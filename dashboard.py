@@ -94,6 +94,10 @@ def get_accounts():
                         for item in tab_data:
                             item['account_name'] = conn.account_name
                             item['account_index'] = i
+                            
+                            # Ensure we have both User and Phase fields (Phase is the renamed User field)
+                            if 'User' in item and 'Phase' not in item:
+                                item['Phase'] = item['User']
                         
                         account_data.extend(tab_data)
                         print(f"Added {len(tab_data)} items from {conn.account_name}")

@@ -41,7 +41,7 @@ function getAllAccountTableData() {
       'Dollar Open P L': 'Open P&L',
       'Dist Drawdown Net Liq': 'Net Liquidation',
       'Total Available Margin': 'Available Margin',
-      'User': 'Username',
+      'User': 'Phase',
       'Dollar Total P L': 'Total P&L'
     };
     
