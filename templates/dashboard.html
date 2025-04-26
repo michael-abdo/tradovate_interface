@@ -87,6 +87,42 @@
             color: #999;
         }
         
+        /* Platform styling */
+        .platform-tradovate {
+            color: #5ac8fa;
+            font-weight: bold;
+        }
+        
+        .platform-apex {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        .platform-amp {
+            color: #ff9500;
+            font-weight: bold;
+        }
+        
+        .platform-ninjatrader {
+            color: #34c759;
+            font-weight: bold;
+        }
+        
+        .platform-tt {
+            color: #af52de;
+            font-weight: bold;
+        }
+        
+        .platform-trailingtie {
+            color: #ff2d55;
+            font-weight: bold;
+        }
+        
+        .platform-unknown {
+            color: #8e8e93;
+            font-style: italic;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -260,7 +296,7 @@
         let accountData = [];
         
         // Default column order (first column is always Account)
-        let defaultColumnOrder = ['Account', 'Phase', 'Status'];
+        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status'];
         
         // Current column order
         let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
@@ -421,6 +457,10 @@
                         // Apply special styling for Status column
                         const statusClass = value ? `status-${value.toLowerCase()}` : 'status-unknown';
                         tableHtml += `<td class="${statusClass}">${value || 'Unknown'}</td>`;
+                    } else if (column === 'Platform') {
+                        // Apply special styling for Platform column
+                        const platformClass = value ? `platform-${value.toLowerCase()}` : 'platform-unknown';
+                        tableHtml += `<td class="${platformClass}">${value || 'Unknown'}</td>`;
                     } else {
                         tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
                     }

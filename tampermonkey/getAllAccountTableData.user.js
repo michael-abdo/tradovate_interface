@@ -89,6 +89,35 @@ function getAllAccountTableData() {
       rowData['Status'] = 'Unknown';
     }
     
+    // Determine platform based on account name
+    const accountName = rowData['Account'] || '';
+    const accountNameLower = accountName.toString().toLowerCase();
+    
+    // Dictionary of platform keywords and corresponding platform names
+    const platformKeywords = {
+      'demo': 'Tradovate',
+      'tv': 'Tradovate',
+      'tradovate': 'Tradovate',
+      'apex': 'Apex',
+      'pa': 'Apex',
+      'amp': 'AMP',
+      'ninja': 'NinjaTrader',
+      'nt': 'NinjaTrader',
+      'tt': 'TT',
+      'trailing': 'TrailingTie'
+    };
+    
+    // Check for platform keywords in account name
+    let platform = 'Unknown';
+    for (const [keyword, platformName] of Object.entries(platformKeywords)) {
+      if (accountNameLower.includes(keyword)) {
+        platform = platformName;
+        break;
+      }
+    }
+    
+    rowData['Platform'] = platform;
+    
     return rowData;
   });
   
