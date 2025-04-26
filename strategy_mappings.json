@@ -1,0 +1,8 @@
+{
+  "strategy_mappings": {
+    "DEFAULT": [],
+    "DayTrade": [],
+    "SwingTrade": [],
+    "ScalpTrade": []
+  }
+}

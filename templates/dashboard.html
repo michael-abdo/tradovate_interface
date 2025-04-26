@@ -433,6 +433,142 @@
             letter-spacing: 1px;
         }
         
+        /* Strategy Management Styling */
+        .strategy-management {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .strategy-controls {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .strategy-button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.2s;
+        }
+        
+        .strategy-button:hover {
+            background-color: #555;
+        }
+        
+        #save-strategies-btn {
+            background-color: #0a84ff;
+        }
+        
+        #save-strategies-btn:hover {
+            background-color: #0071e3;
+        }
+        
+        #add-strategy-btn {
+            background-color: #34c759;
+        }
+        
+        #add-strategy-btn:hover {
+            background-color: #28a745;
+        }
+        
+        .strategy-assignments {
+            margin-bottom: 20px;
+        }
+        
+        #strategy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        #strategy-table th, #strategy-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        
+        #strategy-table th {
+            background-color: #333;
+            font-weight: 600;
+        }
+        
+        .strategy-select {
+            background-color: #3a3a3a;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 6px 8px;
+            width: 100%;
+            min-height: 32px;
+        }
+        
+        .strategy-select option {
+            background-color: #3a3a3a;
+            color: white;
+            padding: 4px;
+        }
+        
+        .strategy-list-container {
+            background-color: #333;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        
+        .strategy-list-container h3 {
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #aaa;
+        }
+        
+        #strategy-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .strategy-item {
+            background-color: #444;
+            border-radius: 4px;
+            padding: 8px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .strategy-name {
+            font-weight: 500;
+        }
+        
+        .strategy-remove {
+            background: none;
+            border: none;
+            color: #ff3b30;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .strategy-remove:hover {
+            color: white;
+            background-color: #ff3b30;
+            border-radius: 50%;
+        }
+        
         /* Drag indicator */
         th::after {
             content: '⋮';
@@ -511,6 +647,36 @@
                 </tr>
             </tbody>
         </table>
+        
+        <h2>Strategy Management</h2>
+        <div class="strategy-management">
+            <div class="strategy-controls">
+                <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
+                <button id="save-strategies-btn" class="strategy-button">Save Mappings</button>
+            </div>
+            <div class="strategy-assignments">
+                <table id="strategy-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Strategies</th>
+                        </tr>
+                    </thead>
+                    <tbody id="strategy-assignments-body">
+                        <!-- Will be populated by JavaScript -->
+                        <tr>
+                            <td colspan="2" class="loading">Loading strategy assignments...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="strategy-list-container">
+                <h3>Available Strategies</h3>
+                <div id="strategy-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
         
         <h2>Trade Controls</h2>
         
@@ -1260,6 +1426,198 @@
         
         // Initialize trade controls
         setupTradeControls();
+        
+        // ---- Strategy Management Functionality ----
+        
+        // Globally accessible strategy data
+        let strategies = [];
+        let strategyMappings = {};
+        
+        // Fetch strategy mappings from the server
+        async function fetchStrategies() {
+            try {
+                const response = await fetch('/api/strategies');
+                const data = await response.json();
+                
+                strategyMappings = data.strategy_mappings || {};
+                strategies = Object.keys(strategyMappings);
+                
+                // Add DEFAULT if not present
+                if (!strategies.includes('DEFAULT')) {
+                    strategies.push('DEFAULT');
+                    strategyMappings['DEFAULT'] = [];
+                }
+                
+                console.log("Loaded strategies:", strategies);
+                console.log("Strategy mappings:", strategyMappings);
+                
+                updateStrategyUI();
+            } catch (error) {
+                console.error('Error fetching strategies:', error);
+            }
+        }
+        
+        // Update the UI with current strategies
+        function updateStrategyUI() {
+            // Update strategy assignments table
+            const tableBody = document.getElementById('strategy-assignments-body');
+            if (!tableBody) return;
+            
+            // Clear existing rows
+            tableBody.innerHTML = '';
+            
+            // Create a row for each account
+            accountData.forEach(account => {
+                const accountId = account.Account;
+                if (!accountId) return;
+                
+                const row = document.createElement('tr');
+                
+                // Account name cell
+                const accountCell = document.createElement('td');
+                accountCell.innerHTML = `<strong>${accountId}</strong>`;
+                row.appendChild(accountCell);
+                
+                // Strategies cell with multi-select dropdown
+                const strategiesCell = document.createElement('td');
+                const select = document.createElement('select');
+                select.className = 'strategy-select';
+                select.multiple = true;
+                select.dataset.account = accountId;
+                
+                // Add options for each strategy
+                strategies.forEach(strategy => {
+                    const option = document.createElement('option');
+                    option.value = strategy;
+                    option.text = strategy;
+                    
+                    // Check if this account is assigned to this strategy
+                    option.selected = (strategyMappings[strategy] && 
+                                      strategyMappings[strategy].includes(accountId));
+                    
+                    select.appendChild(option);
+                });
+                
+                strategiesCell.appendChild(select);
+                row.appendChild(strategiesCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Update available strategies list
+            const strategyList = document.getElementById('strategy-list');
+            if (!strategyList) return;
+            
+            strategyList.innerHTML = '';
+            
+            // Add each strategy as a chip
+            strategies.forEach(strategy => {
+                const strategyItem = document.createElement('div');
+                strategyItem.className = 'strategy-item';
+                
+                const strategyName = document.createElement('span');
+                strategyName.className = 'strategy-name';
+                strategyName.textContent = strategy;
+                strategyItem.appendChild(strategyName);
+                
+                // Add remove button for all except DEFAULT
+                if (strategy !== 'DEFAULT') {
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'strategy-remove';
+                    removeBtn.innerHTML = '✕';
+                    removeBtn.setAttribute('data-strategy', strategy);
+                    removeBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        removeStrategy(strategy);
+                    });
+                    strategyItem.appendChild(removeBtn);
+                }
+                
+                strategyList.appendChild(strategyItem);
+            });
+        }
+        
+        // Save strategy mappings to the server
+        async function saveStrategyMappings() {
+            try {
+                // Gather mappings from all selects
+                const newMappings = {};
+                strategies.forEach(strategy => {
+                    newMappings[strategy] = [];
+                });
+                
+                const selects = document.querySelectorAll('.strategy-select');
+                selects.forEach(select => {
+                    const accountId = select.dataset.account;
+                    
+                    Array.from(select.selectedOptions).forEach(option => {
+                        const strategy = option.value;
+                        if (newMappings[strategy] && !newMappings[strategy].includes(accountId)) {
+                            newMappings[strategy].push(accountId);
+                        }
+                    });
+                });
+                
+                // Send updated mappings to server
+                const response = await fetch('/api/strategies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ strategy_mappings: newMappings })
+                });
+                
+                if (response.ok) {
+                    strategyMappings = newMappings;
+                    alert('Strategy mappings saved successfully');
+                    updateStrategyUI();
+                } else {
+                    throw new Error('Failed to save strategy mappings');
+                }
+            } catch (error) {
+                console.error('Error saving strategy mappings:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        // Add a new strategy
+        function addStrategy() {
+            const strategyName = prompt('Enter new strategy name:');
+            if (!strategyName) return;
+            
+            if (strategyName && !strategies.includes(strategyName)) {
+                strategies.push(strategyName);
+                strategyMappings[strategyName] = [];
+                updateStrategyUI();
+            } else {
+                alert('Strategy already exists');
+            }
+        }
+        
+        // Remove a strategy
+        function removeStrategy(strategy) {
+            if (strategy === 'DEFAULT') {
+                alert('Cannot remove DEFAULT strategy');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to remove strategy "${strategy}"?`)) {
+                const index = strategies.indexOf(strategy);
+                if (index > -1) {
+                    strategies.splice(index, 1);
+                    delete strategyMappings[strategy];
+                    updateStrategyUI();
+                }
+            }
+        }
+        
+        // Set up event listeners for strategy management
+        document.getElementById('add-strategy-btn').addEventListener('click', addStrategy);
+        document.getElementById('save-strategies-btn').addEventListener('click', saveStrategyMappings);
+        
+        // Initialize strategy management
+        fetchStrategies();
     </script>
 </body>
 </html>

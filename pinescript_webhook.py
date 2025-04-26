@@ -43,9 +43,60 @@ def start_ngrok(port: int) -> str | None:
     print("❌ Timeout: ngrok did not confirm the domain in time.")
     return None
 
+def get_target_accounts_for_strategy(strategy_name):
+    """Get account indices that are mapped to a specific strategy"""
+    try:
+        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        if not os.path.exists(strategy_file):
+            print(f"Strategy mappings file not found. Using all accounts.")
+            return list(range(len(controller.connections)))
+            
+        with open(strategy_file, 'r') as f:
+            mappings = json.load(f)
+            
+        strategy_accounts = mappings.get("strategy_mappings", {}).get(strategy_name, [])
+        
+        # If no mappings for this strategy, try DEFAULT strategy
+        if not strategy_accounts and strategy_name != "DEFAULT":
+            print(f"No accounts mapped for strategy {strategy_name}, using DEFAULT")
+            strategy_accounts = mappings.get("strategy_mappings", {}).get("DEFAULT", [])
+        
+        # If still no accounts, use all accounts
+        if not strategy_accounts:
+            print(f"No DEFAULT mapping or empty, using all accounts")
+            return list(range(len(controller.connections)))
+                
+        # Convert account names to indices
+        account_indices = []
+        for i, conn in enumerate(controller.connections):
+            try:
+                # Get account data to extract account ID
+                result = conn.get_account_data()
+                if result and 'result' in result and 'value' in result['result']:
+                    account_data = json.loads(result['result']['value'])
+                    if account_data and len(account_data) > 0:
+                        account_id = account_data[0].get('Account')
+                        if account_id in strategy_accounts:
+                            account_indices.append(i)
+                            print(f"Account {account_id} (index {i}) matched for strategy {strategy_name}")
+            except Exception as e:
+                print(f"Error processing account data for connection {i}: {e}")
+        
+        # If no matches found, use all accounts
+        if not account_indices:
+            print(f"No matching accounts found for strategy {strategy_name}, using all accounts")
+            return list(range(len(controller.connections)))
+            
+        return account_indices
+            
+    except Exception as e:
+        print(f"Error loading strategy mappings: {e}")
+        # Fallback to all accounts
+        return list(range(len(controller.connections)))
+
 def process_trading_signal(data):
     """
-    Process incoming trading signal and execute it on Tradovate
+    Process incoming trading signal and execute it on specific accounts based on strategy
     """
     print(f"Processing trade signal: {json.dumps(data, indent=2)}")
     
@@ -57,17 +108,34 @@ def process_trading_signal(data):
     entry_price = data.get("entryPrice", 0)
     tp_price = data.get("takeProfitPrice", 0)
     trade_type = data.get("tradeType", "Open")  # Open or Close
-    strategy = data.get("strategy", "")
+    strategy = data.get("strategy", "DEFAULT")
     
     # Log the strategy that sent the signal
     print(f"Strategy: {strategy}")
     
+    # Determine target accounts for this strategy
+    target_account_indices = get_target_accounts_for_strategy(strategy)
+    print(f"Target accounts for strategy {strategy}: {target_account_indices}")
+    
     # If this is a Close signal, use exit_positions
     if trade_type == "Close":
         print(f"🔴 Closing positions for {symbol}")
-        results = controller.execute_on_all('exit_positions', symbol)
+        
+        results = []
+        # Execute on each targeted account
+        for account_index in target_account_indices:
+            if account_index < len(controller.connections):
+                result = controller.execute_on_one(account_index, 'exit_positions', symbol)
+                results.append(result)
+        
         print(f"Close results: {results}")
-        return {"status": "closed", "symbol": symbol, "results": results}
+        return {
+            "status": "closed", 
+            "symbol": symbol, 
+            "strategy": strategy,
+            "target_accounts": target_account_indices,
+            "results": results
+        }
     
     # Otherwise, it's an open signal - calculate TP and SL in ticks
     # Get the tick size from the first connection (assuming consistent across all)
@@ -93,11 +161,19 @@ def process_trading_signal(data):
     # Default SL ticks (typically 40% of TP)
     sl_ticks = int(tp_ticks * 0.4) if tp_ticks else 40
     
-    # Execute the trade on all connected Tradovate instances
+    # Execute the trade on targeted Tradovate instances
     print(f"🟢 Executing {action} order for {order_qty} {symbol} with TP: {tp_ticks} ticks, SL: {sl_ticks} ticks")
-    results = controller.execute_on_all('auto_trade', 
-                                symbol, order_qty, action, 
-                                tp_ticks, sl_ticks, tick_size)
+    
+    results = []
+    # Execute on each targeted account
+    for account_index in target_account_indices:
+        if account_index < len(controller.connections):
+            result = controller.execute_on_one(
+                account_index, 'auto_trade', 
+                symbol, order_qty, action, 
+                tp_ticks, sl_ticks, tick_size
+            )
+            results.append(result)
     
     return {
         "status": "executed", 
@@ -106,6 +182,8 @@ def process_trading_signal(data):
         "quantity": order_qty,
         "tp_ticks": tp_ticks,
         "sl_ticks": sl_ticks,
+        "strategy": strategy,
+        "target_accounts": target_account_indices,
         "results": results
     }
 

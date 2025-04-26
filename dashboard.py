@@ -337,6 +337,44 @@ def update_quantity():
             'message': str(e)
         }), 500
 
+# API endpoint to get strategy mappings
+@app.route('/api/strategies', methods=['GET'])
+def get_strategies():
+    try:
+        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        if not os.path.exists(strategy_file):
+            # Create default file if it doesn't exist
+            default_mappings = {
+                "strategy_mappings": {
+                    "DEFAULT": []
+                }
+            }
+            with open(strategy_file, 'w') as f:
+                json.dump(default_mappings, f, indent=2)
+                
+        with open(strategy_file, 'r') as f:
+            mappings = json.load(f)
+        return jsonify(mappings), 200
+    except Exception as e:
+        print(f"Error loading strategy mappings: {e}")
+        return jsonify({"error": f"Failed to load strategy mappings: {str(e)}"}), 500
+
+# API endpoint to update strategy mappings
+@app.route('/api/strategies', methods=['POST'])
+def update_strategies():
+    try:
+        data = request.json
+        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        
+        with open(strategy_file, 'w') as f:
+            json.dump(data, f, indent=2)
+            
+        print(f"Strategy mappings updated: {json.dumps(data, indent=2)}")
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        print(f"Error saving strategy mappings: {e}")
+        return jsonify({"error": f"Failed to update strategy mappings: {str(e)}"}), 500
+
 # Run the app
 def run_flask_dashboard():
     inject_account_data_function()
