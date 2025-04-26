@@ -61,11 +61,11 @@
             font-weight: bold;
         }
         
-        .positive {
+        #positive {
             color: #4cd964;
         }
         
-        .negative {
+        #negative {
             color: #ff3b30;
         }
         
@@ -199,7 +199,7 @@
         <h1>Tradovate Account Dashboard</h1>
         
         <div class="refresh-info">
-            Last updated: <span id="last-update">-</span> (auto-refreshes every second)
+            Last updated: <span id="last-update">-</span>
             <button class="refresh-button" onclick="fetchAccountData()">Refresh Now</button>
         </div>
         
@@ -254,7 +254,6 @@
         // Function to save column order to localStorage
         function saveColumnOrder() {
             localStorage.setItem('tradovate_dashboard_column_order', JSON.stringify(columnOrder));
-            console.log('Saved column order:', columnOrder);
         }
         
         // Function to get saved column order from localStorage
@@ -316,7 +315,6 @@
                 
                 // Save the fixed column order
                 saveColumnOrder();
-                console.log('Fixed duplicate Account columns in saved order');
             }
             
             // Update default column order with all available columns (for first time use)

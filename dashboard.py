@@ -43,14 +43,11 @@ def dashboard():
 # API endpoint to get all account data
 @app.route('/api/accounts', methods=['GET'])
 def get_accounts():
-    print("\n==== Fetching account data ====")
     account_data = []
-    print(f"Found {len(controller.connections)} connections")
     
     # Fetch data from all tabs
     for i, conn in enumerate(controller.connections):
         if conn.tab:
-            print(f"Processing connection {i+1}: {conn.account_name}")
             try:
                 # First make sure the getAllAccountTableData function is available
                 try:
@@ -60,34 +57,19 @@ def get_accounts():
                     with open(account_data_path, 'r') as file:
                         get_account_data_js = file.read()
                     conn.tab.Runtime.evaluate(expression=get_account_data_js)
-                    print(f"Re-injected getAllAccountTableData into {conn.account_name}")
                 except Exception as inject_err:
                     print(f"Error re-injecting function: {inject_err}")
                 
                 # Execute the getAllAccountTableData() function in each tab
-                print(f"Executing getAllAccountTableData() in {conn.account_name}")
                 result = conn.tab.Runtime.evaluate(
                     expression="getAllAccountTableData()")
                 
-                print(f"Result received for {conn.account_name}")
-                print(f"Result type: {type(result)}")
-                print(f"Result keys: {result.keys() if hasattr(result, 'keys') else 'No keys'}")
-                
-                if result and 'result' in result:
-                    print(f"Result['result'] keys: {result['result'].keys() if hasattr(result['result'], 'keys') else 'No keys'}")
-                
                 if result and 'result' in result and 'value' in result['result']:
-                    print(f"Value type: {type(result['result']['value'])}")
-                    print(f"Value content sample: {result['result']['value'][:100] if isinstance(result['result']['value'], str) else 'Not a string'}")
-                    
                     try:
                         # Parse the JSON result
                         tab_data = json.loads(result['result']['value'])
-                        print(f"Parsed JSON data type: {type(tab_data)}")
-                        print(f"Found {len(tab_data) if isinstance(tab_data, list) else 'non-list'} items")
                         
                         if not tab_data:
-                            print(f"No account data returned from {conn.account_name}")
                             continue
                             
                         # Add account identifier to each item
@@ -110,17 +92,13 @@ def get_accounts():
                                     item['Account'] = account_value
                         
                         account_data.extend(tab_data)
-                        print(f"Added {len(tab_data)} items from {conn.account_name}")
                     except json.JSONDecodeError as e:
                         print(f"Error parsing JSON from {conn.account_name}: {e}")
-                        print(f"Raw value: {result['result']['value']}")
                 else:
                     print(f"No valid result structure for {conn.account_name}")
             except Exception as e:
                 print(f"Error getting account data from {conn.account_name}: {e}")
     
-    print(f"Total account data items: {len(account_data)}")
-    print("==== End of account data fetch ====\n")
     return jsonify(account_data)
 
 # API endpoint to get summary data

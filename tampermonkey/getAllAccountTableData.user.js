@@ -1,7 +1,5 @@
 // Function to get account summary data
 function getAllAccountTableData() {
-  console.log("getAllAccountTableData function called");
-  
   // The accounts data is in the third .publicDataTable_main element
   const tables = document.querySelectorAll('.public_fixedDataTable_main');
   
@@ -16,13 +14,11 @@ function getAllAccountTableData() {
     // Check if this table has account-related headers
     if (headers.includes('Account ▲') || headers.includes('Total Available Margin')) {
       accountTable = table;
-      console.log(`Found account table at index ${i}`);
       break;
     }
   }
   
   if (!accountTable) {
-    console.log("No account table found");
     return JSON.stringify([]);
   }
   
@@ -47,11 +43,9 @@ function getAllAccountTableData() {
     
     return standardHeaders[headerText] || headerText;
   });
-  console.log("Standardized Headers:", headerNames);
   
   // Extract rows
   const rows = [...accountTable.querySelectorAll('.public_fixedDataTable_bodyRow')];
-  console.log(`Found ${rows.length} account rows`);
   
   const result = rows.map(r => {
     const cells = r.querySelectorAll('[role="gridcell"]');
@@ -67,6 +61,7 @@ function getAllAccountTableData() {
             // Replace $ and commas, then convert to number
             text = Number(text.replace(/[$,]/g, '')) || 0;
           } catch (e) {
+            // Keep error logging for critical errors
             console.error("Error converting currency:", e);
           }
         }
@@ -78,6 +73,5 @@ function getAllAccountTableData() {
     return rowData;
   });
   
-  console.log("Final result:", result);
   return JSON.stringify(result);
 }
