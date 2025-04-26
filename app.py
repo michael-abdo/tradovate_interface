@@ -3,6 +3,8 @@ import os
 import sys
 import json
 import argparse
+import threading
+import time
 
 # Load the Tampermonkey script
 tampermonkey_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tampermonkey/autoOrder.user.js')
@@ -71,6 +73,16 @@ class TradovateConnection:
         try:
             print(f"Injecting Tampermonkey functions for {self.account_name}...")
             self.tab.Runtime.evaluate(expression=tampermonkey_functions)
+            
+            # Also inject the getAllAccountTableData function
+            account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                                         'tampermonkey/getAllAccountTableData.user.js')
+            if os.path.exists(account_data_path):
+                with open(account_data_path, 'r') as file:
+                    account_data_js = file.read()
+                self.tab.Runtime.evaluate(expression=account_data_js)
+                print(f"Account data function injected for {self.account_name}")
+            
             print(f"Tampermonkey functions injected successfully for {self.account_name}")
             return True
         except Exception as e:
@@ -120,6 +132,17 @@ class TradovateConnection:
         try:
             js_code = f"updateSymbol('.search-box--input', normalizeSymbol('{symbol}'));"
             result = self.tab.Runtime.evaluate(expression=js_code)
+            return result
+        except Exception as e:
+            return {"error": str(e)}
+            
+    def get_account_data(self):
+        """Get account data from the tab using the getAllAccountTableData function"""
+        if not self.tab:
+            return {"error": "No tab available"}
+            
+        try:
+            result = self.tab.Runtime.evaluate(expression="getAllAccountTableData()")
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -207,6 +230,9 @@ def main():
     symbol_parser.add_argument('symbol', help='Symbol to update to')
     symbol_parser.add_argument('--account', type=int, help='Account index (all if not specified)')
     
+    # Dashboard command
+    dashboard_parser = subparsers.add_parser('dashboard', help='Launch the dashboard UI')
+    
     args = parser.parse_args()
     
     # Initialize the controller
@@ -260,6 +286,39 @@ def main():
         else:
             results = controller.execute_on_all('update_symbol', args.symbol)
             print(f"Symbol updated on all {len(results)} accounts")
+    
+    elif args.command == 'dashboard':
+        # Ensure all connections have the account data function
+        for conn in controller.connections:
+            if conn.tab:
+                account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                                          'tampermonkey/getAllAccountTableData.user.js')
+                if os.path.exists(account_data_path):
+                    with open(account_data_path, 'r') as file:
+                        account_data_js = file.read()
+                    conn.tab.Runtime.evaluate(expression=account_data_js)
+        
+        # Import the dashboard module here to avoid circular imports
+        try:
+            from dashboard import run_flask_dashboard
+            print("Starting Tradovate dashboard...")
+            dashboard_thread = threading.Thread(target=run_flask_dashboard)
+            dashboard_thread.daemon = True
+            dashboard_thread.start()
+            print("Dashboard running at http://localhost:5000")
+            print("Press Ctrl+C to stop")
+            
+            # Keep the main thread alive
+            try:
+                while True:
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                print("Dashboard stopped")
+                
+        except ImportError as e:
+            print(f"Error loading dashboard: {e}")
+            print("Make sure dashboard.py exists in the same directory")
+            return 1
     
     else:
         parser.print_help()

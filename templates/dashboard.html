@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradovate Multi-Account Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 0 10px 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .stat-title {
+            font-size: 14px;
+            color: #aaaaaa;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .positive {
+            color: #4cd964;
+        }
+        
+        .negative {
+            color: #ff3b30;
+        }
+        
+        .neutral {
+            color: #ffffff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #2d2d2d;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        
+        th {
+            background-color: #333;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #3a3a3a;
+        }
+        
+        .account-label {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            color: #fff;
+        }
+        
+        .refresh-info {
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #999;
+        }
+        
+        .account-summary {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .account-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .account-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #555;
+        }
+        
+        .account-details {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .account-count {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #aaa;
+        }
+        
+        .refresh-button {
+            background-color: #0a84ff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            margin-left: 10px;
+        }
+        
+        .refresh-button:hover {
+            background-color: #0071e3;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #444;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #aaa;
+            font-size: 16px;
+        }
+        
+        .tab.active {
+            color: white;
+            border-bottom: 2px solid #0a84ff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Tradovate Multi-Account Dashboard</h1>
+        
+        <div class="refresh-info">
+            Last updated: <span id="last-update">-</span>
+            <button class="refresh-button" onclick="refreshAll()">Refresh Now</button>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab active" onclick="openTab(event, 'summary-tab')">Summary</button>
+                <button class="tab" onclick="openTab(event, 'positions-tab')">All Positions</button>
+            </div>
+            
+            <div id="summary-tab" class="tab-content active">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-title">TOTAL P&L</div>
+                        <div id="total-pnl" class="stat-value">$0.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">ACCOUNTS</div>
+                        <div id="account-count" class="stat-value neutral">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">TOTAL POSITIONS</div>
+                        <div id="position-count" class="stat-value neutral">0</div>
+                    </div>
+                </div>
+                
+                <h2>Account Summary</h2>
+                <div id="account-summary" class="account-summary">
+                    <div class="loading">Loading account data...</div>
+                </div>
+            </div>
+            
+            <div id="positions-tab" class="tab-content">
+                <table id="account-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Symbol</th>
+                            <th>Qty</th>
+                            <th>Side</th>
+                            <th>Entry</th>
+                            <th>Current</th>
+                            <th>P&L</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="account-data">
+                        <tr>
+                            <td colspan="8" class="loading">Loading position data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to open tabs
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tabs
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Show the current tab and add active class
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Function to format money
+        function formatMoney(amount) {
+            if (typeof amount !== 'number') {
+                try {
+                    amount = parseFloat(amount.replace(/[$,]/g, ''));
+                } catch (e) {
+                    return '$0.00';
+                }
+            }
+            
+            return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+        
+        // Function to fetch account summary
+        async function fetchSummary() {
+            try {
+                const response = await fetch('/api/summary');
+                const data = await response.json();
+                
+                // Update summary stats
+                const totalPnl = document.getElementById('total-pnl');
+                totalPnl.textContent = formatMoney(data.total_pnl);
+                totalPnl.className = 'stat-value ' + (data.total_pnl >= 0 ? 'positive' : 'negative');
+                
+                document.getElementById('account-count').textContent = data.account_count;
+                
+                // Calculate total position count
+                let totalPositions = 0;
+                data.accounts.forEach(account => {
+                    totalPositions += account.position_count;
+                });
+                document.getElementById('position-count').textContent = totalPositions;
+                
+                // Update account summary cards
+                const summaryContainer = document.getElementById('account-summary');
+                
+                if (data.accounts.length === 0) {
+                    summaryContainer.innerHTML = '<div class="empty-state">No active accounts found</div>';
+                    return;
+                }
+                
+                // Generate account cards
+                let accountHtml = '';
+                
+                // Color palette for different accounts
+                const colors = [
+                    '#0a84ff', '#30d158', '#ff9f0a', '#ff375f', 
+                    '#5e5ce6', '#64d2ff', '#bf5af2', '#ff9f0a'
+                ];
+                
+                data.accounts.forEach((account, index) => {
+                    const accountColor = colors[index % colors.length];
+                    const pnlClass = account.pnl >= 0 ? 'positive' : 'negative';
+                    
+                    accountHtml += `
+                        <div class="account-card">
+                            <div class="account-name" style="color: ${accountColor}">
+                                ${account.account_name}
+                            </div>
+                            <div class="account-details">
+                                <div>P&L:</div>
+                                <div class="${pnlClass}">${formatMoney(account.pnl)}</div>
+                            </div>
+                            <div class="account-details">
+                                <div>Positions:</div>
+                                <div>${account.position_count}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                summaryContainer.innerHTML = accountHtml;
+                
+            } catch (error) {
+                console.error('Error fetching summary data:', error);
+                document.getElementById('account-summary').innerHTML = 
+                    '<div class="empty-state">Error loading account data</div>';
+            }
+        }
+        
+        // Function to fetch account data
+        async function fetchAccountData() {
+            try {
+                const response = await fetch('/api/accounts');
+                const data = await response.json();
+                
+                // Update the table
+                const tableBody = document.getElementById('account-data');
+                
+                // Color palette for different accounts
+                const colors = [
+                    '#0a84ff', '#30d158', '#ff9f0a', '#ff375f', 
+                    '#5e5ce6', '#64d2ff', '#bf5af2', '#ff9f0a'
+                ];
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="8" class="empty-state">No active positions found</td></tr>';
+                } else {
+                    let tableHtml = '';
+                    
+                    data.forEach((item, index) => {
+                        // Calculate color for this account
+                        const accountIndex = item.account_index || 0;
+                        const accountColor = colors[accountIndex % colors.length];
+                        
+                        // Format P&L with color
+                        let pnl = item['P&L'] || 0;
+                        if (typeof pnl === 'string') {
+                            pnl = parseFloat(pnl.replace(/[$,]/g, '')) || 0;
+                        }
+                        const pnlClass = pnl >= 0 ? 'positive' : 'negative';
+                        
+                        tableHtml += `
+                            <tr>
+                                <td>
+                                    <span class="account-label" style="background-color:${accountColor}">
+                                        ${item.account_name || `Account ${accountIndex + 1}`}
+                                    </span>
+                                </td>
+                                <td>${item.Symbol || '-'}</td>
+                                <td>${item.Qty || '-'}</td>
+                                <td>${item.Side || '-'}</td>
+                                <td>${item['Entry Price'] || '-'}</td>
+                                <td>${item['Last Price'] || '-'}</td>
+                                <td class="${pnlClass}">${typeof pnl === 'number' ? formatMoney(pnl) : pnl}</td>
+                                <td>${item.Status || '-'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableBody.innerHTML = tableHtml;
+                }
+                
+            } catch (error) {
+                console.error('Error fetching account data:', error);
+                document.getElementById('account-data').innerHTML = 
+                    '<tr><td colspan="8" class="empty-state">Error loading position data</td></tr>';
+            }
+        }
+        
+        // Function to refresh all data
+        async function refreshAll() {
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+            await Promise.all([
+                fetchSummary(),
+                fetchAccountData()
+            ]);
+        }
+        
+        // Initial fetch
+        refreshAll();
+        
+        // Set up periodic refresh (every 15 seconds)
+        setInterval(refreshAll, 15000);
+    </script>
+</body>
+</html>
