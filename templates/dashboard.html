@@ -95,6 +95,17 @@
             font-weight: 600;
             position: sticky;
             top: 0;
+            cursor: move;
+            user-select: none;
+        }
+        
+        th:hover {
+            background-color: #444;
+        }
+        
+        th.dragging {
+            opacity: 0.5;
+            background-color: #555;
         }
         
         tbody tr {
@@ -148,6 +159,39 @@
         .account-row {
             background-color: #3a3a3a;
         }
+        
+        .column-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .column-controls button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+        
+        .column-controls button:hover {
+            background-color: #555;
+        }
+        
+        .reset-columns {
+            color: #ff9500;
+        }
+        
+        /* Drag indicator */
+        th::after {
+            content: '⋮';
+            margin-left: 5px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -175,6 +219,16 @@
         </div>
         
         <h2>Accounts</h2>
+        
+        <div class="column-controls">
+            <div>
+                <button onclick="resetColumnOrder()">Reset Column Order</button>
+            </div>
+            <div>
+                <small>Drag column headers to reorder</small>
+            </div>
+        </div>
+        
         <table id="account-table">
             <thead id="table-header">
                 <!-- Will be populated by JavaScript -->
@@ -188,6 +242,42 @@
     </div>
 
     <script>
+        // Store the last fetched data
+        let accountData = [];
+        
+        // Default column order (first column is always Account)
+        let defaultColumnOrder = ['Account'];
+        
+        // Current column order
+        let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
+        
+        // Function to save column order to localStorage
+        function saveColumnOrder() {
+            localStorage.setItem('tradovate_dashboard_column_order', JSON.stringify(columnOrder));
+            console.log('Saved column order:', columnOrder);
+        }
+        
+        // Function to get saved column order from localStorage
+        function getSavedColumnOrder() {
+            const saved = localStorage.getItem('tradovate_dashboard_column_order');
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    console.error('Error parsing saved column order:', e);
+                    return null;
+                }
+            }
+            return null;
+        }
+        
+        // Function to reset column order
+        function resetColumnOrder() {
+            columnOrder = [...defaultColumnOrder];
+            saveColumnOrder();
+            renderTable(accountData);
+        }
+        
         // Function to format money
         function formatMoney(amount) {
             if (typeof amount !== 'number') {
@@ -202,102 +292,191 @@
             return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
         
+        // Function to render the table with the current column order
+        function renderTable(data) {
+            const tableBody = document.getElementById('account-data');
+            const tableHeader = document.getElementById('table-header');
+            
+            if (!data || data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="empty-state">No account data found</td></tr>';
+                return;
+            }
+            
+            // Get all available column names from the data
+            const availableColumns = Object.keys(data[0]).filter(key => 
+                key !== 'account_name' && key !== 'account_index' && key !== 'Account ▲'
+            );
+            
+            // Update default column order with all available columns (for first time use)
+            if (defaultColumnOrder.length === 1) {
+                defaultColumnOrder = ['Account', ...availableColumns];
+            }
+            
+            // Add any new columns to the column order
+            availableColumns.forEach(column => {
+                if (!columnOrder.includes(column) && column !== 'Account') {
+                    columnOrder.push(column);
+                }
+            });
+            
+            // Remove any columns that no longer exist
+            columnOrder = columnOrder.filter(column => 
+                column === 'Account' || availableColumns.includes(column)
+            );
+            
+            // Create table header
+            let headerHtml = '<tr>';
+            columnOrder.forEach(column => {
+                headerHtml += `<th data-column="${column}" draggable="true">${column}</th>`;
+            });
+            headerHtml += '</tr>';
+            tableHeader.innerHTML = headerHtml;
+            
+            // Set up drag and drop for column reordering
+            setupColumnDragAndDrop();
+            
+            // Create table rows
+            let tableHtml = '';
+            let totalPnl = 0;
+            let totalMargin = 0;
+            
+            data.forEach((account, index) => {
+                tableHtml += '<tr class="account-row">';
+                
+                // Render cells in the current column order
+                columnOrder.forEach(column => {
+                    // Special handling for the Account column
+                    if (column === 'Account') {
+                        let accountName = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
+                        tableHtml += `<td><strong>${accountName}</strong></td>`;
+                        return;
+                    }
+                    
+                    const value = account[column];
+                    
+                    // Format numbers as currency if they look like money values
+                    if (typeof value === 'number' || (typeof value === 'string' && value.includes('$'))) {
+                        // Try to parse it as a number
+                        try {
+                            const numVal = typeof value === 'number' ? 
+                                value : 
+                                parseFloat(value.replace(/[$,]/g, ''));
+                            
+                            // Add to totals for certain fields
+                            if (column === 'Total P&L' || column === 'Open P&L' || 
+                                column === 'Dollar Total P L' || column === 'Dollar Open P L') {
+                                totalPnl += numVal || 0;
+                            }
+                            
+                            if (column === 'Available Margin' || column === 'Total Available Margin') {
+                                totalMargin += numVal || 0;
+                            }
+                            
+                            // Determine class for P&L values
+                            let className = '';
+                            if (column === 'Total P&L' || column === 'Open P&L' || 
+                                column === 'Dollar Total P L' || column === 'Dollar Open P L') {
+                                className = numVal >= 0 ? 'positive' : 'negative';
+                            }
+                            
+                            tableHtml += `<td class="${className}">${formatMoney(numVal)}</td>`;
+                        } catch (e) {
+                            tableHtml += `<td>${value}</td>`;
+                        }
+                    } else {
+                        tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
+                    }
+                });
+                
+                tableHtml += '</tr>';
+            });
+            
+            tableBody.innerHTML = tableHtml;
+            
+            // Update summary stats
+            document.getElementById('account-count').textContent = data.length;
+            
+            const totalPnlEl = document.getElementById('total-pnl');
+            totalPnlEl.textContent = formatMoney(totalPnl);
+            totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
+            
+            document.getElementById('total-margin').textContent = formatMoney(totalMargin);
+            
+            // Update last refresh time
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Setup drag and drop for column reordering
+        function setupColumnDragAndDrop() {
+            const headers = document.querySelectorAll('#table-header th');
+            let draggedColumn = null;
+            
+            headers.forEach(header => {
+                header.addEventListener('dragstart', function(e) {
+                    draggedColumn = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.dataset.column);
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                
+                header.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedColumn = null;
+                });
+                
+                header.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+                
+                header.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    if (draggedColumn !== this) {
+                        this.classList.add('drag-over');
+                    }
+                });
+                
+                header.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+                
+                header.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    if (draggedColumn !== this) {
+                        const fromColumn = draggedColumn.dataset.column;
+                        const toColumn = this.dataset.column;
+                        
+                        // Update column order
+                        const fromIndex = columnOrder.indexOf(fromColumn);
+                        const toIndex = columnOrder.indexOf(toColumn);
+                        
+                        if (fromIndex !== -1 && toIndex !== -1) {
+                            // Remove from current position
+                            columnOrder.splice(fromIndex, 1);
+                            // Insert at new position
+                            columnOrder.splice(toIndex, 0, fromColumn);
+                            
+                            // Save the new column order
+                            saveColumnOrder();
+                            
+                            // Re-render the table
+                            renderTable(accountData);
+                        }
+                    }
+                });
+            });
+        }
+        
         // Function to fetch account data
         async function fetchAccountData() {
             try {
                 const response = await fetch('/api/accounts');
-                const data = await response.json();
+                accountData = await response.json();
                 
-                // Update the table
-                const tableBody = document.getElementById('account-data');
-                const tableHeader = document.getElementById('table-header');
-                
-                if (data.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="6" class="empty-state">No account data found</td></tr>';
-                    return;
-                }
-                
-                // Get all unique headers
-                const headers = Object.keys(data[0]).filter(key => 
-                    // Filter out account identifiers and duplicate Account column
-                    key !== 'account_name' && key !== 'account_index' && key !== 'Account' && key !== 'Account ▲'
-                );
-                
-                // Create table header
-                let headerHtml = '<tr>';
-                headerHtml += '<th>Account</th>'; // Just one Account column
-                headers.forEach(header => {
-                    headerHtml += `<th>${header}</th>`;
-                });
-                headerHtml += '</tr>';
-                tableHeader.innerHTML = headerHtml;
-                
-                // Create table rows
-                let tableHtml = '';
-                let totalPnl = 0;
-                let totalMargin = 0;
-                
-                data.forEach((account, index) => {
-                    tableHtml += '<tr class="account-row">';
-                    
-                    // Account name/ID (check both standardized and original headers)
-                    let accountName = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
-                    tableHtml += `<td><strong>${accountName}</strong></td>`;
-                    
-                    // All other data columns (skipping Account column as we already displayed it)
-                    headers.forEach(header => {
-                        const value = account[header];
-                        
-                        // Format numbers as currency if they look like money values
-                        if (typeof value === 'number' || (typeof value === 'string' && value.includes('$'))) {
-                            // Try to parse it as a number
-                            try {
-                                const numVal = typeof value === 'number' ? 
-                                    value : 
-                                    parseFloat(value.replace(/[$,]/g, ''));
-                                
-                                // Add to totals for certain fields
-                                if (header === 'Total P&L' || header === 'Open P&L' || 
-                                    header === 'Dollar Total P L' || header === 'Dollar Open P L') {
-                                    totalPnl += numVal || 0;
-                                }
-                                
-                                if (header === 'Available Margin' || header === 'Total Available Margin') {
-                                    totalMargin += numVal || 0;
-                                }
-                                
-                                // Determine class for P&L values
-                                let className = '';
-                                if (header === 'Total P&L' || header === 'Open P&L' || 
-                                    header === 'Dollar Total P L' || header === 'Dollar Open P L') {
-                                    className = numVal >= 0 ? 'positive' : 'negative';
-                                }
-                                
-                                tableHtml += `<td class="${className}">${formatMoney(numVal)}</td>`;
-                            } catch (e) {
-                                tableHtml += `<td>${value}</td>`;
-                            }
-                        } else {
-                            tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
-                        }
-                    });
-                    
-                    tableHtml += '</tr>';
-                });
-                
-                tableBody.innerHTML = tableHtml;
-                
-                // Update summary stats
-                document.getElementById('account-count').textContent = data.length;
-                
-                const totalPnlEl = document.getElementById('total-pnl');
-                totalPnlEl.textContent = formatMoney(totalPnl);
-                totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
-                
-                document.getElementById('total-margin').textContent = formatMoney(totalMargin);
-                
-                // Update last refresh time
-                document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+                // Render the table with the current column order
+                renderTable(accountData);
                 
             } catch (error) {
                 console.error('Error fetching account data:', error);
