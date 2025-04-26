@@ -431,8 +431,14 @@
 
     async function createBracketOrdersManual(tradeData) {
         console.log('Creating bracket orders with data:', tradeData);
-        const enableTP = document.getElementById('tpCheckbox').checked;
-        const enableSL = document.getElementById('slCheckbox').checked;
+        // Get checkbox states from UI if available, otherwise infer from tradeData
+        const tpCheckbox = document.getElementById('tpCheckbox');
+        const slCheckbox = document.getElementById('slCheckbox');
+        
+        // If checkboxes exist in the UI, use their values, otherwise determine from tradeData
+        const enableTP = tpCheckbox ? tpCheckbox.checked : 'takeProfit' in tradeData;
+        const enableSL = slCheckbox ? slCheckbox.checked : 'stopLoss' in tradeData;
+        
         console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
@@ -536,24 +542,32 @@
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
             tradeData.action = 'Sell';
-            if (enableTP) {
+            if (enableTP && tradeData.takeProfit) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
                 await submitOrder('LIMIT', tradeData.takeProfit);
+            } else {
+                console.log('Skipping take profit order - disabled or price not provided');
             }
-            if (enableSL) {
+            if (enableSL && tradeData.stopLoss) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
                 await submitOrder('STOP', tradeData.stopLoss);
+            } else {
+                console.log('Skipping stop loss order - disabled or price not provided');
             }
         } else {
             console.log('Flipping action to Buy for TP/SL orders');
             tradeData.action = 'Buy';
-            if (enableTP) {
+            if (enableTP && tradeData.takeProfit) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
                 await submitOrder('LIMIT', tradeData.takeProfit);
+            } else {
+                console.log('Skipping take profit order - disabled or price not provided');
             }
-            if (enableSL) {
+            if (enableSL && tradeData.stopLoss) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
                 await submitOrder('STOP', tradeData.stopLoss);
+            } else {
+                console.log('Skipping stop loss order - disabled or price not provided');
             }
         }
         console.log('Bracket order creation complete');
@@ -599,7 +613,7 @@
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25) {
         console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}`);
 
-        const symbolInput = document.getElementById('symbolInput').value || 'NQ';
+        const symbolInput = document.getElementById('symbolInput')?.value || inputSymbol || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
 
         // Get root symbol (e.g., 'NQH5' -> 'NQ')
@@ -611,33 +625,49 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         // Keep track of the last symbol to handle symbol changes
         if (rootSymbol !== autoTrade.lastRootSymbol) {
-           document.getElementById('tickInput').value = symbolData?.tickSize ?? '';
+           const tickInput = document.getElementById('tickInput');
+           if (tickInput) tickInput.value = symbolData?.tickSize ?? '';
         }
         autoTrade.lastRootSymbol = rootSymbol;
         const tickSize = (symbolData && typeof symbolData.tickSize === 'number')
                ? symbolData.tickSize
-               : parseFloat(document.getElementById('tickInput').value) || _tickSize;
+               : parseFloat(document.getElementById('tickInput')?.value || '') || _tickSize;
 
         // right after tickSize is determined
-        tickInput.value = tickSize;           // shows the real value
-        localStorage.setItem('bracketTrade_tick', tickSize);
+        const tickInput = document.getElementById('tickInput');
+        if (tickInput) {
+            tickInput.value = tickSize;           // shows the real value
+            localStorage.setItem('bracketTrade_tick', tickSize);
+        }
 
-        // Use provided values or defaults from dictionary or UI
-        const actualStopLossTicks = stopLossTicks ||
-                                   symbolData?.defaultSL ||
-                                   parseInt(document.getElementById('slInput').value) ||
-                                   40;
+        // Check if TP/SL are enabled or disabled (0 means disabled)
+        const enableTP = takeProfitTicks !== 0;
+        const enableSL = stopLossTicks !== 0;
+        console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
 
-        const actualTakeProfitTicks = takeProfitTicks ||
-                                     symbolData?.defaultTP ||
-                                     parseInt(document.getElementById('tpInput').value) ||
-                                     100;
+        // Only calculate TP/SL values if they are enabled
+        let actualStopLossTicks = 0;
+        let actualTakeProfitTicks = 0;
+
+        if (enableSL) {
+            actualStopLossTicks = stopLossTicks ||
+                                 symbolData?.defaultSL ||
+                                 parseInt(document.getElementById('slInput')?.value || '') ||
+                                 40;
+        }
+
+        if (enableTP) {
+            actualTakeProfitTicks = takeProfitTicks ||
+                                   symbolData?.defaultTP ||
+                                   parseInt(document.getElementById('tpInput')?.value || '') ||
+                                   100;
+        }
 
         const from = symbolData?.tickSize ? 'dictionary'
-          : document.getElementById('tickInput').value ? 'input field'
+          : document.getElementById('tickInput')?.value ? 'input field'
           : 'default parameter';
         console.log(`Using tick size ${tickSize} (from ${from})`);
-        console.log(`Using SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
+        console.log(`Using SL: ${enableSL ? actualStopLossTicks + ' ticks' : 'disabled'}, TP: ${enableTP ? actualTakeProfitTicks + ' ticks' : 'disabled'}`);
 
         console.log(`Getting market data for ${symbolInput}`);
         const marketData = getMarketData(symbolInput);
@@ -688,38 +718,48 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         const hardcodedSLPrice = slPriceInput && slPriceInput.value ? parseFloat(slPriceInput.value) : null;
         const hardcodedTPPrice = tpPriceInput && tpPriceInput.value ? parseFloat(tpPriceInput.value) : null;
         
-        // Determine SL price - use hardcoded if available, otherwise calculate based on ticks
-        let stopLossPrice;
-        if (hardcodedSLPrice !== null) {
-            stopLossPrice = hardcodedSLPrice.toFixed(decimalPrecision);
-            console.log(`Using hardcoded SL price: ${stopLossPrice}`);
+        // Determine SL price only if SL is enabled
+        let stopLossPrice = null;
+        if (enableSL) {
+            if (hardcodedSLPrice !== null) {
+                stopLossPrice = hardcodedSLPrice.toFixed(decimalPrecision);
+                console.log(`Using hardcoded SL price: ${stopLossPrice}`);
+            } else {
+                stopLossPrice = (action === 'Buy'
+                    ? entryPrice - actualStopLossTicks * tickSize
+                    : entryPrice + actualStopLossTicks * tickSize).toFixed(decimalPrecision);
+                console.log(`Calculated SL price: ${stopLossPrice} (${action === 'Buy' ? 'entry - ' : 'entry + '}${actualStopLossTicks} ticks)`);
+            }
         } else {
-            stopLossPrice = (action === 'Buy'
-                ? entryPrice - actualStopLossTicks * tickSize
-                : entryPrice + actualStopLossTicks * tickSize).toFixed(decimalPrecision);
-            console.log(`Calculated SL price: ${stopLossPrice} (${action === 'Buy' ? 'entry - ' : 'entry + '}${actualStopLossTicks} ticks)`);
+            console.log("Stop Loss is disabled for this trade");
         }
 
-        // Determine TP price - use hardcoded if available, otherwise calculate based on ticks
-        let takeProfitPrice;
-        if (hardcodedTPPrice !== null) {
-            takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
-            console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
+        // Determine TP price only if TP is enabled
+        let takeProfitPrice = null;
+        if (enableTP) {
+            if (hardcodedTPPrice !== null) {
+                takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
+                console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
+            } else {
+                takeProfitPrice = (action === 'Buy'
+                    ? entryPrice + actualTakeProfitTicks * tickSize
+                    : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
+                console.log(`Calculated TP price: ${takeProfitPrice} (${action === 'Buy' ? 'entry + ' : 'entry - '}${actualTakeProfitTicks} ticks)`);
+            }
         } else {
-            takeProfitPrice = (action === 'Buy'
-                ? entryPrice + actualTakeProfitTicks * tickSize
-                : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
-            console.log(`Calculated TP price: ${takeProfitPrice} (${action === 'Buy' ? 'entry + ' : 'entry - '}${actualTakeProfitTicks} ticks)`);
+            console.log("Take Profit is disabled for this trade");
         }
 
         const tradeData = {
             symbol: marketData.symbol,
             action,
             qty: quantity.toString(),
-            takeProfit: takeProfitPrice,
-            stopLoss: stopLossPrice,
             orderType: orderType,
-            entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
+            entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null,
+            
+            // Only include TP/SL if they are enabled
+            ...(enableTP && { takeProfit: takeProfitPrice }),
+            ...(enableSL && { stopLoss: stopLossPrice })
         };
         console.log('Trade data prepared:', tradeData);
 

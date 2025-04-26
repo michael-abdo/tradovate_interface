@@ -1121,21 +1121,36 @@
         function executeTradeAction(action) {
             const symbol = document.getElementById('symbolInput').value || 'NQ';
             const qty = parseInt(document.getElementById('qtyInput').value) || 1;
-            const tp = parseInt(document.getElementById('tpInput').value) || 100;
-            const sl = parseInt(document.getElementById('slInput').value) || 40;
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
+            
+            // Check if TP/SL checkboxes are checked
+            const enableTP = document.getElementById('tpCheckbox').checked;
+            const enableSL = document.getElementById('slCheckbox').checked;
+            
+            // Get TP/SL values only if enabled
+            const tp = enableTP ? (parseInt(document.getElementById('tpInput').value) || 100) : null;
+            const sl = enableSL ? (parseInt(document.getElementById('slInput').value) || 40) : null;
             
             // Prepare the trade parameters
             const tradeParams = {
                 symbol: symbol,
                 quantity: qty,
                 action: action,
-                tp_ticks: tp,
-                sl_ticks: sl,
                 tick_size: tickSize,
-                account: 'all' // Trade on all accounts
+                account: 'all', // Trade on all accounts
+                enable_tp: enableTP,
+                enable_sl: enableSL
             };
+            
+            // Only add TP/SL if they are enabled
+            if (enableTP) {
+                tradeParams.tp_ticks = tp;
+            }
+            
+            if (enableSL) {
+                tradeParams.sl_ticks = sl;
+            }
             
             // If entry price is specified, add it to the parameters
             if (entryPrice) {
@@ -1153,7 +1168,7 @@
             .then(response => response.json())
             .then(result => {
                 // Show success message
-                alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
                 
                 // Reset price inputs
                 document.getElementById('entryPriceInput').value = '';
@@ -1186,7 +1201,7 @@
             .then(result => {
                 // Show success message
                 const action = option.includes('Exit') ? 'closed' : 'canceled';
-                alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
+                //alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
             })
             .catch(error => {
                 console.error('Error executing cancel/close action:', error);

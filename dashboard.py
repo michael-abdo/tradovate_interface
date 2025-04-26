@@ -158,20 +158,33 @@ def execute_trade():
         symbol = data.get('symbol', 'NQ')
         quantity = data.get('quantity', 1)
         action = data.get('action', 'Buy')
-        tp_ticks = data.get('tp_ticks', 100)
-        sl_ticks = data.get('sl_ticks', 40)
         tick_size = data.get('tick_size', 0.25)
         account_index = data.get('account', 'all')
         
+        # Check TP/SL enable flags
+        enable_tp = data.get('enable_tp', True)
+        enable_sl = data.get('enable_sl', True)
+        
+        # Only get TP/SL values if they are enabled
+        tp_ticks = data.get('tp_ticks', 100) if enable_tp else 0
+        sl_ticks = data.get('sl_ticks', 40) if enable_sl else 0
+        
+        # Ensure tp_ticks and sl_ticks are integers
+        tp_ticks = int(tp_ticks) if tp_ticks else 0
+        sl_ticks = int(sl_ticks) if sl_ticks else 0
+        
+        print(f"Trade request: {symbol} {action} {quantity} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'}")
+        
         # Check if we should execute on all accounts or just one
         if account_index == 'all':
+            # We need to update auto_trade.js to respect tp_ticks=0 and sl_ticks=0 as disabled
             result = controller.execute_on_all(
                 'auto_trade', 
                 symbol, 
                 quantity, 
                 action, 
-                tp_ticks, 
-                sl_ticks, 
+                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
                 tick_size
             )
             
@@ -193,8 +206,8 @@ def execute_trade():
                 symbol, 
                 quantity, 
                 action, 
-                tp_ticks, 
-                sl_ticks, 
+                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
                 tick_size
             )
             
