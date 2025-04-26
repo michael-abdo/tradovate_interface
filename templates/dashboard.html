@@ -199,7 +199,7 @@
         <h1>Tradovate Account Dashboard</h1>
         
         <div class="refresh-info">
-            Last updated: <span id="last-update">-</span>
+            Last updated: <span id="last-update">-</span> (auto-refreshes every second)
             <button class="refresh-button" onclick="fetchAccountData()">Refresh Now</button>
         </div>
         
@@ -510,8 +510,8 @@
         // Initial fetch
         fetchAccountData();
         
-        // Set up periodic refresh (every 15 seconds)
-        setInterval(fetchAccountData, 15000);
+        // Set up periodic refresh (every 1 second)
+        setInterval(fetchAccountData, 1000);
     </script>
 </body>
 </html>
