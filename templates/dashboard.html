@@ -73,6 +73,20 @@
             color: #ffffff;
         }
         
+        .status-active {
+            color: #4cd964;
+            font-weight: bold;
+        }
+        
+        .status-inactive {
+            color: #ff9500;
+            font-style: italic;
+        }
+        
+        .status-unknown {
+            color: #999;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -246,7 +260,7 @@
         let accountData = [];
         
         // Default column order (first column is always Account)
-        let defaultColumnOrder = ['Account'];
+        let defaultColumnOrder = ['Account', 'Phase', 'Status'];
         
         // Current column order
         let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
@@ -403,6 +417,10 @@
                         } catch (e) {
                             tableHtml += `<td>${value}</td>`;
                         }
+                    } else if (column === 'Status') {
+                        // Apply special styling for Status column
+                        const statusClass = value ? `status-${value.toLowerCase()}` : 'status-unknown';
+                        tableHtml += `<td class="${statusClass}">${value || 'Unknown'}</td>`;
                     } else {
                         tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
                     }

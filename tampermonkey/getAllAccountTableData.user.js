@@ -70,6 +70,25 @@ function getAllAccountTableData() {
       }
     });
     
+    // Parse Status from Phase column and clean up Phase display
+    if (rowData['Phase']) {
+      // Extract status (active/inactive) from Phase text
+      const phaseText = rowData['Phase'].toString().toLowerCase();
+      if (phaseText.includes('active')) {
+        rowData['Status'] = phaseText.includes('inactive') ? 'Inactive' : 'Active';
+        
+        // Clean up Phase to show only the number
+        const phaseMatch = rowData['Phase'].match(/(\d+)/);
+        if (phaseMatch) {
+          rowData['Phase'] = phaseMatch[1];
+        }
+      } else {
+        rowData['Status'] = 'Unknown';
+      }
+    } else {
+      rowData['Status'] = 'Unknown';
+    }
+    
     return rowData;
   });
   
