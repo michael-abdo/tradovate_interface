@@ -236,6 +236,63 @@
             color: #ff9500;
         }
         
+        /* Filter controls */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 120px;
+        }
+        
+        .filter-group label {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #aaa;
+        }
+        
+        .filter-group select {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .filter-group select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(90, 200, 250, 0.4);
+        }
+        
+        .filter-controls button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+            align-self: flex-end;
+        }
+        
+        .filter-controls button:hover {
+            background-color: #666;
+        }
+        
+        .filtered-out {
+            display: none;
+        }
+        
         /* Drag indicator */
         th::after {
             content: '⋮';
@@ -269,6 +326,31 @@
         </div>
         
         <h2>Accounts</h2>
+        
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label for="platform-filter">Platform</label>
+                <select id="platform-filter" onchange="applyFilters()">
+                    <option value="all">All Platforms</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="phase-filter">Phase</label>
+                <select id="phase-filter" onchange="applyFilters()">
+                    <option value="all">All Phases</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="status-filter">Status</label>
+                <select id="status-filter" onchange="applyFilters()">
+                    <option value="all">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Unknown">Unknown</option>
+                </select>
+            </div>
+            <button onclick="resetFilters()">Reset Filters</button>
+        </div>
         
         <div class="column-controls">
             <div>
@@ -556,18 +638,191 @@
                 // Render the table with the current column order
                 renderTable(accountData);
                 
+                return accountData;
             } catch (error) {
                 console.error('Error fetching account data:', error);
                 document.getElementById('account-data').innerHTML = 
                     '<tr><td colspan="6" class="empty-state">Error loading account data</td></tr>';
+                return [];
             }
         }
         
-        // Initial fetch
-        fetchAccountData();
+        // Filter variables
+        let currentFilters = {
+            platform: 'all',
+            phase: 'all',
+            status: 'all'
+        };
+        
+        // Function to populate filter dropdowns with available options
+        function populateFilterOptions() {
+            // Get unique values for platform and phase
+            const platforms = new Set();
+            const phases = new Set();
+            
+            accountData.forEach(account => {
+                if (account['Platform']) platforms.add(account['Platform']);
+                if (account['Phase']) phases.add(account['Phase']);
+            });
+            
+            // Populate platform filter
+            const platformFilter = document.getElementById('platform-filter');
+            platformFilter.innerHTML = '<option value="all">All Platforms</option>';
+            [...platforms].sort().forEach(platform => {
+                const option = document.createElement('option');
+                option.value = platform;
+                option.textContent = platform;
+                platformFilter.appendChild(option);
+            });
+            
+            // Populate phase filter
+            const phaseFilter = document.getElementById('phase-filter');
+            phaseFilter.innerHTML = '<option value="all">All Phases</option>';
+            [...phases].sort((a, b) => {
+                // Sort numerically if they are numbers
+                const numA = parseInt(a);
+                const numB = parseInt(b);
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return numA - numB;
+                }
+                return String(a).localeCompare(String(b));
+            }).forEach(phase => {
+                const option = document.createElement('option');
+                option.value = phase;
+                option.textContent = phase;
+                phaseFilter.appendChild(option);
+            });
+            
+            // Set filters to current values
+            platformFilter.value = currentFilters.platform;
+            phaseFilter.value = currentFilters.phase;
+            document.getElementById('status-filter').value = currentFilters.status;
+        }
+        
+        // Function to apply filters
+        function applyFilters() {
+            // Get filter values
+            currentFilters.platform = document.getElementById('platform-filter').value;
+            currentFilters.phase = document.getElementById('phase-filter').value;
+            currentFilters.status = document.getElementById('status-filter').value;
+            
+            // Save filters to localStorage
+            localStorage.setItem('tradovate_dashboard_filters', JSON.stringify(currentFilters));
+            
+            // Apply filters to rows
+            const rows = document.querySelectorAll('#account-data tr.account-row');
+            
+            let visibleCount = 0;
+            let totalPnl = 0;
+            let totalMargin = 0;
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length === 0) return;
+                
+                const accountData = {};
+                columnOrder.forEach((column, index) => {
+                    if (index < cells.length) {
+                        accountData[column] = cells[index].textContent.trim();
+                    }
+                });
+                
+                // Check if this row passes all filters
+                const platformMatch = currentFilters.platform === 'all' || 
+                                     accountData['Platform'] === currentFilters.platform;
+                                     
+                const phaseMatch = currentFilters.phase === 'all' || 
+                                  accountData['Phase'] === currentFilters.phase;
+                                  
+                const statusMatch = currentFilters.status === 'all' || 
+                                   accountData['Status'] === currentFilters.status;
+                
+                const rowVisible = platformMatch && phaseMatch && statusMatch;
+                
+                // Show/hide the row
+                row.classList.toggle('filtered-out', !rowVisible);
+                
+                // Update statistics if visible
+                if (rowVisible) {
+                    visibleCount++;
+                    
+                    // Add to totals
+                    if (accountData['Total P&L']) {
+                        try {
+                            const pnlValue = parseFloat(accountData['Total P&L'].replace(/[$,]/g, ''));
+                            if (!isNaN(pnlValue)) {
+                                totalPnl += pnlValue;
+                            }
+                        } catch (e) {}
+                    }
+                    
+                    if (accountData['Available Margin']) {
+                        try {
+                            const marginValue = parseFloat(accountData['Available Margin'].replace(/[$,]/g, ''));
+                            if (!isNaN(marginValue)) {
+                                totalMargin += marginValue;
+                            }
+                        } catch (e) {}
+                    }
+                }
+            });
+            
+            // Update summary stats with filtered data
+            document.getElementById('account-count').textContent = visibleCount;
+            
+            const totalPnlEl = document.getElementById('total-pnl');
+            totalPnlEl.textContent = formatMoney(totalPnl);
+            totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
+            
+            document.getElementById('total-margin').textContent = formatMoney(totalMargin);
+        }
+        
+        // Function to reset filters
+        function resetFilters() {
+            // Reset filter values
+            document.getElementById('platform-filter').value = 'all';
+            document.getElementById('phase-filter').value = 'all';
+            document.getElementById('status-filter').value = 'all';
+            
+            // Clear saved filters
+            localStorage.removeItem('tradovate_dashboard_filters');
+            
+            // Apply the reset filters
+            currentFilters = {
+                platform: 'all',
+                phase: 'all',
+                status: 'all'
+            };
+            
+            applyFilters();
+        }
+        
+        // Load saved filters from localStorage
+        function loadSavedFilters() {
+            const savedFilters = localStorage.getItem('tradovate_dashboard_filters');
+            if (savedFilters) {
+                try {
+                    currentFilters = JSON.parse(savedFilters);
+                } catch (e) {
+                    console.error('Error parsing saved filters:', e);
+                }
+            }
+        }
+        
+        // Initial setup
+        loadSavedFilters();
+        fetchAccountData().then(() => {
+            populateFilterOptions();
+            applyFilters();
+        });
         
         // Set up periodic refresh (every 1 second)
-        setInterval(fetchAccountData, 1000);
+        setInterval(() => {
+            fetchAccountData().then(() => {
+                populateFilterOptions();
+                applyFilters();
+            });
+        }, 1000);
     </script>
 </body>
 </html>
