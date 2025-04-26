@@ -9,6 +9,7 @@ import json
 # Import from app.py
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import TradovateController
+from flask import request
 
 # Create Flask app
 app = Flask(__name__, 
@@ -146,6 +147,114 @@ def get_summary():
         'total_margin': total_margin,
         'account_count': len(accounts_data)
     })
+
+# API endpoint to execute trades
+@app.route('/api/trade', methods=['POST'])
+def execute_trade():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        symbol = data.get('symbol', 'NQ')
+        quantity = data.get('quantity', 1)
+        action = data.get('action', 'Buy')
+        tp_ticks = data.get('tp_ticks', 100)
+        sl_ticks = data.get('sl_ticks', 40)
+        tick_size = data.get('tick_size', 0.25)
+        account_index = data.get('account', 'all')
+        
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            result = controller.execute_on_all(
+                'auto_trade', 
+                symbol, 
+                quantity, 
+                action, 
+                tp_ticks, 
+                sl_ticks, 
+                tick_size
+            )
+            
+            # Count successful trades
+            accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'{action} trade executed on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': result
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            result = controller.execute_on_one(
+                account_index,
+                'auto_trade', 
+                symbol, 
+                quantity, 
+                action, 
+                tp_ticks, 
+                sl_ticks, 
+                tick_size
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'{action} trade executed on account {account_index}',
+                'accounts_affected': 1,
+                'details': result
+            })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+# API endpoint to exit positions or cancel orders
+@app.route('/api/exit', methods=['POST'])
+def exit_positions():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        symbol = data.get('symbol', 'NQ')
+        option = data.get('option', 'cancel-option-Exit-at-Mkt-Cxl')
+        account_index = data.get('account', 'all')
+        
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            result = controller.execute_on_all('exit_positions', symbol, option)
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Exit/cancel operation executed on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': result
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            result = controller.execute_on_one(
+                account_index,
+                'exit_positions', 
+                symbol, 
+                option
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Exit/cancel operation executed on account {account_index}',
+                'accounts_affected': 1,
+                'details': result
+            })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
 
 # Run the app
 def run_flask_dashboard():

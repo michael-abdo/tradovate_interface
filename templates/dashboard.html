@@ -293,6 +293,146 @@
             display: none;
         }
         
+        /* Trade Controls Styling */
+        .trade-controls {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .trade-controls-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+        
+        .trade-controls-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .input-group label {
+            font-size: 12px;
+            color: #aaaaaa;
+        }
+        
+        .trade-input {
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 8px 10px;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        .trade-input:focus {
+            outline: none;
+            border-color: #5ac8fa;
+            box-shadow: 0 0 0 2px rgba(90, 200, 250, 0.3);
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #5ac8fa;
+        }
+        
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .price-inputs input {
+            flex: 1;
+        }
+        
+        .trade-buttons {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .buy-button, .sell-button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .buy-button {
+            background-color: #4cd964;
+        }
+        
+        .buy-button:hover {
+            background-color: #34c759;
+        }
+        
+        .sell-button {
+            background-color: #ff3b30;
+        }
+        
+        .sell-button:hover {
+            background-color: #e02d1f;
+        }
+        
+        .cancel-button, .close-button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .cancel-button {
+            background-color: #ff9500;
+            color: #000;
+        }
+        
+        .cancel-button:hover {
+            background-color: #e07d00;
+        }
+        
+        .close-button {
+            background-color: #ff3b30;
+            color: white;
+        }
+        
+        .close-button:hover {
+            background-color: #e02d1f;
+        }
+        
+        /* Make symbol input stand out */
+        .symbol-input {
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
         /* Drag indicator */
         th::after {
             content: '⋮';
@@ -371,6 +511,64 @@
                 </tr>
             </tbody>
         </table>
+        
+        <h2>Trade Controls</h2>
+        
+        <div class="trade-controls">
+            <div class="trade-controls-row">
+                <div class="input-group">
+                    <label for="symbolInput">Symbol</label>
+                    <input type="text" id="symbolInput" placeholder="NQ" class="trade-input symbol-input">
+                </div>
+                <div class="input-group">
+                    <label for="qtyInput">Quantity</label>
+                    <input type="number" id="qtyInput" value="1" min="1" class="trade-input">
+                </div>
+                <div class="input-group">
+                    <label for="tickInput">Tick Size</label>
+                    <input type="number" id="tickInput" value="0.25" step="0.01" class="trade-input">
+                </div>
+            </div>
+            
+            <div class="trade-controls-row">
+                <div class="input-group">
+                    <div class="checkbox-label">
+                        <input type="checkbox" id="tpCheckbox" checked>
+                        <label for="tpCheckbox">Take Profit</label>
+                    </div>
+                    <div class="price-inputs">
+                        <input type="number" id="tpInput" value="100" class="trade-input" placeholder="TP Ticks">
+                        <input type="number" id="tpPriceInput" step="0.01" class="trade-input" placeholder="TP Price">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="checkbox-label">
+                        <input type="checkbox" id="slCheckbox" checked>
+                        <label for="slCheckbox">Stop Loss</label>
+                    </div>
+                    <div class="price-inputs">
+                        <input type="number" id="slInput" value="40" class="trade-input" placeholder="SL Ticks">
+                        <input type="number" id="slPriceInput" step="0.01" class="trade-input" placeholder="SL Price">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trade-controls-row">
+                <div class="input-group">
+                    <label for="entryPriceInput">Entry Price (optional)</label>
+                    <input type="number" id="entryPriceInput" step="0.01" class="trade-input" placeholder="Entry Price">
+                </div>
+                <div class="trade-buttons">
+                    <button id="buyBtn" class="buy-button">Buy</button>
+                    <button id="sellBtn" class="sell-button">Sell</button>
+                </div>
+            </div>
+            
+            <div class="trade-controls-row">
+                <button id="cancelAllBtn" class="cancel-button">Cancel All</button>
+                <button id="closeAllBtn" class="close-button">Close All Positions</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -823,6 +1021,181 @@
                 applyFilters();
             });
         }, 1000);
+        
+        // ---- Trade Controls Functionality ----
+        
+        // Load saved trade settings from localStorage
+        function loadTradeSettings() {
+            document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+            document.getElementById('qtyInput').value = localStorage.getItem('bracketTrade_qty') || '1';
+            document.getElementById('tpInput').value = localStorage.getItem('bracketTrade_tp') || '100';
+            document.getElementById('slInput').value = localStorage.getItem('bracketTrade_sl') || '40';
+            document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
+        }
+        
+        // Store trade settings in localStorage
+        function saveTradeSettings() {
+            localStorage.setItem('bracketTrade_symbol', document.getElementById('symbolInput').value);
+            localStorage.setItem('bracketTrade_qty', document.getElementById('qtyInput').value);
+            localStorage.setItem('bracketTrade_tp', document.getElementById('tpInput').value);
+            localStorage.setItem('bracketTrade_sl', document.getElementById('slInput').value);
+            localStorage.setItem('bracketTrade_tick', document.getElementById('tickInput').value);
+        }
+        
+        // Futures tick data dictionary with default SL/TP settings for each instrument
+        const futuresTickData = {
+            // Symbol: { tickSize, tickValue, defaultSL, defaultTP, precision }
+            MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+            NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+            ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },
+            RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },
+            YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },
+            CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },
+            GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },
+            MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }
+        };
+        
+        // Set up trade controls event handlers
+        function setupTradeControls() {
+            // Load saved settings
+            loadTradeSettings();
+            
+            // Symbol input change handler
+            document.getElementById('symbolInput').addEventListener('change', e => {
+                // Get root symbol (e.g., 'NQH5' -> 'NQ')
+                const symbolValue = e.target.value;
+                const rootSymbol = symbolValue.replace(/[A-Z]\d+$/, '');
+                
+                // Update defaults based on symbol if we have defined defaults
+                const symbolDefaults = futuresTickData[rootSymbol];
+                if (symbolDefaults) {
+                    document.getElementById('slInput').value = symbolDefaults.defaultSL;
+                    document.getElementById('tpInput').value = symbolDefaults.defaultTP;
+                    document.getElementById('tickInput').value = symbolDefaults.tickSize;
+                    
+                    // Save to localStorage
+                    saveTradeSettings();
+                }
+            });
+            
+            // SL input handler (auto-calculate TP as 3x SL)
+            document.getElementById('slInput').addEventListener('input', () => {
+                const slInput = document.getElementById('slInput');
+                const tpInput = document.getElementById('tpInput');
+                
+                const slVal = parseFloat(slInput.value);
+                if (!isNaN(slVal)) {
+                    tpInput.value = slVal * 3;
+                }
+                
+                saveTradeSettings();
+            });
+            
+            // Other input change handlers for saving to localStorage
+            ['tpInput', 'qtyInput', 'tickInput'].forEach(id => {
+                document.getElementById(id).addEventListener('input', saveTradeSettings);
+            });
+            
+            // Buy button handler
+            document.getElementById('buyBtn').addEventListener('click', () => {
+                executeTradeAction('Buy');
+            });
+            
+            // Sell button handler
+            document.getElementById('sellBtn').addEventListener('click', () => {
+                executeTradeAction('Sell');
+            });
+            
+            // Cancel All button handler
+            document.getElementById('cancelAllBtn').addEventListener('click', () => {
+                executeCancelAction('cancel-option-Cancel-All');
+            });
+            
+            // Close All button handler
+            document.getElementById('closeAllBtn').addEventListener('click', () => {
+                executeCancelAction('cancel-option-Exit-at-Mkt-Cxl');
+            });
+        }
+        
+        // Execute a trade action (Buy or Sell)
+        function executeTradeAction(action) {
+            const symbol = document.getElementById('symbolInput').value || 'NQ';
+            const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+            const tp = parseInt(document.getElementById('tpInput').value) || 100;
+            const sl = parseInt(document.getElementById('slInput').value) || 40;
+            const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
+            const entryPrice = document.getElementById('entryPriceInput').value || null;
+            
+            // Prepare the trade parameters
+            const tradeParams = {
+                symbol: symbol,
+                quantity: qty,
+                action: action,
+                tp_ticks: tp,
+                sl_ticks: sl,
+                tick_size: tickSize,
+                account: 'all' // Trade on all accounts
+            };
+            
+            // If entry price is specified, add it to the parameters
+            if (entryPrice) {
+                tradeParams.entry_price = entryPrice;
+            }
+            
+            // Send API request to execute the trade
+            fetch('/api/trade', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tradeParams)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Show success message
+                alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                
+                // Reset price inputs
+                document.getElementById('entryPriceInput').value = '';
+                document.getElementById('tpPriceInput').value = '';
+                document.getElementById('slPriceInput').value = '';
+            })
+            .catch(error => {
+                console.error('Error executing trade:', error);
+                alert('Error placing order. See console for details.');
+            });
+        }
+        
+        // Execute cancel or close action
+        function executeCancelAction(option) {
+            const symbol = document.getElementById('symbolInput').value || 'NQ';
+            
+            // Send API request to cancel or close positions
+            fetch('/api/exit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    symbol: symbol,
+                    option: option,
+                    account: 'all' // Apply to all accounts
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Show success message
+                const action = option.includes('Exit') ? 'closed' : 'canceled';
+                alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
+            })
+            .catch(error => {
+                console.error('Error executing cancel/close action:', error);
+                alert('Error canceling/closing orders. See console for details.');
+            });
+        }
+        
+        // Initialize trade controls
+        setupTradeControls();
     </script>
 </body>
 </html>
