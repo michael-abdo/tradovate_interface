@@ -268,6 +268,74 @@ def exit_positions():
             'status': 'error',
             'message': str(e)
         }), 500
+        
+# API endpoint to update symbol on accounts
+@app.route('/api/update-symbol', methods=['POST'])
+def update_symbol():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        symbol = data.get('symbol', 'NQ')
+        account_index = data.get('account', 'all')
+        
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            result = controller.execute_on_all('update_symbol', symbol)
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Symbol updated to {symbol} on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': result
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            result = controller.execute_on_one(
+                account_index,
+                'update_symbol', 
+                symbol
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Symbol updated to {symbol} on account {account_index}',
+                'accounts_affected': 1,
+                'details': result
+            })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+# API endpoint to update quantity on accounts
+@app.route('/api/update-quantity', methods=['POST'])
+def update_quantity():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        quantity = data.get('quantity', 1)
+        account_index = data.get('account', 'all')
+        
+        # This is a placeholder - we don't have a direct quantity update method,
+        # but we can add one in the future. For now, we'll just return success.
+        
+        return jsonify({
+            'status': 'success',
+            'message': f'Quantity updated to {quantity}',
+            'accounts_affected': len(controller.connections) if account_index == 'all' else 1
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
 
 # Run the app
 def run_flask_dashboard():

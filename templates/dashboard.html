@@ -1072,10 +1072,28 @@
                     document.getElementById('slInput').value = symbolDefaults.defaultSL;
                     document.getElementById('tpInput').value = symbolDefaults.defaultTP;
                     document.getElementById('tickInput').value = symbolDefaults.tickSize;
-                    
-                    // Save to localStorage
-                    saveTradeSettings();
                 }
+                
+                // Save to localStorage
+                saveTradeSettings();
+                
+                // Send updated symbol to all accounts in background
+                fetch('/api/update-symbol', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbolValue,
+                        account: 'all'
+                    })
+                }).then(response => response.json())
+                .then(result => {
+                    console.log("Symbol updated on connected accounts:", result);
+                })
+                .catch(error => {
+                    console.error("Error updating symbol:", error);
+                });
             });
             
             // SL input handler (auto-calculate TP as 3x SL)
@@ -1092,8 +1110,39 @@
             });
             
             // Other input change handlers for saving to localStorage
-            ['tpInput', 'qtyInput', 'tickInput'].forEach(id => {
+            ['tpInput', 'tickInput'].forEach(id => {
                 document.getElementById(id).addEventListener('input', saveTradeSettings);
+            });
+            
+            // Quantity input handler with shared update across accounts
+            document.getElementById('qtyInput').addEventListener('input', () => {
+                saveTradeSettings();
+                
+                // Optional: Update master quantity on all accounts if needed
+                // We won't send a request for every keystroke; better to wait for execute trade
+            });
+            
+            // When quantity input loses focus, update all accounts
+            document.getElementById('qtyInput').addEventListener('change', () => {
+                const quantity = document.getElementById('qtyInput').value;
+                
+                // Update quantity for all accounts
+                fetch('/api/update-quantity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        quantity: quantity,
+                        account: 'all'
+                    })
+                }).then(response => response.json())
+                .then(result => {
+                    console.log("Quantity updated on connected accounts:", result);
+                })
+                .catch(error => {
+                    console.error("Error updating quantity:", error);
+                });
             });
             
             // Buy button handler
