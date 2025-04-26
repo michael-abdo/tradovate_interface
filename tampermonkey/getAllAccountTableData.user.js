@@ -28,10 +28,26 @@ function getAllAccountTableData() {
   
   // Extract headers
   const headers = [...accountTable.querySelectorAll('[role="columnheader"]')];
-  const headerNames = headers.map(h => 
-    h.textContent.replace(/\s+/g, ' ').trim()
-  );
-  console.log("Headers:", headerNames);
+  const headerNames = headers.map(h => {
+    // Clean up header text and remove arrow symbols
+    let headerText = h.textContent.replace(/\s+/g, ' ').trim();
+    
+    // Remove arrow symbols (▲ or ▼)
+    headerText = headerText.replace(/[\u25b2\u25bc]/, '').trim();
+    
+    // Standardize common header names
+    const standardHeaders = {
+      'Account': 'Account',
+      'Dollar Open P L': 'Open P&L',
+      'Dist Drawdown Net Liq': 'Net Liquidation',
+      'Total Available Margin': 'Available Margin',
+      'User': 'Username',
+      'Dollar Total P L': 'Total P&L'
+    };
+    
+    return standardHeaders[headerText] || headerText;
+  });
+  console.log("Standardized Headers:", headerNames);
   
   // Extract rows
   const rows = [...accountTable.querySelectorAll('.public_fixedDataTable_bodyRow')];

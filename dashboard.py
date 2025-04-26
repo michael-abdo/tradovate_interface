@@ -121,27 +121,33 @@ def get_summary():
     total_margin = 0
     
     for account in accounts_data:
-        # Try to extract P&L
-        if 'Dollar Total P L' in account:
-            val = account['Dollar Total P L']
-            if isinstance(val, (int, float)):
-                total_pnl += val
-            elif isinstance(val, str):
-                try:
-                    total_pnl += float(val.replace('$', '').replace(',', ''))
-                except (ValueError, TypeError):
-                    pass
+        # Try to extract P&L (check both original and standardized names)
+        pnl_fields = ['Total P&L', 'Dollar Total P L']
+        for field in pnl_fields:
+            if field in account:
+                val = account[field]
+                if isinstance(val, (int, float)):
+                    total_pnl += val
+                elif isinstance(val, str):
+                    try:
+                        total_pnl += float(val.replace('$', '').replace(',', ''))
+                    except (ValueError, TypeError):
+                        pass
+                break
                     
-        # Try to extract margin
-        if 'Total Available Margin' in account:
-            val = account['Total Available Margin']
-            if isinstance(val, (int, float)):
-                total_margin += val
-            elif isinstance(val, str):
-                try:
-                    total_margin += float(val.replace('$', '').replace(',', ''))
-                except (ValueError, TypeError):
-                    pass
+        # Try to extract margin (check both original and standardized names)
+        margin_fields = ['Available Margin', 'Total Available Margin']
+        for field in margin_fields:
+            if field in account:
+                val = account[field]
+                if isinstance(val, (int, float)):
+                    total_margin += val
+                elif isinstance(val, str):
+                    try:
+                        total_margin += float(val.replace('$', '').replace(',', ''))
+                    except (ValueError, TypeError):
+                        pass
+                break
     
     return jsonify({
         'total_pnl': total_pnl,

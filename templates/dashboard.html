@@ -219,14 +219,14 @@
                 
                 // Get all unique headers
                 const headers = Object.keys(data[0]).filter(key => 
-                    key !== 'account_name' && key !== 'account_index'
+                    // Filter out account identifiers and duplicate Account column
+                    key !== 'account_name' && key !== 'account_index' && key !== 'Account' && key !== 'Account ▲'
                 );
                 
                 // Create table header
                 let headerHtml = '<tr>';
-                headerHtml += '<th>Account</th>';
+                headerHtml += '<th>Account</th>'; // Just one Account column
                 headers.forEach(header => {
-                    // Don't display account_name and account_index as they're handled separately
                     headerHtml += `<th>${header}</th>`;
                 });
                 headerHtml += '</tr>';
@@ -240,11 +240,11 @@
                 data.forEach((account, index) => {
                     tableHtml += '<tr class="account-row">';
                     
-                    // Account name/ID
-                    const accountName = account["Account ▲"] || `Account ${index + 1}`;
+                    // Account name/ID (check both standardized and original headers)
+                    let accountName = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
                     tableHtml += `<td><strong>${accountName}</strong></td>`;
                     
-                    // All other data columns
+                    // All other data columns (skipping Account column as we already displayed it)
                     headers.forEach(header => {
                         const value = account[header];
                         
@@ -257,17 +257,19 @@
                                     parseFloat(value.replace(/[$,]/g, ''));
                                 
                                 // Add to totals for certain fields
-                                if (header === 'Dollar Total P L' || header === 'Dollar Open P L') {
+                                if (header === 'Total P&L' || header === 'Open P&L' || 
+                                    header === 'Dollar Total P L' || header === 'Dollar Open P L') {
                                     totalPnl += numVal || 0;
                                 }
                                 
-                                if (header === 'Total Available Margin') {
+                                if (header === 'Available Margin' || header === 'Total Available Margin') {
                                     totalMargin += numVal || 0;
                                 }
                                 
                                 // Determine class for P&L values
                                 let className = '';
-                                if (header === 'Dollar Total P L' || header === 'Dollar Open P L') {
+                                if (header === 'Total P&L' || header === 'Open P&L' || 
+                                    header === 'Dollar Total P L' || header === 'Dollar Open P L') {
                                     className = numVal >= 0 ? 'positive' : 'negative';
                                 }
                                 
@@ -276,7 +278,7 @@
                                 tableHtml += `<td>${value}</td>`;
                             }
                         } else {
-                            tableHtml += `<td>${value}</td>`;
+                            tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
                         }
                     });
                     
