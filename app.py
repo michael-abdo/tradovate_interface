@@ -305,7 +305,7 @@ def main():
             dashboard_thread = threading.Thread(target=run_flask_dashboard)
             dashboard_thread.daemon = True
             dashboard_thread.start()
-            print("Dashboard running at http://localhost:5000")
+            print("Dashboard running at http://localhost:6001")
             print("Press Ctrl+C to stop")
             
             # Keep the main thread alive

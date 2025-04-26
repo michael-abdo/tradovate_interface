@@ -117,10 +117,10 @@ def get_summary():
 # Run the app
 def run_flask_dashboard():
     inject_account_data_function()
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=6001)
 
 if __name__ == '__main__':
     # Start the Flask server
     inject_account_data_function()
-    app.run(host='0.0.0.0', port=5000, debug=True)
-    print("Dashboard running at http://localhost:5000")
+    app.run(host='0.0.0.0', port=6001, debug=True)
+    print("Dashboard running at http://localhost:6001")
