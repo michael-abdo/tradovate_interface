@@ -98,6 +98,16 @@ def get_accounts():
                             # Ensure we have both User and Phase fields (Phase is the renamed User field)
                             if 'User' in item and 'Phase' not in item:
                                 item['Phase'] = item['User']
+                                
+                            # Standardize Account field - ensure there's only one Account field
+                            # and remove any with arrows
+                            if 'Account ▲' in item:
+                                account_value = item['Account ▲']
+                                # Remove the old key and add standardized one
+                                item.pop('Account ▲', None)
+                                # Make sure we don't create duplicate Account fields
+                                if 'Account' not in item:
+                                    item['Account'] = account_value
                         
                         account_data.extend(tab_data)
                         print(f"Added {len(tab_data)} items from {conn.account_name}")

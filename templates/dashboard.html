@@ -304,8 +304,20 @@
             
             // Get all available column names from the data
             const availableColumns = Object.keys(data[0]).filter(key => 
-                key !== 'account_name' && key !== 'account_index' && key !== 'Account ▲'
+                key !== 'account_name' && key !== 'account_index' && 
+                key !== 'Account ▲' && key !== 'Account'
             );
+            
+            // Fix any duplicate Account columns in saved column order
+            if (columnOrder.filter(col => col === 'Account').length > 1) {
+                // Remove all Account entries and add just one at the beginning
+                columnOrder = columnOrder.filter(col => col !== 'Account');
+                columnOrder.unshift('Account');
+                
+                // Save the fixed column order
+                saveColumnOrder();
+                console.log('Fixed duplicate Account columns in saved order');
+            }
             
             // Update default column order with all available columns (for first time use)
             if (defaultColumnOrder.length === 1) {
@@ -314,15 +326,24 @@
             
             // Add any new columns to the column order
             availableColumns.forEach(column => {
-                if (!columnOrder.includes(column) && column !== 'Account') {
+                if (!columnOrder.includes(column)) {
                     columnOrder.push(column);
                 }
             });
             
-            // Remove any columns that no longer exist
+            // Remove any columns that no longer exist (except Account)
             columnOrder = columnOrder.filter(column => 
                 column === 'Account' || availableColumns.includes(column)
             );
+            
+            // Ensure there's only one Account column and it's first
+            if (!columnOrder.includes('Account')) {
+                columnOrder.unshift('Account');
+            } else if (columnOrder.indexOf('Account') !== 0) {
+                // If Account exists but isn't first, move it to first position
+                columnOrder = columnOrder.filter(col => col !== 'Account');
+                columnOrder.unshift('Account');
+            }
             
             // Create table header
             let headerHtml = '<tr>';
@@ -347,6 +368,7 @@
                 columnOrder.forEach(column => {
                     // Special handling for the Account column
                     if (column === 'Account') {
+                        // Get account name from any available account field
                         let accountName = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
                         tableHtml += `<td><strong>${accountName}</strong></td>`;
                         return;
