@@ -168,11 +168,16 @@
         }
         
         tbody tr {
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, opacity 0.3s;
         }
         
         tbody tr:hover {
             background-color: #3a3a3a;
+        }
+        
+        /* Add transitions to make updates less jarring */
+        #table-header, th, td, .stat-value {
+            transition: opacity 0.3s, background-color 0.2s;
         }
         
         .refresh-info {
@@ -284,6 +289,7 @@
             
             /* Strategy controls for mobile */
             .strategy-controls {
+                display: none;
                 padding: 10px;
                 gap: 5px;
             }
@@ -540,7 +546,7 @@
             padding: 15px;
             margin: 15px 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            display: flex;
+            display: none;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
@@ -690,6 +696,34 @@
             content: '⋮';
             margin-left: 5px;
             color: #666;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #5ac8fa;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .loading-spinner::after {
+            content: 'Loading...';
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+            width: 100px;
+            text-align: center;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -885,20 +919,25 @@
                 return;
             }
             
+            // Remember the current scroll position
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // STEP 1: First calculate and stabilize the column order before making any DOM changes
+            
             // Get all available column names from the data
             const availableColumns = Object.keys(data[0]).filter(key => 
                 key !== 'account_name' && key !== 'account_index' && 
                 key !== 'Account ▲' && key !== 'Account'
             );
             
+            // Create a copy of the current column order to avoid mutating it until we're sure
+            let newColumnOrder = [...columnOrder];
+            
             // Fix any duplicate Account columns in saved column order
-            if (columnOrder.filter(col => col === 'Account').length > 1) {
+            if (newColumnOrder.filter(col => col === 'Account').length > 1) {
                 // Remove all Account entries and add just one at the beginning
-                columnOrder = columnOrder.filter(col => col !== 'Account');
-                columnOrder.unshift('Account');
-                
-                // Save the fixed column order
-                saveColumnOrder();
+                newColumnOrder = newColumnOrder.filter(col => col !== 'Account');
+                newColumnOrder.unshift('Account');
             }
             
             // Update default column order with all available columns (for first time use)
@@ -908,8 +947,8 @@
             
             // Add any new columns to the column order
             availableColumns.forEach(column => {
-                if (!columnOrder.includes(column)) {
-                    columnOrder.push(column);
+                if (!newColumnOrder.includes(column)) {
+                    newColumnOrder.push(column);
                 }
             });
             
@@ -917,60 +956,128 @@
             const specialColumns = ['Account', 'Strategy'];
             
             // Remove any columns that no longer exist (except special columns)
-            columnOrder = columnOrder.filter(column => 
+            newColumnOrder = newColumnOrder.filter(column => 
                 specialColumns.includes(column) || availableColumns.includes(column)
             );
             
             // Ensure there's only one Account column and it's first
-            if (!columnOrder.includes('Account')) {
-                columnOrder.unshift('Account');
-            } else if (columnOrder.indexOf('Account') !== 0) {
+            if (!newColumnOrder.includes('Account')) {
+                newColumnOrder.unshift('Account');
+            } else if (newColumnOrder.indexOf('Account') !== 0) {
                 // If Account exists but isn't first, move it to first position
-                columnOrder = columnOrder.filter(col => col !== 'Account');
-                columnOrder.unshift('Account');
+                newColumnOrder = newColumnOrder.filter(col => col !== 'Account');
+                newColumnOrder.unshift('Account');
             }
             
             // Ensure Strategy column is included
-            if (!columnOrder.includes('Strategy')) {
+            if (!newColumnOrder.includes('Strategy')) {
                 // Add Strategy after Status if present, otherwise after Account
-                const statusIndex = columnOrder.indexOf('Status');
+                const statusIndex = newColumnOrder.indexOf('Status');
                 if (statusIndex !== -1) {
-                    columnOrder.splice(statusIndex + 1, 0, 'Strategy');
+                    newColumnOrder.splice(statusIndex + 1, 0, 'Strategy');
                 } else {
-                    columnOrder.splice(1, 0, 'Strategy');
+                    newColumnOrder.splice(1, 0, 'Strategy');
                 }
             }
             
-            // Create table header
+            // Now that we have the final column order, update the global variable
+            // but only if it has actually changed
+            let columnOrderChanged = false;
+            if (JSON.stringify(columnOrder) !== JSON.stringify(newColumnOrder)) {
+                columnOrder = newColumnOrder;
+                saveColumnOrder();
+                columnOrderChanged = true;
+            }
+            
+            // STEP 2: Now we can deal with the DOM with a stable column order
+            
+            // First, remove any loading rows to ensure they don't persist
+            const loadingRows = tableBody.querySelectorAll('td.loading');
+            if (loadingRows.length > 0 || columnOrderChanged) {
+                // If we have loading rows or column order has changed,
+                // clear the entire table body before adding new content
+                tableBody.innerHTML = '';
+            }
+            
+            // Check if header has changed (different columns or order)
+            const currentHeader = tableHeader.innerHTML;
             let headerHtml = '<tr>';
             columnOrder.forEach(column => {
                 headerHtml += `<th data-column="${column}" draggable="true">${column}</th>`;
             });
             headerHtml += '</tr>';
-            tableHeader.innerHTML = headerHtml;
             
-            // Set up drag and drop for column reordering
-            setupColumnDragAndDrop();
+            // Only update header if it changed to avoid flashing
+            if (headerHtml !== currentHeader) {
+                // Use opacity transition for smoother update
+                tableHeader.style.opacity = '0.3';
+                tableHeader.innerHTML = headerHtml;
+                
+                // Restore opacity after a small delay
+                setTimeout(() => {
+                    tableHeader.style.opacity = '1';
+                    // Set up drag and drop for column reordering
+                    setupColumnDragAndDrop();
+                }, 50);
+            }
             
-            // Create table rows
-            let tableHtml = '';
+            // Store current accounts and their values for comparison
+            const currentAccountRows = {};
+            const currentRows = tableBody.querySelectorAll('.account-row');
+            currentRows.forEach(row => {
+                const accountCell = row.querySelector('td:first-child strong');
+                if (accountCell) {
+                    const accountId = accountCell.textContent;
+                    currentAccountRows[accountId] = row;
+                }
+            });
+            
+            // Create a document fragment to build the new rows
+            const fragment = document.createDocumentFragment();
+            
+            // Variables for summary stats
             let totalPnl = 0;
             let totalMargin = 0;
             
+            // Track which rows were updated
+            const updatedAccountIds = new Set();
+            
+            // Build new rows
             data.forEach((account, index) => {
-                tableHtml += '<tr class="account-row">';
+                // Get account identifier
+                const accountId = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
+                updatedAccountIds.add(accountId);
                 
-                // Render cells in the current column order
-                columnOrder.forEach(column => {
-                    // Special handling for the Account column
-                    if (column === 'Account') {
-                        // Get account name from any available account field
-                        let accountName = account["Account"] || account["Account ▲"] || `Account ${index + 1}`;
-                        tableHtml += `<td><strong>${accountName}</strong></td>`;
-                        return;
+                // Check if this account already exists in the table
+                const existingRow = currentAccountRows[accountId];
+                let row;
+                
+                if (existingRow) {
+                    // Reuse existing row
+                    row = existingRow;
+                    // Clear existing cells (except the first one)
+                    while (row.children.length > 1) {
+                        row.removeChild(row.lastChild);
                     }
+                } else {
+                    // Create new row
+                    row = document.createElement('tr');
+                    row.className = 'account-row';
+                    
+                    // Add account cell
+                    const accountCell = document.createElement('td');
+                    const accountStrong = document.createElement('strong');
+                    accountStrong.textContent = accountId;
+                    accountCell.appendChild(accountStrong);
+                    row.appendChild(accountCell);
+                }
+                
+                // Add or update cells for each column (skip 'Account' as we already handled it)
+                columnOrder.forEach((column, colIndex) => {
+                    if (column === 'Account') return; // Skip Account column
                     
                     const value = account[column];
+                    const cell = document.createElement('td');
                     
                     // Format numbers as currency if they look like money values
                     if (typeof value === 'number' || (typeof value === 'string' && value.includes('$'))) {
@@ -991,58 +1098,140 @@
                             }
                             
                             // Determine class for P&L values
-                            let className = '';
                             if (column === 'Total P&L' || column === 'Open P&L' || 
                                 column === 'Dollar Total P L' || column === 'Dollar Open P L') {
-                                className = numVal >= 0 ? 'positive' : 'negative';
+                                cell.className = numVal >= 0 ? 'positive' : 'negative';
                             }
                             
-                            tableHtml += `<td class="${className}">${formatMoney(numVal)}</td>`;
+                            cell.textContent = formatMoney(numVal);
                         } catch (e) {
-                            tableHtml += `<td>${value}</td>`;
+                            cell.textContent = value || '';
                         }
                     } else if (column === 'Status') {
                         // Apply special styling for Status column
-                        const statusClass = value ? `status-${value.toLowerCase()}` : 'status-unknown';
-                        tableHtml += `<td class="${statusClass}">${value || 'Unknown'}</td>`;
+                        cell.className = value ? `status-${value.toLowerCase()}` : 'status-unknown';
+                        cell.textContent = value || 'Unknown';
                     } else if (column === 'Platform') {
                         // Apply special styling for Platform column
-                        const platformClass = value ? `platform-${value.toLowerCase()}` : 'platform-unknown';
-                        tableHtml += `<td class="${platformClass}">${value || 'Unknown'}</td>`;
+                        cell.className = value ? `platform-${value.toLowerCase()}` : 'platform-unknown';
+                        cell.textContent = value || 'Unknown';
                     } else if (column === 'Strategy') {
-                        // Create multi-select dropdown for strategy selection
-                        const accountId = account["Account"];
-                        tableHtml += `<td class="strategy-cell">
-                            <select class="strategy-select" data-account="${accountId}">
-                                ${strategies.map(strategy => 
-                                    `<option value="${strategy}" ${strategyMappings[strategy]?.includes(accountId) ? 'selected' : ''}>${strategy}</option>`
-                                ).join('')}
-                            </select>
-                        </td>`;
+                        // Create strategy select
+                        cell.className = 'strategy-cell';
+                        
+                        const select = document.createElement('select');
+                        select.className = 'strategy-select';
+                        select.setAttribute('data-account', account["Account"]);
+                        
+                        // Add empty option
+                        const emptyOption = document.createElement('option');
+                        emptyOption.value = '';
+                        emptyOption.textContent = '-- Select --';
+                        select.appendChild(emptyOption);
+                        
+                        // Add options for each strategy
+                        strategies.forEach(strategy => {
+                            const option = document.createElement('option');
+                            option.value = strategy;
+                            option.textContent = strategy;
+                            
+                            // Select this option if account is mapped to this strategy
+                            if (strategyMappings[strategy] && strategyMappings[strategy].includes(account["Account"])) {
+                                option.selected = true;
+                            }
+                            
+                            select.appendChild(option);
+                        });
+                        
+                        cell.appendChild(select);
                     } else {
-                        tableHtml += `<td>${value || 'Unknown'}</td>`; // Show 'Unknown' for empty values
+                        cell.textContent = value || 'Unknown';
                     }
+                    
+                    row.appendChild(cell);
                 });
                 
-                tableHtml += '</tr>';
+                // If this is a new row, add it to the fragment
+                if (!existingRow) {
+                    fragment.appendChild(row);
+                }
             });
             
-            tableBody.innerHTML = tableHtml;
+            // Remove rows for accounts that no longer exist
+            const rowsToRemove = [];
+            currentRows.forEach(row => {
+                const accountCell = row.querySelector('td:first-child strong');
+                if (accountCell && !updatedAccountIds.has(accountCell.textContent)) {
+                    rowsToRemove.push(row);
+                }
+            });
             
-            // Update summary stats
-            document.getElementById('account-count').textContent = data.length;
+            rowsToRemove.forEach(row => row.remove());
             
+            // Add new rows to the table
+            // Check if there are any non-account rows (like loading) and remove them
+            Array.from(tableBody.children).forEach(child => {
+                if (!child.classList.contains('account-row')) {
+                    child.remove();
+                }
+            });
+            
+            // Now append the new rows
+            tableBody.appendChild(fragment);
+            
+            // Update summary stats with smooth transitions
+            updateSummaryStats(data.length, totalPnl, totalMargin);
+            
+            // Maintain scroll position after update
+            window.scrollTo(0, scrollTop);
+            
+            // Make refresh button visible
+            document.querySelector('.refresh-button').parentElement.style.display = 'block';
+        }
+        
+        // Update summary stats with smooth transitions
+        function updateSummaryStats(accountCount, totalPnl, totalMargin) {
+            // Update account count with animated transition
+            const countEl = document.getElementById('account-count');
+            const oldCount = parseInt(countEl.textContent) || 0;
+            
+            if (oldCount !== accountCount) {
+                countEl.style.transition = 'opacity 0.3s';
+                countEl.style.opacity = '0.5';
+                countEl.textContent = accountCount;
+                
+                setTimeout(() => {
+                    countEl.style.opacity = '1';
+                }, 200);
+            }
+            
+            // Update total P&L with animated transition
             const totalPnlEl = document.getElementById('total-pnl');
-            totalPnlEl.textContent = formatMoney(totalPnl);
-            totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
+            const currentPnl = parseFloat(totalPnlEl.textContent.replace(/[$,]/g, '')) || 0;
             
-            document.getElementById('total-margin').textContent = formatMoney(totalMargin);
+            if (Math.abs(currentPnl - totalPnl) > 0.01) {
+                totalPnlEl.style.transition = 'opacity 0.3s';
+                totalPnlEl.style.opacity = '0.5';
+                totalPnlEl.textContent = formatMoney(totalPnl);
+                totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
+                
+                setTimeout(() => {
+                    totalPnlEl.style.opacity = '1';
+                }, 200);
+            }
             
-            // We removed last-update element, so this line should be removed
+            // Update total margin with animated transition
+            const totalMarginEl = document.getElementById('total-margin');
+            const currentMargin = parseFloat(totalMarginEl.textContent.replace(/[$,]/g, '')) || 0;
             
-            // Update strategy dropdowns if strategies are loaded
-            if (strategies && strategies.length > 0) {
-                updateStrategySelects();
+            if (Math.abs(currentMargin - totalMargin) > 0.01) {
+                totalMarginEl.style.transition = 'opacity 0.3s';
+                totalMarginEl.style.opacity = '0.5';
+                totalMarginEl.textContent = formatMoney(totalMargin);
+                
+                setTimeout(() => {
+                    totalMarginEl.style.opacity = '1';
+                }, 200);
             }
         }
         
@@ -1118,12 +1307,39 @@
             const tableTop = table.getBoundingClientRect().top + scrollTop;
             const scrollPosition = scrollTop - tableTop;
             
-            try {
-                // Show loading state but preserve existing rows to maintain height
-                const currentTableHeight = table.offsetHeight;
-                document.getElementById('account-data').innerHTML = 
-                    `<tr><td colspan="8" class="loading" style="height: ${currentTableHeight}px">Loading account data...</td></tr>`;
+            // Add loading indication without replacing the entire table
+            // by adding a semi-transparent overlay
+            let loadingOverlay = document.getElementById('loading-overlay');
+            if (!loadingOverlay) {
+                loadingOverlay = document.createElement('div');
+                loadingOverlay.id = 'loading-overlay';
+                //loadingOverlay.innerHTML = '<div class="loading-spinner">Loading...</div>';
+                loadingOverlay.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(46, 46, 46, 0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10;
+                    border-radius: 5px;
+                `;
                 
+                // Add the overlay as a positioned parent if table isn't already
+                const tableParent = table.parentElement;
+                if (getComputedStyle(tableParent).position === 'static') {
+                    tableParent.style.position = 'relative';
+                }
+                
+                tableParent.appendChild(loadingOverlay);
+            } else {
+                loadingOverlay.style.display = 'flex';
+            }
+            
+            try {
                 const response = await fetch('/api/accounts');
                 if (!response.ok) {
                     throw new Error(`Server returned ${response.status}: ${response.statusText}`);
@@ -1138,6 +1354,11 @@
                 
                 // Render the table with the current column order
                 renderTable(accountData);
+                
+                // Hide the loading overlay
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = 'none';
+                }
                 
                 // Restore scroll position after rendering
                 setTimeout(() => {
@@ -1163,6 +1384,11 @@
                 
                 document.getElementById('account-data').innerHTML = 
                     `<tr><td colspan="8" class="empty-state">${errorMessage}</td></tr>`;
+                    
+                // Hide the loading overlay
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = 'none';
+                }
                     
                 // Clear existing data to avoid showing stale data
                 return [];
