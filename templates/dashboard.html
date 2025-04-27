@@ -899,14 +899,37 @@
         function formatMoney(amount) {
             if (typeof amount !== 'number') {
                 try {
-                    amount = parseFloat(amount.toString().replace(/[$,]/g, ''));
+                    // Check if the amount is in parentheses format like ($650.52)
+                    const isParenthesis = typeof amount === 'string' && 
+                        amount.includes('(') && amount.includes(')');
+                    
+                    // Handle NaN values displayed as string
+                    if (amount === 'NaN' || amount === '$NaN') {
+                        return '$0.00';
+                    }
+                    
+                    // Remove $ , ( ) characters to get the pure number
+                    amount = parseFloat(amount.toString().replace(/[$,()]/g, ''));
+                    
+                    // Make it negative if it was in parentheses
+                    if (isParenthesis) {
+                        amount = -Math.abs(amount);
+                    }
+                    
                     if (isNaN(amount)) return '$0.00';
                 } catch (e) {
+                    console.error('Error parsing money value:', e);
                     return '$0.00';
                 }
             }
             
-            return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            // Format positive amounts normally, negative amounts with the minus sign
+            if (amount >= 0) {
+                return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            } else {
+                // Convert negative value to positive for formatting, then add the negative sign
+                return '-$' + Math.abs(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
         }
         
         // Function to render the table with the current column order
@@ -1083,9 +1106,14 @@
                     if (typeof value === 'number' || (typeof value === 'string' && value.includes('$'))) {
                         // Try to parse it as a number
                         try {
+                            // Check if value is in parentheses format
+                            const isParenthesis = typeof value === 'string' && 
+                                value.includes('(') && value.includes(')');
+                            
+                            // Parse numeric value, handling both standard and parenthesized negative values
                             const numVal = typeof value === 'number' ? 
                                 value : 
-                                parseFloat(value.replace(/[$,]/g, ''));
+                                parseFloat(value.replace(/[$,()]/g, '')) * (isParenthesis ? -1 : 1);
                             
                             // Add to totals for certain fields
                             if (column === 'Total P&L' || column === 'Open P&L' || 
@@ -1504,9 +1532,16 @@
                     // Add to totals
                     if (accountData['Total P&L']) {
                         try {
-                            const pnlValue = parseFloat(accountData['Total P&L'].replace(/[$,]/g, ''));
-                            if (!isNaN(pnlValue)) {
-                                totalPnl += pnlValue;
+                            // Check if value is in parentheses format
+                            const pnlValue = accountData['Total P&L'];
+                            const isParenthesis = typeof pnlValue === 'string' && 
+                                pnlValue.includes('(') && pnlValue.includes(')');
+                                
+                            // Parse value considering parentheses notation
+                            const parsedPnlValue = parseFloat(pnlValue.replace(/[$,()]/g, '')) * 
+                                (isParenthesis ? -1 : 1);
+                            if (!isNaN(parsedPnlValue)) {
+                                totalPnl += parsedPnlValue;
                             }
                         } catch (e) {}
                     }
@@ -1709,26 +1744,97 @@
                 // We won't send a request for every keystroke; better to wait for execute trade
             });
             
-            // When quantity input loses focus, update all accounts
-            document.getElementById('qtyInput').addEventListener('change', () => {
-                const quantity = document.getElementById('qtyInput').value;
+            // Debouncing function to prevent too many rapid updates
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+            
+            // When any trade control is changed, update all Chrome UIs
+            // Create the actual update function
+            function _updateAllTradeControls() {
+                console.log("Executing synchronized update to all Chrome windows");
                 
-                // Update quantity for all accounts
-                fetch('/api/update-quantity', {
+                // Collect all trade control values 
+                const tradeControls = {
+                    symbol: document.getElementById('symbolInput').value,
+                    quantity: document.getElementById('qtyInput').value,
+                    tp_ticks: document.getElementById('tpInput').value,
+                    sl_ticks: document.getElementById('slInput').value,
+                    tick_size: document.getElementById('tickInput').value,
+                    account: 'all'
+                };
+                
+                // Include additional fields if they have values
+                const tpCheckbox = document.getElementById('tpCheckbox');
+                const slCheckbox = document.getElementById('slCheckbox');
+                const tpPriceInput = document.getElementById('tpPriceInput');
+                const slPriceInput = document.getElementById('slPriceInput');
+                const entryPriceInput = document.getElementById('entryPriceInput');
+                
+                // Add checkbox states
+                tradeControls.enable_tp = tpCheckbox.checked;
+                tradeControls.enable_sl = slCheckbox.checked;
+                
+                // Add price values if they exist
+                if (tpPriceInput.value) tradeControls.tp_price = tpPriceInput.value;
+                if (slPriceInput.value) tradeControls.sl_price = slPriceInput.value;
+                if (entryPriceInput.value) tradeControls.entry_price = entryPriceInput.value;
+                
+                // Update all Chrome UIs with the current trade control values
+                fetch('/api/update-trade-controls', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        quantity: quantity,
-                        account: 'all'
-                    })
+                    body: JSON.stringify(tradeControls)
                 }).then(response => response.json())
                 .then(result => {
-                    console.log("Quantity updated on connected accounts:", result);
+                    console.log("Trade controls updated on connected accounts:", result);
                 })
                 .catch(error => {
-                    console.error("Error updating quantity:", error);
+                    console.error("Error updating trade controls:", error);
+                });
+            }
+            
+            // Create a debounced version that limits updates to once every 100ms
+            // This prevents flooding the server with updates during fast typing
+            const updateAllTradeControls = debounce(_updateAllTradeControls, 100);
+            
+            // Real-time synchronization: update Chrome UI immediately on any input change
+            // Set up both input and change listeners for text/number inputs
+            [
+                'symbolInput', 'qtyInput', 'tickInput', 
+                'tpInput', 'slInput', 'tpPriceInput', 'slPriceInput', 'entryPriceInput'
+            ].forEach(id => {
+                const element = document.getElementById(id);
+                
+                // Add input event for real-time updates as you type
+                element.addEventListener('input', function() {
+                    console.log(`Input changed in ${id}: ${this.value}`);
+                    updateAllTradeControls();
+                });
+                
+                // Keep change event for when focus leaves the field as a fallback
+                element.addEventListener('change', function() {
+                    console.log(`Change event in ${id}: ${this.value}`);
+                    updateAllTradeControls();
+                });
+            });
+            
+            // Checkboxes with click event
+            ['tpCheckbox', 'slCheckbox'].forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener('click', function() {
+                    console.log(`Checkbox ${id} clicked: ${this.checked}`);
+                    updateAllTradeControls();
                 });
             });
             

@@ -142,11 +142,15 @@ def process_trading_signal(data):
     # Extract the data from the webhook payload
     symbol = data.get("symbol", "")
     
-    # Remove exclamation points from the symbol if present (e.g., "NQ!" -> "NQ")
-    if symbol and '!' in symbol:
+    # Clean the symbol by removing numeric suffixes and exclamation points (e.g., "NQ1!" -> "NQ")
+    if symbol:
         original_symbol = symbol
+        # First remove any trailing exclamation point
         symbol = symbol.replace('!', '')
-        print(f"Symbol cleaning: Removed exclamation point from '{original_symbol}' -> '{symbol}'")
+        # Then remove any numeric suffixes (like NQ1, ES2, etc.)
+        symbol = re.sub(r'(\D+)\d+$', r'\1', symbol)
+        if original_symbol != symbol:
+            print(f"Symbol cleaning: Transformed '{original_symbol}' -> '{symbol}'")
     
     action = data.get("action", "Buy")  # Buy or Sell
     order_qty = int(data.get("orderQty", 1))
@@ -163,9 +167,9 @@ def process_trading_signal(data):
     target_account_indices = get_target_accounts_for_strategy(strategy)
     print(f"Target accounts for strategy {strategy}: {target_account_indices}")
     
-    # If this is a Close signal, use exit_positions
+    # If this is a Close signal, use closeAll
     if trade_type == "Close":
-        print(f"🔴 Closing positions for {symbol}")
+        print(f"🔴 Closing all positions for {symbol}")
         
         # First update the UI symbol in each browser tab before closing positions
         print(f"🔄 Updating UI symbol to {symbol} in all targeted accounts")
@@ -182,12 +186,13 @@ def process_trading_signal(data):
         # Execute on each targeted account
         for account_index in target_account_indices:
             if account_index < len(controller.connections):
-                result = controller.execute_on_one(account_index, 'exit_positions', symbol)
+                # Use closeAll instead of exit_positions for Close trade type
+                result = controller.execute_on_one(account_index, 'closeAll', symbol)
                 results.append(result)
         
-        print(f"Close results: {results}")
+        print(f"CloseAll results: {results}")
         return {
-            "status": "closed", 
+            "status": "closed_all", 
             "symbol": symbol, 
             "strategy": strategy,
             "target_accounts": target_account_indices,
@@ -196,8 +201,11 @@ def process_trading_signal(data):
     
     # Otherwise, it's an open signal - calculate TP and SL in ticks
     # Get the tick size from the first connection (assuming consistent across all)
-    # Remove USD suffix if present for lookup in futuresTickData
+    # Process symbol for lookup in futuresTickData
+    # Remove USD suffix if present and ensure any other suffixes are removed
     lookup_symbol = symbol.replace('USD', '')
+    # Double-check that we have a clean base symbol (no suffixes)
+    lookup_symbol = re.sub(r'(\D+)\d+$', r'\1', lookup_symbol)
     tick_size = 0.25  # Default tick size
     
     try:

@@ -342,14 +342,74 @@ def update_quantity():
         quantity = data.get('quantity', 1)
         account_index = data.get('account', 'all')
         
-        # This is a placeholder - we don't have a direct quantity update method,
-        # but we can add one in the future. For now, we'll just return success.
+        # Update quantity in Chrome UI
+        js_code = f"""
+        (function() {{
+            try {{
+                // Update quantity input field
+                const qtyInput = document.getElementById('quantityInput');
+                if (qtyInput) {{
+                    qtyInput.value = {quantity};
+                    qtyInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                    qtyInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                    console.log("Quantity updated to {quantity} in Tradovate UI");
+                    return "Quantity updated in UI";
+                }} else {{
+                    console.error("Quantity input field not found");
+                    return "Quantity input field not found";
+                }}
+            }} catch (err) {{
+                console.error("Error updating quantity:", err);
+                return "Error: " + err.toString();
+            }}
+        }})();
+        """
         
-        return jsonify({
-            'status': 'success',
-            'message': f'Quantity updated to {quantity}',
-            'accounts_affected': len(controller.connections) if account_index == 'all' else 1
-        })
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            results = []
+            for i, conn in enumerate(controller.connections):
+                if conn.tab:
+                    try:
+                        ui_result = conn.tab.Runtime.evaluate(expression=js_code)
+                        result_value = ui_result.get('result', {}).get('value', 'Unknown')
+                        results.append({"account": i, "result": result_value})
+                    except Exception as e:
+                        results.append({"account": i, "error": str(e)})
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in results if "error" not in r)
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Quantity updated to {quantity} on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': results
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            if account_index < len(controller.connections) and controller.connections[account_index].tab:
+                try:
+                    ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=js_code)
+                    result_value = ui_result.get('result', {}).get('value', 'Unknown')
+                    
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'Quantity updated to {quantity} on account {account_index}',
+                        'accounts_affected': 1,
+                        'details': result_value
+                    })
+                except Exception as e:
+                    return jsonify({
+                        'status': 'error',
+                        'message': str(e)
+                    }), 500
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Account {account_index} not found or not available'
+                }), 404
     except Exception as e:
         return jsonify({
             'status': 'error',
@@ -433,6 +493,270 @@ def update_strategies():
     except Exception as e:
         print(f"Error saving strategy mappings: {e}")
         return jsonify({"error": f"Failed to update strategy mappings: {str(e)}"}), 500
+
+# API endpoint to update all trade control settings
+@app.route('/api/update-trade-controls', methods=['POST'])
+def update_trade_controls():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        symbol = data.get('symbol')
+        quantity = data.get('quantity')
+        tp_ticks = data.get('tp_ticks')
+        sl_ticks = data.get('sl_ticks')
+        tick_size = data.get('tick_size')
+        
+        # Additional parameters
+        enable_tp = data.get('enable_tp')
+        enable_sl = data.get('enable_sl')
+        tp_price = data.get('tp_price')
+        sl_price = data.get('sl_price')
+        entry_price = data.get('entry_price')
+        account_index = data.get('account', 'all')
+        
+        # Create JavaScript to update all the trade controls in the UI
+        js_code = """
+        (function() {
+            try {
+                const updates = {
+                    success: true,
+                    updates: {}
+                };
+        """
+        
+        # Only add each field to the JavaScript if it was provided in the request
+        if symbol:
+            js_code += f"""
+                // Update symbol
+                try {{
+                    const symbolInput = document.getElementById('symbolInput');
+                    if (symbolInput) {{
+                        symbolInput.value = "{symbol}";
+                        symbolInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.symbol = "{symbol}";
+                    }}
+                }} catch (err) {{
+                    updates.updates.symbol = "error: " + err.toString();
+                }}
+            """
+            
+        if quantity:
+            js_code += f"""
+                // Update quantity - matching ID 'qtyInput' from autoOrder.user.js
+                try {{
+                    const qtyInput = document.getElementById('qtyInput');
+                    if (qtyInput) {{
+                        qtyInput.value = {quantity};
+                        qtyInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        qtyInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.quantity = {quantity};
+                    }}
+                }} catch (err) {{
+                    updates.updates.quantity = "error: " + err.toString();
+                }}
+            """
+            
+        if tp_ticks:
+            js_code += f"""
+                // Update TP ticks - matching ID 'tpInput' from autoOrder.user.js
+                try {{
+                    const tpInput = document.getElementById('tpInput');
+                    if (tpInput) {{
+                        tpInput.value = {tp_ticks};
+                        tpInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        tpInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.tp_ticks = {tp_ticks};
+                    }}
+                }} catch (err) {{
+                    updates.updates.tp_ticks = "error: " + err.toString();
+                }}
+            """
+            
+        if sl_ticks:
+            js_code += f"""
+                // Update SL ticks - matching ID 'slInput' from autoOrder.user.js
+                try {{
+                    const slInput = document.getElementById('slInput');
+                    if (slInput) {{
+                        slInput.value = {sl_ticks};
+                        slInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        slInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.sl_ticks = {sl_ticks};
+                    }}
+                }} catch (err) {{
+                    updates.updates.sl_ticks = "error: " + err.toString();
+                }}
+            """
+            
+        if tick_size:
+            js_code += f"""
+                // Update tick size - matching ID 'tickInput' from autoOrder.user.js
+                try {{
+                    const tickInput = document.getElementById('tickInput');
+                    if (tickInput) {{
+                        tickInput.value = {tick_size};
+                        tickInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        tickInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.tick_size = {tick_size};
+                    }}
+                }} catch (err) {{
+                    updates.updates.tick_size = "error: " + err.toString();
+                }}
+            """
+        
+        # Add additional fields
+        if enable_tp is not None:
+            js_code += f"""
+                // Update TP checkbox - matching ID 'tpCheckbox' from autoOrder.user.js
+                try {{
+                    const tpCheckbox = document.getElementById('tpCheckbox');
+                    if (tpCheckbox) {{
+                        tpCheckbox.checked = {'true' if enable_tp else 'false'};
+                        tpCheckbox.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.enable_tp = {'true' if enable_tp else 'false'};
+                    }}
+                }} catch (err) {{
+                    updates.updates.enable_tp = "error: " + err.toString();
+                }}
+            """
+            
+        if enable_sl is not None:
+            js_code += f"""
+                // Update SL checkbox - matching ID 'slCheckbox' from autoOrder.user.js
+                try {{
+                    const slCheckbox = document.getElementById('slCheckbox');
+                    if (slCheckbox) {{
+                        slCheckbox.checked = {'true' if enable_sl else 'false'};
+                        slCheckbox.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.enable_sl = {'true' if enable_sl else 'false'};
+                    }}
+                }} catch (err) {{
+                    updates.updates.enable_sl = "error: " + err.toString();
+                }}
+            """
+            
+        if tp_price:
+            js_code += f"""
+                // Update TP price input - matching ID 'tpPriceInput' from autoOrder.user.js
+                try {{
+                    const tpPriceInput = document.getElementById('tpPriceInput');
+                    if (tpPriceInput) {{
+                        tpPriceInput.value = {tp_price};
+                        tpPriceInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        tpPriceInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.tp_price = {tp_price};
+                    }}
+                }} catch (err) {{
+                    updates.updates.tp_price = "error: " + err.toString();
+                }}
+            """
+            
+        if sl_price:
+            js_code += f"""
+                // Update SL price input - matching ID 'slPriceInput' from autoOrder.user.js
+                try {{
+                    const slPriceInput = document.getElementById('slPriceInput');
+                    if (slPriceInput) {{
+                        slPriceInput.value = {sl_price};
+                        slPriceInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        slPriceInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.sl_price = {sl_price};
+                    }}
+                }} catch (err) {{
+                    updates.updates.sl_price = "error: " + err.toString();
+                }}
+            """
+            
+        if entry_price:
+            js_code += f"""
+                // Update entry price input - matching ID 'entryPriceInput' from autoOrder.user.js
+                try {{
+                    const entryPriceInput = document.getElementById('entryPriceInput');
+                    if (entryPriceInput) {{
+                        entryPriceInput.value = {entry_price};
+                        entryPriceInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        entryPriceInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        updates.updates.entry_price = {entry_price};
+                    }}
+                }} catch (err) {{
+                    updates.updates.entry_price = "error: " + err.toString();
+                }}
+            """
+        
+        # Close the JavaScript function
+        js_code += """
+                console.log("Trade control updates complete:", updates);
+                return JSON.stringify(updates);
+            } catch (err) {
+                console.error("Error updating trade controls:", err);
+                return JSON.stringify({success: false, error: err.toString()});
+            }
+        })();
+        """
+        
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            results = []
+            for i, conn in enumerate(controller.connections):
+                if conn.tab:
+                    try:
+                        ui_result = conn.tab.Runtime.evaluate(expression=js_code)
+                        result_value = ui_result.get('result', {}).get('value', '{}')
+                        # Parse the JSON result
+                        try:
+                            parsed_result = json.loads(result_value)
+                            results.append({"account": i, "result": parsed_result})
+                        except:
+                            results.append({"account": i, "result": result_value})
+                    except Exception as e:
+                        results.append({"account": i, "error": str(e)})
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in results if "error" not in r)
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Trade controls updated on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': results
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            if account_index < len(controller.connections) and controller.connections[account_index].tab:
+                try:
+                    ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=js_code)
+                    result_value = ui_result.get('result', {}).get('value', '{}')
+                    # Parse the JSON result
+                    try:
+                        parsed_result = json.loads(result_value)
+                        result = parsed_result
+                    except:
+                        result = result_value
+                    
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'Trade controls updated on account {account_index}',
+                        'accounts_affected': 1,
+                        'details': result
+                    })
+                except Exception as e:
+                    return jsonify({
+                        'status': 'error',
+                        'message': str(e)
+                    }), 500
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Account {account_index} not found or not available'
+                }), 404
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
 
 # Run the app
 def run_flask_dashboard():
