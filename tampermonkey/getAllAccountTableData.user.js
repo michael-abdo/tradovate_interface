@@ -38,7 +38,8 @@ function getAllAccountTableData() {
       'Dist Drawdown Net Liq': 'Net Liquidation',
       'Total Available Margin': 'Available Margin',
       'User': 'Phase',
-      'Dollar Total P L': 'Total P&L'
+      'Dollar Total P L': 'Total P&L',
+      'Strategy': 'Strategy'
     };
     
     return standardHeaders[headerText] || headerText;
