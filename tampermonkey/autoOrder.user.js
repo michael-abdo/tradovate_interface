@@ -357,9 +357,79 @@
         }
     }
     
+    // Function to check for order closures and run risk management
+    function setupOrderClosedListener() {
+        console.log('Setting up order closed listener...');
+        
+        // Store the last known order events to detect changes
+        let lastEventCount = 0;
+        let lastOrderEvents = [];
+        
+        // Check for new order events periodically
+        const orderCheckInterval = setInterval(() => {
+            try {
+                const currentEvents = getOrderEvents();
+                
+                // If no previous events stored, just save current state
+                if (lastEventCount === 0) {
+                    lastEventCount = currentEvents.length;
+                    lastOrderEvents = [...currentEvents];
+                    return;
+                }
+                
+                // Check if we have new events
+                if (currentEvents.length > lastEventCount) {
+                    // Find the new events (ones that weren't in our last check)
+                    const newEvents = currentEvents.slice(0, currentEvents.length - lastEventCount);
+                    
+                    // Check for filled or exit events
+                    const closeEvents = newEvents.filter(event => 
+                        (event.event && (
+                            event.event.includes("filled") || 
+                            event.event.includes("Exit") ||
+                            event.event.toLowerCase().includes("cancel") ||
+                            event.event.includes("closed")
+                        ))
+                    );
+                    
+                    if (closeEvents.length > 0) {
+                        console.log("🔔 Order closure detected:", closeEvents);
+                        
+                        // Run risk management
+                        console.log("Running auto risk management after order closure");
+                        if (typeof getTableData === 'function' && 
+                            typeof updateUserColumnPhaseStatus === 'function' && 
+                            typeof performAccountActions === 'function') {
+                            getTableData();
+                            updateUserColumnPhaseStatus();
+                            performAccountActions();
+                            console.log("Auto risk management completed after order closure");
+                        } else {
+                            console.error("Auto risk management functions not available");
+                        }
+                    }
+                    
+                    // Update our stored state
+                    lastEventCount = currentEvents.length;
+                    lastOrderEvents = [...currentEvents];
+                }
+            } catch (err) {
+                console.error("Error in order closed listener:", err);
+            }
+        }, 2000); // Check every 2 seconds
+        
+        // Store the interval ID in case we need to clear it later
+        window.orderClosedListenerInterval = orderCheckInterval;
+        
+        return orderCheckInterval;
+    }
+    
     console.log('Creating UI...');
     createUI();
     console.log('UI creation complete');
+    
+    // Start the order closed listener
+    setupOrderClosedListener();
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);

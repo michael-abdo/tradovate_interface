@@ -83,6 +83,46 @@ class TradovateConnection:
                 self.tab.Runtime.evaluate(expression=account_data_js)
                 print(f"Account data function injected for {self.account_name}")
             
+            # Inject the autoriskManagement.js script
+            risk_management_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                                         'tampermonkey/autoriskManagement.js')
+            if os.path.exists(risk_management_path):
+                with open(risk_management_path, 'r') as file:
+                    risk_management_js = file.read()
+                # First evaluate the script to define the functions
+                self.tab.Runtime.evaluate(expression=risk_management_js)
+                print(f"Auto risk management script injected for {self.account_name}")
+                
+                # Wait a moment for the script to fully initialize
+                time.sleep(1)
+                
+                # Then explicitly run the risk management functions
+                self.tab.Runtime.evaluate(expression="""
+                    console.log("Executing initial risk management assessment...");
+                    if (typeof getTableData === 'function') {
+                        getTableData();
+                        console.log("getTableData executed");
+                    } else {
+                        console.error("getTableData function not found");
+                    }
+                    
+                    if (typeof updateUserColumnPhaseStatus === 'function') {
+                        updateUserColumnPhaseStatus();
+                        console.log("updateUserColumnPhaseStatus executed");
+                    } else {
+                        console.error("updateUserColumnPhaseStatus function not found");
+                    }
+                    
+                    if (typeof performAccountActions === 'function') {
+                        performAccountActions();
+                        console.log("performAccountActions executed");
+                    } else {
+                        console.error("performAccountActions function not found");
+                    }
+                    console.log("Risk management assessment completed");
+                """)
+                print(f"Auto risk management executed for {self.account_name}")
+            
             print(f"Tampermonkey functions injected successfully for {self.account_name}")
             return True
         except Exception as e:
@@ -133,6 +173,69 @@ class TradovateConnection:
             js_code = f"updateSymbol('.search-box--input', normalizeSymbol('{symbol}'));"
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
+        except Exception as e:
+            return {"error": str(e)}
+            
+    def run_risk_management(self):
+        """Run the auto risk management functions"""
+        if not self.tab:
+            return {"error": "No tab available"}
+            
+        try:
+            # First check if the required functions exist
+            check_code = """
+            {
+                "getTableData": typeof getTableData === 'function',
+                "updateUserColumnPhaseStatus": typeof updateUserColumnPhaseStatus === 'function',
+                "performAccountActions": typeof performAccountActions === 'function'
+            }
+            """
+            check_result = self.tab.Runtime.evaluate(expression=check_code)
+            check_data = json.loads(check_result.get('result', {}).get('value', '{}'))
+            
+            # If any function is missing, try to re-inject the script
+            if not all(check_data.values()):
+                print(f"Re-injecting auto risk management script because some functions are missing: {check_data}")
+                risk_management_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                                            'tampermonkey/autoriskManagement.js')
+                if os.path.exists(risk_management_path):
+                    with open(risk_management_path, 'r') as file:
+                        risk_management_js = file.read()
+                    self.tab.Runtime.evaluate(expression=risk_management_js)
+                    # Give it a moment to initialize
+                    time.sleep(0.5)
+            
+            # Run the main auto risk management sequence
+            js_code = """
+            console.log("Running risk management sequence...");
+            try {
+                if (typeof getTableData !== 'function') {
+                    throw new Error("getTableData function not available");
+                }
+                getTableData();
+                
+                if (typeof updateUserColumnPhaseStatus !== 'function') {
+                    throw new Error("updateUserColumnPhaseStatus function not available");
+                }
+                updateUserColumnPhaseStatus();
+                
+                if (typeof performAccountActions !== 'function') {
+                    throw new Error("performAccountActions function not available");
+                }
+                performAccountActions();
+                
+                return {status: "success", message: "Risk management sequence completed"};
+            } catch (err) {
+                return {status: "error", message: err.toString()};
+            }
+            """
+            result = self.tab.Runtime.evaluate(expression=js_code)
+            result_data = json.loads(result.get('result', {}).get('value', '{}'))
+            
+            if result_data.get('status') == 'success':
+                return {"status": "success", "message": "Auto risk management executed"}
+            else:
+                return {"status": "error", "message": result_data.get('message', 'Unknown error')}
         except Exception as e:
             return {"error": str(e)}
             
@@ -230,6 +333,10 @@ def main():
     symbol_parser.add_argument('symbol', help='Symbol to update to')
     symbol_parser.add_argument('--account', type=int, help='Account index (all if not specified)')
     
+    # Risk management command
+    risk_parser = subparsers.add_parser('risk', help='Run auto risk management')
+    risk_parser.add_argument('--account', type=int, help='Account index (all if not specified)')
+    
     # Dashboard command
     dashboard_parser = subparsers.add_parser('dashboard', help='Launch the dashboard UI')
     
@@ -286,6 +393,15 @@ def main():
         else:
             results = controller.execute_on_all('update_symbol', args.symbol)
             print(f"Symbol updated on all {len(results)} accounts")
+    
+    elif args.command == 'risk':
+        if args.account is not None:
+            result = controller.execute_on_one(args.account, 'run_risk_management')
+            print(f"Auto risk management executed on account {args.account}: {result}")
+        else:
+            results = controller.execute_on_all('run_risk_management')
+            successes = sum(1 for r in results if r.get('result', {}).get('status') == 'success')
+            print(f"Auto risk management executed on {successes} of {len(results)} accounts")
     
     elif args.command == 'dashboard':
         # Ensure all connections have the account data function

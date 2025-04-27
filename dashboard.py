@@ -241,11 +241,21 @@ def exit_positions():
             # Count successful operations
             accounts_affected = sum(1 for r in result if 'error' not in r['result'])
             
+            # After exit positions, run risk management on all accounts
+            print(f"Running auto risk management after exit positions on all accounts")
+            risk_results = controller.execute_on_all('run_risk_management')
+            risk_accounts_affected = sum(1 for r in risk_results if r.get('result', {}).get('status') == 'success')
+            print(f"Auto risk management completed on {risk_accounts_affected} accounts")
+            
             return jsonify({
                 'status': 'success',
                 'message': f'Exit/cancel operation executed on {accounts_affected} accounts',
                 'accounts_affected': accounts_affected,
-                'details': result
+                'details': result,
+                'risk_management': {
+                    'accounts_affected': risk_accounts_affected,
+                    'details': risk_results
+                }
             })
         else:
             # Execute on specific account
@@ -257,11 +267,20 @@ def exit_positions():
                 option
             )
             
+            # After exit positions, run risk management
+            print(f"Running auto risk management after exit positions on account {account_index}")
+            risk_result = controller.execute_on_one(
+                account_index,
+                'run_risk_management'
+            )
+            print(f"Auto risk management completed: {risk_result}")
+            
             return jsonify({
                 'status': 'success',
                 'message': f'Exit/cancel operation executed on account {account_index}',
                 'accounts_affected': 1,
-                'details': result
+                'details': result,
+                'risk_management': risk_result
             })
     except Exception as e:
         return jsonify({
@@ -331,6 +350,46 @@ def update_quantity():
             'message': f'Quantity updated to {quantity}',
             'accounts_affected': len(controller.connections) if account_index == 'all' else 1
         })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+# API endpoint to run auto risk management
+@app.route('/api/risk-management', methods=['POST'])
+def run_risk_management():
+    try:
+        data = request.json
+        account_index = data.get('account', 'all')
+        
+        if account_index == 'all':
+            # Run on all accounts
+            results = controller.execute_on_all('run_risk_management')
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in results if r.get('result', {}).get('status') == 'success')
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Auto risk management executed on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': results
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            result = controller.execute_on_one(
+                account_index,
+                'run_risk_management'
+            )
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Auto risk management executed on account {account_index}',
+                'accounts_affected': 1,
+                'details': result
+            })
     except Exception as e:
         return jsonify({
             'status': 'error',
