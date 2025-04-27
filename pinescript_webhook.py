@@ -102,6 +102,13 @@ def process_trading_signal(data):
     
     # Extract the data from the webhook payload
     symbol = data.get("symbol", "")
+    
+    # Remove exclamation points from the symbol if present (e.g., "NQ!" -> "NQ")
+    if symbol and '!' in symbol:
+        original_symbol = symbol
+        symbol = symbol.replace('!', '')
+        print(f"Symbol cleaning: Removed exclamation point from '{original_symbol}' -> '{symbol}'")
+    
     action = data.get("action", "Buy")  # Buy or Sell
     order_qty = int(data.get("orderQty", 1))
     order_type = data.get("orderType", "Market")
@@ -139,11 +146,13 @@ def process_trading_signal(data):
     
     # Otherwise, it's an open signal - calculate TP and SL in ticks
     # Get the tick size from the first connection (assuming consistent across all)
-    js_code = f"futuresTickData['{symbol.replace('USD', '')}']?.tickSize || 0.25;"
+    # Remove USD suffix if present for lookup in futuresTickData
+    lookup_symbol = symbol.replace('USD', '')
     tick_size = 0.25  # Default tick size
     
     try:
         if controller.connections:
+            js_code = f"futuresTickData['{lookup_symbol}']?.tickSize || 0.25;"
             tick_size_result = controller.connections[0].tab.Runtime.evaluate(expression=js_code)
             if tick_size_result and 'result' in tick_size_result and 'value' in tick_size_result['result']:
                 tick_size = float(tick_size_result['result']['value'])
