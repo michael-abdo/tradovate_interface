@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tradovate Account Dashboard</title>
+    <!-- Add viewport specific rules to ensure better mobile rendering -->
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -134,9 +135,17 @@
         }
         
         th, td {
-            padding: 12px 15px;
+            padding: 8px 10px;
             text-align: left;
             border-bottom: 1px solid #444;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            th, td {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
         }
         
         th {
@@ -208,6 +217,97 @@
         
         .account-row {
             background-color: #3a3a3a;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .dashboard {
+                padding: 10px;
+                margin: 0;
+                max-width: 100%;
+            }
+            
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .stats-container {
+                justify-content: space-around;
+            }
+            
+            .stat-card {
+                min-width: 100px;
+                padding: 10px;
+                margin: 0 5px 10px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .stat-title {
+                font-size: 12px;
+            }
+            
+            h1 {
+                font-size: 20px;
+                margin-top: 10px;
+            }
+            
+            h2 {
+                font-size: 18px;
+                margin-top: 15px;
+            }
+            
+            /* Filter controls for mobile */
+            .filter-controls {
+                gap: 5px;
+                padding: 8px;
+            }
+            
+            .filter-group {
+                min-width: auto;
+                flex: 1;
+            }
+            
+            .filter-group select {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+            
+            /* Strategy controls for mobile */
+            .strategy-controls {
+                padding: 10px;
+                gap: 5px;
+            }
+            
+            .strategy-button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            /* Trade controls for mobile */
+            .trade-controls-row {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            
+            .trade-input {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+            
+            .buy-button, .sell-button, .cancel-button, .close-button {
+                font-size: 14px;
+                padding: 8px;
+            }
         }
         
         .column-controls {
@@ -444,7 +544,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            justify-content: flex-start;
+            justify-content: center;
         }
         
         .strategy-cell {
@@ -513,16 +613,29 @@
             min-height: 32px;
         }
         
+        @media (max-width: 768px) {
+            .strategy-select {
+                padding: 4px 6px;
+                font-size: 12px;
+                min-height: 28px;
+            }
+            
+            .strategy-cell {
+                padding: 2px !important;
+            }
+        }
+        
         .strategy-select option {
             background-color: #3a3a3a;
             color: white;
-            padding: 4px;
+            padding: 6px;
         }
         
         .strategy-list-container {
             background-color: #333;
             border-radius: 6px;
             padding: 15px;
+            text-align: center;
         }
         
         .strategy-list-container h3 {
@@ -536,6 +649,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center;
         }
         
         .strategy-item {
@@ -583,10 +697,6 @@
     <div class="dashboard">
         <h1>Tradovate Account Dashboard</h1>
         
-        <div class="refresh-info">
-            Last updated: <span id="last-update">-</span>
-            <button class="refresh-button" onclick="fetchAccountData()">Refresh Now</button>
-        </div>
         
         <div class="stats-container">
             <div class="stat-card">
@@ -630,14 +740,6 @@
             <button onclick="resetFilters()">Reset Filters</button>
         </div>
         
-        <div class="column-controls">
-            <div>
-                <button onclick="resetColumnOrder()">Reset Column Order</button>
-            </div>
-            <div>
-                <small>Drag column headers to reorder</small>
-            </div>
-        </div>
         
         <table id="account-table">
             <thead id="table-header">
@@ -650,10 +752,14 @@
             </tbody>
         </table>
         
+        <div style="text-align: center; margin-top: 10px;">
+            <button class="refresh-button" onclick="fetchAccountData()">Refresh Data</button>
+        </div>
+        
         <div class="strategy-controls">
             <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
             <button id="save-strategies-btn" class="strategy-button">Save Strategy Mappings</button>
-            <div class="strategy-list-container" style="display: inline-flex; margin-left: 15px;">
+            <div class="strategy-list-container" style="display: flex; justify-content: center; width: 100%; margin-top: 10px;">
                 <div id="strategy-list">
                     <!-- Will be populated by JavaScript -->
                 </div>
@@ -724,7 +830,7 @@
         let accountData = [];
         
         // Default column order (first column is always Account)
-        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy'];
+        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation'];
         
         // Current column order
         let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
@@ -807,9 +913,12 @@
                 }
             });
             
-            // Remove any columns that no longer exist (except Account)
+            // Special columns that should always be included regardless of data
+            const specialColumns = ['Account', 'Strategy'];
+            
+            // Remove any columns that no longer exist (except special columns)
             columnOrder = columnOrder.filter(column => 
-                column === 'Account' || availableColumns.includes(column)
+                specialColumns.includes(column) || availableColumns.includes(column)
             );
             
             // Ensure there's only one Account column and it's first
@@ -819,6 +928,17 @@
                 // If Account exists but isn't first, move it to first position
                 columnOrder = columnOrder.filter(col => col !== 'Account');
                 columnOrder.unshift('Account');
+            }
+            
+            // Ensure Strategy column is included
+            if (!columnOrder.includes('Strategy')) {
+                // Add Strategy after Status if present, otherwise after Account
+                const statusIndex = columnOrder.indexOf('Status');
+                if (statusIndex !== -1) {
+                    columnOrder.splice(statusIndex + 1, 0, 'Strategy');
+                } else {
+                    columnOrder.splice(1, 0, 'Strategy');
+                }
             }
             
             // Create table header
@@ -890,11 +1010,13 @@
                         const platformClass = value ? `platform-${value.toLowerCase()}` : 'platform-unknown';
                         tableHtml += `<td class="${platformClass}">${value || 'Unknown'}</td>`;
                     } else if (column === 'Strategy') {
-                        // Create dropdown for strategy selection
+                        // Create multi-select dropdown for strategy selection
                         const accountId = account["Account"];
                         tableHtml += `<td class="strategy-cell">
-                            <select class="strategy-select" data-account="${accountId}" multiple>
-                                <!-- Will be populated by updateStrategySelects function -->
+                            <select class="strategy-select" data-account="${accountId}">
+                                ${strategies.map(strategy => 
+                                    `<option value="${strategy}" ${strategyMappings[strategy]?.includes(accountId) ? 'selected' : ''}>${strategy}</option>`
+                                ).join('')}
                             </select>
                         </td>`;
                     } else {
@@ -916,8 +1038,7 @@
             
             document.getElementById('total-margin').textContent = formatMoney(totalMargin);
             
-            // Update last refresh time
-            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+            // We removed last-update element, so this line should be removed
             
             // Update strategy dropdowns if strategies are loaded
             if (strategies && strategies.length > 0) {
@@ -990,18 +1111,60 @@
         
         // Function to fetch account data
         async function fetchAccountData() {
+            // Remember scroll position
+            const table = document.getElementById('account-table');
+            const scrollContainer = table.parentElement;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const tableTop = table.getBoundingClientRect().top + scrollTop;
+            const scrollPosition = scrollTop - tableTop;
+            
             try {
+                // Show loading state but preserve existing rows to maintain height
+                const currentTableHeight = table.offsetHeight;
+                document.getElementById('account-data').innerHTML = 
+                    `<tr><td colspan="8" class="loading" style="height: ${currentTableHeight}px">Loading account data...</td></tr>`;
+                
                 const response = await fetch('/api/accounts');
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                }
+                
                 accountData = await response.json();
+                
+                if (!accountData || !Array.isArray(accountData)) {
+                    console.error('Invalid account data format:', accountData);
+                    throw new Error('Invalid data format received from server');
+                }
                 
                 // Render the table with the current column order
                 renderTable(accountData);
                 
+                // Restore scroll position after rendering
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: tableTop + scrollPosition,
+                        behavior: 'auto'
+                    });
+                }, 0);
+                
                 return accountData;
             } catch (error) {
                 console.error('Error fetching account data:', error);
+                let errorMessage = 'Error loading account data';
+                
+                if (error.message) {
+                    errorMessage += `: ${error.message}`;
+                }
+                
+                // Check if it might be a connection issue
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    errorMessage = 'Connection error: Cannot reach server. Please check if the dashboard server is running.';
+                }
+                
                 document.getElementById('account-data').innerHTML = 
-                    '<tr><td colspan="6" class="empty-state">Error loading account data</td></tr>';
+                    `<tr><td colspan="8" class="empty-state">${errorMessage}</td></tr>`;
+                    
+                // Clear existing data to avoid showing stale data
                 return [];
             }
         }
@@ -1060,6 +1223,9 @@
         
         // Function to apply filters
         function applyFilters() {
+            // Remember scroll position
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
             // Get filter values
             currentFilters.platform = document.getElementById('platform-filter').value;
             currentFilters.phase = document.getElementById('phase-filter').value;
@@ -1070,6 +1236,10 @@
             
             // Apply filters to rows
             const rows = document.querySelectorAll('#account-data tr.account-row');
+            
+            // Record table height before filtering to minimize layout shifts
+            const table = document.getElementById('account-table');
+            const initialHeight = table.offsetHeight;
             
             let visibleCount = 0;
             let totalPnl = 0;
@@ -1134,6 +1304,14 @@
             totalPnlEl.className = 'stat-value ' + (totalPnl >= 0 ? 'positive' : 'negative');
             
             document.getElementById('total-margin').textContent = formatMoney(totalMargin);
+            
+            // Restore scroll position after DOM updates
+            setTimeout(() => {
+                window.scrollTo({
+                    top: scrollTop,
+                    behavior: 'auto'
+                });
+            }, 0);
         }
         
         // Function to reset filters
@@ -1170,18 +1348,40 @@
         
         // Initial setup
         loadSavedFilters();
+        
+        // Force reset the column order to ensure Strategy column is included
+        localStorage.removeItem('tradovate_dashboard_column_order');
+        columnOrder = [...defaultColumnOrder];
+        
+        // Make sure Strategy is included and positioned appropriately
+        if (!columnOrder.includes('Strategy')) {
+            // Add it after Status if it exists, otherwise after Account
+            const statusIndex = columnOrder.indexOf('Status');
+            if (statusIndex !== -1) {
+                columnOrder.splice(statusIndex + 1, 0, 'Strategy');
+            } else {
+                columnOrder.splice(1, 0, 'Strategy');
+            }
+        }
+        
+        // Save the forced column order
+        saveColumnOrder();
+        
         fetchAccountData().then(() => {
             populateFilterOptions();
             applyFilters();
         });
         
-        // Set up periodic refresh (every 1 second)
+        // Set up periodic refresh (every 5 seconds)
         setInterval(() => {
-            fetchAccountData().then(() => {
-                populateFilterOptions();
-                applyFilters();
-            });
-        }, 1000);
+            // Only auto-refresh if page is visible to avoid unnecessary requests
+            if (!document.hidden) {
+                fetchAccountData().then(() => {
+                    populateFilterOptions();
+                    applyFilters();
+                });
+            }
+        }, 5000);
         
         // ---- Trade Controls Functionality ----
         
@@ -1522,6 +1722,12 @@
                     
                     select.appendChild(option);
                 });
+                
+                // Add empty option as first item
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = '-- Select --';
+                select.insertBefore(emptyOption, select.firstChild);
             });
         }
         
@@ -1539,12 +1745,11 @@
                     const accountId = select.dataset.account;
                     if (!accountId) return;
                     
-                    Array.from(select.selectedOptions).forEach(option => {
-                        const strategy = option.value;
-                        if (newMappings[strategy] && !newMappings[strategy].includes(accountId)) {
-                            newMappings[strategy].push(accountId);
-                        }
-                    });
+                    // Get the selected strategy (single select)
+                    const selectedStrategy = select.value;
+                    if (selectedStrategy && newMappings[selectedStrategy]) {
+                        newMappings[selectedStrategy].push(accountId);
+                    }
                 });
                 
                 console.log("Saving strategy mappings:", newMappings);
