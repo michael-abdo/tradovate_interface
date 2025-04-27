@@ -94,6 +94,45 @@ def get_target_accounts_for_strategy(strategy_name):
         # Fallback to all accounts
         return list(range(len(controller.connections)))
 
+def update_ui_symbol(account_index, symbol):
+    """
+    Update the symbol in the Tradovate interface and the Bracket UI
+    """
+    if account_index >= len(controller.connections):
+        return {"status": "error", "message": "Invalid account index"}
+    
+    try:
+        # First update the symbol in Tradovate's interface
+        controller.execute_on_one(account_index, 'update_symbol', symbol)
+        
+        # Then update the symbolInput element in the Bracket UI
+        update_ui_script = f"""
+        (function() {{
+            // Update the symbolInput in the Bracket UI
+            const symbolInput = document.getElementById('symbolInput');
+            if (symbolInput) {{
+                symbolInput.value = "{symbol}";
+                // Dispatch events to ensure value change is registered
+                symbolInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                console.log("Updated UI symbol to {symbol}");
+                
+                // Also store in localStorage for persistence
+                localStorage.setItem('bracketTrade_symbol', "{symbol}");
+                return "Symbol updated in UI";
+            }} else {{
+                return "symbolInput element not found";
+            }}
+        }})();
+        """
+        ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=update_ui_script)
+        result_value = ui_result.get('result', {}).get('value', 'Unknown')
+        print(f"UI symbol update on account {account_index}: {result_value}")
+        return {"status": "success", "message": result_value}
+    except Exception as e:
+        print(f"Error updating UI symbol on account {account_index}: {e}")
+        return {"status": "error", "message": str(e)}
+
 def process_trading_signal(data):
     """
     Process incoming trading signal and execute it on specific accounts based on strategy
@@ -127,6 +166,17 @@ def process_trading_signal(data):
     # If this is a Close signal, use exit_positions
     if trade_type == "Close":
         print(f"🔴 Closing positions for {symbol}")
+        
+        # First update the UI symbol in each browser tab before closing positions
+        print(f"🔄 Updating UI symbol to {symbol} in all targeted accounts")
+        
+        # Update the symbol in the UI for each target account
+        for account_index in target_account_indices:
+            if account_index < len(controller.connections):
+                update_result = update_ui_symbol(account_index, symbol)
+        
+        # Small delay to ensure UI updates before closing positions
+        time.sleep(0.5)
         
         results = []
         # Execute on each targeted account
@@ -170,6 +220,17 @@ def process_trading_signal(data):
     # Default SL ticks (typically 40% of TP)
     sl_ticks = int(tp_ticks * 0.4) if tp_ticks else 40
     
+    # First, update the UI symbol in each browser tab before executing trades
+    print(f"🔄 Updating UI symbol to {symbol} in all targeted accounts")
+    
+    # Update the symbol in the UI for each target account
+    for account_index in target_account_indices:
+        if account_index < len(controller.connections):
+            update_result = update_ui_symbol(account_index, symbol)
+    
+    # Small delay to ensure UI updates before placing orders
+    time.sleep(0.5)
+            
     # Execute the trade on targeted Tradovate instances
     print(f"🟢 Executing {action} order for {order_qty} {symbol} with TP: {tp_ticks} ticks, SL: {sl_ticks} ticks")
     
