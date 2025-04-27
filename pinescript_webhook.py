@@ -186,11 +186,11 @@ def process_trading_signal(data):
         # Execute on each targeted account
         for account_index in target_account_indices:
             if account_index < len(controller.connections):
-                # Use closeAll instead of exit_positions for Close trade type
-                result = controller.execute_on_one(account_index, 'closeAll', symbol)
+                # Use exit_positions with the Exit-at-Mkt-Cxl option for Close trade type
+                result = controller.execute_on_one(account_index, 'exit_positions', symbol, 'cancel-option-Exit-at-Mkt-Cxl')
                 results.append(result)
         
-        print(f"CloseAll results: {results}")
+        print(f"Close all positions results: {results}")
         return {
             "status": "closed_all", 
             "symbol": symbol, 
