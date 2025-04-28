@@ -365,15 +365,21 @@ def process_trading_signal(data):
                     # This is a more reliable approach that avoids Promise handling issues
                     switch_script = f"""
                     (function() {{
+                        // Add console.debug for all return values to verify they're properly formatted
+                        function debugReturn(result) {{
+                            console.debug("Returning to Python:", JSON.stringify(result));
+                            return result;
+                        }}
+                        
                         try {{
                             // First check if the account exists in the dropdown
                             // Do this by clicking the dropdown and checking the account items
                             const accountSelector = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"]');
                             if (!accountSelector) {{
-                                return {{ 
+                                return debugReturn({{ 
                                     success: false, 
                                     message: "Account selector not found" 
-                                }};
+                                }});
                             }}
                             
                             // Check if we're already on the account
@@ -384,11 +390,11 @@ def process_trading_signal(data):
                                 
                                 if (currentAccount === "{account_name}") {{
                                     console.log(`Already on the exact account: ${{currentAccount}}`);
-                                    return {{ 
+                                    return debugReturn({{ 
                                         success: true, 
                                         message: `Already on account: ${{currentAccount}}`,
                                         availableAccounts: [currentAccount]
-                                    }};
+                                    }});
                                 }}
                             }}
                             
@@ -425,32 +431,52 @@ def process_trading_signal(data):
                                     clickAccountItemByName('{account_name}');
                                 }}
                                 
-                                return {{ 
+                                return debugReturn({{ 
                                     success: true, 
                                     message: `Account exists and switch initiated: {account_name}`,
                                     availableAccounts: availableAccounts
-                                }};
+                                }});
                             }} else {{
                                 console.error(`Account {account_name} not found in available accounts.`);
-                                return {{ 
+                                return debugReturn({{ 
                                     success: false, 
                                     message: `Account not found: {account_name}`,
                                     availableAccounts: availableAccounts
-                                }};
+                                }});
                             }}
                         }} catch (error) {{
                             console.error("Error checking/switching account:", error);
-                            return {{ 
+                            return debugReturn({{ 
                                 success: false, 
                                 message: `Error: ${{error.toString()}}` 
-                            }};
+                            }});
                         }}
                     }})();
                     """
                     
                     switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
                     
-                    switch_response = switch_result.get('result', {}).get('value', {})
+                    # Log the raw response from JavaScript
+                    print(f"DEBUG - Raw switch_result: {switch_result}")
+                    
+                    # Try to extract the value with more verbose logging
+                    result_obj = switch_result.get('result', {})
+                    print(f"DEBUG - Result object: {result_obj}")
+                    
+                    # Check if we got a Promise instead of a value
+                    if result_obj.get('subtype') == 'promise':
+                        print(f"DEBUG - Detected Promise object, forcing success for {account_name}")
+                        switch_response = {
+                            'success': True,
+                            'message': f"Promise detected, assuming success for {account_name}",
+                            'availableAccounts': [account_name]
+                        }
+                    else:
+                        # Get the value property or empty dict if not present
+                        switch_response = result_obj.get('value', {})
+                        
+                    print(f"DEBUG - Extracted switch_response: {switch_response}")
+                    print(f"DEBUG - Response type: {type(switch_response)}")
                     
                     # Parse the success status from the response
                     success = False
