@@ -513,6 +513,7 @@ def update_trade_controls():
         tp_price = data.get('tp_price')
         sl_price = data.get('sl_price')
         entry_price = data.get('entry_price')
+        source_field = data.get('source_field', None)  # Which field triggered the update
         account_index = data.get('account', 'all')
         
         # Create JavaScript to update all the trade controls in the UI
@@ -525,10 +526,10 @@ def update_trade_controls():
                 };
         """
         
-        # Only add each field to the JavaScript if it was provided in the request
-        if symbol:
+        # Only update symbol if it was explicitly changed in the dashboard (not when other fields change)
+        if symbol and source_field == 'symbolInput':
             js_code += f"""
-                // Update symbol
+                // Update symbol in Tradovate UI
                 try {{
                     const symbolInput = document.getElementById('symbolInput');
                     if (symbolInput) {{
@@ -536,9 +537,11 @@ def update_trade_controls():
                         symbolInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
                         symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
                         updates.updates.symbol = "{symbol}";
+                        console.log("Updated symbol to {symbol} in Tradovate UI");
                     }}
                 }} catch (err) {{
                     updates.updates.symbol = "error: " + err.toString();
+                    console.error("Error updating symbol:", err);
                 }}
             """
             

@@ -1758,9 +1758,9 @@
             }
             
             // When any trade control is changed, update all Chrome UIs
-            // Create the actual update function
-            function _updateAllTradeControls() {
-                console.log("Executing synchronized update to all Chrome windows");
+            // Create the actual update function with the ID of the changed field
+            function _updateAllTradeControls(sourceFieldId) {
+                console.log(`Executing synchronized update to Chrome windows from field: ${sourceFieldId}`);
                 
                 // Collect all trade control values 
                 const tradeControls = {
@@ -1769,6 +1769,7 @@
                     tp_ticks: document.getElementById('tpInput').value,
                     sl_ticks: document.getElementById('slInput').value,
                     tick_size: document.getElementById('tickInput').value,
+                    source_field: sourceFieldId, // Track which field triggered the update
                     account: 'all'
                 };
                 
@@ -1806,7 +1807,10 @@
             
             // Create a debounced version that limits updates to once every 100ms
             // This prevents flooding the server with updates during fast typing
-            const updateAllTradeControls = debounce(_updateAllTradeControls, 100);
+            // Note: We need to create a debounced version for each field to track which field changed
+            const createDebouncedUpdater = (fieldId) => {
+                return debounce((sourceId) => _updateAllTradeControls(sourceId), 100);
+            };
             
             // Real-time synchronization: update Chrome UI immediately on any input change
             // Set up both input and change listeners for text/number inputs
@@ -1815,26 +1819,29 @@
                 'tpInput', 'slInput', 'tpPriceInput', 'slPriceInput', 'entryPriceInput'
             ].forEach(id => {
                 const element = document.getElementById(id);
+                const fieldUpdater = createDebouncedUpdater(id);
                 
                 // Add input event for real-time updates as you type
                 element.addEventListener('input', function() {
                     console.log(`Input changed in ${id}: ${this.value}`);
-                    updateAllTradeControls();
+                    fieldUpdater(id); // Pass the field ID
                 });
                 
                 // Keep change event for when focus leaves the field as a fallback
                 element.addEventListener('change', function() {
                     console.log(`Change event in ${id}: ${this.value}`);
-                    updateAllTradeControls();
+                    fieldUpdater(id); // Pass the field ID
                 });
             });
             
             // Checkboxes with click event
             ['tpCheckbox', 'slCheckbox'].forEach(id => {
                 const element = document.getElementById(id);
+                const fieldUpdater = createDebouncedUpdater(id);
+                
                 element.addEventListener('click', function() {
                     console.log(`Checkbox ${id} clicked: ${this.checked}`);
-                    updateAllTradeControls();
+                    fieldUpdater(id); // Pass the field ID
                 });
             });
             
