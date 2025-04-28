@@ -20,6 +20,19 @@ function changeAccount(accountName) {
         try {
             console.log(`Attempting to change to account: ${accountName}`);
             
+            // First check if the account is already selected
+            const currentAccountElement = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"] .name div');
+            if (currentAccountElement) {
+                const currentAccount = currentAccountElement.textContent.trim();
+                console.log(`Current account is: "${currentAccount}"`);
+                
+                // If already on the correct account, return success immediately
+                if (currentAccount === accountName || (accountName && currentAccount.includes(accountName))) {
+                    console.log(`Already on the correct account: ${currentAccount}`);
+                    return resolve(`Already on account: ${currentAccount}`);
+                }
+            }
+            
             // Step 1: Find and click the account dropdown
             const dropdown = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"]');
             if (!dropdown) {
@@ -39,25 +52,53 @@ function changeAccount(accountName) {
                 
                 // Log all available accounts for debugging
                 accountItems.forEach(item => {
-                    console.log(`Available account: ${item.textContent.trim()}`);
+                    const itemText = item.textContent.trim();
+                    const isSelected = item.closest('li').classList.contains('selected');
+                    console.log(`Available account: "${itemText}" (Selected: ${isSelected})`);
                 });
                 
                 // Try to find and click the matching account
                 for (const item of accountItems) {
                     const itemText = item.textContent.trim();
-                    console.log(`Checking account item: "${itemText}"`);
+                    const itemMainText = item.querySelector('.name .main')?.textContent.trim();
+                    console.log(`Checking account item: "${itemMainText || itemText}"`);
                     
                     // Match by exact ID or contains the ID (more flexible)
-                    if (itemText === accountName || itemText.includes(accountName)) {
-                        console.log(`Found matching account: ${itemText}`);
+                    if ((itemMainText && (itemMainText === accountName || itemMainText.includes(accountName))) ||
+                        (itemText === accountName || itemText.includes(accountName))) {
+                        
+                        // Check if this item is already selected
+                        const isAlreadySelected = item.closest('li').classList.contains('selected');
+                        console.log(`Found matching account: "${itemMainText || itemText}" (Already selected: ${isAlreadySelected})`);
+                        
+                        if (isAlreadySelected) {
+                            // If already selected, just close the dropdown by clicking elsewhere
+                            document.body.click();
+                            found = true;
+                            resolve(`Already on account: ${itemMainText || itemText}`);
+                            return;
+                        }
+                        
+                        console.log(`Clicking to switch to account: ${itemMainText || itemText}`);
                         item.click();
                         found = true;
                         
                         // Give the UI time to update
                         setTimeout(() => {
-                            const currentAccount = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"]').textContent.trim();
-                            console.log(`Account switched to: ${currentAccount}`);
-                            resolve(`Successfully changed to account: ${currentAccount}`);
+                            const newAccountElement = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"] .name div');
+                            const newAccount = newAccountElement ? newAccountElement.textContent.trim() : 'Unknown';
+                            console.log(`Account switched to: ${newAccount}`);
+                            
+                            // Verify switch was successful
+                            const switchSuccessful = newAccount && 
+                                (newAccount === accountName || (accountName && newAccount.includes(accountName)));
+                            
+                            if (switchSuccessful) {
+                                resolve(`Successfully changed to account: ${newAccount}`);
+                            } else {
+                                console.error(`Account switch may have failed. Expected: ${accountName}, Got: ${newAccount}`);
+                                resolve(`Attempted to change to account: ${accountName}, now showing: ${newAccount}`);
+                            }
                         }, 500);
                         break;
                     }
@@ -65,6 +106,8 @@ function changeAccount(accountName) {
                 
                 if (!found) {
                     console.error(`Account "${accountName}" not found in dropdown`);
+                    // Close the dropdown by clicking elsewhere
+                    document.body.click();
                     reject(`Account "${accountName}" not found in dropdown`);
                 }
             }, 300);
