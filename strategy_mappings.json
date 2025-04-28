@@ -1,7 +1,10 @@
 {
   "strategy_mappings": {
-    "Demo": [
-      "DEMO4656027"
+    "DEFAULT": [
+      "DEMO3655059-1"
+    ],
+    "Velocity Graph 4/26 v1": [
+      "DEMO4656027",
     ]
   }
 }

@@ -9,7 +9,11 @@ import json
 import os
 
 # Import the TradovateController from app.py
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Handle case where __file__ might not be defined
+try:
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+except NameError:
+    sys.path.append(os.getcwd())
 from app import TradovateController
 
 app = Flask(__name__)
@@ -44,55 +48,82 @@ def start_ngrok(port: int) -> str | None:
     return None
 
 def get_target_accounts_for_strategy(strategy_name):
-    """Get account indices that are mapped to a specific strategy"""
+    """Get account indices and names that are mapped to a specific strategy"""
     try:
-        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        # Use the current working directory if __file__ is not defined
+        try:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        except NameError:
+            base_dir = os.getcwd()
+            
+        strategy_file = os.path.join(base_dir, 'strategy_mappings.json')
         if not os.path.exists(strategy_file):
             print(f"Strategy mappings file not found. Using all accounts.")
-            return list(range(len(controller.connections)))
+            return list(range(len(controller.connections))), []
             
         with open(strategy_file, 'r') as f:
             mappings = json.load(f)
             
         strategy_accounts = mappings.get("strategy_mappings", {}).get(strategy_name, [])
+        print(f"Found strategy accounts for {strategy_name}: {strategy_accounts}")
         
         # If no mappings for this strategy, try DEFAULT strategy
         if not strategy_accounts and strategy_name != "DEFAULT":
             print(f"No accounts mapped for strategy {strategy_name}, using DEFAULT")
             strategy_accounts = mappings.get("strategy_mappings", {}).get("DEFAULT", [])
+            print(f"DEFAULT strategy accounts: {strategy_accounts}")
         
         # If still no accounts, use all accounts
         if not strategy_accounts:
             print(f"No DEFAULT mapping or empty, using all accounts")
-            return list(range(len(controller.connections)))
+            return list(range(len(controller.connections))), []
                 
-        # Convert account names to indices
+        # Convert account names to indices and create mapping
         account_indices = []
+        account_id_to_index = {}  # Map account IDs to connection indices
+        account_id_to_name = {}   # Map account IDs to their actual names in the UI
+        
+        print(f"Looking for accounts that match these IDs: {strategy_accounts}")
         for i, conn in enumerate(controller.connections):
             try:
+                print(f"\nChecking connection {i}:")
                 # Get account data to extract account ID
                 result = conn.get_account_data()
                 if result and 'result' in result and 'value' in result['result']:
-                    account_data = json.loads(result['result']['value'])
-                    if account_data and len(account_data) > 0:
-                        account_id = account_data[0].get('Account')
-                        if account_id in strategy_accounts:
-                            account_indices.append(i)
-                            print(f"Account {account_id} (index {i}) matched for strategy {strategy_name}")
+                    try:
+                        account_data = json.loads(result['result']['value'])
+                        if account_data and len(account_data) > 0:
+                            # Print first account record for debugging
+                            print(f"Account data for connection {i}: {json.dumps(account_data[0], indent=2)}")
+                            
+                            account_id = account_data[0].get('Account')
+                            print(f"Extracted account ID: {account_id}")
+                            
+                            if account_id in strategy_accounts:
+                                account_indices.append(i)
+                                account_id_to_index[account_id] = i
+                                account_id_to_name[account_id] = account_id  # Use ID as name by default
+                                print(f"✅ Account {account_id} (index {i}) matched for strategy {strategy_name}")
+                    except Exception as e:
+                        print(f"Error parsing account data for connection {i}: {e}")
             except Exception as e:
-                print(f"Error processing account data for connection {i}: {e}")
+                print(f"Error processing connection {i}: {e}")
         
         # If no matches found, use all accounts
         if not account_indices:
             print(f"No matching accounts found for strategy {strategy_name}, using all accounts")
-            return list(range(len(controller.connections)))
+            return list(range(len(controller.connections))), []
             
-        return account_indices
+        print(f"Found matching account indices: {account_indices}")
+        print(f"Account ID to index mapping: {account_id_to_index}")
+        print(f"Account names to use: {list(account_id_to_name.values())}")
+        
+        return account_indices, list(account_id_to_name.values())
             
     except Exception as e:
         print(f"Error loading strategy mappings: {e}")
         # Fallback to all accounts
-        return list(range(len(controller.connections)))
+        return list(range(len(controller.connections))), []
 
 def update_ui_symbol(account_index, symbol):
     """
@@ -164,31 +195,108 @@ def process_trading_signal(data):
     print(f"Strategy: {strategy}")
     
     # Determine target accounts for this strategy
-    target_account_indices = get_target_accounts_for_strategy(strategy)
+    target_account_indices, account_names = get_target_accounts_for_strategy(strategy)
     print(f"Target accounts for strategy {strategy}: {target_account_indices}")
+    print(f"Account names for strategy {strategy}: {account_names}")
+    
+    # Inject the changeAccount.user.js script into each matching browser tab
+    # to enable account switching functionality
+    print("Injecting account switching functionality...")
+    # Use the current working directory if __file__ is not defined
+    try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        base_dir = os.getcwd()
+    
+    account_switcher_path = os.path.join(base_dir, 'tampermonkey/changeAccount.user.js')
+    if os.path.exists(account_switcher_path):
+        with open(account_switcher_path, 'r') as file:
+            account_switcher_js = file.read()
+            for i in target_account_indices:
+                try:
+                    if i < len(controller.connections) and controller.connections[i].tab:
+                        controller.connections[i].tab.Runtime.evaluate(expression=account_switcher_js)
+                        print(f"Injected account switcher script into connection {i}")
+                except Exception as e:
+                    print(f"Error injecting account switcher into connection {i}: {e}")
+    else:
+        print(f"Warning: Account switcher script not found at {account_switcher_path}")
     
     # If this is a Close signal, use closeAll
     if trade_type == "Close":
         print(f"🔴 Closing all positions for {symbol}")
         
-        # First update the UI symbol in each browser tab before closing positions
-        print(f"🔄 Updating UI symbol to {symbol} in all targeted accounts")
-        
-        # Update the symbol in the UI for each target account
-        for account_index in target_account_indices:
-            if account_index < len(controller.connections):
-                update_result = update_ui_symbol(account_index, symbol)
-        
-        # Small delay to ensure UI updates before closing positions
-        time.sleep(0.5)
+        # We'll update the symbol for each account individually just before closing positions
+        print(f"🔄 Will update symbol to {symbol} before closing positions for each account")
         
         results = []
         # Execute on each targeted account
-        for account_index in target_account_indices:
+        for i, account_index in enumerate(target_account_indices):
             if account_index < len(controller.connections):
-                # Use exit_positions with the Exit-at-Mkt-Cxl option for Close trade type
-                result = controller.execute_on_one(account_index, 'exit_positions', symbol, 'cancel-option-Exit-at-Mkt-Cxl')
-                results.append(result)
+                conn = controller.connections[account_index]
+                if not conn.tab:
+                    print(f"⚠️ Tab not available for connection {account_index}, skipping")
+                    results.append({"error": "Tab not available"})
+                    continue
+                    
+                try:
+                    # Get account ID to switch to
+                    account_id = account_names[i] if i < len(account_names) else None
+                    
+                    if account_id:
+                        print(f"🔄 Switching to account: {account_id} on connection {account_index}")
+                        
+                        # Call the changeAccount function in the browser context
+                        switch_script = f"""
+                        (async function() {{
+                            try {{
+                                if (typeof changeAccount !== 'function') {{
+                                    return "Account switching function not available";
+                                }}
+                                
+                                // Try to switch to the target account
+                                const result = await changeAccount('{account_id}');
+                                return result;
+                            }} catch (error) {{
+                                console.error("Error switching account:", error);
+                                return "Error switching account: " + error.toString();
+                            }}
+                        }})();
+                        """
+                        
+                        switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
+                        switch_message = switch_result.get('result', {}).get('value', 'Unknown result')
+                        print(f"Account switch result: {switch_message}")
+                        
+                        # Give the UI time to update after account switch
+                        time.sleep(0.5)
+                    
+                    # First, update the symbol and wait for UI to adjust
+                    print(f"Updating symbol to {symbol} on account index {account_index}")
+                    symbol_update_result = update_ui_symbol(account_index, symbol)
+                    print(f"Symbol update result: {symbol_update_result}")
+                    
+                    # Add a longer delay after updating symbol to let the UI fully adjust
+                    print(f"Waiting for symbol to update and market data to load...")
+                    time.sleep(2.0)  # Increased delay for UI to update
+                    
+                    # Use exit_positions with the Exit-at-Mkt-Cxl option for Close trade type
+                    print(f"Closing positions on account index {account_index}")
+                    result = controller.execute_on_one(account_index, 'exit_positions', symbol, 'cancel-option-Exit-at-Mkt-Cxl')
+                    
+                    # Add account info to the result
+                    result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
+                    result_with_account["account_id"] = account_id
+                    result_with_account["account_index"] = account_index
+                    results.append(result_with_account)
+                    
+                except Exception as e:
+                    print(f"⚠️ Error closing positions on connection {account_index}: {e}")
+                    results.append({
+                        "error": str(e),
+                        "account_index": account_index,
+                        "account_id": account_names[i] if i < len(account_names) else None
+                    })
         
         print(f"Close all positions results: {results}")
         return {
@@ -228,30 +336,84 @@ def process_trading_signal(data):
     # Default SL ticks (typically 40% of TP)
     sl_ticks = int(tp_ticks * 0.4) if tp_ticks else 40
     
-    # First, update the UI symbol in each browser tab before executing trades
-    print(f"🔄 Updating UI symbol to {symbol} in all targeted accounts")
-    
-    # Update the symbol in the UI for each target account
-    for account_index in target_account_indices:
-        if account_index < len(controller.connections):
-            update_result = update_ui_symbol(account_index, symbol)
-    
-    # Small delay to ensure UI updates before placing orders
-    time.sleep(0.5)
+    # We'll update the symbol for each account individually just before trade execution
+    print(f"🔄 Will update symbol to {symbol} before each trade execution")
             
     # Execute the trade on targeted Tradovate instances
     print(f"🟢 Executing {action} order for {order_qty} {symbol} with TP: {tp_ticks} ticks, SL: {sl_ticks} ticks")
     
     results = []
     # Execute on each targeted account
-    for account_index in target_account_indices:
+    for i, account_index in enumerate(target_account_indices):
         if account_index < len(controller.connections):
-            result = controller.execute_on_one(
-                account_index, 'auto_trade', 
-                symbol, order_qty, action, 
-                tp_ticks, sl_ticks, tick_size
-            )
-            results.append(result)
+            conn = controller.connections[account_index]
+            if not conn.tab:
+                print(f"⚠️ Tab not available for connection {account_index}, skipping")
+                results.append({"error": "Tab not available"})
+                continue
+                
+            try:
+                # Get account ID to switch to
+                account_id = account_names[i] if i < len(account_names) else None
+                
+                if account_id:
+                    print(f"🔄 Switching to account: {account_id} on connection {account_index}")
+                    
+                    # Call the changeAccount function in the browser context
+                    switch_script = f"""
+                    (async function() {{
+                        try {{
+                            if (typeof changeAccount !== 'function') {{
+                                return "Account switching function not available";
+                            }}
+                            
+                            // Try to switch to the target account
+                            const result = await changeAccount('{account_id}');
+                            return result;
+                        }} catch (error) {{
+                            console.error("Error switching account:", error);
+                            return "Error switching account: " + error.toString();
+                        }}
+                    }})();
+                    """
+                    
+                    switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
+                    switch_message = switch_result.get('result', {}).get('value', 'Unknown result')
+                    print(f"Account switch result: {switch_message}")
+                    
+                    # Give the UI time to update after account switch
+                    time.sleep(0.5)
+                
+                # First, update the symbol and wait for UI to adjust
+                print(f"Updating symbol to {symbol} on account index {account_index}")
+                symbol_update_result = update_ui_symbol(account_index, symbol)
+                print(f"Symbol update result: {symbol_update_result}")
+                
+                # Add a longer delay after updating symbol to let the UI fully adjust
+                print(f"Waiting for symbol to update and market data to load...")
+                time.sleep(2.0)  # Increased delay for UI to update
+                
+                # Now execute the trade on this account
+                print(f"Executing trade on account index {account_index}")
+                result = controller.execute_on_one(
+                    account_index, 'auto_trade', 
+                    symbol, order_qty, action, 
+                    tp_ticks, sl_ticks, tick_size
+                )
+                
+                # Add account info to the result
+                result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
+                result_with_account["account_id"] = account_id
+                result_with_account["account_index"] = account_index
+                results.append(result_with_account)
+                
+            except Exception as e:
+                print(f"⚠️ Error executing trade on connection {account_index}: {e}")
+                results.append({
+                    "error": str(e),
+                    "account_index": account_index,
+                    "account_id": account_names[i] if i < len(account_names) else None
+                })
     
     return {
         "status": "executed", 
