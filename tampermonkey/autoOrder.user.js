@@ -145,8 +145,28 @@
                 // Call the clickExitForSymbol function with the normalized symbol and Exit at Mkt option
                 clickExitForSymbol(normalizedSymbol, 'cancel-option-Exit-at-Mkt-Cxl');
                 console.log('Exit action triggered for symbol:', normalizedSymbol);
+                
+                // Visual feedback for user
+                const closeBtn = document.getElementById('closeAllBtn');
+                if (closeBtn) {
+                    const originalColor = closeBtn.style.background;
+                    closeBtn.style.background = '#00cc00'; // Green flash for success
+                    setTimeout(() => {
+                        closeBtn.style.background = originalColor;
+                    }, 500);
+                }
             } catch (err) {
                 console.error("Close All operation failed:", err);
+                
+                // Visual feedback for error
+                const closeBtn = document.getElementById('closeAllBtn');
+                if (closeBtn) {
+                    const originalColor = closeBtn.style.background;
+                    closeBtn.style.background = '#ff0000'; // Red flash for error
+                    setTimeout(() => {
+                        closeBtn.style.background = originalColor;
+                    }, 500);
+                }
                 
                 // Fallback to old method if the new method fails
                 try {
@@ -174,6 +194,15 @@
                 console.log('Cancel All action triggered for symbol:', normalizedSymbol);
             } catch (err) {
                 console.error("Cancel All operation failed:", err);
+                // Show visual feedback if there's an error
+                const cancelBtn = document.getElementById('cancelAllBtn');
+                if (cancelBtn) {
+                    const originalColor = cancelBtn.style.background;
+                    cancelBtn.style.background = '#ff0000';
+                    setTimeout(() => {
+                        cancelBtn.style.background = originalColor;
+                    }, 500);
+                }
             }
         });
 
@@ -320,15 +349,44 @@
                     
                     // Give the dropdown menu time to appear
                     setTimeout(() => {
-                        // Look for the specific option in the dropdown menu
-                        const option = document.getElementById(optionId);
-                        if (option) {
-                            console.log(`Found and clicking option: ${optionId}`);
-                            option.click();
-                        } else {
-                            console.error(`Option ${optionId} not found in dropdown`);
+                        // Look for visible dropdown menu WITHIN this module or closest to it
+                        const dropdownMenu = module.querySelector('.dropdown-menu') || 
+                                            document.querySelector('.dropdown-menu[style*="display: block"]');
+                        
+                        if (dropdownMenu) {
+                            console.log('Found dropdown menu');
+                            // Find the option within the dropdown menu by ID
+                            const option = dropdownMenu.querySelector(`#${optionId}`);
                             
-                            // Fallback to Exit at Mkt button if dropdown option not found
+                            if (option) {
+                                console.log(`Found and clicking option: ${optionId} within the correct dropdown`);
+                                option.click();
+                            } else {
+                                console.error(`Option ${optionId} not found in this module's dropdown`);
+                                
+                                // Try finding by option text if ID doesn't work
+                                const optionByText = Array.from(dropdownMenu.querySelectorAll('a[role="menuitem"]'))
+                                    .find(link => link.textContent.includes('Exit at Mkt'));
+                                
+                                if (optionByText) {
+                                    console.log('Found option by text: Exit at Mkt');
+                                    optionByText.click();
+                                } else {
+                                    // Fallback to Exit at Mkt button if dropdown option not found
+                                    const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
+                                        .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
+                                    if (exitBtn) {
+                                        console.log('Fallback to Exit at Mkt button');
+                                        exitBtn.click();
+                                    } else {
+                                        console.error('No Exit at Mkt button found either');
+                                    }
+                                }
+                            }
+                        } else {
+                            console.error('Dropdown menu not found or not visible');
+                            
+                            // Fallback to Exit at Mkt button
                             const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
                                 .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
                             if (exitBtn) {
@@ -338,7 +396,7 @@
                                 console.error('No Exit at Mkt button found either');
                             }
                         }
-                    }, 100); // Short delay to ensure dropdown is visible
+                    }, 200); // Increased delay to ensure dropdown is visible
                 } else {
                     console.error('Dropdown button not found');
                     
