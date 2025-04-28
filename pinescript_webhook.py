@@ -191,8 +191,7 @@ def process_trading_signal(data):
     trade_type = data.get("tradeType", "Open")  # Open or Close
     strategy = data.get("strategy", "DEFAULT")
     
-    # Log the strategy that sent the signal
-    print(f"Strategy: {strategy}")
+    # Now processing the already-logged strategy
     
     # Determine target accounts for this strategy
     target_account_indices, account_names = get_target_accounts_for_strategy(strategy)
@@ -442,17 +441,57 @@ def home():
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'POST':
-        data = request.get_json(force=True)
-        print("\n✅ New webhook received:")
-        print(json.dumps(data, indent=2))
+        print("\n=============================================")
+        print("📥 WEBHOOK REQUEST RECEIVED")
+        print("=============================================")
         
-        # Process and execute the trading signal
-        if controller.connections:
-            result = process_trading_signal(data)
-            return jsonify(result), 200
-        else:
-            print("❌ No Tradovate connections available. Make sure auto_login.py is running.")
-            return jsonify({"status": "error", "message": "No Tradovate connections available"}), 500
+        # Print request metadata
+        print(f"Request from: {request.remote_addr}")
+        print(f"Content-Type: {request.headers.get('Content-Type', 'Not specified')}")
+        print(f"User-Agent: {request.headers.get('User-Agent', 'Not specified')}")
+        
+        try:
+            # Parse the JSON payload
+            data = request.get_json(force=True)
+            print("\n📋 Webhook Payload:")
+            print(json.dumps(data, indent=2))
+            
+            # Validate required fields
+            symbol = data.get("symbol", "")
+            if not symbol:
+                error_msg = "Missing required field: 'symbol'"
+                print(f"⚠️ {error_msg}")
+                return jsonify({"status": "error", "message": error_msg}), 400
+                
+            # Extract and highlight strategy information
+            strategy = data.get("strategy", "DEFAULT")
+            print(f"\n🎯 Strategy specified in webhook: '{strategy}'")
+            
+            # Process and execute the trading signal
+            if controller.connections:
+                print(f"Found {len(controller.connections)} active Tradovate connections")
+                result = process_trading_signal(data)
+                print("\n✅ Webhook processed successfully")
+                print("=============================================\n")
+                return jsonify(result), 200
+            else:
+                error_msg = "No Tradovate connections available. Make sure auto_login.py is running."
+                print(f"❌ {error_msg}")
+                print("=============================================\n")
+                return jsonify({"status": "error", "message": error_msg}), 500
+                
+        except ValueError as e:
+            error_msg = f"Invalid JSON data: {str(e)}"
+            print(f"❌ {error_msg}")
+            print(f"Raw data: {request.data}")
+            print("=============================================\n")
+            return jsonify({"status": "error", "message": error_msg}), 400
+            
+        except Exception as e:
+            error_msg = f"Error processing webhook: {str(e)}"
+            print(f"❌ {error_msg}")
+            print("=============================================\n")
+            return jsonify({"status": "error", "message": error_msg}), 500
     
     # Handle browser GET so you see a friendly page
     return (
