@@ -11,11 +11,13 @@
 
 /**
  * Changes the active account in Tradovate UI to the specified account
+ * This version ensures a proper return value format for the webhook
  * 
  * @param {string} accountName - The account name/ID to switch to (e.g., "DEMO4656027")
  * @returns {Promise<string>} - Result message
  */
 function changeAccount(accountName) {
+    
     return new Promise((resolve, reject) => {
         try {
             console.log(`Attempting to change to account: ${accountName}`);
