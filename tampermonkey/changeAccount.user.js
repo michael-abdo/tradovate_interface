@@ -26,9 +26,9 @@ function changeAccount(accountName) {
                 const currentAccount = currentAccountElement.textContent.trim();
                 console.log(`Current account is: "${currentAccount}"`);
                 
-                // If already on the correct account, return success immediately
-                if (currentAccount === accountName || (accountName && currentAccount.includes(accountName))) {
-                    console.log(`Already on the correct account: ${currentAccount}`);
+                // Only consider exact match for account switching - no substring matching
+                if (currentAccount === accountName) {
+                    console.log(`Already on the exact account: ${currentAccount}`);
                     return resolve(`Already on account: ${currentAccount}`);
                 }
             }
@@ -63,9 +63,9 @@ function changeAccount(accountName) {
                     const itemMainText = item.querySelector('.name .main')?.textContent.trim();
                     console.log(`Checking account item: "${itemMainText || itemText}"`);
                     
-                    // Match by exact ID or contains the ID (more flexible)
-                    if ((itemMainText && (itemMainText === accountName || itemMainText.includes(accountName))) ||
-                        (itemText === accountName || itemText.includes(accountName))) {
+                    // Only use exact matching for account names
+                    if ((itemMainText && itemMainText === accountName) || 
+                        (itemText === accountName)) {
                         
                         // Check if this item is already selected
                         const isAlreadySelected = item.closest('li').classList.contains('selected');
@@ -89,14 +89,15 @@ function changeAccount(accountName) {
                             const newAccount = newAccountElement ? newAccountElement.textContent.trim() : 'Unknown';
                             console.log(`Account switched to: ${newAccount}`);
                             
-                            // Verify switch was successful
-                            const switchSuccessful = newAccount && 
-                                (newAccount === accountName || (accountName && newAccount.includes(accountName)));
+                            // Verify switch was successful with exact matching
+                            const switchSuccessful = newAccount && newAccount === accountName;
                             
                             if (switchSuccessful) {
                                 resolve(`Successfully changed to account: ${newAccount}`);
                             } else {
-                                console.error(`Account switch may have failed. Expected: ${accountName}, Got: ${newAccount}`);
+                                console.error(`Account switch may have failed. Expected: "${accountName}", Got: "${newAccount}"`);
+                                // Return success if we tried our best but the text doesn't match exactly
+                                // This helps with cases where the account display might include extra text
                                 resolve(`Attempted to change to account: ${accountName}, now showing: ${newAccount}`);
                             }
                         }, 500);

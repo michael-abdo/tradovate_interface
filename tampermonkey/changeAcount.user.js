@@ -13,9 +13,9 @@ function clickAccountItemByName(accountName) {
     const currentAccount = currentAccountElement.textContent.trim();
     console.log(`clickAccountItemByName: Current account is: "${currentAccount}"`);
     
-    // If already on the correct account, return success immediately
-    if (currentAccount === accountName || (accountName && currentAccount.includes(accountName))) {
-      console.log(`clickAccountItemByName: Already on the correct account: ${currentAccount}`);
+    // Only consider exact match for account switching - no substring matching
+    if (currentAccount === accountName) {
+      console.log(`clickAccountItemByName: Already on the exact account: ${currentAccount}`);
       return Promise.resolve(true);
     }
   }
@@ -44,7 +44,7 @@ function clickAccountItemByName(accountName) {
         console.log(`clickAccountItemByName: Available account: "${itemText}" (Selected: ${isSelected})`);
       });
       
-      // Look for exact match first
+      // Look for exact match only
       let found = false;
       
       for (const item of items) {
@@ -52,13 +52,13 @@ function clickAccountItemByName(accountName) {
         const itemMainText = item.querySelector('.name .main')?.textContent.trim();
         console.log(`clickAccountItemByName: Checking against "${itemMainText || itemText}"`);
         
-        // First try exact match, then fallback to contains
-        if ((itemMainText && (itemMainText === accountName || itemMainText.includes(accountName))) ||
-            (itemText === accountName || itemText.includes(accountName))) {
+        // Only use exact matching for account names
+        if ((itemMainText && itemMainText === accountName) || 
+            (itemText === accountName)) {
           
           // Check if this item is already selected
           const isAlreadySelected = item.closest('li').classList.contains('selected');
-          console.log(`clickAccountItemByName: Found matching account: "${itemMainText || itemText}" (Already selected: ${isAlreadySelected})`);
+          console.log(`clickAccountItemByName: Found exact matching account: "${itemMainText || itemText}" (Already selected: ${isAlreadySelected})`);
           
           if (isAlreadySelected) {
             // If already selected, just close the dropdown by clicking elsewhere
@@ -87,10 +87,9 @@ function clickAccountItemByName(accountName) {
           const currentAccount = currentAccountElement ? currentAccountElement.textContent.trim() : null;
           console.log(`clickAccountItemByName: Account switched to: "${currentAccount}"`);
           
-          // Check if the switch actually worked by verifying the dropdown text contains the account name
-          const switchSuccessful = currentAccount && 
-            (currentAccount === accountName || (accountName && currentAccount.includes(accountName)));
-          console.log(`clickAccountItemByName: Switch successful: ${switchSuccessful}`);
+          // Check if the switch actually worked by verifying the dropdown text matches the account name exactly
+          const switchSuccessful = currentAccount && currentAccount === accountName;
+          console.log(`clickAccountItemByName: Switch successful: ${switchSuccessful} (current: "${currentAccount}", target: "${accountName}")`);
           
           resolve(switchSuccessful);
         }, 500);
