@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto Order
 // @namespace    http://tampermonkey.net/
-// @version      5.1
+// @version      5.3
 // @description  Tampermonkey UI for bracket auto trades with TP/SL checkboxes
 // @author       You
 // @match        https://trader.tradovate.com/
@@ -145,28 +145,8 @@
                 // Call the clickExitForSymbol function with the normalized symbol and Exit at Mkt option
                 clickExitForSymbol(normalizedSymbol, 'cancel-option-Exit-at-Mkt-Cxl');
                 console.log('Exit action triggered for symbol:', normalizedSymbol);
-                
-                // Visual feedback for user
-                const closeBtn = document.getElementById('closeAllBtn');
-                if (closeBtn) {
-                    const originalColor = closeBtn.style.background;
-                    closeBtn.style.background = '#00cc00'; // Green flash for success
-                    setTimeout(() => {
-                        closeBtn.style.background = originalColor;
-                    }, 500);
-                }
             } catch (err) {
                 console.error("Close All operation failed:", err);
-                
-                // Visual feedback for error
-                const closeBtn = document.getElementById('closeAllBtn');
-                if (closeBtn) {
-                    const originalColor = closeBtn.style.background;
-                    closeBtn.style.background = '#ff0000'; // Red flash for error
-                    setTimeout(() => {
-                        closeBtn.style.background = originalColor;
-                    }, 500);
-                }
                 
                 // Fallback to old method if the new method fails
                 try {
@@ -194,15 +174,6 @@
                 console.log('Cancel All action triggered for symbol:', normalizedSymbol);
             } catch (err) {
                 console.error("Cancel All operation failed:", err);
-                // Show visual feedback if there's an error
-                const cancelBtn = document.getElementById('cancelAllBtn');
-                if (cancelBtn) {
-                    const originalColor = cancelBtn.style.background;
-                    cancelBtn.style.background = '#ff0000';
-                    setTimeout(() => {
-                        cancelBtn.style.background = originalColor;
-                    }, 500);
-                }
             }
         });
 
@@ -415,79 +386,9 @@
         }
     }
     
-    // Function to check for order closures and run risk management
-    function setupOrderClosedListener() {
-        console.log('Setting up order closed listener...');
-        
-        // Store the last known order events to detect changes
-        let lastEventCount = 0;
-        let lastOrderEvents = [];
-        
-        // Check for new order events periodically
-        const orderCheckInterval = setInterval(() => {
-            try {
-                const currentEvents = getOrderEvents();
-                
-                // If no previous events stored, just save current state
-                if (lastEventCount === 0) {
-                    lastEventCount = currentEvents.length;
-                    lastOrderEvents = [...currentEvents];
-                    return;
-                }
-                
-                // Check if we have new events
-                if (currentEvents.length > lastEventCount) {
-                    // Find the new events (ones that weren't in our last check)
-                    const newEvents = currentEvents.slice(0, currentEvents.length - lastEventCount);
-                    
-                    // Check for filled or exit events
-                    const closeEvents = newEvents.filter(event => 
-                        (event.event && (
-                            event.event.includes("filled") || 
-                            event.event.includes("Exit") ||
-                            event.event.toLowerCase().includes("cancel") ||
-                            event.event.includes("closed")
-                        ))
-                    );
-                    
-                    if (closeEvents.length > 0) {
-                        console.log("🔔 Order closure detected:", closeEvents);
-                        
-                        // Run risk management
-                        console.log("Running auto risk management after order closure");
-                        if (typeof getTableData === 'function' && 
-                            typeof updateUserColumnPhaseStatus === 'function' && 
-                            typeof performAccountActions === 'function') {
-                            getTableData();
-                            updateUserColumnPhaseStatus();
-                            performAccountActions();
-                            console.log("Auto risk management completed after order closure");
-                        } else {
-                            console.error("Auto risk management functions not available");
-                        }
-                    }
-                    
-                    // Update our stored state
-                    lastEventCount = currentEvents.length;
-                    lastOrderEvents = [...currentEvents];
-                }
-            } catch (err) {
-                console.error("Error in order closed listener:", err);
-            }
-        }, 2000); // Check every 2 seconds
-        
-        // Store the interval ID in case we need to clear it later
-        window.orderClosedListenerInterval = orderCheckInterval;
-        
-        return orderCheckInterval;
-    }
-    
     console.log('Creating UI...');
     createUI();
     console.log('UI creation complete');
-    
-    // Start the order closed listener
-    setupOrderClosedListener();
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);
@@ -559,14 +460,8 @@
 
     async function createBracketOrdersManual(tradeData) {
         console.log('Creating bracket orders with data:', tradeData);
-        // Get checkbox states from UI if available, otherwise infer from tradeData
-        const tpCheckbox = document.getElementById('tpCheckbox');
-        const slCheckbox = document.getElementById('slCheckbox');
-        
-        // If checkboxes exist in the UI, use their values, otherwise determine from tradeData
-        const enableTP = tpCheckbox ? tpCheckbox.checked : 'takeProfit' in tradeData;
-        const enableSL = slCheckbox ? slCheckbox.checked : 'stopLoss' in tradeData;
-        
+        const enableTP = document.getElementById('tpCheckbox').checked;
+        const enableSL = document.getElementById('slCheckbox').checked;
         console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
@@ -643,6 +538,16 @@
             });
         }
 
+        function clickPriceArrow(direction = 'up') {
+          const wrapper = document.querySelector('.numeric-input-value-controls');
+          if (!wrapper) return;
+
+          const target = wrapper.querySelector(
+            direction === 'up' ? '.numeric-input-increment' : '.numeric-input-decrement'
+          );
+          target?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        }
+
         async function submitOrder(orderType, priceValue) {
             await setCommonFields();
 
@@ -652,10 +557,11 @@
                 .find(li => li.textContent.trim() === orderType)
                 ?.click();
 
-            await delay(400);               // NEW - let Tradovate draw the price box
+            //await delay(400);               // NEW - let Tradovate draw the price box
 
             if (priceValue)
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
+            clickPriceArrow();
 
             document.querySelector('.btn-group .btn-primary')?.click();
             await delay(200);
@@ -670,32 +576,24 @@
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
             tradeData.action = 'Sell';
-            if (enableTP && tradeData.takeProfit) {
+            if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
                 await submitOrder('LIMIT', tradeData.takeProfit);
-            } else {
-                console.log('Skipping take profit order - disabled or price not provided');
             }
-            if (enableSL && tradeData.stopLoss) {
+            if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
                 await submitOrder('STOP', tradeData.stopLoss);
-            } else {
-                console.log('Skipping stop loss order - disabled or price not provided');
             }
         } else {
             console.log('Flipping action to Buy for TP/SL orders');
             tradeData.action = 'Buy';
-            if (enableTP && tradeData.takeProfit) {
+            if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
                 await submitOrder('LIMIT', tradeData.takeProfit);
-            } else {
-                console.log('Skipping take profit order - disabled or price not provided');
             }
-            if (enableSL && tradeData.stopLoss) {
+            if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
                 await submitOrder('STOP', tradeData.stopLoss);
-            } else {
-                console.log('Skipping stop loss order - disabled or price not provided');
             }
         }
         console.log('Bracket order creation complete');
@@ -741,7 +639,7 @@
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25) {
         console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}`);
 
-        const symbolInput = document.getElementById('symbolInput')?.value || inputSymbol || 'NQ';
+        const symbolInput = document.getElementById('symbolInput').value || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
 
         // Get root symbol (e.g., 'NQH5' -> 'NQ')
@@ -753,49 +651,33 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         // Keep track of the last symbol to handle symbol changes
         if (rootSymbol !== autoTrade.lastRootSymbol) {
-           const tickInput = document.getElementById('tickInput');
-           if (tickInput) tickInput.value = symbolData?.tickSize ?? '';
+           document.getElementById('tickInput').value = symbolData?.tickSize ?? '';
         }
         autoTrade.lastRootSymbol = rootSymbol;
         const tickSize = (symbolData && typeof symbolData.tickSize === 'number')
                ? symbolData.tickSize
-               : parseFloat(document.getElementById('tickInput')?.value || '') || _tickSize;
+               : parseFloat(document.getElementById('tickInput').value) || _tickSize;
 
         // right after tickSize is determined
-        const tickInput = document.getElementById('tickInput');
-        if (tickInput) {
-            tickInput.value = tickSize;           // shows the real value
-            localStorage.setItem('bracketTrade_tick', tickSize);
-        }
+        tickInput.value = tickSize;           // shows the real value
+        localStorage.setItem('bracketTrade_tick', tickSize);
 
-        // Check if TP/SL are enabled or disabled (0 means disabled)
-        const enableTP = takeProfitTicks !== 0;
-        const enableSL = stopLossTicks !== 0;
-        console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
+        // Use provided values or defaults from dictionary or UI
+        const actualStopLossTicks = stopLossTicks ||
+                                   symbolData?.defaultSL ||
+                                   parseInt(document.getElementById('slInput').value) ||
+                                   40;
 
-        // Only calculate TP/SL values if they are enabled
-        let actualStopLossTicks = 0;
-        let actualTakeProfitTicks = 0;
-
-        if (enableSL) {
-            actualStopLossTicks = stopLossTicks ||
-                                 symbolData?.defaultSL ||
-                                 parseInt(document.getElementById('slInput')?.value || '') ||
-                                 40;
-        }
-
-        if (enableTP) {
-            actualTakeProfitTicks = takeProfitTicks ||
-                                   symbolData?.defaultTP ||
-                                   parseInt(document.getElementById('tpInput')?.value || '') ||
-                                   100;
-        }
+        const actualTakeProfitTicks = takeProfitTicks ||
+                                     symbolData?.defaultTP ||
+                                     parseInt(document.getElementById('tpInput').value) ||
+                                     100;
 
         const from = symbolData?.tickSize ? 'dictionary'
-          : document.getElementById('tickInput')?.value ? 'input field'
+          : document.getElementById('tickInput').value ? 'input field'
           : 'default parameter';
         console.log(`Using tick size ${tickSize} (from ${from})`);
-        console.log(`Using SL: ${enableSL ? actualStopLossTicks + ' ticks' : 'disabled'}, TP: ${enableTP ? actualTakeProfitTicks + ' ticks' : 'disabled'}`);
+        console.log(`Using SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
 
         console.log(`Getting market data for ${symbolInput}`);
         const marketData = getMarketData(symbolInput);
@@ -846,48 +728,38 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         const hardcodedSLPrice = slPriceInput && slPriceInput.value ? parseFloat(slPriceInput.value) : null;
         const hardcodedTPPrice = tpPriceInput && tpPriceInput.value ? parseFloat(tpPriceInput.value) : null;
         
-        // Determine SL price only if SL is enabled
-        let stopLossPrice = null;
-        if (enableSL) {
-            if (hardcodedSLPrice !== null) {
-                stopLossPrice = hardcodedSLPrice.toFixed(decimalPrecision);
-                console.log(`Using hardcoded SL price: ${stopLossPrice}`);
-            } else {
-                stopLossPrice = (action === 'Buy'
-                    ? entryPrice - actualStopLossTicks * tickSize
-                    : entryPrice + actualStopLossTicks * tickSize).toFixed(decimalPrecision);
-                console.log(`Calculated SL price: ${stopLossPrice} (${action === 'Buy' ? 'entry - ' : 'entry + '}${actualStopLossTicks} ticks)`);
-            }
+        // Determine SL price - use hardcoded if available, otherwise calculate based on ticks
+        let stopLossPrice;
+        if (hardcodedSLPrice !== null) {
+            stopLossPrice = hardcodedSLPrice.toFixed(decimalPrecision);
+            console.log(`Using hardcoded SL price: ${stopLossPrice}`);
         } else {
-            console.log("Stop Loss is disabled for this trade");
+            stopLossPrice = (action === 'Buy'
+                ? entryPrice - actualStopLossTicks * tickSize
+                : entryPrice + actualStopLossTicks * tickSize).toFixed(decimalPrecision);
+            console.log(`Calculated SL price: ${stopLossPrice} (${action === 'Buy' ? 'entry - ' : 'entry + '}${actualStopLossTicks} ticks)`);
         }
 
-        // Determine TP price only if TP is enabled
-        let takeProfitPrice = null;
-        if (enableTP) {
-            if (hardcodedTPPrice !== null) {
-                takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
-                console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
-            } else {
-                takeProfitPrice = (action === 'Buy'
-                    ? entryPrice + actualTakeProfitTicks * tickSize
-                    : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
-                console.log(`Calculated TP price: ${takeProfitPrice} (${action === 'Buy' ? 'entry + ' : 'entry - '}${actualTakeProfitTicks} ticks)`);
-            }
+        // Determine TP price - use hardcoded if available, otherwise calculate based on ticks
+        let takeProfitPrice;
+        if (hardcodedTPPrice !== null) {
+            takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
+            console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
         } else {
-            console.log("Take Profit is disabled for this trade");
+            takeProfitPrice = (action === 'Buy'
+                ? entryPrice + actualTakeProfitTicks * tickSize
+                : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
+            console.log(`Calculated TP price: ${takeProfitPrice} (${action === 'Buy' ? 'entry + ' : 'entry - '}${actualTakeProfitTicks} ticks)`);
         }
 
         const tradeData = {
             symbol: marketData.symbol,
             action,
             qty: quantity.toString(),
+            takeProfit: takeProfitPrice,
+            stopLoss: stopLossPrice,
             orderType: orderType,
-            entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null,
-            
-            // Only include TP/SL if they are enabled
-            ...(enableTP && { takeProfit: takeProfitPrice }),
-            ...(enableSL && { stopLoss: stopLossPrice })
+            entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
         };
         console.log('Trade data prepared:', tradeData);
 
