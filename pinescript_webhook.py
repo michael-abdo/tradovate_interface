@@ -369,7 +369,11 @@ def process_trading_signal(data):
                             if (typeof changeAccount === 'function') {{
                                 console.log("Using changeAccount function to switch to {account_name}");
                                 const result = await changeAccount('{account_name}');
-                                return {{ success: !result.includes("not found"), message: result }};
+                                // Consider success for both "Already on account" and "Successfully changed"
+                                return {{ 
+                                    success: result.includes("Already on account") || result.includes("Successfully changed"), 
+                                    message: result 
+                                }};
                             }} else if (typeof clickAccountItemByName === 'function') {{
                                 console.log("Using clickAccountItemByName function to switch to {account_name}");
                                 const result = clickAccountItemByName('{account_name}');
