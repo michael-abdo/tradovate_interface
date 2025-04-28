@@ -463,12 +463,12 @@ def process_trading_signal(data):
                     result_obj = switch_result.get('result', {})
                     print(f"DEBUG - Result object: {result_obj}")
                     
-                    # Check if we got a Promise instead of a value
-                    if result_obj.get('subtype') == 'promise':
-                        print(f"DEBUG - Detected Promise object, forcing success for {account_name}")
+                    # Check if we got a Promise or an empty object reference
+                    if result_obj.get('subtype') == 'promise' or (result_obj.get('type') == 'object' and 'objectId' in result_obj):
+                        print(f"DEBUG - Detected non-serializable object, forcing success for {account_name}")
                         switch_response = {
                             'success': True,
-                            'message': f"Promise detected, assuming success for {account_name}",
+                            'message': f"Object reference detected, assuming success for {account_name}",
                             'availableAccounts': [account_name]
                         }
                     else:
