@@ -792,7 +792,10 @@
         
         <div class="strategy-controls">
             <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
-            <button id="save-strategies-btn" class="strategy-button">Save Strategy Mappings</button>
+            <button id="save-strategies-btn" class="strategy-button">Save All Strategy Mappings</button>
+            <div style="text-align: center; font-size: 12px; color: #aaa; margin-top: 5px;">
+                Strategy selections are automatically saved when changed
+            </div>
             <div class="strategy-list-container" style="display: flex; justify-content: center; width: 100%; margin-top: 10px;">
                 <div id="strategy-list">
                     <!-- Will be populated by JavaScript -->
@@ -1150,6 +1153,77 @@
                         const select = document.createElement('select');
                         select.className = 'strategy-select';
                         select.setAttribute('data-account', account["Account"]);
+                        
+                        // Add event listener to auto-update backend when selection changes
+                        select.addEventListener('change', function() {
+                            const accountId = this.getAttribute('data-account');
+                            const selectedStrategy = this.value;
+                            
+                            // Gather existing mappings from all selects
+                            const newMappings = {};
+                            strategies.forEach(strategy => {
+                                newMappings[strategy] = [...(strategyMappings[strategy] || [])];
+                                
+                                // Remove this account from this strategy if it exists
+                                const index = newMappings[strategy].indexOf(accountId);
+                                if (index !== -1) {
+                                    newMappings[strategy].splice(index, 1);
+                                }
+                            });
+                            
+                            // Add account to the selected strategy
+                            if (selectedStrategy && newMappings[selectedStrategy]) {
+                                newMappings[selectedStrategy].push(accountId);
+                            }
+                            
+                            console.log("Auto-updating strategy mappings:", newMappings);
+                            
+                            // Send updated mappings to server
+                            fetch('/api/strategies', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ strategy_mappings: newMappings })
+                            })
+                            .then(response => response.json())
+                            .then(result => {
+                                console.log('Strategy mapping updated successfully:', result);
+                                strategyMappings = newMappings; // Update the local state
+                                
+                                // Briefly show visual feedback that the change was saved
+                                const savedFeedback = document.createElement('div');
+                                savedFeedback.textContent = 'Strategy saved';
+                                savedFeedback.style.position = 'fixed';
+                                savedFeedback.style.bottom = '20px';
+                                savedFeedback.style.right = '20px';
+                                savedFeedback.style.backgroundColor = '#4cd964';
+                                savedFeedback.style.color = 'white';
+                                savedFeedback.style.padding = '8px 12px';
+                                savedFeedback.style.borderRadius = '4px';
+                                savedFeedback.style.zIndex = '9999';
+                                savedFeedback.style.opacity = '0';
+                                savedFeedback.style.transition = 'opacity 0.3s';
+                                
+                                document.body.appendChild(savedFeedback);
+                                
+                                // Fade in
+                                setTimeout(() => {
+                                    savedFeedback.style.opacity = '1';
+                                }, 10);
+                                
+                                // Remove after delay
+                                setTimeout(() => {
+                                    savedFeedback.style.opacity = '0';
+                                    setTimeout(() => {
+                                        document.body.removeChild(savedFeedback);
+                                    }, 300);
+                                }, 2000);
+                            })
+                            .catch(error => {
+                                console.error('Error updating strategy mapping:', error);
+                            });
+                        });
                         
                         // Add empty option
                         const emptyOption = document.createElement('option');
