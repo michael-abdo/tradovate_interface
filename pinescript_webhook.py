@@ -361,76 +361,92 @@ def process_trading_signal(data):
                 for account_name in account_names:
                     print(f"🔄 Attempting to switch to account: {account_name} on connection {account_index}")
                     
-                    # Call the account switching function in the browser context
-                    # Handle the specific DEMO3655059-1 account as special case to ensure success
-                    if account_name == "DEMO3655059-1":
-                        switch_script = """
-                        (function() {
-                            return { 
-                                success: true, 
-                                message: "Special handling for DEMO3655059-1"
-                            };
-                        })();
-                        """
-                    else:
-                        # For other accounts, use a non-async script that directly checks for the current account
-                        # This avoids Promise handling issues with Runtime.evaluate
-                        switch_script = f"""
-                        (function() {{
-                            try {{
-                                // First check if we're already on the correct account
-                                const currentAccountElement = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"] .name div');
-                                if (currentAccountElement) {{
-                                    const currentAccount = currentAccountElement.textContent.trim();
-                                    console.log(`Current account is: "${{currentAccount}}"`);
-                                    
-                                    // If already on the target account, return success immediately
-                                    if (currentAccount === "{account_name}") {{
-                                        console.log(`Already on the exact account: ${{currentAccount}}`);
-                                        return {{ 
-                                            success: true, 
-                                            message: `Already on account: ${{currentAccount}}` 
-                                        }};
-                                    }}
+                    # Check if the account exists in the available accounts list
+                    # This is a more reliable approach that avoids Promise handling issues
+                    switch_script = f"""
+                    (function() {{
+                        try {{
+                            // First check if the account exists in the dropdown
+                            // Do this by clicking the dropdown and checking the account items
+                            const accountSelector = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"]');
+                            if (!accountSelector) {{
+                                return {{ 
+                                    success: false, 
+                                    message: "Account selector not found" 
+                                }};
+                            }}
+                            
+                            // Check if we're already on the account
+                            const currentAccountElement = accountSelector.querySelector('.name div');
+                            if (currentAccountElement) {{
+                                const currentAccount = currentAccountElement.textContent.trim();
+                                console.log(`Current account is: "${{currentAccount}}"`);
+                                
+                                if (currentAccount === "{account_name}") {{
+                                    console.log(`Already on the exact account: ${{currentAccount}}`);
+                                    return {{ 
+                                        success: true, 
+                                        message: `Already on account: ${{currentAccount}}`,
+                                        availableAccounts: [currentAccount]
+                                    }};
+                                }}
+                            }}
+                            
+                            // Click to open the dropdown
+                            accountSelector.click();
+                            
+                            // Get all available accounts
+                            const availableAccounts = [];
+                            const accountItems = document.querySelectorAll('.dropdown-menu li a.account');
+                            accountItems.forEach(item => {{
+                                const mainDiv = item.querySelector('.name .main');
+                                if (mainDiv) {{
+                                    availableAccounts.push(mainDiv.textContent.trim());
+                                }} else {{
+                                    availableAccounts.push(item.textContent.trim());
+                                }}
+                            }});
+                            
+                            console.log(`Available accounts: ${{JSON.stringify(availableAccounts)}}`);
+                            
+                            // Check if the target account is in the list
+                            const accountExists = availableAccounts.includes("{account_name}");
+                            
+                            // Close the dropdown by clicking elsewhere
+                            document.body.click();
+                            
+                            if (accountExists) {{
+                                console.log(`Account ${account_name} exists in available accounts. Proceeding with switch.`);
+                                
+                                // Don't wait for the Promise, just initiate the switch
+                                if (typeof changeAccount === 'function') {{
+                                    changeAccount('{account_name}');
+                                }} else if (typeof clickAccountItemByName === 'function') {{
+                                    clickAccountItemByName('{account_name}');
                                 }}
                                 
-                                // Call the appropriate account switch function
-                                if (typeof changeAccount === 'function') {{
-                                    console.log("Using changeAccount function to switch to {account_name}");
-                                    // Since we can't await the Promise in this context, we'll just initiate the switch
-                                    changeAccount('{account_name}');
-                                    
-                                    // Give it a moment to switch but don't wait for it
-                                    setTimeout(() => {{
-                                        const afterSwitchElement = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"] .name div');
-                                        if (afterSwitchElement && afterSwitchElement.textContent.trim() === "{account_name}") {{
-                                            console.log(`Successfully switched to account: {account_name}`);
-                                        }}
-                                    }}, 500);
-                                    
-                                    return {{ 
-                                        success: true, 
-                                        message: `Initiated switch to account: {account_name}` 
-                                    }};
-                                }} else if (typeof clickAccountItemByName === 'function') {{
-                                    console.log("Using clickAccountItemByName function to switch to {account_name}");
-                                    
-                                    // Call the function without waiting for result
-                                    clickAccountItemByName('{account_name}');
-                                    
-                                    return {{ 
-                                        success: true, 
-                                        message: `Initiated switch to account: {account_name}` 
-                                    }};
-                                }} else {{
-                                    return {{ success: false, message: "No account switching function available" }};
-                                }}
-                            }} catch (error) {{
-                                console.error("Error switching account:", error);
-                                return {{ success: false, message: "Error switching account: " + error.toString() }};
+                                return {{ 
+                                    success: true, 
+                                    message: `Account exists and switch initiated: {account_name}`,
+                                    availableAccounts: availableAccounts
+                                }};
+                            }} else {{
+                                console.error(`Account {account_name} not found in available accounts.`);
+                                return {{ 
+                                    success: false, 
+                                    message: `Account not found: {account_name}`,
+                                    availableAccounts: availableAccounts
+                                }};
                             }}
-                        }})();
-                        """
+                        }} catch (error) {{
+                            console.error("Error checking/switching account:", error);
+                            return {{ 
+                                success: false, 
+                                message: `Error: ${{error.toString()}}` 
+                            }};
+                        }}
+                    }})();
+                    """
                     
                     switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
                     
@@ -439,19 +455,24 @@ def process_trading_signal(data):
                     # Parse the success status from the response
                     success = False
                     message = "Unknown result"
+                    available_accounts = []
                     
-                    # For testing, force success for DEMO3655059-1
-                    if account_name == "DEMO3655059-1":
-                        success = True
-                        message = "Forcing success for known account"
-                    elif isinstance(switch_response, str):
+                    if isinstance(switch_response, str):
                         # Handle string responses for backward compatibility
                         message = switch_response
-                        success = "already on account" in switch_response.lower() or "successfully changed" in switch_response.lower() or "initiated switch" in switch_response.lower()
+                        success = "already on account" in switch_response.lower() or "account exists" in switch_response.lower()
                     elif isinstance(switch_response, dict):
                         # Handle structured responses
                         success = switch_response.get('success', False)
                         message = switch_response.get('message', "Unknown result")
+                        available_accounts = switch_response.get('availableAccounts', [])
+                        
+                        # Log the available accounts if present
+                        if available_accounts:
+                            print(f"Available accounts in dropdown: {available_accounts}")
+                            # If our target account is in the list, ensure success is true
+                            if account_name in available_accounts:
+                                success = True
                     
                     print(f"Account switch result: {message} (Success: {success})")
                     
