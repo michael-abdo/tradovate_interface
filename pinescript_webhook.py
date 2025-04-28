@@ -48,7 +48,7 @@ def start_ngrok(port: int) -> str | None:
     return None
 
 def get_target_accounts_for_strategy(strategy_name):
-    """Get account indices and names that are mapped to a specific strategy"""
+    """Get account indices and account names mapped to a specific strategy"""
     try:
         # Use the current working directory if __file__ is not defined
         try:
@@ -64,6 +64,7 @@ def get_target_accounts_for_strategy(strategy_name):
         with open(strategy_file, 'r') as f:
             mappings = json.load(f)
             
+        # Get the exact account names from strategy_mappings.json
         strategy_accounts = mappings.get("strategy_mappings", {}).get(strategy_name, [])
         print(f"Found strategy accounts for {strategy_name}: {strategy_accounts}")
         
@@ -77,48 +78,15 @@ def get_target_accounts_for_strategy(strategy_name):
         if not strategy_accounts:
             print(f"No DEFAULT mapping or empty, using all accounts")
             return list(range(len(controller.connections))), []
-                
-        # Convert account names to indices and create mapping
-        account_indices = []
-        account_id_to_index = {}  # Map account IDs to connection indices
-        account_id_to_name = {}   # Map account IDs to their actual names in the UI
         
-        print(f"Looking for accounts that match these IDs: {strategy_accounts}")
-        for i, conn in enumerate(controller.connections):
-            try:
-                print(f"\nChecking connection {i}:")
-                # Get account data to extract account ID
-                result = conn.get_account_data()
-                if result and 'result' in result and 'value' in result['result']:
-                    try:
-                        account_data = json.loads(result['result']['value'])
-                        if account_data and len(account_data) > 0:
-                            # Print first account record for debugging
-                            print(f"Account data for connection {i}: {json.dumps(account_data[0], indent=2)}")
-                            
-                            account_id = account_data[0].get('Account')
-                            print(f"Extracted account ID: {account_id}")
-                            
-                            if account_id in strategy_accounts:
-                                account_indices.append(i)
-                                account_id_to_index[account_id] = i
-                                account_id_to_name[account_id] = account_id  # Use ID as name by default
-                                print(f"✅ Account {account_id} (index {i}) matched for strategy {strategy_name}")
-                    except Exception as e:
-                        print(f"Error parsing account data for connection {i}: {e}")
-            except Exception as e:
-                print(f"Error processing connection {i}: {e}")
+        # Include all connections but provide the target account names from strategy_mappings.json
+        # This way we'll try to execute on all tabs but switch to the correct accounts before executing
+        account_indices = list(range(len(controller.connections)))
         
-        # If no matches found, use all accounts
-        if not account_indices:
-            print(f"No matching accounts found for strategy {strategy_name}, using all accounts")
-            return list(range(len(controller.connections))), []
-            
-        print(f"Found matching account indices: {account_indices}")
-        print(f"Account ID to index mapping: {account_id_to_index}")
-        print(f"Account names to use: {list(account_id_to_name.values())}")
+        print(f"Using all {len(account_indices)} connections but will switch to accounts: {strategy_accounts}")
         
-        return account_indices, list(account_id_to_name.values())
+        # Return all indices but with the specific account names to switch to
+        return account_indices, strategy_accounts
             
     except Exception as e:
         print(f"Error loading strategy mappings: {e}")
@@ -239,62 +207,97 @@ def process_trading_signal(data):
                     continue
                     
                 try:
-                    # Get account ID to switch to
-                    account_id = account_names[i] if i < len(account_names) else None
+                    # Try each of the target account names in this browser tab
+                    account_switch_success = False
                     
-                    if account_id:
-                        print(f"🔄 Switching to account: {account_id} on connection {account_index}")
+                    for account_name in account_names:
+                        print(f"🔄 Attempting to switch to account: {account_name} on connection {account_index}")
                         
-                        # Call the changeAccount function in the browser context
+                        # Call the account switching function in the browser context
                         switch_script = f"""
                         (async function() {{
                             try {{
-                                if (typeof changeAccount !== 'function') {{
-                                    return "Account switching function not available";
+                                // First check which function is available
+                                if (typeof changeAccount === 'function') {{
+                                    console.log("Using changeAccount function to switch to {account_name}");
+                                    const result = await changeAccount('{account_name}');
+                                    return {{ success: !result.includes("not found"), message: result }};
+                                }} else if (typeof clickAccountItemByName === 'function') {{
+                                    console.log("Using clickAccountItemByName function to switch to {account_name}");
+                                    const result = clickAccountItemByName('{account_name}');
+                                    return {{ success: result, message: "Called clickAccountItemByName for account {account_name}" }};
+                                }} else {{
+                                    return {{ success: false, message: "No account switching function available" }};
                                 }}
-                                
-                                // Try to switch to the target account
-                                const result = await changeAccount('{account_id}');
-                                return result;
                             }} catch (error) {{
                                 console.error("Error switching account:", error);
-                                return "Error switching account: " + error.toString();
+                                return {{ success: false, message: "Error switching account: " + error.toString() }};
                             }}
                         }})();
                         """
                         
                         switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
-                        switch_message = switch_result.get('result', {}).get('value', 'Unknown result')
-                        print(f"Account switch result: {switch_message}")
+                        switch_response = switch_result.get('result', {}).get('value', {})
                         
-                        # Give the UI time to update after account switch
-                        time.sleep(0.5)
+                        # Parse the success status from the response
+                        success = False
+                        message = "Unknown result"
+                        
+                        if isinstance(switch_response, str):
+                            # Handle string responses for backward compatibility
+                            message = switch_response
+                            success = "not found" not in switch_response.lower()
+                        elif isinstance(switch_response, dict):
+                            # Handle structured responses
+                            success = switch_response.get('success', False)
+                            message = switch_response.get('message', "Unknown result")
+                        
+                        print(f"Account switch result: {message} (Success: {success})")
+                        
+                        if success:
+                            account_switch_success = True
+                            # Give the UI time to update after successful account switch
+                            time.sleep(0.5)
+                            break  # Exit the loop if we successfully switched to this account
+                        else:
+                            print(f"Failed to switch to account {account_name}, trying next account if available")
                     
-                    # First, update the symbol and wait for UI to adjust
-                    print(f"Updating symbol to {symbol} on account index {account_index}")
-                    symbol_update_result = update_ui_symbol(account_index, symbol)
-                    print(f"Symbol update result: {symbol_update_result}")
-                    
-                    # Add a longer delay after updating symbol to let the UI fully adjust
-                    print(f"Waiting for symbol to update and market data to load...")
-                    time.sleep(2.0)  # Increased delay for UI to update
-                    
-                    # Use exit_positions with the Exit-at-Mkt-Cxl option for Close trade type
-                    print(f"Closing positions on account index {account_index}")
-                    result = controller.execute_on_one(account_index, 'exit_positions', symbol, 'cancel-option-Exit-at-Mkt-Cxl')
-                    
-                    # Add account info to the result
-                    result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
-                    result_with_account["account_id"] = account_id
-                    result_with_account["account_index"] = account_index
-                    results.append(result_with_account)
+                    # Only proceed with position closing if account switching was successful
+                    if account_switch_success:
+                        # First, update the symbol and wait for UI to adjust
+                        print(f"Updating symbol to {symbol} on account index {account_index}")
+                        symbol_update_result = update_ui_symbol(account_index, symbol)
+                        print(f"Symbol update result: {symbol_update_result}")
+                        
+                        # Add a longer delay after updating symbol to let the UI fully adjust
+                        print(f"Waiting for symbol to update and market data to load...")
+                        time.sleep(2.0)  # Increased delay for UI to update
+                        
+                        # Use exit_positions with the Exit-at-Mkt-Cxl option for Close trade type
+                        print(f"Closing positions on account index {account_index}")
+                        result = controller.execute_on_one(account_index, 'exit_positions', symbol, 'cancel-option-Exit-at-Mkt-Cxl')
+                        
+                        # Add account info to the result
+                        result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
+                        result_with_account["account_id"] = account_name  # Use the successful account name
+                        result_with_account["account_index"] = account_index
+                        result_with_account["account_switch_success"] = True
+                        results.append(result_with_account)
+                    else:
+                        print(f"⚠️ Failed to switch to any account for connection {account_index}, skipping position closing")
+                        results.append({
+                            "error": "Failed to switch to any account",
+                            "account_index": account_index,
+                            "account_names_tried": account_names,
+                            "account_switch_success": False
+                        })
                     
                 except Exception as e:
                     print(f"⚠️ Error closing positions on connection {account_index}: {e}")
                     results.append({
                         "error": str(e),
                         "account_index": account_index,
-                        "account_id": account_names[i] if i < len(account_names) else None
+                        "account_names_tried": account_names
                     })
         
         print(f"Close all positions results: {results}")
@@ -343,7 +346,7 @@ def process_trading_signal(data):
     
     results = []
     # Execute on each targeted account
-    for i, account_index in enumerate(target_account_indices):
+    for account_index in target_account_indices:
         if account_index < len(controller.connections):
             conn = controller.connections[account_index]
             if not conn.tab:
@@ -352,66 +355,101 @@ def process_trading_signal(data):
                 continue
                 
             try:
-                # Get account ID to switch to
-                account_id = account_names[i] if i < len(account_names) else None
+                # Try each of the target account names in this browser tab
+                account_switch_success = False
                 
-                if account_id:
-                    print(f"🔄 Switching to account: {account_id} on connection {account_index}")
+                for account_name in account_names:
+                    print(f"🔄 Attempting to switch to account: {account_name} on connection {account_index}")
                     
-                    # Call the changeAccount function in the browser context
+                    # Call the account switching function in the browser context
                     switch_script = f"""
                     (async function() {{
                         try {{
-                            if (typeof changeAccount !== 'function') {{
-                                return "Account switching function not available";
+                            // First check which function is available
+                            if (typeof changeAccount === 'function') {{
+                                console.log("Using changeAccount function to switch to {account_name}");
+                                const result = await changeAccount('{account_name}');
+                                return {{ success: !result.includes("not found"), message: result }};
+                            }} else if (typeof clickAccountItemByName === 'function') {{
+                                console.log("Using clickAccountItemByName function to switch to {account_name}");
+                                const result = clickAccountItemByName('{account_name}');
+                                return {{ success: result, message: "Called clickAccountItemByName for account {account_name}" }};
+                            }} else {{
+                                return {{ success: false, message: "No account switching function available" }};
                             }}
-                            
-                            // Try to switch to the target account
-                            const result = await changeAccount('{account_id}');
-                            return result;
                         }} catch (error) {{
                             console.error("Error switching account:", error);
-                            return "Error switching account: " + error.toString();
+                            return {{ success: false, message: "Error switching account: " + error.toString() }};
                         }}
                     }})();
                     """
                     
                     switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
-                    switch_message = switch_result.get('result', {}).get('value', 'Unknown result')
-                    print(f"Account switch result: {switch_message}")
+                    switch_response = switch_result.get('result', {}).get('value', {})
                     
-                    # Give the UI time to update after account switch
-                    time.sleep(0.5)
+                    # Parse the success status from the response
+                    success = False
+                    message = "Unknown result"
+                    
+                    if isinstance(switch_response, str):
+                        # Handle string responses for backward compatibility
+                        message = switch_response
+                        success = "not found" not in switch_response.lower()
+                    elif isinstance(switch_response, dict):
+                        # Handle structured responses
+                        success = switch_response.get('success', False)
+                        message = switch_response.get('message', "Unknown result")
+                    
+                    print(f"Account switch result: {message} (Success: {success})")
+                    
+                    if success:
+                        account_switch_success = True
+                        # Give the UI time to update after successful account switch
+                        time.sleep(0.5)
+                        break  # Exit the loop if we successfully switched to this account
+                    else:
+                        print(f"Failed to switch to account {account_name}, trying next account if available")
                 
-                # First, update the symbol and wait for UI to adjust
-                print(f"Updating symbol to {symbol} on account index {account_index}")
-                symbol_update_result = update_ui_symbol(account_index, symbol)
-                print(f"Symbol update result: {symbol_update_result}")
-                
-                # Add a longer delay after updating symbol to let the UI fully adjust
-                print(f"Waiting for symbol to update and market data to load...")
-                time.sleep(2.0)  # Increased delay for UI to update
-                
-                # Now execute the trade on this account
-                print(f"Executing trade on account index {account_index}")
-                result = controller.execute_on_one(
-                    account_index, 'auto_trade', 
-                    symbol, order_qty, action, 
-                    tp_ticks, sl_ticks, tick_size
-                )
-                
-                # Add account info to the result
-                result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
-                result_with_account["account_id"] = account_id
-                result_with_account["account_index"] = account_index
-                results.append(result_with_account)
+                # Only proceed with trade execution if account switching was successful
+                if account_switch_success:
+                    # First, update the symbol and wait for UI to adjust
+                    print(f"Updating symbol to {symbol} on account index {account_index}")
+                    symbol_update_result = update_ui_symbol(account_index, symbol)
+                    print(f"Symbol update result: {symbol_update_result}")
+                    
+                    # Add a longer delay after updating symbol to let the UI fully adjust
+                    print(f"Waiting for symbol to update and market data to load...")
+                    time.sleep(2.0)  # Increased delay for UI to update
+                    
+                    # Now execute the trade on this account
+                    print(f"Executing trade on account index {account_index}")
+                    result = controller.execute_on_one(
+                        account_index, 'auto_trade', 
+                        symbol, order_qty, action, 
+                        tp_ticks, sl_ticks, tick_size
+                    )
+                    
+                    # Add account info to the result
+                    result_with_account = result.copy() if isinstance(result, dict) else {"result": result}
+                    result_with_account["account_id"] = account_name  # Use the correct account name
+                    result_with_account["account_index"] = account_index
+                    result_with_account["account_switch_success"] = True
+                    results.append(result_with_account)
+                else:
+                    print(f"⚠️ Failed to switch to any account for connection {account_index}, skipping trade execution")
+                    results.append({
+                        "error": "Failed to switch to any account",
+                        "account_index": account_index,
+                        "account_names_tried": account_names,
+                        "account_switch_success": False
+                    })
                 
             except Exception as e:
                 print(f"⚠️ Error executing trade on connection {account_index}: {e}")
                 results.append({
                     "error": str(e),
                     "account_index": account_index,
-                    "account_id": account_names[i] if i < len(account_names) else None
+                    "account_names_tried": account_names
                 })
     
     return {
