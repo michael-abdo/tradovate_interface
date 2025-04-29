@@ -49,33 +49,76 @@
 
 
     function updateUserColumnPhaseStatus() {
+        console.log("[updateUserColumnPhaseStatus] Starting...");
+        //debugger; // JavaScript debugger breakpoint
+        
         const accountTable = document.querySelector('.module.positions.data-table');
-        if (!accountTable) return;
+        if (!accountTable) {
+          console.error("[updateUserColumnPhaseStatus] No accountTable found");
+          return;
+        }
 
         const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
-        if (!rows.length) return;
+        if (!rows.length){
+            console.error("[updateUserColumnPhaseStatus] No rows found");
+            return;
+        } 
+        console.log(`[updateUserColumnPhaseStatus] Found ${rows.length} rows`);
 
         // Determine the index of the "User" column from the header row.
         const headerCells = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent');
+        console.log(`[updateUserColumnPhaseStatus] Header cells:`, 
+            Array.from(headerCells).map(c => c.textContent.trim()));
+            
         let userIndex = -1;
         headerCells.forEach((cell, i) => {
-            if (cell.textContent.trim().startsWith("User")) userIndex = i;
+            if (cell.textContent.trim().startsWith("User")) {
+                userIndex = i;
+                console.log(`[updateUserColumnPhaseStatus] Found User column at index ${i}`);
+            }
         });
-        if (userIndex === -1) return;
+        
+        if (userIndex === -1) {
+            console.error("[updateUserColumnPhaseStatus] User column not found");
+            return;
+        }
 
+        console.log("[updateUserColumnPhaseStatus] Getting table data...");
         const tableData = getTableData();
+        console.log(`[updateUserColumnPhaseStatus] Table data: ${tableData.length} rows`);
+        if (tableData.length === 0) {
+            console.error("[updateUserColumnPhaseStatus] No data from getTableData()");
+            return;
+        }
 
         // Update the "User" column cells for each data row with phase and status.
         rows.forEach((row, idx) => {
             if (idx === 0) return; // skip header row
             const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+            
+            if (idx === 1) {
+                console.log(`[updateUserColumnPhaseStatus] First data row has ${cells.length} cells, we need index ${userIndex}`);
+            }
+            
             if (cells.length > userIndex) {
                 const cell = cells[userIndex];
+                if (!tableData[idx - 1]) {
+                    console.error(`[updateUserColumnPhaseStatus] No data for row ${idx}`);
+                    return;
+                }
+                
                 const dataRow = tableData[idx - 1];
+                const accountName = dataRow["Account ▲"] || dataRow["Account"] || "Unknown";
+                console.log(`[updateUserColumnPhaseStatus] Setting row ${idx} (${accountName}) phase=${dataRow.phase}, active=${dataRow.active}`);
+                
                 cell.textContent = `${dataRow.phase} (${dataRow.active ? 'active' : 'inactive'})`;
                 cell.style.color = dataRow.active ? 'green' : 'red';
+            } else {
+                console.error(`[updateUserColumnPhaseStatus] Row ${idx} doesn't have enough cells (has ${cells.length}, needs index ${userIndex})`);
             }
         });
+        
+        console.log("[updateUserColumnPhaseStatus] Completed");
     }
 
 
@@ -226,12 +269,16 @@
         }
 
         function parseValue(val) {
+            if (!val || typeof val !== 'string') {
+                console.log(`[parseValue] Invalid value: ${val}, type: ${typeof val}`);
+                return 0;
+            }
             const num = parseFloat(val.replace(/[$,()]/g, ''));
             return (val.includes('(') && val.includes(')')) ? -num : num;
         }
         const parsed = {
-            totalAvail: parseValue(row["Total Available Margin"]),
-            distDraw:   parseValue(row["Dist Drawdown Net Liq"])
+            totalAvail: parseValue(row["Total Available Margin"] || "$0.00"),
+            distDraw:   parseValue(row["Dist Drawdown Net Liq"] || "$0.00")
         };
 
         const accountName = row["Account ▲"] || row["Account"] || "";
