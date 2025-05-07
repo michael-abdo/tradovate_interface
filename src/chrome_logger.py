@@ -191,8 +191,8 @@ def create_logger(tab, log_file=None, callback=None):
     return None
 
 
-# Simple usage example
-if __name__ == "__main__":
+def main():
+    """Main function for running the Chrome logger as a standalone tool"""
     import sys
     from src import login_helper
     
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     
     if success:
         print("Connected to Chrome, setting up logger...")
-        log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'chrome.log')
+        log_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs', 'chrome.log')
         logger = create_logger(tab, log_file, print_log)
         
         if logger:
@@ -239,9 +239,15 @@ if __name__ == "__main__":
             except KeyboardInterrupt:
                 logger.stop()
                 print("Logger stopped")
+                return 0
         else:
             print("Failed to start logger")
-            sys.exit(1)
+            return 1
     else:
         print("Failed to connect to Chrome")
-        sys.exit(1)
+        return 1
+
+# Simple usage example
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
