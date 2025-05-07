@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Multi‑Timer</title>
+  <style>
+    :root {
+      --primary-bg:#121212;
+      --secondary-bg:#1e1e1e;
+      --tertiary-bg:#2d2d2d;
+      --text:#e0e0e0;
+      --accent:#90caf9;
+      --danger:#f44336;
+      --warn:#ff9800;
+      --success:#4caf50;
+      --radius:8px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;background:var(--primary-bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+    h2{color:var(--accent);margin-bottom:15px}
+    .panel{background:var(--secondary-bg);border-radius:var(--radius);padding:20px;max-width:460px;width:100%;box-shadow:0 4px 6px rgba(0,0,0,.3)}
+    .form-group{margin-bottom:15px}
+    label{display:block;margin-bottom:5px;font-size:14px;color:var(--accent)}
+    input[type="number"],select,input[type="time"]{width:100%;padding:8px;border:none;border-radius:4px;background:var(--tertiary-bg);color:var(--text)}
+    .row{display:flex;gap:6px}
+    button{cursor:pointer;border:none;border-radius:4px;padding:10px 14px;font-weight:bold;background:var(--accent);color:#000;width:100%;transition:opacity .3s}
+    button:hover{opacity:.85}
+
+    /* timers list */
+    #activeTimers{margin-top:20px;display:flex;flex-direction:column;gap:12px}
+    .timer-item{background:var(--tertiary-bg);border-radius:4px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:relative}
+    .timer-info{display:flex;flex-direction:column}
+    .timer-name{font-weight:bold;color:var(--accent)}
+    .timer-interval{font-size:12px;opacity:.8}
+    .timer-scheduled{font-size:11px;opacity:.7}
+    .countdown{font-weight:bold;color:var(--success)}
+    .countdown.warning{color:var(--warn)}
+    .countdown.danger{color:var(--danger)}
+    .timer-delete{background:var(--danger);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;border:none}
+    .timer-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--accent);width:0%}
+    .no-timers{text-align:center;font-style:italic;color:var(--accent);margin-top:15px}
+    @keyframes cooldown-progress{from{width:100%}to{width:0%}}
+  </style>
+</head>
+<body>
+  <h2>Multi‑Timer</h2>
+  <div class="panel">
+    <!-- configuration -->
+    <div class="form-group">
+      <label for="timerValue">Interval</label>
+      <div class="row">
+        <input type="number" id="timerValue" value="5" min="1" />
+        <select id="timerUnit">
+          <option value="seconds">Seconds</option>
+          <option value="minutes" selected>Minutes</option>
+          <option value="hours">Hours</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="timerStartTime">Start Time (PST)</label>
+      <div class="row">
+        <input type="time" id="timerStartTime" value="09:30" />
+        <select id="timerStartType">
+          <option value="immediate" selected>Start Now</option>
+          <option value="scheduled">Schedule Start</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="addTimer">Add Timer</button>
+  </div>
+
+  <!-- active timers -->
+  <div id="activeTimers">
+    <div class="no-timers" id="noTimers">No active timers</div>
+  </div>
+
+  <script>
+    (()=>{
+      const bell=new Audio("https://bigsoundbank.com/UPLOAD/mp3/0028.mp3");
+      let timers=[],nextId=1;
+      class Timer{
+        constructor({id,value,unit,startType,startTime,nextRing}){
+          this.id=id;this.val=value;this.unit=unit;this.type=startType;this.time=startTime;this.interval=this.calcInterval();
+          this.scheduled=this.type==="scheduled";
+          this.nextRing=nextRing??(this.scheduled?this.calcStart():Date.now()+this.interval);
+          this.last=0;this.render();this.tick();
+        }
+        calcInterval(){const v=parseInt(this.val);return this.unit==="seconds"?v*1e3:this.unit==="hours"?v*36e5:v*6e4}
+        calcStart(){const now=new Date();const pst=new Date(now.toLocaleString("en-US",{timeZone:"America/Los_Angeles"}));const [h,m]=this.time.split(":").map(Number);const tgt=new Date(pst);tgt.setHours(h,m,0,0);const offset=pst.getTime()-now.getTime();let local=tgt.getTime()-offset;if(local<Date.now())local+=864e5;return local}
+        name(){return `${this.val} ${this.unit.charAt(0).toUpperCase()+this.unit.slice(1)}`}
+        render(){const wrap=document.createElement("div");wrap.className="timer-item";wrap.id=`t-${this.id}`;
+          wrap.innerHTML=`<div class='timer-info'><div class='timer-name'>${this.name()}</div><div class='timer-interval'>Repeats every ${this.name()}</div>${this.scheduled?`<div class='timer-scheduled'></div>`:""}</div><div class='countdown'>00:00</div><button class='timer-delete' title='Delete'>&times;</button><div class='timer-progress'></div>`;
+          document.getElementById("activeTimers").appendChild(wrap);
+          this.el=wrap;this.cd=wrap.querySelector(".countdown");this.progress=wrap.querySelector(".timer-progress");
+          wrap.querySelector(".timer-delete").onclick=()=>this.del();
+          if(this.scheduled)this.updateSchedInfo();
+          updateNoTimers();
+        }
+        updateSchedInfo(){const next=new Date(this.nextRing);const pst=next.toLocaleString("en-US",{timeZone:"America/Los_Angeles",hour:"2-digit",minute:"2-digit",hour12:true});this.el.querySelector(".timer-scheduled").textContent=`Next start: ${pst} PST`}
+        tick(){this.i=setInterval(()=>{const now=Date.now();const rem=this.nextRing-now;if(rem<=0){this.ring();return}
+            const sec=Math.ceil(rem/1e3),m=Math.floor(sec/60),s=sec%60;this.cd.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+            this.cd.className="countdown"+(m===0?(s<=10?" danger":" warning"):"");this.progress.style.width=`${100*(1-rem/this.interval)}%`;
+          },1e3)}
+        ring(){const now=Date.now();if(now-this.last<1e3)return;this.last=now;bell.play();this.flash();
+          if(this.scheduled){this.scheduled=false;this.el.querySelector(".timer-scheduled").textContent="Timer active - recurring"}
+          this.nextRing=now+this.interval;this.progress.style.animation="none";void this.progress.offsetWidth;this.progress.style.animation=`cooldown-progress ${this.interval/1e3}s linear forwards`}
+        flash(){this.el.style.background="rgba(255,255,255,.1)";setTimeout(()=>{this.el.style.background=""},500)}
+        del(){clearInterval(this.i);this.el.remove();timers=timers.filter(t=>t.id!==this.id);save();updateNoTimers()}
+      }
+
+      function updateNoTimers(){document.getElementById("noTimers").style.display=timers.length?"none":"block"}
+      function add(){const v=parseInt(document.getElementById("timerValue").value)||5,u=document.getElementById("timerUnit").value,stt=document.getElementById("timerStartType").value,stm=document.getElementById("timerStartTime").value;
+        const t=new Timer({id:nextId++,value:v,unit:u,startType:stt,startTime:stm});timers.push(t);save()}
+      function save(){localStorage.setItem("multiTimers",JSON.stringify(timers.map(t=>({id:t.id,value:t.val,unit:t.unit,startType:t.type,startTime:t.time,nextRing:t.nextRing}))))}
+      function load(){const data=JSON.parse(localStorage.getItem("multiTimers")||"[]");data.forEach(d=>{timers.push(new Timer(d));nextId=Math.max(nextId,d.id+1)});updateNoTimers()}
+
+      document.getElementById("addTimer").onclick=add;load();
+      if("Notification"in window&&Notification.permission!=="granted"&&Notification.permission!=="denied")setTimeout(()=>Notification.requestPermission(),3e3);
+    })();
+  </script>
+</body>
+</html>

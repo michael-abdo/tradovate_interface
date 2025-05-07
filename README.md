@@ -15,6 +15,26 @@ A Python interface for automating trading operations with multiple Tradovate acc
 - Inject Tampermonkey UI and functions without needing the extension
 - Simple credential management with JSON
 
+## Project Structure
+
+The project is organized into the following directories:
+
+- `src/`: Core Python modules
+  - `app.py`: Main application code
+  - `auto_login.py`: Chrome instance management and auto-login
+  - `login_helper.py`: Chrome remote debugging interface
+  - `chrome_logger.py`: Browser logging tools
+  - `dashboard.py`: Web dashboard implementation
+  - `pinescript_webhook.py`: Webhook server for TradingView integration
+  - `examples/`: Example scripts showing usage patterns
+- `web/`: Web interface files
+  - `templates/`: HTML templates for Flask
+  - `static/`: Static assets (CSS, JS, images)
+- `scripts/`: Browser automation scripts
+  - `tampermonkey/`: Tampermonkey scripts for browser automation
+- `strategies/`: Trading strategy files
+  - `pinescript/`: PineScript code for TradingView
+
 ## Setup
 
 1. Install required packages:
@@ -25,6 +45,7 @@ A Python interface for automating trading operations with multiple Tradovate acc
    Or manually:
    ```bash
    pip install pychrome flask
+   ```
 
 2. Configure your credentials in `credentials.json`:
    ```json
@@ -41,7 +62,7 @@ A Python interface for automating trading operations with multiple Tradovate acc
 First, launch Chrome instances for each account:
 
 ```bash
-python auto_login.py
+python auto_login_launcher.py
 ```
 
 This will:
@@ -57,7 +78,7 @@ This will:
 Launch the web dashboard to monitor and control all accounts:
 
 ```bash
-python app.py dashboard
+python app_launcher.py dashboard
 ```
 
 The dashboard will be available at http://localhost:6001 and provides:
@@ -70,26 +91,26 @@ The dashboard will be available at http://localhost:6001 and provides:
 
 #### Option 2: Command-line Interface
 
-Use `app.py` to control all instances via command line:
+Use `app_launcher.py` to control all instances via command line:
 
 ```bash
 # List all active connections
-python app.py list
+python app_launcher.py list
 
 # Create the UI on all accounts
-python app.py ui
+python app_launcher.py ui
 
 # Execute a trade on all accounts
-python app.py trade NQ --qty 1 --action Buy --tp 100 --sl 40
+python app_launcher.py trade NQ --qty 1 --action Buy --tp 100 --sl 40
 
 # Execute a trade on a specific account (index from the list command)
-python app.py trade NQ --account 0 --qty 1 --action Buy
+python app_launcher.py trade NQ --account 0 --qty 1 --action Buy
 
 # Close positions on all accounts
-python app.py exit NQ
+python app_launcher.py exit NQ
 
 # Update the symbol on all accounts
-python app.py symbol MES
+python app_launcher.py symbol MES
 ```
 
 ### Step 3: (Optional) PineScript Webhook Integration
@@ -97,7 +118,7 @@ python app.py symbol MES
 Set up a webhook endpoint to receive trading signals from TradingView:
 
 ```bash
-python pinescript_webhook.py
+python pinescript_webhook_launcher.py
 ```
 
 This will start a webhook server on port 5000 that can receive and process trading signals from TradingView's PineScript alerts.
@@ -188,7 +209,7 @@ The system includes a webhook endpoint for automated trading via TradingView Pin
 ```
 
 To use this feature:
-1. Start the webhook server: `python pinescript_webhook.py`
+1. Start the webhook server: `python pinescript_webhook_launcher.py`
 2. Create a TradingView alert with a webhook URL pointing to your server (e.g., `http://your-server:5000/webhook`)
 3. Configure the alert message to include the JSON payload shown above
 4. Set the alert to trigger based on your trading strategy conditions
