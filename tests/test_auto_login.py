@@ -86,8 +86,9 @@ class TestAutoLogin:
             mock_browser.new_tab.assert_called_once_with(url=auto_login.TRADOVATE_URL)
             mock_sleep.assert_called()  # Called at least once
 
-    def test_inject_login_script(self, mock_tab):
+    def test_inject_login_script(self, mock_tab_with_logger):
         # Setup
+        mock_tab, logger, log_capture = mock_tab_with_logger
         username = "testuser"
         password = "testpass"
         
@@ -101,6 +102,17 @@ class TestAutoLogin:
         script_arg = mock_tab.Runtime.evaluate.call_args_list[0][1]['expression']
         assert 'const username = "testuser";' in script_arg.replace('%USERNAME%', username)
         assert 'const password = "testpass";' in script_arg.replace('%PASSWORD%', password)
+        
+        # Simulate a console log from the login script to test the logger
+        mock_tab.trigger_console_api(
+            type="log", 
+            args=[{"value": "Auto login function executing for: testuser"}]
+        )
+        
+        # Verify that the login log message was captured
+        logs = log_capture.get_logs_containing("Auto login function executing")
+        assert len(logs) > 0
+        assert "testuser" in logs[0]["text"]
 
     def test_disable_alerts(self, mock_tab):
         # Setup

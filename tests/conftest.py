@@ -3,6 +3,20 @@ import os
 import pytest
 from unittest.mock import MagicMock, patch
 import json
+import sys
+import logging
+from datetime import datetime
+
+# Add the project root to the path so we can import the chrome_logger_fixture
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from chrome_logger_fixture import chrome_logger, real_chrome_logger, LogCapture
+
+# Set up test logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger("tradovate_test")
 
 # Mock for pychrome.Tab
 class MockTab:
@@ -88,6 +102,52 @@ def mock_credentials():
         "testuser": "testpassword",
         "user2": "pass2"
     }
+
+
+@pytest.fixture
+def mock_tab_with_logger(mock_tab, tmp_path):
+    """
+    Fixture that provides a mock Tab with an integrated logger
+    
+    Returns:
+        tuple: (mock_tab, logger, log_capture)
+    """
+    # Create a log file in the temp directory
+    logs_dir = tmp_path / "chrome_logs"
+    logs_dir.mkdir(exist_ok=True)
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = str(logs_dir / f"chrome_mock_{timestamp}.log")
+    
+    # Set up the LogCapture
+    log_capture = LogCapture(log_file)
+    
+    # Import ChromeLogger
+    from src.chrome_logger import ChromeLogger
+    
+    # Create and start logger
+    logger = ChromeLogger(mock_tab, log_file)
+    logger.add_callback(log_capture.log_callback)
+    logger.start()
+    
+    yield mock_tab, logger, log_capture
+    
+    # Clean up
+    logger.stop()
+
+
+@pytest.fixture(scope="session")
+def logs_dir():
+    """
+    Fixture that provides a directory for test logs
+    
+    Returns:
+        str: Path to logs directory
+    """
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    logs_dir = os.path.join(project_root, "logs", "tests")
+    os.makedirs(logs_dir, exist_ok=True)
+    return logs_dir
 
 
 # We're using direct patching in tests instead of this fixture approach to avoid recursion issues
