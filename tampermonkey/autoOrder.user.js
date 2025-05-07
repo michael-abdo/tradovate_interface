@@ -107,6 +107,9 @@
                 <button id="cancelAllBtn" style="flex:1;padding:12px 8px;background:#e6b800;color:#000;border:none;border-radius:4px;font-weight:bold;">Cancel</button>
                 <button id="closeAllBtn" style="flex:3;padding:12px 8px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Close All</button>
             </div>
+            <div style="display:flex;gap:10px;margin-top:6px;">
+                <button id="reverseBtn" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse</button>
+            </div>
         </div>`;
 
         document.body.appendChild(container);
@@ -174,6 +177,22 @@
                 console.log('Cancel All action triggered for symbol:', normalizedSymbol);
             } catch (err) {
                 console.error("Cancel All operation failed:", err);
+            }
+        });
+        
+        // Add event listener for the Reverse button
+        document.getElementById('reverseBtn').addEventListener('click', () => {
+            console.log('Reverse Position button clicked');
+            try {
+                const symbol = document.getElementById('symbolInput').value || 'NQ';
+                const normalizedSymbol = normalizeSymbol(symbol);
+                console.log(`Calling clickExitForSymbol for: ${normalizedSymbol} with Reverse & Cxl option`);
+                
+                // Call the clickExitForSymbol function with the normalized symbol and Reverse option
+                clickExitForSymbol(normalizedSymbol, 'cancel-option-Reverse-Cxl');
+                console.log('Reverse Position action triggered for symbol:', normalizedSymbol);
+            } catch (err) {
+                console.error("Reverse Position operation failed:", err);
             }
         });
 

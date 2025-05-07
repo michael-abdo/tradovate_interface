@@ -12,6 +12,73 @@
 (function() {
     'use strict';
 
+      const phaseCriteria = [
+          // ── DEMO ──
+        {
+            phase: '1',
+            accountNameIncludes: 'DEMO',
+            totalAvailOperator: '<',
+            totalAvailValue: 60000,   // midpoint between 50 k-70 k
+            distDrawOperator: '>',
+            distDrawValue: 2000,
+            maxActive: 0,
+            reduceFactor: 0.5,
+            useOr: false,
+            quantity: 20
+        },
+        {
+            phase: '2',
+            accountNameIncludes: 'DEMO',
+            totalAvailOperator: '>=',
+            totalAvailValue: 60000,
+            distDrawOperator: '<=',
+            distDrawValue: 2000,
+            maxActive: 0,
+            reduceFactor: null,
+            useOr: true,
+            quantity: 10
+        },
+        
+        // ── APEX ──
+        {
+            phase: '1',
+            accountNameIncludes: 'APEX',
+            totalAvailOperator: '<',
+            totalAvailValue: 310000,
+            distDrawOperator: '>',
+            distDrawValue: 2000,
+            maxActive: 0,
+            reduceFactor: 0.5,
+            useOr: false,
+            quantity: 20
+        },
+        {
+            phase: '2',
+            accountNameIncludes: 'APEX',
+            totalAvailOperator: '>=',
+            totalAvailValue: 310000,
+            distDrawOperator: '<=',
+            distDrawValue: 2000,
+            maxActive: 0,
+            reduceFactor: null,
+            useOr: true,
+            quantity: 10
+        },
+        {
+            phase: '3',
+            accountNameIncludes: 'PAAPEX',
+            totalAvailOperator: null,
+            totalAvailValue: 0,
+            distDrawOperator: null,
+            distDrawValue: 0,
+            maxActive: 20,
+            reduceFactor: null,
+            useOr: false,
+            quantity: 2
+        }
+    ];
+    
+
     function updateDOMDollarTotalPL(...manualAdds) {
         const phaseRandomValues = {};
         const rows = Array.from(document.querySelectorAll('.fixedDataTableCellGroupLayout_cellGroupWrapper[style*="left: 185px"]'));
@@ -120,76 +187,6 @@
         
         console.log("[updateUserColumnPhaseStatus] Completed");
     }
-
-
-
-
-    const phaseCriteria = [
-          // ── DEMO ──
-        {
-            phase: '1',
-            accountNameIncludes: 'DEMO',
-            totalAvailOperator: '<',
-            totalAvailValue: 60000,   // midpoint between 50 k-70 k
-            distDrawOperator: '>',
-            distDrawValue: 2000,
-            maxActive: 0,
-            reduceFactor: 0.5,
-            useOr: false,
-            quantity: 20
-        },
-        {
-            phase: '2',
-            accountNameIncludes: 'DEMO',
-            totalAvailOperator: '>=',
-            totalAvailValue: 60000,
-            distDrawOperator: '<=',
-            distDrawValue: 2000,
-            maxActive: 0,
-            reduceFactor: null,
-            useOr: true,
-            quantity: 10
-        },
-        
-        // ── APEX ──
-        {
-            phase: '1',
-            accountNameIncludes: 'APEX',
-            totalAvailOperator: '<',
-            totalAvailValue: 310000,
-            distDrawOperator: '>',
-            distDrawValue: 2000,
-            maxActive: 0,
-            reduceFactor: 0.5,
-            useOr: false,
-            quantity: 20
-        },
-        {
-            phase: '2',
-            accountNameIncludes: 'APEX',
-            totalAvailOperator: '>=',
-            totalAvailValue: 310000,
-            distDrawOperator: '<=',
-            distDrawValue: 2000,
-            maxActive: 0,
-            reduceFactor: null,
-            useOr: true,
-            quantity: 10
-        },
-        {
-            phase: '3',
-            accountNameIncludes: 'PAAPEX',
-            totalAvailOperator: null,
-            totalAvailValue: 0,
-            distDrawOperator: null,
-            distDrawValue: 0,
-            maxActive: 20,
-            reduceFactor: null,
-            useOr: false,
-            quantity: 2
-        }
-    ];
-
 
 
     function getTableData() {
