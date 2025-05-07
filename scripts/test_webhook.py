@@ -152,32 +152,49 @@ def test_health_endpoint(url="http://localhost:6000/health"):
 
 def main():
     """Main function to run all tests"""
-    # First test the health endpoint
-    health_ok = test_health_endpoint()
+    # Parse command line arguments
+    import argparse
+    parser = argparse.ArgumentParser(description="Test the webhook endpoint")
+    parser.add_argument("--url", default=DEFAULT_URL, help="URL to test")
+    parser.add_argument("--format", choices=["json", "text", "embedded", "minimal", "tradingview", "all"], 
+                      default="all", help="Format to test")
+    parser.add_argument("--skip-health", action="store_true", help="Skip health check")
+    parser.add_argument("--force", action="store_true", help="Continue even if health check fails")
+    args = parser.parse_args()
     
-    if not health_ok:
+    # Get URL from arguments
+    url = args.url
+    
+    # First test the health endpoint
+    health_ok = True
+    if not args.skip_health:
+        health_ok = test_health_endpoint()
+    
+    if not health_ok and not args.force:
         print("\n❌ Health check failed. Server might not be running.")
         decision = input("Continue with tests anyway? (y/n): ")
         if decision.lower() != 'y':
             return
     
-    # Get custom URL if provided
-    if len(sys.argv) > 1:
-        url = sys.argv[1]
-    else:
-        url = DEFAULT_URL
-    
     print(f"\nRunning webhook tests against: {url}")
     
-    # Run the tests
+    # Run the tests based on format
     results = []
-    results.append(("JSON payload", test_json_payload(url)))
-    time.sleep(1)
-    results.append(("Text/plain payload", test_text_plain_payload(url)))
-    time.sleep(1)
-    results.append(("Embedded JSON payload", test_embedded_json_payload(url)))
-    time.sleep(1)
-    results.append(("Minimal payload", test_minimal_payload(url)))
+    
+    if args.format in ["json", "all"]:
+        results.append(("JSON payload", test_json_payload(url)))
+        time.sleep(1)
+        
+    if args.format in ["text", "all"]:
+        results.append(("Text/plain payload", test_text_plain_payload(url)))
+        time.sleep(1)
+        
+    if args.format in ["embedded", "tradingview", "all"]:
+        results.append(("Embedded JSON payload", test_embedded_json_payload(url)))
+        time.sleep(1)
+        
+    if args.format in ["minimal", "all"]:
+        results.append(("Minimal payload", test_minimal_payload(url)))
     
     # Summary
     print("\n=== Test Results Summary ===")
