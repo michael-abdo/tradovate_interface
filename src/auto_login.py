@@ -245,7 +245,7 @@ def load_credentials():
     """Load all credentials from JSON file, allowing duplicates"""
     try:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        credentials_path = os.path.join(project_root, 'credentials.json')
+        credentials_path = os.path.join(project_root, 'config/credentials.json')
         print(f"Loading credentials from {credentials_path}")
         
         with open(credentials_path, 'r') as file:

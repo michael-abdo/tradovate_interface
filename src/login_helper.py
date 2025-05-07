@@ -23,7 +23,7 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
     if not (username and password):
         try:
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            credentials_path = os.path.join(project_root, 'credentials.json')
+            credentials_path = os.path.join(project_root, 'config/credentials.json')
             print(f"Loading credentials from {credentials_path}")
             
             with open(credentials_path, 'r') as file:
