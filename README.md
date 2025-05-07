@@ -27,6 +27,14 @@ The project is organized into the following directories:
   - `dashboard.py`: Web dashboard implementation
   - `pinescript_webhook.py`: Webhook server for TradingView integration
   - `examples/`: Example scripts showing usage patterns
+  - `utils/`: Utility functions and helper scripts
+    - `check_chrome.py`: Utility for checking Chrome connectivity
+- `tests/`: Test scripts and fixtures
+  - `test_auto_login.py`: Test script for auto login using mock HTML
+  - `test_autorisk.py`: Test script for auto risk management
+  - `test_simple.py`: Simple test for opening mock login page
+  - `test_chrome_logs.py`: Test script for Chrome logger functionality
+  - `chrome_logger_fixture.py`: Test fixtures for Chrome logging
 - `web/`: Web interface files
   - `templates/`: HTML templates for Flask
   - `static/`: Static assets (CSS, JS, images)
@@ -34,6 +42,13 @@ The project is organized into the following directories:
   - `tampermonkey/`: Tampermonkey scripts for browser automation
 - `strategies/`: Trading strategy files
   - `pinescript/`: PineScript code for TradingView
+- `launchers/`: Entry point scripts for different components
+  - `app_launcher.py`: Launcher for main app
+  - `auto_login_launcher.py`: Launcher for auto login
+  - `chrome_logger_launcher.py`: Launcher for Chrome logger
+  - `dashboard_launcher.py`: Launcher for dashboard
+  - `login_helper_launcher.py`: Launcher for login helper
+  - `pinescript_webhook_launcher.py`: Launcher for webhook server
 
 ## Setup
 

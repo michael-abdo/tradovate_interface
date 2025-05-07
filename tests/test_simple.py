@@ -1,20 +1,12 @@
 #!/usr/bin/env python3
 """
-Test script for auto_login.py with a local test HTML page
-instead of the actual Tradovate site
+Simple test to open a Chrome browser to the mock Tradovate login page
 """
+import webbrowser
 import os
 import time
-import subprocess
-import webbrowser
 import http.server
 import threading
-import signal
-import sys
-
-# Add the project root to the Python path
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, project_root)
 
 # Create a mock login page for testing
 MOCK_HTML = """
@@ -193,6 +185,7 @@ MOCK_HTML = """
 """
 
 # Create a directory for the mock HTML page
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.makedirs(os.path.join(project_root, "temp"), exist_ok=True)
 mock_html_path = os.path.join(project_root, "temp", "mock_tradovate.html")
 
@@ -214,7 +207,6 @@ def start_server():
     server_address = ('', 8000)
     httpd = http.server.HTTPServer(server_address, SimpleHTTPRequestHandler)
     print("Mock server started at http://localhost:8000")
-    print("You can access the mock login page at http://localhost:8000/mock_tradovate.html")
     httpd.serve_forever()
 
 # Start the server in a background thread
@@ -224,31 +216,32 @@ server_thread.start()
 print("Starting server...")
 time.sleep(1)  # Give the server time to start
 
-# Now import and run a modified version of auto_login
-from src import auto_login
+# Open the mock Tradovate login page in the default browser
+mock_url = "http://localhost:8000/mock_tradovate.html"
+print(f"Opening {mock_url} in your browser...")
+webbrowser.open(mock_url)
 
-# Override TRADOVATE_URL to point to our mock server
-auto_login.TRADOVATE_URL = "http://localhost:8000/mock_tradovate.html"
-
-# Reduce login monitor interval for testing
-auto_login.ChromeInstance.login_check_interval = 5  # Check every 5 seconds instead of 30
-
-print("\nStarting auto_login with modified URL...")
-print("This test will use the mock Tradovate login page to test the auto-login functionality")
-print("You can use the test controls on the page to simulate different login states")
-print("\nNOTE: To test the auto re-login feature, click 'Auto Logout' and wait 10 seconds")
-print("The auto-login script should detect the logout and automatically log back in\n")
+print("\n=== Test Instructions ===")
+print("1. The page should now be open in your browser")
+print("2. You can test the login flow manually:")
+print("   - Enter credentials and click 'Sign In'")
+print("   - Click 'Access Simulation' to continue to the dashboard")
+print("3. Use the test controls at the bottom to simulate different states:")
+print("   - 'Show Login Page' - Shows the login form (similar to being logged out)")
+print("   - 'Show Account Selection' - Shows the account selection page")
+print("   - 'Show Dashboard' - Shows the logged-in dashboard")
+print("   - 'Auto Logout' - Will automatically log out after 10 seconds")
+print("\nPress Ctrl+C to stop the test server when done")
 
 try:
-    auto_login.main()
+    # Keep the script running so the server stays up
+    while True:
+        time.sleep(1)
 except KeyboardInterrupt:
     print("\nTest terminated by user")
 except Exception as e:
     print(f"\nTest terminated with error: {e}")
 finally:
     print("\nCleaning up...")
-    # Clean up mock files if desired
-    # os.remove(mock_html_path)
-    
-    # Note: The HTTP server will automatically shut down when the program exits
-    # because it's running in a daemon thread.
+    # The HTTP server will automatically shut down when the program exits
+    # because it's running in a daemon thread
