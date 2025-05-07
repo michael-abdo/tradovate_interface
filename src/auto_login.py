@@ -23,6 +23,9 @@ class ChromeInstance:
         self.process = None
         self.browser = None
         self.tab = None
+        self.login_check_interval = 30  # Check login status every 30 seconds
+        self.login_monitor_thread = None
+        self.is_running = False
         
     def start(self):
         """Start Chrome with remote debugging on the specified port"""
@@ -30,13 +33,133 @@ class ChromeInstance:
         if self.process:
             self.browser, self.tab = connect_to_chrome(self.port)
             if self.tab:
-                inject_login_script(self.tab, self.username, self.password)
+                # Check if we're on the login page and log in if needed
+                self.check_and_login_if_needed()
                 disable_alerts(self.tab)
+                
+                # Start a thread to monitor login status
+                self.is_running = True
+                self.login_monitor_thread = threading.Thread(
+                    target=self.monitor_login_status,
+                    daemon=True
+                )
+                self.login_monitor_thread.start()
+                
                 return True
         return False
+    
+    def check_and_login_if_needed(self):
+        """Check if we're on the login page and log in if needed"""
+        if not self.tab:
+            return False
+            
+        try:
+            # Check if we're on the login page by looking for the login form
+            check_js = """
+            (function() {
+                // Check if we're on the login page
+                const emailInput = document.getElementById("name-input");
+                const passwordInput = document.getElementById("password-input");
+                const loginButton = document.querySelector("button.MuiButton-containedPrimary");
+                
+                if (emailInput && passwordInput && loginButton) {
+                    return "login_page";
+                }
+                
+                // Check if we're on the account selection page
+                const accessButtons = Array.from(document.querySelectorAll("button.tm"))
+                    .filter(btn => 
+                        btn.textContent.trim() === "Access Simulation" || 
+                        btn.textContent.trim() === "Launch"
+                    );
+                    
+                if (accessButtons.length > 0) {
+                    return "account_selection";
+                }
+                
+                // Check if we're logged in by looking for key elements
+                const isLoggedIn = document.querySelector(".bar--heading") || 
+                                document.querySelector(".app-bar--account-menu-button") ||
+                                document.querySelector(".dashboard--container") ||
+                                document.querySelector(".pane.account-selector");
+                                
+                return isLoggedIn ? "logged_in" : "unknown";
+            })();
+            """
+            
+            result = self.tab.Runtime.evaluate(expression=check_js)
+            page_status = result.get("result", {}).get("value", "unknown")
+            
+            print(f"Current page status for {self.username}: {page_status}")
+            
+            if page_status == "login_page":
+                print(f"Found login page for {self.username}, injecting login script")
+                inject_login_script(self.tab, self.username, self.password)
+                return True
+                
+            elif page_status == "account_selection":
+                print(f"Found account selection page for {self.username}, clicking Access Simulation")
+                access_js = """
+                (function() {
+                    const accessButtons = Array.from(document.querySelectorAll("button.tm"))
+                        .filter(btn => 
+                            btn.textContent.trim() === "Access Simulation" || 
+                            btn.textContent.trim() === "Launch"
+                        );
+                        
+                    if (accessButtons.length > 0) {
+                        console.log("Clicking Access Simulation button");
+                        accessButtons[0].click();
+                        return true;
+                    }
+                    return false;
+                })();
+                """
+                self.tab.Runtime.evaluate(expression=access_js)
+                return True
+                
+            elif page_status == "logged_in":
+                print(f"Already logged in for {self.username}")
+                return False
+                
+            else:
+                print(f"Unknown page status for {self.username}: {page_status}")
+                return False
+                
+        except Exception as e:
+            print(f"Error checking login status: {e}")
+            return False
+    
+    def monitor_login_status(self):
+        """Monitor login status and automatically log in again if logged out"""
+        print(f"Starting login monitor for {self.username} on port {self.port}")
+        
+        while self.is_running and self.tab:
+            try:
+                # Sleep first to allow initial login to complete
+                time.sleep(self.login_check_interval)
+                
+                if not self.is_running:
+                    break
+                    
+                # Check and log in if needed
+                self.check_and_login_if_needed()
+                
+            except Exception as e:
+                print(f"Error in login monitor for {self.username}: {e}")
+                time.sleep(5)  # Shorter sleep after error
+        
+        print(f"Login monitor stopped for {self.username}")
         
     def stop(self):
         """Stop this Chrome instance"""
+        self.is_running = False
+        
+        # Stop the login monitor thread
+        if self.login_monitor_thread and self.login_monitor_thread.is_alive():
+            print(f"Stopping login monitor for {self.username}")
+            self.login_monitor_thread.join(timeout=2)
+            
         if self.process:
             try:
                 self.process.terminate()
@@ -124,44 +247,104 @@ def inject_login_script(tab, username, password):
     """Inject and execute auto-login script with specific credentials"""
     print(f"Injecting auto-login script for {username}...")
     
-    # Create a simple login function
+    # Create a more robust login function with retries and DOM readiness checks
     auto_login_js = '''
-    function login(username, password) {
-        console.log("Auto login function executing...");
-        
-        const emailInput = document.getElementById("name-input");
-        const passwordInput = document.getElementById("password-input");
-        if (!emailInput || !passwordInput) {
-            console.error("Input fields not found!");
-            return;
-        }
-        
+    // More reliable way to set input values and trigger events
+    function setInputValue(input, value) {
         const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-        nativeSetter.call(emailInput, username);
-        emailInput.dispatchEvent(new Event("input", { bubbles: true }));
-        nativeSetter.call(passwordInput, password);
-        passwordInput.dispatchEvent(new Event("input", { bubbles: true }));
-        
-        setTimeout(() => {
-            const loginButton = document.querySelector("button.MuiButton-containedPrimary");
-            if (loginButton) {
-                loginButton.click();
-                console.log("Login button clicked");
-            } else {
-                console.error("Login button not found!");
-            }
-        }, 500);
+        nativeSetter.call(input, value);
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.dispatchEvent(new Event("change", { bubbles: true }));
     }
     
-    function waitForAccessSimulation() {
+    // Main login function
+    function login(username, password) {
+        console.log("Auto login function executing for: " + username);
+        
+        // Wait for the DOM to fully load and login form to appear
+        let retryCount = 0;
+        const maxRetries = 10;
+        
+        function attemptLogin() {
+            // Find login form elements
+            const emailInput = document.getElementById("name-input");
+            const passwordInput = document.getElementById("password-input");
+            const loginButton = document.querySelector("button.MuiButton-containedPrimary");
+            
+            if (!emailInput || !passwordInput || !loginButton) {
+                console.log("Login form not fully loaded yet, retry: " + retryCount);
+                
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    setTimeout(attemptLogin, 500);
+                } else {
+                    console.error("Input fields or login button not found after multiple attempts!");
+                }
+                return;
+            }
+            
+            // Form is ready, fill and submit
+            console.log("Login form found, filling credentials...");
+            
+            // Clear any existing values
+            emailInput.value = "";
+            passwordInput.value = "";
+            
+            // Set new values
+            setInputValue(emailInput, username);
+            setInputValue(passwordInput, password);
+            
+            // Give a moment for form validation to process
+            setTimeout(() => {
+                // Check if login button is enabled
+                if (loginButton.disabled) {
+                    console.log("Login button is disabled, waiting for form validation...");
+                    // Wait and try again
+                    setTimeout(() => {
+                        const updatedLoginButton = document.querySelector("button.MuiButton-containedPrimary");
+                        if (updatedLoginButton && !updatedLoginButton.disabled) {
+                            console.log("Login button now enabled, clicking...");
+                            updatedLoginButton.click();
+                        } else {
+                            console.error("Login button still disabled after waiting");
+                        }
+                    }, 1000);
+                } else {
+                    console.log("Clicking login button...");
+                    loginButton.click();
+                }
+                
+                // Start watching for the account selection page
+                watchForAccountSelection();
+            }, 500);
+        }
+        
+        // Start the login attempt
+        attemptLogin();
+    }
+    
+    // Watch for account selection page and click the button when it appears
+    function watchForAccountSelection() {
+        console.log("Watching for account selection page...");
+        
+        let retryCount = 0;
+        const maxRetries = 20; // Try for about 10 seconds
         const interval = setInterval(() => {
-            const buttons = document.querySelectorAll("button.tm");
-            for (const btn of buttons) {
-                if (btn.textContent.trim() === "Access Simulation" || btn.textContent.trim() === "Launch") {
-                    console.log("Clicking Access Simulation button");
-                    btn.click();
+            const accessButtons = Array.from(document.querySelectorAll("button.tm"))
+                .filter(btn => 
+                    btn.textContent.trim() === "Access Simulation" || 
+                    btn.textContent.trim() === "Launch"
+                );
+                
+            if (accessButtons.length > 0) {
+                console.log("Account selection page detected, clicking button...");
+                clearInterval(interval);
+                accessButtons[0].click();
+            } else {
+                retryCount++;
+                if (retryCount >= maxRetries) {
+                    console.log("Account selection page not found after multiple attempts");
                     clearInterval(interval);
-                    break;
                 }
             }
         }, 500);
@@ -172,10 +355,8 @@ def inject_login_script(tab, username, password):
     const password = "%PASSWORD%";
     
     // Wait for the page to be ready
-    setTimeout(() => {
-        login(username, password);
-        waitForAccessSimulation();
-    }, 1000);
+    console.log("Starting login process for: " + username);
+    login(username, password);
     '''
     
     # Replace placeholders with actual credentials
@@ -189,18 +370,49 @@ def inject_login_script(tab, username, password):
         
         # Append test element to DOM to verify script is running
         test_script = f'''
-        const testDiv = document.createElement('div');
-        testDiv.id = 'claude-test-element';
-        testDiv.style.position = 'fixed';
-        testDiv.style.top = '10px';
-        testDiv.style.right = '10px';
-        testDiv.style.background = 'red';
-        testDiv.style.color = 'white';
-        testDiv.style.padding = '10px';
-        testDiv.style.zIndex = '9999';
-        testDiv.innerHTML = 'Auto-login script connected: {username}';
-        document.body.appendChild(testDiv);
-        console.log("Test element added to DOM");
+        (function() {{
+            // Remove existing test element if present
+            const existingElement = document.getElementById('claude-test-element');
+            if (existingElement) {{
+                existingElement.remove();
+            }}
+            
+            // Create new test element
+            const testDiv = document.createElement('div');
+            testDiv.id = 'claude-test-element';
+            testDiv.style.position = 'fixed';
+            testDiv.style.top = '10px';
+            testDiv.style.right = '10px';
+            testDiv.style.background = 'rgba(0, 128, 0, 0.8)';
+            testDiv.style.color = 'white';
+            testDiv.style.padding = '8px';
+            testDiv.style.borderRadius = '4px';
+            testDiv.style.fontSize = '12px';
+            testDiv.style.fontFamily = 'Arial, sans-serif';
+            testDiv.style.zIndex = '9999';
+            testDiv.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+            testDiv.innerHTML = 'Auto-login active: {username}';
+            
+            // Add timestamp
+            const timestamp = document.createElement('div');
+            timestamp.style.fontSize = '10px';
+            timestamp.style.marginTop = '4px';
+            timestamp.style.opacity = '0.8';
+            timestamp.innerText = new Date().toLocaleTimeString();
+            testDiv.appendChild(timestamp);
+            
+            // Append to DOM
+            document.body.appendChild(testDiv);
+            console.log("Test element added to DOM");
+            
+            // Make it auto-update the timestamp every minute
+            setInterval(() => {{
+                const timestampElement = testDiv.querySelector('div');
+                if (timestampElement) {{
+                    timestampElement.innerText = new Date().toLocaleTimeString();
+                }}
+            }}, 60000);
+        }})();
         '''
         tab.Runtime.evaluate(expression=test_script)
         
