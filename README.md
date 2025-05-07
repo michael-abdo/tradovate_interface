@@ -15,6 +15,26 @@ A Python interface for automating trading operations with multiple Tradovate acc
 - Inject Tampermonkey UI and functions without needing the extension
 - Simple credential management with JSON
 
+## Project Structure
+
+The project is organized into the following directories:
+
+- `src/`: Core Python modules
+  - `app.py`: Main application code
+  - `auto_login.py`: Chrome instance management and auto-login
+  - `login_helper.py`: Chrome remote debugging interface
+  - `chrome_logger.py`: Browser logging tools
+  - `dashboard.py`: Web dashboard implementation
+  - `pinescript_webhook.py`: Webhook server for TradingView integration
+  - `examples/`: Example scripts showing usage patterns
+- `web/`: Web interface files
+  - `templates/`: HTML templates for Flask
+  - `static/`: Static assets (CSS, JS, images)
+- `scripts/`: Browser automation scripts
+  - `tampermonkey/`: Tampermonkey scripts for browser automation
+- `strategies/`: Trading strategy files
+  - `pinescript/`: PineScript code for TradingView
+
 ## Setup
 
 1. Install required packages:
@@ -25,8 +45,9 @@ A Python interface for automating trading operations with multiple Tradovate acc
    Or manually:
    ```bash
    pip install pychrome flask
+   ```
 
-2. Configure your credentials in `credentials.json`:
+2. Configure your credentials in `config/credentials.json`:
    ```json
    {
      "username1@example.com": "password1",
@@ -36,16 +57,18 @@ A Python interface for automating trading operations with multiple Tradovate acc
 
 ## Usage
 
+The application now provides a unified interface through `main.py` to access all components:
+
 ### Step 1: Start Chrome instances with auto-login
 
 First, launch Chrome instances for each account:
 
 ```bash
-python auto_login.py
+python main.py login
 ```
 
 This will:
-- Start a new Chrome instance for each credential pair in `credentials.json`
+- Start a new Chrome instance for each credential pair in `config/credentials.json`
 - Each instance will run on a different debugging port (starting at 9222)
 - Automatically log in to Tradovate
 - Keep running until you press Ctrl+C
@@ -57,7 +80,13 @@ This will:
 Launch the web dashboard to monitor and control all accounts:
 
 ```bash
-python app.py dashboard
+python main.py dashboard
+```
+
+Or with the app interface:
+
+```bash
+python main.py app dashboard
 ```
 
 The dashboard will be available at http://localhost:6001 and provides:
@@ -70,26 +99,26 @@ The dashboard will be available at http://localhost:6001 and provides:
 
 #### Option 2: Command-line Interface
 
-Use `app.py` to control all instances via command line:
+Use `main.py app` to control all instances via command line:
 
 ```bash
 # List all active connections
-python app.py list
+python main.py app list
 
 # Create the UI on all accounts
-python app.py ui
+python main.py app ui
 
 # Execute a trade on all accounts
-python app.py trade NQ --qty 1 --action Buy --tp 100 --sl 40
+python main.py app trade NQ --qty 1 --action Buy --tp 100 --sl 40
 
 # Execute a trade on a specific account (index from the list command)
-python app.py trade NQ --account 0 --qty 1 --action Buy
+python main.py app trade NQ --account 0 --qty 1 --action Buy
 
 # Close positions on all accounts
-python app.py exit NQ
+python main.py app exit NQ
 
 # Update the symbol on all accounts
-python app.py symbol MES
+python main.py app symbol MES
 ```
 
 ### Step 3: (Optional) PineScript Webhook Integration
@@ -97,10 +126,28 @@ python app.py symbol MES
 Set up a webhook endpoint to receive trading signals from TradingView:
 
 ```bash
-python pinescript_webhook.py
+python main.py webhook
 ```
 
 This will start a webhook server on port 5000 that can receive and process trading signals from TradingView's PineScript alerts.
+
+### Additional Tools
+
+#### Chrome Logger
+
+Start a logger for a Chrome instance to monitor browser logs:
+
+```bash
+python main.py logger
+```
+
+#### Login Helper
+
+Connect to an existing Chrome instance on a specific port:
+
+```bash
+python main.py login-helper --port 9222
+```
 
 ## Available Commands
 
@@ -125,7 +172,7 @@ This will start a webhook server on port 5000 that can receive and process tradi
 
 ## Credential Management
 
-Credentials are stored in a simple JSON file:
+Credentials are stored in a simple JSON file in the config directory:
 
 ```json
 {
@@ -188,7 +235,7 @@ The system includes a webhook endpoint for automated trading via TradingView Pin
 ```
 
 To use this feature:
-1. Start the webhook server: `python pinescript_webhook.py`
+1. Start the webhook server: `python pinescript_webhook_launcher.py`
 2. Create a TradingView alert with a webhook URL pointing to your server (e.g., `http://your-server:5000/webhook`)
 3. Configure the alert message to include the JSON payload shown above
 4. Set the alert to trigger based on your trading strategy conditions

@@ -4,7 +4,7 @@ import time
 import json
 import os
 import sys
-from auto_login import inject_login_script, disable_alerts
+from src.auto_login import inject_login_script, disable_alerts
 
 def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
     """
@@ -22,7 +22,8 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
     # If credentials not provided, try to load from file
     if not (username and password):
         try:
-            credentials_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials.json')
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            credentials_path = os.path.join(project_root, 'config/credentials.json')
             print(f"Loading credentials from {credentials_path}")
             
             with open(credentials_path, 'r') as file:

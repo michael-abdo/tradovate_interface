@@ -14,7 +14,7 @@ try:
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 except NameError:
     sys.path.append(os.getcwd())
-from app import TradovateController
+from src.app import TradovateController
 
 app = Flask(__name__)
 PORT = 6000
@@ -56,7 +56,8 @@ def get_target_accounts_for_strategy(strategy_name):
         except NameError:
             base_dir = os.getcwd()
             
-        strategy_file = os.path.join(base_dir, 'strategy_mappings.json')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         if not os.path.exists(strategy_file):
             print(f"Strategy mappings file not found. Using all accounts.")
             return list(range(len(controller.connections))), []
@@ -176,6 +177,10 @@ def process_trading_signal(data):
         base_dir = os.getcwd()
     
     account_switcher_path = os.path.join(base_dir, 'tampermonkey/changeAccount.user.js')
+    # Try the new path if the file doesn't exist
+    if not os.path.exists(account_switcher_path):
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        account_switcher_path = os.path.join(project_root, 'scripts/tampermonkey/changeAccount.user.js')
     if os.path.exists(account_switcher_path):
         with open(account_switcher_path, 'r') as file:
             account_switcher_js = file.read()

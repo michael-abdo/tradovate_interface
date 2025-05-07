@@ -7,14 +7,14 @@ import os
 import json
 
 # Import from app.py
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from app import TradovateController
+from src.app import TradovateController
 from flask import request
 
 # Create Flask app
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(__name__, 
-            static_folder='static',
-            template_folder='templates')
+            static_folder=os.path.join(project_root, 'web/static'),
+            template_folder=os.path.join(project_root, 'web/templates'))
 
 # Initialize controller
 controller = TradovateController()
@@ -25,8 +25,9 @@ def inject_account_data_function():
         if conn.tab:
             try:
                 # Read the function from the file
-                account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                       'tampermonkey/getAllAccountTableData.user.js')
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                account_data_path = os.path.join(project_root, 
+                                       'scripts/tampermonkey/getAllAccountTableData.user.js')
                 with open(account_data_path, 'r') as file:
                     get_account_data_js = file.read()
                 
@@ -53,8 +54,9 @@ def get_accounts():
                 # First make sure the getAllAccountTableData function is available
                 try:
                     # Re-inject the function to ensure it's available
-                    account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                           'tampermonkey/getAllAccountTableData.user.js')
+                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    account_data_path = os.path.join(project_root, 
+                                           'scripts/tampermonkey/getAllAccountTableData.user.js')
                     with open(account_data_path, 'r') as file:
                         get_account_data_js = file.read()
                     conn.tab.Runtime.evaluate(expression=get_account_data_js)
@@ -460,7 +462,8 @@ def run_risk_management():
 @app.route('/api/strategies', methods=['GET'])
 def get_strategies():
     try:
-        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         if not os.path.exists(strategy_file):
             # Create default file if it doesn't exist
             default_mappings = {
@@ -483,7 +486,8 @@ def get_strategies():
 def update_strategies():
     try:
         data = request.json
-        strategy_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'strategy_mappings.json')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         
         with open(strategy_file, 'w') as f:
             json.dump(data, f, indent=2)

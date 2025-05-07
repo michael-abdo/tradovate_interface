@@ -9,19 +9,19 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import login_helper
+from src import login_helper
 
 class TestLoginHelper:
     
-    @patch("login_helper.inject_login_script")
-    @patch("login_helper.disable_alerts")
+    @patch("src.login_helper.inject_login_script")
+    @patch("src.login_helper.disable_alerts")
     def test_login_to_existing_chrome_success(self, mock_disable_alerts, mock_inject_login_script, 
                                             mock_browser, mock_tab):
         # Setup
         mock_tab.mock_evaluate_result("https://trader.tradovate.com")
         mock_browser.add_tab(mock_tab)
         
-        with patch("pychrome.Browser", return_value=mock_browser):
+        with patch("src.auto_login.pychrome.Browser", return_value=mock_browser):
             # Execute
             success, tab, browser = login_helper.login_to_existing_chrome(
                 username="testuser", 
@@ -35,14 +35,14 @@ class TestLoginHelper:
             mock_inject_login_script.assert_called_once_with(mock_tab, "testuser", "testpass")
             mock_disable_alerts.assert_called_once_with(mock_tab)
 
-    @patch("login_helper.inject_login_script")
-    @patch("login_helper.disable_alerts")
+    @patch("src.login_helper.inject_login_script")
+    @patch("src.login_helper.disable_alerts")
     def test_login_to_existing_chrome_no_tabs(self, mock_disable_alerts, mock_inject_login_script, 
                                             mock_browser, mock_tab):
         # Setup - empty browser with no tabs
         mock_browser.new_tab.return_value = mock_tab
         
-        with patch("pychrome.Browser", return_value=mock_browser):
+        with patch("src.auto_login.pychrome.Browser", return_value=mock_browser):
             with patch("time.sleep"):  # Mock sleep to avoid waiting
                 # Execute
                 success, tab, browser = login_helper.login_to_existing_chrome(
@@ -66,9 +66,9 @@ class TestLoginHelper:
         # Create a mock file for credentials
         mock_file = mock_open(read_data=json.dumps(mock_credentials))
         
-        with patch("pychrome.Browser", return_value=mock_browser), \
-             patch("login_helper.inject_login_script") as mock_inject, \
-             patch("login_helper.disable_alerts"), \
+        with patch("src.auto_login.pychrome.Browser", return_value=mock_browser), \
+             patch("src.login_helper.inject_login_script") as mock_inject, \
+             patch("src.login_helper.disable_alerts"), \
              patch("builtins.open", mock_file), \
              patch("os.path.dirname", return_value="/fake/path"), \
              patch("os.path.abspath", return_value="/fake/path"):
@@ -86,7 +86,7 @@ class TestLoginHelper:
 
     def test_login_to_existing_chrome_connection_error(self, mock_browser):
         # Setup - simulate connection error
-        with patch("pychrome.Browser", side_effect=Exception("Connection error")):
+        with patch("src.auto_login.pychrome.Browser", side_effect=Exception("Connection error")):
             # Execute
             success, tab, browser = login_helper.login_to_existing_chrome(
                 username="testuser", 

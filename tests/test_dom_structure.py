@@ -6,7 +6,7 @@ import sys
 import time
 
 # Load the debug script
-debug_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tampermonkey/debug_dom.user.js')
+debug_script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts/tampermonkey/debug_dom.user.js')
 with open(debug_script_path, 'r') as file:
     debug_script = file.read()
 
@@ -41,8 +41,8 @@ def analyze_tradovate_tab(port=9222):
                 # Also test the actual data gathering function
                 print("\nTesting getAllAccountTableData function...")
                 # First check if we have the script
-                account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                       'tampermonkey/getAllAccountTableData.user.js')
+                account_data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                                       'scripts/tampermonkey/getAllAccountTableData.user.js')
                 
                 if os.path.exists(account_data_path):
                     with open(account_data_path, 'r') as file:

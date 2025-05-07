@@ -7,6 +7,7 @@ import signal
 import sys
 import json
 import random
+import threading
 
 # Configuration
 CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"  # Update for your OS
@@ -244,7 +245,8 @@ def disable_alerts(tab):
 def load_credentials():
     """Load all credentials from JSON file, allowing duplicates"""
     try:
-        credentials_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'credentials.json')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        credentials_path = os.path.join(project_root, 'config/credentials.json')
         print(f"Loading credentials from {credentials_path}")
         
         with open(credentials_path, 'r') as file:
@@ -327,23 +329,42 @@ def main():
         subprocess.run(["pkill", "-f", f"remote-debugging-port={BASE_DEBUGGING_PORT}"],
                       capture_output=True)
         
-        # Start Chrome instances for each credential pair
-        for idx, (username, password) in enumerate(credentials):
+        # Start Chrome instances for each credential pair simultaneously using threads
+        threads = []
+        instances = []
+        results = []  # To store results from threads
+        
+        def start_chrome_instance(idx, username, password):
             # Assign a unique port for each Chrome instance
             port = BASE_DEBUGGING_PORT + idx
-            print(f"\nStarting Chrome instance {idx+1} for {username} on port {port}")
+            print(f"Preparing Chrome instance {idx+1} for {username} on port {port}")
             
-            # Add a small delay between starting instances to avoid conflicts
-            if idx > 0:
-                time.sleep(1.5)
-                
             # Create and start a new Chrome instance
             instance = ChromeInstance(port, username, password)
             if instance.start():
-                chrome_instances.append(instance)
                 print(f"Chrome instance for {username} started successfully")
+                results.append((instance, True))
             else:
                 print(f"Failed to start Chrome instance for {username}")
+                results.append((instance, False))
+        
+        # Create and start a thread for each credential pair
+        for idx, (username, password) in enumerate(credentials):
+            thread = threading.Thread(
+                target=start_chrome_instance,
+                args=(idx, username, password)
+            )
+            threads.append(thread)
+            thread.start()
+        
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+        
+        # Process results
+        for instance, success in results:
+            if success:
+                chrome_instances.append(instance)
         
         if not chrome_instances:
             print("Failed to start any Chrome instances, exiting")

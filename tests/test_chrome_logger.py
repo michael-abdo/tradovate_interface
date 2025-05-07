@@ -10,7 +10,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import chrome_logger
+from src import chrome_logger
 
 class TestChromeLogger:
     
@@ -213,7 +213,7 @@ class TestChromeLogger:
         callback = MagicMock()
         log_file = "test.log"
         
-        with patch("chrome_logger.ChromeLogger") as MockLoggerClass:
+        with patch("src.chrome_logger.ChromeLogger") as MockLoggerClass:
             mock_logger = MagicMock()
             mock_logger.start.return_value = True
             MockLoggerClass.return_value = mock_logger
@@ -229,7 +229,7 @@ class TestChromeLogger:
 
     def test_create_logger_failure(self, mock_tab):
         # Setup
-        with patch("chrome_logger.ChromeLogger") as MockLoggerClass:
+        with patch("src.chrome_logger.ChromeLogger") as MockLoggerClass:
             mock_logger = MagicMock()
             mock_logger.start.return_value = False  # Logger fails to start
             MockLoggerClass.return_value = mock_logger

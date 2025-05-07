@@ -10,7 +10,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import auto_login
+from src import auto_login
 
 class TestAutoLogin:
     
@@ -55,7 +55,7 @@ class TestAutoLogin:
         mock_tab.mock_evaluate_result("https://trader.tradovate.com")
         mock_browser.add_tab(mock_tab)
         
-        with patch("pychrome.Browser", return_value=mock_browser):
+        with patch("src.auto_login.pychrome.Browser", return_value=mock_browser):
             # Execute
             browser, tab = auto_login.connect_to_chrome(9222)
             
@@ -76,7 +76,7 @@ class TestAutoLogin:
         mock_tab.mock_evaluate_result("https://trader.tradovate.com")
         mock_browser.new_tab.return_value = mock_tab
         
-        with patch("pychrome.Browser", return_value=mock_browser):
+        with patch("src.auto_login.pychrome.Browser", return_value=mock_browser):
             # Execute
             browser, tab = auto_login.connect_to_chrome(9222)
             
@@ -156,10 +156,10 @@ class TestAutoLogin:
 
     def test_chrome_instance_start_stop(self):
         # Setup
-        with patch("auto_login.start_chrome_with_debugging") as mock_start, \
-             patch("auto_login.connect_to_chrome") as mock_connect, \
-             patch("auto_login.inject_login_script") as mock_inject, \
-             patch("auto_login.disable_alerts") as mock_disable:
+        with patch("src.auto_login.start_chrome_with_debugging") as mock_start, \
+             patch("src.auto_login.connect_to_chrome") as mock_connect, \
+             patch("src.auto_login.inject_login_script") as mock_inject, \
+             patch("src.auto_login.disable_alerts") as mock_disable:
             
             # Mock successful Chrome start
             mock_process = MagicMock()

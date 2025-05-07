@@ -7,7 +7,8 @@ import threading
 import time
 
 # Load the Tampermonkey script
-tampermonkey_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tampermonkey/autoOrder.user.js')
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+tampermonkey_path = os.path.join(project_root, 'scripts/tampermonkey/autoOrder.user.js')
 with open(tampermonkey_path, 'r') as file:
     tampermonkey_code = file.read()
     
@@ -75,8 +76,9 @@ class TradovateConnection:
             self.tab.Runtime.evaluate(expression=tampermonkey_functions)
             
             # Also inject the getAllAccountTableData function
-            account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                         'tampermonkey/getAllAccountTableData.user.js')
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            account_data_path = os.path.join(project_root, 
+                                         'scripts/tampermonkey/getAllAccountTableData.user.js')
             if os.path.exists(account_data_path):
                 with open(account_data_path, 'r') as file:
                     account_data_js = file.read()
@@ -84,8 +86,8 @@ class TradovateConnection:
                 print(f"Account data function injected for {self.account_name}")
             
             # Inject the autoriskManagement.js script
-            risk_management_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                         'tampermonkey/autoriskManagement.js')
+            risk_management_path = os.path.join(project_root, 
+                                         'scripts/tampermonkey/autoriskManagement.js')
             if os.path.exists(risk_management_path):
                 with open(risk_management_path, 'r') as file:
                     risk_management_js = file.read()
@@ -196,8 +198,9 @@ class TradovateConnection:
             # If any function is missing, try to re-inject the script
             if not all(check_data.values()):
                 print(f"Re-injecting auto risk management script because some functions are missing: {check_data}")
-                risk_management_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                            'tampermonkey/autoriskManagement.js')
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                risk_management_path = os.path.join(project_root, 
+                                            'scripts/tampermonkey/autoriskManagement.js')
                 if os.path.exists(risk_management_path):
                     with open(risk_management_path, 'r') as file:
                         risk_management_js = file.read()
@@ -407,8 +410,9 @@ def main():
         # Ensure all connections have the account data function
         for conn in controller.connections:
             if conn.tab:
-                account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                          'tampermonkey/getAllAccountTableData.user.js')
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                account_data_path = os.path.join(project_root, 
+                                          'scripts/tampermonkey/getAllAccountTableData.user.js')
                 if os.path.exists(account_data_path):
                     with open(account_data_path, 'r') as file:
                         account_data_js = file.read()
@@ -416,7 +420,7 @@ def main():
         
         # Import the dashboard module here to avoid circular imports
         try:
-            from dashboard import run_flask_dashboard
+            from src.dashboard import run_flask_dashboard
             print("Starting Tradovate dashboard...")
             dashboard_thread = threading.Thread(target=run_flask_dashboard)
             dashboard_thread.daemon = True
