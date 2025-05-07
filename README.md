@@ -72,7 +72,30 @@ The project is organized into the following directories:
 
 ## Usage
 
-The application now provides a unified interface through `main.py` to access all components:
+The application provides a unified interface through `main.py` to access all components:
+
+### Important: Running Scripts Correctly
+
+To avoid module import errors like `ModuleNotFoundError: No module named 'src'`, always use one of these methods to run the scripts:
+
+1. **Use the main entry point (Recommended)**:
+   ```bash
+   python main.py [component]
+   ```
+
+2. **Use the launcher scripts**:
+   ```bash
+   python launchers/pinescript_webhook_launcher.py
+   ```
+
+3. **Run from project root directory**:
+   ```bash
+   # Make sure you're in the project root directory
+   cd /path/to/tradovate_interface
+   python src/pinescript_webhook.py
+   ```
+
+Running scripts directly from other directories may cause import errors.
 
 ### Step 1: Start Chrome instances with auto-login
 
@@ -255,11 +278,35 @@ To use this feature:
 3. Configure the alert message to include the JSON payload shown above
 4. Set the alert to trigger based on your trading strategy conditions
 
+## Troubleshooting
+
+If you encounter any issues with imports, Chrome connections, or other aspects of the system, please refer to the detailed [Troubleshooting Guide](docs/TROUBLESHOOTING.md).
+
+Common issues and solutions:
+
+### ModuleNotFoundError: No module named 'src'
+
+If you get this error, you're likely running a script directly without setting up the Python path correctly. Use one of these solutions:
+
+1. Run using main.py: `python main.py webhook`
+2. Use the launcher scripts: `python launchers/pinescript_webhook_launcher.py`
+3. Run from the project root directory
+
+### Test Your Environment
+
+A test script is provided to verify all imports are working correctly:
+
+```bash
+python launchers/test_imports.py
+```
+
+If all imports pass, your environment is set up correctly.
+
 ## Notes
 
 - Requires Chrome to be installed
 - Uses sequential ports starting at 9222 for remote debugging (one port per account)
 - Makes use of Tampermonkey functions without needing the extension installed
 - Each account instance runs in its own separate browser window with isolated user profile
-- Dashboard runs on port 6001, webhook server on port 5000
+- Dashboard runs on port 6001, webhook server on port 6000
 - All settings and preferences are stored in the browser's localStorage

@@ -420,7 +420,16 @@ def main():
         
         # Import the dashboard module here to avoid circular imports
         try:
+            # First try importing with src. prefix
             from src.dashboard import run_flask_dashboard
+        except ImportError:
+            # Fall back to direct import (when run from within src directory)
+            try:
+                from dashboard import run_flask_dashboard
+            except ImportError as e:
+                print(f"Error loading dashboard module: {e}")
+                print("Make sure you're running this script from the project root directory")
+                return 1
             print("Starting Tradovate dashboard...")
             dashboard_thread = threading.Thread(target=run_flask_dashboard)
             dashboard_thread.daemon = True

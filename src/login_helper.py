@@ -4,7 +4,22 @@ import time
 import json
 import os
 import sys
-from src.auto_login import inject_login_script, disable_alerts
+
+# Add the project root to the path so we can import from src
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
+# First try importing with src. prefix
+try:
+    from src.auto_login import inject_login_script, disable_alerts
+except ImportError:
+    # Fall back to direct import (when run from within src directory)
+    try:
+        from auto_login import inject_login_script, disable_alerts
+    except ImportError as e:
+        print(f"Failed to import from auto_login: {e}")
+        print("Make sure you're running this script from the project root directory")
+        sys.exit(1)
 
 def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
     """

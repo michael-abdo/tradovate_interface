@@ -31,13 +31,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger('webhook_server')
 
+# Add the project root to the path so we can import from src
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
 # Import the TradovateController from app.py
-# Handle case where __file__ might not be defined
 try:
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-except NameError:
-    sys.path.append(os.getcwd())
-from src.app import TradovateController
+    from src.app import TradovateController
+except ImportError:
+    # If the above import fails, try importing directly (when run from within src directory)
+    try:
+        from app import TradovateController
+        logger.info("Imported TradovateController directly from app")
+    except ImportError as e:
+        logger.error(f"Failed to import TradovateController: {e}")
+        logger.error("Make sure you're running this script from the project root directory")
+        sys.exit(1)
 
 app = Flask(__name__)
 PORT = 6000
