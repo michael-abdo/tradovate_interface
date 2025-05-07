@@ -8,6 +8,9 @@ component to launch: auto-login, dashboard, webhook, etc.
 import sys
 import os
 import argparse
+import time
+import threading
+import subprocess
 
 # Add the project root to the path so we can import from src
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -100,6 +103,16 @@ def main():
         help="Start Chrome logger (equivalent to chrome_logger_launcher.py)"
     )
     
+    # Start-all command - start Chrome, auto-login, and dashboard together
+    start_all_parser = subparsers.add_parser(
+        "start-all",
+        help="Launch the complete stack: Chrome, auto-login, and dashboard"
+    )
+    start_all_parser.add_argument("--wait", type=int, default=15, 
+                        help="Seconds to wait between auto-login and dashboard start (default: 15)")
+    start_all_parser.add_argument("--background", action="store_true", 
+                        help="Run auto-login in the background")
+    
     args = parser.parse_args()
     
     if not args.command:
@@ -129,6 +142,40 @@ def main():
     
     elif args.command == "logger":
         return chrome_logger_main()
+    
+    elif args.command == "start-all":
+        # Handle the complete stack: auto-login + dashboard
+        if args.background:
+            # Start auto-login in the background
+            print("Starting auto-login process in the background...")
+            auto_login_process = subprocess.Popen(
+                [sys.executable, f"{project_root}/main.py", "login"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            print(f"Auto-login started (PID: {auto_login_process.pid})")
+            
+            # Wait for Chrome instances to start and log in
+            print(f"Waiting {args.wait} seconds for login to complete...")
+            time.sleep(args.wait)
+            
+            # Start the dashboard in the foreground
+            run_flask_dashboard()
+            return 0
+        else:
+            # Start auto-login in a separate thread
+            auto_login_thread = threading.Thread(target=auto_login_main)
+            auto_login_thread.daemon = True
+            auto_login_thread.start()
+            
+            # Wait for Chrome instances to start and log in
+            print(f"Waiting {args.wait} seconds for login to complete...")
+            time.sleep(args.wait)
+            
+            # Start dashboard in the main thread
+            run_flask_dashboard()
+            return 0
     
     else:
         parser.print_help()
