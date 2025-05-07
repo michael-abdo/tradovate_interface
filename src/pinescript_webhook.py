@@ -56,11 +56,8 @@ def get_target_accounts_for_strategy(strategy_name):
         except NameError:
             base_dir = os.getcwd()
             
-        strategy_file = os.path.join(base_dir, 'strategy_mappings.json')
-        # Try the new path if the file doesn't exist
-        if not os.path.exists(strategy_file):
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            strategy_file = os.path.join(project_root, 'strategy_mappings.json')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         if not os.path.exists(strategy_file):
             print(f"Strategy mappings file not found. Using all accounts.")
             return list(range(len(controller.connections))), []

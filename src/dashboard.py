@@ -25,8 +25,9 @@ def inject_account_data_function():
         if conn.tab:
             try:
                 # Read the function from the file
-                account_data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                       'tampermonkey/getAllAccountTableData.user.js')
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                account_data_path = os.path.join(project_root, 
+                                       'scripts/tampermonkey/getAllAccountTableData.user.js')
                 with open(account_data_path, 'r') as file:
                     get_account_data_js = file.read()
                 
@@ -462,7 +463,7 @@ def run_risk_management():
 def get_strategies():
     try:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        strategy_file = os.path.join(project_root, 'strategy_mappings.json')
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         if not os.path.exists(strategy_file):
             # Create default file if it doesn't exist
             default_mappings = {
@@ -486,7 +487,7 @@ def update_strategies():
     try:
         data = request.json
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        strategy_file = os.path.join(project_root, 'strategy_mappings.json')
+        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         
         with open(strategy_file, 'w') as f:
             json.dump(data, f, indent=2)
