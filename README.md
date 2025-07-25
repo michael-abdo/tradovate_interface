@@ -17,31 +17,52 @@ A Python interface for automating trading operations with multiple Tradovate acc
 
 ## Project Structure
 
-The project is organized into the following directories:
+```
+tradovate_interface/
+├── 🚀 Core Application
+│   ├── main.py                 # Main entry point
+│   ├── start_all.py           # Complete stack launcher
+│   └── src/                   # Core Python modules
+│       ├── app.py             # Trading execution engine
+│       ├── auto_login.py      # Chrome automation & login
+│       ├── dashboard.py       # Web monitoring interface
+│       ├── chrome_logger.py   # Browser activity logging
+│       └── pinescript_webhook.py # TradingView integration
+│
+├── 📁 Configuration & Data
+│   ├── config/                # Account credentials & settings
+│   ├── logs/                  # Comprehensive activity logging
+│   ├── temp/                  # Temporary files & mocks
+│   └── strategies/            # Trading strategy configurations
+│
+├── 🔧 Automation & Scripts
+│   ├── scripts/tampermonkey/  # Browser automation scripts
+│   ├── launchers/             # Component startup scripts
+│   └── utils/                 # Helper utilities
+│
+├── 🧪 Testing & Quality
+│   ├── tests/                 # Unit & integration tests
+│   └── static/                # Static assets
+│
+├── 📚 Documentation
+│   ├── docs/implementation/   # **🎯 STABILITY GUIDES**
+│   │   ├── CHROME_PROCESS_WATCHDOG.md      # 99.9% uptime system
+│   │   ├── CONNECTION_HEALTH_MONITORING.md # Zero-downtime failover
+│   │   └── STABILITY_IMPLEMENTATION_PLAN.md # Complete roadmap
+│   ├── docs/architecture/     # System architecture
+│   └── docs/                  # Additional documentation
+│
+└── 🌐 Web Interface
+    └── web/                   # Dashboard UI assets
+```
 
-- `src/`: Core Python modules
-  - `app.py`: Main application code
-  - `auto_login.py`: Chrome instance management and auto-login
-  - `login_helper.py`: Chrome remote debugging interface
-  - `chrome_logger.py`: Browser logging tools
-  - `dashboard.py`: Web dashboard implementation
-  - `pinescript_webhook.py`: Webhook server for TradingView integration
-  - `examples/`: Example scripts showing usage patterns
-  - `utils/`: Utility functions and helper scripts
-    - `check_chrome.py`: Utility for checking Chrome connectivity
-- `tests/`: Test scripts and fixtures
-  - `test_auto_login.py`: Test script for auto login using mock HTML
-  - `test_autorisk.py`: Test script for auto risk management
-  - `test_simple.py`: Simple test for opening mock login page
-  - `test_chrome_logs.py`: Test script for Chrome logger functionality
-  - `chrome_logger_fixture.py`: Test fixtures for Chrome logging
-- `web/`: Web interface files
-  - `templates/`: HTML templates for Flask
-  - `static/`: Static assets (CSS, JS, images)
-- `scripts/`: Browser automation scripts
-  - `tampermonkey/`: Tampermonkey scripts for browser automation
-- `strategies/`: Trading strategy files
-  - `pinescript/`: PineScript code for TradingView
+## 🚨 Critical Stability Features
+
+This system includes **production-grade stability** implementations:
+
+- **[Chrome Process Watchdog](docs/implementation/CHROME_PROCESS_WATCHDOG.md)** - Automated crash detection and recovery (Target: 99.9% uptime)
+- **[Connection Health Monitoring](docs/implementation/CONNECTION_HEALTH_MONITORING.md)** - Network failover and recovery (Target: <30s recovery)  
+- **[Implementation Plan](docs/implementation/STABILITY_IMPLEMENTATION_PLAN.md)** - Complete 4-week development roadmap
 - `launchers/`: Entry point scripts for different components
   - `app_launcher.py`: Launcher for main app
   - `auto_login_launcher.py`: Launcher for auto login
