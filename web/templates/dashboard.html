@@ -884,7 +884,7 @@
         let accountData = [];
         
         // Default column order (first column is always Account)
-        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation'];
+        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation', 'Drawdown Distance'];
         
         // Current column order
         let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
@@ -1796,10 +1796,22 @@
             if (refreshCountdown <= 0) refreshCountdown = 30;
             
             const refreshBtn = document.querySelector('.refresh-button');
-            if (refreshBtn && refreshBtn.querySelector('small')) {
-                const timeStr = refreshBtn.querySelector('small').textContent.match(/Last: (.+)/);
-                if (timeStr) {
-                    refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr[1]} | Next in: ${refreshCountdown}s)</small>`;
+            if (refreshBtn) {
+                const currentText = refreshBtn.innerHTML;
+                const timeMatch = currentText.match(/Last: ([^|]+)/);
+                const timeStr = timeMatch ? timeMatch[1].trim() : new Date().toLocaleTimeString();
+                
+                // Update button text with countdown
+                refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr} | Next in: ${refreshCountdown}s)</small>`;
+                
+                // Add visual flash when countdown reaches 0 (auto-refresh happening)
+                if (refreshCountdown === 30) {
+                    refreshBtn.style.backgroundColor = '#34c759';
+                    refreshBtn.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        refreshBtn.style.backgroundColor = '#0a84ff';
+                        refreshBtn.style.transform = 'scale(1)';
+                    }, 800);
                 }
             }
         }, 1000);
@@ -2213,12 +2225,13 @@
         function updateQuantityRecommendation() {
             const accountSelect = document.getElementById('accountSelect');
             const qtyRecommendation = document.getElementById('qtyRecommendation');
+            const qtyInput = document.getElementById('qtyInput');
             
-            if (!accountSelect || !qtyRecommendation || !accountData) return;
+            if (!accountSelect || !qtyRecommendation || !qtyInput || !accountData) return;
             
             const selectedAccount = accountSelect.value;
             
-            // Define phase-based quantity recommendations
+            // Define phase-based quantity recommendations matching the QA test requirements
             const phaseQuantities = {
                 'Phase 1': 20,
                 'Phase 2': 10,
@@ -2227,32 +2240,44 @@
             };
             
             if (selectedAccount === 'all') {
-                // For all accounts, show a range or average
+                // For all accounts, show a range based on phases present
                 let phases = new Set();
                 accountData.forEach(account => {
-                    if (account.phase) phases.add(account.phase);
+                    if (account.Phase) phases.add(account.Phase);
                 });
                 
                 if (phases.size > 1) {
                     qtyRecommendation.textContent = '(Recommended: varies by phase)';
+                    // Don't change quantity input for "all" selection
                 } else if (phases.size === 1) {
                     const phase = Array.from(phases)[0];
                     const recommendedQty = phaseQuantities[phase] || 1;
                     qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phase})`;
+                    // Update quantity input to recommended value
+                    qtyInput.value = recommendedQty;
+                } else {
+                    qtyRecommendation.textContent = '(Recommended: varies by phase)';
                 }
             } else {
-                // For specific account, show its phase recommendation
-                const account = accountData.find(acc => 
-                    acc.account === selectedAccount || 
-                    acc['Account'] === selectedAccount ||
-                    acc.account_name === selectedAccount
-                );
+                // For specific account, show its phase recommendation and update input
+                const accountIndex = parseInt(selectedAccount);
+                const account = accountData[accountIndex];
                 
-                if (account && account.phase) {
-                    const recommendedQty = phaseQuantities[account.phase] || 1;
-                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${account.phase})`;
+                if (account && account.Phase) {
+                    const recommendedQty = phaseQuantities[account.Phase] || 1;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${account.Phase})`;
+                    // Update quantity input to recommended value
+                    qtyInput.value = recommendedQty;
+                    
+                    // Add visual feedback that the quantity was auto-updated
+                    qtyInput.style.backgroundColor = '#34c759';
+                    qtyInput.style.transition = 'background-color 0.3s';
+                    setTimeout(() => {
+                        qtyInput.style.backgroundColor = '#3a3a3a';
+                    }, 1000);
                 } else {
-                    qtyRecommendation.textContent = '';
+                    qtyRecommendation.textContent = '(Recommended: 1 for Unknown)';
+                    qtyInput.value = 1;
                 }
             }
         }
