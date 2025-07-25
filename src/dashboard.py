@@ -126,40 +126,224 @@ def update_phases():
                     with open(risk_script_path, 'r') as file:
                         risk_script = file.read()
                     
-                    # Extract the updateUserColumnPhaseStatus function and dependencies
-                    # We need to inject getTableData as well since it's used by updateUserColumnPhaseStatus
+                    # Inject the complete autoriskManagement.js functions to run actual phase logic
                     functions_to_inject = """
-                    // Check if functions already exist to avoid redefinition
+                    // Inject phase criteria from autoriskManagement.js
+                    const phaseCriteria = [
+                        // ── DEMO ──
+                        {
+                            phase: '1',
+                            accountNameIncludes: 'DEMO',
+                            totalAvailOperator: '<',
+                            totalAvailValue: 60000,
+                            distDrawOperator: '>',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: 0.5,
+                            useOr: false,
+                            quantity: 20
+                        },
+                        {
+                            phase: '2',
+                            accountNameIncludes: 'DEMO',
+                            totalAvailOperator: '>=',
+                            totalAvailValue: 60000,
+                            distDrawOperator: '<=',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: null,
+                            useOr: true,
+                            quantity: 10
+                        },
+                        
+                        // ── APEX ──
+                        {
+                            phase: '1',
+                            accountNameIncludes: 'APEX',
+                            totalAvailOperator: '<',
+                            totalAvailValue: 310000,
+                            distDrawOperator: '>',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: 0.5,
+                            useOr: false,
+                            quantity: 20
+                        },
+                        {
+                            phase: '2',
+                            accountNameIncludes: 'APEX',
+                            totalAvailOperator: '>=',
+                            totalAvailValue: 310000,
+                            distDrawOperator: '<=',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: null,
+                            useOr: true,
+                            quantity: 10
+                        },
+                        {
+                            phase: '3',
+                            accountNameIncludes: 'PAAPEX',
+                            totalAvailOperator: null,
+                            totalAvailValue: 0,
+                            distDrawOperator: null,
+                            distDrawValue: 0,
+                            maxActive: 20,
+                            reduceFactor: null,
+                            useOr: false,
+                            quantity: 2
+                        }
+                    ];
+                    
+                    // Phase analysis function
+                    function analyzePhase(row, reset = false) {
+                        if (reset || typeof analyzePhase.phaseData === 'undefined') {
+                            console.log("[analyzePhase] resetting phaseData");
+                            analyzePhase.phaseData = {};
+
+                            const phase1Count = phaseCriteria.filter(r => r.phase === '1').length;
+                            const rule1 = phaseCriteria.find(r => r.phase === '1');
+                            if (rule1) {
+                                rule1.maxActive = 1;
+                                console.log(`[analyzePhase] set phase 1 maxActive to ${rule1.maxActive}`);
+                            }
+
+                            const increment = typeof analyzePhase.maxActiveIncrement === 'number'
+                            ? analyzePhase.maxActiveIncrement
+                            : 1;
+                            const rule2 = phaseCriteria.find(r => r.phase === '2');
+                            if (rule2) {
+                                rule2.maxActive = 1;
+                                console.log(`[analyzePhase] increased phase 2 maxActive to ${rule2.maxActive}`);
+                            }
+                        }
+
+                        if (row === null) {
+                            return;
+                        }
+
+                        function parseValue(val) {
+                            if (!val || typeof val !== 'string') {
+                                console.log(`[parseValue] Invalid value: ${val}, type: ${typeof val}`);
+                                return 0;
+                            }
+                            const num = parseFloat(val.replace(/[$,()]/g, ''));
+                            return (val.includes('(') && val.includes(')')) ? -num : num;
+                        }
+                        const parsed = {
+                            totalAvail: parseValue(row["Total Available Margin"] || "$0.00"),
+                            distDraw:   parseValue(row["Dist Drawdown Net Liq"] || "$0.00")
+                        };
+
+                        const accountName = row["Account ▲"] || row["Account"] || "";
+                        function compareNumeric(value, operator, compareValue) {
+                            const ops = { '>':(a,b)=>a>b, '<':(a,b)=>a<b, '>=':(a,b)=>a>=b, '<=':(a,b)=>a<=b };
+                            return ops[operator]?.(value, compareValue) ?? false;
+                        }
+                        function matchesRule(rule) {
+                            if (rule.accountNameIncludes && !accountName.includes(rule.accountNameIncludes)) return false;
+                            const ta = rule.totalAvailOperator
+                            ? compareNumeric(parsed.totalAvail, rule.totalAvailOperator, rule.totalAvailValue)
+                            : true;
+                            const dd = rule.distDrawOperator
+                            ? compareNumeric(parsed.distDraw, rule.distDrawOperator, rule.distDrawValue)
+                            : true;
+                            return rule.useOr && rule.totalAvailOperator && rule.distDrawOperator
+                                ? (ta || dd)
+                            : (ta && dd);
+                        }
+
+                        let rule = accountName.includes('PAAPEX')
+                        ? phaseCriteria.find(r => r.accountNameIncludes === 'PAAPEX')
+                        : phaseCriteria.find(matchesRule) || { phase:'Unknown', maxActive:0, profitLimit:Infinity };
+
+                        row.phase = rule.phase;
+                        row.phaseInfo = { phase:rule.phase, maxActive:rule.maxActive, profitLimit:rule.profitLimit,
+                                         accountName, totalAvail:parsed.totalAvail, distDraw:parsed.distDraw,
+                                         reduceFactor:rule.reduceFactor||null };
+
+                        if (rule.phase === '2' && parsed.totalAvail > 320000) {
+                            row.active = false;
+                            return rule.phase;
+                        }
+
+                        if (!analyzePhase.phaseData[rule.phase]) {
+                            analyzePhase.phaseData[rule.phase] = { activeCount:0, cumulativeProfit:0 };
+                        }
+
+                        function parseDollar(val) {
+                            const num = parseFloat(val.replace(/[$,()]/g, ''));
+                            return (val.includes('(') && val.includes(')')) ? -num : num;
+                        }
+                        const profit = parseDollar(row["Dollar Total P L"]||"$0.00");
+                        analyzePhase.phaseData[rule.phase].cumulativeProfit += profit;
+
+                        // Determine how many can be active
+                        let allowedActive = rule.maxActive;
+                        if (analyzePhase.phaseData[rule.phase].cumulativeProfit > rule.profitLimit) {
+                            allowedActive = rule.reduceFactor
+                                ? Math.ceil(rule.maxActive * rule.reduceFactor)
+                            : 0;
+                        }
+
+                        const currentActive = analyzePhase.phaseData[rule.phase].activeCount;
+                        if (currentActive >= allowedActive) {
+                            row.active = false;
+                            return rule.phase;
+                        }
+
+                        // Otherwise activate
+                        row.active = true;
+                        analyzePhase.phaseData[rule.phase].activeCount++;
+
+                        return rule.phase;
+                    }
+                    
+                    // Enhanced getTableData function with real phase analysis
                     if (typeof getTableData === 'undefined') {
                         window.getTableData = function() {
                             const accountTable = document.querySelector('.module.positions.data-table');
                             if (!accountTable) return [];
                             
                             const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
-                            const data = [];
-                            
-                            // Skip header row
-                            for (let i = 1; i < rows.length; i++) {
-                                const cells = rows[i].querySelectorAll('.public_fixedDataTableCell_cellContent');
-                                const rowData = {};
-                                
-                                // Extract data from cells
-                                cells.forEach((cell, index) => {
-                                    const headerCell = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent')[index];
-                                    if (headerCell) {
-                                        const key = headerCell.textContent.trim();
-                                        rowData[key] = cell.textContent.trim();
-                                    }
-                                });
-                                
-                                // Add phase and active status (defaults for now)
-                                rowData.phase = 'Phase 1';
-                                rowData.active = true;
-                                
-                                data.push(rowData);
-                            }
-                            
-                            return data;
+                            if (!rows.length) return [];
+
+                            // First row as header (skip header in final output)
+                            const headerCells = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent');
+                            const headers = Array.from(headerCells).map(cell => cell.textContent.trim());
+
+                            const jsonData = [];
+                            // Reset phase tracking before processing rows.
+                            analyzePhase(null, true);
+
+                            rows.forEach((row, index) => {
+                                if (index === 0) return; // Skip header row
+                                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+                                const values = Array.from(cells).map(cell => cell.textContent.trim());
+                                if (values.length) {
+                                    const rowObj = {};
+                                    headers.forEach((header, i) => {
+                                        rowObj[header] = values[i];
+                                    });
+                                    // Process the row to determine its phase and active state.
+                                    rowObj.phase = analyzePhase(rowObj);
+
+                                    // Build a simplified object with the desired keys including "active".
+                                    const simpleRow = {
+                                        "Account ▲": rowObj["Account ▲"] || rowObj["Account"] || "",
+                                        "Dollar Total P L": rowObj["Dollar Total P L"] || "",
+                                        "Dollar Open P L": rowObj["Dollar Open P L"] || "",
+                                        "Dist Drawdown Net Liq": rowObj["Dist Drawdown Net Liq"] || "",
+                                        "Total Available Margin": rowObj["Total Available Margin"] || "",
+                                        "phase": rowObj.phase,
+                                        "active": rowObj.active || false
+                                    };
+
+                                    jsonData.push(simpleRow);
+                                }
+                            });
+
+                            return jsonData;
                         };
                     }
                     
