@@ -795,7 +795,7 @@
         <div class="strategy-controls">
             <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
             <button id="save-strategies-btn" class="strategy-button">Save All Strategy Mappings</button>
-            <button id="auto-risk-btn" class="strategy-button" style="background-color: #ff6600; margin-left: 10px;">Auto Risk Management</button>
+            <button id="auto-risk-btn" class="strategy-button" style="background-color: #ff6600; margin-left: 10px;">Auto Manage</button>
             <div style="text-align: center; font-size: 12px; color: #aaa; margin-top: 5px;">
                 Strategy selections are automatically saved when changed
             </div>
@@ -806,7 +806,7 @@
             </div>
         </div>
         
-        <h2>Trade Controls</h2>
+        <h2>Action Controls</h2>
         
         <div id="trade-error-display" style="display: none; background-color: #ff3b30; color: white; padding: 10px; margin-bottom: 10px; border-radius: 4px; text-align: center;">
             <!-- Error messages will appear here -->
@@ -839,21 +839,21 @@
                 <div class="input-group">
                     <div class="checkbox-label">
                         <input type="checkbox" id="tpCheckbox" checked>
-                        <label for="tpCheckbox">Take Profit</label>
+                        <label for="tpCheckbox">Target</label>
                     </div>
                     <div class="price-inputs">
-                        <input type="number" id="tpInput" value="100" class="trade-input" placeholder="TP Ticks">
-                        <input type="number" id="tpPriceInput" step="0.01" class="trade-input" placeholder="TP Price">
+                        <input type="number" id="tpInput" value="100" class="trade-input" placeholder="Target Ticks">
+                        <input type="number" id="tpPriceInput" step="0.01" class="trade-input" placeholder="Target Price">
                     </div>
                 </div>
                 <div class="input-group">
                     <div class="checkbox-label">
                         <input type="checkbox" id="slCheckbox" checked>
-                        <label for="slCheckbox">Stop Loss</label>
+                        <label for="slCheckbox">Stop</label>
                     </div>
                     <div class="price-inputs">
-                        <input type="number" id="slInput" value="40" class="trade-input" placeholder="SL Ticks">
-                        <input type="number" id="slPriceInput" step="0.01" class="trade-input" placeholder="SL Price">
+                        <input type="number" id="slInput" value="40" class="trade-input" placeholder="Stop Ticks">
+                        <input type="number" id="slPriceInput" step="0.01" class="trade-input" placeholder="Stop Price">
                     </div>
                 </div>
             </div>
@@ -864,17 +864,17 @@
                     <input type="number" id="entryPriceInput" step="0.01" class="trade-input" placeholder="Entry Price">
                 </div>
                 <div class="trade-buttons">
-                    <button id="buyBtn" class="buy-button">Buy</button>
-                    <button id="sellBtn" class="sell-button">Sell</button>
+                    <button id="buyBtn" class="buy-button">In</button>
+                    <button id="sellBtn" class="sell-button">Out</button>
                 </div>
             </div>
             
             <div class="trade-controls-row">
-                <button id="cancelAllBtn" class="cancel-button">Cancel All</button>
-                <button id="closeAllBtn" class="close-button">Close All Positions</button>
+                <button id="cancelAllBtn" class="cancel-button">Clear All</button>
+                <button id="closeAllBtn" class="close-button">Exit All</button>
             </div>
             <div class="trade-controls-row" style="margin-top: 10px;">
-                <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse Position</button>
+                <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Flip</button>
             </div>
         </div>
     </div>
@@ -1952,27 +1952,27 @@
                 });
             });
             
-            // Buy button handler
+            // In button handler
             document.getElementById('buyBtn').addEventListener('click', () => {
                 executeTradeAction('Buy');
             });
             
-            // Sell button handler
+            // Out button handler
             document.getElementById('sellBtn').addEventListener('click', () => {
                 executeTradeAction('Sell');
             });
             
-            // Cancel All button handler
+            // Clear All button handler
             document.getElementById('cancelAllBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Cancel-All');
             });
             
-            // Close All button handler
+            // Exit All button handler
             document.getElementById('closeAllBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Exit-at-Mkt-Cxl');
             });
             
-            // Reverse Position button handler
+            // Flip button handler
             document.getElementById('reverseBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Reverse-Cxl');
             });
@@ -2076,7 +2076,7 @@
             .then(result => {
                 if (result.status === 'success') {
                     // Show success feedback in P&L area or console
-                    console.log(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                    console.log(`${action} action completed successfully on ${result.accounts_affected} accounts.`);
                     
                     // Reset price inputs
                     document.getElementById('entryPriceInput').value = '';
@@ -2084,12 +2084,12 @@
                     document.getElementById('slPriceInput').value = '';
                 } else {
                     // Show error message
-                    showTradeError(result.message || 'Trade execution failed');
+                    showTradeError(result.message || 'Action execution failed');
                 }
             })
             .catch(error => {
-                console.error('Error executing trade:', error);
-                showTradeError('Error placing order. Check console for details.');
+                console.error('Error executing action:', error);
+                showTradeError('Error executing action. Check console for details.');
             });
         }
         
@@ -2123,8 +2123,8 @@
                 //alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
             })
             .catch(error => {
-                console.error('Error executing cancel/close action:', error);
-                alert('Error canceling/closing orders. See console for details.');
+                console.error('Error executing action:', error);
+                alert('Error executing action. See console for details.');
             });
         }
         
