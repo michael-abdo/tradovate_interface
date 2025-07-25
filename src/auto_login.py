@@ -247,6 +247,26 @@ def start_chrome_with_debugging(port):
         "--disable-infobars",
         "--disable-session-crashed-bubble",
         "--disable-save-password-bubble",
+        # GPU-related flags to prevent crashes
+        "--disable-gpu-sandbox",
+        "--disable-software-rasterizer",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu-compositing",
+        "--enable-features=SharedArrayBuffer",
+        "--disable-web-security",
+        "--disable-features=IsolateOrigins,site-per-process",
+        # Additional stability flags
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-features=TranslateUI",
+        "--disable-ipc-flooding-protection",
+        # Memory and performance flags
+        "--max_old_space_size=4096",
+        "--js-flags=--max-old-space-size=4096",
+        "--force-color-profile=srgb",
         TRADOVATE_URL,
     ]
 
