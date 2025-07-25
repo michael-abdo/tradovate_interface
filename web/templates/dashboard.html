@@ -819,7 +819,7 @@
                     <input type="text" id="symbolInput" placeholder="NQ" class="trade-input symbol-input">
                 </div>
                 <div class="input-group">
-                    <label for="qtyInput">Quantity</label>
+                    <label for="qtyInput">Quantity <span id="qtyRecommendation" style="color: #0a84ff; font-size: 11px;"></span></label>
                     <input type="number" id="qtyInput" value="1" min="1" class="trade-input">
                 </div>
                 <div class="input-group">
@@ -1482,6 +1482,9 @@
                 // Populate account dropdown with current data
                 populateAccountDropdown();
                 
+                // Update quantity recommendation
+                updateQuantityRecommendation();
+                
                 // Execute phase update on all Chrome tabs
                 console.log(`[Phase Update] Starting phase update at ${new Date().toLocaleTimeString()}`);
                 fetch('/api/update-phases', {
@@ -1759,23 +1762,47 @@
         fetchAccountData().then(() => {
             populateFilterOptions();
             applyFilters();
+            updateQuantityRecommendation(); // Initial recommendation
             console.log(`[Initial Load] Completed at ${new Date().toLocaleTimeString()}`);
         }).catch(error => {
             console.error('[Initial Load] Error:', error);
         });
         
         // Set up periodic refresh (every 30 seconds)
-        setInterval(() => {
-            // Only auto-refresh if page is visible to avoid unnecessary requests
-            if (!document.hidden) {
-                console.log(`[Auto-Refresh] Starting periodic refresh at ${new Date().toLocaleTimeString()}`);
-                fetchAccountData().then(() => {
-                    populateFilterOptions();
-                    applyFilters();
-                    console.log(`[Auto-Refresh] Completed at ${new Date().toLocaleTimeString()}`);
-                });
+        let autoRefreshInterval = setInterval(() => {
+            // For testing/demo purposes, always refresh regardless of visibility
+            console.log(`[Auto-Refresh] Starting periodic refresh at ${new Date().toLocaleTimeString()}`);
+            
+            // Add visual indicator that auto-refresh is happening
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn) {
+                refreshBtn.style.backgroundColor = '#0071e3';
+                setTimeout(() => {
+                    refreshBtn.style.backgroundColor = '#0a84ff';
+                }, 500);
             }
+            
+            fetchAccountData().then(() => {
+                populateFilterOptions();
+                applyFilters();
+                console.log(`[Auto-Refresh] Completed at ${new Date().toLocaleTimeString()}`);
+            });
         }, 30000);
+        
+        // Also add countdown indicator for next refresh
+        let refreshCountdown = 30;
+        setInterval(() => {
+            refreshCountdown--;
+            if (refreshCountdown <= 0) refreshCountdown = 30;
+            
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn && refreshBtn.querySelector('small')) {
+                const timeStr = refreshBtn.querySelector('small').textContent.match(/Last: (.+)/);
+                if (timeStr) {
+                    refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr[1]} | Next in: ${refreshCountdown}s)</small>`;
+                }
+            }
+        }, 1000);
         
         // ---- Trade Controls Functionality ----
         
@@ -1974,6 +2001,7 @@
                 accountSelect.addEventListener('change', function() {
                     console.log(`Account selection changed: ${this.value}`);
                     accountUpdater('accountSelect');
+                    updateQuantityRecommendation();
                 });
             }
             
@@ -2179,6 +2207,54 @@
         function hideTradeError() {
             const errorDiv = document.getElementById('trade-error-display');
             errorDiv.style.display = 'none';
+        }
+        
+        // Update quantity recommendation based on selected account's phase
+        function updateQuantityRecommendation() {
+            const accountSelect = document.getElementById('accountSelect');
+            const qtyRecommendation = document.getElementById('qtyRecommendation');
+            
+            if (!accountSelect || !qtyRecommendation || !accountData) return;
+            
+            const selectedAccount = accountSelect.value;
+            
+            // Define phase-based quantity recommendations
+            const phaseQuantities = {
+                'Phase 1': 20,
+                'Phase 2': 10,
+                'Phase 3': 2,
+                'Unknown': 1
+            };
+            
+            if (selectedAccount === 'all') {
+                // For all accounts, show a range or average
+                let phases = new Set();
+                accountData.forEach(account => {
+                    if (account.phase) phases.add(account.phase);
+                });
+                
+                if (phases.size > 1) {
+                    qtyRecommendation.textContent = '(Recommended: varies by phase)';
+                } else if (phases.size === 1) {
+                    const phase = Array.from(phases)[0];
+                    const recommendedQty = phaseQuantities[phase] || 1;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phase})`;
+                }
+            } else {
+                // For specific account, show its phase recommendation
+                const account = accountData.find(acc => 
+                    acc.account === selectedAccount || 
+                    acc['Account'] === selectedAccount ||
+                    acc.account_name === selectedAccount
+                );
+                
+                if (account && account.phase) {
+                    const recommendedQty = phaseQuantities[account.phase] || 1;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${account.phase})`;
+                } else {
+                    qtyRecommendation.textContent = '';
+                }
+            }
         }
         
         // Auto-refresh indicator functionality

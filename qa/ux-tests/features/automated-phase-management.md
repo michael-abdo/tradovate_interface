@@ -61,12 +61,14 @@
 
 9. Test automatic phase updates during data refresh
    * Wait 30 seconds for automatic data refresh
-   * Phase values should update automatically without manual intervention
+   * Watch for countdown indicator showing "Next in: Xs" on refresh button
+   * When countdown reaches 0, refresh should trigger automatically (button briefly changes color)
    * ✅ Pass | ❌ Fail + reason
 
 10. Verify phase-based quantity recommendations
-    * Different phases should imply different recommended trading quantities
-    * Higher phases should generally allow larger position sizes
+    * Select different accounts from the dropdown
+    * Quantity field label should show "(Recommended: X for Phase Y)"
+    * Phase 1 should recommend 20, Phase 2 should recommend 10, Phase 3 should recommend 2
     * ✅ Pass | ❌ Fail + reason
 
 ---
