@@ -30,7 +30,7 @@
    * ✅ Pass | ❌ Fail + reason
 
 3. Check real-time account data table
-   * Table should display accounts with columns: Account, Dollar Open P L, Phase, Status
+   * Table should display accounts with multiple columns including Account, Phase, Status, Strategy
    * Data should be populated with live account information
    * ✅ Pass | ❌ Fail + reason
 
@@ -54,9 +54,9 @@
    * Values should change during automatic refresh cycles
    * ✅ Pass | ❌ Fail + reason
 
-8. Test account status indicators
-   * Account status should show "Active", "Phase 1", "Phase 2", etc.
-   * Status should be color-coded (green for active, orange for inactive)
+8. Test account phase indicators
+   * Phase column should show "Phase 1", "Phase 2", etc.
+   * Each account should have an appropriate phase value
    * ✅ Pass | ❌ Fail + reason
 
 9. Verify margin information display

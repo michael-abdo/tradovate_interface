@@ -26,22 +26,22 @@
 
 2. Locate "Strategy Management" section
    * Should find strategy section below the main account table
-   * Section should have strategy controls and mapping interface
+   * Section should have "Add Strategy" and "Save All Strategy Mappings" buttons
    * ✅ Pass | ❌ Fail + reason
 
-3. Verify strategy dropdown/selection interface
-   * Should see strategy selection dropdown or interface
+3. Verify strategy dropdown in account table
+   * Each account row should have a Strategy dropdown column
    * Available strategies should be listed (L/H, Velocity Graph variants, DEFAULT)
    * ✅ Pass | ❌ Fail + reason
 
 4. Test strategy selection functionality
-   * Click on strategy dropdown or selection interface
-   * Should be able to select different strategy options
+   * Click on any account's strategy dropdown
+   * Should be able to select different strategy options from the dropdown
    * ✅ Pass | ❌ Fail + reason
 
-5. Check strategy mapping controls
-   * Strategy section should show account mapping capabilities
-   * Should indicate which accounts are assigned to which strategies
+5. Check strategy assignment per account
+   * Each account row shows its currently assigned strategy
+   * Strategy dropdowns should be functional for each account
    * ✅ Pass | ❌ Fail + reason
 
 6. Test default strategy assignment

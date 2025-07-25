@@ -42,9 +42,9 @@
    * Phase values should recalculate based on current account metrics
    * ✅ Pass | ❌ Fail + reason
 
-6. Verify active/inactive status indicators
-   * Accounts should show active/inactive status in phase display
-   * Status should be color-coded (green for active, red for inactive)
+6. Verify account status column
+   * Account table should have a Status column
+   * Status values should indicate account state (Active, Inactive, etc.)
    * ✅ Pass | ❌ Fail + reason
 
 7. Check Total Available Margin impact on phases

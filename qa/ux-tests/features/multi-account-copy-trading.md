@@ -39,7 +39,7 @@
    * ✅ Pass | ❌ Fail + reason
 
 5. Verify account selection dropdown shows "All Accounts"
-   * Click account dropdown next to action controls
+   * Locate the Account dropdown in the Action Controls section
    * Should see "All Accounts" option selected by default
    * ✅ Pass | ❌ Fail + reason
 
