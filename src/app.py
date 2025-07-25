@@ -537,6 +537,12 @@ def main():
         
         # Import the dashboard module here to avoid circular imports
         try:
+            # Add current directory to Python path for src import
+            import sys
+            current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            if current_dir not in sys.path:
+                sys.path.insert(0, current_dir)
+            
             # First try importing with src. prefix
             from src.dashboard import run_flask_dashboard
         except ImportError:
@@ -547,24 +553,20 @@ def main():
                 print(f"Error loading dashboard module: {e}")
                 print("Make sure you're running this script from the project root directory")
                 return 1
-            print("Starting Tradovate dashboard...")
-            dashboard_thread = threading.Thread(target=run_flask_dashboard)
-            dashboard_thread.daemon = True
-            dashboard_thread.start()
-            print("Dashboard running at http://localhost:6001")
-            print("Press Ctrl+C to stop")
-            
-            # Keep the main thread alive
-            try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                print("Dashboard stopped")
-                
-        except ImportError as e:
-            print(f"Error loading dashboard: {e}")
-            print("Make sure dashboard.py exists in the same directory")
-            return 1
+        
+        print("Starting Tradovate dashboard...")
+        dashboard_thread = threading.Thread(target=run_flask_dashboard)
+        dashboard_thread.daemon = True
+        dashboard_thread.start()
+        print("Dashboard running at http://localhost:6001")
+        print("Press Ctrl+C to stop")
+        
+        # Keep the main thread alive
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("Dashboard stopped")
     
     else:
         parser.print_help()
