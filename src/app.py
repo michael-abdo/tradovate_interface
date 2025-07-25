@@ -84,8 +84,13 @@ class TradovateConnection:
             else:
                 print(f"WARNING: Console interceptor not found at {console_interceptor_path}")
             
+            # Load fresh tampermonkey script from file (not cached version)
             print(f"Injecting Tampermonkey functions for {self.account_name}...")
-            self.tab.Runtime.evaluate(expression=tampermonkey_functions)
+            tampermonkey_path = os.path.join(project_root, 'scripts/tampermonkey/autoOrder.user.js')
+            with open(tampermonkey_path, 'r') as file:
+                fresh_tampermonkey_code = file.read()
+            fresh_tampermonkey_functions = extract_core_functions(fresh_tampermonkey_code)
+            self.tab.Runtime.evaluate(expression=fresh_tampermonkey_functions)
             
             # Also inject the getAllAccountTableData function
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -349,27 +354,42 @@ class TradovateConnection:
             return {"error": str(e)}
 
 class TradovateController:
-    def __init__(self, base_port=9223):
+    def __init__(self, base_port=9223, max_instances=20):
         self.base_port = base_port
+        self.max_instances = max_instances
         self.connections = []
         self.initialize_connections()
         
-    def initialize_connections(self, max_instances=10):
+    def initialize_connections(self, max_instances=None):
         """Find and connect to all available Tradovate instances"""
+        if max_instances is None:
+            max_instances = self.max_instances
+            
+        print(f"Scanning for Chrome instances from port {self.base_port} to {self.base_port + max_instances - 1}")
+        
         for i in range(max_instances):
             port = self.base_port + i
             try:
+                print(f"Attempting to connect to Chrome on port {port}...")
                 connection = TradovateConnection(port, f"Account {i+1}")
                 if connection.tab:
                     # Only add connections with a valid tab
                     connection.inject_tampermonkey()
                     self.connections.append(connection)
-                    print(f"Added connection on port {port}")
+                    print(f"✅ Added connection on port {port} for {connection.account_name}")
+                else:
+                    print(f"❌ No Tradovate tab found on port {port}")
             except Exception as e:
-                # This port might not have a running Chrome instance
-                pass
+                # This port might not have a running Chrome instance - log for debugging
+                print(f"⚠️  Port {port} not accessible: {str(e)[:100]}...")
                 
-        print(f"Found {len(self.connections)} active Tradovate connections")
+        print(f"🎯 Found {len(self.connections)} active Tradovate connections")
+        if self.connections:
+            print("Active connections:")
+            for conn in self.connections:
+                print(f"  - {conn.account_name} on port {conn.port}")
+        else:
+            print("⚠️  No connections found. Make sure Chrome instances are running with auto_login.py")
         
     def execute_on_all(self, method_name, *args, **kwargs):
         """Execute a method on all connections"""
@@ -440,11 +460,13 @@ def main():
     
     args = parser.parse_args()
     
-    # Initialize the controller
-    controller = TradovateController()
+    # Initialize the controller with configurable max instances  
+    max_instances = int(os.environ.get('TRADOVATE_MAX_INSTANCES', '20'))
+    controller = TradovateController(max_instances=max_instances)
     
     if len(controller.connections) == 0:
         print("No Tradovate connections found. Make sure auto_login.py is running.")
+        print(f"Checked ports {controller.base_port} to {controller.base_port + controller.max_instances - 1}")
         return 1
     
     # Execute the requested command
