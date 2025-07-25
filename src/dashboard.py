@@ -7,10 +7,8 @@ import os
 import json
 
 # Import from app.py
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.app import TradovateController
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from app import TradovateController
 from flask import request
 
 # Create Flask app
@@ -54,26 +52,27 @@ def get_accounts():
     for i, conn in enumerate(controller.connections):
         if conn.tab:
             try:
-                # First make sure the getAllAccountTableData function is available
-                try:
-                    # Re-inject the function to ensure it's available
-                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                    account_data_path = os.path.join(project_root, 
-                                           'scripts/tampermonkey/getAllAccountTableData.user.js')
-                    with open(account_data_path, 'r') as file:
-                        get_account_data_js = file.read()
-                    conn.tab.Runtime.evaluate(expression=get_account_data_js)
-                except Exception as inject_err:
-                    print(f"Error re-injecting function: {inject_err}")
+                # Inject the phase analysis logic from autoriskManagement.js
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                autorisk_path = os.path.join(project_root, 'scripts/tampermonkey/autoriskManagement.js')
+                with open(autorisk_path, 'r') as file:
+                    autorisk_js = file.read()
                 
-                # Execute the getAllAccountTableData() function in each tab
+                # Just inject the entire autorisk script and call getTableData directly
+                print(f"[Accounts API] Injecting phase logic for {conn.account_name}")
+                conn.tab.Runtime.evaluate(expression=autorisk_js)
+                
+                # Execute the getTableData() function with real phase analysis
                 result = conn.tab.Runtime.evaluate(
-                    expression="getAllAccountTableData()")
+                    expression="JSON.stringify(getTableData())")
+                
+                print(f"[Accounts API] Raw result for {conn.account_name}: {result}")
                 
                 if result and 'result' in result and 'value' in result['result']:
                     try:
                         # Parse the JSON result
                         tab_data = json.loads(result['result']['value'])
+                        print(f"[Accounts API] Parsed data for {conn.account_name}: {len(tab_data) if tab_data else 0} rows")
                         
                         if not tab_data:
                             continue
@@ -106,6 +105,370 @@ def get_accounts():
                 print(f"Error getting account data from {conn.account_name}: {e}")
     
     return jsonify(account_data)
+
+# API endpoint to update phase status in Chrome tabs
+@app.route('/api/update-phases', methods=['POST'])
+def update_phases():
+    print(f"\n[Phase Update API] Called at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"[Phase Update API] Total connections: {len(controller.connections)}")
+    
+    try:
+        results = []
+        # Execute updateUserColumnPhaseStatus on all tabs
+        for i, conn in enumerate(controller.connections):
+            print(f"[Phase Update API] Processing connection {i}: {conn.account_name}")
+            if conn.tab:
+                try:
+                    # First inject the risk management script that contains updateUserColumnPhaseStatus
+                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    risk_script_path = os.path.join(project_root, 
+                                          'scripts/tampermonkey/autoriskManagement.js')
+                    
+                    # Read and extract the core functions from the script
+                    with open(risk_script_path, 'r') as file:
+                        risk_script = file.read()
+                    
+                    # Inject the complete autoriskManagement.js functions to run actual phase logic
+                    functions_to_inject = """
+                    // Inject phase criteria from autoriskManagement.js
+                    const phaseCriteria = [
+                        // ── DEMO ──
+                        {
+                            phase: '1',
+                            accountNameIncludes: 'DEMO',
+                            totalAvailOperator: '<',
+                            totalAvailValue: 60000,
+                            distDrawOperator: '>',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: 0.5,
+                            useOr: false,
+                            quantity: 20
+                        },
+                        {
+                            phase: '2',
+                            accountNameIncludes: 'DEMO',
+                            totalAvailOperator: '>=',
+                            totalAvailValue: 60000,
+                            distDrawOperator: '<=',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: null,
+                            useOr: true,
+                            quantity: 10
+                        },
+                        
+                        // ── APEX ──
+                        {
+                            phase: '1',
+                            accountNameIncludes: 'APEX',
+                            totalAvailOperator: '<',
+                            totalAvailValue: 310000,
+                            distDrawOperator: '>',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: 0.5,
+                            useOr: false,
+                            quantity: 20
+                        },
+                        {
+                            phase: '2',
+                            accountNameIncludes: 'APEX',
+                            totalAvailOperator: '>=',
+                            totalAvailValue: 310000,
+                            distDrawOperator: '<=',
+                            distDrawValue: 2000,
+                            maxActive: 0,
+                            reduceFactor: null,
+                            useOr: true,
+                            quantity: 10
+                        },
+                        {
+                            phase: '3',
+                            accountNameIncludes: 'PAAPEX',
+                            totalAvailOperator: null,
+                            totalAvailValue: 0,
+                            distDrawOperator: null,
+                            distDrawValue: 0,
+                            maxActive: 20,
+                            reduceFactor: null,
+                            useOr: false,
+                            quantity: 2
+                        }
+                    ];
+                    
+                    // Phase analysis function
+                    function analyzePhase(row, reset = false) {
+                        if (reset || typeof analyzePhase.phaseData === 'undefined') {
+                            console.log("[analyzePhase] resetting phaseData");
+                            analyzePhase.phaseData = {};
+
+                            const phase1Count = phaseCriteria.filter(r => r.phase === '1').length;
+                            const rule1 = phaseCriteria.find(r => r.phase === '1');
+                            if (rule1) {
+                                rule1.maxActive = 1;
+                                console.log(`[analyzePhase] set phase 1 maxActive to ${rule1.maxActive}`);
+                            }
+
+                            const increment = typeof analyzePhase.maxActiveIncrement === 'number'
+                            ? analyzePhase.maxActiveIncrement
+                            : 1;
+                            const rule2 = phaseCriteria.find(r => r.phase === '2');
+                            if (rule2) {
+                                rule2.maxActive = 1;
+                                console.log(`[analyzePhase] increased phase 2 maxActive to ${rule2.maxActive}`);
+                            }
+                        }
+
+                        if (row === null) {
+                            return;
+                        }
+
+                        function parseValue(val) {
+                            if (!val || typeof val !== 'string') {
+                                console.log(`[parseValue] Invalid value: ${val}, type: ${typeof val}`);
+                                return 0;
+                            }
+                            const num = parseFloat(val.replace(/[$,()]/g, ''));
+                            return (val.includes('(') && val.includes(')')) ? -num : num;
+                        }
+                        const parsed = {
+                            totalAvail: parseValue(row["Total Available Margin"] || "$0.00"),
+                            distDraw:   parseValue(row["Dist Drawdown Net Liq"] || "$0.00")
+                        };
+
+                        const accountName = row["Account ▲"] || row["Account"] || "";
+                        function compareNumeric(value, operator, compareValue) {
+                            const ops = { '>':(a,b)=>a>b, '<':(a,b)=>a<b, '>=':(a,b)=>a>=b, '<=':(a,b)=>a<=b };
+                            return ops[operator]?.(value, compareValue) ?? false;
+                        }
+                        function matchesRule(rule) {
+                            if (rule.accountNameIncludes && !accountName.includes(rule.accountNameIncludes)) return false;
+                            const ta = rule.totalAvailOperator
+                            ? compareNumeric(parsed.totalAvail, rule.totalAvailOperator, rule.totalAvailValue)
+                            : true;
+                            const dd = rule.distDrawOperator
+                            ? compareNumeric(parsed.distDraw, rule.distDrawOperator, rule.distDrawValue)
+                            : true;
+                            return rule.useOr && rule.totalAvailOperator && rule.distDrawOperator
+                                ? (ta || dd)
+                            : (ta && dd);
+                        }
+
+                        let rule = accountName.includes('PAAPEX')
+                        ? phaseCriteria.find(r => r.accountNameIncludes === 'PAAPEX')
+                        : phaseCriteria.find(matchesRule) || { phase:'Unknown', maxActive:0, profitLimit:Infinity };
+
+                        row.phase = rule.phase;
+                        row.phaseInfo = { phase:rule.phase, maxActive:rule.maxActive, profitLimit:rule.profitLimit,
+                                         accountName, totalAvail:parsed.totalAvail, distDraw:parsed.distDraw,
+                                         reduceFactor:rule.reduceFactor||null };
+
+                        if (rule.phase === '2' && parsed.totalAvail > 320000) {
+                            row.active = false;
+                            return rule.phase;
+                        }
+
+                        if (!analyzePhase.phaseData[rule.phase]) {
+                            analyzePhase.phaseData[rule.phase] = { activeCount:0, cumulativeProfit:0 };
+                        }
+
+                        function parseDollar(val) {
+                            const num = parseFloat(val.replace(/[$,()]/g, ''));
+                            return (val.includes('(') && val.includes(')')) ? -num : num;
+                        }
+                        const profit = parseDollar(row["Dollar Total P L"]||"$0.00");
+                        analyzePhase.phaseData[rule.phase].cumulativeProfit += profit;
+
+                        // Determine how many can be active
+                        let allowedActive = rule.maxActive;
+                        if (analyzePhase.phaseData[rule.phase].cumulativeProfit > rule.profitLimit) {
+                            allowedActive = rule.reduceFactor
+                                ? Math.ceil(rule.maxActive * rule.reduceFactor)
+                            : 0;
+                        }
+
+                        const currentActive = analyzePhase.phaseData[rule.phase].activeCount;
+                        if (currentActive >= allowedActive) {
+                            row.active = false;
+                            return rule.phase;
+                        }
+
+                        // Otherwise activate
+                        row.active = true;
+                        analyzePhase.phaseData[rule.phase].activeCount++;
+
+                        return rule.phase;
+                    }
+                    
+                    // Enhanced getTableData function with real phase analysis
+                    if (typeof getTableData === 'undefined') {
+                        window.getTableData = function() {
+                            const accountTable = document.querySelector('.module.positions.data-table');
+                            if (!accountTable) return [];
+                            
+                            const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
+                            if (!rows.length) return [];
+
+                            // First row as header (skip header in final output)
+                            const headerCells = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent');
+                            const headers = Array.from(headerCells).map(cell => cell.textContent.trim());
+
+                            const jsonData = [];
+                            // Reset phase tracking before processing rows.
+                            analyzePhase(null, true);
+
+                            rows.forEach((row, index) => {
+                                if (index === 0) return; // Skip header row
+                                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+                                const values = Array.from(cells).map(cell => cell.textContent.trim());
+                                if (values.length) {
+                                    const rowObj = {};
+                                    headers.forEach((header, i) => {
+                                        rowObj[header] = values[i];
+                                    });
+                                    // Process the row to determine its phase and active state.
+                                    rowObj.phase = analyzePhase(rowObj);
+
+                                    // Build a simplified object with the desired keys including "active".
+                                    const simpleRow = {
+                                        "Account ▲": rowObj["Account ▲"] || rowObj["Account"] || "",
+                                        "Dollar Total P L": rowObj["Dollar Total P L"] || "",
+                                        "Dollar Open P L": rowObj["Dollar Open P L"] || "",
+                                        "Dist Drawdown Net Liq": rowObj["Dist Drawdown Net Liq"] || "",
+                                        "Total Available Margin": rowObj["Total Available Margin"] || "",
+                                        "phase": rowObj.phase,
+                                        "active": rowObj.active || false
+                                    };
+
+                                    jsonData.push(simpleRow);
+                                }
+                            });
+
+                            return jsonData;
+                        };
+                    }
+                    
+                    if (typeof updateUserColumnPhaseStatus === 'undefined') {
+                        window.updateUserColumnPhaseStatus = function() {
+                            console.log("[updateUserColumnPhaseStatus] Starting...");
+                            
+                            const accountTable = document.querySelector('.module.positions.data-table');
+                            if (!accountTable) {
+                                console.error("[updateUserColumnPhaseStatus] No accountTable found");
+                                return;
+                            }
+                            
+                            const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
+                            if (!rows.length) {
+                                console.error("[updateUserColumnPhaseStatus] No rows found");
+                                return;
+                            }
+                            console.log(`[updateUserColumnPhaseStatus] Found ${rows.length} rows`);
+                            
+                            // Determine the index of the "User" column from the header row
+                            const headerCells = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent');
+                            console.log(`[updateUserColumnPhaseStatus] Header cells:`, 
+                                Array.from(headerCells).map(c => c.textContent.trim()));
+                                
+                            let userIndex = -1;
+                            headerCells.forEach((cell, i) => {
+                                if (cell.textContent.trim().startsWith("User")) {
+                                    userIndex = i;
+                                    console.log(`[updateUserColumnPhaseStatus] Found User column at index ${i}`);
+                                }
+                            });
+                            
+                            if (userIndex === -1) {
+                                console.error("[updateUserColumnPhaseStatus] User column not found");
+                                return;
+                            }
+                            
+                            console.log("[updateUserColumnPhaseStatus] Getting table data...");
+                            const tableData = getTableData();
+                            console.log(`[updateUserColumnPhaseStatus] Table data: ${tableData.length} rows`);
+                            if (tableData.length === 0) {
+                                console.error("[updateUserColumnPhaseStatus] No data from getTableData()");
+                                return;
+                            }
+                            
+                            // Update the "User" column cells for each data row with phase and status
+                            rows.forEach((row, idx) => {
+                                if (idx === 0) return; // skip header row
+                                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+                                
+                                if (cells.length > userIndex) {
+                                    const cell = cells[userIndex];
+                                    if (!tableData[idx - 1]) {
+                                        console.error(`[updateUserColumnPhaseStatus] No data for row ${idx}`);
+                                        return;
+                                    }
+                                    
+                                    const dataRow = tableData[idx - 1];
+                                    const accountName = dataRow["Account ▲"] || dataRow["Account"] || "Unknown";
+                                    console.log(`[updateUserColumnPhaseStatus] Setting row ${idx} (${accountName}) phase=${dataRow.phase}, active=${dataRow.active}`);
+                                    
+                                    cell.textContent = `${dataRow.phase} (${dataRow.active ? 'active' : 'inactive'})`;
+                                    cell.style.color = dataRow.active ? 'green' : 'red';
+                                } else {
+                                    console.error(`[updateUserColumnPhaseStatus] Row ${idx} doesn't have enough cells`);
+                                }
+                            });
+                            
+                            console.log("[updateUserColumnPhaseStatus] Completed");
+                        };
+                    }
+                    """
+                    
+                    # Inject the functions
+                    print(f"[Phase Update API] Injecting functions for {conn.account_name}")
+                    conn.tab.Runtime.evaluate(expression=functions_to_inject)
+                    
+                    # Now execute updateUserColumnPhaseStatus
+                    print(f"[Phase Update API] Executing updateUserColumnPhaseStatus for {conn.account_name}")
+                    result = conn.tab.Runtime.evaluate(
+                        expression="updateUserColumnPhaseStatus(); 'Phase update completed';")
+                    
+                    if result and 'result' in result:
+                        print(f"[Phase Update API] Success for {conn.account_name}: {result['result'].get('value', 'Completed')}")
+                        results.append({
+                            "account": conn.account_name,
+                            "status": "success",
+                            "message": result['result'].get('value', 'Completed')
+                        })
+                    else:
+                        print(f"[Phase Update API] No result for {conn.account_name}")
+                        results.append({
+                            "account": conn.account_name,
+                            "status": "error",
+                            "message": "No result returned"
+                        })
+                        
+                except Exception as e:
+                    print(f"[Phase Update API] Error for {conn.account_name}: {str(e)}")
+                    results.append({
+                        "account": conn.account_name,
+                        "status": "error",
+                        "message": str(e)
+                    })
+            else:
+                print(f"[Phase Update API] No tab for connection {i}: {conn.account_name}")
+        
+        print(f"[Phase Update API] Completed. Total results: {len(results)}")
+        return jsonify({
+            "status": "success",
+            "message": f"Phase update executed on {len(results)} accounts",
+            "details": results
+        })
+        
+    except Exception as e:
+        print(f"[Phase Update API] Fatal error: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 # API endpoint to get summary data
 @app.route('/api/summary', methods=['GET'])
