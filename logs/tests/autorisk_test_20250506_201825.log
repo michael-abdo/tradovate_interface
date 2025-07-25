@@ -1,0 +1,36 @@
+[2025-05-06 20:18:30.940] LOG - 03:18:30.938Z Starting login process for: demo_user
+[2025-05-06 20:18:30.941] LOG - 03:18:30.938Z Starting login process for: demo_user
+[2025-05-06 20:18:30.941] LOG - 03:18:30.939Z Auto login function executing for: demo_user
+[2025-05-06 20:18:30.941] LOG - 03:18:30.939Z Auto login function executing for: demo_user
+[2025-05-06 20:18:30.942] LOG - 03:18:30.939Z Login form found, filling credentials...
+[2025-05-06 20:18:30.942] LOG - 03:18:30.939Z Login form found, filling credentials...
+[2025-05-06 20:18:30.960] LOG - 03:18:30.959Z Test element added to DOM
+[2025-05-06 20:18:30.961] LOG - 03:18:30.959Z Test element added to DOM
+[2025-05-06 20:18:31.199] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:31.459] LOG - 03:18:31.458Z Clicking login button...
+[2025-05-06 20:18:31.460] LOG - 03:18:31.458Z Clicking login button...
+[2025-05-06 20:18:31.472] LOG - 03:18:31.469Z authentication starting
+[2025-05-06 20:18:31.472] LOG - 03:18:31.469Z authentication starting
+[2025-05-06 20:18:31.884] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu
+[2025-05-06 20:18:31.884] LOG - 03:18:31.870Z Watching for account selection page...
+[2025-05-06 20:18:31.885] LOG - 03:18:31.870Z Watching for account selection page...
+[2025-05-06 20:18:31.915] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:32.026] INFO - 03:18:32.023Z expire token. expiration was set to  undefined
+[2025-05-06 20:18:32.026] INFO - 03:18:32.023Z expire token. expiration was set to 
+[2025-05-06 20:18:32.396] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:32.901] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:33.407] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:33.912] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:34.418] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:34.923] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:35.427] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:35.932] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:36.437] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:36.944] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:37.447] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:37.952] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:38.458] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:38.963] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:39.469] warning - Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.googletagmanager.com') does not match the recipient window's origin ('null').
+[2025-05-06 20:18:41.873] LOG - 03:18:41.871Z Account selection page not found after multiple attempts
+[2025-05-06 20:18:41.873] LOG - 03:18:41.871Z Account selection page not found after multiple attempts

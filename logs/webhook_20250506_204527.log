@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/Mike/trading/tradovate_interface/src/pinescript_webhook.py", line 40, in <module>
+    from src.app import TradovateController
+  File "/Users/Mike/trading/tradovate_interface/src/app.py", line 1, in <module>
+    import pychrome
+ModuleNotFoundError: No module named 'pychrome'
