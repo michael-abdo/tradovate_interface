@@ -7,7 +7,8 @@ import os
 import json
 
 # Import from app.py
-from src.app import TradovateController
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from app import TradovateController
 from flask import request
 
 # Create Flask app
@@ -51,26 +52,27 @@ def get_accounts():
     for i, conn in enumerate(controller.connections):
         if conn.tab:
             try:
-                # First make sure the getAllAccountTableData function is available
-                try:
-                    # Re-inject the function to ensure it's available
-                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                    account_data_path = os.path.join(project_root, 
-                                           'scripts/tampermonkey/getAllAccountTableData.user.js')
-                    with open(account_data_path, 'r') as file:
-                        get_account_data_js = file.read()
-                    conn.tab.Runtime.evaluate(expression=get_account_data_js)
-                except Exception as inject_err:
-                    print(f"Error re-injecting function: {inject_err}")
+                # Inject the phase analysis logic from autoriskManagement.js
+                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                autorisk_path = os.path.join(project_root, 'scripts/tampermonkey/autoriskManagement.js')
+                with open(autorisk_path, 'r') as file:
+                    autorisk_js = file.read()
                 
-                # Execute the getAllAccountTableData() function in each tab
+                # Just inject the entire autorisk script and call getTableData directly
+                print(f"[Accounts API] Injecting phase logic for {conn.account_name}")
+                conn.tab.Runtime.evaluate(expression=autorisk_js)
+                
+                # Execute the getTableData() function with real phase analysis
                 result = conn.tab.Runtime.evaluate(
-                    expression="getAllAccountTableData()")
+                    expression="JSON.stringify(getTableData())")
+                
+                print(f"[Accounts API] Raw result for {conn.account_name}: {result}")
                 
                 if result and 'result' in result and 'value' in result['result']:
                     try:
                         # Parse the JSON result
                         tab_data = json.loads(result['result']['value'])
+                        print(f"[Accounts API] Parsed data for {conn.account_name}: {len(tab_data) if tab_data else 0} rows")
                         
                         if not tab_data:
                             continue
