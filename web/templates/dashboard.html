@@ -1480,6 +1480,21 @@
                 // Populate account dropdown with current data
                 populateAccountDropdown();
                 
+                // Execute phase update on all Chrome tabs
+                fetch('/api/update-phases', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Phase update result:', result);
+                })
+                .catch(error => {
+                    console.error('Error updating phases:', error);
+                });
+                
                 // Hide the loading overlay
                 if (loadingOverlay) {
                     loadingOverlay.style.display = 'none';

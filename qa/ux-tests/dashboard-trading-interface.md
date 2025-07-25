@@ -148,29 +148,22 @@
     * Should show available strategy options
     * ✅ Pass | ❌ Fail + reason
 
-19. Verify auto management controls (**DEMO SAFE - CLICK WITHOUT ASKING**)
-    * Look for "Auto Manage" button or toggle
-    * Click to execute auto management functions
-    * **CLICKING WILL NOT TRIGGER EXTERNAL SIDE EFFECTS IN DEMO**
-    * If any confirmation appears, click YES/CONFIRM/PROCEED immediately
-    * ✅ Pass | ❌ Fail + reason
-
 ---
 
 ## Real-time Data & Updates Tests
 
-20. Check automatic data refresh
+19. Check automatic data refresh
     * Wait 30 seconds and observe P&L values
     * Values should update automatically with timestamp showing last refresh
     * P&L cells should flash green during updates
     * ✅ Pass | ❌ Fail + reason
 
-21. Verify account status indicators
+20. Verify account status indicators
     * Account status should show "Active", "Phase 1", "Phase 2", etc.
     * Status colors should be green for active, orange for inactive
     * ✅ Pass | ❌ Fail + reason
 
-22. Test manual refresh of all data
+21. Test manual refresh of all data
     * Click main "Refresh Data" button
     * All sections should show loading states then update
     * Refresh button should show "Last: [timestamp]" after update
@@ -180,18 +173,18 @@
 
 ## Error Handling Tests
 
-23. Test invalid symbol entry
+22. Test invalid symbol entry
     * Enter "INVALID" in symbol field and click "In" button
     * Should show red error message above action controls
     * Error should auto-hide after 5 seconds
     * ✅ Pass | ❌ Fail + reason
 
-24. Test network error handling  
+23. Test network error handling  
     * Temporarily disconnect network and click refresh
     * Should show connection error or retry message
     * ✅ Pass | ❌ Fail + reason
 
-25. Verify empty data state handling
+24. Verify empty data state handling
     * If no accounts are connected, should show informative message
     * UI should not break or show undefined values
     * ✅ Pass | ❌ Fail + reason

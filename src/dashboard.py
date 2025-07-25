@@ -104,6 +104,171 @@ def get_accounts():
     
     return jsonify(account_data)
 
+# API endpoint to update phase status in Chrome tabs
+@app.route('/api/update-phases', methods=['POST'])
+def update_phases():
+    try:
+        results = []
+        # Execute updateUserColumnPhaseStatus on all tabs
+        for i, conn in enumerate(controller.connections):
+            if conn.tab:
+                try:
+                    # First inject the risk management script that contains updateUserColumnPhaseStatus
+                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    risk_script_path = os.path.join(project_root, 
+                                          'scripts/tampermonkey/autoriskManagement.js')
+                    
+                    # Read and extract the core functions from the script
+                    with open(risk_script_path, 'r') as file:
+                        risk_script = file.read()
+                    
+                    # Extract the updateUserColumnPhaseStatus function and dependencies
+                    # We need to inject getTableData as well since it's used by updateUserColumnPhaseStatus
+                    functions_to_inject = """
+                    // Check if functions already exist to avoid redefinition
+                    if (typeof getTableData === 'undefined') {
+                        window.getTableData = function() {
+                            const accountTable = document.querySelector('.module.positions.data-table');
+                            if (!accountTable) return [];
+                            
+                            const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
+                            const data = [];
+                            
+                            // Skip header row
+                            for (let i = 1; i < rows.length; i++) {
+                                const cells = rows[i].querySelectorAll('.public_fixedDataTableCell_cellContent');
+                                const rowData = {};
+                                
+                                // Extract data from cells
+                                cells.forEach((cell, index) => {
+                                    const headerCell = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent')[index];
+                                    if (headerCell) {
+                                        const key = headerCell.textContent.trim();
+                                        rowData[key] = cell.textContent.trim();
+                                    }
+                                });
+                                
+                                // Add phase and active status (defaults for now)
+                                rowData.phase = 'Phase 1';
+                                rowData.active = true;
+                                
+                                data.push(rowData);
+                            }
+                            
+                            return data;
+                        };
+                    }
+                    
+                    if (typeof updateUserColumnPhaseStatus === 'undefined') {
+                        window.updateUserColumnPhaseStatus = function() {
+                            console.log("[updateUserColumnPhaseStatus] Starting...");
+                            
+                            const accountTable = document.querySelector('.module.positions.data-table');
+                            if (!accountTable) {
+                                console.error("[updateUserColumnPhaseStatus] No accountTable found");
+                                return;
+                            }
+                            
+                            const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
+                            if (!rows.length) {
+                                console.error("[updateUserColumnPhaseStatus] No rows found");
+                                return;
+                            }
+                            console.log(`[updateUserColumnPhaseStatus] Found ${rows.length} rows`);
+                            
+                            // Determine the index of the "User" column from the header row
+                            const headerCells = rows[0].querySelectorAll('.public_fixedDataTableCell_cellContent');
+                            console.log(`[updateUserColumnPhaseStatus] Header cells:`, 
+                                Array.from(headerCells).map(c => c.textContent.trim()));
+                                
+                            let userIndex = -1;
+                            headerCells.forEach((cell, i) => {
+                                if (cell.textContent.trim().startsWith("User")) {
+                                    userIndex = i;
+                                    console.log(`[updateUserColumnPhaseStatus] Found User column at index ${i}`);
+                                }
+                            });
+                            
+                            if (userIndex === -1) {
+                                console.error("[updateUserColumnPhaseStatus] User column not found");
+                                return;
+                            }
+                            
+                            console.log("[updateUserColumnPhaseStatus] Getting table data...");
+                            const tableData = getTableData();
+                            console.log(`[updateUserColumnPhaseStatus] Table data: ${tableData.length} rows`);
+                            if (tableData.length === 0) {
+                                console.error("[updateUserColumnPhaseStatus] No data from getTableData()");
+                                return;
+                            }
+                            
+                            // Update the "User" column cells for each data row with phase and status
+                            rows.forEach((row, idx) => {
+                                if (idx === 0) return; // skip header row
+                                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+                                
+                                if (cells.length > userIndex) {
+                                    const cell = cells[userIndex];
+                                    if (!tableData[idx - 1]) {
+                                        console.error(`[updateUserColumnPhaseStatus] No data for row ${idx}`);
+                                        return;
+                                    }
+                                    
+                                    const dataRow = tableData[idx - 1];
+                                    const accountName = dataRow["Account ▲"] || dataRow["Account"] || "Unknown";
+                                    console.log(`[updateUserColumnPhaseStatus] Setting row ${idx} (${accountName}) phase=${dataRow.phase}, active=${dataRow.active}`);
+                                    
+                                    cell.textContent = `${dataRow.phase} (${dataRow.active ? 'active' : 'inactive'})`;
+                                    cell.style.color = dataRow.active ? 'green' : 'red';
+                                } else {
+                                    console.error(`[updateUserColumnPhaseStatus] Row ${idx} doesn't have enough cells`);
+                                }
+                            });
+                            
+                            console.log("[updateUserColumnPhaseStatus] Completed");
+                        };
+                    }
+                    """
+                    
+                    # Inject the functions
+                    conn.tab.Runtime.evaluate(expression=functions_to_inject)
+                    
+                    # Now execute updateUserColumnPhaseStatus
+                    result = conn.tab.Runtime.evaluate(
+                        expression="updateUserColumnPhaseStatus(); 'Phase update completed';")
+                    
+                    if result and 'result' in result:
+                        results.append({
+                            "account": conn.account_name,
+                            "status": "success",
+                            "message": result['result'].get('value', 'Completed')
+                        })
+                    else:
+                        results.append({
+                            "account": conn.account_name,
+                            "status": "error",
+                            "message": "No result returned"
+                        })
+                        
+                except Exception as e:
+                    results.append({
+                        "account": conn.account_name,
+                        "status": "error",
+                        "message": str(e)
+                    })
+        
+        return jsonify({
+            "status": "success",
+            "message": f"Phase update executed on {len(results)} accounts",
+            "details": results
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
 # API endpoint to get summary data
 @app.route('/api/summary', methods=['GET'])
 def get_summary():
