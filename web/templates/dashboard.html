@@ -790,9 +790,12 @@
             <button class="refresh-button" onclick="fetchAccountData()">Refresh Data</button>
         </div>
         
+        <h2>Strategy Management</h2>
+        
         <div class="strategy-controls">
             <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
             <button id="save-strategies-btn" class="strategy-button">Save All Strategy Mappings</button>
+            <button id="auto-risk-btn" class="strategy-button" style="background-color: #ff6600; margin-left: 10px;">Auto Risk Management</button>
             <div style="text-align: center; font-size: 12px; color: #aaa; margin-top: 5px;">
                 Strategy selections are automatically saved when changed
             </div>
@@ -804,6 +807,10 @@
         </div>
         
         <h2>Trade Controls</h2>
+        
+        <div id="trade-error-display" style="display: none; background-color: #ff3b30; color: white; padding: 10px; margin-bottom: 10px; border-radius: 4px; text-align: center;">
+            <!-- Error messages will appear here -->
+        </div>
         
         <div class="trade-controls">
             <div class="trade-controls-row">
@@ -818,6 +825,13 @@
                 <div class="input-group">
                     <label for="tickInput">Tick Size</label>
                     <input type="number" id="tickInput" value="0.25" step="0.01" class="trade-input">
+                </div>
+                <div class="input-group">
+                    <label for="accountSelect">Account</label>
+                    <select id="accountSelect" class="trade-input">
+                        <option value="all">All Accounts</option>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
                 </div>
             </div>
             
@@ -1460,6 +1474,12 @@
                 // Render the table with the current column order
                 renderTable(accountData);
                 
+                // Update auto-refresh indicator
+                updateAutoRefreshIndicator();
+                
+                // Populate account dropdown with current data
+                populateAccountDropdown();
+                
                 // Hide the loading overlay
                 if (loadingOverlay) {
                     loadingOverlay.style.display = 'none';
@@ -1847,7 +1867,7 @@
                     sl_ticks: document.getElementById('slInput').value,
                     tick_size: document.getElementById('tickInput').value,
                     source_field: sourceFieldId, // Track which field triggered the update
-                    account: 'all'
+                    account: document.getElementById('accountSelect').value || 'all'
                 };
                 
                 // Include additional fields if they have values
@@ -1911,6 +1931,16 @@
                 });
             });
             
+            // Account select dropdown with change event
+            const accountSelect = document.getElementById('accountSelect');
+            if (accountSelect) {
+                const accountUpdater = createDebouncedUpdater('accountSelect');
+                accountSelect.addEventListener('change', function() {
+                    console.log(`Account selection changed: ${this.value}`);
+                    accountUpdater('accountSelect');
+                });
+            }
+            
             // Checkboxes with click event
             ['tpCheckbox', 'slCheckbox'].forEach(id => {
                 const element = document.getElementById(id);
@@ -1946,6 +1976,36 @@
             document.getElementById('reverseBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Reverse-Cxl');
             });
+            
+            // Auto Risk Management button handler
+            document.getElementById('auto-risk-btn').addEventListener('click', () => {
+                executeAutoRiskManagement();
+            });
+        }
+        
+        // Execute Auto Risk Management
+        function executeAutoRiskManagement() {
+            const selectedAccount = document.getElementById('accountSelect').value || 'all';
+            
+            fetch('/api/risk-management', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ account: selectedAccount })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    console.log(`Auto risk management executed on ${result.accounts_affected} accounts.`);
+                } else {
+                    showTradeError(result.message || 'Risk management execution failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error executing auto risk management:', error);
+                showTradeError('Error executing risk management. Check console for details.');
+            });
         }
         
         // Execute a trade action (Buy or Sell)
@@ -1954,6 +2014,22 @@
             const qty = parseInt(document.getElementById('qtyInput').value) || 1;
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
+            const selectedAccount = document.getElementById('accountSelect').value || 'all';
+            
+            // Clear any previous errors
+            hideTradeError();
+            
+            // Validate symbol
+            if (!symbol || symbol.trim() === '') {
+                showTradeError('Symbol cannot be empty');
+                return;
+            }
+            
+            // Basic symbol validation - check for obviously invalid symbols
+            if (symbol.toLowerCase() === 'invalid' || symbol.length > 10 || /[^A-Za-z0-9]/.test(symbol)) {
+                showTradeError(`Invalid symbol: ${symbol}. Please enter a valid futures symbol.`);
+                return;
+            }
             
             // Check if TP/SL checkboxes are checked
             const enableTP = document.getElementById('tpCheckbox').checked;
@@ -1969,7 +2045,7 @@
                 quantity: qty,
                 action: action,
                 tick_size: tickSize,
-                account: 'all', // Trade on all accounts
+                account: selectedAccount,
                 enable_tp: enableTP,
                 enable_sl: enableSL
             };
@@ -1998,17 +2074,22 @@
             })
             .then(response => response.json())
             .then(result => {
-                // Show success message
-                //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
-                
-                // Reset price inputs
-                document.getElementById('entryPriceInput').value = '';
-                document.getElementById('tpPriceInput').value = '';
-                document.getElementById('slPriceInput').value = '';
+                if (result.status === 'success') {
+                    // Show success feedback in P&L area or console
+                    console.log(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                    
+                    // Reset price inputs
+                    document.getElementById('entryPriceInput').value = '';
+                    document.getElementById('tpPriceInput').value = '';
+                    document.getElementById('slPriceInput').value = '';
+                } else {
+                    // Show error message
+                    showTradeError(result.message || 'Trade execution failed');
+                }
             })
             .catch(error => {
                 console.error('Error executing trade:', error);
-                alert('Error placing order. See console for details.');
+                showTradeError('Error placing order. Check console for details.');
             });
         }
         
@@ -2045,6 +2126,66 @@
                 console.error('Error executing cancel/close action:', error);
                 alert('Error canceling/closing orders. See console for details.');
             });
+        }
+        
+        // Helper functions for error display
+        function showTradeError(message) {
+            const errorDiv = document.getElementById('trade-error-display');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                hideTradeError();
+            }, 5000);
+        }
+        
+        function hideTradeError() {
+            const errorDiv = document.getElementById('trade-error-display');
+            errorDiv.style.display = 'none';
+        }
+        
+        // Auto-refresh indicator functionality
+        function updateAutoRefreshIndicator() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            
+            // Update the refresh button text to show last update time
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn) {
+                refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr})</small>`;
+            }
+            
+            // Add visual indicator to P&L cells to show they're updating
+            const pnlCells = document.querySelectorAll('[data-field="Total P&L"], [data-field="Open P&L"]');
+            pnlCells.forEach(cell => {
+                cell.style.backgroundColor = '#4cd964';
+                cell.style.transition = 'background-color 0.3s';
+                
+                setTimeout(() => {
+                    cell.style.backgroundColor = '';
+                }, 300);
+            });
+        }
+        
+        // Populate account dropdown
+        function populateAccountDropdown() {
+            const accountSelect = document.getElementById('accountSelect');
+            if (accountSelect && accountData.length > 0) {
+                // Clear existing options except "All Accounts"
+                while (accountSelect.children.length > 1) {
+                    accountSelect.removeChild(accountSelect.lastChild);
+                }
+                
+                // Add individual account options
+                const uniqueAccounts = [...new Set(accountData.map(acc => acc.Account))];
+                uniqueAccounts.forEach((account, index) => {
+                    const option = document.createElement('option');
+                    option.value = index.toString();
+                    option.textContent = account;
+                    accountSelect.appendChild(option);
+                });
+            }
         }
         
         // Initialize trade controls
