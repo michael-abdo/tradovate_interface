@@ -67,7 +67,7 @@ def find_chrome_path():
     return default_path
 
 CHROME_PATH = find_chrome_path()
-BASE_DEBUGGING_PORT = 9222
+BASE_DEBUGGING_PORT = 9223  # Start from 9223 to avoid 9222 (Rule #0)
 TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
 
