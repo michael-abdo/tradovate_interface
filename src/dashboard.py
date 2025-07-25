@@ -107,10 +107,14 @@ def get_accounts():
 # API endpoint to update phase status in Chrome tabs
 @app.route('/api/update-phases', methods=['POST'])
 def update_phases():
+    print(f"\n[Phase Update API] Called at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"[Phase Update API] Total connections: {len(controller.connections)}")
+    
     try:
         results = []
         # Execute updateUserColumnPhaseStatus on all tabs
         for i, conn in enumerate(controller.connections):
+            print(f"[Phase Update API] Processing connection {i}: {conn.account_name}")
             if conn.tab:
                 try:
                     # First inject the risk management script that contains updateUserColumnPhaseStatus
@@ -231,19 +235,23 @@ def update_phases():
                     """
                     
                     # Inject the functions
+                    print(f"[Phase Update API] Injecting functions for {conn.account_name}")
                     conn.tab.Runtime.evaluate(expression=functions_to_inject)
                     
                     # Now execute updateUserColumnPhaseStatus
+                    print(f"[Phase Update API] Executing updateUserColumnPhaseStatus for {conn.account_name}")
                     result = conn.tab.Runtime.evaluate(
                         expression="updateUserColumnPhaseStatus(); 'Phase update completed';")
                     
                     if result and 'result' in result:
+                        print(f"[Phase Update API] Success for {conn.account_name}: {result['result'].get('value', 'Completed')}")
                         results.append({
                             "account": conn.account_name,
                             "status": "success",
                             "message": result['result'].get('value', 'Completed')
                         })
                     else:
+                        print(f"[Phase Update API] No result for {conn.account_name}")
                         results.append({
                             "account": conn.account_name,
                             "status": "error",
@@ -251,12 +259,16 @@ def update_phases():
                         })
                         
                 except Exception as e:
+                    print(f"[Phase Update API] Error for {conn.account_name}: {str(e)}")
                     results.append({
                         "account": conn.account_name,
                         "status": "error",
                         "message": str(e)
                     })
+            else:
+                print(f"[Phase Update API] No tab for connection {i}: {conn.account_name}")
         
+        print(f"[Phase Update API] Completed. Total results: {len(results)}")
         return jsonify({
             "status": "success",
             "message": f"Phase update executed on {len(results)} accounts",
@@ -264,6 +276,9 @@ def update_phases():
         })
         
     except Exception as e:
+        print(f"[Phase Update API] Fatal error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({
             "status": "error",
             "message": str(e)

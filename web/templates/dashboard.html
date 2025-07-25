@@ -1419,6 +1419,8 @@
         
         // Function to fetch account data
         async function fetchAccountData() {
+            console.log(`[fetchAccountData] Starting at ${new Date().toLocaleTimeString()}`);
+            
             // Remember scroll position
             const table = document.getElementById('account-table');
             const scrollContainer = table.parentElement;
@@ -1481,18 +1483,31 @@
                 populateAccountDropdown();
                 
                 // Execute phase update on all Chrome tabs
+                console.log(`[Phase Update] Starting phase update at ${new Date().toLocaleTimeString()}`);
                 fetch('/api/update-phases', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log(`[Phase Update] Response status: ${response.status}`);
+                    return response.json();
+                })
                 .then(result => {
-                    console.log('Phase update result:', result);
+                    console.log('[Phase Update] Result:', result);
+                    if (result.status === 'success') {
+                        console.log(`[Phase Update] Successfully updated ${result.details.length} accounts`);
+                        result.details.forEach(detail => {
+                            console.log(`[Phase Update] Account ${detail.account}: ${detail.status} - ${detail.message}`);
+                        });
+                    } else {
+                        console.error('[Phase Update] Failed:', result.message);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error updating phases:', error);
+                    console.error('[Phase Update] Error:', error);
+                    console.error('[Phase Update] Stack:', error.stack);
                 });
                 
                 // Hide the loading overlay
@@ -1740,21 +1755,27 @@
         // Save the forced column order
         saveColumnOrder();
         
+        console.log(`[Initial Load] Starting initial data fetch at ${new Date().toLocaleTimeString()}`);
         fetchAccountData().then(() => {
             populateFilterOptions();
             applyFilters();
+            console.log(`[Initial Load] Completed at ${new Date().toLocaleTimeString()}`);
+        }).catch(error => {
+            console.error('[Initial Load] Error:', error);
         });
         
-        // Set up periodic refresh (every 5 seconds)
+        // Set up periodic refresh (every 30 seconds)
         setInterval(() => {
             // Only auto-refresh if page is visible to avoid unnecessary requests
             if (!document.hidden) {
+                console.log(`[Auto-Refresh] Starting periodic refresh at ${new Date().toLocaleTimeString()}`);
                 fetchAccountData().then(() => {
                     populateFilterOptions();
                     applyFilters();
+                    console.log(`[Auto-Refresh] Completed at ${new Date().toLocaleTimeString()}`);
                 });
             }
-        }, 5000);
+        }, 30000);
         
         // ---- Trade Controls Functionality ----
         
