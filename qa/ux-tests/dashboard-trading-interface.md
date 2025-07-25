@@ -27,7 +27,6 @@
 
 ❌ **Does NOT have access to:**
 - DevTools or network tab
-- Mobile device emulation
 - Drag-and-drop
 - Window resizing
 
@@ -179,34 +178,20 @@
 
 ---
 
-## Responsive Design Tests
-
-23. Test layout on narrow screen
-    * Resize browser window to 600px width
-    * Dashboard should remain functional with mobile optimizations
-    * ✅ Pass | ❌ Fail + reason
-
-24. Verify button accessibility on mobile
-    * All action buttons should remain clickable at narrow widths
-    * Text should remain readable without horizontal scrolling
-    * ✅ Pass | ❌ Fail + reason
-
----
-
 ## Error Handling Tests
 
-25. Test invalid symbol entry
+23. Test invalid symbol entry
     * Enter "INVALID" in symbol field and click "In" button
     * Should show red error message above action controls
     * Error should auto-hide after 5 seconds
     * ✅ Pass | ❌ Fail + reason
 
-26. Test network error handling  
+24. Test network error handling  
     * Temporarily disconnect network and click refresh
     * Should show connection error or retry message
     * ✅ Pass | ❌ Fail + reason
 
-27. Verify empty data state handling
+25. Verify empty data state handling
     * If no accounts are connected, should show informative message
     * UI should not break or show undefined values
     * ✅ Pass | ❌ Fail + reason
