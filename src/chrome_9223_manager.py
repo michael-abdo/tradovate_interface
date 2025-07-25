@@ -52,7 +52,9 @@ class Chrome9223Manager:
             "--use-mock-keychain",
             "--disable-extensions",
             "--disable-plugins",
-            "--headless=new"  # Run headless for stability
+            "--window-size=1200,800",
+            "--window-position=100,100"
+            # Removed --headless=new so you can see the Chrome window
         ]
         
         try:
