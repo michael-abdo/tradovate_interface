@@ -9,6 +9,15 @@ import json
 import random
 import threading
 
+# Import Chrome Process Monitor
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tradovate_interface', 'src'))
+try:
+    from utils.process_monitor import ChromeProcessMonitor
+    WATCHDOG_AVAILABLE = True
+except ImportError:
+    print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
+    WATCHDOG_AVAILABLE = False
+
 # Configuration
 # Try to detect Chrome path based on OS
 import platform
@@ -575,14 +584,21 @@ def load_credentials():
             return [(username, password)]
         return []
 
-def handle_exit(chrome_instances):
+def handle_exit(chrome_instances, process_monitor=None):
     """Clean up before exiting"""
     print("Cleaning up and exiting...")
+    
+    # Stop process monitor first if available
+    if process_monitor:
+        print("Stopping Chrome Process Monitor...")
+        process_monitor.stop_monitoring()
+    
     for instance in chrome_instances:
         instance.stop()
 
 def main():
     chrome_instances = []
+    process_monitor = None
     
     try:
         # Load credential pairs
@@ -592,6 +608,13 @@ def main():
             return 1
             
         print(f"Found {len(credentials)} credential pair(s)")
+        
+        # Initialize Chrome Process Monitor if available
+        if WATCHDOG_AVAILABLE:
+            print("Initializing Chrome Process Monitor...")
+            process_monitor = ChromeProcessMonitor()
+            process_monitor.start_monitoring()
+            print("Chrome Process Monitor started")
         
         # Make sure any existing Chrome instances are stopped
         subprocess.run(["pkill", "-f", f"remote-debugging-port={BASE_DEBUGGING_PORT}"],
@@ -633,6 +656,17 @@ def main():
         for instance, success in results:
             if success:
                 chrome_instances.append(instance)
+                
+                # Register with process monitor if available
+                if WATCHDOG_AVAILABLE and process_monitor and instance.process:
+                    account_name = f"Account {len(chrome_instances)}"  # Or use username
+                    process_monitor.register_process(
+                        account_name=account_name,
+                        pid=instance.process.pid,
+                        port=instance.port,
+                        profile_dir=f"/tmp/tradovate_debug_profile_{instance.port}"
+                    )
+                    print(f"Registered {account_name} with Process Monitor")
         
         if not chrome_instances:
             print("Failed to start any Chrome instances, exiting")
@@ -652,7 +686,7 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
-        handle_exit(chrome_instances)
+        handle_exit(chrome_instances, process_monitor)
     
     return 0
 
