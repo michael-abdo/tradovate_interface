@@ -72,6 +72,18 @@ class TradovateConnection:
             return False
             
         try:
+            # First, inject the console interceptor to capture ALL console output
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            console_interceptor_path = os.path.join(project_root, 
+                                                   'scripts/tampermonkey/console_interceptor.js')
+            if os.path.exists(console_interceptor_path):
+                with open(console_interceptor_path, 'r') as file:
+                    console_interceptor_js = file.read()
+                self.tab.Runtime.evaluate(expression=console_interceptor_js)
+                print(f"Console interceptor injected for {self.account_name}")
+            else:
+                print(f"WARNING: Console interceptor not found at {console_interceptor_path}")
+            
             print(f"Injecting Tampermonkey functions for {self.account_name}...")
             self.tab.Runtime.evaluate(expression=tampermonkey_functions)
             
@@ -148,8 +160,23 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
+            # Clear existing console logs before trade
+            self.get_console_logs(clear_after=True)
+            
+            # Execute the trade
             js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
             result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            # Wait a moment for console logs to be generated
+            time.sleep(1)
+            
+            # Get console logs generated during trade execution
+            console_logs = self.get_console_logs(limit=50)
+            
+            # Add console logs to result
+            if isinstance(result, dict):
+                result['console_logs'] = console_logs.get('logs', [])
+            
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -160,8 +187,23 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
+            # Clear existing console logs before exit
+            self.get_console_logs(clear_after=True)
+            
+            # Execute the exit
             js_code = f"clickExitForSymbol(normalizeSymbol('{symbol}'), '{option}');"
             result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            # Wait a moment for console logs to be generated
+            time.sleep(0.5)
+            
+            # Get console logs generated during exit execution
+            console_logs = self.get_console_logs(limit=30)
+            
+            # Add console logs to result
+            if isinstance(result, dict):
+                result['console_logs'] = console_logs.get('logs', [])
+            
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -242,6 +284,59 @@ class TradovateConnection:
         except Exception as e:
             return {"error": str(e)}
             
+    def get_console_logs(self, limit=None, clear_after=False):
+        """Get captured console logs from localStorage
+        
+        Args:
+            limit: Maximum number of logs to return (None for all)
+            clear_after: Clear logs after retrieval
+            
+        Returns:
+            List of log entries with timestamp, level, message, and url
+        """
+        if not self.tab:
+            return {"error": "No tab available", "logs": []}
+            
+        try:
+            # Get all console logs - need to return it as JSON string for pychrome
+            js_code = "JSON.stringify(window.getConsoleLogs())"
+            result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            if not result or 'result' not in result:
+                return {"error": "Failed to retrieve console logs", "logs": []}
+                
+            # Parse the result
+            logs_json = result.get('result', {}).get('value')
+            if logs_json:
+                try:
+                    logs_data = json.loads(logs_json) if isinstance(logs_json, str) else logs_json
+                except json.JSONDecodeError:
+                    print(f"Failed to parse logs JSON: {logs_json}")
+                    logs_data = []
+            else:
+                logs_data = []
+            
+            # Apply limit if specified
+            if limit and isinstance(logs_data, list):
+                logs_data = logs_data[-limit:]  # Get last N logs
+            
+            # Clear logs if requested
+            if clear_after:
+                self.tab.Runtime.evaluate(expression="window.clearConsoleLogs && window.clearConsoleLogs()")
+                
+            return {
+                "status": "success",
+                "logs": logs_data,
+                "count": len(logs_data) if isinstance(logs_data, list) else 0
+            }
+            
+        except json.JSONDecodeError as e:
+            print(f"JSON decode error getting console logs: {e}")
+            return {"error": f"JSON decode error: {str(e)}", "logs": []}
+        except Exception as e:
+            print(f"Error getting console logs: {e}")
+            return {"error": str(e), "logs": []}
+    
     def get_account_data(self):
         """Get account data from the tab using the getAllAccountTableData function"""
         if not self.tab:

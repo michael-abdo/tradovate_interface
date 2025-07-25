@@ -1,75 +1,33 @@
 # Tradovate Multi-Account Interface
 
-A Python interface for automating trading operations with multiple Tradovate accounts simultaneously. Features a web dashboard for visual monitoring and control of all accounts.
+Python interface for automated multi-account Tradovate trading with web dashboard.
 
-## Features
+## Core Features
+- Multi-account auto-login with Chrome automation
+- Real-time web dashboard monitoring  
+- Unified trade execution across all accounts
+- PineScript webhook integration
+- Tampermonkey UI injection (no extension required)
+- Console log capture system (bypasses pychrome JSON errors)
 
-- Auto-login to multiple Tradovate accounts in separate browser windows
-- Interactive web dashboard for monitoring all accounts in real-time
-- Control all accounts from a single interface (web or command-line)
-- Execute trades simultaneously across all accounts
-- Filter accounts by platform, phase, and status
-- Customizable column layout with drag-and-drop reordering
-- Integrated trade controls with TP/SL options
-- PineScript webhook integration for automated trading signals
-- Inject Tampermonkey UI and functions without needing the extension
-- Simple credential management with JSON
-
-## Project Structure
-
+## Structure
 ```
 tradovate_interface/
-├── 🚀 Core Application
-│   ├── main.py                 # Main entry point
-│   ├── start_all.py           # Complete stack launcher
-│   └── src/                   # Core Python modules
-│       ├── app.py             # Trading execution engine
-│       ├── auto_login.py      # Chrome automation & login
-│       ├── dashboard.py       # Web monitoring interface
-│       ├── chrome_logger.py   # Browser activity logging
-│       └── pinescript_webhook.py # TradingView integration
-│
-├── 📁 Configuration & Data
-│   ├── config/                # Account credentials & settings
-│   ├── logs/                  # Comprehensive activity logging
-│   ├── temp/                  # Temporary files & mocks
-│   └── strategies/            # Trading strategy configurations
-│
-├── 🔧 Automation & Scripts
-│   ├── scripts/tampermonkey/  # Browser automation scripts
-│   ├── launchers/             # Component startup scripts
-│   └── utils/                 # Helper utilities
-│
-├── 🧪 Testing & Quality
-│   ├── tests/                 # Unit & integration tests
-│   └── static/                # Static assets
-│
-├── 📚 Documentation
-│   ├── docs/implementation/   # **🎯 STABILITY GUIDES**
-│   │   ├── CHROME_PROCESS_WATCHDOG.md      # 99.9% uptime system
-│   │   ├── CONNECTION_HEALTH_MONITORING.md # Zero-downtime failover
-│   │   └── STABILITY_IMPLEMENTATION_PLAN.md # Complete roadmap
-│   ├── docs/architecture/     # System architecture
-│   └── docs/                  # Additional documentation
-│
-└── 🌐 Web Interface
-    └── web/                   # Dashboard UI assets
+├── main.py                    # Entry point
+├── src/                       # Core modules
+│   ├── app.py                 # Trading engine
+│   ├── auto_login.py          # Chrome automation
+│   ├── dashboard.py           # Web interface
+│   └── pinescript_webhook.py  # TradingView integration
+├── config/                    # Credentials & settings
+├── docs/implementation/       # Stability guides
+└── tests/                     # Test suite
 ```
 
-## 🚨 Critical Stability Features
-
-This system includes **production-grade stability** implementations:
-
-- **[Chrome Process Watchdog](docs/implementation/CHROME_PROCESS_WATCHDOG.md)** - Automated crash detection and recovery (Target: 99.9% uptime)
-- **[Connection Health Monitoring](docs/implementation/CONNECTION_HEALTH_MONITORING.md)** - Network failover and recovery (Target: <30s recovery)  
-- **[Implementation Plan](docs/implementation/STABILITY_IMPLEMENTATION_PLAN.md)** - Complete 4-week development roadmap
-- `launchers/`: Entry point scripts for different components
-  - `app_launcher.py`: Launcher for main app
-  - `auto_login_launcher.py`: Launcher for auto login
-  - `chrome_logger_launcher.py`: Launcher for Chrome logger
-  - `dashboard_launcher.py`: Launcher for dashboard
-  - `login_helper_launcher.py`: Launcher for login helper
-  - `pinescript_webhook_launcher.py`: Launcher for webhook server
+## Stability Features
+- Chrome process watchdog (99.9% uptime target)
+- Connection health monitoring (<30s recovery)
+- See `docs/implementation/` for detailed guides
 
 ## Setup
 
@@ -93,241 +51,90 @@ This system includes **production-grade stability** implementations:
 
 ## Usage
 
-The application provides a unified interface through `main.py` to access all components:
+**Run from project root to avoid import errors**
 
-### Important: Running Scripts Correctly
-
-To avoid module import errors like `ModuleNotFoundError: No module named 'src'`, always use one of these methods to run the scripts:
-
-1. **Use the main entry point (Recommended)**:
-   ```bash
-   python main.py [component]
-   ```
-
-2. **Use the launcher scripts**:
-   ```bash
-   python launchers/pinescript_webhook_launcher.py
-   ```
-
-3. **Run from project root directory**:
-   ```bash
-   # Make sure you're in the project root directory
-   cd /path/to/tradovate_interface
-   python src/pinescript_webhook.py
-   ```
-
-Running scripts directly from other directories may cause import errors.
-
-### Step 1: Start Chrome instances with auto-login
-
-First, launch Chrome instances for each account:
-
+### Basic Workflow
 ```bash
+# 1. Start Chrome instances with auto-login
 python main.py login
-```
 
-This will:
-- Start a new Chrome instance for each credential pair in `config/credentials.json`
-- Each instance will run on a different debugging port (starting at 9222)
-- Automatically log in to Tradovate
-- Keep running until you press Ctrl+C
-
-### Step 2: Control the instances
-
-#### Option 1: Web Dashboard (recommended)
-
-Launch the web dashboard to monitor and control all accounts:
-
-```bash
+# 2. Launch web dashboard (http://localhost:6001)
 python main.py dashboard
-```
 
-Or with the app interface:
-
-```bash
-python main.py app dashboard
-```
-
-The dashboard will be available at http://localhost:6001 and provides:
-- Real-time account data from all connected instances
-- Ability to filter accounts by platform, phase, and status
-- Customizable columns with drag-and-drop reordering
-- Integrated trade controls for executing trades on all accounts
-- Take Profit and Stop Loss controls with checkbox toggles
-- Automatic symbol and quantity synchronization across accounts
-
-#### Option 2: Command-line Interface
-
-Use `main.py app` to control all instances via command line:
-
-```bash
-# List all active connections
-python main.py app list
-
-# Create the UI on all accounts
-python main.py app ui
-
-# Execute a trade on all accounts
-python main.py app trade NQ --qty 1 --action Buy --tp 100 --sl 40
-
-# Execute a trade on a specific account (index from the list command)
-python main.py app trade NQ --account 0 --qty 1 --action Buy
-
-# Close positions on all accounts
-python main.py app exit NQ
-
-# Update the symbol on all accounts
-python main.py app symbol MES
-```
-
-### Step 3: (Optional) PineScript Webhook Integration
-
-Set up a webhook endpoint to receive trading signals from TradingView:
-
-```bash
+# 3. (Optional) Start webhook server for TradingView
 python main.py webhook
 ```
 
-This will start a webhook server on port 5000 that can receive and process trading signals from TradingView's PineScript alerts.
-
-### Additional Tools
-
-#### Chrome Logger
-
-Start a logger for a Chrome instance to monitor browser logs:
-
+### Command Line Trading
 ```bash
-python main.py logger
+# List all connections
+python main.py app list
+
+# Execute trade on all accounts
+python main.py app trade NQ --qty 1 --action Buy --tp 100 --sl 40
+
+# Close positions
+python main.py app exit NQ
 ```
 
-#### Login Helper
+## Commands
+- `login` - Auto-login to all accounts
+- `dashboard` - Web interface (localhost:6001)  
+- `webhook` - TradingView integration server
+- `app list` - Show active connections
+- `app trade SYMBOL --qty N --action Buy/Sell --tp N --sl N` - Execute trade
+- `app exit SYMBOL` - Close positions
+- `logger` - Monitor Chrome logs
+- `login-helper --port PORT` - Connect to specific Chrome instance
 
-Connect to an existing Chrome instance on a specific port:
+## Configuration
 
-```bash
-python main.py login-helper --port 9222
-```
-
-## Available Commands
-
-- `dashboard`: Launch the web dashboard interface (http://localhost:6001)
-- `list`: List all active Tradovate connections
-- `ui`: Create the Tampermonkey UI overlay
-- `trade`: Execute a trade with parameters:
-  - `symbol`: The symbol to trade (required)
-  - `--account`: Specific account index (optional)
-  - `--qty`: Quantity (default: 1)
-  - `--action`: Buy or Sell (default: Buy)
-  - `--tp`: Take profit in ticks (default: 100)
-  - `--sl`: Stop loss in ticks (default: 40)
-  - `--tick`: Tick size (default: 0.25)
-- `exit`: Close positions with parameters:
-  - `symbol`: The symbol to close (required)
-  - `--account`: Specific account index (optional)
-  - `--option`: Exit option (default: cancel-option-Exit-at-Mkt-Cxl)
-- `symbol`: Update the current symbol with parameters:
-  - `symbol`: The symbol to change to (required)
-  - `--account`: Specific account index (optional)
-
-## Credential Management
-
-Credentials are stored in a simple JSON file in the config directory:
-
+**Credentials**: `config/credentials.json`
 ```json
 {
-  "your_email1@example.com": "your_password1",
-  "your_email2@example.com": "your_password2"
+  "email1@example.com": "password1",
+  "email2@example.com": "password2"
 }
 ```
 
-You can also use environment variables if preferred:
-
-```bash
-export TRADOVATE_USERNAME="your_username"
-export TRADOVATE_PASSWORD="your_password"
+**Webhook Payload**: TradingView integration
+```json
+{
+  "passphrase": "secret",
+  "action": "Buy",
+  "symbol": "NQ",
+  "quantity": 1,
+  "takeProfitTicks": 120,
+  "stopLossTicks": 40
+}
 ```
 
-The script will first try to use credentials from the JSON file, then fall back to environment variables if needed.
+## Console Logging
 
-## Dashboard Features
-
-The web dashboard provides a comprehensive interface for monitoring and controlling multiple Tradovate accounts:
-
-### Account Monitoring
-- Real-time data from all connected Tradovate instances
-- Summary statistics (total accounts, total P&L, total margin)
-- Auto-refresh every 1 second
-- Platform detection (Tradovate, Apex, NinjaTrader, etc.)
-- Phase and status tracking (Active/Inactive)
-
-### Customization
-- Filter accounts by platform, phase, and status
-- Drag-and-drop column reordering
-- Persistent layout and filter preferences (saved in localStorage)
-- Reset options for filters and column layouts
-
-### Trading Controls
-- Unified trading interface for all accounts
-- Symbol selection with instrument-specific defaults
-- Take Profit and Stop Loss controls with enable/disable options
-- Entry price specification for limit and stop orders
-- Buy/Sell buttons for instant execution
-- Cancel All and Close All options for risk management
-- Automatic symbol and quantity synchronization across all accounts
-
-## PineScript Webhook Integration
-
-The system includes a webhook endpoint for automated trading via TradingView PineScript alerts:
+The system includes a console interceptor that captures all browser console output:
 
 ```python
-# Example webhook payload from TradingView
-{
-    "passphrase": "your_secret_passphrase",
-    "action": "Buy",
-    "tradeType": "bracket",
-    "symbol": "NQ",
-    "quantity": 1,
-    "takeProfitTicks": 120,
-    "stopLossTicks": 40,
-    "accountIndex": "all"  # or specific account index
-}
+# Get console logs from a connection
+logs = connection.get_console_logs(limit=50)
+
+# Console logs are automatically included in trade responses
+result = connection.auto_trade('NQ', quantity=1)
+if 'console_logs' in result:
+    for log in result['console_logs']:
+        print(f"[{log['level']}] {log['message']}")
 ```
 
-To use this feature:
-1. Start the webhook server: `python pinescript_webhook_launcher.py`
-2. Create a TradingView alert with a webhook URL pointing to your server (e.g., `http://your-server:5000/webhook`)
-3. Configure the alert message to include the JSON payload shown above
-4. Set the alert to trigger based on your trading strategy conditions
+See [Console Interceptor Documentation](docs/CONSOLE_INTERCEPTOR.md) for details.
 
 ## Troubleshooting
 
-If you encounter any issues with imports, Chrome connections, or other aspects of the system, please refer to the detailed [Troubleshooting Guide](docs/TROUBLESHOOTING.md).
+**Import Errors**: Run from project root directory or use `python main.py [command]`
 
-Common issues and solutions:
+**Test Environment**: `python launchers/test_imports.py`
 
-### ModuleNotFoundError: No module named 'src'
+See [detailed troubleshooting guide](docs/TROUBLESHOOTING.md)
 
-If you get this error, you're likely running a script directly without setting up the Python path correctly. Use one of these solutions:
-
-1. Run using main.py: `python main.py webhook`
-2. Use the launcher scripts: `python launchers/pinescript_webhook_launcher.py`
-3. Run from the project root directory
-
-### Test Your Environment
-
-A test script is provided to verify all imports are working correctly:
-
-```bash
-python launchers/test_imports.py
-```
-
-If all imports pass, your environment is set up correctly.
-
-## Notes
-
-- Requires Chrome to be installed
-- Uses sequential ports starting at 9222 for remote debugging (one port per account)
-- Makes use of Tampermonkey functions without needing the extension installed
-- Each account instance runs in its own separate browser window with isolated user profile
-- Dashboard runs on port 6001, webhook server on port 6000
-- All settings and preferences are stored in the browser's localStorage
+## Requirements
+- Chrome browser
+- Sequential ports 9222+ for remote debugging
+- Dashboard: port 6001, Webhook: port 6000
