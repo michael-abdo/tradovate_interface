@@ -55,10 +55,10 @@ tradovate_interface/
 
 ### Basic Workflow
 ```bash
-# 1. Start Chrome instances with auto-login
-python main.py login
+# 1. Start Chrome on port 9223 (happens automatically with most commands)
+python main.py chrome start
 
-# 2. Launch web dashboard (http://localhost:6001)
+# 2. Launch web dashboard (http://localhost:6001) - auto-starts Chrome
 python main.py dashboard
 
 # 3. (Optional) Start webhook server for TradingView
@@ -78,14 +78,15 @@ python main.py app exit NQ
 ```
 
 ## Commands
-- `login` - Auto-login to all accounts
-- `dashboard` - Web interface (localhost:6001)  
+- `chrome start|stop|status|restart` - Manage Chrome instance on port 9223
+- `login` - Auto-login to all accounts  
+- `dashboard` - Web interface (localhost:6001) - auto-starts Chrome
 - `webhook` - TradingView integration server
-- `app list` - Show active connections
-- `app trade SYMBOL --qty N --action Buy/Sell --tp N --sl N` - Execute trade
-- `app exit SYMBOL` - Close positions
+- `app list` - Show active connections - auto-starts Chrome
+- `app trade SYMBOL --qty N --action Buy/Sell --tp N --sl N` - Execute trade with console logs
+- `app exit SYMBOL` - Close positions with console logs
 - `logger` - Monitor Chrome logs
-- `login-helper --port PORT` - Connect to specific Chrome instance
+- `login-helper --port PORT` - Connect to specific Chrome instance (default: 9223)
 
 ## Configuration
 
@@ -136,5 +137,20 @@ See [detailed troubleshooting guide](docs/TROUBLESHOOTING.md)
 
 ## Requirements
 - Chrome browser
-- Sequential ports 9222+ for remote debugging
+- Port 9223 for dedicated Chrome instance (auto-managed)
 - Dashboard: port 6001, Webhook: port 6000
+
+## Chrome Management
+The application now uses a dedicated Chrome instance on port 9223 (separate from any existing Chrome on port 9222). This provides:
+- **Complete isolation** from other Chrome instances
+- **Automatic startup** - Chrome starts automatically with most commands
+- **Console log capture** - All browser console output captured and included in trade results
+- **Clean environment** - Fresh Chrome state for reliable automation
+
+```bash
+# Manual Chrome management (usually not needed)
+python main.py chrome start    # Start Chrome on port 9223
+python main.py chrome status   # Check Chrome status
+python main.py chrome stop     # Stop Chrome
+python main.py chrome restart  # Restart Chrome
+```

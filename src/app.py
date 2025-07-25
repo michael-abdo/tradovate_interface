@@ -349,7 +349,7 @@ class TradovateConnection:
             return {"error": str(e)}
 
 class TradovateController:
-    def __init__(self, base_port=9222):
+    def __init__(self, base_port=9223):
         self.base_port = base_port
         self.connections = []
         self.initialize_connections()

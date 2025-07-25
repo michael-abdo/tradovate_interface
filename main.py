@@ -23,6 +23,24 @@ from src.dashboard import run_flask_dashboard
 from src.login_helper import main as login_helper_main
 from src.pinescript_webhook import run_flask as run_webhook_server
 from src.chrome_logger import main as chrome_logger_main
+from src.chrome_9223_manager import Chrome9223Manager
+
+def ensure_chrome_9223_running():
+    """Ensure Chrome is running on port 9223 before executing commands"""
+    manager = Chrome9223Manager()
+    if not manager.is_running():
+        print("🚀 Starting Chrome on port 9223...")
+        success = manager.start_chrome()
+        if success:
+            manager.create_tradovate_tab()
+            time.sleep(2)  # Give Chrome time to fully start
+            return True
+        else:
+            print("❌ Failed to start Chrome on port 9223")
+            return False
+    else:
+        print("✅ Chrome already running on port 9223")
+        return True
 
 def main():
     parser = argparse.ArgumentParser(
@@ -95,12 +113,23 @@ def main():
         "login-helper", 
         help="Connect to existing Chrome instance (equivalent to login_helper_launcher.py)"
     )
-    login_helper_parser.add_argument("--port", type=int, default=9222, help="Chrome debugging port")
+    login_helper_parser.add_argument("--port", type=int, default=9223, help="Chrome debugging port")
     
     # Chrome logger command
     chrome_logger_parser = subparsers.add_parser(
         "logger", 
         help="Start Chrome logger (equivalent to chrome_logger_launcher.py)"
+    )
+    
+    # Chrome 9223 management command
+    chrome_9223_parser = subparsers.add_parser(
+        "chrome",
+        help="Manage Chrome instance on port 9223"
+    )
+    chrome_9223_parser.add_argument(
+        "chrome_action", 
+        choices=["start", "stop", "status", "restart"],
+        help="Chrome management action"
     )
     
     # Start-all command - start Chrome, auto-login, and dashboard together
@@ -121,6 +150,9 @@ def main():
     
     # Execute the requested command
     if args.command == "app":
+        # Ensure Chrome 9223 is running before app commands
+        if not ensure_chrome_9223_running():
+            return 1
         # Pass all args to app_main, it has its own arg parsing
         sys.argv = [sys.argv[0]] + sys.argv[2:]
         return app_main()
@@ -129,6 +161,9 @@ def main():
         return auto_login_main()
     
     elif args.command == "dashboard":
+        # Ensure Chrome 9223 is running for dashboard
+        if not ensure_chrome_9223_running():
+            return 1
         run_flask_dashboard()
         return 0
     
@@ -143,7 +178,39 @@ def main():
     elif args.command == "logger":
         return chrome_logger_main()
     
+    elif args.command == "chrome":
+        # Handle Chrome 9223 management commands
+        manager = Chrome9223Manager()
+        
+        if args.chrome_action == "start":
+            success = manager.start_chrome()
+            if success:
+                manager.create_tradovate_tab()
+            return 0 if success else 1
+            
+        elif args.chrome_action == "stop":
+            manager.stop_chrome()
+            return 0
+            
+        elif args.chrome_action == "status":
+            status = manager.get_status()
+            import json
+            print(json.dumps(status, indent=2))
+            return 0
+            
+        elif args.chrome_action == "restart":
+            manager.stop_chrome()
+            time.sleep(2)
+            success = manager.start_chrome()
+            if success:
+                manager.create_tradovate_tab()
+            return 0 if success else 1
+    
     elif args.command == "start-all":
+        # Start Chrome 9223 first
+        if not ensure_chrome_9223_running():
+            return 1
+            
         # Handle the complete stack: auto-login + dashboard
         if args.background:
             # Start auto-login in the background
