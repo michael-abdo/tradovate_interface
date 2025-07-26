@@ -160,9 +160,23 @@ class TradovateConnection:
             return {"error": str(e)}
             
     def auto_trade(self, symbol, quantity=1, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
-        """Execute an auto trade using the Tampermonkey script"""
+        """Execute an auto trade using the Tampermonkey script with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing trade
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "error": "Trade rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "trade_rejected": True
+            }
+        
+        # Log trading attempt with health context
+        print(f"Executing trade for {self.username}: {action} {quantity} {symbol} (Health: {health_check.get('healthy', False)})")
             
         try:
             # Clear existing console logs before trade
@@ -178,18 +192,46 @@ class TradovateConnection:
             # Get console logs generated during trade execution
             console_logs = self.get_console_logs(limit=50)
             
-            # Add console logs to result
+            # Add console logs and health status to result
             if isinstance(result, dict):
                 result['console_logs'] = console_logs.get('logs', [])
+                result['health_at_execution'] = health_check
+                result['trade_executed'] = True
+            else:
+                # Ensure result is a dict for consistency
+                result = {
+                    'trade_result': result,
+                    'console_logs': console_logs.get('logs', []),
+                    'health_at_execution': health_check,
+                    'trade_executed': True
+                }
             
             return result
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "trade_executed": False
+            }
             
     def exit_positions(self, symbol, option='cancel-option-Exit-at-Mkt-Cxl'):
-        """Close all positions for the given symbol"""
+        """Close all positions for the given symbol with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing exit
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "error": "Exit rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "exit_rejected": True
+            }
+        
+        # Log exit attempt with health context
+        print(f"Exiting positions for {self.username}: {symbol} with {option} (Health: {health_check.get('healthy', False)})")
             
         try:
             # Clear existing console logs before exit
@@ -205,13 +247,27 @@ class TradovateConnection:
             # Get console logs generated during exit execution
             console_logs = self.get_console_logs(limit=30)
             
-            # Add console logs to result
+            # Add console logs and health status to result
             if isinstance(result, dict):
                 result['console_logs'] = console_logs.get('logs', [])
+                result['health_at_execution'] = health_check
+                result['exit_executed'] = True
+            else:
+                # Ensure result is a dict for consistency
+                result = {
+                    'exit_result': result,
+                    'console_logs': console_logs.get('logs', []),
+                    'health_at_execution': health_check,
+                    'exit_executed': True
+                }
             
             return result
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "exit_executed": False
+            }
             
     def update_symbol(self, symbol):
         """Update the symbol in Tradovate's interface"""
@@ -226,9 +282,24 @@ class TradovateConnection:
             return {"error": str(e)}
             
     def run_risk_management(self):
-        """Run the auto risk management functions"""
+        """Run the auto risk management functions with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing risk management
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "status": "error",
+                "error": "Risk management rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "risk_management_rejected": True
+            }
+        
+        # Log risk management attempt with health context
+        print(f"Running risk management for {self.username} (Health: {health_check.get('healthy', False)})")
             
         try:
             # First check if the required functions exist
@@ -283,11 +354,25 @@ class TradovateConnection:
             result_data = json.loads(result.get('result', {}).get('value', '{}'))
             
             if result_data.get('status') == 'success':
-                return {"status": "success", "message": "Auto risk management executed"}
+                return {
+                    "status": "success", 
+                    "message": "Auto risk management executed",
+                    "health_at_execution": health_check,
+                    "risk_management_executed": True
+                }
             else:
-                return {"status": "error", "message": result_data.get('message', 'Unknown error')}
+                return {
+                    "status": "error", 
+                    "message": result_data.get('message', 'Unknown error'),
+                    "health_at_execution": health_check,
+                    "risk_management_executed": False
+                }
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "risk_management_executed": False
+            }
             
     def get_console_logs(self, limit=None, clear_after=False):
         """Get captured console logs from localStorage

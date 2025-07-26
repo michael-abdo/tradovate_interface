@@ -5,11 +5,13 @@ from flask import Flask, render_template, jsonify
 import sys
 import os
 import json
+import datetime
 
 # Import from app.py
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import TradovateController
 from flask import request
+from utils.chrome_stability import ChromeStabilityMonitor
 
 # Create Flask app
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,8 +19,19 @@ app = Flask(__name__,
             static_folder=os.path.join(project_root, 'web/static'),
             template_folder=os.path.join(project_root, 'web/templates'))
 
-# Initialize controller
+# Initialize controller and health monitor
 controller = TradovateController()
+
+# Initialize connection health monitoring
+health_monitor = ChromeStabilityMonitor(log_dir="logs/dashboard_health")
+
+# Register connections with health monitor
+for idx, connection in enumerate(controller.connections):
+    account_name = f"Account_{idx+1}_{connection.account_name.replace(' ', '_')}"
+    health_monitor.register_connection(account_name, connection.port)
+
+# Start health monitoring
+health_monitor.start_health_monitoring()
 
 def inject_account_data_function():
     """Inject the getAllAccountTableData function into all tabs"""
@@ -515,6 +528,106 @@ def get_summary():
         'total_margin': total_margin,
         'account_count': len(accounts_data)
     })
+
+# API endpoint to get connection health status
+@app.route('/api/health', methods=['GET'])
+def get_connection_health():
+    """Get real-time connection health status for all monitored connections"""
+    try:
+        # Get health status from the monitor
+        health_status = health_monitor.get_connection_health_status()
+        
+        # Enhance with current Chrome instance health checks
+        enhanced_status = health_status.copy()
+        enhanced_status['chrome_instances'] = []
+        
+        for idx, connection in enumerate(controller.connections):
+            if connection.tab:
+                try:
+                    # Get real-time health check from the Chrome instance
+                    instance_health = connection.check_connection_health()
+                    enhanced_status['chrome_instances'].append({
+                        'account_index': idx,
+                        'account_name': connection.account_name,
+                        'port': connection.port,
+                        'health': instance_health
+                    })
+                except Exception as e:
+                    enhanced_status['chrome_instances'].append({
+                        'account_index': idx,
+                        'account_name': connection.account_name,
+                        'port': connection.port,
+                        'health': {
+                            'healthy': False,
+                            'errors': [f"Health check failed: {str(e)}"]
+                        }
+                    })
+        
+        return jsonify(enhanced_status)
+        
+    except Exception as e:
+        return jsonify({
+            'error': f'Failed to get health status: {str(e)}',
+            'timestamp': time.time(),
+            'monitoring_active': False,
+            'connections': {},
+            'chrome_instances': []
+        }), 500
+
+# API endpoint to get network quality metrics
+@app.route('/api/network-quality', methods=['GET'])
+def get_network_quality():
+    """Get comprehensive network quality metrics for all monitored connections"""
+    try:
+        # Get network quality summary from the health monitor
+        network_summary = health_monitor.get_network_quality_summary()
+        
+        # Enhance with real-time status
+        enhanced_summary = network_summary.copy()
+        enhanced_summary['real_time_checks'] = []
+        
+        # Add current connection quality assessments
+        for idx, connection in enumerate(controller.connections):
+            if connection.tab:
+                try:
+                    account_name = f"Account_{idx+1}_{connection.account_name.replace(' ', '_')}"
+                    
+                    # Get quick network quality check
+                    start_time = time.time()
+                    instance_health = connection.check_connection_health()
+                    check_duration = (time.time() - start_time) * 1000  # Convert to ms
+                    
+                    quality_check = {
+                        'account_index': idx,
+                        'account_name': connection.account_name,
+                        'port': connection.port,
+                        'response_time_ms': round(check_duration, 2),
+                        'healthy': instance_health.get('healthy', False),
+                        'checks_passed': sum(1 for check in instance_health.get('checks', {}).values() if check),
+                        'total_checks': len(instance_health.get('checks', {})),
+                        'errors': instance_health.get('errors', [])
+                    }
+                    
+                    enhanced_summary['real_time_checks'].append(quality_check)
+                    
+                except Exception as e:
+                    enhanced_summary['real_time_checks'].append({
+                        'account_index': idx,
+                        'account_name': connection.account_name,
+                        'port': connection.port,
+                        'error': f"Quality check failed: {str(e)}"
+                    })
+        
+        return jsonify(enhanced_summary)
+        
+    except Exception as e:
+        return jsonify({
+            'error': f'Failed to get network quality: {str(e)}',
+            'timestamp': datetime.datetime.now().isoformat(),
+            'network_monitoring_enabled': False,
+            'connections': {},
+            'real_time_checks': []
+        }), 500
 
 # API endpoint to execute trades
 @app.route('/api/trade', methods=['POST'])
