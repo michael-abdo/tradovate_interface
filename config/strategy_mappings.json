@@ -1,13 +1,8 @@
 {
   "strategy_mappings": {
-    "Velocity Graph - Velocity Push": [
-      "DEMO3655059-1"
-    ],
-    "Velocity Graph - Rebound": [
-      "DEMO3655059-2"
-    ],
-    "L/H": [
-      "DEMO3655059"
-    ]
+    "L/H": [],
+    "Velocity Graph - Rebound": [],
+    "Velocity Graph - Velocity Push": [],
+    "DEFAULT": []
   }
 }

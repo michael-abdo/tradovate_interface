@@ -48,24 +48,32 @@ def run_dashboard():
     run_flask_dashboard()
 
 def collect_chrome_processes():
-    """Find all Chrome processes with remote-debugging-port and track them"""
+    """
+    Track only Chrome processes started by this script (ports 9223+)
+    NEVER track port 9222 or other existing Chrome instances
+    """
     global chrome_processes
     
     try:
-        if platform.system() == "Darwin":  # macOS
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
-        elif platform.system() == "Windows":
-            cmd = ["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/FO", "CSV"]
-        else:  # Linux
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
-            
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        if result.returncode == 0 and result.stdout.strip():
-            pids = result.stdout.strip().split('\n')
-            for pid in pids:
-                if pid.isdigit():  # Ensure it's a valid PID
-                    chrome_processes.append(int(pid))
-            print(f"Tracking {len(chrome_processes)} Chrome processes for cleanup")
+        # Only track Chrome processes on our specific ports (9223+)
+        # This respects CLAUDE.md Rule #0: NEVER START/STOP CHROME on port 9222
+        for port in range(9223, 9243):  # Only our range, not 9222
+            try:
+                if platform.system() == "Darwin":  # macOS
+                    cmd = ["pgrep", "-f", f"remote-debugging-port={port}"]
+                else:  # Linux
+                    cmd = ["pgrep", "-f", f"remote-debugging-port={port}"]
+                
+                result = subprocess.run(cmd, capture_output=True, text=True)
+                if result.returncode == 0 and result.stdout.strip():
+                    pids = result.stdout.strip().split('\n')
+                    for pid in pids:
+                        if pid.isdigit():  # Ensure it's a valid PID
+                            chrome_processes.append(int(pid))
+            except Exception:
+                continue  # Skip if port check fails
+                
+        print(f"Tracking {len(chrome_processes)} Chrome processes for cleanup (ports 9223+)")
     except Exception as e:
         print(f"Error collecting Chrome processes: {e}")
 
@@ -108,6 +116,7 @@ def cleanup_chrome_instances():
                 print(f"Error terminating Chrome process {pid}: {e}")
         
         # Last resort: Use pkill as a safety net (NEVER touch port 9222)
+        # Only target specific trading ports to comply with CLAUDE.md Rule #0
         try:
             if platform.system() != "Windows":
                 print("Running targeted pkill for ports 9223+ only...")
@@ -145,10 +154,12 @@ def show_watchdog_status():
 def main():
     global auto_login_process
     
-    # Register cleanup handlers
-    atexit.register(cleanup_chrome_instances)
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    # NOTE: Cleanup handlers disabled - Chrome instances will persist after script exit
+    # This allows trading to continue even if dashboard script is stopped
+    # Uncomment below to enable cleanup on script exit:
+    # atexit.register(cleanup_chrome_instances)
+    # signal.signal(signal.SIGINT, signal_handler)
+    # signal.signal(signal.SIGTERM, signal_handler)
     
     parser = argparse.ArgumentParser(description="Start the complete Tradovate Interface stack")
     parser.add_argument("--wait", type=int, default=15, 

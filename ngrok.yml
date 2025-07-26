@@ -1,0 +1,19 @@
+# Ngrok configuration file
+# Place this in ~/.ngrok2/ngrok.yml or use with: ngrok start dashboard
+
+version: "2"
+authtoken: YOUR_NGROK_AUTHTOKEN_HERE
+
+tunnels:
+  dashboard:
+    proto: http
+    addr: 6001
+    # Use subdomain (requires paid plan)
+    # subdomain: tradovate-dashboard
+    
+    # Free version settings
+    bind_tls: true
+    inspect: true
+    
+    # Optional: Basic auth for security
+    # auth: "username:password"

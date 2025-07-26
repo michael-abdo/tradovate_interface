@@ -18,6 +18,9 @@ except ImportError:
     print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
     WATCHDOG_AVAILABLE = False
 
+# Import connection health monitoring
+from utils.chrome_stability import ChromeStabilityMonitor
+
 # Configuration
 # Try to detect Chrome path based on OS
 import platform
@@ -76,7 +79,7 @@ def find_chrome_path():
     return default_path
 
 CHROME_PATH = find_chrome_path()
-BASE_DEBUGGING_PORT = 9222
+BASE_DEBUGGING_PORT = 9223  # Start from 9223 to avoid 9222 (Rule #0)
 TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
 
@@ -215,6 +218,87 @@ class ChromeInstance:
                 time.sleep(5)  # Shorter sleep after error
         
         print(f"Login monitor stopped for {self.username}")
+    
+    def check_connection_health(self) -> dict:
+        """Check the health of this Chrome instance connection"""
+        health_status = {
+            'account': self.username,
+            'port': self.port,
+            'healthy': False,
+            'checks': {},
+            'errors': []
+        }
+        
+        try:
+            # Check if process is still running
+            if self.process and self.process.poll() is None:
+                health_status['checks']['process_running'] = True
+            else:
+                health_status['checks']['process_running'] = False
+                health_status['errors'].append("Chrome process not running")
+                return health_status
+            
+            # Check if browser connection is available
+            if self.browser:
+                try:
+                    tabs = self.browser.list_tab()
+                    health_status['checks']['browser_responsive'] = True
+                    health_status['checks']['tab_count'] = len(tabs)
+                except Exception as e:
+                    health_status['checks']['browser_responsive'] = False
+                    health_status['errors'].append(f"Browser not responsive: {e}")
+                    return health_status
+            else:
+                health_status['checks']['browser_responsive'] = False
+                health_status['errors'].append("No browser connection")
+                return health_status
+            
+            # Check if tab is accessible
+            if self.tab:
+                try:
+                    # Simple JavaScript test
+                    result = self.tab.Runtime.evaluate(expression="1 + 1")
+                    if result.get("result", {}).get("value") == 2:
+                        health_status['checks']['javascript_execution'] = True
+                    else:
+                        health_status['checks']['javascript_execution'] = False
+                        health_status['errors'].append("JavaScript execution failed")
+                except Exception as e:
+                    health_status['checks']['javascript_execution'] = False
+                    health_status['errors'].append(f"Tab not accessible: {e}")
+                    return health_status
+            else:
+                health_status['checks']['javascript_execution'] = False
+                health_status['errors'].append("No tab available")
+                return health_status
+            
+            # Check Tradovate application status
+            try:
+                app_check_js = """
+                ({
+                    url: window.location.href,
+                    authenticated: !document.querySelector('#name-input'),
+                    tradingReady: typeof window.autoTrade === 'function'
+                })
+                """
+                result = self.tab.Runtime.evaluate(expression=app_check_js)
+                app_status = result.get("result", {}).get("value", {})
+                
+                health_status['checks']['tradovate_loaded'] = "tradovate.com" in app_status.get('url', '')
+                health_status['checks']['authenticated'] = app_status.get('authenticated', False)
+                health_status['checks']['trading_ready'] = app_status.get('tradingReady', False)
+                
+                # Overall health assessment
+                critical_checks = ['process_running', 'browser_responsive', 'javascript_execution']
+                health_status['healthy'] = all(health_status['checks'].get(check, False) for check in critical_checks)
+                
+            except Exception as e:
+                health_status['errors'].append(f"Application check failed: {e}")
+        
+        except Exception as e:
+            health_status['errors'].append(f"Health check exception: {e}")
+        
+        return health_status
         
     def stop(self):
         """Stop this Chrome instance"""
@@ -259,6 +343,26 @@ def start_chrome_with_debugging(port):
         "--disable-infobars",
         "--disable-session-crashed-bubble",
         "--disable-save-password-bubble",
+        # GPU-related flags to prevent crashes
+        "--disable-gpu-sandbox",
+        "--disable-software-rasterizer",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu-compositing",
+        "--enable-features=SharedArrayBuffer",
+        "--disable-web-security",
+        "--disable-features=IsolateOrigins,site-per-process",
+        # Additional stability flags
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-features=TranslateUI",
+        "--disable-ipc-flooding-protection",
+        # Memory and performance flags
+        "--max_old_space_size=4096",
+        "--js-flags=--max-old-space-size=4096",
+        "--force-color-profile=srgb",
         TRADOVATE_URL,
     ]
 
@@ -587,7 +691,7 @@ def load_credentials():
             return [(username, password)]
         return []
 
-def handle_exit(chrome_instances, process_monitor=None):
+def handle_exit(chrome_instances, process_monitor=None, health_monitor=None):
     """Clean up before exiting"""
     print("Cleaning up and exiting...")
     
@@ -596,12 +700,19 @@ def handle_exit(chrome_instances, process_monitor=None):
         print("Stopping Chrome Process Monitor...")
         process_monitor.stop_monitoring()
     
+    # Stop health monitoring first
+    if health_monitor:
+        print("Stopping connection health monitoring...")
+        health_monitor.stop_health_monitoring()
+    
+    # Stop Chrome instances
     for instance in chrome_instances:
         instance.stop()
 
 def main():
     chrome_instances = []
     process_monitor = None
+    health_monitor = None
     
     try:
         # Load credential pairs
@@ -677,6 +788,20 @@ def main():
             print("Failed to start any Chrome instances, exiting")
             return 1
         
+        # Initialize connection health monitoring
+        print("Initializing connection health monitoring...")
+        health_monitor = ChromeStabilityMonitor(log_dir="logs/connection_health")
+        
+        # Register each Chrome instance with health monitor
+        for idx, instance in enumerate(chrome_instances):
+            account_name = f"Account_{idx+1}_{instance.username.split('@')[0]}"  # Use email prefix for account name
+            health_monitor.register_connection(account_name, instance.port)
+            print(f"Registered {account_name} for health monitoring on port {instance.port}")
+        
+        # Start health monitoring
+        health_monitor.start_health_monitoring()
+        print("Connection health monitoring started")
+        
         # Print summary
         print(f"\n{len(chrome_instances)} Chrome instances running:")
         for idx, instance in enumerate(chrome_instances):
@@ -691,7 +816,7 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
-        handle_exit(chrome_instances, process_monitor)
+        handle_exit(chrome_instances, process_monitor, health_monitor)
     
     return 0
 

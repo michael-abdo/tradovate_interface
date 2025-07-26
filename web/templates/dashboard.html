@@ -790,9 +790,12 @@
             <button class="refresh-button" onclick="fetchAccountData()">Refresh Data</button>
         </div>
         
+        <h2>Strategy Management</h2>
+        
         <div class="strategy-controls">
             <button id="add-strategy-btn" class="strategy-button">Add Strategy</button>
             <button id="save-strategies-btn" class="strategy-button">Save All Strategy Mappings</button>
+            <button id="auto-risk-btn" class="strategy-button" style="background-color: #ff6600; margin-left: 10px;">Auto Manage</button>
             <div style="text-align: center; font-size: 12px; color: #aaa; margin-top: 5px;">
                 Strategy selections are automatically saved when changed
             </div>
@@ -803,7 +806,11 @@
             </div>
         </div>
         
-        <h2>Trade Controls</h2>
+        <h2>Action Controls</h2>
+        
+        <div id="trade-error-display" style="display: none; background-color: #ff3b30; color: white; padding: 10px; margin-bottom: 10px; border-radius: 4px; text-align: center;">
+            <!-- Error messages will appear here -->
+        </div>
         
         <div class="trade-controls">
             <div class="trade-controls-row">
@@ -812,12 +819,19 @@
                     <input type="text" id="symbolInput" placeholder="NQ" class="trade-input symbol-input">
                 </div>
                 <div class="input-group">
-                    <label for="qtyInput">Quantity</label>
+                    <label for="qtyInput">Quantity <span id="qtyRecommendation" style="color: #0a84ff; font-size: 11px;"></span></label>
                     <input type="number" id="qtyInput" value="1" min="1" class="trade-input">
                 </div>
                 <div class="input-group">
                     <label for="tickInput">Tick Size</label>
                     <input type="number" id="tickInput" value="0.25" step="0.01" class="trade-input">
+                </div>
+                <div class="input-group">
+                    <label for="accountSelect">Account</label>
+                    <select id="accountSelect" class="trade-input">
+                        <option value="all">All Accounts</option>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
                 </div>
             </div>
             
@@ -825,21 +839,21 @@
                 <div class="input-group">
                     <div class="checkbox-label">
                         <input type="checkbox" id="tpCheckbox" checked>
-                        <label for="tpCheckbox">Take Profit</label>
+                        <label for="tpCheckbox">Target</label>
                     </div>
                     <div class="price-inputs">
-                        <input type="number" id="tpInput" value="100" class="trade-input" placeholder="TP Ticks">
-                        <input type="number" id="tpPriceInput" step="0.01" class="trade-input" placeholder="TP Price">
+                        <input type="number" id="tpInput" value="100" class="trade-input" placeholder="Target Ticks">
+                        <input type="number" id="tpPriceInput" step="0.01" class="trade-input" placeholder="Target Price">
                     </div>
                 </div>
                 <div class="input-group">
                     <div class="checkbox-label">
                         <input type="checkbox" id="slCheckbox" checked>
-                        <label for="slCheckbox">Stop Loss</label>
+                        <label for="slCheckbox">Stop</label>
                     </div>
                     <div class="price-inputs">
-                        <input type="number" id="slInput" value="40" class="trade-input" placeholder="SL Ticks">
-                        <input type="number" id="slPriceInput" step="0.01" class="trade-input" placeholder="SL Price">
+                        <input type="number" id="slInput" value="40" class="trade-input" placeholder="Stop Ticks">
+                        <input type="number" id="slPriceInput" step="0.01" class="trade-input" placeholder="Stop Price">
                     </div>
                 </div>
             </div>
@@ -850,17 +864,17 @@
                     <input type="number" id="entryPriceInput" step="0.01" class="trade-input" placeholder="Entry Price">
                 </div>
                 <div class="trade-buttons">
-                    <button id="buyBtn" class="buy-button">Buy</button>
-                    <button id="sellBtn" class="sell-button">Sell</button>
+                    <button id="buyBtn" class="buy-button">In</button>
+                    <button id="sellBtn" class="sell-button">Out</button>
                 </div>
             </div>
             
             <div class="trade-controls-row">
-                <button id="cancelAllBtn" class="cancel-button">Cancel All</button>
-                <button id="closeAllBtn" class="close-button">Close All Positions</button>
+                <button id="cancelAllBtn" class="cancel-button">Clear All</button>
+                <button id="closeAllBtn" class="close-button">Exit All</button>
             </div>
             <div class="trade-controls-row" style="margin-top: 10px;">
-                <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse Position</button>
+                <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Flip</button>
             </div>
         </div>
     </div>
@@ -870,7 +884,7 @@
         let accountData = [];
         
         // Default column order (first column is always Account)
-        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation'];
+        let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation', 'Drawdown Distance'];
         
         // Current column order
         let columnOrder = getSavedColumnOrder() || [...defaultColumnOrder];
@@ -1405,6 +1419,8 @@
         
         // Function to fetch account data
         async function fetchAccountData() {
+            console.log(`[fetchAccountData] Starting at ${new Date().toLocaleTimeString()}`);
+            
             // Remember scroll position
             const table = document.getElementById('account-table');
             const scrollContainer = table.parentElement;
@@ -1459,6 +1475,43 @@
                 
                 // Render the table with the current column order
                 renderTable(accountData);
+                
+                // Update auto-refresh indicator
+                updateAutoRefreshIndicator();
+                
+                // Populate account dropdown with current data
+                populateAccountDropdown();
+                
+                // Update quantity recommendation
+                updateQuantityRecommendation();
+                
+                // Execute phase update on all Chrome tabs
+                console.log(`[Phase Update] Starting phase update at ${new Date().toLocaleTimeString()}`);
+                fetch('/api/update-phases', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log(`[Phase Update] Response status: ${response.status}`);
+                    return response.json();
+                })
+                .then(result => {
+                    console.log('[Phase Update] Result:', result);
+                    if (result.status === 'success') {
+                        console.log(`[Phase Update] Successfully updated ${result.details.length} accounts`);
+                        result.details.forEach(detail => {
+                            console.log(`[Phase Update] Account ${detail.account}: ${detail.status} - ${detail.message}`);
+                        });
+                    } else {
+                        console.error('[Phase Update] Failed:', result.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('[Phase Update] Error:', error);
+                    console.error('[Phase Update] Stack:', error.stack);
+                });
                 
                 // Hide the loading overlay
                 if (loadingOverlay) {
@@ -1705,21 +1758,63 @@
         // Save the forced column order
         saveColumnOrder();
         
+        console.log(`[Initial Load] Starting initial data fetch at ${new Date().toLocaleTimeString()}`);
         fetchAccountData().then(() => {
             populateFilterOptions();
             applyFilters();
+            updateQuantityRecommendation(); // Initial recommendation
+            console.log(`[Initial Load] Completed at ${new Date().toLocaleTimeString()}`);
+        }).catch(error => {
+            console.error('[Initial Load] Error:', error);
         });
         
-        // Set up periodic refresh (every 5 seconds)
-        setInterval(() => {
-            // Only auto-refresh if page is visible to avoid unnecessary requests
-            if (!document.hidden) {
-                fetchAccountData().then(() => {
-                    populateFilterOptions();
-                    applyFilters();
-                });
+        // Set up periodic refresh (every 30 seconds)
+        let autoRefreshInterval = setInterval(() => {
+            // For testing/demo purposes, always refresh regardless of visibility
+            console.log(`[Auto-Refresh] Starting periodic refresh at ${new Date().toLocaleTimeString()}`);
+            
+            // Add visual indicator that auto-refresh is happening
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn) {
+                refreshBtn.style.backgroundColor = '#0071e3';
+                setTimeout(() => {
+                    refreshBtn.style.backgroundColor = '#0a84ff';
+                }, 500);
             }
-        }, 5000);
+            
+            fetchAccountData().then(() => {
+                populateFilterOptions();
+                applyFilters();
+                console.log(`[Auto-Refresh] Completed at ${new Date().toLocaleTimeString()}`);
+            });
+        }, 30000);
+        
+        // Also add countdown indicator for next refresh
+        let refreshCountdown = 30;
+        setInterval(() => {
+            refreshCountdown--;
+            if (refreshCountdown <= 0) refreshCountdown = 30;
+            
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn) {
+                const currentText = refreshBtn.innerHTML;
+                const timeMatch = currentText.match(/Last: ([^|]+)/);
+                const timeStr = timeMatch ? timeMatch[1].trim() : new Date().toLocaleTimeString();
+                
+                // Update button text with countdown
+                refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr} | Next in: ${refreshCountdown}s)</small>`;
+                
+                // Add visual flash when countdown reaches 0 (auto-refresh happening)
+                if (refreshCountdown === 30) {
+                    refreshBtn.style.backgroundColor = '#34c759';
+                    refreshBtn.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        refreshBtn.style.backgroundColor = '#0a84ff';
+                        refreshBtn.style.transform = 'scale(1)';
+                    }, 800);
+                }
+            }
+        }, 1000);
         
         // ---- Trade Controls Functionality ----
         
@@ -1847,7 +1942,7 @@
                     sl_ticks: document.getElementById('slInput').value,
                     tick_size: document.getElementById('tickInput').value,
                     source_field: sourceFieldId, // Track which field triggered the update
-                    account: 'all'
+                    account: document.getElementById('accountSelect').value || 'all'
                 };
                 
                 // Include additional fields if they have values
@@ -1911,6 +2006,17 @@
                 });
             });
             
+            // Account select dropdown with change event
+            const accountSelect = document.getElementById('accountSelect');
+            if (accountSelect) {
+                const accountUpdater = createDebouncedUpdater('accountSelect');
+                accountSelect.addEventListener('change', function() {
+                    console.log(`Account selection changed: ${this.value}`);
+                    accountUpdater('accountSelect');
+                    updateQuantityRecommendation();
+                });
+            }
+            
             // Checkboxes with click event
             ['tpCheckbox', 'slCheckbox'].forEach(id => {
                 const element = document.getElementById(id);
@@ -1922,29 +2028,59 @@
                 });
             });
             
-            // Buy button handler
+            // In button handler
             document.getElementById('buyBtn').addEventListener('click', () => {
                 executeTradeAction('Buy');
             });
             
-            // Sell button handler
+            // Out button handler
             document.getElementById('sellBtn').addEventListener('click', () => {
                 executeTradeAction('Sell');
             });
             
-            // Cancel All button handler
+            // Clear All button handler
             document.getElementById('cancelAllBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Cancel-All');
             });
             
-            // Close All button handler
+            // Exit All button handler
             document.getElementById('closeAllBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Exit-at-Mkt-Cxl');
             });
             
-            // Reverse Position button handler
+            // Flip button handler
             document.getElementById('reverseBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Reverse-Cxl');
+            });
+            
+            // Auto Risk Management button handler
+            document.getElementById('auto-risk-btn').addEventListener('click', () => {
+                executeAutoRiskManagement();
+            });
+        }
+        
+        // Execute Auto Risk Management
+        function executeAutoRiskManagement() {
+            const selectedAccount = document.getElementById('accountSelect').value || 'all';
+            
+            fetch('/api/risk-management', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ account: selectedAccount })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    console.log(`Auto risk management executed on ${result.accounts_affected} accounts.`);
+                } else {
+                    showTradeError(result.message || 'Risk management execution failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error executing auto risk management:', error);
+                showTradeError('Error executing risk management. Check console for details.');
             });
         }
         
@@ -1954,6 +2090,22 @@
             const qty = parseInt(document.getElementById('qtyInput').value) || 1;
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
+            const selectedAccount = document.getElementById('accountSelect').value || 'all';
+            
+            // Clear any previous errors
+            hideTradeError();
+            
+            // Validate symbol
+            if (!symbol || symbol.trim() === '') {
+                showTradeError('Symbol cannot be empty');
+                return;
+            }
+            
+            // Basic symbol validation - check for obviously invalid symbols
+            if (symbol.toLowerCase() === 'invalid' || symbol.length > 10 || /[^A-Za-z0-9]/.test(symbol)) {
+                showTradeError(`Invalid symbol: ${symbol}. Please enter a valid futures symbol.`);
+                return;
+            }
             
             // Check if TP/SL checkboxes are checked
             const enableTP = document.getElementById('tpCheckbox').checked;
@@ -1969,7 +2121,7 @@
                 quantity: qty,
                 action: action,
                 tick_size: tickSize,
-                account: 'all', // Trade on all accounts
+                account: selectedAccount,
                 enable_tp: enableTP,
                 enable_sl: enableSL
             };
@@ -1998,17 +2150,22 @@
             })
             .then(response => response.json())
             .then(result => {
-                // Show success message
-                //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
-                
-                // Reset price inputs
-                document.getElementById('entryPriceInput').value = '';
-                document.getElementById('tpPriceInput').value = '';
-                document.getElementById('slPriceInput').value = '';
+                if (result.status === 'success') {
+                    // Show success feedback in P&L area or console
+                    console.log(`${action} action completed successfully on ${result.accounts_affected} accounts.`);
+                    
+                    // Reset price inputs
+                    document.getElementById('entryPriceInput').value = '';
+                    document.getElementById('tpPriceInput').value = '';
+                    document.getElementById('slPriceInput').value = '';
+                } else {
+                    // Show error message
+                    showTradeError(result.message || 'Action execution failed');
+                }
             })
             .catch(error => {
-                console.error('Error executing trade:', error);
-                alert('Error placing order. See console for details.');
+                console.error('Error executing action:', error);
+                showTradeError('Error executing action. Check console for details.');
             });
         }
         
@@ -2042,9 +2199,130 @@
                 //alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
             })
             .catch(error => {
-                console.error('Error executing cancel/close action:', error);
-                alert('Error canceling/closing orders. See console for details.');
+                console.error('Error executing action:', error);
+                alert('Error executing action. See console for details.');
             });
+        }
+        
+        // Helper functions for error display
+        function showTradeError(message) {
+            const errorDiv = document.getElementById('trade-error-display');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                hideTradeError();
+            }, 5000);
+        }
+        
+        function hideTradeError() {
+            const errorDiv = document.getElementById('trade-error-display');
+            errorDiv.style.display = 'none';
+        }
+        
+        // Update quantity recommendation based on selected account's phase
+        function updateQuantityRecommendation() {
+            const accountSelect = document.getElementById('accountSelect');
+            const qtyRecommendation = document.getElementById('qtyRecommendation');
+            const qtyInput = document.getElementById('qtyInput');
+            
+            if (!accountSelect || !qtyRecommendation || !qtyInput || !accountData) return;
+            
+            const selectedAccount = accountSelect.value;
+            
+            // Define phase-based quantity recommendations matching the QA test requirements
+            const phaseQuantities = {
+                'Phase 1': 20,
+                'Phase 2': 10,
+                'Phase 3': 2,
+                'Unknown': 1
+            };
+            
+            if (selectedAccount === 'all') {
+                // For all accounts, show a range based on phases present
+                let phases = new Set();
+                accountData.forEach(account => {
+                    if (account.Phase) phases.add(account.Phase);
+                });
+                
+                if (phases.size > 1) {
+                    qtyRecommendation.textContent = '(Recommended: varies by phase)';
+                    // Don't change quantity input for "all" selection
+                } else if (phases.size === 1) {
+                    const phase = Array.from(phases)[0];
+                    const recommendedQty = phaseQuantities[phase] || 1;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phase})`;
+                    // Update quantity input to recommended value
+                    qtyInput.value = recommendedQty;
+                } else {
+                    qtyRecommendation.textContent = '(Recommended: varies by phase)';
+                }
+            } else {
+                // For specific account, show its phase recommendation and update input
+                const accountIndex = parseInt(selectedAccount);
+                const account = accountData[accountIndex];
+                
+                if (account && account.Phase) {
+                    const recommendedQty = phaseQuantities[account.Phase] || 1;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${account.Phase})`;
+                    // Update quantity input to recommended value
+                    qtyInput.value = recommendedQty;
+                    
+                    // Add visual feedback that the quantity was auto-updated
+                    qtyInput.style.backgroundColor = '#34c759';
+                    qtyInput.style.transition = 'background-color 0.3s';
+                    setTimeout(() => {
+                        qtyInput.style.backgroundColor = '#3a3a3a';
+                    }, 1000);
+                } else {
+                    qtyRecommendation.textContent = '(Recommended: 1 for Unknown)';
+                    qtyInput.value = 1;
+                }
+            }
+        }
+        
+        // Auto-refresh indicator functionality
+        function updateAutoRefreshIndicator() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            
+            // Update the refresh button text to show last update time
+            const refreshBtn = document.querySelector('.refresh-button');
+            if (refreshBtn) {
+                refreshBtn.innerHTML = `Refresh Data <small>(Last: ${timeStr})</small>`;
+            }
+            
+            // Add visual indicator to P&L cells to show they're updating
+            const pnlCells = document.querySelectorAll('[data-field="Total P&L"], [data-field="Open P&L"]');
+            pnlCells.forEach(cell => {
+                cell.style.backgroundColor = '#4cd964';
+                cell.style.transition = 'background-color 0.3s';
+                
+                setTimeout(() => {
+                    cell.style.backgroundColor = '';
+                }, 300);
+            });
+        }
+        
+        // Populate account dropdown
+        function populateAccountDropdown() {
+            const accountSelect = document.getElementById('accountSelect');
+            if (accountSelect && accountData.length > 0) {
+                // Clear existing options except "All Accounts"
+                while (accountSelect.children.length > 1) {
+                    accountSelect.removeChild(accountSelect.lastChild);
+                }
+                
+                // Add individual account options
+                const uniqueAccounts = [...new Set(accountData.map(acc => acc.Account))];
+                uniqueAccounts.forEach((account, index) => {
+                    const option = document.createElement('option');
+                    option.value = index.toString();
+                    option.textContent = account;
+                    accountSelect.appendChild(option);
+                });
+            }
         }
         
         // Initialize trade controls

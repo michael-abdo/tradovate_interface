@@ -72,8 +72,25 @@ class TradovateConnection:
             return False
             
         try:
+            # First, inject the console interceptor to capture ALL console output
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            console_interceptor_path = os.path.join(project_root, 
+                                                   'scripts/tampermonkey/console_interceptor.js')
+            if os.path.exists(console_interceptor_path):
+                with open(console_interceptor_path, 'r') as file:
+                    console_interceptor_js = file.read()
+                self.tab.Runtime.evaluate(expression=console_interceptor_js)
+                print(f"Console interceptor injected for {self.account_name}")
+            else:
+                print(f"WARNING: Console interceptor not found at {console_interceptor_path}")
+            
+            # Load fresh tampermonkey script from file (not cached version)
             print(f"Injecting Tampermonkey functions for {self.account_name}...")
-            self.tab.Runtime.evaluate(expression=tampermonkey_functions)
+            tampermonkey_path = os.path.join(project_root, 'scripts/tampermonkey/autoOrder.user.js')
+            with open(tampermonkey_path, 'r') as file:
+                fresh_tampermonkey_code = file.read()
+            fresh_tampermonkey_functions = extract_core_functions(fresh_tampermonkey_code)
+            self.tab.Runtime.evaluate(expression=fresh_tampermonkey_functions)
             
             # Also inject the getAllAccountTableData function
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -143,28 +160,114 @@ class TradovateConnection:
             return {"error": str(e)}
             
     def auto_trade(self, symbol, quantity=1, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
-        """Execute an auto trade using the Tampermonkey script"""
+        """Execute an auto trade using the Tampermonkey script with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing trade
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "error": "Trade rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "trade_rejected": True
+            }
+        
+        # Log trading attempt with health context
+        print(f"Executing trade for {self.username}: {action} {quantity} {symbol} (Health: {health_check.get('healthy', False)})")
             
         try:
+            # Clear existing console logs before trade
+            self.get_console_logs(clear_after=True)
+            
+            # Execute the trade
             js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
             result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            # Wait a moment for console logs to be generated
+            time.sleep(1)
+            
+            # Get console logs generated during trade execution
+            console_logs = self.get_console_logs(limit=50)
+            
+            # Add console logs and health status to result
+            if isinstance(result, dict):
+                result['console_logs'] = console_logs.get('logs', [])
+                result['health_at_execution'] = health_check
+                result['trade_executed'] = True
+            else:
+                # Ensure result is a dict for consistency
+                result = {
+                    'trade_result': result,
+                    'console_logs': console_logs.get('logs', []),
+                    'health_at_execution': health_check,
+                    'trade_executed': True
+                }
+            
             return result
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "trade_executed": False
+            }
             
     def exit_positions(self, symbol, option='cancel-option-Exit-at-Mkt-Cxl'):
-        """Close all positions for the given symbol"""
+        """Close all positions for the given symbol with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing exit
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "error": "Exit rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "exit_rejected": True
+            }
+        
+        # Log exit attempt with health context
+        print(f"Exiting positions for {self.username}: {symbol} with {option} (Health: {health_check.get('healthy', False)})")
             
         try:
+            # Clear existing console logs before exit
+            self.get_console_logs(clear_after=True)
+            
+            # Execute the exit
             js_code = f"clickExitForSymbol(normalizeSymbol('{symbol}'), '{option}');"
             result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            # Wait a moment for console logs to be generated
+            time.sleep(0.5)
+            
+            # Get console logs generated during exit execution
+            console_logs = self.get_console_logs(limit=30)
+            
+            # Add console logs and health status to result
+            if isinstance(result, dict):
+                result['console_logs'] = console_logs.get('logs', [])
+                result['health_at_execution'] = health_check
+                result['exit_executed'] = True
+            else:
+                # Ensure result is a dict for consistency
+                result = {
+                    'exit_result': result,
+                    'console_logs': console_logs.get('logs', []),
+                    'health_at_execution': health_check,
+                    'exit_executed': True
+                }
+            
             return result
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "exit_executed": False
+            }
             
     def update_symbol(self, symbol):
         """Update the symbol in Tradovate's interface"""
@@ -179,9 +282,24 @@ class TradovateConnection:
             return {"error": str(e)}
             
     def run_risk_management(self):
-        """Run the auto risk management functions"""
+        """Run the auto risk management functions with health verification"""
         if not self.tab:
             return {"error": "No tab available"}
+        
+        # Verify connection health before executing risk management
+        health_check = self.check_connection_health()
+        if not health_check.get('healthy', False):
+            health_errors = health_check.get('errors', ['Connection unhealthy'])
+            return {
+                "status": "error",
+                "error": "Risk management rejected due to connection health issues",
+                "health_status": health_check,
+                "health_errors": health_errors,
+                "risk_management_rejected": True
+            }
+        
+        # Log risk management attempt with health context
+        print(f"Running risk management for {self.username} (Health: {health_check.get('healthy', False)})")
             
         try:
             # First check if the required functions exist
@@ -236,12 +354,79 @@ class TradovateConnection:
             result_data = json.loads(result.get('result', {}).get('value', '{}'))
             
             if result_data.get('status') == 'success':
-                return {"status": "success", "message": "Auto risk management executed"}
+                return {
+                    "status": "success", 
+                    "message": "Auto risk management executed",
+                    "health_at_execution": health_check,
+                    "risk_management_executed": True
+                }
             else:
-                return {"status": "error", "message": result_data.get('message', 'Unknown error')}
+                return {
+                    "status": "error", 
+                    "message": result_data.get('message', 'Unknown error'),
+                    "health_at_execution": health_check,
+                    "risk_management_executed": False
+                }
         except Exception as e:
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "health_at_execution": health_check,
+                "risk_management_executed": False
+            }
             
+    def get_console_logs(self, limit=None, clear_after=False):
+        """Get captured console logs from localStorage
+        
+        Args:
+            limit: Maximum number of logs to return (None for all)
+            clear_after: Clear logs after retrieval
+            
+        Returns:
+            List of log entries with timestamp, level, message, and url
+        """
+        if not self.tab:
+            return {"error": "No tab available", "logs": []}
+            
+        try:
+            # Get all console logs - need to return it as JSON string for pychrome
+            js_code = "JSON.stringify(window.getConsoleLogs())"
+            result = self.tab.Runtime.evaluate(expression=js_code)
+            
+            if not result or 'result' not in result:
+                return {"error": "Failed to retrieve console logs", "logs": []}
+                
+            # Parse the result
+            logs_json = result.get('result', {}).get('value')
+            if logs_json:
+                try:
+                    logs_data = json.loads(logs_json) if isinstance(logs_json, str) else logs_json
+                except json.JSONDecodeError:
+                    print(f"Failed to parse logs JSON: {logs_json}")
+                    logs_data = []
+            else:
+                logs_data = []
+            
+            # Apply limit if specified
+            if limit and isinstance(logs_data, list):
+                logs_data = logs_data[-limit:]  # Get last N logs
+            
+            # Clear logs if requested
+            if clear_after:
+                self.tab.Runtime.evaluate(expression="window.clearConsoleLogs && window.clearConsoleLogs()")
+                
+            return {
+                "status": "success",
+                "logs": logs_data,
+                "count": len(logs_data) if isinstance(logs_data, list) else 0
+            }
+            
+        except json.JSONDecodeError as e:
+            print(f"JSON decode error getting console logs: {e}")
+            return {"error": f"JSON decode error: {str(e)}", "logs": []}
+        except Exception as e:
+            print(f"Error getting console logs: {e}")
+            return {"error": str(e), "logs": []}
+    
     def get_account_data(self):
         """Get account data from the tab using the getAllAccountTableData function"""
         if not self.tab:
@@ -254,27 +439,42 @@ class TradovateConnection:
             return {"error": str(e)}
 
 class TradovateController:
-    def __init__(self, base_port=9222):
+    def __init__(self, base_port=9223, max_instances=20):
         self.base_port = base_port
+        self.max_instances = max_instances
         self.connections = []
         self.initialize_connections()
         
-    def initialize_connections(self, max_instances=10):
+    def initialize_connections(self, max_instances=None):
         """Find and connect to all available Tradovate instances"""
+        if max_instances is None:
+            max_instances = self.max_instances
+            
+        print(f"Scanning for Chrome instances from port {self.base_port} to {self.base_port + max_instances - 1}")
+        
         for i in range(max_instances):
             port = self.base_port + i
             try:
+                print(f"Attempting to connect to Chrome on port {port}...")
                 connection = TradovateConnection(port, f"Account {i+1}")
                 if connection.tab:
                     # Only add connections with a valid tab
                     connection.inject_tampermonkey()
                     self.connections.append(connection)
-                    print(f"Added connection on port {port}")
+                    print(f"✅ Added connection on port {port} for {connection.account_name}")
+                else:
+                    print(f"❌ No Tradovate tab found on port {port}")
             except Exception as e:
-                # This port might not have a running Chrome instance
-                pass
+                # This port might not have a running Chrome instance - log for debugging
+                print(f"⚠️  Port {port} not accessible: {str(e)[:100]}...")
                 
-        print(f"Found {len(self.connections)} active Tradovate connections")
+        print(f"🎯 Found {len(self.connections)} active Tradovate connections")
+        if self.connections:
+            print("Active connections:")
+            for conn in self.connections:
+                print(f"  - {conn.account_name} on port {conn.port}")
+        else:
+            print("⚠️  No connections found. Make sure Chrome instances are running with auto_login.py")
         
     def execute_on_all(self, method_name, *args, **kwargs):
         """Execute a method on all connections"""
@@ -345,11 +545,13 @@ def main():
     
     args = parser.parse_args()
     
-    # Initialize the controller
-    controller = TradovateController()
+    # Initialize the controller with configurable max instances  
+    max_instances = int(os.environ.get('TRADOVATE_MAX_INSTANCES', '20'))
+    controller = TradovateController(max_instances=max_instances)
     
     if len(controller.connections) == 0:
         print("No Tradovate connections found. Make sure auto_login.py is running.")
+        print(f"Checked ports {controller.base_port} to {controller.base_port + controller.max_instances - 1}")
         return 1
     
     # Execute the requested command
@@ -420,6 +622,12 @@ def main():
         
         # Import the dashboard module here to avoid circular imports
         try:
+            # Add current directory to Python path for src import
+            import sys
+            current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            if current_dir not in sys.path:
+                sys.path.insert(0, current_dir)
+            
             # First try importing with src. prefix
             from src.dashboard import run_flask_dashboard
         except ImportError:
@@ -430,24 +638,20 @@ def main():
                 print(f"Error loading dashboard module: {e}")
                 print("Make sure you're running this script from the project root directory")
                 return 1
-            print("Starting Tradovate dashboard...")
-            dashboard_thread = threading.Thread(target=run_flask_dashboard)
-            dashboard_thread.daemon = True
-            dashboard_thread.start()
-            print("Dashboard running at http://localhost:6001")
-            print("Press Ctrl+C to stop")
-            
-            # Keep the main thread alive
-            try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                print("Dashboard stopped")
-                
-        except ImportError as e:
-            print(f"Error loading dashboard: {e}")
-            print("Make sure dashboard.py exists in the same directory")
-            return 1
+        
+        print("Starting Tradovate dashboard...")
+        dashboard_thread = threading.Thread(target=run_flask_dashboard)
+        dashboard_thread.daemon = True
+        dashboard_thread.start()
+        print("Dashboard running at http://localhost:6001")
+        print("Press Ctrl+C to stop")
+        
+        # Keep the main thread alive
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("Dashboard stopped")
     
     else:
         parser.print_help()

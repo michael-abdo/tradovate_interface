@@ -817,14 +817,52 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             : inputSymbol.toUpperCase();
         console.log(`Using symbol: "${symbol}" for market data lookup`);
 
-        // 1️⃣ look for an existing row
+        // 1️⃣ look for an existing row - updated to search more flexibly
         console.log('Searching for symbol in data table rows');
-        const symbolCells = document.querySelectorAll('.symbol-main');
-        console.log(`Found ${symbolCells.length} symbol cells in the table`);
+        
+        // First try the old selector for backwards compatibility
+        let symbolCells = document.querySelectorAll('.symbol-main');
+        console.log(`Found ${symbolCells.length} .symbol-main cells`);
+        
+        // If old selector doesn't work, search all elements for the symbol
+        if (symbolCells.length === 0) {
+            console.log('Trying flexible symbol search...');
+            const allElements = Array.from(document.querySelectorAll('*'));
+            symbolCells = allElements.filter(el => 
+                el.textContent && 
+                el.textContent.trim() === symbol &&
+                el.children.length === 0 // Only leaf elements
+            );
+            console.log(`Found ${symbolCells.length} elements containing "${symbol}"`);
+        }
 
-        let row = [...symbolCells]
-            .find(el => el.textContent.trim() === symbol)
-            ?.closest('.fixedDataTableRowLayout_rowWrapper');
+        let row = null;
+        if (symbolCells.length > 0) {
+            // Try to find the row using old structure first
+            row = [...symbolCells]
+                .find(el => el.textContent.trim() === symbol)
+                ?.closest('.fixedDataTableRowLayout_rowWrapper');
+                
+            // If old structure doesn't work, try to find parent row element
+            if (!row && symbolCells.length > 0) {
+                console.log('Trying flexible row search...');
+                const symbolElement = [...symbolCells].find(el => el.textContent.trim() === symbol);
+                if (symbolElement) {
+                    // Look for parent elements that might be the row (tr, div with multiple cells, etc.)
+                    let parent = symbolElement.parentElement;
+                    while (parent && parent !== document.body) {
+                        // Check if this parent has multiple "cell-like" children
+                        const childCells = parent.querySelectorAll('*').length;
+                        if (childCells >= 5) { // A data row should have multiple cells
+                            row = parent;
+                            console.log(`Found potential row element: ${parent.tagName} with ${childCells} child elements`);
+                            break;
+                        }
+                        parent = parent.parentElement;
+                    }
+                }
+            }
+        }
 
         // 2️⃣ if missing, type the symbol into Tradovate’s search so it appears
         if (row) {
@@ -840,11 +878,46 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         }
 
         console.log('Extracting price data from cells');
-        const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
-        console.log(`Found ${cells.length} cells in the row`);
+        
+        // Try old selector first
+        let cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+        console.log(`Found ${cells.length} .public_fixedDataTableCell_cellContent cells`);
+        
+        // If old selector doesn't work, get all child elements as potential cells
+        if (cells.length === 0) {
+            console.log('Trying flexible cell extraction...');
+            cells = Array.from(row.querySelectorAll('*')).filter(el => 
+                el.textContent && 
+                el.textContent.trim() && 
+                el.children.length === 0 // Only leaf elements with text
+            );
+            console.log(`Found ${cells.length} potential cell elements`);
+        }
 
-        const bidPrice = cells[4]?.textContent.trim();
-        const offerPrice = cells[5]?.textContent.trim();
+        let bidPrice, offerPrice;
+        
+        if (cells.length >= 6) {
+            // Standard case: use expected positions
+            bidPrice = cells[4]?.textContent.trim();
+            offerPrice = cells[5]?.textContent.trim();
+        } else {
+            // Flexible case: search for price-like patterns
+            console.log('Searching for price patterns in cells...');
+            const pricePattern = /^\d+\.?\d*$/;
+            const priceCells = Array.from(cells).filter(cell => {
+                const text = cell.textContent.trim();
+                return pricePattern.test(text) && parseFloat(text) > 1000; // Futures prices are typically > 1000
+            });
+            
+            if (priceCells.length >= 2) {
+                bidPrice = priceCells[0]?.textContent.trim();
+                offerPrice = priceCells[1]?.textContent.trim();
+                console.log(`Found price patterns: bid=${bidPrice}, offer=${offerPrice}`);
+            } else {
+                console.log('Could not identify bid/offer prices from cell patterns');
+            }
+        }
+        
         console.log(`Extracted prices: bid=${bidPrice}, offer=${offerPrice}`);
 
         return {

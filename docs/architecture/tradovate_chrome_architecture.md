@@ -110,15 +110,19 @@ TRADOVATE CHROME AUTOMATION SYSTEM ARCHITECTURE
    ↓
 5. **app.py** connects to all Chrome instances
    ↓
-6. Tampermonkey scripts provide trading interface functions
+6. **console_interceptor.js** injected FIRST to capture all console output
    ↓
-7. Commands executed: trade, exit, risk management, symbol switching
+7. Tampermonkey scripts provide trading interface functions
    ↓
-8. **dashboard.py** provides web monitoring interface
+8. Commands executed: trade, exit, risk management, symbol switching
    ↓
-9. **pinescript_webhook** receives external trading signals
+9. Console logs captured and included in trade results
    ↓
-10. All activity logged to timestamped log files
+10. **dashboard.py** provides web monitoring interface
+    ↓
+11. **pinescript_webhook** receives external trading signals
+    ↓
+12. All activity logged to timestamped log files
 
 ## KEY COMPONENTS
 
@@ -129,6 +133,7 @@ TRADOVATE CHROME AUTOMATION SYSTEM ARCHITECTURE
 - **Flask dashboard**: Real-time monitoring and control interface
 - **Webhook integration**: External signal processing (TradingView, etc.)
 - **Comprehensive logging**: All operations tracked with timestamps
+- **Console Interceptor**: Captures browser console output via localStorage relay
 
 ## FILE STRUCTURE
 
@@ -142,6 +147,7 @@ TRADOVATE CHROME AUTOMATION SYSTEM ARCHITECTURE
 - `src/chrome_logger.py` - DevTools Protocol event logging
 - `src/login_helper.py` - Connect to existing Chrome instances
 - `src/utils/check_chrome.py` - Cross-platform Chrome detection
+- `scripts/tampermonkey/console_interceptor.js` - Console log capture via localStorage
 
 ### Trading Core
 - `src/app.py` - Main trading application
