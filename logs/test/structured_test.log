@@ -1,0 +1,3 @@
+{"timestamp": "2025-07-26T04:08:11.469304Z", "level": "INFO", "logger": "test_structured", "message": "Test info message", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76146, "test_id": 123}
+{"timestamp": "2025-07-26T04:08:11.469477Z", "level": "WARNING", "logger": "test_structured", "message": "Test warning", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76146, "severity": "medium"}
+{"timestamp": "2025-07-26T04:08:11.469608Z", "level": "INFO", "logger": "test_structured", "message": "Message with context", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76146, "session": "test-session", "operation": "test_op"}

@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 """
 All-in-one startup script for Tradovate Interface:
@@ -67,7 +68,6 @@ def run_auto_login():
     except Exception as e:
         logger.exception("Unexpected error during startup")
         raise
-
 def run_dashboard():
     """Run the dashboard process"""
     from src.dashboard import run_flask_dashboard

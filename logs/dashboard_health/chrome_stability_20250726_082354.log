@@ -1,0 +1,26 @@
+2025-07-26 08:23:54,941 - INFO - Loading environment-specific config for: production
+2025-07-26 08:23:54,942 - INFO - Applied production environment overrides
+2025-07-26 08:23:54,942 - INFO - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+2025-07-26 08:23:54,942 - INFO - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+2025-07-26 08:23:54,943 - INFO - Loaded startup monitoring configuration from config file
+2025-07-26 08:23:54,943 - INFO - Startup monitoring mode: disabled
+2025-07-26 08:23:54,943 - INFO - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+2025-07-26 08:23:54,944 - INFO - Startup monitoring enabled in passive mode
+2025-07-26 08:23:54,944 - INFO - Startup monitoring loop started
+2025-07-26 08:23:54,944 - INFO - Started startup monitoring thread
+2025-07-26 08:23:54,945 - WARNING - Memory usage (9562.6MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:23:54,954 - INFO - Loading environment-specific config for: production
+2025-07-26 08:23:54,955 - INFO - Applied production environment overrides
+2025-07-26 08:23:54,955 - INFO - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+2025-07-26 08:23:54,955 - INFO - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+2025-07-26 08:23:54,956 - INFO - Loaded startup monitoring configuration from config file
+2025-07-26 08:23:54,956 - INFO - Startup monitoring mode: disabled
+2025-07-26 08:23:54,956 - INFO - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+2025-07-26 08:23:54,957 - INFO - Loading environment-specific config for: production
+2025-07-26 08:23:54,957 - INFO - Applied production environment overrides
+2025-07-26 08:23:54,958 - INFO - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+2025-07-26 08:23:54,958 - INFO - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+2025-07-26 08:23:54,958 - INFO - Loaded startup monitoring configuration from config file
+2025-07-26 08:23:54,959 - INFO - Startup monitoring mode: disabled
+2025-07-26 08:23:54,959 - INFO - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+2025-07-26 08:23:54,959 - WARNING - SKIPPING startup registration for port 9222 - this port is protected

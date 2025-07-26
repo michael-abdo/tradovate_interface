@@ -1,0 +1,30 @@
+{
+  "stats": {
+    "start_time": null,
+    "end_time": null,
+    "attempts": 0,
+    "success": false,
+    "errors": []
+  },
+  "total_events": 0,
+  "success_events": 0,
+  "failure_events": 0,
+  "events": [],
+  "config": {
+    "enabled": true,
+    "max_retries": 3,
+    "retry_delay_seconds": 10,
+    "startup_timeout_seconds": 60,
+    "validation_checks": {
+      "ports": true,
+      "memory": true,
+      "network": true,
+      "chrome_executable": true,
+      "websocket_connectivity": true
+    },
+    "cleanup_on_failure": true,
+    "required_memory_gb": 2.0,
+    "network_test_url": "https://trader.tradovate.com",
+    "network_timeout_seconds": 10
+  }
+}

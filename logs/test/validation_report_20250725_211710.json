@@ -1,0 +1,15 @@
+{
+  "timestamp": "20250725_211710",
+  "validation_time": "2025-07-25T21:17:12.252548",
+  "passed": true,
+  "issues": [],
+  "warnings": [
+    "Port 5000 in use - dashboard will use alternate port"
+  ],
+  "environment": {
+    "python_version": "3.13.5 (main, Jun 11 2025, 15:36:57) [Clang 17.0.0 (clang-1700.0.13.3)]",
+    "platform": "darwin",
+    "memory_available_gb": 5.589912414550781,
+    "cpu_count": 16
+  }
+}

@@ -1,0 +1,3 @@
+{"timestamp": "2025-07-26T04:22:27.318000Z", "level": "INFO", "logger": "post_test", "message": "Analyzing test results", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76796, "test_id": "20250725_211936"}
+{"timestamp": "2025-07-26T04:22:27.318490Z", "level": "INFO", "logger": "post_test", "message": "Chrome instances started successfully", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76796}
+{"timestamp": "2025-07-26T04:22:27.318589Z", "level": "INFO", "logger": "post_test", "message": "Starting post-test cleanup", "module": "(unknown file)", "function": null, "line": 0, "thread": "MainThread", "process": 76796}

@@ -1,0 +1,383 @@
+2025-07-26 08:59:43,595 - INFO - Loading environment-specific config for: production
+2025-07-26 08:59:43,597 - INFO - Applied production environment overrides
+2025-07-26 08:59:43,597 - INFO - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+2025-07-26 08:59:43,598 - INFO - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+2025-07-26 08:59:43,598 - INFO - Loaded startup monitoring configuration from config file
+2025-07-26 08:59:43,598 - INFO - Startup monitoring mode: disabled
+2025-07-26 08:59:43,598 - INFO - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+2025-07-26 08:59:43,598 - INFO - Startup monitoring enabled in passive mode
+2025-07-26 08:59:43,599 - INFO - Startup monitoring loop started
+2025-07-26 08:59:43,599 - INFO - Started startup monitoring thread
+2025-07-26 08:59:43,599 - WARNING - Memory usage (9495.1MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:43,629 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6001
+ * Running on http://10.0.0.220:6001
+2025-07-26 08:59:43,629 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-26 08:59:44,357 - WARNING - Memory usage (9495.5MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:48,610 - WARNING - Memory usage (9389.0MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:49,361 - WARNING - Memory usage (9408.5MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:53,614 - WARNING - Memory usage (9416.1MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:55,371 - INFO - Adaptive resource limits updated: CPU=7.6%, Memory=67.0%, New max_memory=660MB, New max_concurrent=3
+2025-07-26 08:59:55,371 - WARNING - Memory usage (9414.5MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 08:59:58,617 - WARNING - Memory usage (9353.4MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:59:58,831 - INFO - 127.0.0.1 - - [26/Jul/2025 08:59:58] "GET / HTTP/1.1" 200 -
+2025-07-26 08:59:59,077 - INFO - 127.0.0.1 - - [26/Jul/2025 08:59:59] "GET /api/strategies HTTP/1.1" 200 -
+2025-07-26 08:59:59,097 - INFO - 127.0.0.1 - - [26/Jul/2025 08:59:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:59:59,192 - INFO - 127.0.0.1 - - [26/Jul/2025 08:59:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 08:59:59,199 - INFO - 127.0.0.1 - - [26/Jul/2025 08:59:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:00:00,375 - WARNING - Memory usage (9422.5MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 09:00:03,621 - WARNING - Memory usage (9399.0MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 09:00:05,380 - WARNING - Memory usage (9377.3MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 09:00:08,624 - WARNING - Memory usage (9404.9MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 09:00:10,385 - WARNING - Memory usage (9426.1MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 09:00:14,633 - INFO - Adaptive resource limits updated: CPU=11.5%, Memory=67.9%, New max_memory=641MB, New max_concurrent=3
+2025-07-26 09:00:14,635 - WARNING - Memory usage (9402.8MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:15,389 - WARNING - Memory usage (9351.8MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 09:00:19,640 - WARNING - Memory usage (9294.4MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:20,392 - WARNING - Memory usage (9302.2MB) exceeds limit (660MB), throttling startup monitoring
+2025-07-26 09:00:24,645 - WARNING - Memory usage (9229.2MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:26,402 - INFO - Adaptive resource limits updated: CPU=10.2%, Memory=67.4%, New max_memory=651MB, New max_concurrent=3
+2025-07-26 09:00:26,402 - WARNING - Memory usage (9236.6MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:29,097 - INFO - 127.0.0.1 - - [26/Jul/2025 09:00:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:00:29,143 - INFO - 127.0.0.1 - - [26/Jul/2025 09:00:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:00:29,650 - WARNING - Memory usage (9271.1MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:31,406 - WARNING - Memory usage (9290.6MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:34,654 - WARNING - Memory usage (9293.6MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:36,410 - WARNING - Memory usage (9297.0MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:39,660 - WARNING - Memory usage (9298.2MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:00:41,415 - WARNING - Memory usage (9297.2MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:45,670 - INFO - Adaptive resource limits updated: CPU=9.9%, Memory=64.7%, New max_memory=706MB, New max_concurrent=3
+2025-07-26 09:00:45,670 - WARNING - Memory usage (9318.3MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:00:46,420 - WARNING - Memory usage (9327.6MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:50,674 - WARNING - Memory usage (9257.4MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:00:51,425 - WARNING - Memory usage (9257.3MB) exceeds limit (651MB), throttling startup monitoring
+2025-07-26 09:00:55,679 - WARNING - Memory usage (9250.1MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:00:57,433 - INFO - Adaptive resource limits updated: CPU=5.9%, Memory=68.6%, New max_memory=628MB, New max_concurrent=3
+2025-07-26 09:00:57,434 - WARNING - Memory usage (9225.4MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:00:59,087 - INFO - 127.0.0.1 - - [26/Jul/2025 09:00:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:00:59,130 - INFO - 127.0.0.1 - - [26/Jul/2025 09:00:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:01:00,683 - WARNING - Memory usage (9203.0MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:01:02,439 - WARNING - Memory usage (9206.7MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:01:05,688 - WARNING - Memory usage (9216.9MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:01:07,439 - WARNING - Memory usage (9166.1MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:01:10,694 - WARNING - Memory usage (9194.2MB) exceeds limit (706MB), throttling startup monitoring
+2025-07-26 09:01:12,443 - WARNING - Memory usage (9198.4MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:01:16,705 - INFO - Adaptive resource limits updated: CPU=8.0%, Memory=68.8%, New max_memory=624MB, New max_concurrent=3
+2025-07-26 09:01:16,705 - WARNING - Memory usage (9208.1MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:17,445 - WARNING - Memory usage (9207.9MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:01:21,710 - WARNING - Memory usage (9215.7MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:22,450 - WARNING - Memory usage (9214.0MB) exceeds limit (628MB), throttling startup monitoring
+2025-07-26 09:01:26,716 - WARNING - Memory usage (9212.6MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:28,460 - INFO - Adaptive resource limits updated: CPU=5.5%, Memory=68.9%, New max_memory=621MB, New max_concurrent=3
+2025-07-26 09:01:28,460 - WARNING - Memory usage (9211.9MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:29,093 - INFO - 127.0.0.1 - - [26/Jul/2025 09:01:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:01:29,131 - INFO - 127.0.0.1 - - [26/Jul/2025 09:01:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:01:31,720 - WARNING - Memory usage (9167.4MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:33,464 - WARNING - Memory usage (9167.8MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:36,723 - WARNING - Memory usage (9161.8MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:38,470 - WARNING - Memory usage (9157.1MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:41,728 - WARNING - Memory usage (9157.7MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:01:43,474 - WARNING - Memory usage (9157.4MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:47,737 - INFO - Adaptive resource limits updated: CPU=12.3%, Memory=69.8%, New max_memory=604MB, New max_concurrent=3
+2025-07-26 09:01:47,738 - WARNING - Memory usage (9045.7MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:01:48,479 - WARNING - Memory usage (9045.7MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:52,743 - WARNING - Memory usage (8879.9MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:01:53,482 - WARNING - Memory usage (8877.4MB) exceeds limit (621MB), throttling startup monitoring
+2025-07-26 09:01:57,749 - WARNING - Memory usage (8902.5MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:01:59,089 - INFO - 127.0.0.1 - - [26/Jul/2025 09:01:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:01:59,130 - INFO - 127.0.0.1 - - [26/Jul/2025 09:01:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:01:59,492 - INFO - Adaptive resource limits updated: CPU=12.9%, Memory=70.8%, New max_memory=584MB, New max_concurrent=2
+2025-07-26 09:01:59,492 - WARNING - Memory usage (8882.2MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:02,755 - WARNING - Memory usage (8832.6MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:02:04,496 - WARNING - Memory usage (8813.2MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:07,761 - WARNING - Memory usage (8798.8MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:02:09,501 - WARNING - Memory usage (8801.6MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:12,766 - WARNING - Memory usage (8773.8MB) exceeds limit (604MB), throttling startup monitoring
+2025-07-26 09:02:14,505 - WARNING - Memory usage (8729.4MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:18,777 - INFO - Adaptive resource limits updated: CPU=4.3%, Memory=71.3%, New max_memory=574MB, New max_concurrent=2
+2025-07-26 09:02:18,777 - WARNING - Memory usage (8725.4MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:19,509 - WARNING - Memory usage (8725.0MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:23,782 - WARNING - Memory usage (8559.4MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:24,514 - WARNING - Memory usage (8559.6MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 09:02:28,787 - WARNING - Memory usage (8569.0MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:29,090 - INFO - 127.0.0.1 - - [26/Jul/2025 09:02:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:02:29,129 - INFO - 127.0.0.1 - - [26/Jul/2025 09:02:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:02:30,523 - INFO - Adaptive resource limits updated: CPU=4.8%, Memory=70.4%, New max_memory=591MB, New max_concurrent=2
+2025-07-26 09:02:30,524 - WARNING - Memory usage (8580.9MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:33,793 - WARNING - Memory usage (8582.7MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:35,529 - WARNING - Memory usage (8584.1MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:38,798 - WARNING - Memory usage (8584.0MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:40,533 - WARNING - Memory usage (8583.2MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:43,801 - WARNING - Memory usage (8583.6MB) exceeds limit (574MB), throttling startup monitoring
+2025-07-26 09:02:45,538 - WARNING - Memory usage (8585.2MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:49,811 - INFO - Adaptive resource limits updated: CPU=6.2%, Memory=70.6%, New max_memory=588MB, New max_concurrent=2
+2025-07-26 09:02:49,812 - WARNING - Memory usage (8611.2MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:02:50,543 - WARNING - Memory usage (8608.0MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:54,817 - WARNING - Memory usage (8741.0MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:02:55,547 - WARNING - Memory usage (8695.8MB) exceeds limit (591MB), throttling startup monitoring
+2025-07-26 09:02:59,090 - INFO - 127.0.0.1 - - [26/Jul/2025 09:02:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:02:59,127 - INFO - 127.0.0.1 - - [26/Jul/2025 09:02:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:02:59,823 - WARNING - Memory usage (8664.2MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:03:01,559 - INFO - Adaptive resource limits updated: CPU=4.5%, Memory=71.4%, New max_memory=572MB, New max_concurrent=2
+2025-07-26 09:03:01,559 - WARNING - Memory usage (8699.0MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:04,828 - WARNING - Memory usage (8750.3MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:03:06,564 - WARNING - Memory usage (8717.2MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:09,833 - WARNING - Memory usage (8713.7MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:03:11,568 - WARNING - Memory usage (8715.6MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:14,838 - WARNING - Memory usage (8700.7MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:03:16,573 - WARNING - Memory usage (8695.1MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:20,848 - INFO - Adaptive resource limits updated: CPU=5.4%, Memory=72.1%, New max_memory=558MB, New max_concurrent=2
+2025-07-26 09:03:20,849 - WARNING - Memory usage (8683.0MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:21,578 - WARNING - Memory usage (8682.9MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:25,854 - WARNING - Memory usage (8663.9MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:26,583 - WARNING - Memory usage (8652.1MB) exceeds limit (572MB), throttling startup monitoring
+2025-07-26 09:03:29,087 - INFO - 127.0.0.1 - - [26/Jul/2025 09:03:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:03:29,121 - INFO - 127.0.0.1 - - [26/Jul/2025 09:03:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:03:30,859 - WARNING - Memory usage (8623.3MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:32,591 - INFO - Adaptive resource limits updated: CPU=9.2%, Memory=72.6%, New max_memory=548MB, New max_concurrent=2
+2025-07-26 09:03:32,592 - WARNING - Memory usage (8617.1MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:35,864 - WARNING - Memory usage (8525.6MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:37,597 - WARNING - Memory usage (8528.5MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:40,871 - WARNING - Memory usage (8530.7MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:42,600 - WARNING - Memory usage (8533.8MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:45,875 - WARNING - Memory usage (8534.4MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:03:47,605 - WARNING - Memory usage (8536.6MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:51,881 - INFO - Adaptive resource limits updated: CPU=3.7%, Memory=70.7%, New max_memory=586MB, New max_concurrent=2
+2025-07-26 09:03:51,882 - WARNING - Memory usage (8463.7MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:03:52,610 - WARNING - Memory usage (8464.6MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:56,886 - WARNING - Memory usage (8464.9MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:03:57,614 - WARNING - Memory usage (8467.5MB) exceeds limit (548MB), throttling startup monitoring
+2025-07-26 09:03:59,149 - INFO - 127.0.0.1 - - [26/Jul/2025 09:03:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:03:59,164 - INFO - 127.0.0.1 - - [26/Jul/2025 09:03:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:04:01,892 - WARNING - Memory usage (8437.2MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:04:03,623 - INFO - Adaptive resource limits updated: CPU=11.0%, Memory=71.2%, New max_memory=576MB, New max_concurrent=2
+2025-07-26 09:04:03,623 - WARNING - Memory usage (8551.1MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:06,896 - WARNING - Memory usage (8576.1MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:04:08,629 - WARNING - Memory usage (8574.9MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:11,900 - WARNING - Memory usage (8570.6MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:04:13,634 - WARNING - Memory usage (8570.9MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:16,905 - WARNING - Memory usage (8562.6MB) exceeds limit (586MB), throttling startup monitoring
+2025-07-26 09:04:18,640 - WARNING - Memory usage (8410.8MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:22,915 - INFO - Adaptive resource limits updated: CPU=4.4%, Memory=70.2%, New max_memory=596MB, New max_concurrent=2
+2025-07-26 09:04:22,916 - WARNING - Memory usage (8387.1MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:23,645 - WARNING - Memory usage (8387.4MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:27,920 - WARNING - Memory usage (8453.7MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:28,650 - WARNING - Memory usage (8453.9MB) exceeds limit (576MB), throttling startup monitoring
+2025-07-26 09:04:29,158 - INFO - 127.0.0.1 - - [26/Jul/2025 09:04:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:04:29,177 - INFO - 127.0.0.1 - - [26/Jul/2025 09:04:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:04:32,925 - WARNING - Memory usage (8503.8MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:34,659 - INFO - Adaptive resource limits updated: CPU=15.7%, Memory=70.6%, New max_memory=588MB, New max_concurrent=2
+2025-07-26 09:04:34,659 - WARNING - Memory usage (8524.5MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:04:37,931 - WARNING - Memory usage (8714.2MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:39,664 - WARNING - Memory usage (9196.0MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:04:42,935 - WARNING - Memory usage (9412.7MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:44,670 - WARNING - Memory usage (9422.5MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:04:47,937 - WARNING - Memory usage (9453.6MB) exceeds limit (596MB), throttling startup monitoring
+2025-07-26 09:04:49,674 - WARNING - Memory usage (9450.5MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:04:53,947 - INFO - Adaptive resource limits updated: CPU=3.2%, Memory=58.9%, New max_memory=822MB, New max_concurrent=4
+2025-07-26 09:04:53,947 - WARNING - Memory usage (9439.5MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:04:54,678 - WARNING - Memory usage (9446.9MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:04:58,952 - WARNING - Memory usage (9462.3MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:04:59,154 - INFO - 127.0.0.1 - - [26/Jul/2025 09:04:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:04:59,165 - INFO - 127.0.0.1 - - [26/Jul/2025 09:04:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:04:59,684 - WARNING - Memory usage (9475.2MB) exceeds limit (588MB), throttling startup monitoring
+2025-07-26 09:05:03,957 - WARNING - Memory usage (9507.7MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:05:05,693 - INFO - Adaptive resource limits updated: CPU=9.4%, Memory=61.3%, New max_memory=774MB, New max_concurrent=3
+2025-07-26 09:05:05,694 - WARNING - Memory usage (9529.6MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:08,962 - WARNING - Memory usage (9530.1MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:05:10,695 - WARNING - Memory usage (9530.5MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:13,962 - WARNING - Memory usage (9538.5MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:05:15,700 - WARNING - Memory usage (9538.6MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:18,967 - WARNING - Memory usage (9538.8MB) exceeds limit (822MB), throttling startup monitoring
+2025-07-26 09:05:20,706 - WARNING - Memory usage (9532.0MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:24,978 - INFO - Adaptive resource limits updated: CPU=4.4%, Memory=61.7%, New max_memory=766MB, New max_concurrent=3
+2025-07-26 09:05:24,978 - WARNING - Memory usage (9536.2MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:25,710 - WARNING - Memory usage (9536.1MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:29,083 - INFO - 127.0.0.1 - - [26/Jul/2025 09:05:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:05:29,100 - INFO - 127.0.0.1 - - [26/Jul/2025 09:05:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:05:29,981 - WARNING - Memory usage (9672.8MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:30,713 - WARNING - Memory usage (9693.6MB) exceeds limit (774MB), throttling startup monitoring
+2025-07-26 09:05:34,984 - WARNING - Memory usage (9706.0MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:36,721 - INFO - Adaptive resource limits updated: CPU=5.9%, Memory=62.9%, New max_memory=742MB, New max_concurrent=3
+2025-07-26 09:05:36,722 - WARNING - Memory usage (9699.3MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:05:39,985 - WARNING - Memory usage (9773.7MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:41,726 - WARNING - Memory usage (9765.7MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:05:44,989 - WARNING - Memory usage (9782.6MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:46,730 - WARNING - Memory usage (9785.1MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:05:49,994 - WARNING - Memory usage (9865.3MB) exceeds limit (766MB), throttling startup monitoring
+2025-07-26 09:05:51,734 - WARNING - Memory usage (9867.6MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:05:56,001 - INFO - Adaptive resource limits updated: CPU=14.4%, Memory=62.8%, New max_memory=744MB, New max_concurrent=3
+2025-07-26 09:05:56,002 - WARNING - Memory usage (9872.7MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:05:56,739 - WARNING - Memory usage (9882.2MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:05:59,085 - INFO - 127.0.0.1 - - [26/Jul/2025 09:05:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:05:59,114 - INFO - 127.0.0.1 - - [26/Jul/2025 09:05:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:06:01,005 - WARNING - Memory usage (9878.9MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:06:01,785 - WARNING - Memory usage (9739.6MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:06:06,010 - WARNING - Memory usage (9803.1MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:06:07,796 - INFO - Adaptive resource limits updated: CPU=12.5%, Memory=65.7%, New max_memory=686MB, New max_concurrent=3
+2025-07-26 09:06:07,797 - WARNING - Memory usage (9786.6MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:11,016 - WARNING - Memory usage (9645.9MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:06:12,800 - WARNING - Memory usage (9673.6MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:16,023 - WARNING - Memory usage (9613.2MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:06:17,805 - WARNING - Memory usage (9618.7MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:21,030 - WARNING - Memory usage (9601.6MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:06:22,808 - WARNING - Memory usage (9591.5MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:27,041 - INFO - Adaptive resource limits updated: CPU=4.1%, Memory=66.6%, New max_memory=668MB, New max_concurrent=3
+2025-07-26 09:06:27,042 - WARNING - Memory usage (9550.8MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:27,814 - WARNING - Memory usage (9550.7MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:29,099 - INFO - 127.0.0.1 - - [26/Jul/2025 09:06:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:06:29,132 - INFO - 127.0.0.1 - - [26/Jul/2025 09:06:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:06:32,045 - WARNING - Memory usage (9423.2MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:32,820 - WARNING - Memory usage (9306.8MB) exceeds limit (686MB), throttling startup monitoring
+2025-07-26 09:06:37,050 - WARNING - Memory usage (9224.3MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:38,830 - INFO - Adaptive resource limits updated: CPU=4.9%, Memory=68.3%, New max_memory=634MB, New max_concurrent=3
+2025-07-26 09:06:38,831 - WARNING - Memory usage (9221.0MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:06:42,056 - WARNING - Memory usage (9248.9MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:43,835 - WARNING - Memory usage (9259.9MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:06:47,061 - WARNING - Memory usage (9229.9MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:48,840 - WARNING - Memory usage (9224.0MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:06:52,064 - WARNING - Memory usage (9202.0MB) exceeds limit (668MB), throttling startup monitoring
+2025-07-26 09:06:53,846 - WARNING - Memory usage (9186.6MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:06:58,076 - INFO - Adaptive resource limits updated: CPU=7.4%, Memory=69.2%, New max_memory=616MB, New max_concurrent=3
+2025-07-26 09:06:58,077 - WARNING - Memory usage (9181.6MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:06:58,851 - WARNING - Memory usage (9179.9MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:06:59,108 - INFO - 127.0.0.1 - - [26/Jul/2025 09:06:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:06:59,138 - INFO - 127.0.0.1 - - [26/Jul/2025 09:06:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:07:03,079 - WARNING - Memory usage (9156.3MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:07:03,856 - WARNING - Memory usage (9158.0MB) exceeds limit (634MB), throttling startup monitoring
+2025-07-26 09:07:08,082 - WARNING - Memory usage (9110.0MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:07:09,867 - INFO - Adaptive resource limits updated: CPU=7.2%, Memory=61.0%, New max_memory=780MB, New max_concurrent=3
+2025-07-26 09:07:09,868 - WARNING - Memory usage (9119.4MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:13,087 - WARNING - Memory usage (9064.7MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:07:14,873 - WARNING - Memory usage (9066.7MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:18,091 - WARNING - Memory usage (9059.2MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:07:19,878 - WARNING - Memory usage (9061.5MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:23,095 - WARNING - Memory usage (9199.8MB) exceeds limit (616MB), throttling startup monitoring
+2025-07-26 09:07:24,883 - WARNING - Memory usage (9199.1MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:29,095 - INFO - 127.0.0.1 - - [26/Jul/2025 09:07:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:07:29,103 - INFO - Adaptive resource limits updated: CPU=7.4%, Memory=62.8%, New max_memory=744MB, New max_concurrent=3
+2025-07-26 09:07:29,103 - WARNING - Memory usage (9192.0MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:29,136 - INFO - 127.0.0.1 - - [26/Jul/2025 09:07:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:07:29,889 - WARNING - Memory usage (9202.4MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:34,107 - WARNING - Memory usage (9193.8MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:34,893 - WARNING - Memory usage (9191.0MB) exceeds limit (780MB), throttling startup monitoring
+2025-07-26 09:07:39,111 - WARNING - Memory usage (9173.4MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:40,902 - INFO - Adaptive resource limits updated: CPU=4.6%, Memory=62.9%, New max_memory=742MB, New max_concurrent=3
+2025-07-26 09:07:40,902 - WARNING - Memory usage (9169.6MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:07:44,115 - WARNING - Memory usage (9128.8MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:45,907 - WARNING - Memory usage (9130.2MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:07:49,119 - WARNING - Memory usage (9183.8MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:50,911 - WARNING - Memory usage (9179.0MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:07:54,122 - WARNING - Memory usage (9199.8MB) exceeds limit (744MB), throttling startup monitoring
+2025-07-26 09:07:55,917 - WARNING - Memory usage (9201.3MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:07:59,095 - INFO - 127.0.0.1 - - [26/Jul/2025 09:07:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:07:59,135 - INFO - 127.0.0.1 - - [26/Jul/2025 09:07:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:08:00,132 - INFO - Adaptive resource limits updated: CPU=8.7%, Memory=63.7%, New max_memory=726MB, New max_concurrent=3
+2025-07-26 09:08:00,132 - WARNING - Memory usage (9271.7MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:00,922 - WARNING - Memory usage (9280.3MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:08:05,136 - WARNING - Memory usage (9310.1MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:05,926 - WARNING - Memory usage (9314.8MB) exceeds limit (742MB), throttling startup monitoring
+2025-07-26 09:08:10,141 - WARNING - Memory usage (9308.4MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:11,937 - INFO - Adaptive resource limits updated: CPU=5.0%, Memory=64.1%, New max_memory=718MB, New max_concurrent=3
+2025-07-26 09:08:11,937 - WARNING - Memory usage (9317.6MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:15,145 - WARNING - Memory usage (9319.2MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:16,940 - WARNING - Memory usage (9322.9MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:20,149 - WARNING - Memory usage (9332.1MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:21,944 - WARNING - Memory usage (9391.0MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:25,158 - WARNING - Memory usage (9494.1MB) exceeds limit (726MB), throttling startup monitoring
+2025-07-26 09:08:26,950 - WARNING - Memory usage (9534.0MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:29,097 - INFO - 127.0.0.1 - - [26/Jul/2025 09:08:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:08:29,136 - INFO - 127.0.0.1 - - [26/Jul/2025 09:08:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:08:31,168 - INFO - Adaptive resource limits updated: CPU=6.4%, Memory=68.0%, New max_memory=640MB, New max_concurrent=3
+2025-07-26 09:08:31,168 - WARNING - Memory usage (9441.0MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:31,956 - WARNING - Memory usage (9415.2MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:36,173 - WARNING - Memory usage (9257.4MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:36,962 - WARNING - Memory usage (9267.7MB) exceeds limit (718MB), throttling startup monitoring
+2025-07-26 09:08:41,178 - WARNING - Memory usage (9252.1MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:42,972 - INFO - Adaptive resource limits updated: CPU=5.9%, Memory=68.8%, New max_memory=624MB, New max_concurrent=3
+2025-07-26 09:08:42,972 - WARNING - Memory usage (9250.5MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:08:46,183 - WARNING - Memory usage (9124.3MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:47,977 - WARNING - Memory usage (9024.1MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:08:51,189 - WARNING - Memory usage (8996.7MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:52,982 - WARNING - Memory usage (8977.6MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:08:56,195 - WARNING - Memory usage (8970.5MB) exceeds limit (640MB), throttling startup monitoring
+2025-07-26 09:08:57,987 - WARNING - Memory usage (8976.7MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:08:59,211 - INFO - 127.0.0.1 - - [26/Jul/2025 09:08:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:08:59,286 - INFO - 127.0.0.1 - - [26/Jul/2025 09:08:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:09:02,205 - INFO - Adaptive resource limits updated: CPU=12.4%, Memory=71.0%, New max_memory=580MB, New max_concurrent=2
+2025-07-26 09:09:02,206 - WARNING - Memory usage (8971.6MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:02,991 - WARNING - Memory usage (8961.1MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:09:07,210 - WARNING - Memory usage (8993.4MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:07,996 - WARNING - Memory usage (8993.5MB) exceeds limit (624MB), throttling startup monitoring
+2025-07-26 09:09:12,214 - WARNING - Memory usage (8946.9MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:14,006 - INFO - Adaptive resource limits updated: CPU=9.5%, Memory=72.1%, New max_memory=558MB, New max_concurrent=2
+2025-07-26 09:09:14,006 - WARNING - Memory usage (8792.7MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:17,220 - WARNING - Memory usage (8721.2MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:19,010 - WARNING - Memory usage (8643.0MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:22,225 - WARNING - Memory usage (8627.2MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:24,013 - WARNING - Memory usage (8577.7MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:27,229 - WARNING - Memory usage (8507.9MB) exceeds limit (580MB), throttling startup monitoring
+2025-07-26 09:09:29,018 - WARNING - Memory usage (8509.1MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:29,205 - INFO - 127.0.0.1 - - [26/Jul/2025 09:09:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:09:29,234 - INFO - 127.0.0.1 - - [26/Jul/2025 09:09:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:09:33,239 - INFO - Adaptive resource limits updated: CPU=5.1%, Memory=74.1%, New max_memory=518MB, New max_concurrent=2
+2025-07-26 09:09:33,240 - WARNING - Memory usage (8539.7MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:34,022 - WARNING - Memory usage (8534.4MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:38,243 - WARNING - Memory usage (8486.5MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:39,027 - WARNING - Memory usage (8476.6MB) exceeds limit (558MB), throttling startup monitoring
+2025-07-26 09:09:43,248 - WARNING - Memory usage (8472.6MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:45,034 - INFO - Adaptive resource limits updated: CPU=5.6%, Memory=73.6%, New max_memory=528MB, New max_concurrent=2
+2025-07-26 09:09:45,035 - WARNING - Memory usage (8456.8MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:09:48,252 - WARNING - Memory usage (8363.7MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:50,039 - WARNING - Memory usage (8361.0MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:09:53,257 - WARNING - Memory usage (8261.3MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:55,042 - WARNING - Memory usage (8342.3MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:09:58,261 - WARNING - Memory usage (8414.4MB) exceeds limit (518MB), throttling startup monitoring
+2025-07-26 09:09:59,097 - INFO - 127.0.0.1 - - [26/Jul/2025 09:09:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:09:59,111 - INFO - 127.0.0.1 - - [26/Jul/2025 09:09:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:10:00,046 - WARNING - Memory usage (8434.5MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:10:04,271 - INFO - Adaptive resource limits updated: CPU=14.3%, Memory=72.8%, New max_memory=544MB, New max_concurrent=2
+2025-07-26 09:10:04,271 - WARNING - Memory usage (8432.4MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:05,051 - WARNING - Memory usage (8436.6MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:10:05,107 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:05] "GET / HTTP/1.1" 200 -
+2025-07-26 09:10:05,509 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:05] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 09:10:05,523 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:05] "GET /api/strategies HTTP/1.1" 200 -
+2025-07-26 09:10:05,543 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:05] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:10:05,629 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:05] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:10:09,276 - WARNING - Memory usage (8539.4MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:10,056 - WARNING - Memory usage (8545.2MB) exceeds limit (528MB), throttling startup monitoring
+2025-07-26 09:10:14,281 - WARNING - Memory usage (8489.8MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:16,062 - INFO - Adaptive resource limits updated: CPU=9.6%, Memory=73.4%, New max_memory=531MB, New max_concurrent=2
+2025-07-26 09:10:16,062 - WARNING - Memory usage (8528.2MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:19,286 - WARNING - Memory usage (8493.7MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:21,067 - WARNING - Memory usage (8463.2MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:24,291 - WARNING - Memory usage (8437.2MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:26,072 - WARNING - Memory usage (8431.9MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:29,165 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:29] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:10:29,195 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:29] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:10:29,296 - WARNING - Memory usage (8406.6MB) exceeds limit (544MB), throttling startup monitoring
+2025-07-26 09:10:31,077 - WARNING - Memory usage (8302.7MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:35,307 - INFO - Adaptive resource limits updated: CPU=16.4%, Memory=75.3%, New max_memory=512MB, New max_concurrent=2
+2025-07-26 09:10:35,307 - WARNING - Memory usage (8255.5MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:10:35,537 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:35] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:10:35,617 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:35] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:10:36,082 - WARNING - Memory usage (8319.7MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:40,310 - WARNING - Memory usage (8373.0MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:10:41,088 - WARNING - Memory usage (8369.8MB) exceeds limit (531MB), throttling startup monitoring
+2025-07-26 09:10:45,315 - WARNING - Memory usage (8473.0MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:10:47,098 - INFO - Adaptive resource limits updated: CPU=23.2%, Memory=63.9%, New max_memory=722MB, New max_concurrent=3
+2025-07-26 09:10:47,098 - WARNING - Memory usage (8572.3MB) exceeds limit (722MB), throttling startup monitoring
+2025-07-26 09:10:50,320 - WARNING - Memory usage (8679.6MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:10:52,102 - WARNING - Memory usage (8750.0MB) exceeds limit (722MB), throttling startup monitoring
+2025-07-26 09:10:55,326 - WARNING - Memory usage (8742.6MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:10:57,106 - WARNING - Memory usage (8692.5MB) exceeds limit (722MB), throttling startup monitoring
+2025-07-26 09:10:59,208 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:10:59,235 - INFO - 127.0.0.1 - - [26/Jul/2025 09:10:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:11:00,329 - WARNING - Memory usage (8715.4MB) exceeds limit (512MB), throttling startup monitoring
+2025-07-26 09:11:02,109 - WARNING - Memory usage (8694.9MB) exceeds limit (722MB), throttling startup monitoring
+2025-07-26 09:11:05,540 - INFO - 127.0.0.1 - - [26/Jul/2025 09:11:05] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 09:11:05,619 - INFO - 127.0.0.1 - - [26/Jul/2025 09:11:05] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 09:11:06,338 - INFO - Adaptive resource limits updated: CPU=23.4%, Memory=67.9%, New max_memory=641MB, New max_concurrent=3
+2025-07-26 09:11:06,338 - WARNING - Memory usage (8935.2MB) exceeds limit (641MB), throttling startup monitoring
+2025-07-26 09:11:07,115 - WARNING - Memory usage (8935.2MB) exceeds limit (722MB), throttling startup monitoring

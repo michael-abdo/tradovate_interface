@@ -1,0 +1,233 @@
+{
+  "test_id": "20250725_212744",
+  "timestamp": "2025-07-25T21:28:04.481712",
+  "success": false,
+  "metrics": {
+    "startup_time": 14.535210847854614,
+    "peak_memory_mb": 43.45703125,
+    "peak_cpu_percent": 96.1,
+    "chrome_instances_started": 19,
+    "retry_attempts": 0,
+    "final_status": "failed",
+    "exit_code": 1
+  },
+  "performance_analysis": {
+    "startup_speed": "fast",
+    "memory_usage": "low",
+    "retry_needed": false,
+    "all_instances_started": true
+  },
+  "log_summary": {
+    "total_events": 25,
+    "errors": 2,
+    "warnings": 2,
+    "info": 21,
+    "startup_phases": {
+      "monitor_registration": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.164372Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.164372Z",
+          "level": "ERROR",
+          "logger": "startup_manager",
+          "message": "Startup failure: monitor_registration",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "monitor_registration",
+          "details": "Process monitor not available"
+        }
+      },
+      "attempt_1_start": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.164506Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.164506Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: attempt_1_start",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "attempt_1_start",
+          "details": "Starting attempt_1"
+        }
+      },
+      "prerequisite_validation_start": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.164592Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.164592Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: prerequisite_validation_start",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "prerequisite_validation_start",
+          "details": "Starting prerequisite_validation"
+        }
+      },
+      "port_validation": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.166840Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.166840Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: port_validation",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "port_validation",
+          "details": "Ports [9223, 9224] available"
+        }
+      },
+      "memory_validation": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.167003Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.167003Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: memory_validation",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "memory_validation",
+          "details": "Memory available: 6.2GB",
+          "available_gb": 6.243106842041016,
+          "percent_available": 39.0
+        }
+      },
+      "network_validation": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.386310Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.386310Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: network_validation",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "network_validation",
+          "details": "Tradovate accessible",
+          "url": "https://trader.tradovate.com",
+          "status_code": 200,
+          "response_time_ms": 219.11001205444336
+        }
+      },
+      "chrome_validation": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.519802Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.519802Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: chrome_validation",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "chrome_validation",
+          "details": "Chrome found at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          "path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          "version": "Google Chrome 138.0.7204.169"
+        }
+      },
+      "prerequisites_ok": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.519962Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.519962Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: prerequisites_ok",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "prerequisites_ok",
+          "details": "All prerequisite validations passed"
+        }
+      },
+      "prerequisite_validation_complete": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.520081Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.520081Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: prerequisite_validation_complete",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "prerequisite_validation_complete",
+          "details": "Completed prerequisite_validation in 0.36s",
+          "duration_seconds": 0.3553781509399414
+        }
+      },
+      "auto_login_start": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.520242Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.520242Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: auto_login_start",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "auto_login_start",
+          "details": "Starting auto-login process"
+        }
+      },
+      "startup_begin": {
+        "status": "completed",
+        "timestamp": "2025-07-26T04:27:47.164210Z",
+        "details": {
+          "timestamp": "2025-07-26T04:27:47.164210Z",
+          "level": "INFO",
+          "logger": "startup_manager",
+          "message": "Startup event: startup_begin",
+          "module": "(unknown file)",
+          "function": null,
+          "line": 0,
+          "thread": "Thread-1 (run_auto_login)",
+          "process": 77148,
+          "event_type": "startup_begin",
+          "details": "Starting with max 3 retries"
+        }
+      }
+    },
+    "monitoring_duration": null
+  },
+  "recommendations": [
+    "Found 2 errors in logs - review for issues"
+  ],
+  "environment": {
+    "platform": "darwin",
+    "python_version": "3.13.5",
+    "available_memory_gb": 6.224754333496094,
+    "cpu_count": 16
+  }
+}

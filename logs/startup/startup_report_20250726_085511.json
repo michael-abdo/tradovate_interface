@@ -1,0 +1,60 @@
+{
+  "stats": {
+    "start_time": null,
+    "end_time": null,
+    "attempts": 0,
+    "success": false,
+    "errors": [
+      {
+        "timestamp": "2025-07-26T08:55:11.197470",
+        "event": "report_test_3",
+        "details": "Test event 3",
+        "success": false,
+        "attempt": 0
+      }
+    ]
+  },
+  "total_events": 3,
+  "success_events": 2,
+  "failure_events": 1,
+  "events": [
+    {
+      "timestamp": "2025-07-26T08:55:11.197230",
+      "event": "report_test_1",
+      "details": "Test event 1",
+      "success": true,
+      "attempt": 0
+    },
+    {
+      "timestamp": "2025-07-26T08:55:11.197382",
+      "event": "report_test_2",
+      "details": "Test event 2",
+      "success": true,
+      "attempt": 0
+    },
+    {
+      "timestamp": "2025-07-26T08:55:11.197470",
+      "event": "report_test_3",
+      "details": "Test event 3",
+      "success": false,
+      "attempt": 0
+    }
+  ],
+  "config": {
+    "enabled": true,
+    "startup_retry_attempts": 3,
+    "startup_retry_delay_seconds": 10,
+    "startup_timeout_seconds": 60,
+    "validation_checks": {
+      "ports": true,
+      "memory": true,
+      "network": true,
+      "chrome_executable": true,
+      "websocket_connectivity": true
+    },
+    "cleanup_on_failure": true,
+    "required_memory_gb": 2.0,
+    "network_test_url": "https://trader.tradovate.com",
+    "network_timeout_seconds": 10
+  }
+}

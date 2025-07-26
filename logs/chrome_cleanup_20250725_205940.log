@@ -1,0 +1,64 @@
+[2025-07-25 20:59:41] [INFO] Starting Chrome cleanup...
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 61720)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 61734)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 61735)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 61751)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 61752)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 62291)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 62782)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 62786)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 62787)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 62837)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 64321)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 66108)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 66112)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 66311)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 66580)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 70343)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 70347)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 70600)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 70604)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 71677)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 72296)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 72585)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 73151)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 74023)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75479)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75480)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75618)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75619)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75805)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75820)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75823)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75824)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75825)
+[2025-07-25 20:59:41] [WARNING] Skipping protected port 9222 (PID: 75827)
+[2025-07-25 20:59:41] [INFO] No Chrome debug processes found
+[2025-07-25 20:59:41] [INFO] 
+Cleaning Chrome profiles...
+[2025-07-25 20:59:41] [INFO] Removing old Chrome profile: /tmp/chrome-debug-9223 (age: 11.3 hours)
+[2025-07-25 20:59:41] [INFO] Removing old Chrome profile: /tmp/chrome-dev-profile-Crash-Test-9223-1753487299 (age: 4.2 hours)
+[2025-07-25 20:59:41] [INFO] Removing old Chrome profile: /tmp/chrome-watchdog-test (age: 4.4 hours)
+[2025-07-25 20:59:41] [INFO] Removing old Chrome profile: /tmp/chrome-watchdog-test-9223 (age: 4.4 hours)
+[2025-07-25 20:59:41] [INFO] Removing old Chrome profile: /tmp/chrome_debug_9223 (age: 11.3 hours)
+[2025-07-25 20:59:41] [WARNING] Skipping protected profile: /tmp/tradovate_debug_profile_9222
+[2025-07-25 20:59:41] [INFO] Keeping recent profile: /tmp/tradovate_debug_profile_9223 (age: 0.8 hours)
+[2025-07-25 20:59:41] [INFO] Keeping recent profile: /tmp/tradovate_debug_profile_9224 (age: 0.8 hours)
+[2025-07-25 20:59:41] [INFO] Cleaned 5 Chrome profiles
+[2025-07-25 20:59:41] [INFO] 
+Cleaning Chrome lock files...
+[2025-07-25 20:59:41] [ERROR] Error removing lock file /tmp/tradovate_debug_profile_9223/SingletonLock: [Errno 2] No such file or directory: '/tmp/tradovate_debug_profile_9223/SingletonLock'
+[2025-07-25 20:59:41] [INFO] Removing stale lock file: /tmp/tradovate_debug_profile_9223/SingletonSocket (age: 47.1 minutes)
+[2025-07-25 20:59:41] [ERROR] Error removing lock file /tmp/tradovate_debug_profile_9223/SingletonCookie: [Errno 2] No such file or directory: '/tmp/tradovate_debug_profile_9223/SingletonCookie'
+[2025-07-25 20:59:41] [ERROR] Error removing lock file /tmp/tradovate_debug_profile_9224/SingletonLock: [Errno 2] No such file or directory: '/tmp/tradovate_debug_profile_9224/SingletonLock'
+[2025-07-25 20:59:42] [INFO] Removing stale lock file: /tmp/tradovate_debug_profile_9224/SingletonSocket (age: 47.1 minutes)
+[2025-07-25 20:59:42] [ERROR] Error removing lock file /tmp/tradovate_debug_profile_9224/SingletonCookie: [Errno 2] No such file or directory: '/tmp/tradovate_debug_profile_9224/SingletonCookie'
+[2025-07-25 20:59:42] [INFO] Cleaned 2 lock files
+[2025-07-25 20:59:42] [INFO] 
+==================================================
+[2025-07-25 20:59:42] [INFO] CLEANUP SUMMARY:
+[2025-07-25 20:59:42] [INFO]   Chrome processes found: 0
+[2025-07-25 20:59:42] [INFO]   Chrome processes killed: 0
+[2025-07-25 20:59:42] [INFO]   Chrome profiles cleaned: 5
+[2025-07-25 20:59:42] [INFO]   Lock files cleaned: 2
+[2025-07-25 20:59:42] [INFO] ==================================================

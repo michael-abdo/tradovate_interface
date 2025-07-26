@@ -1,0 +1,1 @@
+2025-07-25 19:42:36,234 - INFO - ChromeStabilityMonitor initialized with config: {'enabled': True, 'check_interval_seconds': 10, 'log_directory': 'logs/connection_health', 'background_monitoring': True}
