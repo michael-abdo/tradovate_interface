@@ -68,10 +68,108 @@ def run_auto_login():
         logger.exception("Unexpected error during startup")
         raise
 
-def run_dashboard():
+def get_ngrok_url():
+    """Get the best available ngrok URL"""
+    try:
+        result = subprocess.run(
+            ["./scripts/save_ngrok_url.sh", "best"],
+            capture_output=True,
+            text=True,
+            cwd=project_root
+        )
+        if result.returncode == 0:
+            # Extract URL from output like "🎯 Best available URL: https://..."
+            output = result.stdout.strip()
+            if "Best available URL:" in output:
+                url = output.split("Best available URL: ")[1]
+                return url
+    except Exception as e:
+        print(f"Error getting ngrok URL: {e}")
+    return None
+
+def start_ngrok():
+    """Start ngrok tunnel for dashboard"""
+    try:
+        print("🌐 Starting ngrok tunnel...")
+        # Start ngrok in the background
+        process = subprocess.Popen(
+            ["ngrok", "http", "6001"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        
+        # Wait a moment for ngrok to start
+        time.sleep(3)
+        
+        # Validate and save the new URL
+        subprocess.run(
+            ["./scripts/save_ngrok_url.sh", "validate"],
+            cwd=project_root
+        )
+        
+        url = get_ngrok_url()
+        if url:
+            print(f"✅ ngrok tunnel started: {url}")
+            return url
+        else:
+            print("❌ Failed to get ngrok URL after startup")
+            return None
+            
+    except Exception as e:
+        print(f"Error starting ngrok: {e}")
+        return None
+
+def ensure_ngrok_running(auto_start=False):
+    """Ensure ngrok is running and get/save the URL"""
+    try:
+        # Check if ngrok is already running
+        result = subprocess.run(
+            ["curl", "-s", "http://localhost:4040/api/tunnels"],
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode == 0:
+            # Validate and update saved URL
+            subprocess.run(
+                ["./scripts/save_ngrok_url.sh", "validate"],
+                cwd=project_root
+            )
+            
+            # Get best available URL
+            url = get_ngrok_url()
+            if url:
+                print(f"🌐 ngrok URL available: {url}")
+                return url
+            else:
+                print("⚠️  ngrok running but no valid URL found")
+        else:
+            print("⚠️  ngrok not running on port 4040")
+            if auto_start:
+                return start_ngrok()
+            else:
+                print("💡 Start ngrok with: ngrok http 6001")
+                print("💡 Or use --ngrok flag to auto-start")
+    except Exception as e:
+        print(f"Error checking ngrok status: {e}")
+    
+    return None
+
+def run_dashboard(auto_ngrok=False):
     """Run the dashboard process"""
     from src.dashboard import run_flask_dashboard
     print("Starting dashboard...")
+    
+    # Check ngrok availability
+    ngrok_url = ensure_ngrok_running(auto_start=auto_ngrok)
+    if ngrok_url:
+        print(f"📱 Dashboard will be available at:")
+        print(f"   Local:  http://localhost:6001")
+        print(f"   Public: {ngrok_url}")
+    else:
+        print("📱 Dashboard available locally at: http://localhost:6001")
+        print("💡 For public access, start ngrok with: ngrok http 6001")
+    
     run_flask_dashboard()
 
 def collect_chrome_processes():
@@ -195,6 +293,8 @@ def main():
                         help="Run auto-login in the background")
     parser.add_argument("--no-watchdog", action="store_true",
                         help="Disable Chrome Process Watchdog monitoring")
+    parser.add_argument("--ngrok", action="store_true",
+                        help="Auto-start ngrok tunnel for public dashboard access")
     args = parser.parse_args()
     
     # Show watchdog status
@@ -220,7 +320,7 @@ def main():
         collect_chrome_processes()
         
         # Start the dashboard in the foreground
-        run_dashboard()
+        run_dashboard(auto_ngrok=args.ngrok)
     else:
         # Start auto-login in a separate thread
         auto_login_thread = threading.Thread(target=run_auto_login)
@@ -235,7 +335,7 @@ def main():
         collect_chrome_processes()
         
         # Start dashboard in the main thread
-        run_dashboard()
+        run_dashboard(auto_ngrok=args.ngrok)
 
 if __name__ == "__main__":
     try:

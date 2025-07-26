@@ -2,17 +2,14 @@
 # Place this in ~/.ngrok2/ngrok.yml or use with: ngrok start dashboard
 
 version: "2"
-authtoken: YOUR_NGROK_AUTHTOKEN_HERE
+authtoken: 2acOggkvAAb9ZJQvQVoGcwZLKNn_4jhUvCNVEaFRdgRgfkqdG
+api_key: 2acOggkvAAb9ZJQvQVoGcwZLKNn_4jhUvCNVEaFRdgRgfkqdG
 
 tunnels:
   dashboard:
     proto: http
     addr: 6001
-    # Use subdomain (requires paid plan)
-    # subdomain: tradovate-dashboard
-    
-    # Free version settings
-    bind_tls: true
+    domain: mike-development.ngrok-free.app
     inspect: true
     
     # Optional: Basic auth for security
