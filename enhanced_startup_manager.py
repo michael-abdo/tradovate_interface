@@ -37,8 +37,8 @@ class StartupManager:
         
         # Apply configuration
         startup_config = self.config.get('startup_monitoring', {})
-        self.max_retries = startup_config.get('max_retries', 3)
-        self.retry_delay = startup_config.get('retry_delay_seconds', 10)
+        self.max_retries = startup_config.get('startup_retry_attempts', startup_config.get('max_retries', 3))
+        self.retry_delay = startup_config.get('startup_retry_delay_seconds', startup_config.get('retry_delay_seconds', 10))
         self.startup_timeout = startup_config.get('startup_timeout_seconds', 60)
         self.required_ports = [9223, 9224]
         
@@ -86,9 +86,38 @@ class StartupManager:
         return {
             "startup_monitoring": {
                 "enabled": True,
-                "max_retries": 3,
-                "retry_delay_seconds": 10,
+                "startup_retry_attempts": 3,
+                "startup_retry_delay_seconds": 10,
                 "startup_timeout_seconds": 60,
+                "startup_phases": {
+                    "chrome_launch": {
+                        "timeout_seconds": 30,
+                        "validation_required": True
+                    },
+                    "page_load": {
+                        "timeout_seconds": 45,
+                        "validation_required": True
+                    },
+                    "authentication": {
+                        "timeout_seconds": 60,
+                        "validation_required": True
+                    },
+                    "trading_interface": {
+                        "timeout_seconds": 45,
+                        "validation_required": True
+                    }
+                },
+                "startup_failure_actions": {
+                    "log_failure": True,
+                    "alert_on_failure": True,
+                    "auto_retry": True,
+                    "escalate_after_retries": 3
+                },
+                "startup_metrics": {
+                    "collect_timing_data": True,
+                    "track_resource_usage": True,
+                    "log_performance_metrics": True
+                },
                 "validation_checks": {
                     "ports": True,
                     "memory": True,
@@ -305,6 +334,135 @@ class StartupManager:
                          error=str(e))
             return False
     
+    def validate_chrome_processes(self) -> bool:
+        """Check if Chrome processes are running correctly on required ports"""
+        validation_config = self.config.get('startup_monitoring', {}).get('validation_checks', {})
+        if not validation_config.get('chrome_processes', True):
+            self.log_event("chrome_process_validation", "Chrome process validation disabled by config")
+            return True
+        
+        try:
+            running_processes = []
+            
+            for port in self.required_ports:
+                # Check if a Chrome process is listening on the port
+                for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+                    try:
+                        if proc.info['name'] and 'chrome' in proc.info['name'].lower():
+                            cmdline = ' '.join(proc.info['cmdline'] or [])
+                            if f'--remote-debugging-port={port}' in cmdline:
+                                # Verify the process is actually listening on the port
+                                for conn in proc.connections(kind='inet'):
+                                    if conn.laddr.port == port and conn.status == 'LISTEN':
+                                        running_processes.append({
+                                            'port': port,
+                                            'pid': proc.info['pid'],
+                                            'status': 'running'
+                                        })
+                                        break
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+            
+            if len(running_processes) == len(self.required_ports):
+                self.log_event("chrome_process_validation", 
+                             f"All {len(self.required_ports)} Chrome processes running", 
+                             True,
+                             processes=running_processes)
+                return True
+            else:
+                missing_ports = [port for port in self.required_ports 
+                               if not any(p['port'] == port for p in running_processes)]
+                self.log_event("chrome_process_validation", 
+                             f"Missing Chrome processes on ports: {missing_ports}", 
+                             False,
+                             running_processes=running_processes,
+                             missing_ports=missing_ports)
+                return False
+                
+        except Exception as e:
+            self.log_event("chrome_process_validation", 
+                         f"Chrome process validation failed: {e}", 
+                         False,
+                         error=str(e))
+            return False
+    
+    def validate_websocket_connections(self) -> bool:
+        """Check if WebSocket connections to Chrome instances are working"""
+        validation_config = self.config.get('startup_monitoring', {}).get('validation_checks', {})
+        if not validation_config.get('websocket_connectivity', True):
+            self.log_event("websocket_validation", "WebSocket validation disabled by config")
+            return True
+        
+        try:
+            successful_connections = 0
+            
+            for port in self.required_ports:
+                try:
+                    # Test basic HTTP connection to Chrome DevTools API
+                    response = requests.get(f'http://localhost:{port}/json', timeout=5)
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        # Check if we get a list of tabs/targets
+                        if isinstance(data, list) and len(data) > 0:
+                            self.log_event("websocket_validation", 
+                                         f"Chrome DevTools API accessible on port {port}", 
+                                         True,
+                                         port=port,
+                                         targets_found=len(data))
+                            successful_connections += 1
+                        else:
+                            self.log_event("websocket_validation", 
+                                         f"Chrome DevTools API returned empty response on port {port}", 
+                                         False,
+                                         port=port)
+                    else:
+                        self.log_event("websocket_validation", 
+                                     f"Chrome DevTools API returned status {response.status_code} on port {port}", 
+                                     False,
+                                     port=port,
+                                     status_code=response.status_code)
+                        
+                except requests.exceptions.ConnectionError:
+                    self.log_event("websocket_validation", 
+                                 f"Cannot connect to Chrome DevTools API on port {port}", 
+                                 False,
+                                 port=port,
+                                 error="connection_refused")
+                except requests.exceptions.Timeout:
+                    self.log_event("websocket_validation", 
+                                 f"Timeout connecting to Chrome DevTools API on port {port}", 
+                                 False,
+                                 port=port,
+                                 error="timeout")
+                except Exception as e:
+                    self.log_event("websocket_validation", 
+                                 f"Error testing Chrome DevTools API on port {port}: {e}", 
+                                 False,
+                                 port=port,
+                                 error=str(e))
+            
+            if successful_connections == len(self.required_ports):
+                self.log_event("websocket_validation", 
+                             f"All {len(self.required_ports)} WebSocket connections successful", 
+                             True,
+                             successful_connections=successful_connections)
+                return True
+            else:
+                self.log_event("websocket_validation", 
+                             f"Only {successful_connections}/{len(self.required_ports)} WebSocket connections successful", 
+                             False,
+                             successful_connections=successful_connections,
+                             required_connections=len(self.required_ports))
+                return False
+                
+        except Exception as e:
+            self.log_event("websocket_validation", 
+                         f"WebSocket validation failed: {e}", 
+                         False,
+                         error=str(e))
+            return False
+    
     def validate_startup_prerequisites(self) -> bool:
         """Run all prerequisite validations"""
         validations = [
@@ -324,6 +482,25 @@ class StartupManager:
                     return False
             
             self.log_event("prerequisites_ok", "All prerequisite validations passed", True)
+            return True
+    
+    def validate_startup_completion(self) -> bool:
+        """Run post-startup validations to ensure everything is working"""
+        validations = [
+            ("chrome_processes", self.validate_chrome_processes),
+            ("websocket_connections", self.validate_websocket_connections)
+        ]
+        
+        with self.startup_phase("startup_completion_validation"):
+            for name, validation_func in validations:
+                if not validation_func():
+                    self.log_event("completion_validation_failed", 
+                                 f"{name} validation failed", 
+                                 False,
+                                 validation_name=name)
+                    return False
+            
+            self.log_event("startup_completion_ok", "All startup completion validations passed", True)
             return True
     
     def cleanup_failed_startup(self):
@@ -393,9 +570,13 @@ class StartupManager:
                     from src.auto_login import main as auto_login_main
                     result = auto_login_main()
                     
-                    # Phase 3: Validate Chrome instances (basic check for now)
-                    self.log_event("chrome_validation", "Validating Chrome instances started")
-                    time.sleep(5)  # Give Chrome time to start
+                    # Phase 3: Validate Chrome instances and connections
+                    self.log_event("chrome_startup_validation", "Validating Chrome startup completion")
+                    time.sleep(10)  # Give Chrome time to fully start and initialize
+                    
+                    # Run comprehensive startup completion validation
+                    if not self.validate_startup_completion():
+                        raise StartupValidationError("Chrome startup completion validation failed")
                     
                     # If we get here, startup succeeded
                     self.startup_stats['success'] = True

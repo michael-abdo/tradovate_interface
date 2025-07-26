@@ -1,8 +1,3 @@
-
-# Enhanced startup imports
-from enhanced_startup_manager import StartupManager, StartupValidationError
-from structured_logger import get_logger
-
 #!/usr/bin/env python3
 """
 All-in-one startup script for Tradovate Interface:
@@ -26,6 +21,10 @@ import platform
 # Add the project root to the path so we can import from src
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
+
+# Enhanced startup imports
+from enhanced_startup_manager import StartupManager, StartupValidationError
+from structured_logger import get_logger
 
 # Import watchdog to check availability
 sys.path.insert(0, os.path.join(project_root, 'tradovate_interface', 'src'))
@@ -68,6 +67,7 @@ def run_auto_login():
     except Exception as e:
         logger.exception("Unexpected error during startup")
         raise
+
 def run_dashboard():
     """Run the dashboard process"""
     from src.dashboard import run_flask_dashboard
