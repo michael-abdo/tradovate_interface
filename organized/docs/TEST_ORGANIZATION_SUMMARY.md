@@ -25,7 +25,7 @@ From the project root, you can:
 
 1. **Run interactive test menu**:
    ```bash
-   ./test_watchdog.sh
+   ./organized/tests/test_watchdog.sh
    ```
 
 2. **Run all automated tests**:
