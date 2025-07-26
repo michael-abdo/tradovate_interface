@@ -11,16 +11,11 @@ import datetime
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import TradovateController
 from flask import request
-from utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_stability import ChromeStabilityMonitor
 
-# Import process monitor for startup monitoring integration
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tradovate_interface', 'src'))
-try:
-    from utils.process_monitor import ChromeProcessMonitor, StartupPhase, StartupMonitoringMode
-    STARTUP_MONITORING_AVAILABLE = True
-except ImportError:
-    print("Warning: Startup monitoring not available for dashboard integration.")
-    STARTUP_MONITORING_AVAILABLE = False
+# Note: Process monitor was moved to archive with tradovate_interface
+# Disable startup monitoring integration for now
+STARTUP_MONITORING_AVAILABLE = False
 
 # Create Flask app
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

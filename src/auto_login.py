@@ -9,17 +9,13 @@ import json
 import random
 import threading
 
-# Import Chrome Process Monitor
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tradovate_interface', 'src'))
-try:
-    from utils.process_monitor import ChromeProcessMonitor, StartupPhase
-    WATCHDOG_AVAILABLE = True
-except ImportError:
-    print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
-    WATCHDOG_AVAILABLE = False
+# Note: Chrome Process Monitor was moved to archive with tradovate_interface
+# Disable watchdog functionality for now
+print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
+WATCHDOG_AVAILABLE = False
 
 # Import connection health monitoring
-from utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_stability import ChromeStabilityMonitor
 
 # Configuration
 # Try to detect Chrome path based on OS

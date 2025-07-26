@@ -7,10 +7,28 @@
 
 # Virtual environments
 venv/
+*/venv/
 
 # OS specific files
 .DS_Store
 __pycache__/
-.DS_Store
-venv/
+
+# Temporary files and directories
+organized/temp/
+*.tmp
+*.temp
+
+# Backup files
+backups/root_cleanup_*/
+
+# Recovery files
 recovery/
+
+# Log files
+*.log
+logs/*.log
+
+# Generated reports
+*.json
+!package.json
+!package-lock.json

@@ -12,22 +12,50 @@ Python interface for automated multi-account Tradovate trading with web dashboar
 
 ## Structure
 ```
-tradovate_interface/
-├── main.py                    # Entry point
-├── src/                       # Core modules
-│   ├── app.py                 # Trading engine
-│   ├── auto_login.py          # Chrome automation
-│   ├── dashboard.py           # Web interface
-│   └── pinescript_webhook.py  # TradingView integration
-├── config/                    # Credentials & settings
-├── docs/implementation/       # Stability guides
-└── tests/                     # Test suite
+trading/
+├── CLAUDE.md                  # Development principles & rules
+├── README.md                  # This file
+├── start_all.py              # Main entry point
+├── ngrok.yml                 # ngrok configuration (permanent URL)
+├── current_ngrok_url.txt     # Persistent URL storage
+├── requirements.txt          # Python dependencies
+├── src/                      # Core application modules
+│   ├── app.py                # Trading engine
+│   ├── auto_login.py         # Chrome automation & login
+│   ├── dashboard.py          # Web dashboard interface
+│   ├── pinescript_webhook.py # TradingView integration
+│   └── utils/                # Utility modules
+├── config/                   # Configuration files
+├── scripts/                  # Utility scripts (ngrok, monitoring)
+├── logs/                     # Application logs
+├── organized/                # Organized project structure
+│   ├── docs/                 # ALL documentation
+│   ├── tests/                # ALL test files
+│   ├── deployment/           # Deployment scripts & configs
+│   ├── archive/              # Archived/old files
+│   └── temp/                 # Temporary files (gitignored)
+├── backups/                  # System backups
+├── recovery/                 # Account state recovery
+├── strategies/               # Trading strategies
+└── web/                      # Web templates
+```
+
+## Quick Start
+```bash
+# Start everything (Chrome, login, dashboard, ngrok)
+./start_all.py --ngrok
+
+# Dashboard URLs:
+# Local:  http://localhost:6001
+# Public: https://mike-development.ngrok-free.app (permanent)
 ```
 
 ## Stability Features
-- Chrome process watchdog (99.9% uptime target)
-- Connection health monitoring (<30s recovery)
-- See `docs/implementation/` for detailed guides
+- Chrome process monitoring with health checks
+- Automatic ngrok URL persistence
+- Connection health monitoring & recovery
+- Comprehensive logging system
+- See `organized/docs/` for detailed guides
 
 ## Setup
 
