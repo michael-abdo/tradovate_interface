@@ -9,6 +9,48 @@ import sys
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
+# Optional Chrome Communication Framework integration
+try:
+    from src.utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
+    FRAMEWORK_AVAILABLE = True
+    print("✅ Chrome Communication Framework loaded - enhanced logging enabled")
+    
+    # Create a manager instance for this helper
+    chrome_manager = ChromeCommunicationManager()
+    
+    def execute_safe_js(tab, js_code, description="Login helper operation", operation_type=OperationType.NON_CRITICAL):
+        """Execute JavaScript with framework safety features if available"""
+        try:
+            result = safe_evaluate(tab, js_code, operation_type, description)
+            if result.success:
+                return {"result": {"value": result.value}}
+            else:
+                print(f"⚠️  JS execution failed: {result.error}")
+                # Return None to maintain exact API compatibility when execution fails
+                raise Exception(f"Safe execution failed: {result.error}")
+        except Exception as e:
+            print(f"❌ Framework execution error: {e}")
+            # Fallback to direct execution
+            try:
+                return tab.Runtime.evaluate(expression=js_code)
+            except Exception as fallback_error:
+                # If both framework AND fallback fail, return None to match original behavior
+                print(f"Error executing script: {fallback_error}")
+                return None
+    
+except ImportError:
+    FRAMEWORK_AVAILABLE = False
+    print("ℹ️  Chrome Communication Framework not available - using standard execution")
+    
+    def execute_safe_js(tab, js_code, description="Login helper operation", operation_type=None):
+        """Fallback to standard Runtime.evaluate when framework unavailable"""
+        try:
+            return tab.Runtime.evaluate(expression=js_code)
+        except Exception as e:
+            # Match original error handling behavior exactly
+            print(f"Error executing script: {e}")
+            return None
+
 # First try importing with src. prefix
 try:
     from src.auto_login import inject_login_script, disable_alerts
@@ -66,7 +108,7 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
             try:
                 tab.start()
                 tab.Page.enable()
-                result = tab.Runtime.evaluate(expression="document.location.href")
+                result = execute_safe_js(tab, "document.location.href", "Tab URL detection for Tradovate identification")
                 url = result.get("result", {}).get("value", "")
                 print(f"Tab URL: {url}")
                 
@@ -116,7 +158,7 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
             document.body.appendChild(helperDiv);
         }, 2000);
         """
-        target_tab.Runtime.evaluate(expression=visual_indicator)
+        execute_safe_js(target_tab, visual_indicator, "Login helper visual indicator injection")
         
         print("Login script injected successfully")
         return True, target_tab, browser
@@ -161,7 +203,7 @@ def wait_for_element(tab, selector, timeout=10, visible=True):
     start_time = time.time()
     while time.time() - start_time < timeout:
         try:
-            result = tab.Runtime.evaluate(expression=check_script)
+            result = execute_safe_js(tab, check_script, f"Element existence check for selector: {selector}")
             if result.get("result", {}).get("value", False):
                 print(f"Element found: {selector}")
                 return True
@@ -176,7 +218,7 @@ def wait_for_element(tab, selector, timeout=10, visible=True):
 def execute_js(tab, script):
     """Execute JavaScript in the tab and return the result"""
     try:
-        result = tab.Runtime.evaluate(expression=script)
+        result = execute_safe_js(tab, script, "Generic JavaScript execution via execute_js function")
         return result.get("result", {})
     except Exception as e:
         print(f"Error executing script: {e}")

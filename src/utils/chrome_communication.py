@@ -35,7 +35,27 @@ from typing import Dict, Any, Optional, Callable, List, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 import requests.exceptions
-import websocket.exceptions
+
+# Handle optional websocket import gracefully
+try:
+    import websocket.exceptions
+    WEBSOCKET_AVAILABLE = True
+except ImportError:
+    try:
+        import websocket_client as websocket
+        WEBSOCKET_AVAILABLE = True
+    except ImportError:
+        # Create dummy websocket exceptions for type checking
+        class _DummyWebsocketExceptions:
+            class ConnectionClosed(Exception):
+                pass
+            class WebSocketException(Exception):
+                pass
+        
+        class websocket:
+            exceptions = _DummyWebsocketExceptions()
+        
+        WEBSOCKET_AVAILABLE = False
 
 # ============================================================================
 # CONSTANTS AND CONFIGURATION
@@ -198,9 +218,15 @@ def classify_exception(exception: Exception) -> ErrorType:
                              requests.exceptions.ReadTimeout)):
         return ErrorType.NETWORK_ERROR
     
-    if isinstance(exception, (websocket.exceptions.ConnectionClosed,
-                             websocket.exceptions.ConnectionClosedError)):
-        return ErrorType.NETWORK_ERROR
+    # Check websocket exceptions if available
+    if WEBSOCKET_AVAILABLE:
+        try:
+            if isinstance(exception, (websocket.exceptions.ConnectionClosed,
+                                     getattr(websocket.exceptions, 'ConnectionClosedError', Exception))):
+                return ErrorType.NETWORK_ERROR
+        except AttributeError:
+            # Some websocket libraries might not have all exception types
+            pass
     
     if any(keyword in exception_str for keyword in ['500', 'busy', 'overloaded', 'timeout']):
         return ErrorType.CHROME_BUSY
@@ -342,7 +368,17 @@ class StructuredFormatter(logging.Formatter):
 class ChromeOperationLogger:
     """Specialized logger for Chrome operations with context tracking"""
     
-    def __init__(self, base_logger: logging.Logger):
+    def __init__(self, base_logger: logging.Logger = None):
+        # Create default logger if none provided
+        if base_logger is None:
+            base_logger = logging.getLogger('chrome_communication')
+            if not base_logger.handlers:
+                handler = logging.StreamHandler()
+                formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                handler.setFormatter(formatter)
+                base_logger.addHandler(handler)
+                base_logger.setLevel(logging.INFO)
+        
         self.base_logger = base_logger
         self.operation_contexts = {}  # Track context per operation
     
@@ -548,7 +584,7 @@ class TabHealthValidator:
                 return health
             
             # Page state validation
-            if not self._validate_page_state(tab, health):
+            if not self._validate_page_state(tab, health, operation_type):
                 return health
             
             # Function availability check
@@ -581,7 +617,7 @@ class TabHealthValidator:
             health.errors.append(f"Basic connectivity failed: {str(e)}")
             return False
     
-    def _validate_page_state(self, tab, health: TabHealthStatus) -> bool:
+    def _validate_page_state(self, tab, health: TabHealthStatus, operation_type: OperationType = OperationType.IMPORTANT) -> bool:
         """Validate page is in correct state"""
         try:
             # Get comprehensive page state
@@ -619,16 +655,18 @@ class TabHealthValidator:
             health.ready_state = page_data.get("readyState", "")
             health.tradovate_loaded = page_data.get("tradovateLoaded", False)
             
-            # Validate requirements
-            if not health.tradovate_loaded:
+            # Validate requirements (stricter for CRITICAL operations)
+            if not health.tradovate_loaded and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
                 health.errors.append("Not on Tradovate domain")
                 return False
             
-            if health.ready_state != "complete":
+            # Page readiness check (relaxed for NON_CRITICAL operations)
+            if health.ready_state != "complete" and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
                 health.errors.append(f"Page not ready: {health.ready_state}")
                 return False
             
-            if not page_data.get("hasContent", False):
+            # Content check (relaxed for NON_CRITICAL operations)
+            if not page_data.get("hasContent", False) and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
                 health.errors.append("Page has no content")
                 return False
             
@@ -695,11 +733,11 @@ class TabHealthValidator:
             health.functions_available = func_data.get("availableFunctions", [])
             missing_functions = func_data.get("missingFunctions", [])
             
-            # Check if critical functions are missing
+            # Check if critical functions are missing (relaxed for NON_CRITICAL operations)
             critical_functions = self.REQUIRED_FUNCTIONS.get(operation_type, [])
             missing_critical = [f for f in critical_functions if f not in health.functions_available]
             
-            if missing_critical:
+            if missing_critical and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
                 health.errors.append(f"Missing critical functions: {missing_critical}")
                 return False
             
@@ -979,6 +1017,432 @@ class RetryStrategyFactory:
         else:  # UNKNOWN_ERROR
             max_attempts = RETRY_LIMITS.get(operation_type.value, 1)
             return ExponentialBackoffStrategy(max_attempts=max_attempts, base_delay=2.0)
+
+# ============================================================================
+# SAFE EVALUATE CORE IMPLEMENTATION
+# ============================================================================
+
+def safe_evaluate(tab, js_code: str, operation_type: OperationType = OperationType.IMPORTANT,
+                 description: str = "", expected_type: str = None, 
+                 timeout: float = None) -> OperationResult:
+    """
+    Safe wrapper for tab.Runtime.evaluate() with comprehensive validation and retry logic
+    
+    Args:
+        tab: pychrome tab object
+        js_code: JavaScript code to execute
+        operation_type: Criticality level (CRITICAL, IMPORTANT, NON_CRITICAL)
+        description: Human-readable description for logging
+        expected_type: Expected JavaScript return type (optional)
+        timeout: Custom timeout in seconds (optional)
+        
+    Returns:
+        OperationResult with success status, value, and detailed error information
+    """
+    operation_id = generate_operation_id()
+    start_time = time.time()
+    
+    # Get timeout based on operation type
+    if timeout is None:
+        timeout = OPERATION_TIMEOUTS.get(operation_type.value, 5.0)
+    
+    # Initialize result
+    result = OperationResult(
+        success=False,
+        operation_id=operation_id,
+        execution_time=0.0
+    )
+    
+    # Get tab info for logging
+    validator = TabHealthValidator()
+    tab_info = validator.get_tab_info(tab)
+    
+    # Start operation logging
+    operation_logger.start_operation(operation_id, operation_type, description, tab_info)
+    
+    try:
+        # Validate tab health before execution
+        health_status = validator.validate_tab_health(tab, operation_type)
+        if not health_status.healthy:
+            result.error = f"Tab health validation failed: {'; '.join(health_status.errors)}"
+            result.error_type = ErrorType.TAB_ERROR
+            operation_logger.log_failure(operation_id, Exception(result.error), ErrorType.TAB_ERROR)
+            return result
+        
+        # Execute with retry logic
+        retry_count = 0
+        max_retries = RETRY_LIMITS.get(operation_type.value, 2)
+        
+        while retry_count <= max_retries:
+            try:
+                # Log the actual JavaScript being executed (truncated for security)
+                js_preview = js_code[:100] + "..." if len(js_code) > 100 else js_code
+                base_logger.debug(f"Executing JS: {js_preview}", extra={
+                    "operation_id": operation_id,
+                    "retry_count": retry_count
+                })
+                
+                # Execute the JavaScript with timeout
+                execute_start = time.time()
+                raw_result = tab.Runtime.evaluate(expression=js_code, timeout=timeout)
+                execute_time = time.time() - execute_start
+                
+                # Validate the response
+                validation = validate_pychrome_response(raw_result, expected_type)
+                
+                if validation["status"] == ResponseStatus.SUCCESS:
+                    # Success path
+                    result.success = True
+                    result.value = validation["value"]
+                    result.execution_time = time.time() - start_time
+                    result.retry_count = retry_count
+                    
+                    operation_logger.log_success(operation_id, result.value, result.execution_time)
+                    return result
+                
+                elif validation["status"] == ResponseStatus.JAVASCRIPT_ERROR:
+                    # JavaScript error - no retry
+                    result.error = validation["error"]
+                    result.error_type = ErrorType.JAVASCRIPT_ERROR
+                    result.execution_time = time.time() - start_time
+                    result.retry_count = retry_count
+                    
+                    js_error = JavaScriptExecutionError(
+                        result.error, 
+                        validation.get("exception_details", {}),
+                        operation_id
+                    )
+                    operation_logger.log_failure(operation_id, js_error, ErrorType.JAVASCRIPT_ERROR, retry_count)
+                    return result
+                
+                else:
+                    # Other validation error - may retry
+                    error_msg = validation["error"]
+                    if not validation.get("retry_recommended", False):
+                        result.error = error_msg
+                        result.error_type = ErrorType.UNKNOWN_ERROR
+                        result.execution_time = time.time() - start_time
+                        result.retry_count = retry_count
+                        
+                        operation_logger.log_failure(operation_id, Exception(error_msg), ErrorType.UNKNOWN_ERROR, retry_count)
+                        return result
+                    
+                    # Will retry - continue to retry logic below
+                    raise ChromeCommunicationError(error_msg, ErrorType.UNKNOWN_ERROR, retry_count, operation_id)
+                
+            except Exception as e:
+                # Classify the exception
+                error_type = classify_exception(e)
+                retry_count += 1
+                
+                # Check if we should retry
+                strategy = RetryStrategyFactory.get_strategy(error_type, operation_type)
+                
+                if retry_count > max_retries or not strategy.should_retry(retry_count - 1, e, error_type):
+                    # No more retries - final failure
+                    result.error = str(e)
+                    result.error_type = error_type
+                    result.execution_time = time.time() - start_time
+                    result.retry_count = retry_count - 1
+                    
+                    operation_logger.log_failure(operation_id, e, error_type, retry_count - 1)
+                    return result
+                
+                # Calculate backoff time and wait
+                backoff_time = strategy.get_backoff_time(retry_count - 1, error_type)
+                
+                operation_logger.log_retry(operation_id, retry_count, error_type, str(e), backoff_time)
+                
+                if backoff_time > 0:
+                    time.sleep(backoff_time)
+                
+                # Continue to next retry attempt
+                continue
+        
+        # If we exit the loop without returning, we've exhausted retries
+        result.error = f"Exhausted {max_retries} retry attempts"
+        result.error_type = ErrorType.UNKNOWN_ERROR
+        result.execution_time = time.time() - start_time
+        result.retry_count = max_retries
+        
+        operation_logger.log_failure(operation_id, Exception(result.error), ErrorType.UNKNOWN_ERROR, max_retries)
+        return result
+        
+    except Exception as e:
+        # Unexpected error in safe_evaluate itself
+        result.error = f"safe_evaluate internal error: {str(e)}"
+        result.error_type = ErrorType.UNKNOWN_ERROR
+        result.execution_time = time.time() - start_time
+        
+        base_logger.error(f"safe_evaluate internal error: {e}", extra={
+            "operation_id": operation_id,
+            "error_message": str(e)
+        })
+        
+        return result
+
+# ============================================================================
+# CHROME COMMUNICATION MANAGER
+# ============================================================================
+
+class ChromeCommunicationManager:
+    """
+    Central manager for Chrome communication with integrated safety features
+    
+    Coordinates:
+    - Per-tab circuit breakers
+    - Operation queues for concurrent safety
+    - Health monitoring
+    - Centralized logging and metrics
+    """
+    
+    def __init__(self):
+        self.tab_circuit_breakers = {}  # tab_id -> CircuitBreaker
+        self.tab_operation_queues = {}  # tab_id -> OperationQueue
+        self.tab_health_cache = {}      # tab_id -> (TabHealthStatus, timestamp)
+        self.tab_references = {}        # tab_id -> tab object
+        self.health_cache_ttl = 30.0    # seconds
+        
+        self.validator = TabHealthValidator()
+        self.lock = threading.Lock()
+        
+        # Performance metrics
+        self.metrics = {
+            "total_operations": 0,
+            "successful_operations": 0,
+            "failed_operations": 0,
+            "circuit_breaker_trips": 0,
+            "average_execution_time": 0.0
+        }
+        
+        base_logger.info("ChromeCommunicationManager initialized")
+    
+    def register_tab(self, tab_id: str, tab) -> bool:
+        """
+        Register a tab for managed communication
+        
+        Args:
+            tab_id: Unique identifier for the tab
+            tab: pychrome tab object
+            
+        Returns:
+            True if registration successful
+        """
+        with self.lock:
+            try:
+                # Store tab reference
+                self.tab_references[tab_id] = tab
+                
+                # Create circuit breaker for this tab
+                if tab_id not in self.tab_circuit_breakers:
+                    self.tab_circuit_breakers[tab_id] = CircuitBreaker(
+                        failure_threshold=CIRCUIT_BREAKER_CONFIG["failure_threshold"],
+                        recovery_timeout=CIRCUIT_BREAKER_CONFIG["recovery_timeout"],
+                        half_open_limit=CIRCUIT_BREAKER_CONFIG["half_open_limit"]
+                    )
+                
+                # Create operation queue for this tab
+                if tab_id not in self.tab_operation_queues:
+                    self.tab_operation_queues[tab_id] = OperationQueue()
+                
+                # Validate tab health
+                health_status = self.validator.validate_tab_health(tab)
+                self.tab_health_cache[tab_id] = (health_status, time.time())
+                
+                operation_logger.log_tab_health(tab_id, health_status)
+                
+                base_logger.info(f"Tab registered: {tab_id} - healthy: {health_status.healthy}")
+                return health_status.healthy
+                
+            except Exception as e:
+                base_logger.error(f"Failed to register tab {tab_id}: {e}")
+                return False
+    
+    def execute_operation(self, tab_id: str, tab, js_code: str, 
+                         operation_type: OperationType = OperationType.IMPORTANT,
+                         description: str = "", expected_type: str = None,
+                         timeout: float = None) -> OperationResult:
+        """
+        Execute JavaScript operation with full safety features
+        
+        Args:
+            tab_id: Unique identifier for the tab
+            tab: pychrome tab object
+            js_code: JavaScript code to execute
+            operation_type: Criticality level
+            description: Human-readable description
+            expected_type: Expected JavaScript return type
+            timeout: Custom timeout in seconds
+            
+        Returns:
+            OperationResult with execution details
+        """
+        operation_id = generate_operation_id()
+        
+        # Update metrics
+        self.metrics["total_operations"] += 1
+        
+        try:
+            # Check circuit breaker
+            circuit_breaker = self.tab_circuit_breakers.get(tab_id)
+            if circuit_breaker and not circuit_breaker.can_execute(operation_id):
+                self.metrics["circuit_breaker_trips"] += 1
+                return OperationResult(
+                    success=False,
+                    error="Circuit breaker is open",
+                    error_type=ErrorType.UNKNOWN_ERROR,
+                    operation_id=operation_id
+                )
+            
+            # Check operation queue capacity
+            operation_queue = self.tab_operation_queues.get(tab_id)
+            if operation_queue and not operation_queue.start_operation(operation_id):
+                return OperationResult(
+                    success=False,
+                    error="Operation queue full - too many concurrent operations",
+                    error_type=ErrorType.UNKNOWN_ERROR,
+                    operation_id=operation_id
+                )
+            
+            try:
+                # Execute the operation
+                result = safe_evaluate(
+                    tab=tab,
+                    js_code=js_code,
+                    operation_type=operation_type,
+                    description=description,
+                    expected_type=expected_type,
+                    timeout=timeout
+                )
+                
+                # Update circuit breaker
+                if circuit_breaker:
+                    if result.success:
+                        circuit_breaker.record_success(operation_id)
+                        self.metrics["successful_operations"] += 1
+                    else:
+                        circuit_breaker.record_failure(operation_id, Exception(result.error), result.error_type)
+                        self.metrics["failed_operations"] += 1
+                
+                # Update performance metrics
+                if result.execution_time > 0:
+                    current_avg = self.metrics["average_execution_time"]
+                    total_ops = self.metrics["total_operations"]
+                    self.metrics["average_execution_time"] = (
+                        (current_avg * (total_ops - 1) + result.execution_time) / total_ops
+                    )
+                
+                return result
+                
+            finally:
+                # Always finish operation in queue
+                if operation_queue:
+                    operation_queue.finish_operation(operation_id)
+        
+        except Exception as e:
+            self.metrics["failed_operations"] += 1
+            base_logger.error(f"Manager execution error for {tab_id}: {e}")
+            return OperationResult(
+                success=False,
+                error=f"Manager error: {str(e)}",
+                error_type=ErrorType.UNKNOWN_ERROR,
+                operation_id=operation_id
+            )
+    
+    def get_tab_status(self, tab_id: str) -> dict:
+        """Get comprehensive status for a tab"""
+        with self.lock:
+            status = {
+                "tab_id": tab_id,
+                "circuit_breaker": None,
+                "operation_queue": None,
+                "health_status": None
+            }
+            
+            # Circuit breaker status
+            if tab_id in self.tab_circuit_breakers:
+                cb_status = self.tab_circuit_breakers[tab_id].get_status()
+                status["circuit_breaker"] = {
+                    "state": cb_status.state.value,
+                    "failure_count": cb_status.failure_count,
+                    "success_rate": cb_status.success_rate
+                }
+            
+            # Operation queue status
+            if tab_id in self.tab_operation_queues:
+                queue = self.tab_operation_queues[tab_id]
+                status["operation_queue"] = {
+                    "active_operations": queue.active_operations,
+                    "max_concurrent": queue.max_concurrent
+                }
+            
+            # Health status (cached)
+            if tab_id in self.tab_health_cache:
+                health, timestamp = self.tab_health_cache[tab_id]
+                age = time.time() - timestamp
+                status["health_status"] = {
+                    "healthy": health.healthy,
+                    "url": health.url,
+                    "functions_available": len(health.functions_available),
+                    "errors": health.errors,
+                    "cache_age_seconds": age,
+                    "stale": age > self.health_cache_ttl
+                }
+            
+            return status
+    
+    def get_global_metrics(self) -> dict:
+        """Get global performance metrics"""
+        return self.metrics.copy()
+    
+    def get_safe_evaluator(self, tab_id: str):
+        """Get a safe evaluator function bound to a specific tab"""
+        def safe_evaluator(js_code: str, operation_type: OperationType = OperationType.IMPORTANT,
+                          description: str = "", expected_type: str = None,
+                          timeout: float = None) -> OperationResult:
+            """Safe evaluator bound to this tab"""
+            if tab_id not in self.tab_references:
+                raise ChromeCommunicationError(f"Tab {tab_id} not registered")
+            
+            tab = self.tab_references[tab_id]  # Get tab from stored references
+            return safe_evaluate(tab, js_code, operation_type, description, expected_type, timeout)
+        
+        return safe_evaluator
+    
+    def get_tab_health(self, tab_id: str) -> TabHealthStatus:
+        """Get current tab health status"""
+        if tab_id in self.tab_health_cache:
+            health, timestamp = self.tab_health_cache[tab_id]
+            # Return cached health if still fresh
+            if time.time() - timestamp < self.health_cache_ttl:
+                return health
+        
+        # Return None if no health data available
+        return None
+    
+    def get_performance_stats(self, tab_id: str) -> dict:
+        """Get performance statistics for a specific tab"""
+        if tab_id not in self.tab_circuit_breakers:
+            return {}
+        
+        # Get tab-specific metrics
+        tab_stats = {
+            "tab_id": tab_id,
+            "circuit_breaker_state": self.tab_circuit_breakers[tab_id].get_status().state.value,
+            "operations_count": 0,
+            "avg_execution_time": 0.0,
+            "error_rate": 0.0,
+            "last_operation": None
+        }
+        
+        # Add global metrics
+        global_metrics = self.get_global_metrics()
+        tab_stats.update(global_metrics)
+        
+        return tab_stats
+
+# Default global manager instance
+default_manager = ChromeCommunicationManager()
 
 # ============================================================================
 # MODULE INITIALIZATION
