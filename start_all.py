@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
 All-in-one startup script for Tradovate Interface:
-1. Auto-launch Chrome instances
+1. Auto-launch Chrome instances with watchdog protection
 2. Automatically log in to all accounts
 3. Start the dashboard
 
 This script handles the complete startup flow in a single command.
+The Chrome Process Watchdog automatically monitors ports 9223+ for crashes.
 """
 import sys
 import os
@@ -20,6 +21,14 @@ import platform
 # Add the project root to the path so we can import from src
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
+
+# Import watchdog to check availability
+sys.path.insert(0, os.path.join(project_root, 'tradovate_interface', 'src'))
+try:
+    from utils.process_monitor import ChromeProcessMonitor
+    WATCHDOG_AVAILABLE = True
+except ImportError:
+    WATCHDOG_AVAILABLE = False
 
 # Global variables to track resources for proper cleanup
 auto_login_process = None
@@ -116,6 +125,21 @@ def signal_handler(sig, frame):
     cleanup_chrome_instances()
     sys.exit(0)
 
+def show_watchdog_status():
+    """Display Chrome Process Watchdog status"""
+    if WATCHDOG_AVAILABLE:
+        print("\n" + "="*60)
+        print("🛡️  Chrome Process Watchdog: ENABLED")
+        print("   - Monitoring Chrome instances on ports 9223+")
+        print("   - Automatic crash recovery in <30 seconds")
+        print("   - Port 9222 is protected from monitoring")
+        print("="*60 + "\n")
+    else:
+        print("\n" + "="*60)
+        print("⚠️  Chrome Process Watchdog: NOT AVAILABLE")
+        print("   Chrome instances will not have crash protection")
+        print("="*60 + "\n")
+
 def main():
     global auto_login_process
     
@@ -129,7 +153,13 @@ def main():
                         help="Seconds to wait between auto-login and dashboard start (default: 15)")
     parser.add_argument("--background", action="store_true", 
                         help="Run auto-login in the background")
+    parser.add_argument("--no-watchdog", action="store_true",
+                        help="Disable Chrome Process Watchdog monitoring")
     args = parser.parse_args()
+    
+    # Show watchdog status
+    if not args.no_watchdog:
+        show_watchdog_status()
     
     if args.background:
         # Start auto-login in the background
