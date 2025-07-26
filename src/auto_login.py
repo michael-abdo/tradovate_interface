@@ -240,9 +240,12 @@ def start_chrome_with_debugging(port):
     profile_dir = os.path.join("/tmp", f"tradovate_debug_profile_{port}")
     os.makedirs(profile_dir, exist_ok=True)
 
-    # Stop any Chrome that's already using this debugging port
-    subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
-                   capture_output=True)
+    # SAFETY: NEVER kill port 9222 - only kill trading ports 9223+
+    if port != 9222:
+        subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
+                       capture_output=True)
+    else:
+        print(f"SAFETY: Skipping cleanup for protected port {port}")
 
     chrome_cmd = [
         CHROME_PATH,
@@ -616,9 +619,11 @@ def main():
             process_monitor.start_monitoring()
             print("Chrome Process Monitor started")
         
-        # Make sure any existing Chrome instances are stopped
-        subprocess.run(["pkill", "-f", f"remote-debugging-port={BASE_DEBUGGING_PORT}"],
-                      capture_output=True)
+        # SAFETY: NEVER kill port 9222 - only kill ports 9223+
+        # Make sure any existing Chrome instances on trading ports are stopped
+        for port in [9223, 9224, 9225, 9226, 9227, 9228, 9229, 9230]:
+            subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
+                          capture_output=True)
         
         # Start Chrome instances for each credential pair simultaneously using threads
         threads = []

@@ -107,11 +107,13 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error terminating Chrome process {pid}: {e}")
         
-        # Last resort: Use pkill as a safety net
+        # Last resort: Use pkill as a safety net (NEVER touch port 9222)
         try:
             if platform.system() != "Windows":
-                print("Running pkill as final cleanup...")
-                subprocess.run(["pkill", "-f", "remote-debugging-port"], capture_output=True)
+                print("Running targeted pkill for ports 9223+ only...")
+                # Kill only specific ports 9223, 9224, 9225, etc - NEVER 9222
+                for port in [9223, 9224, 9225, 9226, 9227, 9228, 9229, 9230]:
+                    subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"], capture_output=True)
         except Exception as e:
             print(f"Error running pkill: {e}")
             
