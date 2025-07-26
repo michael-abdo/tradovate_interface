@@ -13,6 +13,15 @@ from app import TradovateController
 from flask import request
 from utils.chrome_stability import ChromeStabilityMonitor
 
+# Import process monitor for startup monitoring integration
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tradovate_interface', 'src'))
+try:
+    from utils.process_monitor import ChromeProcessMonitor, StartupPhase, StartupMonitoringMode
+    STARTUP_MONITORING_AVAILABLE = True
+except ImportError:
+    print("Warning: Startup monitoring not available for dashboard integration.")
+    STARTUP_MONITORING_AVAILABLE = False
+
 # Create Flask app
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(__name__, 
@@ -25,13 +34,26 @@ controller = TradovateController()
 # Initialize connection health monitoring
 health_monitor = ChromeStabilityMonitor(log_dir="logs/dashboard_health")
 
-# Register connections with health monitor
+# Initialize startup monitoring for dashboard integration if available
+startup_monitor = None
+if STARTUP_MONITORING_AVAILABLE:
+    try:
+        startup_monitor = ChromeProcessMonitor(config_path="config/process_monitor.json")
+        startup_monitor.enable_startup_monitoring(StartupMonitoringMode.PASSIVE)  # Passive monitoring for dashboard
+        print("Startup monitoring initialized for dashboard integration")
+    except Exception as e:
+        print(f"Warning: Failed to initialize startup monitoring for dashboard: {e}")
+        startup_monitor = None
+
+# Register connections with health monitor if methods exist
 for idx, connection in enumerate(controller.connections):
     account_name = f"Account_{idx+1}_{connection.account_name.replace(' ', '_')}"
-    health_monitor.register_connection(account_name, connection.port)
+    if hasattr(health_monitor, 'register_connection'):
+        health_monitor.register_connection(account_name, connection.port)
 
-# Start health monitoring
-health_monitor.start_health_monitoring()
+# Start health monitoring if method exists
+if hasattr(health_monitor, 'start_health_monitoring'):
+    health_monitor.start_health_monitoring()
 
 def inject_account_data_function():
     """Inject the getAllAccountTableData function into all tabs"""
@@ -627,6 +649,227 @@ def get_network_quality():
             'network_monitoring_enabled': False,
             'connections': {},
             'real_time_checks': []
+        }), 500
+
+# API endpoint to get startup monitoring status
+@app.route('/api/startup-monitoring', methods=['GET'])
+def get_startup_monitoring():
+    """Get comprehensive startup monitoring status and metrics"""
+    try:
+        if not STARTUP_MONITORING_AVAILABLE or not startup_monitor:
+            return jsonify({
+                'error': 'Startup monitoring not available',
+                'timestamp': datetime.datetime.now().isoformat(),
+                'startup_monitoring_enabled': False,
+                'startup_processes': {},
+                'monitoring_stats': {}
+            }), 503
+        
+        # Get current startup monitoring status
+        status = startup_monitor.get_status()
+        
+        # Enhance with startup-specific information
+        startup_status = {
+            'timestamp': datetime.datetime.now().isoformat(), 
+            'startup_monitoring_enabled': STARTUP_MONITORING_AVAILABLE and startup_monitor is not None,
+            'monitoring_active': status.get('monitoring_active', False),
+            'startup_monitoring_active': hasattr(startup_monitor, 'startup_monitoring_thread') and 
+                                       startup_monitor.startup_monitoring_thread and 
+                                       startup_monitor.startup_monitoring_thread.is_alive(),
+            'startup_processes': {},
+            'monitoring_stats': {
+                'total_startup_processes': 0,
+                'active_startup_processes': 0,
+                'completed_startup_processes': 0,
+                'failed_startup_processes': 0,
+                'average_startup_time': 0,
+                'startup_success_rate': 0
+            },
+            'startup_phases': {},
+            'resource_usage': {}
+        }
+        
+        # Get startup process information if available
+        if hasattr(startup_monitor, 'startup_processes'):
+            with startup_monitor.process_lock:
+                startup_processes = getattr(startup_monitor, 'startup_processes', {})
+                
+                total_processes = len(startup_processes)
+                active_count = 0
+                completed_count = 0
+                failed_count = 0
+                startup_times = []
+                phase_counts = {}
+                
+                for account_name, process_info in startup_processes.items():
+                    # Convert process info to serializable format
+                    if hasattr(process_info, '__dict__'):
+                        process_dict = {}
+                        for key, value in process_info.__dict__.items():
+                            if isinstance(value, datetime.datetime):
+                                process_dict[key] = value.isoformat()
+                            elif hasattr(value, 'value'):  # Enum value
+                                process_dict[key] = value.value
+                            else:
+                                try:
+                                    # Test if value is JSON serializable
+                                    json.dumps(value)
+                                    process_dict[key] = value
+                                except (TypeError, ValueError):
+                                    process_dict[key] = str(value)
+                        
+                        startup_status['startup_processes'][account_name] = process_dict
+                        
+                        # Calculate statistics
+                        current_phase = getattr(process_info, 'current_phase', StartupPhase.REGISTERED)
+                        phase_name = current_phase.value if hasattr(current_phase, 'value') else str(current_phase)
+                        phase_counts[phase_name] = phase_counts.get(phase_name, 0) + 1
+                        
+                        if phase_name == StartupPhase.READY.value:
+                            completed_count += 1
+                            # Calculate startup time if available
+                            if hasattr(process_info, 'startup_time') and hasattr(process_info, 'completion_time'):
+                                startup_time = process_info.completion_time - process_info.startup_time
+                                startup_times.append(startup_time.total_seconds())
+                        elif phase_name in ['failed', 'timeout']:
+                            failed_count += 1
+                        else:
+                            active_count += 1
+                
+                # Update statistics
+                startup_status['monitoring_stats'].update({
+                    'total_startup_processes': total_processes,
+                    'active_startup_processes': active_count,
+                    'completed_startup_processes': completed_count,
+                    'failed_startup_processes': failed_count,
+                    'average_startup_time': sum(startup_times) / len(startup_times) if startup_times else 0,
+                    'startup_success_rate': (completed_count / total_processes * 100) if total_processes > 0 else 0
+                })
+                
+                startup_status['startup_phases'] = phase_counts
+        
+        # Get resource usage information if available
+        if hasattr(startup_monitor, 'startup_monitoring_thread'):
+            try:
+                import psutil
+                startup_status['resource_usage'] = {
+                    'cpu_percent': psutil.cpu_percent(interval=0.1),
+                    'memory_percent': psutil.virtual_memory().percent,
+                    'startup_monitoring_memory': 0  # Could be enhanced to track specific thread memory
+                }
+            except ImportError:
+                startup_status['resource_usage'] = {
+                    'error': 'psutil not available for resource monitoring'
+                }
+        
+        # Add startup monitoring configuration
+        if hasattr(startup_monitor, 'config'):
+            config = startup_monitor.config
+            startup_status['configuration'] = {
+                'startup_timeout': config.get('startup_timeout', 60),
+                'startup_warning_threshold': config.get('startup_warning_threshold', 30),
+                'startup_retry_threshold': config.get('startup_retry_threshold', 45),
+                'startup_resource_limit_cpu': config.get('startup_resource_limit_cpu', 80),
+                'startup_resource_limit_memory': config.get('startup_resource_limit_memory', 80),
+                'startup_check_interval': config.get('startup_check_interval', 2)
+            }
+        
+        return jsonify(startup_status)
+        
+    except Exception as e:
+        print(f"Error getting startup monitoring status: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'error': f'Failed to get startup monitoring status: {str(e)}',
+            'timestamp': datetime.datetime.now().isoformat(),
+            'startup_monitoring_enabled': False,
+            'startup_processes': {},
+            'monitoring_stats': {}
+        }), 500
+
+# API endpoint to control startup monitoring
+@app.route('/api/startup-monitoring/control', methods=['POST'])
+def control_startup_monitoring():
+    """Enable, disable, or configure startup monitoring"""
+    try:
+        if not STARTUP_MONITORING_AVAILABLE or not startup_monitor:
+            return jsonify({
+                'error': 'Startup monitoring not available',
+                'status': 'unavailable'
+            }), 503
+        
+        data = request.json
+        action = data.get('action', 'status')
+        
+        if action == 'enable':
+            mode = data.get('mode', 'PASSIVE')
+            try:
+                monitoring_mode = StartupMonitoringMode(mode.lower())
+                startup_monitor.enable_startup_monitoring(monitoring_mode)
+                return jsonify({
+                    'status': 'success',
+                    'message': f'Startup monitoring enabled in {mode} mode',
+                    'monitoring_mode': mode
+                })
+            except ValueError:
+                return jsonify({
+                    'error': f'Invalid monitoring mode: {mode}',
+                    'valid_modes': [mode.value for mode in StartupMonitoringMode]
+                }), 400
+                
+        elif action == 'disable':
+            startup_monitor.enable_startup_monitoring(StartupMonitoringMode.DISABLED)
+            return jsonify({
+                'status': 'success',
+                'message': 'Startup monitoring disabled'
+            })
+            
+        elif action == 'clear':
+            # Clear completed startup processes from tracking
+            if hasattr(startup_monitor, 'startup_processes'):
+                with startup_monitor.process_lock:
+                    startup_processes = getattr(startup_monitor, 'startup_processes', {})
+                    completed_count = 0
+                    accounts_to_remove = []
+                    
+                    for account_name, process_info in startup_processes.items():
+                        current_phase = getattr(process_info, 'current_phase', StartupPhase.REGISTERED)
+                        if current_phase == StartupPhase.READY:
+                            accounts_to_remove.append(account_name)
+                            completed_count += 1
+                    
+                    for account_name in accounts_to_remove:
+                        del startup_processes[account_name]
+                    
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'Cleared {completed_count} completed startup processes',
+                        'cleared_count': completed_count
+                    })
+            
+            return jsonify({
+                'status': 'success',
+                'message': 'No completed processes to clear',
+                'cleared_count': 0
+            })
+            
+        else:
+            # Return current status
+            status = startup_monitor.get_status()
+            return jsonify({
+                'status': 'success',
+                'monitoring_active': status.get('monitoring_active', False),
+                'startup_monitoring_active': hasattr(startup_monitor, 'startup_monitoring_thread') and 
+                                           startup_monitor.startup_monitoring_thread and 
+                                           startup_monitor.startup_monitoring_thread.is_alive()
+            })
+        
+    except Exception as e:
+        print(f"Error controlling startup monitoring: {e}")
+        return jsonify({
+            'error': f'Failed to control startup monitoring: {str(e)}',
+            'status': 'error'
         }), 500
 
 # API endpoint to execute trades

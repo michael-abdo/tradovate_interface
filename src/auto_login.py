@@ -12,7 +12,7 @@ import threading
 # Import Chrome Process Monitor
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tradovate_interface', 'src'))
 try:
-    from utils.process_monitor import ChromeProcessMonitor
+    from utils.process_monitor import ChromeProcessMonitor, StartupPhase
     WATCHDOG_AVAILABLE = True
 except ImportError:
     print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
@@ -84,10 +84,12 @@ TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
 
 class ChromeInstance:
-    def __init__(self, port, username, password):
+    def __init__(self, port, username, password, account_name=None, process_monitor=None):
         self.port = port
         self.username = username
         self.password = password
+        self.account_name = account_name or f"Account_{port-BASE_DEBUGGING_PORT+1}"
+        self.process_monitor = process_monitor
         self.process = None
         self.browser = None
         self.tab = None
@@ -97,15 +99,81 @@ class ChromeInstance:
         
     def start(self):
         """Start Chrome with remote debugging on the specified port"""
+        # SAFETY: Never start Chrome on port 9222 - protected port
+        if self.port == 9222:
+            print(f"REFUSING to start Chrome on protected port 9222 for {self.account_name}")
+            return False
+            
+        # Register for startup monitoring before launching Chrome
+        if self.process_monitor and WATCHDOG_AVAILABLE:
+            print(f"Registering {self.account_name} for startup monitoring on port {self.port}")
+            if not self.process_monitor.register_for_startup_monitoring(self.account_name, self.port):
+                print(f"Failed to register startup monitoring for {self.account_name}")
+            else:
+                # Update startup phase to LAUNCHING
+                self.process_monitor.update_startup_phase(
+                    self.account_name, 
+                    StartupPhase.LAUNCHING, 
+                    f"About to launch Chrome for {self.username}"
+                )
+        
+        # Launch Chrome process
+        print(f"Starting Chrome for {self.account_name} ({self.username}) on port {self.port}")
         self.process = start_chrome_with_debugging(self.port)
+        
         if self.process:
+            # Update startup phase with PID
+            if self.process_monitor and WATCHDOG_AVAILABLE:
+                self.process_monitor.update_startup_phase(
+                    self.account_name,
+                    StartupPhase.CONNECTING,
+                    f"Chrome process started with PID {self.process.pid}",
+                    pid=self.process.pid
+                )
+            
+            # Connect to Chrome debugging protocol
+            print(f"Connecting to Chrome for {self.account_name}")
             self.browser, self.tab = connect_to_chrome(self.port)
+            
             if self.tab:
+                # Update startup phase to LOADING
+                if self.process_monitor and WATCHDOG_AVAILABLE:
+                    self.process_monitor.update_startup_phase(
+                        self.account_name,
+                        StartupPhase.LOADING,
+                        f"Connected to Chrome, tab available for {self.username}"
+                    )
+                
                 # Check if we're on the login page and log in if needed
-                self.check_and_login_if_needed()
+                login_attempted = self.check_and_login_if_needed()
+                
+                # Update startup phase to AUTHENTICATING
+                if self.process_monitor and WATCHDOG_AVAILABLE:
+                    phase_detail = f"Login attempted: {login_attempted}" if login_attempted else "Already authenticated"
+                    self.process_monitor.update_startup_phase(
+                        self.account_name,
+                        StartupPhase.AUTHENTICATING,
+                        phase_detail
+                    )
+                
+                # Disable browser alerts
                 disable_alerts(self.tab)
                 
-                # Start a thread to monitor login status
+                # Validate startup completion
+                startup_valid = True
+                if self.process_monitor and WATCHDOG_AVAILABLE:
+                    startup_valid = self.process_monitor.validate_startup_completion(self.account_name)
+                    if startup_valid:
+                        self.process_monitor.update_startup_phase(
+                            self.account_name,
+                            StartupPhase.READY,
+                            f"Startup validation successful for {self.username}"
+                        )
+                        print(f"Startup monitoring completed successfully for {self.account_name}")
+                    else:
+                        print(f"Startup validation failed for {self.account_name}")
+                
+                # Start login monitoring thread
                 self.is_running = True
                 self.login_monitor_thread = threading.Thread(
                     target=self.monitor_login_status,
@@ -113,7 +181,26 @@ class ChromeInstance:
                 )
                 self.login_monitor_thread.start()
                 
-                return True
+                return startup_valid
+            else:
+                # Failed to connect to tab
+                if self.process_monitor and WATCHDOG_AVAILABLE:
+                    self.process_monitor.update_startup_phase(
+                        self.account_name,
+                        StartupPhase.CONNECTING,
+                        f"Failed to connect to Chrome tab for {self.username}"
+                    )
+                print(f"Failed to connect to Chrome tab for {self.account_name}")
+        else:
+            # Failed to start Chrome process
+            if self.process_monitor and WATCHDOG_AVAILABLE:
+                self.process_monitor.update_startup_phase(
+                    self.account_name,
+                    StartupPhase.LAUNCHING,
+                    f"Failed to start Chrome process for {self.username}"
+                )
+            print(f"Failed to start Chrome process for {self.account_name}")
+            
         return False
     
     def check_and_login_if_needed(self):
@@ -747,10 +834,17 @@ def main():
         def start_chrome_instance(idx, username, password):
             # Assign a unique port for each Chrome instance
             port = BASE_DEBUGGING_PORT + idx
+            account_name = f"Account_{idx+1}_{username.split('@')[0]}"  # Use email prefix for account name
             print(f"Preparing Chrome instance {idx+1} for {username} on port {port}")
             
-            # Create and start a new Chrome instance
-            instance = ChromeInstance(port, username, password)
+            # Create and start a new Chrome instance with startup monitoring
+            instance = ChromeInstance(
+                port=port, 
+                username=username, 
+                password=password,
+                account_name=account_name,
+                process_monitor=process_monitor
+            )
             if instance.start():
                 print(f"Chrome instance for {username} started successfully")
                 results.append((instance, True))
@@ -776,16 +870,15 @@ def main():
             if success:
                 chrome_instances.append(instance)
                 
-                # Register with process monitor if available
+                # Register with regular process monitor if available (startup monitoring should have transitioned)
                 if WATCHDOG_AVAILABLE and process_monitor and instance.process:
-                    account_name = f"Account {len(chrome_instances)}"  # Or use username
                     process_monitor.register_process(
-                        account_name=account_name,
+                        account_name=instance.account_name,
                         pid=instance.process.pid,
                         port=instance.port,
                         profile_dir=f"/tmp/tradovate_debug_profile_{instance.port}"
                     )
-                    print(f"Registered {account_name} with Process Monitor")
+                    print(f"Registered {instance.account_name} with regular Process Monitor")
         
         if not chrome_instances:
             print("Failed to start any Chrome instances, exiting")
@@ -796,11 +889,10 @@ def main():
         health_monitor = ChromeStabilityMonitor(log_dir="logs/connection_health")
         
         # Register each Chrome instance with health monitor
-        for idx, instance in enumerate(chrome_instances):
-            account_name = f"Account_{idx+1}_{instance.username.split('@')[0]}"  # Use email prefix for account name
+        for instance in chrome_instances:
             if hasattr(health_monitor, 'register_connection'):
-                health_monitor.register_connection(account_name, instance.port)
-                print(f"Registered {account_name} for health monitoring on port {instance.port}")
+                health_monitor.register_connection(instance.account_name, instance.port)
+                print(f"Registered {instance.account_name} for health monitoring on port {instance.port}")
             else:
                 print(f"Warning: health_monitor missing register_connection method")
         
