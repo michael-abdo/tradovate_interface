@@ -1,0 +1,6 @@
+[2025-07-25 19:47:55,476] INFO - Loaded config from ../tradovate_interface/config/process_monitor.json
+[2025-07-25 19:47:55,477] INFO - Chrome process monitoring started
+[2025-07-25 19:48:01,157] INFO - Registered Chrome process for Account 1 - PID: 71040, Port: 9223
+[2025-07-25 19:48:01,157] INFO - Registered Chrome process for Account 2 - PID: 71039, Port: 9224
+[2025-07-25 19:48:01,158] INFO - Stopping Chrome process monitoring...
+[2025-07-25 19:48:01,159] INFO - Chrome process monitoring stopped

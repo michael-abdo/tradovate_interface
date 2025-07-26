@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-07-25T21:03:21.055985",
+  "summary": {
+    "passed": 5,
+    "warnings": 1,
+    "failed": 1,
+    "ready_to_implement": false
+  },
+  "checks": {
+    "passed": [
+      {
+        "name": "backups",
+        "message": "Recent backup found: backup_20250725_205823"
+      },
+      {
+        "name": "chrome_processes",
+        "message": "No conflicting Chrome processes"
+      },
+      {
+        "name": "chrome_installation",
+        "message": "Chrome found: Google Chrome 138.0.7204.169"
+      },
+      {
+        "name": "file_structure",
+        "message": "All required files exist"
+      },
+      {
+        "name": "configuration",
+        "message": "Configuration valid"
+      }
+    ],
+    "warnings": [
+      {
+        "name": "virtual_environment",
+        "message": "Not in venv. Activate with: source /Users/Mike/trading/tradovate_interface/venv/bin/activate"
+      }
+    ],
+    "failed": [
+      {
+        "name": "environment",
+        "message": "Environment issues: \u2717 Missing package 'websocket-client': WebSocket connections"
+      }
+    ]
+  }
+}

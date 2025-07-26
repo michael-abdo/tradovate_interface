@@ -1,8 +1,3 @@
-
-# Enhanced startup imports
-from enhanced_startup_manager import StartupManager, StartupValidationError
-from structured_logger import get_logger
-
 #!/usr/bin/env python3
 """
 All-in-one startup script for Tradovate Interface:
@@ -41,33 +36,11 @@ chrome_processes = []
 chrome_termination_lock = threading.Lock()
 
 def run_auto_login():
-    """Run the auto_login process with enhanced error handling"""
-    logger = get_logger("start_all", log_file="startup/start_all.log")
-    logger.info("Starting enhanced auto-login process")
-    
-    try:
-        # Use StartupManager for robust startup
-        manager = StartupManager()
-        return manager.start_with_retry()
-    except StartupValidationError as e:
-        logger.error("Startup validation failed", error=str(e))
-        print(f"\n❌ Startup failed: {e}")
-        
-        # Show startup report
-        report = manager.get_startup_report()
-        print("\nStartup events:")
-        for event in report['events'][-5:]:
-            status = "✓" if event['success'] else "✗"
-            print(f"  {status} {event['event']}: {event.get('details', '')}")
-        
-        # Save report
-        report_file = manager.save_startup_report()
-        print(f"\nDetailed report saved to: {report_file}")
-        
-        raise
-    except Exception as e:
-        logger.exception("Unexpected error during startup")
-        raise
+    """Run the auto_login process to start Chrome and log in"""
+    from src.auto_login import main as auto_login_main
+    print("Starting Chrome and auto-login process...")
+    return auto_login_main()
+
 def run_dashboard():
     """Run the dashboard process"""
     from src.dashboard import run_flask_dashboard

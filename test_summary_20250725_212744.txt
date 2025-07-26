@@ -1,0 +1,13 @@
+ENHANCED STARTUP TEST SUMMARY
+============================================================
+
+Test ID: 20250725_212744
+Status: FAILED
+Duration: 14.54 seconds
+Chrome Instances: 19
+Retry Attempts: 0
+Peak Memory: 43.5 MB
+Exit Code: 1
+
+Recommendations:
+- Found 2 errors in logs - review for issues
