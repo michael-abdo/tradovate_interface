@@ -39,6 +39,7 @@ class TradovateConnection:
     def __init__(self, port, account_name=None):
         self.port = port
         self.account_name = account_name or f"Account on port {port}"
+        self.username = self.account_name  # Add username property for compatibility
         # Direct connection without circular import
         self.browser = pychrome.Browser(url=f"http://localhost:{port}")
         self.tab = None
@@ -50,14 +51,10 @@ class TradovateConnection:
             try:
                 tab.start()
                 tab.Page.enable()
-                # Use safe_evaluate to check if this is a Tradovate tab
-                result = safe_evaluate(
-                    tab=tab, 
-                    js_code="document.location.href",
-                    operation_type=OperationType.IMPORTANT,
-                    description="Check if tab is Tradovate"
-                )
-                url = result.value if result.success else ""
+                # Use direct execution to get URL (bypass Chrome Communication Framework validation)
+                # This is needed because login pages don't have the required functions injected yet
+                result = tab.Runtime.evaluate(expression="document.location.href")
+                url = result.get("result", {}).get("value", "")
                 
                 if "tradovate" in url:
                     self.tab = tab
@@ -74,6 +71,57 @@ class TradovateConnection:
                     pass
                     
         print(f"No Tradovate tab found for {self.account_name} (fallback method)")
+    
+    def check_connection_health(self) -> dict:
+        """Check the health of this Chrome instance connection - simplified for dashboard use"""
+        health_status = {
+            'account': self.username,
+            'port': self.port,
+            'healthy': False,
+            'checks': {},
+            'errors': []
+        }
+        
+        try:
+            # Check if browser connection is available
+            if self.browser:
+                try:
+                    tabs = self.browser.list_tab()
+                    health_status['checks']['browser_responsive'] = True
+                    health_status['checks']['tab_count'] = len(tabs)
+                except Exception as e:
+                    health_status['checks']['browser_responsive'] = False
+                    health_status['errors'].append(f"Browser not responsive: {str(e)}")
+                    return health_status
+            else:
+                health_status['checks']['browser_responsive'] = False
+                health_status['errors'].append("No browser connection")
+                return health_status
+            
+            # Check if tab is available and responsive
+            if self.tab:
+                try:
+                    # Use direct evaluation instead of safe_evaluate to avoid validation issues
+                    result = self.tab.Runtime.evaluate(expression="document.readyState")
+                    ready_state = result.get("result", {}).get("value", "")
+                    health_status['checks']['tab_responsive'] = True
+                    health_status['checks']['document_ready'] = ready_state == "complete"
+                except Exception as e:
+                    health_status['checks']['tab_responsive'] = False
+                    health_status['errors'].append(f"Tab not responsive: {str(e)}")
+                    return health_status
+            else:
+                health_status['checks']['tab_responsive'] = False
+                health_status['errors'].append("No active tab")
+                return health_status
+            
+            # If we get here, basic checks passed
+            health_status['healthy'] = True
+            return health_status
+            
+        except Exception as e:
+            health_status['errors'].append(f"Health check failed: {str(e)}")
+            return health_status
         
     def inject_tampermonkey(self):
         """Inject the Tampermonkey functions into the tab"""

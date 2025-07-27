@@ -193,14 +193,15 @@ class ChromeInstance:
             })();
             """
             
-            # Use safe_evaluate to check page status
-            result = safe_evaluate(
-                tab=self.tab,
-                js_code=check_js,
-                operation_type=OperationType.IMPORTANT,
-                description=f"Check page status for {self.username}"
-            )
-            page_status = result.value if result.success else "unknown"
+            # Skip safe_evaluate for page status checks to avoid strict validation
+            # and go directly to tab execution since we're just checking page state
+            try:
+                direct_result = self.tab.Runtime.evaluate(expression=check_js)
+                page_status = direct_result.get("result", {}).get("value", "unknown")
+                print(f"Direct page status check for {self.username}: {page_status}")
+            except Exception as e:
+                print(f"Direct page status check failed for {self.username}: {e}")
+                page_status = "unknown"
             
             print(f"Current page status for {self.username}: {page_status}")
             
@@ -227,17 +228,16 @@ class ChromeInstance:
                     return false;
                 })();
                 """
-                # Use safe_evaluate to handle access request
-                result = safe_evaluate(
-                    tab=self.tab,
-                    js_code=access_js,
-                    operation_type=OperationType.CRITICAL,
-                    description=f"Handle access request for {self.username}"
-                )
-                if result.success:
-                    return True
-                else:
-                    print(f"Failed to handle access request for {self.username}: {result.error}")
+                # Use direct execution to handle access request
+                try:
+                    result = self.tab.Runtime.evaluate(expression=access_js)
+                    if result.get("result", {}).get("value", False):
+                        return True
+                    else:
+                        print(f"Failed to handle access request for {self.username}: No button found")
+                        return False
+                except Exception as e:
+                    print(f"Failed to handle access request for {self.username}: {e}")
                     return False
                 
             elif page_status == "logged_in":
@@ -329,14 +329,9 @@ class ChromeInstance:
             # Check if tab is accessible
             if self.tab:
                 try:
-                    # Test JavaScript execution using safe_evaluate
-                    result = safe_evaluate(
-                        tab=self.tab,
-                        js_code="1 + 1",
-                        operation_type=OperationType.NON_CRITICAL,
-                        description=f"Test JavaScript execution for {self.username}"
-                    )
-                    if result.success and result.value == 2:
+                    # Test JavaScript execution using direct execution
+                    result = self.tab.Runtime.evaluate(expression="1 + 1")
+                    if result.get("result", {}).get("value") == 2:
                         health_status['checks']['javascript_execution'] = True
                         
                         # If JavaScript works, check Tradovate application status
@@ -348,14 +343,9 @@ class ChromeInstance:
                                 tradingReady: typeof window.autoTrade === 'function'
                             })
                             """
-                            # Use safe_evaluate to check application status
-                            result = safe_evaluate(
-                                tab=self.tab,
-                                js_code=app_check_js,
-                                operation_type=OperationType.NON_CRITICAL,
-                                description=f"Check application status for {self.username}"
-                            )
-                            app_status = result.value if result.success else {}
+                            # Use direct execution to check application status
+                            result = self.tab.Runtime.evaluate(expression=app_check_js)
+                            app_status = result.get("result", {}).get("value", {})
                             
                             health_status['checks']['tradovate_loaded'] = "tradovate.com" in app_status.get('url', '')
                             health_status['checks']['authenticated'] = app_status.get('authenticated', False)
@@ -458,14 +448,9 @@ def connect_to_chrome(port):
         try:
             tab.start()
             tab.Page.enable()
-            # Use safe_evaluate to get URL
-            result = safe_evaluate(
-                tab=tab,
-                js_code="document.location.href",
-                operation_type=OperationType.NON_CRITICAL,
-                description="Get tab URL for validation"
-            )
-            url = result.value if result.success else ""
+            # Use direct execution to get URL
+            result = tab.Runtime.evaluate(expression="document.location.href")
+            url = result.get("result", {}).get("value", "")
             print(f"Found tab with URL: {url}")
             
             if "tradovate" in url:
@@ -654,13 +639,8 @@ def inject_login_script(tab, username, password):
     # Execute the login script in the browser
     try:
         print("Executing login script...")
-        # Use safe_evaluate to execute login script
-        result = safe_evaluate(
-            tab=tab,
-            js_code=auto_login_js,
-            operation_type=OperationType.CRITICAL,
-            description=f"Execute login script for {username}"
-        )
+        # Use direct execution to avoid framework validation issues
+        result = tab.Runtime.evaluate(expression=auto_login_js)
         
         # Append test element to DOM to verify script is running
         test_script = f'''
@@ -708,13 +688,8 @@ def inject_login_script(tab, username, password):
             }}, 60000);
         }})();
         '''
-        # Use safe_evaluate to execute test script
-        safe_evaluate(
-            tab=tab,
-            js_code=test_script,
-            operation_type=OperationType.NON_CRITICAL,
-            description=f"Execute test script for {username}"
-        )
+        # Use direct execution for test script as well
+        tab.Runtime.evaluate(expression=test_script)
         
         print(f"Login script executed for {username}")
         return result
@@ -747,19 +722,10 @@ def disable_alerts(tab):
     '''
     
     try:
-        # Use safe_evaluate to disable alerts
-        result = safe_evaluate(
-            tab=tab,
-            js_code=disable_js,
-            operation_type=OperationType.NON_CRITICAL,
-            description="Disable browser alerts and confirmations"
-        )
-        if result.success:
-            print("Disabled browser alerts and confirmations")
-            return True
-        else:
-            print(f"Failed to disable alerts: {result.error}")
-            return False
+        # Use direct execution to disable alerts
+        result = tab.Runtime.evaluate(expression=disable_js)
+        print("Disabled browser alerts and confirmations")
+        return True
     except Exception as e:
         print(f"Error disabling alerts: {e}")
         return False
@@ -847,38 +813,54 @@ def main():
             # Assign a unique port for each Chrome instance
             port = BASE_DEBUGGING_PORT + idx
             account_name = f"Account_{idx+1}_{username.split('@')[0]}"  # Use email prefix for account name
-            print(f"Preparing Chrome instance {idx+1} for {username} on port {port}")
+            print(f"Thread {idx}: Preparing Chrome instance {idx+1} for {username} on port {port}")
             
-            # Create and start a new Chrome instance with startup monitoring
-            instance = ChromeInstance(
-                port=port, 
-                username=username, 
-                password=password,
-                account_name=account_name,
-                process_monitor=process_monitor
-            )
-            if instance.start():
-                print(f"Chrome instance for {username} started successfully")
-                results.append((instance, True))
-            else:
-                print(f"Failed to start Chrome instance for {username}")
-                results.append((instance, False))
+            try:
+                # Create and start a new Chrome instance with startup monitoring
+                instance = ChromeInstance(
+                    port=port, 
+                    username=username, 
+                    password=password,
+                    account_name=account_name,
+                    process_monitor=process_monitor
+                )
+                print(f"Thread {idx}: Created ChromeInstance object for {username}")
+                
+                if instance.start():
+                    print(f"Thread {idx}: Chrome instance for {username} started successfully")
+                    results.append((instance, True))
+                else:
+                    print(f"Thread {idx}: Failed to start Chrome instance for {username}")
+                    results.append((instance, False))
+            except Exception as e:
+                print(f"Thread {idx}: Exception in start_chrome_instance for {username}: {e}")
+                import traceback
+                traceback.print_exc()
+                results.append((None, False))
         
         # Create and start a thread for each credential pair
+        print(f"Starting {len(credentials)} threads for Chrome instances...")
         for idx, (username, password) in enumerate(credentials):
+            print(f"Creating thread {idx} for {username}")
             thread = threading.Thread(
                 target=start_chrome_instance,
                 args=(idx, username, password)
             )
             threads.append(thread)
             thread.start()
+            print(f"Thread {idx} started for {username}")
         
         # Wait for all threads to complete
-        for thread in threads:
+        print("Waiting for all threads to complete...")
+        for idx, thread in enumerate(threads):
+            print(f"Joining thread {idx}...")
             thread.join()
+            print(f"Thread {idx} completed")
         
+        print(f"All threads completed. Processing {len(results)} results...")
         # Process results
-        for instance, success in results:
+        for idx, (instance, success) in enumerate(results):
+            print(f"Result {idx}: success={success}, instance={instance}")
             if success:
                 chrome_instances.append(instance)
                 
