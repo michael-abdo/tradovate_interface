@@ -441,29 +441,10 @@ def start_chrome_with_debugging(port):
         return None
 
 def connect_to_chrome(port):
-    """Connect to Chrome via remote debugging protocol - DRY refactored"""
+    """Connect to Chrome via remote debugging protocol"""
     print(f"Connecting to Chrome on port {port}...")
     
-    # First try to use TradovateConnection for standardized connection
-    try:
-        # Import here to avoid circular dependency
-        import sys
-        import os
-        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from app import TradovateConnection
-        
-        # Use TradovateConnection to find existing Tradovate tab
-        connection = TradovateConnection(port, f"Auto-Login Port {port}")
-        
-        if connection.tab:
-            print(f"✓ Found Tradovate tab via TradovateConnection")
-            # Return browser reference and tab to maintain interface
-            return connection.browser, connection.tab
-            
-    except Exception as e:
-        print(f"TradovateConnection not available or failed: {e}")
-    
-    # Fallback to original implementation for compatibility
+    # Direct connection without circular imports
     browser = pychrome.Browser(url=f"http://localhost:{port}")
     
     # Make sure Chrome is ready

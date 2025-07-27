@@ -39,19 +39,10 @@ class TradovateConnection:
     def __init__(self, port, account_name=None):
         self.port = port
         self.account_name = account_name or f"Account on port {port}"
-        # Use unified connection logic from auto_login instead of duplicating tab finding
-        try:
-            from auto_login import connect_to_chrome
-            self.browser, self.tab = connect_to_chrome(port)
-            if self.tab:
-                print(f"✅ Connected to Tradovate tab via unified connection logic for {self.account_name}")
-            else:
-                print(f"❌ Failed to find Tradovate tab for {self.account_name}")
-        except ImportError:
-            print(f"⚠️  Unified connection not available, using fallback for {self.account_name}")
-            self.browser = pychrome.Browser(url=f"http://localhost:{port}")
-            self.tab = None
-            self.find_tradovate_tab()
+        # Direct connection without circular import
+        self.browser = pychrome.Browser(url=f"http://localhost:{port}")
+        self.tab = None
+        self.find_tradovate_tab()
         
     def find_tradovate_tab(self):
         """Fallback tab finding method when unified connection not available"""
