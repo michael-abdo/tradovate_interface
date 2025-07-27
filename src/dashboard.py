@@ -9,11 +9,11 @@ import datetime
 
 # Import from app.py
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from app import TradovateController
+from src.app import TradovateController
 from flask import request
-from utils.chrome_stability import ChromeStabilityMonitor
-from utils.chrome_communication import safe_evaluate, OperationType
-from utils.trading_errors import (
+from src.utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_communication import safe_evaluate, OperationType
+from src.utils.trading_errors import (
     error_aggregator, ErrorSeverity, ErrorCategory,
     configure_error_logging, TradingError
 )

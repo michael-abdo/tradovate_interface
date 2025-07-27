@@ -7,7 +7,7 @@ import threading
 import time
 
 # Import Chrome Communication Framework for safe operations
-from utils.chrome_communication import safe_evaluate, OperationType
+from src.utils.chrome_communication import safe_evaluate, OperationType
 
 # Load the Tampermonkey script
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

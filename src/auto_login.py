@@ -9,17 +9,21 @@ import json
 import random
 import threading
 
+# Add project root to path for imports
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+
 # Note: Chrome Process Monitor was moved to archive with tradovate_interface
 # Disable watchdog functionality for now
 print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
 WATCHDOG_AVAILABLE = False
 
 # Import connection health monitoring and Chrome Communication Framework
-from utils.chrome_stability import ChromeStabilityMonitor
-from utils.chrome_communication import safe_evaluate, OperationType
+from src.utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_communication import safe_evaluate, OperationType
 
 # Configuration - Use unified Chrome configuration management
-from utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT, get_chrome_ports
+from src.utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT, get_chrome_ports
 
 # Fallback for backwards compatibility
 try:
@@ -781,18 +785,28 @@ def disable_alerts(tab):
 
 # Use unified credential loading from Chrome Communication Framework
 try:
-    from utils.chrome_communication import load_unified_credentials
+    from src.utils.chrome_communication import load_unified_credentials
     def load_credentials():
         """Load all credentials using unified authentication manager"""
         return load_unified_credentials(allow_duplicates=True)
 except ImportError:
+    # Direct fallback to loading from credentials.json
     def load_credentials():
-        """Fallback credential loading if unified framework not available"""
-        username = os.environ.get('TRADOVATE_USERNAME', '')
-        password = os.environ.get('TRADOVATE_PASSWORD', '')
-        if username and password:
-            return [(username, password)]
-        return []
+        """Load credentials directly from JSON file"""
+        config_dir = os.path.join(project_root, 'config')
+        credentials_file = os.path.join(config_dir, 'credentials.json')
+        
+        if not os.path.exists(credentials_file):
+            print(f"Credentials file not found: {credentials_file}")
+            return []
+        
+        try:
+            with open(credentials_file, 'r') as f:
+                creds_dict = json.load(f)
+                return list(creds_dict.items())
+        except Exception as e:
+            print(f"Error loading credentials: {e}")
+            return []
 
 def handle_exit(chrome_instances, process_monitor=None, health_monitor=None):
     """Clean up before exiting"""

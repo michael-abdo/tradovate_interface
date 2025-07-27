@@ -136,8 +136,8 @@ class StartupManager:
         """Initialize process monitor if available"""
         try:
             # Import inside method to avoid circular dependencies
-            sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'tradovate_interface', 'src'))
-            from utils.process_monitor import ChromeProcessMonitor, StartupMonitoringMode
+            # Process monitor was moved to archive with tradovate_interface
+            from tradovate_interface.src.utils.process_monitor import ChromeProcessMonitor, StartupMonitoringMode
             
             self.process_monitor = ChromeProcessMonitor()
             self.process_monitor.enable_startup_monitoring(StartupMonitoringMode.ACTIVE)
@@ -567,6 +567,7 @@ class StartupManager:
                     self.log_event("auto_login_start", "Starting auto-login process")
                     
                     # Import and run auto-login
+                    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
                     from src.auto_login import main as auto_login_main
                     result = auto_login_main()
                     

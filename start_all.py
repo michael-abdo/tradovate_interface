@@ -22,9 +22,9 @@ import platform
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
 
-# Enhanced startup imports
-from enhanced_startup_manager import StartupManager, StartupValidationError
-from structured_logger import get_logger
+# Simple logging
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Import watchdog to check availability
 sys.path.insert(0, os.path.join(project_root, 'tradovate_interface', 'src'))
@@ -40,33 +40,24 @@ chrome_processes = []
 chrome_termination_lock = threading.Lock()
 
 def run_auto_login():
-    """Run the auto_login process with enhanced error handling"""
-    logger = get_logger("start_all", log_file="startup/start_all.log")
-    logger.info("Starting enhanced auto-login process")
+    """Run the auto_login process in background"""
+    print("Starting auto-login process in background...")
     
     try:
-        # Use StartupManager for robust startup
-        manager = StartupManager()
-        return manager.start_with_retry()
-    except StartupValidationError as e:
-        logger.error("Startup validation failed", error=str(e))
-        print(f"\n❌ Startup failed: {e}")
+        # Start auto_login as a background process
+        auto_login_path = os.path.join(project_root, "src", "auto_login.py")
+        process = subprocess.Popen([sys.executable, auto_login_path])
         
-        # Show startup report
-        report = manager.get_startup_report()
-        print("\nStartup events:")
-        for event in report['events'][-5:]:
-            status = "✓" if event['success'] else "✗"
-            print(f"  {status} {event['event']}: {event.get('details', '')}")
+        print(f"✅ Auto-login started (PID: {process.pid})")
         
-        # Save report
-        report_file = manager.save_startup_report()
-        print(f"\nDetailed report saved to: {report_file}")
+        # Give it time to start Chrome instances
+        print("Waiting 10 seconds for Chrome instances to start...")
+        time.sleep(10)
         
-        raise
+        return 0
     except Exception as e:
-        logger.exception("Unexpected error during startup")
-        raise
+        print(f"❌ Error running auto-login: {e}")
+        return 1
 
 def get_ngrok_url():
     """Get the best available ngrok URL"""
