@@ -712,18 +712,19 @@ class TabHealthValidator:
             health.ready_state = page_data.get("readyState", "")
             health.tradovate_loaded = page_data.get("tradovateLoaded", False)
             
-            # Validate requirements (stricter for CRITICAL operations)
-            if not health.tradovate_loaded and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
+            # Validate requirements (stricter for CRITICAL operations only)
+            # Allow IMPORTANT operations to proceed even if tradovate check fails
+            if not health.tradovate_loaded and operation_type == OperationType.CRITICAL:
                 health.errors.append("Not on Tradovate domain")
                 return False
             
-            # Page readiness check (relaxed for NON_CRITICAL operations)
-            if health.ready_state != "complete" and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
+            # Page readiness check (only for CRITICAL operations)
+            if health.ready_state != "complete" and operation_type == OperationType.CRITICAL:
                 health.errors.append(f"Page not ready: {health.ready_state}")
                 return False
             
-            # Content check (relaxed for NON_CRITICAL operations)
-            if not page_data.get("hasContent", False) and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
+            # Content check (only for CRITICAL operations)
+            if not page_data.get("hasContent", False) and operation_type == OperationType.CRITICAL:
                 health.errors.append("Page has no content")
                 return False
             
