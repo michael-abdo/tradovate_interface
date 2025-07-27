@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Auto Order
 // @namespace    http://tampermonkey.net/
-// @version      5.3
-// @description  Tampermonkey UI for bracket auto trades with TP/SL checkboxes
+// @version      5.4
+// @description  Tampermonkey UI for bracket auto trades with TP/SL checkboxes (DOM Intelligence Enhanced)
 // @author       You
 // @match        https://trader.tradovate.com/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tradovate.com
@@ -13,8 +13,210 @@
 
 (function () {
     'use strict';
-    console.log('Auto Order script initialized');
+    console.log('Auto Order script initialized with DOM Intelligence validation');
     var debug = false;
+
+    // ============================================================================
+    // DOM INTELLIGENCE VALIDATION FUNCTIONS
+    // ============================================================================
+    
+    // Load UI Elements mapping for unified selectors
+    function loadUIElementsMapping() {
+        if (window.TRADOVATE_UI_ELEMENTS) {
+            console.log('✅ UI Elements mapping already loaded');
+            return Promise.resolve();
+        }
+        
+        // Check if mapping script is available
+        const script = document.createElement('script');
+        script.src = '/scripts/tampermonkey/tradovate_ui_elements_map.js';
+        script.onload = () => {
+            console.log('✅ UI Elements mapping loaded from external script');
+        };
+        script.onerror = () => {
+            console.log('ℹ️ External UI mapping not found, using inline fallback');
+            // Inline fallback for critical selectors used in this script
+            window.TRADOVATE_UI_ELEMENTS = {
+                MARKET_DATA: {
+                    SYMBOL_DISPLAY: '.search-box--input',
+                    SYMBOL_ALT: '.contract-symbol span',
+                    MARKET_CELLS: '.public_fixedDataTableCell_cellContent'
+                },
+                ORDER_SUBMISSION: {
+                    SUBMIT_BUTTON: '.btn-group .btn-primary'
+                },
+                ORDER_STATUS: {
+                    ORDER_ROWS: '.module.orders .fixedDataTableRowLayout_rowWrapper',
+                    ORDER_CELLS: '.public_fixedDataTableCell_cellContent',
+                    POSITION_ROWS: '.module.positions .fixedDataTableRowLayout_rowWrapper'
+                },
+                ACCOUNT_SELECTION: {
+                    ACCOUNT_DROPDOWN: '.dropdown-menu'
+                }
+            };
+        };
+        document.head.appendChild(script);
+        
+        return Promise.resolve();
+    }
+
+    // Load DOM validation helpers
+    function loadDOMHelpers() {
+        if (window.domHelpers) {
+            console.log('✅ DOM Helpers already loaded');
+            return Promise.resolve();
+        }
+        
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'http://localhost:8080/domHelpers.js';
+            script.onload = () => {
+                console.log('✅ DOM Helpers loaded externally');
+                resolve();
+            };
+            script.onerror = () => {
+                console.warn('⚠️ Could not load external DOM Helpers, using inline version');
+                // Inline basic validation functions if external load fails
+                window.domHelpers = {
+                    waitForElement: async (selector, timeout = 10000) => {
+                        const startTime = Date.now();
+                        return new Promise((resolve) => {
+                            const checkElement = () => {
+                                const element = document.querySelector(selector);
+                                if (element) {
+                                    console.log(`✅ Element found: ${selector} (${Date.now() - startTime}ms)`);
+                                    resolve(element);
+                                } else if (Date.now() - startTime >= timeout) {
+                                    console.warn(`⏰ Timeout waiting for element: ${selector} (${timeout}ms)`);
+                                    resolve(null);
+                                } else {
+                                    setTimeout(checkElement, 100);
+                                }
+                            };
+                            checkElement();
+                        });
+                    },
+                    validateElementExists: (selector) => {
+                        const element = document.querySelector(selector);
+                        const exists = element !== null;
+                        if (exists) {
+                            console.log(`✅ Element exists: ${selector}`);
+                        } else {
+                            console.warn(`❌ Element not found: ${selector}`);
+                        }
+                        return exists;
+                    },
+                    validateElementVisible: (element) => {
+                        if (!element) return false;
+                        const style = window.getComputedStyle(element);
+                        const isVisible = style.display !== 'none' && 
+                                         style.visibility !== 'hidden' && 
+                                         element.offsetWidth > 0 && 
+                                         element.offsetHeight > 0;
+                        console.log(`${isVisible ? '✅' : '❌'} Element visibility: ${isVisible}`);
+                        return isVisible;
+                    },
+                    validateElementClickable: (element) => {
+                        if (!element) return false;
+                        const isVisible = window.domHelpers.validateElementVisible(element);
+                        const isEnabled = !element.disabled && !element.hasAttribute('disabled');
+                        const isClickable = isVisible && isEnabled;
+                        console.log(`${isClickable ? '✅' : '❌'} Element clickable: ${isClickable}`);
+                        return isClickable;
+                    },
+                    safeClick: async (selector) => {
+                        console.log(`🔍 Safe click validation for: ${selector}`);
+                        const element = await window.domHelpers.waitForElement(selector, 5000);
+                        if (!element) {
+                            console.error(`❌ Cannot click: element not found: ${selector}`);
+                            return false;
+                        }
+                        if (!window.domHelpers.validateElementClickable(element)) {
+                            console.error(`❌ Cannot click: element not clickable: ${selector}`);
+                            return false;
+                        }
+                        try {
+                            element.click();
+                            console.log(`✅ Clicked element successfully: ${selector}`);
+                            return true;
+                        } catch (error) {
+                            console.error(`❌ Error clicking element: ${error.message}`);
+                            return false;
+                        }
+                    }
+                };
+                console.log('✅ Inline DOM Helpers ready');
+                resolve();
+            };
+            document.head.appendChild(script);
+        });
+    }
+    
+    // Initialize DOM Helpers and Order Validation Framework
+    Promise.all([
+        loadUIElementsMapping(),
+        loadDOMHelpers(),
+        loadOrderValidationFramework()
+    ]).then(() => {
+        console.log('🚀 Auto Order script ready with unified UI mapping, DOM Intelligence and Order Validation');
+    });
+    
+    // Load Order Validation Framework
+    function loadOrderValidationFramework() {
+        return new Promise((resolve) => {
+            // Load UI elements mapping
+            const uiElementsScript = document.createElement('script');
+            uiElementsScript.src = 'http://localhost:8080/tradovate_ui_elements_map.js';
+            uiElementsScript.onload = () => {
+                console.log('✅ UI Elements mapping loaded');
+                
+                // Load error patterns
+                const errorPatternsScript = document.createElement('script');
+                errorPatternsScript.src = 'http://localhost:8080/order_error_patterns.js';
+                errorPatternsScript.onload = () => {
+                    console.log('✅ Error patterns loaded');
+                    
+                    // Load validation framework
+                    const frameworkScript = document.createElement('script');
+                    frameworkScript.src = 'http://localhost:8080/OrderValidationFramework.js';
+                    frameworkScript.onload = () => {
+                        console.log('✅ OrderValidationFramework loaded');
+                        
+                        // Initialize validation framework with auto order settings
+                        if (!window.autoOrderValidator) {
+                            window.autoOrderValidator = new window.OrderValidationFramework({
+                                scriptName: 'autoOrder',
+                                debugMode: localStorage.getItem('autoOrderValidationDebug') === 'true',
+                                performanceMode: true
+                            });
+                            
+                            // Start monitoring for active trading sessions
+                            window.autoOrderValidator.startMonitoring();
+                            
+                            console.log('✅ Auto Order validation framework initialized');
+                        }
+                        
+                        resolve();
+                    };
+                    frameworkScript.onerror = () => {
+                        console.warn('⚠️ Could not load OrderValidationFramework, continuing without advanced validation');
+                        resolve();
+                    };
+                    document.head.appendChild(frameworkScript);
+                };
+                errorPatternsScript.onerror = () => {
+                    console.warn('⚠️ Could not load error patterns');
+                    resolve();
+                };
+                document.head.appendChild(errorPatternsScript);
+            };
+            uiElementsScript.onerror = () => {
+                console.warn('⚠️ Could not load UI elements mapping');
+                resolve();
+            };
+            document.head.appendChild(uiElementsScript);
+        });
+    }
 
     function delay(ms) {
         console.log(`Delaying for ${ms}ms`);
@@ -242,7 +444,7 @@
             }
 
             // Update the symbol in Tradovate's interface
-            updateSymbol('.search-box--input', normalizedSymbol);
+            updateSymbol(window.TRADOVATE_UI_ELEMENTS?.MARKET_DATA?.SYMBOL_DISPLAY || '.search-box--input', normalizedSymbol);
         });
 
         document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
@@ -322,87 +524,271 @@
     }
 
 
-    // Function to click dropdown option for a specific symbol
-    function clickExitForSymbol(symbol, optionId = 'cancel-option-Exit-at-Mkt-Cxl') {
-        console.log(`clickExitForSymbol called for symbol: ${symbol}, option: ${optionId}`);
+    // Enhanced function to click dropdown option for a specific symbol with validation
+    async function clickExitForSymbol(symbol, optionId = 'cancel-option-Exit-at-Mkt-Cxl') {
+        console.log(`🔍 Order Cancellation: Starting clickExitForSymbol for symbol: ${symbol}, option: ${optionId}`);
+        
+        // Generate cancellation tracking ID
+        const cancellationId = `CANCEL_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+        
+        // Record cancellation attempt in validation framework
+        if (window.autoOrderValidator) {
+            window.autoOrderValidator.recordOrderEvent(cancellationId, 'CANCELLATION_ATTEMPT', {
+                symbol: symbol,
+                optionId: optionId,
+                timestamp: Date.now()
+            });
+        }
+        
+        // Get baseline state before cancellation
+        const preState = await captureOrdersState(symbol);
+        console.log(`🔍 Pre-cancellation state captured:`, preState);
+        
         const modules = document.querySelectorAll('.module.module-dom');
+        let cancellationExecuted = false;
+        
         for (const module of modules) {
-            const symEl = module.querySelector('.contract-symbol span');
+            const symEl = module.querySelector(window.TRADOVATE_UI_ELEMENTS?.MARKET_DATA?.SYMBOL_ALT || '.contract-symbol span');
             if (symEl && symEl.textContent.trim() === symbol) {
-                console.log(`Found matching module for symbol: ${symbol}`);
+                console.log(`✅ Found matching module for symbol: ${symbol}`);
                 
-                // First, click the dropdown button to open the menu
+                // Pre-validation: Check if dropdown button exists and is clickable
                 const dropdownBtn = module.querySelector('button.btn.dropdown-toggle');
                 if (dropdownBtn) {
-                    console.log('Clicking dropdown button');
+                    if (!window.domHelpers?.validateElementVisible(dropdownBtn)) {
+                        console.error(`❌ Dropdown button not visible for ${symbol}`);
+                        if (window.autoOrderValidator) {
+                            window.autoOrderValidator.recordOrderEvent(cancellationId, 'CANCELLATION_FAILED', {
+                                error: 'Dropdown button not visible',
+                                symbol: symbol
+                            });
+                        }
+                        continue;
+                    }
+                    
+                    console.log('✅ Pre-validation passed: Clicking dropdown button');
                     dropdownBtn.click();
                     
-                    // Give the dropdown menu time to appear
-                    setTimeout(() => {
-                        // Look for visible dropdown menu WITHIN this module or closest to it
-                        const dropdownMenu = module.querySelector('.dropdown-menu') || 
-                                            document.querySelector('.dropdown-menu[style*="display: block"]');
-                        
-                        if (dropdownMenu) {
-                            console.log('Found dropdown menu');
-                            // Find the option within the dropdown menu by ID
-                            const option = dropdownMenu.querySelector(`#${optionId}`);
+                    // Wait for dropdown to appear and process
+                    await new Promise((resolve) => {
+                        setTimeout(async () => {
+                            // Look for visible dropdown menu
+                            const dropdownMenu = module.querySelector(window.TRADOVATE_UI_ELEMENTS?.ACCOUNT_SELECTION?.ACCOUNT_DROPDOWN || '.dropdown-menu') || 
+                                                document.querySelector('.dropdown-menu[style*="display: block"]');
                             
-                            if (option) {
-                                console.log(`Found and clicking option: ${optionId} within the correct dropdown`);
-                                option.click();
-                            } else {
-                                console.error(`Option ${optionId} not found in this module's dropdown`);
+                            if (dropdownMenu && window.domHelpers?.validateElementVisible(dropdownMenu)) {
+                                console.log('✅ Found and validated dropdown menu');
                                 
-                                // Try finding by option text if ID doesn't work
-                                const optionByText = Array.from(dropdownMenu.querySelectorAll('a[role="menuitem"]'))
-                                    .find(link => link.textContent.includes('Exit at Mkt'));
+                                // Find the option within the dropdown menu by ID
+                                const option = dropdownMenu.querySelector(`#${optionId}`);
                                 
-                                if (optionByText) {
-                                    console.log('Found option by text: Exit at Mkt');
-                                    optionByText.click();
+                                if (option && window.domHelpers?.validateElementClickable(option)) {
+                                    console.log(`✅ Found and clicking option: ${optionId}`);
+                                    option.click();
+                                    cancellationExecuted = true;
                                 } else {
-                                    // Fallback to Exit at Mkt button if dropdown option not found
-                                    const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                                        .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                                    if (exitBtn) {
-                                        console.log('Fallback to Exit at Mkt button');
-                                        exitBtn.click();
+                                    console.warn(`⚠️ Option ${optionId} not found, trying by text`);
+                                    
+                                    // Try finding by option text if ID doesn't work
+                                    const optionByText = Array.from(dropdownMenu.querySelectorAll('a[role="menuitem"]'))
+                                        .find(link => link.textContent.includes('Exit at Mkt'));
+                                    
+                                    if (optionByText && window.domHelpers?.validateElementClickable(optionByText)) {
+                                        console.log('✅ Found option by text: Exit at Mkt');
+                                        optionByText.click();
+                                        cancellationExecuted = true;
                                     } else {
-                                        console.error('No Exit at Mkt button found either');
+                                        console.warn(`⚠️ Dropdown option not found, trying direct button`);
+                                        cancellationExecuted = await tryDirectCancellation(module, symbol);
                                     }
                                 }
-                            }
-                        } else {
-                            console.error('Dropdown menu not found or not visible');
-                            
-                            // Fallback to Exit at Mkt button
-                            const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                                .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                            if (exitBtn) {
-                                console.log('Fallback to Exit at Mkt button');
-                                exitBtn.click();
                             } else {
-                                console.error('No Exit at Mkt button found either');
+                                console.warn(`⚠️ Dropdown menu not found or not visible, trying direct button`);
+                                cancellationExecuted = await tryDirectCancellation(module, symbol);
                             }
-                        }
-                    }, 200); // Increased delay to ensure dropdown is visible
+                            
+                            resolve();
+                        }, 300); // Increased delay for dropdown to appear
+                    });
                 } else {
-                    console.error('Dropdown button not found');
-                    
-                    // Fallback to original behavior
-                    const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                        .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                    if (exitBtn) {
-                        console.log('Fallback to Exit at Mkt button');
-                        exitBtn.click();
-                    } else {
-                        console.error('No Exit at Mkt button found either');
-                    }
+                    console.warn(`⚠️ Dropdown button not found for ${symbol}, trying direct cancellation`);
+                    cancellationExecuted = await tryDirectCancellation(module, symbol);
                 }
-                break; // stop after first match
+                
+                break; // Stop after first match
             }
         }
+        
+        if (!cancellationExecuted) {
+            console.error(`❌ Cancellation execution failed for ${symbol}`);
+            if (window.autoOrderValidator) {
+                window.autoOrderValidator.recordOrderEvent(cancellationId, 'CANCELLATION_FAILED', {
+                    error: 'No cancellation method executed',
+                    symbol: symbol
+                });
+            }
+            return false;
+        }
+        
+        // Post-cancellation validation
+        console.log(`🔍 Starting post-cancellation validation for ${symbol}...`);
+        
+        // Wait for cancellation to process
+        await delay(1000);
+        
+        // Get post-cancellation state
+        const postState = await captureOrdersState(symbol);
+        console.log(`🔍 Post-cancellation state captured:`, postState);
+        
+        // Validate cancellation success
+        const validationResult = validateCancellationSuccess(preState, postState, symbol);
+        
+        if (window.autoOrderValidator) {
+            window.autoOrderValidator.recordOrderEvent(cancellationId, 'CANCELLATION_VALIDATED', {
+                symbol: symbol,
+                preState: preState,
+                postState: postState,
+                validationResult: validationResult,
+                success: validationResult.success
+            });
+        }
+        
+        if (validationResult.success) {
+            console.log(`✅ Cancellation validation successful for ${symbol}:`, validationResult);
+        } else {
+            console.error(`❌ Cancellation validation failed for ${symbol}:`, validationResult);
+        }
+        
+        return validationResult.success;
+    }
+    
+    // Helper function to try direct cancellation button
+    async function tryDirectCancellation(module, symbol) {
+        const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
+            .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
+        
+        if (exitBtn && window.domHelpers?.validateElementClickable(exitBtn)) {
+            console.log(`✅ Found and clicking direct Exit at Mkt button for ${symbol}`);
+            exitBtn.click();
+            return true;
+        } else {
+            console.error(`❌ No clickable Exit at Mkt button found for ${symbol}`);
+            return false;
+        }
+    }
+    
+    // Helper function to capture current orders state
+    async function captureOrdersState(symbol) {
+        try {
+            const state = {
+                timestamp: Date.now(),
+                symbol: symbol,
+                ordersCount: 0,
+                positionsCount: 0,
+                orders: [],
+                positions: []
+            };
+            
+            // Capture orders from orders table
+            const orderRows = document.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_ROWS || '.module.orders .fixedDataTableRowLayout_rowWrapper');
+            for (const row of orderRows) {
+                const cells = row.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_CELLS || '.public_fixedDataTableCell_cellContent');
+                if (cells.length >= 3) {
+                    const orderSymbol = cells[2]?.textContent?.trim();
+                    if (!symbol || orderSymbol === symbol) {
+                        state.orders.push({
+                            id: cells[1]?.textContent?.trim(),
+                            symbol: orderSymbol,
+                            side: cells[3]?.textContent?.trim(),
+                            quantity: cells[4]?.textContent?.trim(),
+                            status: cells[6]?.textContent?.trim()
+                        });
+                    }
+                }
+            }
+            
+            // Capture positions from positions table
+            const positionRows = document.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.POSITION_ROWS || '.module.positions .fixedDataTableRowLayout_rowWrapper');
+            for (const row of positionRows) {
+                const cells = row.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_CELLS || '.public_fixedDataTableCell_cellContent');
+                if (cells.length >= 2) {
+                    const positionSymbol = cells[1]?.textContent?.trim();
+                    if (!symbol || positionSymbol === symbol) {
+                        state.positions.push({
+                            symbol: positionSymbol,
+                            quantity: cells[2]?.textContent?.trim(),
+                            avgPrice: cells[3]?.textContent?.trim()
+                        });
+                    }
+                }
+            }
+            
+            state.ordersCount = state.orders.length;
+            state.positionsCount = state.positions.length;
+            
+            return state;
+        } catch (error) {
+            console.error(`❌ Error capturing orders state:`, error);
+            return {
+                timestamp: Date.now(),
+                symbol: symbol,
+                error: error.message,
+                ordersCount: 0,
+                positionsCount: 0,
+                orders: [],
+                positions: []
+            };
+        }
+    }
+    
+    // Helper function to validate cancellation success
+    function validateCancellationSuccess(preState, postState, symbol) {
+        const result = {
+            success: false,
+            changes: [],
+            warnings: [],
+            errors: []
+        };
+        
+        try {
+            // Check if orders were reduced
+            if (postState.ordersCount < preState.ordersCount) {
+                const orderReduction = preState.ordersCount - postState.ordersCount;
+                result.changes.push(`Orders reduced by ${orderReduction}`);
+                result.success = true;
+            } else if (postState.ordersCount === preState.ordersCount) {
+                result.warnings.push('Order count unchanged after cancellation');
+            } else {
+                result.errors.push('Order count increased after cancellation attempt');
+            }
+            
+            // Check for position changes (closes)
+            if (postState.positionsCount < preState.positionsCount) {
+                const positionReduction = preState.positionsCount - postState.positionsCount;
+                result.changes.push(`Positions reduced by ${positionReduction}`);
+                result.success = true;
+            }
+            
+            // Detailed order comparison
+            const cancelledOrders = preState.orders.filter(preOrder => 
+                !postState.orders.some(postOrder => postOrder.id === preOrder.id)
+            );
+            
+            if (cancelledOrders.length > 0) {
+                result.changes.push(`Cancelled orders: ${cancelledOrders.map(o => o.id).join(', ')}`);
+                result.success = true;
+            }
+            
+            // If no changes detected but no errors, consider it potentially successful
+            if (result.changes.length === 0 && result.errors.length === 0) {
+                result.warnings.push('No detectable changes after cancellation - may have succeeded silently');
+            }
+            
+        } catch (error) {
+            result.errors.push(`Validation error: ${error.message}`);
+        }
+        
+        return result;
     }
     
     console.log('Creating UI...');
@@ -467,21 +853,62 @@
     }
 
     // ── NEW: root-symbol → front-quarter (uses MONTH_CODES helpers you added) ──
+    // Use unified symbol processing from UI Elements mapping
     function normalizeSymbol(s) {
-        console.log(`normalizeSymbol called with: "${s}"`);
+        if (window.TRADOVATE_UI_ELEMENTS?.TRADING_DATA_PROCESSORS?.normalizeSymbol) {
+            return window.TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.normalizeSymbol(s);
+        }
+        // Fallback for backwards compatibility
+        console.log(`normalizeSymbol fallback called with: "${s}"`);
         const isRootSymbol = /^[A-Z]{1,3}$/.test(s);
-        console.log(`Is root symbol: ${isRootSymbol}`);
         const result = isRootSymbol ? getFrontQuarter(s) : s.toUpperCase();
-        console.log(`Normalized symbol: "${result}"`);
         return result;
     }
 
 
     async function createBracketOrdersManual(tradeData) {
-        console.log('Creating bracket orders with data:', tradeData);
+        console.log('Creating bracket orders with unified trading framework:', tradeData);
+        
+        // Use unified trading framework if available, fallback to original implementation
+        if (window.UNIFIED_TRADING_FRAMEWORK?.createBracketOrder) {
+            console.log('Using unified trading framework for bracket order creation');
+            
+            const enableTP = document.getElementById('tpCheckbox').checked;
+            const enableSL = document.getElementById('slCheckbox').checked;
+            console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
+            
+            // Prepare trade data for unified framework
+            tradeData.tpEnabled = enableTP;
+            tradeData.slEnabled = enableSL;
+            
+            const result = await window.UNIFIED_TRADING_FRAMEWORK.createBracketOrder(tradeData, {
+                enableValidation: true,
+                source: 'autoOrder'
+            });
+            
+            if (result.success) {
+                console.log(`✅ Unified bracket order created successfully: ${result.bracketId}`);
+                return result;
+            } else {
+                console.error(`❌ Unified bracket order failed: ${result.error}`);
+                console.log('Falling back to legacy implementation...');
+                // Continue to fallback implementation below
+            }
+        } else {
+            console.log('Unified trading framework not available, using legacy implementation');
+        }
+
+        // LEGACY FALLBACK: Original implementation for backwards compatibility
+        console.log('Creating bracket orders with legacy data:', tradeData);
         const enableTP = document.getElementById('tpCheckbox').checked;
         const enableSL = document.getElementById('slCheckbox').checked;
         console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
+        
+        // Generate bracket group ID for order validation framework
+        const bracketGroupId = `BRACKET_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+        tradeData.bracketGroupId = bracketGroupId;
+        
+        console.log(`🔗 Bracket Group ID: ${bracketGroupId}`);
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
         async function updateInputValue(selector, value) {
@@ -517,7 +944,7 @@
 
         async function setCommonFields() {
             console.log('Setting common order fields');
-            //if (tradeData.symbol) await updateSymbol('.search-box--input', normalizeSymbol(tradeData.symbol));
+            //if (tradeData.symbol) await updateSymbol(window.TRADOVATE_UI_ELEMENTS?.MARKET_DATA?.SYMBOL_DISPLAY || '.search-box--input', normalizeSymbol(tradeData.symbol));
             if (tradeData.action) {
                 console.log(`Setting action to: ${tradeData.action}`);
                 const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
@@ -568,52 +995,446 @@
         }
 
         async function submitOrder(orderType, priceValue) {
+            console.log(`🔍 Order Validation Framework: Starting submitOrder for ${orderType}`);
+            
+            // Use unified framework if available for comprehensive validation and consistency
+            if (window.UNIFIED_TRADING_FRAMEWORK?.submitOrder) {
+                console.log(`Using unified framework for ${orderType} order submission`);
+                
+                const result = await window.UNIFIED_TRADING_FRAMEWORK.submitOrder(orderType, priceValue, {
+                    tradeData: tradeData,
+                    enableValidation: true,  // Enable validation for safety
+                    source: 'autoOrder'
+                });
+                
+                if (result.success) {
+                    console.log(`✅ Unified order submission successful: ${result.submissionId}`);
+                    return result.success;
+                } else {
+                    console.error(`❌ Unified order submission failed: ${result.error}`);
+                    console.log('Falling back to legacy order submission...');
+                    // Continue to fallback implementation below
+                }
+            } else {
+                console.log('Unified framework not available, using legacy order submission');
+            }
+            
+            // LEGACY FALLBACK: Pre-submission validation using OrderValidationFramework
+            let orderId = null;
+            if (window.autoOrderValidator) {
+                try {
+                    const orderData = {
+                        symbol: tradeData.symbol,
+                        action: tradeData.action,
+                        qty: tradeData.qty,
+                        orderType: orderType,
+                        price: priceValue,
+                        takeProfit: tradeData.takeProfit,
+                        stopLoss: tradeData.stopLoss,
+                        bracketGroupId: tradeData.bracketGroupId,
+                        clientId: `AO_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`
+                    };
+                    
+                    console.log(`🔍 Pre-submission validation starting...`);
+                    const validationResult = await window.autoOrderValidator.validatePreSubmission(orderData);
+                    
+                    if (!validationResult.valid) {
+                        console.error(`❌ Pre-submission validation failed:`, validationResult.errors);
+                        
+                        // Log validation failure event
+                        if (window.autoOrderValidator.recordOrderEvent) {
+                            window.autoOrderValidator.recordOrderEvent(validationResult.validationId, 'VALIDATION_FAILED', {
+                                errors: validationResult.errors,
+                                warnings: validationResult.warnings
+                            });
+                        }
+                        
+                        return false;
+                    }
+                    
+                    orderId = validationResult.orderId;
+                    console.log(`✅ Pre-submission validation passed. Order ID: ${orderId}`);
+                    
+                    // Start submission monitoring
+                    window.autoOrderValidator.monitorOrderSubmission(orderId).then(result => {
+                        console.log(`📊 Submission monitoring result:`, result);
+                    }).catch(error => {
+                        console.error(`❌ Submission monitoring error:`, error);
+                    });
+                    
+                } catch (error) {
+                    console.error(`❌ Validation framework error:`, error);
+                    // Continue with basic validation as fallback
+                }
+            }
+            
             await setCommonFields();
 
-            const typeSel = document.querySelector('.group.order-type .select-input div[tabindex]');
-            typeSel?.click();
-            [...document.querySelectorAll('ul.dropdown-menu li')]
-                .find(li => li.textContent.trim() === orderType)
-                ?.click();
+            // STEP 1: Validate and click order type selector
+            console.log(`🔍 Pre-validation: Order type selector`);
+            const typeSelSelector = '.group.order-type .select-input div[tabindex]';
+            if (!window.domHelpers.validateElementExists(typeSelSelector)) {
+                console.error(`❌ Order type selector not found: ${typeSelSelector}`);
+                if (orderId && window.autoOrderValidator) {
+                    window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_FAILED', {
+                        error: 'Order type selector not found',
+                        selector: typeSelSelector
+                    });
+                }
+                return false;
+            }
+            
+            const typeSel = document.querySelector(typeSelSelector);
+            if (!window.domHelpers.validateElementClickable(typeSel)) {
+                console.error(`❌ Order type selector not clickable`);
+                if (orderId && window.autoOrderValidator) {
+                    window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_FAILED', {
+                        error: 'Order type selector not clickable'
+                    });
+                }
+                return false;
+            }
+            
+            console.log(`✅ Pre-validation passed: Clicking order type selector`);
+            typeSel.click();
+            
+            // STEP 2: Validate and click dropdown menu item
+            await delay(300); // Wait for dropdown to appear
+            console.log(`🔍 Pre-validation: Dropdown menu for ${orderType}`);
+            
+            const dropdownItems = document.querySelectorAll('ul.dropdown-menu li');
+            const targetItem = [...dropdownItems].find(li => li.textContent.trim() === orderType);
+            
+            if (!targetItem) {
+                console.error(`❌ Dropdown item not found for order type: ${orderType}`);
+                return false;
+            }
+            
+            if (!window.domHelpers.validateElementClickable(targetItem)) {
+                console.error(`❌ Dropdown item not clickable: ${orderType}`);
+                return false;
+            }
+            
+            console.log(`✅ Pre-validation passed: Clicking dropdown item ${orderType}`);
+            targetItem.click();
 
-            //await delay(400);               // NEW - let Tradovate draw the price box
+            await delay(400); // Let Tradovate draw the price box
 
-            if (priceValue)
-                await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
+            // STEP 3: Validate and update price input if needed
+            if (priceValue) {
+                console.log(`🔍 Pre-validation: Price input field`);
+                const priceInputSelector = '.numeric-input.feedback-wrapper input';
+                if (!window.domHelpers.validateElementExists(priceInputSelector)) {
+                    console.error(`❌ Price input field not found: ${priceInputSelector}`);
+                    return false;
+                }
+                
+                console.log(`✅ Pre-validation passed: Updating price input`);
+                await updateInputValue(priceInputSelector, priceValue);
+                
+                // Post-validation: Verify price was set
+                const priceInput = document.querySelector(priceInputSelector);
+                if (priceInput && priceInput.value !== priceValue.toString()) {
+                    console.warn(`⚠️ Post-validation: Price input value mismatch. Expected: ${priceValue}, Got: ${priceInput.value}`);
+                } else {
+                    console.log(`✅ Post-validation passed: Price input set correctly`);
+                }
+            }
+            
             clickPriceArrow();
 
-            document.querySelector('.btn-group .btn-primary')?.click();
+            // STEP 4: CRITICAL - Validate and click submit button
+            console.log(`🔍 Pre-validation: CRITICAL SUBMIT BUTTON`);
+            const submitButtonSelector = '.btn-group .btn-primary';
+            
+            if (!window.domHelpers.validateElementExists(submitButtonSelector)) {
+                console.error(`❌ CRITICAL: Submit button not found: ${submitButtonSelector}`);
+                if (orderId && window.autoOrderValidator) {
+                    window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_FAILED', {
+                        error: 'Submit button not found',
+                        selector: submitButtonSelector,
+                        critical: true
+                    });
+                }
+                return false;
+            }
+            
+            const submitButton = document.querySelector(submitButtonSelector);
+            if (!window.domHelpers.validateElementClickable(submitButton)) {
+                console.error(`❌ CRITICAL: Submit button not clickable`);
+                if (orderId && window.autoOrderValidator) {
+                    window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_FAILED', {
+                        error: 'Submit button not clickable',
+                        critical: true
+                    });
+                }
+                return false;
+            }
+            
+            // Record submission attempt
+            if (orderId && window.autoOrderValidator) {
+                window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_ATTEMPT', {
+                    orderType: orderType,
+                    price: priceValue,
+                    timestamp: Date.now()
+                });
+            }
+            
+            console.log(`✅ Pre-validation passed: CLICKING CRITICAL SUBMIT BUTTON`);
+            submitButton.click();
+            
+            // Post-validation: Check for submit confirmation or error
             await delay(200);
-            console.log(getOrderEvents());
-            document.querySelector('.icon.icon-back')?.click();
+            console.log(`✅ Post-validation: Submit button clicked, checking order events`);
+            const orderEvents = getOrderEvents();
+            console.log('📋 Order events after submit:', orderEvents);
+            
+            // Enhanced post-submission validation using OrderValidationFramework
+            if (orderId && window.autoOrderValidator) {
+                try {
+                    console.log(`🔍 Starting post-submission validation...`);
+                    const postValidationResult = await window.autoOrderValidator.validatePostSubmission(orderId);
+                    
+                    if (postValidationResult.confirmed) {
+                        console.log(`✅ Order submission confirmed by validation framework`);
+                        window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_CONFIRMED', {
+                            confirmationMethod: 'framework_validation',
+                            orderEvents: orderEvents
+                        });
+                    } else if (postValidationResult.errors.length > 0) {
+                        console.error(`❌ Post-submission validation detected errors:`, postValidationResult.errors);
+                        
+                        // Classify each error using the error classification system
+                        for (const error of postValidationResult.errors) {
+                            if (window.ERROR_CLASSIFICATION) {
+                                const classification = window.ERROR_CLASSIFICATION.classifyError(error);
+                                const recovery = window.ERROR_CLASSIFICATION.getRecoveryStrategy(classification);
+                                
+                                console.log(`🔍 Error Classification:`, {
+                                    originalError: error,
+                                    category: classification.category,
+                                    severity: classification.severity,
+                                    recovery: recovery.actions,
+                                    userAction: classification.userAction
+                                });
+                                
+                                // Record classified error
+                                window.autoOrderValidator.recordOrderEvent(orderId, 'CLASSIFIED_ERROR', {
+                                    error: error,
+                                    classification: classification,
+                                    recovery: recovery,
+                                    isCritical: window.ERROR_CLASSIFICATION.isCritical(classification),
+                                    isRetryable: window.ERROR_CLASSIFICATION.isRetryable(classification)
+                                });
+                                
+                                // Handle critical errors immediately
+                                if (window.ERROR_CLASSIFICATION.isCritical(classification)) {
+                                    console.error(`🚨 CRITICAL ERROR DETECTED:`, classification);
+                                    window.autoOrderValidator.recordOrderEvent(orderId, 'CRITICAL_ERROR_RESPONSE', {
+                                        classification: classification,
+                                        immediateAction: 'ABORT_SUBMISSION'
+                                    });
+                                    return false; // Abort on critical errors
+                                }
+                            }
+                        }
+                        
+                        window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_ERROR_DETECTED', {
+                            errors: postValidationResult.errors,
+                            warnings: postValidationResult.warnings
+                        });
+                    } else {
+                        console.warn(`⚠️ Post-submission validation inconclusive`);
+                        window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_STATUS_UNKNOWN', {
+                            warnings: postValidationResult.warnings
+                        });
+                    }
+                } catch (error) {
+                    console.error(`❌ Post-submission validation error:`, error);
+                    if (window.autoOrderValidator.recordOrderEvent) {
+                        window.autoOrderValidator.recordOrderEvent(orderId, 'POST_VALIDATION_ERROR', {
+                            error: error.message
+                        });
+                    }
+                }
+            }
+            
+            // Additional error detection using DOM scanning
+            if (window.TRADOVATE_UI_ELEMENTS && window.ERROR_CLASSIFICATION) {
+                const errorElements = window.TRADOVATE_UI_ELEMENTS.ERROR_DETECTION;
+                const errorSelectors = [
+                    errorElements.ERROR_MODAL,
+                    errorElements.ERROR_ALERT,
+                    errorElements.ERROR_MESSAGE,
+                    errorElements.WARNING_ALERT
+                ];
+                
+                for (const selector of errorSelectors) {
+                    const errorElement = document.querySelector(selector);
+                    if (errorElement && window.domHelpers?.validateElementVisible(errorElement)) {
+                        const errorText = errorElement.textContent?.trim();
+                        if (errorText) {
+                            console.error(`🔍 DOM Error Detection: Found error element`, {
+                                selector: selector,
+                                errorText: errorText
+                            });
+                            
+                            // Classify and handle the error
+                            const classification = window.ERROR_CLASSIFICATION.classifyError(errorText);
+                            const recovery = window.ERROR_CLASSIFICATION.getRecoveryStrategy(classification);
+                            
+                            if (orderId && window.autoOrderValidator) {
+                                window.autoOrderValidator.recordOrderEvent(orderId, 'DOM_ERROR_DETECTED', {
+                                    selector: selector,
+                                    errorText: errorText,
+                                    classification: classification,
+                                    recovery: recovery
+                                });
+                            }
+                            
+                            // Log comprehensive error information
+                            console.error(`🔍 Classified DOM Error:`, {
+                                errorText: errorText,
+                                category: classification.category,
+                                severity: classification.severity,
+                                recovery: recovery.actions,
+                                userAction: classification.userAction,
+                                isCritical: window.ERROR_CLASSIFICATION.isCritical(classification)
+                            });
+                            
+                            // Handle critical DOM errors
+                            if (window.ERROR_CLASSIFICATION.isCritical(classification)) {
+                                console.error(`🚨 CRITICAL DOM ERROR - ABORTING SUBMISSION`);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // STEP 5: Validate and click back button
+            console.log(`🔍 Pre-validation: Back navigation button`);
+            const backButtonSelector = '.icon.icon-back';
+            
+            // Wait for back button to appear
+            const backButton = await window.domHelpers.waitForElement(backButtonSelector, 3000);
+            if (!backButton) {
+                console.warn(`⚠️ Back button not found within timeout: ${backButtonSelector}`);
+                return true; // Still consider success if order was submitted
+            }
+            
+            if (!window.domHelpers.validateElementClickable(backButton)) {
+                console.warn(`⚠️ Back button not clickable, but order was submitted`);
+                return true;
+            }
+            
+            console.log(`✅ Pre-validation passed: Clicking back button`);
+            backButton.click();
             await delay(200);
+            
+            // Final validation - record successful completion
+            if (orderId && window.autoOrderValidator) {
+                window.autoOrderValidator.recordOrderEvent(orderId, 'SUBMISSION_COMPLETED', {
+                    orderType: orderType,
+                    completionTime: Date.now(),
+                    success: true
+                });
+                
+                console.log(`✅ Order Validation Framework: submitOrder completed successfully for ${orderType}, Order ID: ${orderId}`);
+            } else {
+                console.log(`✅ DOM Intelligence: submitOrder completed successfully for ${orderType}`);
+            }
+            
+            return orderId || true; // Return order ID if available, otherwise true for backward compatibility
         }
 
         console.log(`Submitting initial ${tradeData.orderType || 'MARKET'} order`);
-        await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
+        const parentOrderId = await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
 
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
             tradeData.action = 'Sell';
+            
+            // Set parent order reference for child orders
+            const originalParentOrderId = tradeData.parentOrderId;
+            tradeData.parentOrderId = parentOrderId;
+            
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                await submitOrder('LIMIT', tradeData.takeProfit);
+                const tpOrderId = await submitOrder('LIMIT', tradeData.takeProfit);
+                
+                // Record bracket relationship in validation framework
+                if (window.autoOrderValidator && parentOrderId && tpOrderId) {
+                    window.autoOrderValidator.recordOrderEvent(parentOrderId, 'CHILD_ORDER_CREATED', {
+                        childOrderId: tpOrderId,
+                        childOrderType: 'TAKE_PROFIT',
+                        price: tradeData.takeProfit
+                    });
+                }
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                await submitOrder('STOP', tradeData.stopLoss);
+                const slOrderId = await submitOrder('STOP', tradeData.stopLoss);
+                
+                // Record bracket relationship in validation framework
+                if (window.autoOrderValidator && parentOrderId && slOrderId) {
+                    window.autoOrderValidator.recordOrderEvent(parentOrderId, 'CHILD_ORDER_CREATED', {
+                        childOrderId: slOrderId,
+                        childOrderType: 'STOP_LOSS',
+                        price: tradeData.stopLoss
+                    });
+                }
             }
+            
+            // Restore original parent order ID
+            tradeData.parentOrderId = originalParentOrderId;
         } else {
             console.log('Flipping action to Buy for TP/SL orders');
             tradeData.action = 'Buy';
+            
+            // Set parent order reference for child orders
+            const originalParentOrderId = tradeData.parentOrderId;
+            tradeData.parentOrderId = parentOrderId;
+            
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                await submitOrder('LIMIT', tradeData.takeProfit);
+                const tpOrderId = await submitOrder('LIMIT', tradeData.takeProfit);
+                
+                // Record bracket relationship in validation framework
+                if (window.autoOrderValidator && parentOrderId && tpOrderId) {
+                    window.autoOrderValidator.recordOrderEvent(parentOrderId, 'CHILD_ORDER_CREATED', {
+                        childOrderId: tpOrderId,
+                        childOrderType: 'TAKE_PROFIT',
+                        price: tradeData.takeProfit
+                    });
+                }
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                await submitOrder('STOP', tradeData.stopLoss);
+                const slOrderId = await submitOrder('STOP', tradeData.stopLoss);
+                
+                // Record bracket relationship in validation framework
+                if (window.autoOrderValidator && parentOrderId && slOrderId) {
+                    window.autoOrderValidator.recordOrderEvent(parentOrderId, 'CHILD_ORDER_CREATED', {
+                        childOrderId: slOrderId,
+                        childOrderType: 'STOP_LOSS',
+                        price: tradeData.stopLoss
+                    });
+                }
             }
+            
+            // Restore original parent order ID
+            tradeData.parentOrderId = originalParentOrderId;
+        }
+        
+        // Mark bracket group as complete
+        if (window.autoOrderValidator && parentOrderId) {
+            window.autoOrderValidator.recordOrderEvent(parentOrderId, 'BRACKET_GROUP_COMPLETE', {
+                bracketGroupId: tradeData.bracketGroupId,
+                enableTP: enableTP,
+                enableSL: enableSL,
+                completionTime: Date.now()
+            });
         }
         console.log('Bracket order creation complete');
         return Promise.resolve();
@@ -643,20 +1464,53 @@
 
 
     // Futures tick data dictionary with default SL/TP settings for each instrument
-    const futuresTickData = {
-      // Symbol: { tickSize, tickValue, defaultSL (ticks), defaultTP (ticks), precision (decimal places) }
-      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // Micro E-mini Nasdaq-100
-      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini Nasdaq-100
-      ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini S&P 500
-      RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },  // E-mini Russell 2000
-      YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },  // E-mini Dow Jones
-      CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },  // Crude Oil
-      GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },  // Gold (15 ticks = $150 risk)
-      MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }   // Micro Gold
+    // Use unified futures tick data from trading framework
+    const futuresTickData = window.UNIFIED_TRADING_FRAMEWORK?.FUTURES_TICK_DATA || {
+      // Fallback data if unified framework not loaded
+      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+      ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },
+      RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },
+      YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },
+      CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },
+      GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },
+      MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }
     };
 
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25) {
         console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}`);
+
+        // Apply unified risk management position sizing - DRY refactored
+        let adjustedQuantity = quantity;
+        try {
+            if (typeof window.unifiedRiskManagement !== 'undefined') {
+                console.log('[autoTrade] Applying unified risk management position sizing');
+                
+                // Try to get current account name
+                let accountName = null;
+                try {
+                    const accountElement = document.querySelector('.account-selector .account-name');
+                    if (accountElement) {
+                        accountName = accountElement.textContent.trim();
+                    }
+                } catch (e) {
+                    console.warn('[autoTrade] Could not get account name:', e);
+                }
+                
+                if (accountName) {
+                    adjustedQuantity = window.unifiedRiskManagement.calculatePositionSize(
+                        quantity, 
+                        accountName
+                    );
+                    
+                    if (adjustedQuantity !== quantity) {
+                        console.log(`[autoTrade] Position size adjusted: ${quantity} -> ${adjustedQuantity} for account ${accountName}`);
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn('[autoTrade] Risk management adjustment failed, using original quantity:', error);
+        }
 
         const symbolInput = document.getElementById('symbolInput').value || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
@@ -774,7 +1628,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         const tradeData = {
             symbol: marketData.symbol,
             action,
-            qty: quantity.toString(),
+            qty: adjustedQuantity.toString(), // Use risk-adjusted quantity
             takeProfit: takeProfitPrice,
             stopLoss: stopLossPrice,
             orderType: orderType,
@@ -800,13 +1654,15 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
     }
 
 
-    // helper – builds the front-quarter code for any root (e.g. 'NQ' → 'NQM5')
+    // Use unified front quarter processing from UI Elements mapping
     function getFrontQuarter(root) {
-        console.log(`getFrontQuarter called for root: "${root}"`);
-        const { letter, yearDigit } = getQuarterlyCode();  // uses MONTH_CODES internally
-        console.log(`Got quarterly code: letter=${letter}, yearDigit=${yearDigit}`);
+        if (window.TRADOVATE_UI_ELEMENTS?.TRADING_DATA_PROCESSORS?.getFrontQuarter) {
+            return window.TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.getFrontQuarter(root);
+        }
+        // Fallback for backwards compatibility
+        console.log(`getFrontQuarter fallback called for root: "${root}"`);
+        const { letter, yearDigit } = getQuarterlyCode();
         const result = `${root.toUpperCase()}${letter}${yearDigit}`;
-        console.log(`Returning front quarter symbol: "${result}"`);
         return result;
     }
 

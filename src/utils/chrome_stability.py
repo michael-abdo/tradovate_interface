@@ -15,6 +15,13 @@ import socket
 import threading
 from enum import Enum
 
+# Import Chrome Communication Framework for unified execution
+try:
+    from src.utils.chrome_communication import safe_evaluate, OperationType
+    SAFE_EVAL_AVAILABLE = True
+except ImportError:
+    SAFE_EVAL_AVAILABLE = False
+
 class ConnectionState(Enum):
     """Connection health states"""
     HEALTHY = "healthy"
@@ -260,8 +267,20 @@ class ChromeStabilityMonitor:
                 self.logger.error(f"Health monitoring loop error: {e}")
                 self.shutdown_event.wait(5)  # Brief pause before retry
     
-    def _check_connection_health(self, account_name: str):
-        """Perform comprehensive health check for a connection"""
+    def _check_connection_health(self, account_name: str, process=None, browser=None, tab=None):
+        """Perform comprehensive health check for a connection - DRY refactored
+        
+        Consolidates health checks from:
+        - ChromeConnection.check_connection_health() 
+        - TabHealthValidator.validate_tab_health()
+        - Original _check_connection_health()
+        
+        Args:
+            account_name: Account identifier
+            process: Chrome process object (optional, for process checks)
+            browser: pychrome Browser object (optional, for browser checks) 
+            tab: pychrome Tab object (optional, for tab checks)
+        """
         if account_name not in self.connection_health:
             return
         
@@ -276,6 +295,30 @@ class ChromeStabilityMonitor:
             'response_time': 0.0,
             'errors': []
         }
+        
+        # Process health check (from ChromeConnection pattern)
+        if process is not None:
+            if process.poll() is None:
+                health_result['checks']['process_running'] = True
+            else:
+                health_result['checks']['process_running'] = False
+                health_result['errors'].append("Chrome process not running")
+                health_result['healthy'] = False
+                self._update_connection_state(account_name, health_result)
+                return
+        
+        # Browser responsiveness check (from ChromeConnection pattern)
+        if browser is not None:
+            try:
+                tabs = browser.list_tab()
+                health_result['checks']['browser_responsive'] = True
+                health_result['checks']['tab_count'] = len(tabs)
+            except Exception as e:
+                health_result['checks']['browser_responsive'] = False
+                health_result['errors'].append(f"Browser not responsive: {e}")
+                health_result['healthy'] = False
+                self._update_connection_state(account_name, health_result)
+                return
         
         try:
             # Level 1: TCP Connection Test
@@ -397,14 +440,24 @@ class ChromeStabilityMonitor:
             tab.start()
             
             # Simple JavaScript execution test
-            result = tab.Runtime.evaluate(expression="1 + 1")
+            if SAFE_EVAL_AVAILABLE:
+                result = safe_evaluate(
+                    tab=tab,
+                    js_code="1 + 1",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Chrome stability basic JS execution test"
+                )
+                js_success = result.success and result.value == 2
+            else:
+                result = tab.Runtime.evaluate(expression="1 + 1")
+                js_success = result.get("result", {}).get("value") == 2
             execution_time = time.time() - start_time
             
             tab.stop()
             
             # Check if execution was successful
             success = (
-                result.get("result", {}).get("value") == 2 and
+                js_success and
                 execution_time < self.failed_response_time
             )
             
@@ -443,10 +496,21 @@ class ChromeStabilityMonitor:
             })
             """
             
-            result = tradovate_tab.Runtime.evaluate(expression=app_health_js)
+            if SAFE_EVAL_AVAILABLE:
+                result = safe_evaluate(
+                    tab=tradovate_tab,
+                    js_code=app_health_js,
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Tradovate application health check"
+                )
+            else:
+                result = tradovate_tab.Runtime.evaluate(expression=app_health_js)
             tradovate_tab.stop()
             
-            app_state = result.value if result.success else {}
+            if SAFE_EVAL_AVAILABLE:
+                app_state = result.value if result.success else {}
+            else:
+                app_state = result.get("result", {}).get("value", {}) if result else {}
             
             return (
                 app_state.get("authenticated", False) and
@@ -666,6 +730,62 @@ class ChromeStabilityMonitor:
                     f"Connection state changed for {account_name}: "
                     f"{previous_state.value if previous_state else 'unknown'} -> {new_state.value}"
                 )
+    
+    def check_unified_health(self, account_name: str, process=None, browser=None, tab=None) -> dict:
+        """Unified health check method - DRY refactored entry point
+        
+        This method consolidates all health check patterns into one place.
+        Call this instead of implementing custom health checks.
+        
+        Args:
+            account_name: Account identifier
+            process: Chrome process object (optional)
+            browser: pychrome Browser object (optional)
+            tab: pychrome Tab object (optional)
+            
+        Returns:
+            dict: Health check results with 'healthy' boolean and detailed checks
+        """
+        # Register connection if not already registered
+        if account_name not in self.connection_health:
+            # Extract port from browser or use default
+            port = None
+            if browser:
+                try:
+                    # Extract port from browser URL
+                    import re
+                    match = re.search(r':(\d+)', str(browser._url))
+                    if match:
+                        port = int(match.group(1))
+                except:
+                    pass
+            
+            if port:
+                self.register_connection(account_name, port)
+            else:
+                # Return basic health check without registration
+                return {
+                    'account': account_name,
+                    'healthy': False,
+                    'checks': {},
+                    'errors': ['Connection not registered and port unknown']
+                }
+        
+        # Perform unified health check
+        self._check_connection_health(account_name, process, browser, tab)
+        
+        # Return the latest health result
+        with self.health_lock:
+            conn_info = self.connection_health.get(account_name, {})
+            if conn_info and conn_info.get('health_checks'):
+                return conn_info['health_checks'][-1]
+            else:
+                return {
+                    'account': account_name,
+                    'healthy': False,
+                    'checks': {},
+                    'errors': ['No health check data available']
+                }
     
     def get_connection_health_status(self) -> dict:
         """Get current health status of all connections"""

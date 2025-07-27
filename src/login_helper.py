@@ -13,6 +13,18 @@ sys.path.insert(0, project_root)
 try:
     from src.utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
     FRAMEWORK_AVAILABLE = True
+except ImportError:
+    FRAMEWORK_AVAILABLE = False
+
+# Unified Chrome Configuration
+try:
+    from src.utils.check_chrome import get_chrome_ports, validate_chrome_port, PROTECTED_PORT
+    CHROME_CONFIG_AVAILABLE = True
+except ImportError:
+    CHROME_CONFIG_AVAILABLE = False
+    PROTECTED_PORT = 9222
+
+if FRAMEWORK_AVAILABLE:
     print("✅ Chrome Communication Framework loaded - enhanced logging enabled")
     
     # Create a manager instance for this helper
@@ -63,7 +75,21 @@ except ImportError:
         print("Make sure you're running this script from the project root directory")
         sys.exit(1)
 
-def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
+def login_to_existing_chrome(port=None, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
+    """Login to Tradovate using existing Chrome with unified port configuration"""
+    # Use unified Chrome port configuration
+    if port is None:
+        if CHROME_CONFIG_AVAILABLE:
+            port = PROTECTED_PORT  # Default to protected port for existing Chrome
+        else:
+            port = 9222  # Fallback
+    
+    # Validate port if configuration is available
+    if CHROME_CONFIG_AVAILABLE and port != PROTECTED_PORT:
+        if not validate_chrome_port(port):
+            print(f"WARNING: Using potentially unsafe port {port}")
+    
+    print(f"Connecting to Chrome on port {port}")
     """
     Login to Tradovate on an existing Chrome instance running with remote debugging.
     
@@ -76,26 +102,41 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
     Returns:
         tuple: (success, tab_handle, browser) - Boolean success status, tab handle, and browser connection if successful
     """
-    # If credentials not provided, try to load from file
+    # If credentials not provided, use unified credential loading
     if not (username and password):
         try:
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            credentials_path = os.path.join(project_root, 'config/credentials.json')
-            print(f"Loading credentials from {credentials_path}")
-            
-            with open(credentials_path, 'r') as file:
-                credentials = json.load(file)
-                if isinstance(credentials, dict):
-                    # Get first credential from the dictionary
-                    username = list(credentials.keys())[0]
-                    password = credentials[username]
-                    print(f"Using credentials for user: {username}")
+            from src.utils.chrome_communication import get_unified_single_credential
+            username, password = get_unified_single_credential(0)
+            if username and password:
+                print(f"Using unified credentials for user: {username}")
+            else:
+                print("No credentials available from unified authentication manager")
+                return False, None, None
+        except ImportError:
+            print("Unified authentication not available, credentials required")
+            return False, None, None
         except Exception as e:
-            print(f"Error loading credentials: {e}")
+            print(f"Error loading unified credentials: {e}")
             return False, None, None
     
-    # Connect to Chrome
+    # Connect to Chrome - DRY refactored to use standardized connection
     try:
+        # First try to use the connect_to_chrome function from auto_login
+        try:
+            from src.auto_login import connect_to_chrome
+            print(f"Using standardized connect_to_chrome for port {port}")
+            browser, target_tab = connect_to_chrome(port)
+            
+            if target_tab:
+                print("Successfully connected via connect_to_chrome")
+                # Skip to after the connection logic
+                
+        except ImportError:
+            print("connect_to_chrome not available, using direct connection")
+            raise  # Fall through to original implementation
+            
+    except:
+        # Fallback to original implementation
         print(f"Connecting to Chrome on port {port}...")
         browser = pychrome.Browser(url=f"http://localhost:{port}")
         tabs = browser.list_tab()
@@ -109,7 +150,7 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
                 tab.start()
                 tab.Page.enable()
                 result = execute_safe_js(tab, "document.location.href", "Tab URL detection for Tradovate identification")
-                url = result.get("result", {}).get("value", "")
+                url = result.value if result.success else ""
                 print(f"Tab URL: {url}")
                 
                 if "tradovate" in url.lower():
@@ -120,7 +161,10 @@ def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_
                     tab.stop()
             except Exception as e:
                 print(f"Error checking tab: {e}")
-                tab.stop()
+                try:
+                    tab.stop()
+                except:
+                    pass
         
         if not target_tab:
             print("No Tradovate tab found. Creating a new tab...")
@@ -204,7 +248,7 @@ def wait_for_element(tab, selector, timeout=10, visible=True):
     while time.time() - start_time < timeout:
         try:
             result = execute_safe_js(tab, check_script, f"Element existence check for selector: {selector}")
-            if result.get("result", {}).get("value", False):
+            if result.value if result.success else False:
                 print(f"Element found: {selector}")
                 return True
         except Exception as e:
@@ -229,7 +273,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="Login to Tradovate via Chrome DevTools Protocol")
-    parser.add_argument("--port", type=int, default=9222, help="Chrome debugging port")
+    parser.add_argument("--port", type=int, default=None, help="Chrome debugging port (default: protected port 9222)")
     parser.add_argument("--username", help="Tradovate username (optional, will use credentials.json if not provided)")
     parser.add_argument("--password", help="Tradovate password (optional)")
     args = parser.parse_args()

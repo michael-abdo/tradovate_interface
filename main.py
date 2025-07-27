@@ -23,40 +23,18 @@ from src.dashboard import run_flask_dashboard
 from src.login_helper import main as login_helper_main
 from src.pinescript_webhook import run_flask as run_webhook_server
 from src.chrome_logger import main as chrome_logger_main
-def load_credentials_count():
-    """Load credentials and return account count for Chrome instance calculation"""
-    try:
-        import json
-        import re
-        
-        credentials_path = os.path.join(project_root, 'config/credentials.json')
-        
-        if not os.path.exists(credentials_path):
-            print(f"❌ Credentials file not found: {credentials_path}")
-            return 0
-            
-        with open(credentials_path, 'r') as file:
-            file_content = file.read()
-            
-        # Handle JSON parsing (credentials.json has comment causing parse issues)
-        try:
-            credentials = json.loads(file_content)
-        except json.JSONDecodeError:
-            print("⚠️  JSON parsing failed, using regex extraction")
-            # Extract email:password pairs using regex
-            pairs = re.findall(r'"([^"]+@[^"]+)"\s*:\s*"([^"]+)"', file_content)
-            credentials = dict(pairs)
-            
-        if not isinstance(credentials, dict):
-            print("❌ Invalid credentials format")
-            return 0
-            
-        account_count = len(credentials)
-        print(f"📊 Found {account_count} accounts in credentials")
-        return account_count
-        
-    except Exception as e:
-        print(f"❌ Error loading credentials: {e}")
+# Use unified credential management from Chrome Communication Framework
+try:
+    from src.utils.chrome_communication import get_unified_credentials_count
+    def load_credentials_count():
+        """Load credentials count using unified authentication manager"""
+        count = get_unified_credentials_count()
+        print(f"📊 Found {count} accounts via unified authentication manager")
+        return count
+except ImportError:
+    def load_credentials_count():
+        """Fallback credential count if unified framework not available"""
+        print("❌ Unified authentication not available")
         return 0
 
 def ensure_chrome_range_running():
@@ -130,21 +108,28 @@ def start_chrome_instances(missing_ports):
         from src.auto_login import ChromeInstance
         from src.utils.chrome_stability import ChromeStabilityMonitor
         
-        # Load credentials 
-        credentials_path = os.path.join(project_root, 'config/credentials.json')
-        with open(credentials_path, 'r') as file:
-            file_content = file.read()
-            
-        # Handle JSON parsing with regex fallback
+        # Load credentials using unified authentication manager
         try:
-            credentials = json.loads(file_content)
-        except json.JSONDecodeError:
-            print("⚠️  Using regex extraction for credentials")
-            pairs = re.findall(r'"([^"]+@[^"]+)"\s*:\s*"([^"]+)"', file_content)
-            credentials = dict(pairs)
-        
-        # Convert credentials to list for port assignment
-        cred_list = list(credentials.items())
+            from src.utils.chrome_communication import load_unified_credentials
+            cred_list = load_unified_credentials(allow_duplicates=True)
+            print(f"✅ Loaded {len(cred_list)} credential pairs via unified authentication manager")
+        except ImportError:
+            print("⚠️  Unified authentication not available, using fallback credential loading")
+            # Fallback credential loading
+            credentials_path = os.path.join(project_root, 'config/credentials.json')
+            with open(credentials_path, 'r') as file:
+                file_content = file.read()
+                
+            # Handle JSON parsing with regex fallback
+            try:
+                credentials = json.loads(file_content)
+            except json.JSONDecodeError:
+                print("⚠️  Using regex extraction for credentials")
+                pairs = re.findall(r'"([^"]+@[^"]+)"\s*:\s*"([^"]+)"', file_content)
+                credentials = dict(pairs)
+            
+            # Convert credentials to list for port assignment
+            cred_list = list(credentials.items())
         
         # Initialize monitoring
         monitor = ChromeStabilityMonitor()

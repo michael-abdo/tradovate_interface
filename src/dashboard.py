@@ -111,15 +111,19 @@ def get_accounts():
             )
                 
                 # Execute the getTableData() function with real phase analysis
-                result = conn.tab.Runtime.evaluate(
-                    expression="JSON.stringify(getTableData())")
+                result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code="JSON.stringify(getTableData())",
+                    operation_type=OperationType.CRITICAL,
+                    description=f"Get table data for {conn.account_name}"
+                )
                 
                 print(f"[Accounts API] Raw result for {conn.account_name}: {result}")
                 
-                if result and 'result' in result and 'value' in result['result']:
+                if result and result.success:
                     try:
                         # Parse the JSON result
-                        tab_data = json.loads(result['result']['value'])
+                        tab_data = json.loads(result.value)
                         print(f"[Accounts API] Parsed data for {conn.account_name}: {len(tab_data) if tab_data else 0} rows")
                         
                         if not tab_data:
@@ -479,18 +483,23 @@ def update_phases():
                     
                     # Now execute updateUserColumnPhaseStatus
                     print(f"[Phase Update API] Executing updateUserColumnPhaseStatus for {conn.account_name}")
-                    result = conn.tab.Runtime.evaluate(
-                        expression="updateUserColumnPhaseStatus(); 'Phase update completed';")
+                    result = safe_evaluate(
+                        tab=conn.tab,
+                        js_code="updateUserColumnPhaseStatus(); 'Phase update completed';",
+                        operation_type=OperationType.CRITICAL,
+                        description=f"Update phase status for {conn.account_name}"
+                    )
                     
-                    if result and 'result' in result:
-                        print(f"[Phase Update API] Success for {conn.account_name}: {result['result'].get('value', 'Completed')}")
+                    if result and result.success:
+                        print(f"[Phase Update API] Success for {conn.account_name}: {result.value}")
                         results.append({
                             "account": conn.account_name,
                             "status": "success",
                             "message": result['result'].get('value', 'Completed')
                         })
                     else:
-                        print(f"[Phase Update API] No result for {conn.account_name}")
+                        error_msg = result.error if result else "No result"
+                        print(f"[Phase Update API] Failed for {conn.account_name}: {error_msg}")
                         results.append({
                             "account": conn.account_name,
                             "status": "error",

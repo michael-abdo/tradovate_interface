@@ -5659,6 +5659,173 @@ def sync_position_update_across_tabs(source_tab_id: str, position_data: dict) ->
     )
 
 # ============================================================================
+# UNIFIED AUTHENTICATION AND CREDENTIAL MANAGEMENT
+# ============================================================================
+
+import json
+import os
+import re
+from typing import List, Tuple, Optional, Dict, Any
+
+class UnifiedAuthenticationManager:
+    """
+    Consolidated authentication and credential management for trading system
+    Eliminates duplication across auto_login.py, login_helper.py, and main.py
+    """
+    
+    def __init__(self):
+        self.project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        self.credentials_path = os.path.join(self.project_root, 'config/credentials.json')
+        self._credentials_cache = None
+        self._last_modified = None
+    
+    def load_unified_credentials(self, allow_duplicates: bool = True) -> List[Tuple[str, str]]:
+        """
+        Unified credential loading that handles all formats and duplicate users
+        Consolidates logic from auto_login.py, login_helper.py, and main.py
+        
+        Args:
+            allow_duplicates: Whether to include duplicate username entries
+            
+        Returns:
+            List of (username, password) tuples
+        """
+        try:
+            # Check if credentials file was modified
+            if os.path.exists(self.credentials_path):
+                current_modified = os.path.getmtime(self.credentials_path)
+                if self._last_modified != current_modified:
+                    self._credentials_cache = None
+                    self._last_modified = current_modified
+            
+            # Return cached credentials if available
+            if self._credentials_cache is not None:
+                return self._credentials_cache
+            
+            print(f"Loading credentials from {self.credentials_path}")
+            
+            if not os.path.exists(self.credentials_path):
+                return self._fallback_to_environment()
+            
+            with open(self.credentials_path, 'r') as file:
+                file_content = file.read()
+                
+                # Try standard JSON parsing first
+                try:
+                    credentials = json.loads(file_content)
+                except json.JSONDecodeError:
+                    print("Error parsing JSON, attempting custom parsing for duplicate keys")
+                    # Handle duplicate keys with regex parsing
+                    credentials = self._parse_duplicate_keys(file_content)
+            
+            # Parse credentials into list of username/password pairs
+            cred_pairs = self._extract_credential_pairs(credentials, file_content, allow_duplicates)
+            
+            if not cred_pairs:
+                return self._fallback_to_environment()
+            
+            self._credentials_cache = cred_pairs
+            print(f"Loaded {len(cred_pairs)} credential pairs")
+            return cred_pairs
+            
+        except Exception as e:
+            print(f"Error loading credentials from file: {e}")
+            return self._fallback_to_environment()
+    
+    def _parse_duplicate_keys(self, file_content: str) -> Dict[str, str]:
+        """Parse JSON with duplicate keys using regex"""
+        pairs = re.findall(r'"([^"]+)"\s*:\s*"([^"]+)"', file_content)
+        credentials = {}
+        for username, password in pairs:
+            credentials[username] = password
+        return credentials
+    
+    def _extract_credential_pairs(self, credentials: Dict, file_content: str, allow_duplicates: bool) -> List[Tuple[str, str]]:
+        """Extract credential pairs from parsed credentials"""
+        cred_pairs = []
+        
+        if isinstance(credentials, dict):
+            if 'users' in credentials:
+                # Handle array format: {"users": [{"username": "...", "password": "..."}]}
+                for user in credentials['users']:
+                    username = user.get('username')
+                    password = user.get('password')
+                    if username and password:
+                        cred_pairs.append((username, password))
+            else:
+                # Handle flat dictionary format: {"username": "password"}
+                for username, password in credentials.items():
+                    if username and password:
+                        if allow_duplicates:
+                            # Count occurrences in original file to handle duplicates
+                            occurrences = file_content.count(f'"{username}"')
+                            for _ in range(max(1, occurrences)):
+                                cred_pairs.append((username, password))
+                        else:
+                            cred_pairs.append((username, password))
+        
+        return cred_pairs
+    
+    def _fallback_to_environment(self) -> List[Tuple[str, str]]:
+        """Fallback to environment variables"""
+        username = os.environ.get('TRADOVATE_USERNAME', '')
+        password = os.environ.get('TRADOVATE_PASSWORD', '')
+        if username and password:
+            print("Using credentials from environment variables")
+            return [(username, password)]
+        return []
+    
+    def get_credentials_count(self) -> int:
+        """Get count of available credentials for Chrome instance calculation"""
+        try:
+            cred_pairs = self.load_unified_credentials(allow_duplicates=False)
+            return len(cred_pairs)
+        except Exception as e:
+            print(f"Error getting credentials count: {e}")
+            return 0
+    
+    def get_single_credential(self, index: int = 0) -> Tuple[Optional[str], Optional[str]]:
+        """Get a single credential pair by index"""
+        try:
+            cred_pairs = self.load_unified_credentials()
+            if index < len(cred_pairs):
+                return cred_pairs[index]
+            return None, None
+        except Exception as e:
+            print(f"Error getting single credential: {e}")
+            return None, None
+    
+    def validate_credentials(self, username: str, password: str) -> bool:
+        """Validate credential format and basic security requirements"""
+        if not username or not password:
+            return False
+        
+        # Basic validation rules
+        if len(password) < 6:
+            print("Warning: Password appears to be very short")
+            
+        if '@' not in username and '.' not in username:
+            print("Warning: Username doesn't appear to be an email format")
+        
+        return True
+
+# Global instance for unified authentication
+unified_auth_manager = UnifiedAuthenticationManager()
+
+# Convenient functions for backward compatibility
+def load_unified_credentials(allow_duplicates: bool = True) -> List[Tuple[str, str]]:
+    """Unified credential loading function - replaces all duplicated versions"""
+    return unified_auth_manager.load_unified_credentials(allow_duplicates)
+
+def get_unified_credentials_count() -> int:
+    """Get credentials count - replaces load_credentials_count() from main.py"""
+    return unified_auth_manager.get_credentials_count()
+
+def get_unified_single_credential(index: int = 0) -> Tuple[Optional[str], Optional[str]]:
+    """Get single credential - replaces login_helper.py credential loading"""
+    return unified_auth_manager.get_single_credential(index)
+
+# ============================================================================
 # MODULE INITIALIZATION
 # ============================================================================
 

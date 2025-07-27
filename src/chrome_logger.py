@@ -5,6 +5,13 @@ import os
 import pychrome
 from threading import Thread
 
+# Import Chrome Communication Framework for unified execution
+try:
+    from src.utils.chrome_communication import safe_evaluate, OperationType
+    SAFE_EVAL_AVAILABLE = True
+except ImportError:
+    SAFE_EVAL_AVAILABLE = False
+
 class ChromeLogger:
     def __init__(self, tab, log_file=None):
         """
@@ -231,7 +238,18 @@ def main():
             console.error('Chrome logger test - ERROR message');
             console.debug('Chrome logger test - DEBUG message');
             """
-            tab.Runtime.evaluate(expression=test_js)
+            # Use safe_evaluate if available, fallback to direct execution
+            if SAFE_EVAL_AVAILABLE:
+                result = safe_evaluate(
+                    tab=tab,
+                    js_code=test_js,
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Chrome logger test console output"
+                )
+                if not result.success:
+                    print(f"Test script execution failed: {result.error}")
+            else:
+                tab.Runtime.evaluate(expression=test_js)
             
             try:
                 while True:

@@ -183,6 +183,67 @@ const TRADOVATE_UI_ELEMENTS = {
     },
     
     // ============================================================================
+    // UNIFIED TRADING DATA PROCESSING FUNCTIONS
+    // ============================================================================
+    TRADING_DATA_PROCESSORS: {
+        // Symbol processing functions - eliminates duplication across autoOrder scripts
+        
+        normalizeSymbol: function(s) {
+            console.log(`normalizeSymbol called with: "${s}"`);
+            const isRootSymbol = /^[A-Z]{1,3}$/.test(s);
+            console.log(`Is root symbol: ${isRootSymbol}`);
+            const result = isRootSymbol ? TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.getFrontQuarter(s) : s.toUpperCase();
+            console.log(`Normalized symbol: "${result}"`);
+            return result;
+        },
+        
+        getFrontQuarter: function(root) {
+            console.log(`getFrontQuarter called for root: "${root}"`);
+            const { letter, yearDigit } = TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.getQuarterlyCode();
+            console.log(`Got quarterly code: letter=${letter}, yearDigit=${yearDigit}`);
+            const result = `${root.toUpperCase()}${letter}${yearDigit}`;
+            console.log(`Returning front quarter symbol: "${result}"`);
+            return result;
+        },
+        
+        getQuarterlyCode: function() {
+            const MONTH_CODES = {
+                0: 'F', 1: 'G', 2: 'H', 3: 'J', 4: 'K', 5: 'M',
+                6: 'N', 7: 'Q', 8: 'U', 9: 'V', 10: 'X', 11: 'Z'
+            };
+            
+            const now = new Date();
+            const month = now.getMonth();
+            const year = now.getFullYear();
+            const letter = MONTH_CODES[month];
+            const yearDigit = year % 10;
+            
+            return { letter, yearDigit };
+        },
+        
+        // Symbol validation and formatting
+        validateSymbol: function(symbol) {
+            if (!symbol || typeof symbol !== 'string') {
+                return false;
+            }
+            
+            // Check if it's a valid futures symbol format
+            const rootPattern = /^[A-Z]{1,3}$/;
+            const fullPattern = /^[A-Z]{1,3}[A-Z]\d$/;
+            
+            return rootPattern.test(symbol) || fullPattern.test(symbol);
+        },
+        
+        extractRootSymbol: function(symbol) {
+            if (!symbol) return null;
+            
+            // Extract root symbol from full futures symbol (e.g., ESH5 -> ES)
+            const match = symbol.match(/^([A-Z]{1,3})[A-Z]?\d?$/);
+            return match ? match[1] : symbol.toUpperCase();
+        }
+    },
+    
+    // ============================================================================
     // VALIDATION HELPER FUNCTIONS
     // ============================================================================
     VALIDATION_HELPERS: {
@@ -336,6 +397,111 @@ const ORDER_VALIDATION_TIMING = {
     SUBMISSION_STEP_DELAY: 200    // 200ms
 };
 
+// ============================================================================
+// UNIFIED TRADING SYSTEM CONFIGURATION
+// ============================================================================
+
+const UNIFIED_TRADING_CONFIG = {
+    // Consolidated timeout configuration - eliminates duplicated timeout values
+    TIMEOUTS: {
+        // DOM operation timeouts (replaces scattered 10000ms values)
+        ELEMENT_WAIT_DEFAULT: 10000,        // Standard element wait
+        ELEMENT_WAIT_QUICK: 5000,           // Quick validation checks
+        ELEMENT_WAIT_EXTENDED: 15000,       // Complex form operations
+        DROPDOWN_SELECTION: 3000,           // Dropdown menu operations
+        MODAL_TRANSITION: 2000,             // Modal dialog transitions
+        FORM_VALIDATION: 5000,              // Form field validation
+        
+        // Operation delays (replaces scattered setTimeout values)
+        CLICK_DELAY: 100,                   // Standard click delay
+        DROPDOWN_DELAY: 300,                // Dropdown interaction delay  
+        MODAL_DELAY: 500,                   // Modal operation delay
+        FORM_INPUT_DELAY: 200,              // Form input setting delay
+        NAVIGATION_DELAY: 500,              // Page navigation delay
+        
+        // Trading-specific timeouts
+        ORDER_SUBMISSION_TIMEOUT: 15000,    // Order submission operations
+        POSITION_EXIT_TIMEOUT: 20000,       // Position exit operations
+        ACCOUNT_SWITCH_TIMEOUT: 10000,      // Account switching operations
+        LOGIN_OPERATION_TIMEOUT: 30000      // Authentication operations
+    },
+    
+    // Circuit breaker and performance thresholds
+    PERFORMANCE: {
+        // Circuit breaker settings
+        CIRCUIT_BREAKER_FAILURE_THRESHOLD: 5,      // Failures before tripping
+        CIRCUIT_BREAKER_RECOVERY_TIMEOUT: 30,      // Seconds before retry
+        CIRCUIT_BREAKER_HALF_OPEN_LIMIT: 3,        // Test attempts when recovering
+        
+        // Performance monitoring thresholds
+        SLOW_OPERATION_THRESHOLD: 2.0,             // Seconds for slow operation warning
+        CRITICAL_OPERATION_THRESHOLD: 5.0,         // Seconds for critical slowness
+        MAX_CONCURRENT_OPERATIONS: 3,              // Concurrent operation limit
+        MAX_QUEUE_SIZE: 10,                        // Operation queue size limit
+        
+        // Health check intervals  
+        HEALTH_CHECK_INTERVAL: 30,                 // Seconds between health checks
+        LOGIN_STATUS_CHECK_INTERVAL: 30,           // Seconds between login checks
+        CONNECTION_HEALTH_INTERVAL: 60             // Seconds between connection checks
+    },
+    
+    // Risk management configuration
+    RISK_MANAGEMENT: {
+        // Position sizing limits
+        MAX_QUANTITY_LIMIT: 1000,                  // Maximum single order quantity
+        DEFAULT_TEST_QUANTITIES: [1, 5, 10, 20],   // Standard test quantities
+        POSITION_SIZE_LIMITS: [1, 5, 10, 20, 50, 100], // Available position sizes
+        
+        // Risk validation thresholds
+        MAX_DOLLAR_RISK_PER_TRADE: 1000,          // Maximum dollar risk per trade
+        MAX_PORTFOLIO_RISK_PERCENT: 10,           // Maximum portfolio risk percentage
+        ACCOUNT_BALANCE_BUFFER: 0.1,              // 10% buffer on account balance
+        
+        // Default risk parameters by account phase
+        ACCOUNT_PHASES: {
+            'conservative': { max_risk_per_trade: 100, max_position_size: 5 },
+            'moderate': { max_risk_per_trade: 500, max_position_size: 20 },
+            'aggressive': { max_risk_per_trade: 1000, max_position_size: 50 }
+        }
+    },
+    
+    // Debug and logging configuration
+    DEBUG: {
+        // Feature flags for debugging
+        ENABLE_ORDER_VALIDATION_DEBUG: false,      // Order validation debugging
+        ENABLE_DOM_INTELLIGENCE_DEBUG: false,      // DOM operation debugging  
+        ENABLE_ACCOUNT_DATA_DEBUG: false,          // Account data debugging
+        ENABLE_PERFORMANCE_MONITORING: true,       // Performance monitoring
+        
+        // Logging levels
+        DEFAULT_LOG_LEVEL: 'INFO',                 // Default logging level
+        VERBOSE_LOGGING: false,                    // Verbose operation logging
+        CONSOLE_LOGGING: true,                     // Browser console logging
+        PERSIST_DEBUG_LOGS: false                  // Persist debug logs locally
+    },
+    
+    // Helper functions for configuration access
+    getTimeout: function(operation) {
+        const timeouts = UNIFIED_TRADING_CONFIG.TIMEOUTS;
+        return timeouts[operation.toUpperCase()] || timeouts.ELEMENT_WAIT_DEFAULT;
+    },
+    
+    getPerformanceThreshold: function(metric) {
+        const perf = UNIFIED_TRADING_CONFIG.PERFORMANCE;
+        return perf[metric.toUpperCase()] || null;
+    },
+    
+    getRiskLimit: function(limitType) {
+        const risk = UNIFIED_TRADING_CONFIG.RISK_MANAGEMENT;
+        return risk[limitType.toUpperCase()] || null;
+    },
+    
+    isDebugEnabled: function(feature) {
+        const debug = UNIFIED_TRADING_CONFIG.DEBUG;
+        return debug[`ENABLE_${feature.toUpperCase()}_DEBUG`] || false;
+    }
+};
+
 // Export for use in other scripts
 if (typeof window !== 'undefined') {
     window.TRADOVATE_UI_ELEMENTS = TRADOVATE_UI_ELEMENTS;
@@ -343,13 +509,397 @@ if (typeof window !== 'undefined') {
     window.ORDER_VALIDATION_TIMING = ORDER_VALIDATION_TIMING;
 }
 
+// ============================================================================
+// UNIFIED TRADING EXECUTION FRAMEWORK
+// ============================================================================
+
+const UNIFIED_TRADING_FRAMEWORK = {
+    // Consolidated futures tick data - eliminates duplication across autoOrder scripts
+    FUTURES_TICK_DATA: {
+        MNQ: { tickSize: 0.25, tickValue: 0.5, defaultSL: 40, defaultTP: 100, precision: 2 },
+        NQ: { tickSize: 0.25, tickValue: 5.0, defaultSL: 40, defaultTP: 100, precision: 2 },
+        ES: { tickSize: 0.25, tickValue: 12.5, defaultSL: 20, defaultTP: 50, precision: 2 },
+        MES: { tickSize: 0.25, tickValue: 1.25, defaultSL: 20, defaultTP: 50, precision: 2 },
+        RTY: { tickSize: 0.1, tickValue: 5.0, defaultSL: 10, defaultTP: 25, precision: 1 },
+        M2K: { tickSize: 0.1, tickValue: 0.5, defaultSL: 10, defaultTP: 25, precision: 1 },
+        YM: { tickSize: 1.0, tickValue: 5.0, defaultSL: 100, defaultTP: 200, precision: 0 },
+        MYM: { tickSize: 1.0, tickValue: 0.5, defaultSL: 100, defaultTP: 200, precision: 0 },
+        CL: { tickSize: 0.01, tickValue: 10.0, defaultSL: 0.50, defaultTP: 1.00, precision: 2 },
+        MCL: { tickSize: 0.01, tickValue: 1.0, defaultSL: 0.50, defaultTP: 1.00, precision: 2 },
+        GC: { tickSize: 0.1, tickValue: 10.0, defaultSL: 10, defaultTP: 20, precision: 1 },
+        MGC: { tickSize: 0.1, tickValue: 1.0, defaultSL: 10, defaultTP: 20, precision: 1 },
+        SI: { tickSize: 0.005, tickValue: 25.0, defaultSL: 0.5, defaultTP: 1.0, precision: 3 },
+        SIL: { tickSize: 0.005, tickValue: 12.5, defaultSL: 0.5, defaultTP: 1.0, precision: 3 }
+    },
+
+    // Unified retry utility function - eliminates duplicated retry logic across scripts
+    retryWithBackoff: function(operation, maxRetries, intervalMs, successCondition, description) {
+        let retryCount = 0;
+        const startTime = Date.now();
+        
+        return new Promise((resolve, reject) => {
+            function attempt() {
+                try {
+                    const result = operation();
+                    
+                    if (successCondition(result)) {
+                        console.log(`${description} succeeded after ${retryCount} retries in ${Date.now() - startTime}ms`);
+                        resolve(result);
+                    } else {
+                        retryCount++;
+                        if (retryCount >= maxRetries) {
+                            const errorMsg = `${description} failed after ${maxRetries} attempts`;
+                            console.error(errorMsg);
+                            reject(new Error(errorMsg));
+                        } else {
+                            console.log(`${description} retry ${retryCount}/${maxRetries}`);
+                            setTimeout(attempt, intervalMs);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`${description} error:`, error);
+                    retryCount++;
+                    if (retryCount >= maxRetries) {
+                        reject(error);
+                    } else {
+                        setTimeout(attempt, intervalMs);
+                    }
+                }
+            }
+            
+            attempt();
+        });
+    },
+
+    // Unified delay utility function - eliminates duplicated setTimeout patterns
+    delay: function(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    },
+
+    // Unified order submission with comprehensive validation
+    submitOrder: async function(orderType, priceValue, validationOptions = {}) {
+        const startTime = Date.now();
+        const submissionId = `ORDER_${startTime}_${Math.random().toString(36).substr(2, 6)}`;
+        
+        try {
+            console.log(`[${submissionId}] Starting unified order submission: ${orderType} at ${priceValue}`);
+            
+            // Pre-submission validation using OrderValidationFramework if available
+            if (window.autoOrderValidator && validationOptions.enableValidation !== false) {
+                const orderData = {
+                    orderType,
+                    price: priceValue,
+                    submissionId,
+                    timestamp: new Date().toISOString()
+                };
+                
+                const validationResult = await window.autoOrderValidator.validatePreSubmission(orderData);
+                if (!validationResult.success) {
+                    console.error(`[${submissionId}] Pre-submission validation failed:`, validationResult.errors);
+                    return {
+                        success: false,
+                        submissionId,
+                        error: 'Validation failed',
+                        details: validationResult.errors
+                    };
+                }
+            }
+            
+            // Apply common fields using framework method
+            await UNIFIED_TRADING_FRAMEWORK.setCommonFields(validationOptions.tradeData || {});
+            
+            // Set order type with validation
+            const typeSelector = TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.ORDER_TYPE_SELECTOR;
+            const typeSel = document.querySelector(typeSelector);
+            
+            if (!typeSel) {
+                console.error(`[${submissionId}] Order type selector not found: ${typeSelector}`);
+                return { success: false, submissionId, error: 'Order type selector not found' };
+            }
+            
+            // DOM Intelligence validation if available
+            if (window.domHelpers?.validateElementClickable && !window.domHelpers.validateElementClickable(typeSel)) {
+                console.error(`[${submissionId}] Order type selector not clickable`);
+                return { success: false, submissionId, error: 'Order type selector not clickable' };
+            }
+            
+            typeSel.click();
+            await UNIFIED_TRADING_FRAMEWORK.delay(UNIFIED_TRADING_CONFIG.TIMEOUTS.DROPDOWN_DELAY);
+            
+            // Select order type from dropdown
+            const dropdownItems = document.querySelectorAll(TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.ORDER_TYPE_DROPDOWN);
+            const targetItem = Array.from(dropdownItems).find(li => li.textContent.trim() === orderType);
+            
+            if (!targetItem) {
+                console.error(`[${submissionId}] Order type not found: ${orderType}`);
+                return { success: false, submissionId, error: `Order type not found: ${orderType}` };
+            }
+            
+            targetItem.click();
+            await UNIFIED_TRADING_FRAMEWORK.delay(UNIFIED_TRADING_CONFIG.TIMEOUTS.DROPDOWN_DELAY);
+            
+            // Set price if provided
+            if (priceValue) {
+                const priceSet = await UNIFIED_TRADING_FRAMEWORK.updateInputValue(
+                    TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.PRICE_INPUT,
+                    priceValue
+                );
+                
+                if (!priceSet) {
+                    console.error(`[${submissionId}] Failed to set price: ${priceValue}`);
+                    return { success: false, submissionId, error: 'Failed to set price' };
+                }
+            }
+            
+            // Click submit button with validation
+            const submitButton = document.querySelector(TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.SUBMIT_BUTTON);
+            if (!submitButton) {
+                console.error(`[${submissionId}] Submit button not found`);
+                return { success: false, submissionId, error: 'Submit button not found' };
+            }
+            
+            if (window.domHelpers?.validateElementClickable && !window.domHelpers.validateElementClickable(submitButton)) {
+                console.error(`[${submissionId}] Submit button not clickable`);
+                return { success: false, submissionId, error: 'Submit button not clickable' };
+            }
+            
+            submitButton.click();
+            await UNIFIED_TRADING_FRAMEWORK.delay(500);
+            
+            // Post-submission validation
+            const orderEvents = UNIFIED_TRADING_FRAMEWORK.getOrderEvents();
+            const executionTime = Date.now() - startTime;
+            
+            console.log(`[${submissionId}] Order submission completed in ${executionTime}ms`);
+            console.log(`[${submissionId}] Order events:`, orderEvents);
+            
+            // Navigate back
+            const backButton = document.querySelector(TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.BACK_BUTTON);
+            if (backButton && window.domHelpers?.validateElementClickable(backButton)) {
+                backButton.click();
+                await UNIFIED_TRADING_FRAMEWORK.delay(UNIFIED_TRADING_CONFIG.TIMEOUTS.NAVIGATION_DELAY);
+            }
+            
+            return {
+                success: true,
+                submissionId,
+                orderType,
+                price: priceValue,
+                executionTime,
+                orderEvents
+            };
+            
+        } catch (error) {
+            const executionTime = Date.now() - startTime;
+            console.error(`[${submissionId}] Order submission failed after ${executionTime}ms:`, error);
+            return {
+                success: false,
+                submissionId,
+                error: error.message || 'Unknown error',
+                executionTime
+            };
+        }
+    },
+
+    // Unified field setting with validation
+    setCommonFields: async function(tradeData) {
+        console.log('Setting common order fields with unified framework');
+        
+        // Set action (Buy/Sell) if provided
+        if (tradeData.action) {
+            console.log(`Setting action to: ${tradeData.action}`);
+            const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
+            
+            for (const label of actionLabels) {
+                if (label.textContent.trim() === tradeData.action) {
+                    if (!window.domHelpers?.validateElementClickable || window.domHelpers.validateElementClickable(label)) {
+                        label.click();
+                        console.log(`Clicked ${tradeData.action} label`);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // Set quantity if provided
+        if (tradeData.qty) {
+            console.log(`Setting quantity to: ${tradeData.qty}`);
+            await UNIFIED_TRADING_FRAMEWORK.updateInputValue(
+                TRADOVATE_UI_ELEMENTS.ORDER_SUBMISSION.QUANTITY_INPUT,
+                tradeData.qty
+            );
+        }
+    },
+
+    // Unified input value updating with validation
+    updateInputValue: async function(selector, value) {
+        console.log(`Updating input ${selector} to value: ${value}`);
+        
+        // Wait for live, visible field
+        let input;
+        for (let i = 0; i < 25; i++) {
+            const candidates = Array.from(document.querySelectorAll(selector));
+            input = candidates.find(el => el.offsetParent && !el.disabled);
+            if (input) break;
+            await UNIFIED_TRADING_FRAMEWORK.delay(UNIFIED_TRADING_CONFIG.TIMEOUTS.CLICK_DELAY);
+        }
+        
+        if (!input) {
+            console.error(`No live input found for selector: ${selector}`);
+            return false;
+        }
+        
+        // Use native setter for reliable value setting
+        const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+        
+        // Write-verify loop with Enter commit
+        for (let tries = 0; tries < 3; tries++) {
+            input.focus();
+            setVal.call(input, value);
+            
+            // Dispatch input and change events
+            ['input', 'change'].forEach(eventType =>
+                input.dispatchEvent(new Event(eventType, { bubbles: true }))
+            );
+            
+            // Commit with Enter key
+            input.dispatchEvent(new KeyboardEvent('keydown', {
+                key: 'Enter',
+                code: 'Enter',
+                keyCode: 13,
+                which: 13,
+                bubbles: true
+            }));
+            
+            input.blur();
+            await UNIFIED_TRADING_FRAMEWORK.delay(UNIFIED_TRADING_CONFIG.TIMEOUTS.FORM_INPUT_DELAY);
+            
+            // Verify value was set correctly
+            if (Number(input.value) === Number(value)) {
+                console.log(`Successfully set ${selector} to ${value}`);
+                return true;
+            }
+        }
+        
+        console.error(`Failed to set ${selector} to ${value} after 3 attempts`);
+        return false;
+    },
+
+    // Unified order events extraction - eliminates duplication
+    getOrderEvents: function(container = document) {
+        const rows = container.querySelectorAll('.order-history-content .public_fixedDataTable_bodyRow');
+        return Array.from(rows, row => {
+            const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+            return {
+                timestamp: cells[0]?.textContent.trim() || '',
+                id: cells[1]?.textContent.trim() || '',
+                event: cells[2]?.textContent.trim() || '',
+                symbol: cells[3]?.textContent.trim() || '',
+                side: cells[4]?.textContent.trim() || '',
+                quantity: cells[5]?.textContent.trim() || '',
+                price: cells[6]?.textContent.trim() || '',
+                status: cells[7]?.textContent.trim() || ''
+            };
+        });
+    },
+
+    // Unified bracket order creation
+    createBracketOrder: async function(tradeData, options = {}) {
+        const bracketId = `BRACKET_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+        console.log(`[${bracketId}] Creating unified bracket order with data:`, tradeData);
+        
+        try {
+            // Generate tracking ID for validation framework
+            if (options.enableValidation !== false) {
+                tradeData.bracketGroupId = bracketId;
+                tradeData.submissionTimestamp = new Date().toISOString();
+            }
+            
+            // Submit main order
+            const mainOrderResult = await UNIFIED_TRADING_FRAMEWORK.submitOrder(
+                tradeData.orderType || 'MARKET',
+                tradeData.price,
+                { tradeData, enableValidation: options.enableValidation }
+            );
+            
+            if (!mainOrderResult.success) {
+                console.error(`[${bracketId}] Main order failed:`, mainOrderResult.error);
+                return { success: false, bracketId, error: mainOrderResult.error };
+            }
+            
+            // Submit stop-loss order if configured
+            if (tradeData.slEnabled && tradeData.slPrice) {
+                console.log(`[${bracketId}] Submitting stop-loss order at ${tradeData.slPrice}`);
+                const slResult = await UNIFIED_TRADING_FRAMEWORK.submitOrder(
+                    'STP',
+                    tradeData.slPrice,
+                    { tradeData, enableValidation: options.enableValidation }
+                );
+                
+                if (!slResult.success) {
+                    console.warn(`[${bracketId}] Stop-loss order failed:`, slResult.error);
+                }
+            }
+            
+            // Submit take-profit order if configured
+            if (tradeData.tpEnabled && tradeData.tpPrice) {
+                console.log(`[${bracketId}] Submitting take-profit order at ${tradeData.tpPrice}`);
+                const tpResult = await UNIFIED_TRADING_FRAMEWORK.submitOrder(
+                    'LMT',
+                    tradeData.tpPrice,
+                    { tradeData, enableValidation: options.enableValidation }
+                );
+                
+                if (!tpResult.success) {
+                    console.warn(`[${bracketId}] Take-profit order failed:`, tpResult.error);
+                }
+            }
+            
+            console.log(`[${bracketId}] Bracket order creation completed`);
+            return {
+                success: true,
+                bracketId,
+                mainOrder: mainOrderResult,
+                timestamp: new Date().toISOString()
+            };
+            
+        } catch (error) {
+            console.error(`[${bracketId}] Bracket order creation failed:`, error);
+            return {
+                success: false,
+                bracketId,
+                error: error.message || 'Unknown error'
+            };
+        }
+    },
+
+
+    // Get tick data for a symbol
+    getTickData: function(symbol) {
+        const rootSymbol = TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.extractRootSymbol(symbol);
+        return UNIFIED_TRADING_FRAMEWORK.FUTURES_TICK_DATA[rootSymbol] || null;
+    }
+};
+
 // Also export for module systems
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         TRADOVATE_UI_ELEMENTS,
         ORDER_VALIDATION_PATTERNS,
-        ORDER_VALIDATION_TIMING
+        ORDER_VALIDATION_TIMING,
+        UNIFIED_TRADING_FRAMEWORK,
+        UNIFIED_TRADING_CONFIG
     };
 }
 
+// Export unified framework to window
+if (typeof window !== 'undefined') {
+    window.TRADOVATE_UI_ELEMENTS = TRADOVATE_UI_ELEMENTS;
+    window.ORDER_VALIDATION_PATTERNS = ORDER_VALIDATION_PATTERNS;
+    window.ORDER_VALIDATION_TIMING = ORDER_VALIDATION_TIMING;
+    window.UNIFIED_TRADING_FRAMEWORK = UNIFIED_TRADING_FRAMEWORK;
+    window.UNIFIED_TRADING_CONFIG = UNIFIED_TRADING_CONFIG;
+}
+
 console.log('✅ Tradovate UI Elements mapping loaded');
+console.log('✅ Unified Trading Execution Framework loaded');

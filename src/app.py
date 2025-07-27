@@ -6,6 +6,9 @@ import argparse
 import threading
 import time
 
+# Import Chrome Communication Framework for safe operations
+from src.utils.chrome_communication import safe_evaluate, OperationType
+
 # Load the Tampermonkey script
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 tampermonkey_path = os.path.join(project_root, 'scripts/tampermonkey/autoOrder.user.js')
@@ -36,22 +39,38 @@ class TradovateConnection:
     def __init__(self, port, account_name=None):
         self.port = port
         self.account_name = account_name or f"Account on port {port}"
-        self.browser = pychrome.Browser(url=f"http://127.0.0.1:{port}")
-        self.tab = None
-        self.find_tradovate_tab()
+        # Use unified connection logic from auto_login instead of duplicating tab finding
+        try:
+            from src.auto_login import connect_to_chrome
+            self.browser, self.tab = connect_to_chrome(port)
+            if self.tab:
+                print(f"✅ Connected to Tradovate tab via unified connection logic for {self.account_name}")
+            else:
+                print(f"❌ Failed to find Tradovate tab for {self.account_name}")
+        except ImportError:
+            print(f"⚠️  Unified connection not available, using fallback for {self.account_name}")
+            self.browser = pychrome.Browser(url=f"http://localhost:{port}")
+            self.tab = None
+            self.find_tradovate_tab()
         
     def find_tradovate_tab(self):
-        """Find a Tradovate tab in the browser"""
+        """Fallback tab finding method when unified connection not available"""
         for tab in self.browser.list_tab():
             try:
                 tab.start()
                 tab.Page.enable()
-                result = tab.Runtime.evaluate(expression="document.location.href")
-                url = result.get("result", {}).get("value", "")
+                # Use safe_evaluate to check if this is a Tradovate tab
+                result = safe_evaluate(
+                    tab=tab, 
+                    js_code="document.location.href",
+                    operation_type=OperationType.IMPORTANT,
+                    description="Check if tab is Tradovate"
+                )
+                url = result.value if result.success else ""
                 
                 if "tradovate" in url:
                     self.tab = tab
-                    print(f"Found Tradovate tab for {self.account_name}")
+                    print(f"Found Tradovate tab for {self.account_name} (fallback method)")
                     # Keep the tab open
                     return
                 else:
@@ -63,7 +82,7 @@ class TradovateConnection:
                 except:
                     pass
                     
-        print(f"No Tradovate tab found for {self.account_name}")
+        print(f"No Tradovate tab found for {self.account_name} (fallback method)")
         
     def inject_tampermonkey(self):
         """Inject the Tampermonkey functions into the tab"""
@@ -79,8 +98,17 @@ class TradovateConnection:
             if os.path.exists(console_interceptor_path):
                 with open(console_interceptor_path, 'r') as file:
                     console_interceptor_js = file.read()
-                self.tab.Runtime.evaluate(expression=console_interceptor_js)
-                print(f"Console interceptor injected for {self.account_name}")
+                # Use safe_evaluate to inject console interceptor
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=console_interceptor_js,
+                    operation_type=OperationType.CRITICAL,
+                    description=f"Inject console interceptor for {self.account_name}"
+                )
+                if result.success:
+                    print(f"Console interceptor injected for {self.account_name}")
+                else:
+                    print(f"Failed to inject console interceptor for {self.account_name}: {result.error}")
             else:
                 print(f"WARNING: Console interceptor not found at {console_interceptor_path}")
             
@@ -90,7 +118,15 @@ class TradovateConnection:
             with open(tampermonkey_path, 'r') as file:
                 fresh_tampermonkey_code = file.read()
             fresh_tampermonkey_functions = extract_core_functions(fresh_tampermonkey_code)
-            self.tab.Runtime.evaluate(expression=fresh_tampermonkey_functions)
+            # Use safe_evaluate to inject Tampermonkey functions
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code=fresh_tampermonkey_functions,
+                operation_type=OperationType.CRITICAL,
+                description=f"Inject Tampermonkey functions for {self.account_name}"
+            )
+            if not result.success:
+                print(f"Failed to inject Tampermonkey functions for {self.account_name}: {result.error}")
             
             # Also inject the getAllAccountTableData function
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -99,8 +135,17 @@ class TradovateConnection:
             if os.path.exists(account_data_path):
                 with open(account_data_path, 'r') as file:
                     account_data_js = file.read()
-                self.tab.Runtime.evaluate(expression=account_data_js)
-                print(f"Account data function injected for {self.account_name}")
+                # Use safe_evaluate to inject account data function
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=account_data_js,
+                    operation_type=OperationType.IMPORTANT,
+                    description=f"Inject account data function for {self.account_name}"
+                )
+                if result.success:
+                    print(f"Account data function injected for {self.account_name}")
+                else:
+                    print(f"Failed to inject account data function for {self.account_name}: {result.error}")
             
             # Inject the autoriskManagement.js script
             risk_management_path = os.path.join(project_root, 
@@ -108,39 +153,58 @@ class TradovateConnection:
             if os.path.exists(risk_management_path):
                 with open(risk_management_path, 'r') as file:
                     risk_management_js = file.read()
-                # First evaluate the script to define the functions
-                self.tab.Runtime.evaluate(expression=risk_management_js)
-                print(f"Auto risk management script injected for {self.account_name}")
-                
-                # Wait a moment for the script to fully initialize
-                time.sleep(1)
-                
-                # Then explicitly run the risk management functions
-                self.tab.Runtime.evaluate(expression="""
-                    console.log("Executing initial risk management assessment...");
-                    if (typeof getTableData === 'function') {
-                        getTableData();
-                        console.log("getTableData executed");
-                    } else {
-                        console.error("getTableData function not found");
-                    }
+                # Use safe_evaluate to inject risk management script
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=risk_management_js,
+                    operation_type=OperationType.CRITICAL,
+                    description=f"Inject risk management script for {self.account_name}"
+                )
+                if result.success:
+                    print(f"Auto risk management script injected for {self.account_name}")
                     
-                    if (typeof updateUserColumnPhaseStatus === 'function') {
-                        updateUserColumnPhaseStatus();
-                        console.log("updateUserColumnPhaseStatus executed");
-                    } else {
-                        console.error("updateUserColumnPhaseStatus function not found");
-                    }
+                    # Wait a moment for the script to fully initialize
+                    time.sleep(1)
                     
-                    if (typeof performAccountActions === 'function') {
-                        performAccountActions();
-                        console.log("performAccountActions executed");
-                    } else {
-                        console.error("performAccountActions function not found");
-                    }
-                    console.log("Risk management assessment completed");
-                """)
-                print(f"Auto risk management executed for {self.account_name}")
+                    # Then explicitly run the risk management functions
+                    init_code = """
+                        console.log("Executing initial risk management assessment...");
+                        if (typeof getTableData === 'function') {
+                            getTableData();
+                            console.log("getTableData executed");
+                        } else {
+                            console.error("getTableData function not found");
+                        }
+                        
+                        if (typeof updateUserColumnPhaseStatus === 'function') {
+                            updateUserColumnPhaseStatus();
+                            console.log("updateUserColumnPhaseStatus executed");
+                        } else {
+                            console.error("updateUserColumnPhaseStatus function not found");
+                        }
+                        
+                        if (typeof performAccountActions === 'function') {
+                            performAccountActions();
+                            console.log("performAccountActions executed");
+                        } else {
+                            console.error("performAccountActions function not found");
+                        }
+                        console.log("Risk management assessment completed");
+                    """
+                    
+                    init_result = safe_evaluate(
+                        tab=self.tab,
+                        js_code=init_code,
+                        operation_type=OperationType.IMPORTANT,
+                        description=f"Initialize risk management for {self.account_name}"
+                    )
+                    
+                    if init_result.success:
+                        print(f"Auto risk management executed for {self.account_name}")
+                    else:
+                        print(f"Failed to initialize risk management for {self.account_name}: {init_result.error}")
+                else:
+                    print(f"Failed to inject risk management script for {self.account_name}: {result.error}")
             
             print(f"Tampermonkey functions injected successfully for {self.account_name}")
             return True
@@ -154,8 +218,14 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            result = self.tab.Runtime.evaluate(expression="createUI();")
-            return result
+            # Use safe_evaluate to create UI
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code="createUI();",
+                operation_type=OperationType.IMPORTANT,
+                description=f"Create UI for {self.username}"
+            )
+            return {"success": result.success, "value": result.value, "error": result.error}
         except Exception as e:
             return {"error": str(e)}
             
@@ -182,9 +252,22 @@ class TradovateConnection:
             # Clear existing console logs before trade
             self.get_console_logs(clear_after=True)
             
-            # Execute the trade
-            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            # Execute the trade with DOM Intelligence validation
+            from src.utils.chrome_communication import execute_auto_trade_with_validation
+            
+            # Prepare context for validation (market conditions, urgency, etc.)
+            validation_context = {
+                'high_frequency_mode': False,  # Set based on trading strategy
+                'market_volatility': 0.0,     # Could be calculated from recent price data
+                'system_latency': 0,          # Could be measured from recent operations
+                'health_check': health_check
+            }
+            
+            # Execute with DOM Intelligence validation and emergency bypass capability
+            result = execute_auto_trade_with_validation(
+                self.tab, symbol, quantity, action, tp_ticks, sl_ticks, tick_size, 
+                context=validation_context
+            )
             
             # Wait a moment for console logs to be generated
             time.sleep(1)
@@ -192,19 +275,35 @@ class TradovateConnection:
             # Get console logs generated during trade execution
             console_logs = self.get_console_logs(limit=50)
             
-            # Add console logs and health status to result
-            if isinstance(result, dict):
+            # Enhanced result processing for DOM Intelligence integration
+            if isinstance(result, dict) and 'dom_intelligence_enabled' in result:
+                # DOM Intelligence result structure
                 result['console_logs'] = console_logs.get('logs', [])
                 result['health_at_execution'] = health_check
-                result['trade_executed'] = True
+                result['trade_executed'] = result.get('overall_success', False)
+                
+                # Log DOM Intelligence metrics
+                validation_result = result.get('validation_result', {})
+                if validation_result.get('emergency_bypass', False):
+                    print(f"⚠️  Emergency bypass used for trade: {validation_result.get('message', 'Unknown reason')}")
+                
+                if not validation_result.get('success', True):
+                    print(f"⚠️  DOM validation warning: {validation_result.get('message', 'Validation failed')}")
+                
             else:
-                # Ensure result is a dict for consistency
-                result = {
-                    'trade_result': result,
-                    'console_logs': console_logs.get('logs', []),
-                    'health_at_execution': health_check,
-                    'trade_executed': True
-                }
+                # Legacy result structure (fallback)
+                if isinstance(result, dict):
+                    result['console_logs'] = console_logs.get('logs', [])
+                    result['health_at_execution'] = health_check
+                    result['trade_executed'] = True
+                else:
+                    # Ensure result is a dict for consistency
+                    result = {
+                        'trade_result': result,
+                        'console_logs': console_logs.get('logs', []),
+                        'health_at_execution': health_check,
+                        'trade_executed': True
+                    }
             
             return result
         except Exception as e:
@@ -237,9 +336,22 @@ class TradovateConnection:
             # Clear existing console logs before exit
             self.get_console_logs(clear_after=True)
             
-            # Execute the exit
-            js_code = f"clickExitForSymbol(normalizeSymbol('{symbol}'), '{option}');"
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            # Execute the exit with DOM Intelligence validation
+            from src.utils.chrome_communication import execute_exit_positions_with_validation
+            
+            # Prepare context for validation (position exit is critical)
+            validation_context = {
+                'high_frequency_mode': False,
+                'market_volatility': 0.0,  # Could be calculated from recent price data
+                'system_latency': 0,       # Could be measured from recent operations
+                'health_check': health_check,
+                'position_exit': True      # Mark as position exit for priority handling
+            }
+            
+            # Execute with DOM Intelligence validation and emergency bypass capability
+            result = execute_exit_positions_with_validation(
+                self.tab, symbol, option, context=validation_context
+            )
             
             # Wait a moment for console logs to be generated
             time.sleep(0.5)
@@ -247,19 +359,35 @@ class TradovateConnection:
             # Get console logs generated during exit execution
             console_logs = self.get_console_logs(limit=30)
             
-            # Add console logs and health status to result
-            if isinstance(result, dict):
+            # Enhanced result processing for DOM Intelligence integration
+            if isinstance(result, dict) and 'dom_intelligence_enabled' in result:
+                # DOM Intelligence result structure
                 result['console_logs'] = console_logs.get('logs', [])
                 result['health_at_execution'] = health_check
-                result['exit_executed'] = True
+                result['exit_executed'] = result.get('overall_success', False)
+                
+                # Log DOM Intelligence metrics for position exits
+                validation_result = result.get('validation_result', {})
+                if validation_result.get('emergency_bypass', False):
+                    print(f"⚠️  Emergency bypass used for position exit: {validation_result.get('message', 'Unknown reason')}")
+                
+                if not validation_result.get('success', True):
+                    print(f"⚠️  DOM validation warning for exit: {validation_result.get('message', 'Validation failed')}")
+                
             else:
-                # Ensure result is a dict for consistency
-                result = {
-                    'exit_result': result,
-                    'console_logs': console_logs.get('logs', []),
-                    'health_at_execution': health_check,
-                    'exit_executed': True
-                }
+                # Legacy result structure (fallback)
+                if isinstance(result, dict):
+                    result['console_logs'] = console_logs.get('logs', [])
+                    result['health_at_execution'] = health_check
+                    result['exit_executed'] = True
+                else:
+                    # Ensure result is a dict for consistency
+                    result = {
+                        'exit_result': result,
+                        'console_logs': console_logs.get('logs', []),
+                        'health_at_execution': health_check,
+                        'exit_executed': True
+                    }
             
             return result
         except Exception as e:
@@ -270,13 +398,38 @@ class TradovateConnection:
             }
             
     def update_symbol(self, symbol):
-        """Update the symbol in Tradovate's interface"""
+        """Update the symbol in Tradovate's interface with DOM Intelligence validation and state sync"""
         if not self.tab:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"updateSymbol('.search-box--input', normalizeSymbol('{symbol}'));"
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            # Use DOM Intelligence validation for symbol update
+            from src.utils.chrome_communication import execute_symbol_update_with_validation, sync_symbol_across_tabs
+            
+            # Get tab ID for synchronization
+            tab_id = getattr(self.tab, 'id', f'tab_{self.username}')
+            
+            # Prepare context for validation
+            validation_context = {
+                'high_frequency_mode': False,
+                'symbol_change': True  # Mark as symbol change operation
+            }
+            
+            # Execute with DOM Intelligence validation
+            result = execute_symbol_update_with_validation(
+                self.tab, symbol, context=validation_context
+            )
+            
+            # If symbol update was successful, sync across other tabs
+            if result.get('overall_success', False):
+                sync_result = sync_symbol_across_tabs(tab_id, symbol)
+                result['sync_result'] = sync_result
+                
+                if sync_result.get('success', False):
+                    print(f"Symbol synced to {len(sync_result.get('synced_tabs', []))} tabs")
+                else:
+                    print(f"Symbol sync warning: {sync_result.get('error', 'Unknown error')}")
+            
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -310,8 +463,18 @@ class TradovateConnection:
                 "performAccountActions": typeof performAccountActions === 'function'
             }
             """
-            check_result = self.tab.Runtime.evaluate(expression=check_code)
-            check_data = json.loads(check_result.get('result', {}).get('value', '{}'))
+            # Use safe_evaluate to check for required functions
+            check_result = safe_evaluate(
+                tab=self.tab,
+                js_code=check_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description=f"Check risk management functions for {self.username}"
+            )
+            
+            if check_result.success:
+                check_data = json.loads(check_result.value) if isinstance(check_result.value, str) else check_result.value
+            else:
+                check_data = {}
             
             # If any function is missing, try to re-inject the script
             if not all(check_data.values()):
@@ -322,7 +485,15 @@ class TradovateConnection:
                 if os.path.exists(risk_management_path):
                     with open(risk_management_path, 'r') as file:
                         risk_management_js = file.read()
-                    self.tab.Runtime.evaluate(expression=risk_management_js)
+                    # Use safe_evaluate to re-inject risk management script
+                    result = safe_evaluate(
+                        tab=self.tab,
+                        js_code=risk_management_js,
+                        operation_type=OperationType.CRITICAL,
+                        description=f"Re-inject risk management script for {self.username}"
+                    )
+                    if not result.success:
+                        print(f"Failed to re-inject risk management script for {self.username}: {result.error}")
                     # Give it a moment to initialize
                     time.sleep(0.5)
             
@@ -350,8 +521,18 @@ class TradovateConnection:
                 return {status: "error", message: err.toString()};
             }
             """
-            result = self.tab.Runtime.evaluate(expression=js_code)
-            result_data = json.loads(result.get('result', {}).get('value', '{}'))
+            # Use safe_evaluate to run risk management sequence
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code=js_code,
+                operation_type=OperationType.CRITICAL,
+                description=f"Run risk management sequence for {self.username}"
+            )
+            
+            if result.success:
+                result_data = json.loads(result.value) if isinstance(result.value, str) else result.value
+            else:
+                result_data = {"status": "error", "error": result.error}
             
             if result_data.get('status') == 'success':
                 return {
@@ -388,15 +569,20 @@ class TradovateConnection:
             return {"error": "No tab available", "logs": []}
             
         try:
-            # Get all console logs - need to return it as JSON string for pychrome
+            # Use safe_evaluate to get console logs
             js_code = "JSON.stringify(window.getConsoleLogs())"
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description=f"Get console logs for {self.username}"
+            )
             
-            if not result or 'result' not in result:
+            if not result.success:
                 return {"error": "Failed to retrieve console logs", "logs": []}
                 
             # Parse the result
-            logs_json = result.get('result', {}).get('value')
+            logs_json = result.value
             if logs_json:
                 try:
                     logs_data = json.loads(logs_json) if isinstance(logs_json, str) else logs_json
@@ -412,7 +598,13 @@ class TradovateConnection:
             
             # Clear logs if requested
             if clear_after:
-                self.tab.Runtime.evaluate(expression="window.clearConsoleLogs && window.clearConsoleLogs()")
+                # Use safe_evaluate to clear console logs
+                safe_evaluate(
+                    tab=self.tab,
+                    js_code="window.clearConsoleLogs && window.clearConsoleLogs()",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description=f"Clear console logs for {self.username}"
+                )
                 
             return {
                 "status": "success",
@@ -433,10 +625,67 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            result = self.tab.Runtime.evaluate(expression="getAllAccountTableData()")
-            return result
+            # Use safe_evaluate to get account data
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code="getAllAccountTableData()",
+                operation_type=OperationType.IMPORTANT,
+                description=f"Get account data for {self.username}"
+            )
+            return {"success": result.success, "value": result.value, "error": result.error}
         except Exception as e:
             return {"error": str(e)}
+    
+    def test_order_validation(self):
+        """Test order validation framework functionality"""
+        if not self.tab:
+            return {"error": "No tab available"}
+        
+        try:
+            # Import the live validation test
+            from src.utils.test_order_validation_live import OrderValidationLiveTester
+            
+            # Create tester instance
+            tester = OrderValidationLiveTester(self.tab)
+            
+            # Run validation tests
+            print(f"Running Order Validation tests for {self.username}...")
+            results = tester.run_validation_tests()
+            
+            # Check if we need to use asyncio
+            import asyncio
+            if asyncio.iscoroutine(results):
+                # Handle async execution
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                results = loop.run_until_complete(results)
+                loop.close()
+            
+            # Log summary
+            print(f"\nValidation Test Results:")
+            print(f"Total Tests: {results['summary']['total_tests']}")
+            print(f"Passed: {results['summary']['passed']}")
+            print(f"Failed: {results['summary']['failed']}")
+            print(f"Success Rate: {results['summary']['success_rate']}")
+            print(f"Duration: {results['summary']['duration']}")
+            
+            # Add connection health context
+            health_check = self.check_connection_health()
+            results['health_at_testing'] = health_check
+            results['account'] = self.username
+            
+            return results
+            
+        except ImportError as e:
+            return {
+                "error": "Test module not found. Ensure test_order_validation_live.py is in src/utils/",
+                "details": str(e)
+            }
+        except Exception as e:
+            return {
+                "error": f"Test execution failed: {str(e)}",
+                "account": self.username
+            }
 
 class TradovateController:
     def __init__(self, base_port=9223, max_instances=20):
@@ -502,6 +751,41 @@ class TradovateController:
             }
         else:
             return {"error": f"Invalid connection index: {index}"}
+    
+    def test_order_validation_all(self):
+        """Run order validation tests on all connections"""
+        print("\n=== Running Order Validation Tests on All Connections ===\n")
+        
+        results = self.execute_on_all('test_order_validation')
+        
+        # Summarize results
+        total_connections = len(results)
+        successful_tests = 0
+        failed_tests = 0
+        
+        for result in results:
+            account = result['account']
+            test_result = result['result']
+            
+            if 'error' in test_result:
+                failed_tests += 1
+                print(f"❌ {account}: Test failed - {test_result['error']}")
+            else:
+                successful_tests += 1
+                summary = test_result.get('summary', {})
+                print(f"✅ {account}: {summary.get('success_rate', 'N/A')} success rate")
+        
+        print(f"\n=== Summary ===")
+        print(f"Total Connections Tested: {total_connections}")
+        print(f"Successful Tests: {successful_tests}")
+        print(f"Failed Tests: {failed_tests}")
+        
+        return {
+            "total_tested": total_connections,
+            "successful": successful_tests,
+            "failed": failed_tests,
+            "details": results
+        }
 
 def main():
     parser = argparse.ArgumentParser(description='Control multiple Tradovate instances via Python')
@@ -542,6 +826,10 @@ def main():
     
     # Dashboard command
     dashboard_parser = subparsers.add_parser('dashboard', help='Launch the dashboard UI')
+    
+    # Test command
+    test_parser = subparsers.add_parser('test', help='Run order validation tests')
+    test_parser.add_argument('--account', type=int, help='Account index (all if not specified)')
     
     args = parser.parse_args()
     
@@ -618,7 +906,13 @@ def main():
                 if os.path.exists(account_data_path):
                     with open(account_data_path, 'r') as file:
                         account_data_js = file.read()
-                    conn.tab.Runtime.evaluate(expression=account_data_js)
+                    # Use safe_evaluate to inject account data function
+                    safe_evaluate(
+                        tab=conn.tab,
+                        js_code=account_data_js,
+                        operation_type=OperationType.IMPORTANT,
+                        description=f"Inject account data function for {conn.account_name}"
+                    )
         
         # Import the dashboard module here to avoid circular imports
         try:
@@ -652,6 +946,30 @@ def main():
                 time.sleep(1)
         except KeyboardInterrupt:
             print("Dashboard stopped")
+    
+    elif args.command == 'test':
+        if args.account is not None:
+            result = controller.execute_on_one(args.account, 'test_order_validation')
+            account_info = controller.connections[args.account].account_name if args.account < len(controller.connections) else f"Account {args.account}"
+            
+            if 'error' in result['result']:
+                print(f"\n❌ Test failed on {account_info}:")
+                print(f"   {result['result']['error']}")
+            else:
+                test_result = result['result']
+                summary = test_result.get('summary', {})
+                print(f"\n✅ Test completed on {account_info}:")
+                print(f"   Success Rate: {summary.get('success_rate', 'N/A')}")
+                print(f"   Tests Passed: {summary.get('passed', 0)}/{summary.get('total_tests', 0)}")
+                
+                # Show performance metrics if available
+                if 'performance' in test_result:
+                    perf = test_result['performance']
+                    print(f"   Average Time: {perf.get('average_duration', 0):.2f}ms")
+        else:
+            # Run tests on all connections
+            results = controller.test_order_validation_all()
+            print(f"\nOverall Success Rate: {results['successful']}/{results['total_tested']} connections passed")
     
     else:
         parser.print_help()

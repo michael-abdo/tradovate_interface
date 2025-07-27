@@ -18,65 +18,15 @@ WATCHDOG_AVAILABLE = False
 from src.utils.chrome_stability import ChromeStabilityMonitor
 from src.utils.chrome_communication import safe_evaluate, OperationType
 
-# Configuration
-# Try to detect Chrome path based on OS
-import platform
+# Configuration - Use unified Chrome configuration management
+from src.utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT
 
-def find_chrome_path():
-    """Find the Chrome executable path based on the operating system"""
-    if platform.system() == "Darwin":  # macOS
-        # Try multiple possible paths
-        paths = [
-            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta",
-            "/Applications/Chromium.app/Contents/MacOS/Chromium",
-            # Add any other possible macOS Chrome paths here
-        ]
-    elif platform.system() == "Windows":
-        # Try multiple possible paths
-        paths = [
-            r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-            r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-            r"C:\Users\%USERNAME%\AppData\Local\Google\Chrome\Application\chrome.exe",
-            # Add any other possible Windows Chrome paths here
-        ]
-    else:  # Linux and others
-        # Try multiple possible paths
-        paths = [
-            "/usr/bin/google-chrome",
-            "/usr/bin/chromium-browser",
-            "/usr/bin/chromium",
-            # Add any other possible Linux Chrome paths here
-        ]
-    
-    # Try each path
-    for path in paths:
-        if os.path.exists(path):
-            print(f"Found Chrome at: {path}")
-            return path
-    
-    # If Chrome is not found in the common paths, try to find it in PATH
-    try:
-        import subprocess
-        if platform.system() == "Windows":
-            result = subprocess.run(["where", "chrome"], capture_output=True, text=True)
-        else:
-            result = subprocess.run(["which", "google-chrome"], capture_output=True, text=True)
-        
-        if result.returncode == 0 and result.stdout.strip():
-            path = result.stdout.strip()
-            print(f"Found Chrome in PATH: {path}")
-            return path
-    except Exception as e:
-        print(f"Error finding Chrome in PATH: {e}")
-    
-    # Default path as fallback
-    default_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    print(f"Chrome not found, will try with default path: {default_path}")
-    return default_path
-
-CHROME_PATH = find_chrome_path()
-BASE_DEBUGGING_PORT = 9223  # Start from 9223 to avoid 9222 (Rule #0)
+# Fallback for backwards compatibility
+try:
+    CHROME_PATH = get_unified_chrome_config()['chrome_path']
+except Exception as e:
+    print(f"Using fallback Chrome configuration: {e}")
+    CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
 
@@ -320,23 +270,44 @@ class ChromeInstance:
         print(f"Login monitor stopped for {self.username}")
     
     def check_connection_health(self) -> dict:
-        """Check the health of this Chrome instance connection"""
-        health_status = {
-            'account': self.username,
-            'port': self.port,
-            'healthy': False,
-            'checks': {},
-            'errors': []
-        }
-        
+        """Check the health of this Chrome instance connection - DRY refactored"""
         try:
+            # Use unified health check from ChromeStabilityMonitor
+            from src.utils.chrome_stability import ChromeStabilityMonitor
+            
+            # Create or get monitor instance  
+            if not hasattr(self, '_health_monitor'):
+                self._health_monitor = ChromeStabilityMonitor()
+            
+            # Use unified health check with all components
+            health_result = self._health_monitor.check_unified_health(
+                account_name=self.username or f"Port_{self.port}",
+                process=self.process,
+                browser=self.browser,
+                tab=self.tab
+            )
+            
+            # Add port info for compatibility
+            health_result['port'] = self.port
+            
+            return health_result
+            
+        except ImportError:
+            # Fallback to original implementation if monitoring not available
+            health_status = {
+                'account': self.username,
+                'port': self.port,
+                'healthy': False,
+                'checks': {},
+                'errors': []
+            }
+            
             # Check if process is still running
             if self.process and self.process.poll() is None:
                 health_status['checks']['process_running'] = True
             else:
                 health_status['checks']['process_running'] = False
                 health_status['errors'].append("Chrome process not running")
-                return health_status
             
             # Check if browser connection is available
             if self.browser:
@@ -347,11 +318,9 @@ class ChromeInstance:
                 except Exception as e:
                     health_status['checks']['browser_responsive'] = False
                     health_status['errors'].append(f"Browser not responsive: {e}")
-                    return health_status
             else:
                 health_status['checks']['browser_responsive'] = False
                 health_status['errors'].append("No browser connection")
-                return health_status
             
             # Check if tab is accessible
             if self.tab:
@@ -365,51 +334,46 @@ class ChromeInstance:
                     )
                     if result.success and result.value == 2:
                         health_status['checks']['javascript_execution'] = True
+                        
+                        # If JavaScript works, check Tradovate application status
+                        try:
+                            app_check_js = """
+                            ({
+                                url: window.location.href,
+                                authenticated: !document.querySelector('#name-input'),
+                                tradingReady: typeof window.autoTrade === 'function'
+                            })
+                            """
+                            # Use safe_evaluate to check application status
+                            result = safe_evaluate(
+                                tab=self.tab,
+                                js_code=app_check_js,
+                                operation_type=OperationType.NON_CRITICAL,
+                                description=f"Check application status for {self.username}"
+                            )
+                            app_status = result.value if result.success else {}
+                            
+                            health_status['checks']['tradovate_loaded'] = "tradovate.com" in app_status.get('url', '')
+                            health_status['checks']['authenticated'] = app_status.get('authenticated', False)
+                            health_status['checks']['trading_ready'] = app_status.get('tradingReady', False)
+                            
+                        except Exception as e:
+                            health_status['errors'].append(f"Application check failed: {e}")
                     else:
                         health_status['checks']['javascript_execution'] = False
                         health_status['errors'].append("JavaScript execution failed")
                 except Exception as e:
                     health_status['checks']['javascript_execution'] = False
                     health_status['errors'].append(f"Tab not accessible: {e}")
-                    return health_status
             else:
                 health_status['checks']['javascript_execution'] = False
                 health_status['errors'].append("No tab available")
-                return health_status
             
-            # Check Tradovate application status
-            try:
-                app_check_js = """
-                ({
-                    url: window.location.href,
-                    authenticated: !document.querySelector('#name-input'),
-                    tradingReady: typeof window.autoTrade === 'function'
-                })
-                """
-                # Use safe_evaluate to check application status
-                result = safe_evaluate(
-                    tab=self.tab,
-                    js_code=app_check_js,
-                    operation_type=OperationType.NON_CRITICAL,
-                    description=f"Check application status for {self.username}"
-                )
-                app_status = result.value if result.success else {}
-                
-                health_status['checks']['tradovate_loaded'] = "tradovate.com" in app_status.get('url', '')
-                health_status['checks']['authenticated'] = app_status.get('authenticated', False)
-                health_status['checks']['trading_ready'] = app_status.get('tradingReady', False)
-                
-                # Overall health assessment
-                critical_checks = ['process_running', 'browser_responsive', 'javascript_execution']
-                health_status['healthy'] = all(health_status['checks'].get(check, False) for check in critical_checks)
-                
-            except Exception as e:
-                health_status['errors'].append(f"Application check failed: {e}")
-        
-        except Exception as e:
-            health_status['errors'].append(f"Health check exception: {e}")
-        
-        return health_status
+            # Overall health assessment
+            critical_checks = ['process_running', 'browser_responsive', 'javascript_execution']
+            health_status['healthy'] = all(health_status['checks'].get(check, False) for check in critical_checks)
+            
+            return health_status
         
     def stop(self):
         """Stop this Chrome instance"""
@@ -436,46 +400,31 @@ def start_chrome_with_debugging(port):
     os.makedirs(profile_dir, exist_ok=True)
 
     # SAFETY: NEVER kill port 9222 - only kill trading ports 9223+
+    if not validate_chrome_port(port):
+        print(f"SAFETY: Cannot use invalid or protected port {port}")
+        return None
+    
     if port != 9222:
         subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
                        capture_output=True)
     else:
         print(f"SAFETY: Skipping cleanup for protected port {port}")
 
-    chrome_cmd = [
-        CHROME_PATH,
-        f"--remote-debugging-port={port}",
-        f"--user-data-dir={profile_dir}",
-        "--no-first-run",
-        "--no-default-browser-check",
-        "--new-window",
-        "--disable-notifications",
-        "--disable-popup-blocking",
-        "--disable-infobars",
-        "--disable-session-crashed-bubble",
-        "--disable-save-password-bubble",
-        # GPU-related flags to prevent crashes
-        "--disable-gpu-sandbox",
-        "--disable-software-rasterizer",
-        "--disable-dev-shm-usage",
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-gpu-compositing",
-        "--enable-features=SharedArrayBuffer",
-        "--disable-web-security",
-        "--disable-features=IsolateOrigins,site-per-process",
-        # Additional stability flags
-        "--disable-background-timer-throttling",
-        "--disable-backgrounding-occluded-windows",
-        "--disable-renderer-backgrounding",
-        "--disable-features=TranslateUI",
-        "--disable-ipc-flooding-protection",
-        # Memory and performance flags
-        "--max_old_space_size=4096",
-        "--js-flags=--max-old-space-size=4096",
-        "--force-color-profile=srgb",
-        TRADOVATE_URL,
-    ]
+    # Use unified Chrome configuration
+    try:
+        config = get_unified_chrome_config(port, profile_dir, TRADOVATE_URL)
+        chrome_cmd = config['chrome_command']
+    except Exception as e:
+        print(f"Using fallback Chrome command: {e}")
+        chrome_cmd = [
+            CHROME_PATH,
+            f"--remote-debugging-port={port}",
+            f"--user-data-dir={profile_dir}",
+            "--no-first-run",
+            "--no-default-browser-check",
+            "--new-window",
+            TRADOVATE_URL,
+        ]
 
     try:
         process = subprocess.Popen(chrome_cmd,
@@ -488,14 +437,35 @@ def start_chrome_with_debugging(port):
         return None
 
 def connect_to_chrome(port):
-    """Connect to Chrome via remote debugging protocol"""
+    """Connect to Chrome via remote debugging protocol - DRY refactored"""
     print(f"Connecting to Chrome on port {port}...")
+    
+    # First try to use TradovateConnection for standardized connection
+    try:
+        # Import here to avoid circular dependency
+        import sys
+        import os
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from app import TradovateConnection
+        
+        # Use TradovateConnection to find existing Tradovate tab
+        connection = TradovateConnection(port, f"Auto-Login Port {port}")
+        
+        if connection.tab:
+            print(f"✓ Found Tradovate tab via TradovateConnection")
+            # Return browser reference and tab to maintain interface
+            return connection.browser, connection.tab
+            
+    except Exception as e:
+        print(f"TradovateConnection not available or failed: {e}")
+    
+    # Fallback to original implementation for compatibility
     browser = pychrome.Browser(url=f"http://localhost:{port}")
     
     # Make sure Chrome is ready
     time.sleep(WAIT_TIME)
     
-    # List tabs and find the Tradovate tab
+    # Reuse TradovateConnection's tab finding logic pattern
     tabs = browser.list_tab()
     target_tab = None
     
@@ -516,11 +486,15 @@ def connect_to_chrome(port):
             if "tradovate" in url:
                 target_tab = tab
                 print("Found Tradovate tab")
+                break
             else:
                 tab.stop()
         except Exception as e:
             print(f"Error checking tab: {e}")
-            tab.stop()
+            try:
+                tab.stop()
+            except:
+                pass
     
     if not target_tab:
         # If no Tradovate tab found, try to create one
@@ -546,31 +520,68 @@ def inject_login_script(tab, username, password):
         input.dispatchEvent(new Event("change", { bubbles: true }));
     }
     
+    // Unified retry utility function - DRY refactoring
+    function retryWithBackoff(operation, maxRetries, intervalMs, successCondition, description) {
+        let retryCount = 0;
+        const startTime = Date.now();
+        
+        return new Promise((resolve, reject) => {
+            function attempt() {
+                try {
+                    const result = operation();
+                    
+                    if (successCondition(result)) {
+                        console.log(`${description} succeeded after ${retryCount} retries in ${Date.now() - startTime}ms`);
+                        resolve(result);
+                    } else {
+                        retryCount++;
+                        if (retryCount >= maxRetries) {
+                            const errorMsg = `${description} failed after ${maxRetries} attempts`;
+                            console.error(errorMsg);
+                            reject(new Error(errorMsg));
+                        } else {
+                            console.log(`${description} retry ${retryCount}/${maxRetries}`);
+                            setTimeout(attempt, intervalMs);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`${description} error:`, error);
+                    retryCount++;
+                    if (retryCount >= maxRetries) {
+                        reject(error);
+                    } else {
+                        setTimeout(attempt, intervalMs);
+                    }
+                }
+            }
+            
+            attempt();
+        });
+    }
+    
     // Main login function
     function login(username, password) {
         console.log("Auto login function executing for: " + username);
         
-        // Wait for the DOM to fully load and login form to appear
-        let retryCount = 0;
-        const maxRetries = 10;
-        
-        function attemptLogin() {
-            // Find login form elements
-            const emailInput = document.getElementById("name-input");
-            const passwordInput = document.getElementById("password-input");
-            const loginButton = document.querySelector("button.MuiButton-containedPrimary");
-            
-            if (!emailInput || !passwordInput || !loginButton) {
-                console.log("Login form not fully loaded yet, retry: " + retryCount);
-                
-                if (retryCount < maxRetries) {
-                    retryCount++;
-                    setTimeout(attemptLogin, 500);
-                } else {
-                    console.error("Input fields or login button not found after multiple attempts!");
-                }
-                return;
-            }
+        // Use unified retry utility for login form detection
+        retryWithBackoff(
+            // Operation to retry
+            () => {
+                const emailInput = document.getElementById("name-input");
+                const passwordInput = document.getElementById("password-input");
+                const loginButton = document.querySelector("button.MuiButton-containedPrimary");
+                return { emailInput, passwordInput, loginButton };
+            },
+            // Max retries
+            10,
+            // Interval
+            500,
+            // Success condition
+            (result) => result.emailInput && result.passwordInput && result.loginButton,
+            // Description
+            "Login form detection"
+        ).then((elements) => {
+            const { emailInput, passwordInput, loginButton } = elements;
             
             // Form is ready, fill and submit
             console.log("Login form found, filling credentials...");
@@ -606,37 +617,40 @@ def inject_login_script(tab, username, password):
                 // Start watching for the account selection page
                 watchForAccountSelection();
             }, 500);
-        }
-        
-        // Start the login attempt
-        attemptLogin();
+        }).catch((error) => {
+            console.error("Login form detection failed:", error);
+        });
     }
     
     // Watch for account selection page and click the button when it appears
     function watchForAccountSelection() {
         console.log("Watching for account selection page...");
         
-        let retryCount = 0;
-        const maxRetries = 20; // Try for about 10 seconds
-        const interval = setInterval(() => {
-            const accessButtons = Array.from(document.querySelectorAll("button.tm"))
-                .filter(btn => 
-                    btn.textContent.trim() === "Access Simulation" || 
-                    btn.textContent.trim() === "Launch"
-                );
-                
-            if (accessButtons.length > 0) {
-                console.log("Account selection page detected, clicking button...");
-                clearInterval(interval);
-                accessButtons[0].click();
-            } else {
-                retryCount++;
-                if (retryCount >= maxRetries) {
-                    console.log("Account selection page not found after multiple attempts");
-                    clearInterval(interval);
-                }
-            }
-        }, 500);
+        // Use unified retry utility for account selection
+        retryWithBackoff(
+            // Operation to retry
+            () => {
+                const accessButtons = Array.from(document.querySelectorAll("button.tm"))
+                    .filter(btn => 
+                        btn.textContent.trim() === "Access Simulation" || 
+                        btn.textContent.trim() === "Launch"
+                    );
+                return accessButtons;
+            },
+            // Max retries
+            20, // Try for about 10 seconds
+            // Interval
+            500,
+            // Success condition
+            (buttons) => buttons && buttons.length > 0,
+            // Description
+            "Account selection detection"
+        ).then((accessButtons) => {
+            console.log("Account selection page detected, clicking button...");
+            accessButtons[0].click();
+        }).catch((error) => {
+            console.log("Account selection page not found after multiple attempts");
+        });
     }
     
     // Execute the login function with credentials
@@ -765,65 +779,15 @@ def disable_alerts(tab):
         print(f"Error disabling alerts: {e}")
         return False
 
-def load_credentials():
-    """Load all credentials from JSON file, allowing duplicates"""
-    try:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        credentials_path = os.path.join(project_root, 'config/credentials.json')
-        print(f"Loading credentials from {credentials_path}")
-        
-        with open(credentials_path, 'r') as file:
-            file_content = file.read()
-            # Use json.loads instead of json.load to handle potential duplicate keys
-            # When there are duplicate keys, the last occurrence will be used
-            try:
-                credentials = json.loads(file_content)
-            except json.JSONDecodeError:
-                print("Error parsing JSON, attempting custom parsing for duplicate keys")
-                # Custom parsing for duplicate keys
-                # This creates a list of all key-value pairs in the order they appear
-                import re
-                # Extract all key-value pairs including duplicates
-                pairs = re.findall(r'"([^"]+)"\s*:\s*"([^"]+)"', file_content)
-                credentials = dict()
-                for username, password in pairs:
-                    credentials[username] = password
-        
-        # Parse credentials into list of username/password pairs
-        # For duplicate usernames, we'll include multiple instances
-        cred_pairs = []
-        
-        if isinstance(credentials, dict):
-            # Handle flat dictionary with username as keys
-            # For duplicate usernames in the original JSON, we have lost them by now
-            # since dictionaries can't have duplicate keys
-            for username, password in credentials.items():
-                if username and password:
-                    # Count occurrences in the original file to handle duplicates
-                    occurrences = file_content.count(f'"{username}"')
-                    for _ in range(max(1, occurrences)):
-                        cred_pairs.append((username, password))
-                        
-        elif isinstance(credentials, dict) and 'users' in credentials:
-            # If it has a 'users' array
-            for user in credentials['users']:
-                username = user.get('username')
-                password = user.get('password')
-                if username and password:
-                    cred_pairs.append((username, password))
-                    
-        if not cred_pairs:
-            # Fallback to environment variables
-            username = os.environ.get('TRADOVATE_USERNAME', '')
-            password = os.environ.get('TRADOVATE_PASSWORD', '')
-            if username and password:
-                cred_pairs.append((username, password))
-        
-        print(f"Loaded {len(cred_pairs)} credential pairs (including duplicates)")            
-        return cred_pairs
-    except Exception as e:
-        print(f"Error loading credentials from file: {e}")
-        # Fall back to environment variables
+# Use unified credential loading from Chrome Communication Framework
+try:
+    from src.utils.chrome_communication import load_unified_credentials
+    def load_credentials():
+        """Load all credentials using unified authentication manager"""
+        return load_unified_credentials(allow_duplicates=True)
+except ImportError:
+    def load_credentials():
+        """Fallback credential loading if unified framework not available"""
         username = os.environ.get('TRADOVATE_USERNAME', '')
         password = os.environ.get('TRADOVATE_PASSWORD', '')
         if username and password:
@@ -872,9 +836,10 @@ def main():
             process_monitor.start_monitoring()
             print("Chrome Process Monitor started")
         
-        # SAFETY: NEVER kill port 9222 - only kill ports 9223+
+        # SAFETY: NEVER kill port 9222 - only kill trading ports using unified config
         # Make sure any existing Chrome instances on trading ports are stopped
-        for port in [9223, 9224, 9225, 9226, 9227, 9228, 9229, 9230]:
+        ports_config = get_chrome_ports()
+        for port in ports_config['port_range']:
             subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
                           capture_output=True)
         
