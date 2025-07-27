@@ -250,4 +250,5 @@ def main():
 # Simple usage example
 if __name__ == "__main__":
     import sys
+    from src.utils.chrome_communication import safe_evaluate, OperationType
     sys.exit(main())

@@ -14,8 +14,9 @@ import threading
 print("Warning: Chrome Process Monitor not available. Running without watchdog protection.")
 WATCHDOG_AVAILABLE = False
 
-# Import connection health monitoring
+# Import connection health monitoring and Chrome Communication Framework
 from src.utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_communication import safe_evaluate, OperationType
 
 # Configuration
 # Try to detect Chrome path based on OS
@@ -238,8 +239,14 @@ class ChromeInstance:
             })();
             """
             
-            result = self.tab.Runtime.evaluate(expression=check_js)
-            page_status = result.get("result", {}).get("value", "unknown")
+            # Use safe_evaluate to check page status
+            result = safe_evaluate(
+                tab=self.tab,
+                js_code=check_js,
+                operation_type=OperationType.IMPORTANT,
+                description=f"Check page status for {self.username}"
+            )
+            page_status = result.value if result.success else "unknown"
             
             print(f"Current page status for {self.username}: {page_status}")
             
@@ -266,8 +273,18 @@ class ChromeInstance:
                     return false;
                 })();
                 """
-                self.tab.Runtime.evaluate(expression=access_js)
-                return True
+                # Use safe_evaluate to handle access request
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=access_js,
+                    operation_type=OperationType.CRITICAL,
+                    description=f"Handle access request for {self.username}"
+                )
+                if result.success:
+                    return True
+                else:
+                    print(f"Failed to handle access request for {self.username}: {result.error}")
+                    return False
                 
             elif page_status == "logged_in":
                 print(f"Already logged in for {self.username}")
@@ -339,9 +356,14 @@ class ChromeInstance:
             # Check if tab is accessible
             if self.tab:
                 try:
-                    # Simple JavaScript test
-                    result = self.tab.Runtime.evaluate(expression="1 + 1")
-                    if result.get("result", {}).get("value") == 2:
+                    # Test JavaScript execution using safe_evaluate
+                    result = safe_evaluate(
+                        tab=self.tab,
+                        js_code="1 + 1",
+                        operation_type=OperationType.NON_CRITICAL,
+                        description=f"Test JavaScript execution for {self.username}"
+                    )
+                    if result.success and result.value == 2:
                         health_status['checks']['javascript_execution'] = True
                     else:
                         health_status['checks']['javascript_execution'] = False
@@ -364,8 +386,14 @@ class ChromeInstance:
                     tradingReady: typeof window.autoTrade === 'function'
                 })
                 """
-                result = self.tab.Runtime.evaluate(expression=app_check_js)
-                app_status = result.get("result", {}).get("value", {})
+                # Use safe_evaluate to check application status
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=app_check_js,
+                    operation_type=OperationType.NON_CRITICAL,
+                    description=f"Check application status for {self.username}"
+                )
+                app_status = result.value if result.success else {}
                 
                 health_status['checks']['tradovate_loaded'] = "tradovate.com" in app_status.get('url', '')
                 health_status['checks']['authenticated'] = app_status.get('authenticated', False)
@@ -475,8 +503,14 @@ def connect_to_chrome(port):
         try:
             tab.start()
             tab.Page.enable()
-            result = tab.Runtime.evaluate(expression="document.location.href")
-            url = result.get("result", {}).get("value", "")
+            # Use safe_evaluate to get URL
+            result = safe_evaluate(
+                tab=tab,
+                js_code="document.location.href",
+                operation_type=OperationType.NON_CRITICAL,
+                description="Get tab URL for validation"
+            )
+            url = result.value if result.success else ""
             print(f"Found tab with URL: {url}")
             
             if "tradovate" in url:
@@ -621,7 +655,13 @@ def inject_login_script(tab, username, password):
     # Execute the login script in the browser
     try:
         print("Executing login script...")
-        result = tab.Runtime.evaluate(expression=auto_login_js)
+        # Use safe_evaluate to execute login script
+        result = safe_evaluate(
+            tab=tab,
+            js_code=auto_login_js,
+            operation_type=OperationType.CRITICAL,
+            description=f"Execute login script for {username}"
+        )
         
         # Append test element to DOM to verify script is running
         test_script = f'''
@@ -669,7 +709,13 @@ def inject_login_script(tab, username, password):
             }}, 60000);
         }})();
         '''
-        tab.Runtime.evaluate(expression=test_script)
+        # Use safe_evaluate to execute test script
+        safe_evaluate(
+            tab=tab,
+            js_code=test_script,
+            operation_type=OperationType.NON_CRITICAL,
+            description=f"Execute test script for {username}"
+        )
         
         print(f"Login script executed for {username}")
         return result
@@ -702,9 +748,19 @@ def disable_alerts(tab):
     '''
     
     try:
-        tab.Runtime.evaluate(expression=disable_js)
-        print("Disabled browser alerts and confirmations")
-        return True
+        # Use safe_evaluate to disable alerts
+        result = safe_evaluate(
+            tab=tab,
+            js_code=disable_js,
+            operation_type=OperationType.NON_CRITICAL,
+            description="Disable browser alerts and confirmations"
+        )
+        if result.success:
+            print("Disabled browser alerts and confirmations")
+            return True
+        else:
+            print(f"Failed to disable alerts: {result.error}")
+            return False
     except Exception as e:
         print(f"Error disabling alerts: {e}")
         return False

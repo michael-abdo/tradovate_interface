@@ -12,6 +12,11 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import TradovateController
 from flask import request
 from src.utils.chrome_stability import ChromeStabilityMonitor
+from src.utils.chrome_communication import safe_evaluate, OperationType
+from src.utils.trading_errors import (
+    error_aggregator, ErrorSeverity, ErrorCategory,
+    configure_error_logging, TradingError
+)
 
 # Note: Process monitor was moved to archive with tradovate_interface
 # Disable startup monitoring integration for now
@@ -63,8 +68,16 @@ def inject_account_data_function():
                     get_account_data_js = file.read()
                 
                 # Inject it into the tab
-                conn.tab.Runtime.evaluate(expression=get_account_data_js)
-                print(f"Injected getAllAccountTableData into {conn.account_name}")
+                result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code=get_account_data_js,
+                    operation_type=OperationType.IMPORTANT,
+                    description=f"Inject getAllAccountTableData into {conn.account_name}"
+                )
+                if result.success:
+                    print(f"Injected getAllAccountTableData into {conn.account_name}")
+                else:
+                    print(f"Failed to inject getAllAccountTableData into {conn.account_name}: {result.error}")
             except Exception as e:
                 print(f"Error injecting account data function: {e}")
 
@@ -90,7 +103,12 @@ def get_accounts():
                 
                 # Just inject the entire autorisk script and call getTableData directly
                 print(f"[Accounts API] Injecting phase logic for {conn.account_name}")
-                conn.tab.Runtime.evaluate(expression=autorisk_js)
+                safe_evaluate(
+                tab=conn.tab,
+                js_code=autorisk_js,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
                 
                 # Execute the getTableData() function with real phase analysis
                 result = conn.tab.Runtime.evaluate(
@@ -452,7 +470,12 @@ def update_phases():
                     
                     # Inject the functions
                     print(f"[Phase Update API] Injecting functions for {conn.account_name}")
-                    conn.tab.Runtime.evaluate(expression=functions_to_inject)
+                    safe_evaluate(
+                tab=conn.tab,
+                js_code=functions_to_inject,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
                     
                     # Now execute updateUserColumnPhaseStatus
                     print(f"[Phase Update API] Executing updateUserColumnPhaseStatus for {conn.account_name}")
@@ -554,9 +577,49 @@ def get_connection_health():
         # Get health status from the monitor
         health_status = health_monitor.get_connection_health_status()
         
+        # Get error summary from aggregator
+        error_summary = error_aggregator.get_summary()
+        
+        # Calculate overall system health score
+        total_errors = error_summary['total_errors']
+        critical_errors = error_summary['by_severity'].get('CRITICAL', 0)
+        error_errors = error_summary['by_severity'].get('ERROR', 0)
+        warn_errors = error_summary['by_severity'].get('WARNING', 0)
+        
+        # Health score calculation (0-100)
+        health_score = 100
+        health_score -= critical_errors * 10  # Critical errors heavily impact score
+        health_score -= error_errors * 5      # Regular errors moderately impact
+        health_score -= warn_errors * 1       # Warnings lightly impact
+        health_score = max(0, health_score)   # Don't go below 0
+        
+        # Determine overall status
+        if health_score >= 90:
+            overall_status = "HEALTHY"
+        elif health_score >= 70:
+            overall_status = "DEGRADED"
+        elif health_score >= 50:
+            overall_status = "WARNING"
+        else:
+            overall_status = "CRITICAL"
+        
         # Enhance with current Chrome instance health checks
         enhanced_status = health_status.copy()
         enhanced_status['chrome_instances'] = []
+        enhanced_status['error_summary'] = error_summary
+        enhanced_status['system_health'] = {
+            'score': health_score,
+            'status': overall_status,
+            'uptime_seconds': error_summary['uptime_seconds']
+        }
+        
+        # Get error rates for key categories
+        enhanced_status['error_rates'] = {
+            'chrome_communication': error_aggregator.get_error_rate(ErrorCategory.CHROME_COMMUNICATION),
+            'order_execution': error_aggregator.get_error_rate(ErrorCategory.ORDER_EXECUTION),
+            'dom_operation': error_aggregator.get_error_rate(ErrorCategory.DOM_OPERATION),
+            'overall': error_aggregator.get_error_rate()
+        }
         
         for idx, connection in enumerate(controller.connections):
             if connection.tab:
@@ -588,7 +651,11 @@ def get_connection_health():
             'timestamp': time.time(),
             'monitoring_active': False,
             'connections': {},
-            'chrome_instances': []
+            'chrome_instances': [],
+            'system_health': {
+                'score': 0,
+                'status': 'UNKNOWN'
+            }
         }), 500
 
 # API endpoint to get network quality metrics
@@ -1090,8 +1157,13 @@ def update_quantity():
             for i, conn in enumerate(controller.connections):
                 if conn.tab:
                     try:
-                        ui_result = conn.tab.Runtime.evaluate(expression=js_code)
-                        result_value = ui_result.get('result', {}).get('value', 'Unknown')
+                        ui_result = safe_evaluate(
+                tab=conn.tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
+                        result_value = ui_result.value if result.success else 'Unknown'
                         results.append({"account": i, "result": result_value})
                     except Exception as e:
                         results.append({"account": i, "error": str(e)})
@@ -1110,8 +1182,13 @@ def update_quantity():
             account_index = int(account_index)
             if account_index < len(controller.connections) and controller.connections[account_index].tab:
                 try:
-                    ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=js_code)
-                    result_value = ui_result.get('result', {}).get('value', 'Unknown')
+                    ui_result = controller.connections[account_index].safe_evaluate(
+                tab=tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
+                    result_value = ui_result.value if result.success else 'Unknown'
                     
                     return jsonify({
                         'status': 'success',
@@ -1426,8 +1503,13 @@ def update_trade_controls():
             for i, conn in enumerate(controller.connections):
                 if conn.tab:
                     try:
-                        ui_result = conn.tab.Runtime.evaluate(expression=js_code)
-                        result_value = ui_result.get('result', {}).get('value', '{}')
+                        ui_result = safe_evaluate(
+                tab=conn.tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
+                        result_value = ui_result.value if result.success else '{}'
                         # Parse the JSON result
                         try:
                             parsed_result = json.loads(result_value)
@@ -1451,8 +1533,13 @@ def update_trade_controls():
             account_index = int(account_index)
             if account_index < len(controller.connections) and controller.connections[account_index].tab:
                 try:
-                    ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=js_code)
-                    result_value = ui_result.get('result', {}).get('value', '{}')
+                    ui_result = controller.connections[account_index].safe_evaluate(
+                tab=tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description="Chrome operation"
+            )
+                    result_value = ui_result.value if result.success else '{}'
                     # Parse the JSON result
                     try:
                         parsed_result = json.loads(result_value)
@@ -1480,6 +1567,123 @@ def update_trade_controls():
         return jsonify({
             'status': 'error',
             'message': str(e)
+        }), 500
+
+# API endpoint for detailed error information and trends
+@app.route('/api/errors', methods=['GET'])
+def get_error_details():
+    """Get detailed error information, trends, and statistics"""
+    try:
+        # Get query parameters
+        category = request.args.get('category', None)
+        window_minutes = int(request.args.get('window', 5))
+        
+        # Get error summary
+        error_summary = error_aggregator.get_summary()
+        
+        # Calculate error trends
+        trends = {}
+        for cat in ErrorCategory:
+            rate = error_aggregator.get_error_rate(cat, window_minutes)
+            trends[cat.value] = {
+                'rate_per_minute': rate,
+                'total_in_window': int(rate * window_minutes)
+            }
+        
+        # Build response
+        response = {
+            'timestamp': datetime.datetime.now().isoformat(),
+            'window_minutes': window_minutes,
+            'summary': error_summary,
+            'trends': trends,
+            'critical_errors': error_summary['recent_critical_errors']
+        }
+        
+        # If specific category requested, add detailed errors
+        if category:
+            try:
+                cat_enum = ErrorCategory(category.upper())
+                category_errors = []
+                
+                # Get errors for specific category (simplified for now)
+                # In production, this would fetch from error_aggregator._errors
+                response['category_details'] = {
+                    'category': category,
+                    'errors': category_errors
+                }
+            except ValueError:
+                response['warning'] = f'Invalid category: {category}'
+        
+        return jsonify(response)
+        
+    except Exception as e:
+        return jsonify({
+            'error': f'Failed to get error details: {str(e)}',
+            'timestamp': datetime.datetime.now().isoformat()
+        }), 500
+
+# API endpoint to clear old errors
+@app.route('/api/errors/clear', methods=['POST'])
+def clear_old_errors():
+    """Clear errors older than specified hours"""
+    try:
+        data = request.json or {}
+        hours = data.get('hours', 24)
+        
+        # Clear old errors
+        error_aggregator.clear_old_errors(hours)
+        
+        # Get updated summary
+        summary = error_aggregator.get_summary()
+        
+        return jsonify({
+            'status': 'success',
+            'message': f'Cleared errors older than {hours} hours',
+            'remaining_errors': summary['total_errors'],
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'error': f'Failed to clear errors: {str(e)}',
+            'timestamp': datetime.datetime.now().isoformat()
+        }), 500
+
+# API endpoint for system health alerts configuration
+@app.route('/api/health/alerts', methods=['GET', 'POST'])
+def health_alerts():
+    """Get or update health alert thresholds"""
+    try:
+        if request.method == 'GET':
+            # Return current alert configuration
+            # This would be loaded from config in production
+            return jsonify({
+                'thresholds': {
+                    'health_score_critical': 50,
+                    'health_score_warning': 70,
+                    'error_rate_critical': 10.0,  # errors per minute
+                    'error_rate_warning': 5.0,
+                    'chrome_disconnect_threshold': 3
+                },
+                'alert_channels': ['console', 'dashboard'],
+                'timestamp': datetime.datetime.now().isoformat()
+            })
+        
+        else:  # POST
+            data = request.json
+            # Update alert configuration
+            # In production, this would save to config file
+            
+            return jsonify({
+                'status': 'success',
+                'message': 'Alert configuration updated',
+                'timestamp': datetime.datetime.now().isoformat()
+            })
+            
+    except Exception as e:
+        return jsonify({
+            'error': f'Failed to manage health alerts: {str(e)}',
+            'timestamp': datetime.datetime.now().isoformat()
         }), 500
 
 # Run the app

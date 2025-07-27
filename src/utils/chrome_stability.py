@@ -417,6 +417,7 @@ class ChromeStabilityMonitor:
         """Test Tradovate application responsiveness"""
         try:
             import pychrome
+            from src.utils.chrome_communication import safe_evaluate, OperationType
             
             browser = pychrome.Browser(url=f"http://localhost:{port}")
             tabs = browser.list_tab()
@@ -445,7 +446,7 @@ class ChromeStabilityMonitor:
             result = tradovate_tab.Runtime.evaluate(expression=app_health_js)
             tradovate_tab.stop()
             
-            app_state = result.get("result", {}).get("value", {})
+            app_state = result.value if result.success else {}
             
             return (
                 app_state.get("authenticated", False) and
