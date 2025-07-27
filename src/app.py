@@ -41,7 +41,7 @@ class TradovateConnection:
         self.account_name = account_name or f"Account on port {port}"
         # Use unified connection logic from auto_login instead of duplicating tab finding
         try:
-            from src.auto_login import connect_to_chrome
+            from auto_login import connect_to_chrome
             self.browser, self.tab = connect_to_chrome(port)
             if self.tab:
                 print(f"✅ Connected to Tradovate tab via unified connection logic for {self.account_name}")

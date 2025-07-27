@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto Risk Management
 // @namespace    http://tampermonkey.net/
-// @version      2025-04-17
+// @version      2025-04-17.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://trader.tradovate.com/
@@ -11,6 +11,111 @@
 
 (function() {
     'use strict';
+
+    // ============================================================================
+    // DOM VALIDATION HELPER FUNCTIONS - Load or define inline
+    // ============================================================================
+    
+    async function loadDOMHelpers() {
+        if (window.domHelpers) {
+            console.log('✅ DOM Helpers already loaded globally');
+            return true;
+        }
+        
+        try {
+            // Try to load external domHelpers.js
+            const script = document.createElement('script');
+            script.src = '/scripts/tampermonkey/domHelpers.js';
+            document.head.appendChild(script);
+            
+            await new Promise((resolve, reject) => {
+                script.onload = resolve;
+                script.onerror = reject;
+                setTimeout(() => reject(new Error('Timeout loading domHelpers')), 5000);
+            });
+            
+            if (window.domHelpers) {
+                console.log('✅ DOM Helpers loaded successfully from external file');
+                return true;
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not load external domHelpers.js, using inline fallback');
+        }
+        
+        // Inline fallback DOM helpers
+        window.domHelpers = {
+            validateElementExists: function(selector) {
+                const element = document.querySelector(selector);
+                const exists = element !== null;
+                if (exists) {
+                    console.log(`✅ Element exists: ${selector}`);
+                } else {
+                    console.warn(`❌ Element not found: ${selector}`);
+                }
+                return exists;
+            },
+            
+            validateElementVisible: function(element) {
+                if (!element) {
+                    console.warn(`❌ Cannot check visibility: element is null`);
+                    return false;
+                }
+                const style = window.getComputedStyle(element);
+                const isVisible = style.display !== 'none' && 
+                                 style.visibility !== 'hidden' && 
+                                 element.offsetWidth > 0 && 
+                                 element.offsetHeight > 0;
+                if (isVisible) {
+                    console.log(`✅ Element is visible: ${element.tagName}${element.className ? '.' + element.className : ''}`);
+                } else {
+                    console.warn(`❌ Element is not visible: ${element.tagName}${element.className ? '.' + element.className : ''}`);
+                }
+                return isVisible;
+            },
+            
+            validateFormFieldValue: function(element, expectedValue) {
+                if (!element) {
+                    console.warn(`❌ Cannot validate form field: element is null`);
+                    return false;
+                }
+                const actualValue = element.value || element.textContent || '';
+                const matches = actualValue.toString() === expectedValue.toString();
+                if (matches) {
+                    console.log(`✅ Form field value correct: "${actualValue}" matches "${expectedValue}"`);
+                } else {
+                    console.warn(`❌ Form field value mismatch: expected "${expectedValue}", got "${actualValue}"`);
+                }
+                return matches;
+            },
+            
+            waitForElement: async function(selector, timeout = 10000) {
+                const startTime = Date.now();
+                return new Promise((resolve) => {
+                    const checkElement = () => {
+                        const element = document.querySelector(selector);
+                        if (element) {
+                            console.log(`✅ Element found: ${selector} (${Date.now() - startTime}ms)`);
+                            resolve(element);
+                            return;
+                        }
+                        if (Date.now() - startTime >= timeout) {
+                            console.warn(`⏰ Timeout waiting for element: ${selector} (${timeout}ms)`);
+                            resolve(null);
+                            return;
+                        }
+                        setTimeout(checkElement, 100);
+                    };
+                    checkElement();
+                });
+            }
+        };
+        
+        console.log('✅ DOM Helpers initialized with inline fallback');
+        return true;
+    }
+    
+    // Load DOM helpers on startup
+    loadDOMHelpers();
 
       const phaseCriteria = [
           // ── DEMO ──
@@ -78,6 +183,190 @@
         }
     ];
     
+    // ============================================================================
+    // UNIFIED RISK MANAGEMENT FUNCTIONS - DRY Refactored
+    // ============================================================================
+    
+    // Global risk management utilities that consolidate duplicate logic
+    window.unifiedRiskManagement = {
+        
+        /**
+         * Calculate position size based on account phase and risk rules
+         * Consolidates logic from autoTrade and risk management calculations
+         */
+        calculatePositionSize: function(baseQuantity, accountName, accountMetrics = null) {
+            try {
+                console.log(`[Risk] Calculating position size: base=${baseQuantity}, account=${accountName}`);
+                
+                if (!baseQuantity || baseQuantity <= 0) {
+                    console.warn('[Risk] Invalid base quantity provided');
+                    return 1; // Safe default
+                }
+                
+                // Get account phase if metrics provided
+                let phaseRule = null;
+                if (accountMetrics) {
+                    phaseRule = this.determineAccountPhase(accountName, accountMetrics);
+                } else {
+                    // Try to get phase from current table data
+                    try {
+                        const tableData = typeof getTableData === 'function' ? getTableData() : [];
+                        const accountRow = tableData.find(row => 
+                            row.accountName && row.accountName.includes(accountName)
+                        );
+                        if (accountRow) {
+                            phaseRule = this.determineAccountPhase(accountName, {
+                                totalAvail: accountRow.totalAvail,
+                                distDraw: accountRow.distDraw
+                            });
+                        }
+                    } catch (e) {
+                        console.warn('[Risk] Could not get current account data:', e);
+                    }
+                }
+                
+                if (!phaseRule) {
+                    console.warn('[Risk] No phase rule found, using base quantity');
+                    return Math.max(1, Math.min(baseQuantity, 1000)); // Hard limit
+                }
+                
+                // Apply phase-based sizing
+                let adjustedQuantity = baseQuantity;
+                
+                // Use phase-specific quantity if defined
+                if (phaseRule.quantity !== undefined && phaseRule.quantity > 0) {
+                    adjustedQuantity = phaseRule.quantity;
+                }
+                
+                // Apply reduction factor for high-risk phases
+                if (phaseRule.reduceFactor && phaseRule.reduceFactor < 1) {
+                    adjustedQuantity = Math.floor(adjustedQuantity * phaseRule.reduceFactor);
+                }
+                
+                // Enforce limits
+                adjustedQuantity = Math.max(1, Math.min(adjustedQuantity, 1000));
+                
+                console.log(`[Risk] Position size calculated: ${baseQuantity} -> ${adjustedQuantity} (phase ${phaseRule.phase})`);
+                return adjustedQuantity;
+                
+            } catch (error) {
+                console.error('[Risk] Error calculating position size:', error);
+                return Math.max(1, Math.min(baseQuantity || 1, 1000)); // Safe fallback
+            }
+        },
+        
+        /**
+         * Determine account phase based on metrics
+         * Consolidates phase determination logic
+         */
+        determineAccountPhase: function(accountName, metrics) {
+            try {
+                if (!accountName || !metrics) {
+                    return { phase: 'Unknown', maxActive: 0, quantity: 1 };
+                }
+                
+                const { totalAvail, distDraw } = metrics;
+                
+                // Helper function for numeric comparisons
+                const compareNumeric = (value, operator, compareValue) => {
+                    const ops = {
+                        '<': (a, b) => a < b,
+                        '<=': (a, b) => a <= b,
+                        '>': (a, b) => a > b,
+                        '>=': (a, b) => a >= b,
+                        '==': (a, b) => a == b,
+                        '!=': (a, b) => a != b
+                    };
+                    return ops[operator]?.(value, compareValue) ?? false;
+                };
+                
+                // Find matching rule
+                const matchesRule = (rule) => {
+                    if (rule.accountNameIncludes && !accountName.includes(rule.accountNameIncludes)) {
+                        return false;
+                    }
+                    
+                    const totalAvailMatch = rule.totalAvailOperator
+                        ? compareNumeric(totalAvail, rule.totalAvailOperator, rule.totalAvailValue)
+                        : true;
+                        
+                    const distDrawMatch = rule.distDrawOperator
+                        ? compareNumeric(distDraw, rule.distDrawOperator, rule.distDrawValue)
+                        : true;
+                    
+                    return rule.useOr && rule.totalAvailOperator && rule.distDrawOperator
+                        ? (totalAvailMatch || distDrawMatch)
+                        : (totalAvailMatch && distDrawMatch);
+                };
+                
+                // Special case for PAAPEX
+                if (accountName.includes('PAAPEX')) {
+                    return phaseCriteria.find(r => r.accountNameIncludes === 'PAAPEX') || 
+                           { phase: 'Unknown', maxActive: 0, quantity: 1 };
+                }
+                
+                // Find matching rule
+                const rule = phaseCriteria.find(matchesRule) || 
+                            { phase: 'Unknown', maxActive: 0, quantity: 1 };
+                
+                console.log(`[Risk] Account ${accountName} determined as Phase ${rule.phase}`);
+                return rule;
+                
+            } catch (error) {
+                console.error('[Risk] Error determining account phase:', error);
+                return { phase: 'Unknown', maxActive: 0, quantity: 1 };
+            }
+        },
+        
+        /**
+         * Validate order against risk limits
+         * Consolidates validation logic from OrderValidationFramework
+         */
+        validateOrderRisk: function(orderData, accountName = null, accountMetrics = null) {
+            const errors = [];
+            const warnings = [];
+            
+            try {
+                // Basic quantity validation
+                const quantity = Number(orderData.qty || orderData.quantity || 0);
+                if (quantity <= 0) {
+                    errors.push('Quantity must be greater than 0');
+                }
+                if (quantity > 1000) {
+                    errors.push('Quantity exceeds maximum limit (1000)');
+                }
+                
+                // Account-specific validation
+                if (accountName && accountMetrics) {
+                    const phaseRule = this.determineAccountPhase(accountName, accountMetrics);
+                    
+                    // Check against phase-specific limits
+                    if (phaseRule.quantity && quantity > phaseRule.quantity) {
+                        warnings.push(`Quantity (${quantity}) exceeds recommended size for Phase ${phaseRule.phase} (${phaseRule.quantity})`);
+                    }
+                    
+                    // Check for high-risk phase
+                    if (phaseRule.reduceFactor && phaseRule.reduceFactor < 1) {
+                        warnings.push(`Account in high-risk Phase ${phaseRule.phase} - position size reduced by ${Math.round((1 - phaseRule.reduceFactor) * 100)}%`);
+                    }
+                }
+                
+                return {
+                    valid: errors.length === 0,
+                    errors: errors,
+                    warnings: warnings
+                };
+                
+            } catch (error) {
+                console.error('[Risk] Error validating order risk:', error);
+                return {
+                    valid: false,
+                    errors: ['Risk validation failed'],
+                    warnings: []
+                };
+            }
+        }
+    };
 
     function updateDOMDollarTotalPL(...manualAdds) {
         const phaseRandomValues = {};
@@ -353,68 +642,167 @@
 
 
     function performAccountActions() {
+        console.log('🔍 DOM Intelligence: Starting performAccountActions with validation');
+        
+        // STEP 1: Pre-validation - Check if account dropdown exists
+        const dropdownSelector = '.pane.account-selector.dropdown [data-toggle="dropdown"]';
+        console.log('🔍 Pre-validation: Checking for account dropdown');
+        
+        if (!window.domHelpers.validateElementExists(dropdownSelector)) {
+            console.error('❌ Pre-validation failed: Account dropdown not found');
+            return false;
+        }
+        
+        const dropdown = document.querySelector(dropdownSelector);
+        if (!window.domHelpers.validateElementVisible(dropdown)) {
+            console.error('❌ Pre-validation failed: Account dropdown not visible');
+            return false;
+        }
+        
+        console.log('✅ Pre-validation passed: Account dropdown found and visible');
+        
         // Step 1: Open settings by clicking the dropdown toggle
-        const dropdown = document.querySelector('.pane.account-selector.dropdown [data-toggle="dropdown"]');
-        if (dropdown) dropdown.click();
+        dropdown.click();
+        console.log('✅ Clicked account dropdown');
 
         // Step 2: After 500ms, click the gear in the "Account group" entry
         setTimeout(() => {
-            document.querySelectorAll('.dropdown-menu li a.account').forEach(item => {
+            console.log('🔍 Pre-validation: Checking for dropdown menu items');
+            
+            const menuItemsSelector = '.dropdown-menu li a.account';
+            if (!window.domHelpers.validateElementExists(menuItemsSelector)) {
+                console.error('❌ Pre-validation failed: Dropdown menu items not found');
+                return;
+            }
+            
+            let gearFound = false;
+            document.querySelectorAll(menuItemsSelector).forEach(item => {
                 if (item.textContent.includes('Account group')) {
+                    console.log('✅ Found Account group menu item');
                     const gear = item.querySelector('.btn.btn-icon');
-                    if (gear) gear.click();
+                    if (gear) {
+                        if (window.domHelpers.validateElementVisible(gear)) {
+                            gear.click();
+                            gearFound = true;
+                            console.log('✅ Clicked gear button in Account group');
+                        } else {
+                            console.error('❌ Gear button not visible');
+                        }
+                    } else {
+                        console.error('❌ Gear button not found in Account group item');
+                    }
                 }
             });
+            
+            if (!gearFound) {
+                console.error('❌ Could not find or click Account group gear');
+                return;
+            }
 
             // After clicking gear, move active left->right and inactive right->left, then set quantities
             setTimeout(() => {
+                console.log('🔍 Pre-validation: Checking for configurator containers');
+                
+                const containerSelector = '.columns-configurator--container';
+                const containers = document.querySelectorAll(containerSelector);
+                
+                if (containers.length < 2) {
+                    console.error(`❌ Pre-validation failed: Need 2 configurator containers, found ${containers.length}`);
+                    return;
+                }
+                
+                const leftList = containers[0].querySelector('.sortable-list');
+                const rightList = containers[1].querySelector('.sortable-list');
+                
+                if (!leftList || !rightList) {
+                    console.error('❌ Pre-validation failed: Sortable lists not found in containers');
+                    return;
+                }
+                
+                console.log('✅ Pre-validation passed: Found both sortable lists');
+                
                 const tableData = getTableData();
                 const map = {};
                 tableData.forEach(row => {
                     const name = row["Account ▲"] || row["Account"];
                     map[name] = row;
                 });
-                const leftList = document.querySelectorAll('.columns-configurator--container')[0].querySelector('.sortable-list');
-                const rightList = document.querySelectorAll('.columns-configurator--container')[1].querySelector('.sortable-list');
 
                 // Move active from left->right
                 leftList.querySelectorAll('[draggable="true"]').forEach(item => {
                     const name = item.textContent.trim().split('\n')[0];
-                    if (map[name]?.active) simulateDragAndDrop(item, rightList);
+                    if (map[name]?.active) {
+                        console.log(`🔍 Moving active account ${name} left->right`);
+                        simulateDragAndDrop(item, rightList);
+                    }
                 });
 
                 // Move inactive from right->left
                 rightList.querySelectorAll('[draggable="true"]').forEach(item => {
                     const name = item.textContent.trim().split('\n')[0];
-                    if (!map[name]?.active) simulateDragAndDrop(item, leftList);
+                    if (!map[name]?.active) {
+                        console.log(`🔍 Moving inactive account ${name} right->left`);
+                        simulateDragAndDrop(item, leftList);
+                    }
                 });
 
                 // Set quantities based on phase, then update total and master quantity
                 setTimeout(() => {
-                    setQuantities();
+                    console.log('🔍 Setting quantities with validation');
+                    const setQuantitiesSuccess = setQuantities();
                     const total = calculateTotalQuantity();
+                    
+                    console.log(`🔍 Calculated total quantity: ${total}`);
 
-                    // Click Save if present
-                    const saveBtn = document.querySelector('.modal-footer .btn.btn-primary');
-                    if (saveBtn) saveBtn.click();
+                    // STEP 3: Pre-validation - Check for Save button
+                    console.log('🔍 Pre-validation: Checking for Save button');
+                    const saveBtnSelector = '.modal-footer .btn.btn-primary';
+                    const saveBtn = document.querySelector(saveBtnSelector);
+                    
+                    if (saveBtn && window.domHelpers.validateElementVisible(saveBtn)) {
+                        console.log('✅ Save button found and visible, clicking');
+                        saveBtn.click();
+                    } else {
+                        console.warn('⚠️ Save button not found or not visible');
+                    }
 
                     // After saving, OK/Close if present, then update master quantity
                     setTimeout(() => {
+                        console.log('🔍 Pre-validation: Checking for OK button');
                         const okBtn = Array.from(document.querySelectorAll('.modal-footer .btn'))
                         .find(btn => btn.textContent.trim() === 'OK');
-                        if (okBtn) okBtn.click();
+                        
+                        if (okBtn && window.domHelpers.validateElementVisible(okBtn)) {
+                            console.log('✅ OK button found and visible, clicking');
+                            okBtn.click();
+                        } else {
+                            console.warn('⚠️ OK button not found or not visible');
+                        }
 
                         setTimeout(() => {
+                            console.log('🔍 Pre-validation: Checking for Close button');
                             const closeBtn = Array.from(document.querySelectorAll('.modal-header .close, .modal-footer .btn'))
                             .find(btn => btn.textContent.trim() === 'Close');
-                            if (closeBtn) closeBtn.click();
+                            
+                            if (closeBtn && window.domHelpers.validateElementVisible(closeBtn)) {
+                                console.log('✅ Close button found and visible, clicking');
+                                closeBtn.click();
+                            } else {
+                                console.warn('⚠️ Close button not found or not visible');
+                            }
 
-                            setTimeout(() => updateMasterQuantity(total), 500);
+                            setTimeout(() => {
+                                console.log('🔍 Updating master quantity with validation');
+                                const updateSuccess = updateMasterQuantity(total);
+                                console.log(`🔍 DOM Intelligence: performAccountActions completed. SetQuantities: ${setQuantitiesSuccess}, UpdateMaster: ${updateSuccess}`);
+                            }, 500);
                         }, 500);
                     }, 500);
                 }, 500);
             }, 500);
         }, 500);
+        
+        return true;
     }
 
 
@@ -437,6 +825,29 @@
     }
 
     function setQuantities() {
+        console.log('🔍 DOM Intelligence: Starting setQuantities with form field validation');
+        
+        // STEP 1: Pre-validation - Check if the sortable container exists
+        const containerSelector = '.columns-configurator--container';
+        if (!window.domHelpers.validateElementExists(containerSelector)) {
+            console.error('❌ Pre-validation failed: columns-configurator--container not found');
+            return false;
+        }
+        
+        const containers = document.querySelectorAll(containerSelector);
+        if (containers.length < 2) {
+            console.error('❌ Pre-validation failed: Need at least 2 containers, found', containers.length);
+            return false;
+        }
+        
+        const added = containers[1].querySelector('.sortable-list');
+        if (!added) {
+            console.error('❌ Pre-validation failed: Sortable list not found in second container');
+            return false;
+        }
+        
+        console.log('✅ Pre-validation passed: Found sortable containers and list');
+        
         const tableData = getTableData();
         const phaseByAccount = {};
         tableData.forEach(r => {
@@ -444,22 +855,71 @@
             phaseByAccount[key] = r.phase;
         });
 
-        const added = document.querySelectorAll('.columns-configurator--container')[1]
-        .querySelector('.sortable-list');
-
-        added.querySelectorAll('.sortable-list-item').forEach(item => {
+        let processedCount = 0;
+        let errorCount = 0;
+        
+        // STEP 2: Process each sortable list item with form field validation
+        added.querySelectorAll('.sortable-list-item').forEach((item, index) => {
             const accountName = item.textContent.trim().split('\n')[0];
             const qty = getPhaseQuantity(phaseByAccount[accountName]);
-            const input = item.querySelector('input.form-control');
-            if (input) {
+            
+            console.log(`🔍 Processing item ${index + 1}: ${accountName} -> quantity ${qty}`);
+            
+            // STEP 3: Pre-validation - Check if form control input exists
+            const inputSelector = 'input.form-control';
+            const input = item.querySelector(inputSelector);
+            
+            if (!input) {
+                console.error(`❌ Form field not found for ${accountName}: ${inputSelector}`);
+                errorCount++;
+                return;
+            }
+            
+            // STEP 4: Pre-validation - Check if input is visible and enabled
+            if (!window.domHelpers.validateElementVisible(input)) {
+                console.error(`❌ Form field not visible for ${accountName}`);
+                errorCount++;
+                return;
+            }
+            
+            if (input.disabled) {
+                console.warn(`⚠️ Form field disabled for ${accountName}, skipping`);
+                return;
+            }
+            
+            console.log(`✅ Pre-validation passed for ${accountName} form field`);
+            
+            // STEP 5: Set the form field value
+            try {
                 const setter = Object.getOwnPropertyDescriptor(
                     window.HTMLInputElement.prototype, 'value').set;
                 setter.call(input, qty);
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 input.dispatchEvent(new Event('change', { bubbles: true }));
-                console.log(`Set ${accountName} qty to`, qty);
+                
+                // STEP 6: Post-validation - Verify the value was set correctly
+                setTimeout(() => {
+                    if (window.domHelpers.validateFormFieldValue(input, qty.toString())) {
+                        console.log(`✅ Successfully set ${accountName} quantity to ${qty}`);
+                    } else {
+                        console.error(`❌ Post-validation failed: ${accountName} quantity not set correctly`);
+                        errorCount++;
+                    }
+                }, 100);
+                
+                processedCount++;
+                
+            } catch (error) {
+                console.error(`❌ Error setting form field for ${accountName}:`, error.message);
+                errorCount++;
             }
         });
+        
+        // STEP 7: Summary validation results
+        console.log(`🔍 DOM Intelligence: setQuantities completed`);
+        console.log(`📊 Summary: ${processedCount} fields processed, ${errorCount} errors`);
+        
+        return errorCount === 0;
     }
 
     function calculateTotalQuantity() {
@@ -482,22 +942,103 @@
     }
 
     function updateMasterQuantity(total) {
-        const masterInput = document.querySelector('input.form-control[placeholder="Select value"]');
+        console.log('🔍 DOM Intelligence: Starting updateMasterQuantity with form field validation');
+        console.log(`🔍 Target total quantity: ${total}`);
+        
+        let successCount = 0;
+        let errorCount = 0;
+        
+        // STEP 1: Update master quantity field
+        console.log('🔍 Pre-validation: Checking for master quantity field');
+        const masterSelector = 'input.form-control[placeholder="Select value"]';
+        const masterInput = document.querySelector(masterSelector);
+        
         if (masterInput) {
-            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-            nativeInputValueSetter.call(masterInput, total);
-            masterInput.dispatchEvent(new Event('input', { bubbles: true }));
-            masterInput.dispatchEvent(new Event('change', { bubbles: true }));
-            console.log('Updated master quantity to', total);
+            console.log('✅ Master quantity field found');
+            
+            // Pre-validation checks
+            if (!window.domHelpers.validateElementVisible(masterInput)) {
+                console.error('❌ Master quantity field not visible');
+                errorCount++;
+            } else if (masterInput.disabled) {
+                console.warn('⚠️ Master quantity field is disabled');
+                errorCount++;
+            } else {
+                try {
+                    // Set the value
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+                    nativeInputValueSetter.call(masterInput, total);
+                    masterInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    masterInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    
+                    // Post-validation - verify value was set
+                    setTimeout(() => {
+                        if (window.domHelpers.validateFormFieldValue(masterInput, total.toString())) {
+                            console.log('✅ Master quantity field updated successfully to', total);
+                        } else {
+                            console.error('❌ Post-validation failed: Master quantity field value not set correctly');
+                            errorCount++;
+                        }
+                    }, 100);
+                    
+                    successCount++;
+                } catch (error) {
+                    console.error('❌ Error updating master quantity field:', error.message);
+                    errorCount++;
+                }
+            }
+        } else {
+            console.warn('⚠️ Master quantity field not found, skipping');
         }
+        
+        // STEP 2: Update bracket quantity field
+        console.log('🔍 Pre-validation: Checking for bracket quantity field');
+        const bracketSelector = '#qtyInput';
         const bracketQtyInput = document.getElementById('qtyInput');
+        
         if (bracketQtyInput) {
-            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-            nativeInputValueSetter.call(bracketQtyInput, total);
-            bracketQtyInput.dispatchEvent(new Event('input', { bubbles: true }));
-            bracketQtyInput.dispatchEvent(new Event('change', { bubbles: true }));
-            console.log('Updated bracket trade quantity to', total);
+            console.log('✅ Bracket quantity field found');
+            
+            // Pre-validation checks
+            if (!window.domHelpers.validateElementVisible(bracketQtyInput)) {
+                console.error('❌ Bracket quantity field not visible');
+                errorCount++;
+            } else if (bracketQtyInput.disabled) {
+                console.warn('⚠️ Bracket quantity field is disabled');
+                errorCount++;
+            } else {
+                try {
+                    // Set the value
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+                    nativeInputValueSetter.call(bracketQtyInput, total);
+                    bracketQtyInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    bracketQtyInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    
+                    // Post-validation - verify value was set
+                    setTimeout(() => {
+                        if (window.domHelpers.validateFormFieldValue(bracketQtyInput, total.toString())) {
+                            console.log('✅ Bracket quantity field updated successfully to', total);
+                        } else {
+                            console.error('❌ Post-validation failed: Bracket quantity field value not set correctly');
+                            errorCount++;
+                        }
+                    }, 100);
+                    
+                    successCount++;
+                } catch (error) {
+                    console.error('❌ Error updating bracket quantity field:', error.message);
+                    errorCount++;
+                }
+            }
+        } else {
+            console.warn('⚠️ Bracket quantity field not found, skipping');
         }
+        
+        // STEP 3: Summary validation results
+        console.log('🔍 DOM Intelligence: updateMasterQuantity completed');
+        console.log(`📊 Summary: ${successCount} fields updated, ${errorCount} errors`);
+        
+        return errorCount === 0;
     }
 
 

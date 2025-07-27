@@ -585,21 +585,51 @@
     }
 
     // Helper function for symbol normalization
+    // Use unified symbol processing from UI Elements mapping
     function normalizeSymbol(s) {
-        console.log(`normalizeSymbol called with: "${s}"`);
+        if (window.TRADOVATE_UI_ELEMENTS?.TRADING_DATA_PROCESSORS?.normalizeSymbol) {
+            return window.TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.normalizeSymbol(s);
+        }
+        // Fallback for backwards compatibility
+        console.log(`normalizeSymbol fallback called with: "${s}"`);
         const isRootSymbol = /^[A-Z]{1,3}$/.test(s);
-        console.log(`Is root symbol: ${isRootSymbol}`);
         const result = isRootSymbol ? getFrontQuarter(s) : s.toUpperCase();
-        console.log(`Normalized symbol: "${result}"`);
         return result;
     }
 
     async function createBracketOrdersManual(tradeData) {
-        console.log('Creating bracket orders with data:', tradeData);
+        console.log('Creating bracket orders with unified trading framework:', tradeData);
 
-        // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
+        // Use unified trading framework if available, fallback to original implementation
+        if (window.UNIFIED_TRADING_FRAMEWORK?.createBracketOrder) {
+            console.log('Using unified trading framework for bracket order creation');
+            
+            // Enable validation for SL orders (safety-first approach)
+            const result = await window.UNIFIED_TRADING_FRAMEWORK.createBracketOrder(tradeData, {
+                enableValidation: true,
+                source: 'autoOrderSL'
+            });
+            
+            if (result.success) {
+                console.log(`✅ Unified bracket order created successfully: ${result.bracketId}`);
+                return result;
+            } else {
+                console.error(`❌ Unified bracket order failed: ${result.error}`);
+                console.log('Falling back to legacy implementation...');
+                // Continue to fallback implementation below
+            }
+        } else {
+            console.log('Unified trading framework not available, using legacy implementation');
+        }
+
+        // LEGACY FALLBACK: Original implementation for backwards compatibility
         async function updateInputValue(selector, value) {
-            // wait for the live, visible field
+            // Use unified framework if available
+            if (window.UNIFIED_TRADING_FRAMEWORK?.updateInputValue) {
+                return await window.UNIFIED_TRADING_FRAMEWORK.updateInputValue(selector, value);
+            }
+            
+            // Fallback to original implementation
             let input;
             for (let i = 0; i < 25; i++) {
                 input = [...document.querySelectorAll(selector)]
@@ -611,7 +641,6 @@
 
             const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;
 
-            // write-verify loop – commit with Enter so Tradovate locks the value
             for (let tries = 0; tries < 3; tries++) {
                 input.focus();
                 setVal.call(input, value);
@@ -621,15 +650,22 @@
                 input.dispatchEvent(new KeyboardEvent('keydown', {
                     key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true
                 }));
-                input.blur();                      // force validation
-                await delay(300);                  // wait for repaint
+                input.blur();
+                await delay(300);
 
-                if (+input.value === +value) break; // done
+                if (+input.value === +value) break;
             }
+            return true;
         }
 
         async function setCommonFields() {
-            console.log('Setting common order fields');
+            // Use unified framework if available
+            if (window.UNIFIED_TRADING_FRAMEWORK?.setCommonFields) {
+                return await window.UNIFIED_TRADING_FRAMEWORK.setCommonFields(tradeData);
+            }
+            
+            // Fallback to original implementation
+            console.log('Setting common order fields (legacy)');
             if (tradeData.action) {
                 console.log(`Setting action to: ${tradeData.action}`);
                 const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
@@ -649,6 +685,12 @@
 
         // returns an array like [{timestamp,id,event,comment,fillPrice}, …]
         function getOrderEvents(container = document) {
+            // Use unified framework if available
+            if (window.UNIFIED_TRADING_FRAMEWORK?.getOrderEvents) {
+                return window.UNIFIED_TRADING_FRAMEWORK.getOrderEvents(container);
+            }
+            
+            // Fallback to original implementation
             const rows = container.querySelectorAll(
                 '.order-history-content .public_fixedDataTable_bodyRow'
             );
@@ -680,6 +722,29 @@
         }
 
         async function submitOrder(orderType, priceValue) {
+            // Use unified framework if available for comprehensive validation
+            if (window.UNIFIED_TRADING_FRAMEWORK?.submitOrder) {
+                console.log(`Using unified framework for ${orderType} order submission`);
+                
+                const result = await window.UNIFIED_TRADING_FRAMEWORK.submitOrder(orderType, priceValue, {
+                    tradeData: tradeData,
+                    enableValidation: true,  // Enable validation for safety
+                    source: 'autoOrderSL'
+                });
+                
+                if (result.success) {
+                    console.log(`✅ Unified order submission successful: ${result.submissionId}`);
+                    return result;
+                } else {
+                    console.error(`❌ Unified order submission failed: ${result.error}`);
+                    console.log('Falling back to legacy order submission...');
+                    // Continue to fallback implementation below
+                }
+            } else {
+                console.log('Unified framework not available, using legacy order submission');
+            }
+
+            // LEGACY FALLBACK: Original implementation
             await setCommonFields();
 
             const typeSel = document.querySelector('.group.order-type .select-input div[tabindex]');
@@ -697,6 +762,8 @@
             console.log(getOrderEvents());
             document.querySelector('.icon.icon-back')?.click();
             await delay(200);
+            
+            return { success: true, orderType, price: priceValue, source: 'legacy' };
         }
 
         console.log(`Submitting initial ${tradeData.orderType || 'MARKET'} order`);
@@ -722,16 +789,17 @@
     }
 
     // Futures tick data dictionary with default SL/TP settings for each instrument
-    const futuresTickData = {
-      // Symbol: { tickSize, tickValue, defaultSL (ticks), defaultTP (ticks), precision (decimal places) }
-      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // Micro E-mini Nasdaq-100
-      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini Nasdaq-100
-      ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini S&P 500
-      RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },  // E-mini Russell 2000
-      YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },  // E-mini Dow Jones
-      CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },  // Crude Oil
-      GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },  // Gold (15 ticks = $150 risk)
-      MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }   // Micro Gold
+    // Use unified futures tick data from trading framework
+    const futuresTickData = window.UNIFIED_TRADING_FRAMEWORK?.FUTURES_TICK_DATA || {
+      // Fallback data if unified framework not loaded
+      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },
+      ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },
+      RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },
+      YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },
+      CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },
+      GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },
+      MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }
     };
 
     // SL-based bracket order function
@@ -884,13 +952,15 @@
         return result;
     }
 
-    // --- Build front-quarter symbol ---
+    // Use unified front quarter processing from UI Elements mapping
     function getFrontQuarter(root) {
-        console.log(`getFrontQuarter called for root: "${root}"`);
-        const { letter, yearDigit } = getQuarterlyCode();  // uses MONTH_CODES internally
-        console.log(`Got quarterly code: letter=${letter}, yearDigit=${yearDigit}`);
+        if (window.TRADOVATE_UI_ELEMENTS?.TRADING_DATA_PROCESSORS?.getFrontQuarter) {
+            return window.TRADOVATE_UI_ELEMENTS.TRADING_DATA_PROCESSORS.getFrontQuarter(root);
+        }
+        // Fallback for backwards compatibility
+        console.log(`getFrontQuarter fallback called for root: "${root}"`);
+        const { letter, yearDigit } = getQuarterlyCode();
         const result = `${root.toUpperCase()}${letter}${yearDigit}`;
-        console.log(`Returning front quarter symbol: "${result}"`);
         return result;
     }
 

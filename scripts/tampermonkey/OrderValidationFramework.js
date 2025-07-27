@@ -17,8 +17,30 @@
 // Last Updated: 2025-01-26
 // ============================================================================
 
+// Ensure UI Elements mapping is available
+function ensureUIElementsMapping() {
+    if (!window.TRADOVATE_UI_ELEMENTS) {
+        console.log('Loading UI Elements mapping fallback for OrderValidationFramework');
+        window.TRADOVATE_UI_ELEMENTS = {
+            MARKET_DATA: {
+                MARKET_CELLS: '.public_fixedDataTableCell_cellContent'
+            },
+            ORDER_STATUS: {
+                ORDER_ROWS: '.fixedDataTableRowLayout_rowWrapper',
+                ORDER_CELLS: '.public_fixedDataTableCell_cellContent'
+            },
+            ACCOUNT_SELECTION: {
+                ACCOUNT_NAME: '.account-selector .account-name'
+            }
+        };
+    }
+}
+
 class OrderValidationFramework {
     constructor(options = {}) {
+        // Ensure UI elements mapping is available
+        ensureUIElementsMapping();
+        
         this.scriptName = options.scriptName || 'OrderValidation';
         this.debugMode = options.debugMode || false;
         this.performanceMode = options.performanceMode !== false; // Default true
@@ -614,6 +636,48 @@ class OrderValidationFramework {
     }
     
     validateRiskLimits(orderData) {
+        // Use unified risk management validation - DRY refactored
+        try {
+            // Check if unified risk management is available
+            if (typeof window.unifiedRiskManagement !== 'undefined') {
+                console.log('[OrderValidation] Using unified risk management validation');
+                
+                // Try to get current account context
+                let accountName = null;
+                let accountMetrics = null;
+                
+                try {
+                    // Extract account name from current context (if available)
+                    const accountElement = document.querySelector(window.TRADOVATE_UI_ELEMENTS?.ACCOUNT_SELECTION?.ACCOUNT_NAME || '.account-selector .account-name');
+                    if (accountElement) {
+                        accountName = accountElement.textContent.trim();
+                    }
+                    
+                    // Get account metrics from table data (if available)
+                    if (typeof getTableData === 'function') {
+                        const tableData = getTableData();
+                        const currentAccount = tableData.find(row => 
+                            accountName && row.accountName && row.accountName.includes(accountName)
+                        );
+                        if (currentAccount) {
+                            accountMetrics = {
+                                totalAvail: currentAccount.totalAvail,
+                                distDraw: currentAccount.distDraw
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[OrderValidation] Could not get account context:', e);
+                }
+                
+                // Use unified validation
+                return window.unifiedRiskManagement.validateOrderRisk(orderData, accountName, accountMetrics);
+            }
+        } catch (error) {
+            console.warn('[OrderValidation] Unified risk management not available, using fallback:', error);
+        }
+        
+        // Fallback to basic validation
         const errors = [];
         
         // Basic risk validation - can be enhanced based on account settings
@@ -623,7 +687,8 @@ class OrderValidationFramework {
         
         return {
             valid: errors.length === 0,
-            errors: errors
+            errors: errors,
+            warnings: []
         };
     }
     
@@ -726,10 +791,10 @@ class OrderValidationFramework {
     async verifyOrderInTable(orderId) {
         // Basic implementation - searches for order in orders table
         try {
-            const orderRows = document.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
+            const orderRows = document.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_ROWS || '.fixedDataTableRowLayout_rowWrapper');
             
             for (const row of orderRows) {
-                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+                const cells = row.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_CELLS || '.public_fixedDataTableCell_cellContent');
                 if (cells.length > 1) {
                     const possibleOrderId = cells[1]?.textContent?.trim();
                     if (possibleOrderId === orderId) {
@@ -749,7 +814,7 @@ class OrderValidationFramework {
     }
     
     extractOrderDetailsFromRow(row) {
-        const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+        const cells = row.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_CELLS || '.public_fixedDataTableCell_cellContent');
         
         return {
             timestamp: cells[0]?.textContent?.trim(),

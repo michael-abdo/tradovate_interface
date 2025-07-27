@@ -19,7 +19,7 @@ from utils.chrome_stability import ChromeStabilityMonitor
 from utils.chrome_communication import safe_evaluate, OperationType
 
 # Configuration - Use unified Chrome configuration management
-from utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT
+from utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT, get_chrome_ports
 
 # Fallback for backwards compatibility
 try:

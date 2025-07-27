@@ -1,0 +1,604 @@
+2025-07-26 14:29:33,033 - chrome_communication - INFO - ChromeCommunicationManager initialized
+2025-07-26 14:29:33,035 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:29:33,037 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:29:33,059 - chrome_communication - INFO - Chrome Communication Framework initialized
+2025-07-26 14:29:33,063 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:29:33,069 - chrome_communication - WARNING - 🚨 DOM circuit breaker opened for symbol_input after 3 failures
+2025-07-26 14:29:33,071 - chrome_communication - WARNING - Emergency bypass recorded: manual_override - Benchmark test
+2025-07-26 14:29:33,071 - chrome_communication - WARNING - Manual emergency override ENABLED: Benchmark test
+2025-07-26 14:29:33,072 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:29:33,072 - chrome_communication - INFO - Registered new tab: tab_0 (account: account_0)
+2025-07-26 14:29:33,072 - chrome_communication - INFO - Registered new tab: tab_1 (account: account_1)
+2025-07-26 14:29:33,072 - chrome_communication - INFO - Registered new tab: tab_2 (account: account_0)
+2025-07-26 14:29:33,072 - chrome_communication - INFO - Registered new tab: tab_3 (account: account_1)
+2025-07-26 14:29:33,072 - chrome_communication - INFO - Registered new tab: tab_4 (account: account_0)
+2025-07-26 14:29:33,073 - chrome_communication - INFO - Queued operation parallel_0 (symbol_input) in 0.19ms
+2025-07-26 14:29:53,094 - chrome_communication - INFO - Executed operation parallel_0 in 20.021s
+2025-07-26 14:29:53,094 - chrome_communication - WARNING - Conflict detected (same_tab): ['Operation parallel_0 already active for symbol_input']
+2025-07-26 14:29:53,095 - chrome_communication - INFO - Queued operation parallel_1 (symbol_input) in 0.49ms
+2025-07-26 14:30:08,109 - chrome_communication - INFO - Executed operation parallel_1 in 15.014s
+2025-07-26 14:30:08,109 - chrome_communication - INFO - Shutting down DOM operation queue
+2025-07-26 14:30:08,110 - chrome_communication - INFO - Registered new tab: tab_0 (account: account_0)
+2025-07-26 14:30:08,110 - chrome_communication - INFO - Auto-sync enabled for tab tab_0
+2025-07-26 14:30:08,110 - chrome_communication - INFO - Registered new tab: tab_1 (account: account_1)
+2025-07-26 14:30:08,110 - chrome_communication - INFO - Auto-sync enabled for tab tab_1
+2025-07-26 14:30:08,110 - chrome_communication - INFO - Registered new tab: tab_2 (account: account_2)
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Auto-sync enabled for tab tab_2
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Registered new tab: tab_3 (account: account_0)
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Auto-sync enabled for tab tab_3
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Registered new tab: tab_4 (account: account_1)
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Auto-sync enabled for tab tab_4
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Registered new tab: tab_5 (account: account_2)
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Auto-sync enabled for tab tab_5
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Registered new tab: tab_6 (account: account_0)
+2025-07-26 14:30:08,111 - chrome_communication - INFO - Auto-sync enabled for tab tab_6
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Registered new tab: tab_7 (account: account_1)
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Auto-sync enabled for tab tab_7
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Registered new tab: tab_8 (account: account_2)
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Auto-sync enabled for tab tab_8
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Registered new tab: tab_9 (account: account_0)
+2025-07-26 14:30:08,112 - chrome_communication - INFO - Auto-sync enabled for tab tab_9
+2025-07-26 14:30:08,121 - chrome_communication - INFO - Calculated baseline for dom_sync_account_switch: {'execution_time_mean': 2.8505325317382813e-05, 'execution_time_stdev': 3.3759290082928175e-06, 'validation_time_mean': 0, 'validation_time_stdev': 0.0, 'success_rate_mean': 0.98, 'calculated_at': datetime.datetime(2025, 7, 26, 14, 30, 8, 121625)}
+2025-07-26 14:30:08,134 - chrome_communication - INFO - Calculated baseline for dom_sync_position_update: {'execution_time_mean': 1.8181800842285157e-05, 'execution_time_stdev': 2.152412099373299e-06, 'validation_time_mean': 0, 'validation_time_stdev': 0.0, 'success_rate_mean': 1.0, 'calculated_at': datetime.datetime(2025, 7, 26, 14, 30, 8, 134532)}
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,142 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,143 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,144 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,145 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,146 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,147 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,148 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,149 - chrome_communication - INFO - DOMValidator initialized with Chrome Communication Framework integration
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,149 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,150 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,151 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,152 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,153 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,154 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,155 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,156 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,157 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,158 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,158 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,158 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,158 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,158 - chrome_communication - INFO - SelectorEvolution system initialized with pattern recognition
+2025-07-26 14:30:08,163 - chrome_communication - INFO - System health check: healthy
+2025-07-26 14:30:08,163 - chrome_communication - WARNING - 🚨 DOM circuit breaker opened for symbol_input after 3 failures
+2025-07-26 14:30:08,164 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,164 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,164 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,164 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,165 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,166 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,167 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,167 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,167 - chrome_communication - WARNING - Emergency bypass recorded: auto_trade - Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,167 - chrome_communication - WARNING - Emergency bypass for auto_trade: Poor recent performance for auto_trade: 0.0%
+2025-07-26 14:30:08,168 - chrome_communication - WARNING - 🚨 DOM circuit breaker opened for market_data_table after 3 failures
+2025-07-26 14:30:08,168 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,168 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,168 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,169 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,170 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass recorded: exit_positions - Poor recent performance for exit_positions: 0.0%
+2025-07-26 14:30:08,171 - chrome_communication - WARNING - Emergency bypass for exit_positions: Poor recent performance for exit_positions: 0.0%
+
+🚀 Starting DOM Intelligence Performance Benchmark Suite
+============================================================
+
+🔬 Benchmarking Validation Tiers...
+
+  Testing ZERO_LATENCY...
+    ✅ Mean: 0.05ms (threshold: 10.0ms)
+    📊 P95: 0.05ms, P99: 0.05ms
+
+  Testing LOW_LATENCY...
+    ✅ Mean: 0.00ms (threshold: 25.0ms)
+    📊 P95: 0.00ms, P99: 0.00ms
+
+  Testing STANDARD_LATENCY...
+    ✅ Mean: 0.00ms (threshold: 50.0ms)
+    📊 P95: 0.00ms, P99: 0.00ms
+
+  Testing HIGH_LATENCY...
+    ✅ Mean: 0.00ms (threshold: 100.0ms)
+    📊 P95: 0.00ms, P99: 0.00ms
+
+🚨 Benchmarking Emergency Bypass...
+
+  Testing normal_conditions...
+    ✅ Mean: 0.002ms (target: <1ms)
+    🔄 Bypass rate: 0.0%
+
+  Testing high_volatility...
+    ✅ Mean: 0.002ms (target: <1ms)
+    🔄 Bypass rate: 100.0%
+
+  Testing manual_override...
+    ✅ Mean: 0.000ms (target: <1ms)
+    🔄 Bypass rate: 100.0%
+
+  Testing system_stress...
+    ✅ Mean: 0.000ms (target: <1ms)
+    🔄 Bypass rate: 100.0%
+
+🔄 Benchmarking Selector Evolution...
+
+❌ Error in selector_evolution benchmark: 'SelectorEvolution' object has no attribute 'record_success'
+
+🔀 Benchmarking Parallel Operations...
+
+  Sequential execution...
+  Parallel execution...
+    📈 Sequential: 20019.49ms
+    ⚡ Parallel: 15015.41ms
+    🚀 Speedup: 1.33x
+
+🔄 Benchmarking State Synchronization...
+
+  Testing symbol_change...
+    ⏱️  Mean: 0.02ms
+    📡 Avg synced tabs: 0.0
+
+  Testing account_switch...
+    ⏱️  Mean: 0.13ms
+    📡 Avg synced tabs: 8.9
+
+  Testing position_update...
+    ⏱️  Mean: 0.11ms
+    📡 Avg synced tabs: 9.0
+
+  Testing order_update...
+    ⏱️  Mean: 0.01ms
+    📡 Avg synced tabs: 0.0
+
+💾 Benchmarking Memory Usage...
+
+  Testing DOMValidator...
+    📊 Per instance: 0.000 MB
+    💾 100 instances: 0.0 MB
+
+  Testing SelectorEvolution...
+    📊 Per instance: 0.000 MB
+    💾 100 instances: 0.0 MB
+
+  Testing TradovateElementRegistry...
+    📊 Per instance: 0.007 MB
+    💾 100 instances: 0.7 MB
+
+  Testing DOMOperationQueue...
+    📊 Per instance: 0.001 MB
+    💾 100 instances: 0.1 MB
+
+  Testing DOMHealthMonitor...
+    📊 Per instance: 0.000 MB
+    💾 100 instances: 0.0 MB
+
+  Testing CriticalOperationValidator...
+    📊 Per instance: 0.000 MB
+    💾 100 instances: 0.0 MB
+
+  Testing DOMStateSynchronizer...
+    📊 Per instance: 0.000 MB
+    💾 100 instances: 0.0 MB
+
+🎯 Benchmarking End-to-End Trading Operations...
+
+  Testing auto_trade...
+    ⏱️  Total: 0.22ms
+    🔍 Validation: 0.05ms
+
+  Testing exit_positions...
+    ⏱️  Total: 0.20ms
+    🔍 Validation: 0.03ms
+
+📄 Performance report saved to: /Users/Mike/trading/tests/performance_report_20250726_143008.txt
+
+============================================================
+================================================================================
+DOM INTELLIGENCE SYSTEM PERFORMANCE REPORT
+================================================================================
+Generated: 2025-07-26 14:30:08
+
+EXECUTIVE SUMMARY
+----------------------------------------
+✅ ZERO_LATENCY: 0.05ms (threshold: 10.0ms)
+✅ LOW_LATENCY: 0.00ms (threshold: 25.0ms)
+✅ STANDARD_LATENCY: 0.00ms (threshold: 50.0ms)
+✅ HIGH_LATENCY: 0.00ms (threshold: 100.0ms)
+
+✅ ALL CRITICAL PERFORMANCE THRESHOLDS MET
+
+================================================================================
+DETAILED PERFORMANCE METRICS
+================================================================================
+
+VALIDATION TIERS
+----------------------------------------
+
+  ZERO_LATENCY:
+    mean_ms: 0.049
+    median_ms: 0.048
+    stdev_ms: 0.001
+    min_ms: 0.047
+    max_ms: 0.054
+    p95_ms: 0.051
+    p99_ms: 0.054
+    threshold_ms: 10.000
+    within_threshold: 1.00
+
+  LOW_LATENCY:
+    mean_ms: 0.002
+    median_ms: 0.002
+    stdev_ms: 0.000
+    min_ms: 0.002
+    max_ms: 0.003
+    p95_ms: 0.002
+    p99_ms: 0.003
+    threshold_ms: 25.000
+    within_threshold: 1.00
+
+  STANDARD_LATENCY:
+    mean_ms: 0.002
+    median_ms: 0.002
+    stdev_ms: 0.000
+    min_ms: 0.002
+    max_ms: 0.002
+    p95_ms: 0.002
+    p99_ms: 0.002
+    threshold_ms: 50.000
+    within_threshold: 1.00
+
+  HIGH_LATENCY:
+    mean_ms: 0.002
+    median_ms: 0.002
+    stdev_ms: 0.000
+    min_ms: 0.002
+    max_ms: 0.002
+    p95_ms: 0.002
+    p99_ms: 0.002
+    threshold_ms: 100.000
+    within_threshold: 1.00
+
+EMERGENCY BYPASS
+----------------------------------------
+
+  normal_conditions:
+    mean_ms: 0.002
+    median_ms: 0.002
+    max_ms: 0.002
+    bypass_rate: 0.00
+    within_1ms: 1.000
+
+  high_volatility:
+    mean_ms: 0.002
+    median_ms: 0.002
+    max_ms: 0.003
+    bypass_rate: 1.00
+    within_1ms: 1.000
+
+  manual_override:
+    mean_ms: 0.000
+    median_ms: 0.000
+    max_ms: 0.000
+    bypass_rate: 1.00
+    within_1ms: 1.000
+
+  system_stress:
+    mean_ms: 0.000
+    median_ms: 0.000
+    max_ms: 0.000
+    bypass_rate: 1.00
+    within_1ms: 1.000
+
+SELECTOR EVOLUTION
+----------------------------------------
+  error: 'SelectorEvolution' object has no attribute 'record_success'
+
+PARALLEL OPERATIONS
+----------------------------------------
+  sequential_ms: 20019.492
+  parallel_ms: 15015.410
+  speedup: 1.333
+  operations_count: 5.000
+
+STATE SYNCHRONIZATION
+----------------------------------------
+
+  symbol_change:
+    mean_ms: 0.020
+    median_ms: 0.019
+    max_ms: 0.077
+    avg_synced_tabs: 0.00
+
+  account_switch:
+    mean_ms: 0.132
+    median_ms: 0.120
+    max_ms: 0.537
+    avg_synced_tabs: 8.91
+
+  position_update:
+    mean_ms: 0.112
+    median_ms: 0.104
+    max_ms: 0.509
+    avg_synced_tabs: 9.00
+
+  order_update:
+    mean_ms: 0.015
+    median_ms: 0.014
+    max_ms: 0.030
+    avg_synced_tabs: 0.00
+
+MEMORY USAGE
+----------------------------------------
+
+  DOMValidator:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.03
+
+  SelectorEvolution:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.00
+
+  TradovateElementRegistry:
+    memory_per_instance_mb: 0.01
+    total_memory_100_instances_mb: 0.70
+
+  DOMOperationQueue:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.06
+
+  DOMHealthMonitor:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.00
+
+  CriticalOperationValidator:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.00
+
+  DOMStateSynchronizer:
+    memory_per_instance_mb: 0.00
+    total_memory_100_instances_mb: 0.00
+
+END TO END TRADING
+----------------------------------------
+
+  auto_trade:
+    mean_total_ms: 0.222
+    median_total_ms: 0.203
+    max_total_ms: 0.476
+    mean_validation_ms: 0.048
+    mean_execution_ms: 0.000
+
+  exit_positions:
+    mean_total_ms: 0.202
+    median_total_ms: 0.200
+    max_total_ms: 0.278
+    mean_validation_ms: 0.034
+    mean_execution_ms: 0.000
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+✅ System performing within all specified limits
+   No immediate optimization required
+
+================================================================================

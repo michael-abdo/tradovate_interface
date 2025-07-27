@@ -13,32 +13,132 @@ let ACCOUNT_ID = null;
 (function () {
   'use strict';
 
-  const waitForElement = (selector, timeout = 10000) => {
-    return new Promise((resolve, reject) => {
-      const interval = 100;
-      let elapsed = 0;
-      const check = () => {
-        const el = document.querySelector(selector);
-        if (el) return resolve(el);
-        elapsed += interval;
-        if (elapsed >= timeout) return reject('Element not found: ' + selector);
-        setTimeout(check, interval);
-      };
-      check();
-    });
-  };
+  // ============================================================================
+// DOM VALIDATION HELPER FUNCTIONS - Load unified library
+// ============================================================================
 
-  const clickSave = () => {
+async function loadDOMHelpers() {
+    if (window.domHelpers) {
+        console.log('✅ DOM Helpers already loaded globally');
+        return true;
+    }
+    
+    try {
+        const script = document.createElement('script');
+        script.src = '/scripts/tampermonkey/domHelpers.js';
+        document.head.appendChild(script);
+        
+        await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = reject;
+            setTimeout(() => reject(new Error('Timeout loading domHelpers')), 5000);
+        });
+        
+        if (window.domHelpers) {
+            console.log('✅ DOM Helpers loaded successfully from external file');
+            return true;
+        }
+    } catch (error) {
+        console.warn('⚠️ Could not load external domHelpers.js, using inline fallback');
+    }
+    
+    // Inline fallback for critical functions
+    window.domHelpers = {
+        waitForElement: async (selector, timeout = 10000) => {
+            return new Promise((resolve, reject) => {
+                const interval = 100;
+                let elapsed = 0;
+                const check = () => {
+                    const el = document.querySelector(selector);
+                    if (el) return resolve(el);
+                    elapsed += interval;
+                    if (elapsed >= timeout) return reject('Element not found: ' + selector);
+                    setTimeout(check, interval);
+                };
+                check();
+            });
+        },
+        validateElementExists: (selector) => !!document.querySelector(selector),
+        validateElementVisible: (element) => {
+            if (!element) return false;
+            const style = window.getComputedStyle(element);
+            return style.display !== 'none' && style.visibility !== 'hidden' && 
+                   element.offsetWidth > 0 && element.offsetHeight > 0;
+        },
+        safeClick: async (element) => {
+            if (!element) return false;
+            try {
+                element.click();
+                return true;
+            } catch (error) {
+                console.error('Error clicking element:', error);
+                return false;
+            }
+        },
+        safeSetValue: async (element, value) => {
+            if (!element) return false;
+            try {
+                element.focus();
+                const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+                nativeInputValueSetter.call(element, value);
+                element.dispatchEvent(new Event('input', { bubbles: true }));
+                element.dispatchEvent(new Event('change', { bubbles: true }));
+                return true;
+            } catch (error) {
+                console.error('Error setting value:', error);
+                return false;
+            }
+        }
+    };
+    
+    console.log('✅ DOM Helpers initialized with inline fallback');
+    return true;
+}
+
+// Load DOM helpers on startup
+loadDOMHelpers();
+
+// Legacy compatibility wrapper
+const waitForElement = (selector, timeout = 10000) => {
+    return window.domHelpers.waitForElement(selector, timeout);
+};
+
+  const clickSave = async () => {
+    console.log('🔍 DOM Intelligence: Starting Save button click with validation');
+    
+    // Pre-validation: Find Save button
     const saveBtn = Array.from(document.querySelectorAll('button'))
       .find(btn => {
         const span = btn.querySelector('span.MuiButton-label');
         return span && span.textContent.trim() === "Save";
       });
-    if (saveBtn) {
-      saveBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-      console.log('Clicked Save button.');
+    
+    if (!saveBtn) {
+      console.error('❌ Pre-validation failed: Save button not found');
+      return false;
+    }
+    
+    // Pre-validation: Check if button is visible and enabled
+    if (!window.domHelpers.validateElementVisible(saveBtn)) {
+      console.error('❌ Pre-validation failed: Save button not visible');
+      return false;
+    }
+    
+    if (saveBtn.disabled) {
+      console.error('❌ Pre-validation failed: Save button is disabled');
+      return false;
+    }
+    
+    console.log('✅ Pre-validation passed: Save button found, visible, and enabled');
+    
+    // Click the button
+    const clickSuccess = await window.domHelpers.safeClick(saveBtn);
+    if (clickSuccess) {
+      console.log('✅ Save button clicked successfully');
+      return true;
     } else {
-      console.error('Save button not found.');
+      console.error('❌ Failed to click Save button');
+      return false;
     }
   };
 
@@ -72,17 +172,40 @@ let ACCOUNT_ID = null;
     }
   };
 
-  const setValue = (val) => {
+  const setValue = async (val) => {
+    console.log(`🔍 DOM Intelligence: Setting value to ${val} with validation`);
+    
+    // Pre-validation: Find input field
+    const inputSelector = '#trailingMaxDrawdownRealTime';
+    if (!window.domHelpers.validateElementExists(inputSelector)) {
+      console.error('❌ Pre-validation failed: Value input not found');
+      return false;
+    }
+    
     const input = document.getElementById('trailingMaxDrawdownRealTime');
-    if (input) {
-      input.focus();
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-      nativeInputValueSetter.call(input, val);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-      console.log('Value set to $' + val);
+    
+    // Pre-validation: Check if input is visible and enabled
+    if (!window.domHelpers.validateElementVisible(input)) {
+      console.error('❌ Pre-validation failed: Value input not visible');
+      return false;
+    }
+    
+    if (input.disabled) {
+      console.error('❌ Pre-validation failed: Value input is disabled');
+      return false;
+    }
+    
+    console.log('✅ Pre-validation passed: Value input found, visible, and enabled');
+    
+    // Set the value using safe method
+    const setSuccess = await window.domHelpers.safeSetValue(input, val);
+    
+    if (setSuccess) {
+      console.log(`✅ Value set successfully to $${val}`);
+      return true;
     } else {
-      console.error('Value input not found.');
+      console.error(`❌ Failed to set value to $${val}`);
+      return false;
     }
   };
 
