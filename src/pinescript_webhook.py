@@ -35,18 +35,15 @@ logger = logging.getLogger('webhook_server')
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
-# Import the TradovateController from app.py
+# Import the TradovateController and Chrome Communication Framework
 try:
-    from src.app import TradovateController
-except ImportError:
-    # If the above import fails, try importing directly (when run from within src directory)
-    try:
-        from app import TradovateController
-        logger.info("Imported TradovateController directly from app")
-    except ImportError as e:
-        logger.error(f"Failed to import TradovateController: {e}")
-        logger.error("Make sure you're running this script from the project root directory")
-        sys.exit(1)
+    from app import TradovateController
+    from utils.chrome_communication import safe_evaluate, OperationType
+    logger.info("Imported TradovateController directly from app")
+except ImportError as e:
+    logger.error(f"Failed to import TradovateController: {e}")
+    logger.error("Make sure you're running this script from the project root directory")
+    sys.exit(1)
 
 app = Flask(__name__)
 PORT = 6000
@@ -172,8 +169,16 @@ def check_chrome_connections():
                     reconnection_needed = True
                     continue
                     
-                # Test the connection by evaluating a simple expression
-                conn.tab.Runtime.evaluate(expression="1+1")
+                # Test the connection using safe_evaluate
+                result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code="1+1",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description=f"Test connection for {conn.account_name}"
+                )
+                if not result.success:
+                    logger.warning(f"Connection test failed for {conn.account_name}: {result.error}")
+                    reconnection_needed = True
             except Exception as e:
                 logger.warning(f"Connection test failed for {conn.account_name}: {e}")
                 reconnection_needed = True
@@ -296,43 +301,101 @@ def get_target_accounts_for_strategy(strategy_name):
 
 def update_ui_symbol(account_index, symbol):
     """
-    Update the symbol in the Tradovate interface and the Bracket UI
+    Update the symbol in the Tradovate interface and the Bracket UI with DOM Intelligence validation
     """
     if account_index >= len(controller.connections):
         return {"status": "error", "message": "Invalid account index"}
     
     try:
-        # First update the symbol in Tradovate's interface
+        # First update the symbol in Tradovate's interface using DOM Intelligence
         controller.execute_on_one(account_index, 'update_symbol', symbol)
         
-        # Then update the symbolInput element in the Bracket UI
-        update_ui_script = f"""
-        (function() {{
-            // Update the symbolInput in the Bracket UI
-            const symbolInput = document.getElementById('symbolInput');
-            if (symbolInput) {{
-                symbolInput.value = "{symbol}";
-                // Dispatch events to ensure value change is registered
-                symbolInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
-                symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                console.log("Updated UI symbol to {symbol}");
+        # Then use DOM Intelligence validation for UI symbol update
+        from src.utils.chrome_communication import execute_symbol_update_with_validation
+        
+        # Prepare context for validation
+        validation_context = {
+            'high_frequency_mode': True,   # Webhook operations are often high frequency
+            'webhook_operation': True,     # Mark as webhook operation
+            'account_index': account_index,
+            'symbol_change': True
+        }
+        
+        # Execute with DOM Intelligence validation
+        tab = controller.connections[account_index].tab
+        result = execute_symbol_update_with_validation(tab, symbol, context=validation_context)
+        
+        # Handle DOM Intelligence result structure
+        if isinstance(result, dict) and 'dom_intelligence_enabled' in result:
+            execution_result = result.get('execution_result', {})
+            validation_result = result.get('validation_result', {})
+            
+            # Log validation insights
+            if validation_result.get('emergency_bypass', False):
+                logger.warning(f"Emergency bypass used for symbol update: {validation_result.get('message', 'Unknown reason')}")
+            
+            if execution_result.get('execution_success', False):
+                # Extract actual result from JS execution
+                js_result = execution_result.get('js_result', {})
+                result_value = js_result.get('result', {}).get('value', 'Symbol updated with DOM Intelligence')
                 
-                // Also store in localStorage for persistence
-                localStorage.setItem('bracketTrade_symbol', "{symbol}");
-                return "Symbol updated in UI";
-            }} else {{
-                return "symbolInput element not found";
-            }}
-        }})();
-        """
-        ui_result = controller.connections[account_index].tab.Runtime.evaluate(expression=update_ui_script)
-        result_value = ui_result.get('result', {}).get('value', 'Unknown')
-        logger.info(f"UI symbol update on account {account_index}: {result_value}")
-        return {"status": "success", "message": result_value}
+                logger.info(f"UI symbol update on account {account_index}: {result_value}")
+                return {"status": "success", "message": result_value, "dom_intelligence": True}
+            else:
+                error_msg = execution_result.get('execution_error', 'Unknown execution error')
+                logger.error(f"Symbol update execution failed on account {account_index}: {error_msg}")
+                return {"status": "error", "message": error_msg}
+        else:
+            # Fallback to legacy method if DOM Intelligence not available
+            logger.warning("DOM Intelligence not available, using legacy symbol update")
+            return update_ui_symbol_legacy(account_index, symbol)
+            
     except Exception as e:
         logger.error(f"Error updating UI symbol on account {account_index}: {e}")
         logger.debug(traceback.format_exc())
-        return {"status": "error", "message": str(e)}
+        
+        # Fallback to legacy method on error
+        try:
+            return update_ui_symbol_legacy(account_index, symbol)
+        except Exception as fallback_error:
+            logger.error(f"Legacy symbol update also failed: {fallback_error}")
+            return {"status": "error", "message": str(e)}
+
+def update_ui_symbol_legacy(account_index, symbol):
+    """Legacy symbol update method (fallback)"""
+    update_ui_script = f"""
+    (function() {{
+        // Update the symbolInput in the Bracket UI
+        const symbolInput = document.getElementById('symbolInput');
+        if (symbolInput) {{
+            symbolInput.value = "{symbol}";
+            // Dispatch events to ensure value change is registered
+            symbolInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+            symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+            console.log("Updated UI symbol to {symbol}");
+            
+            // Also store in localStorage for persistence
+            localStorage.setItem('bracketTrade_symbol', "{symbol}");
+            return "Symbol updated in UI (legacy method)";
+        }} else {{
+            return "symbolInput element not found";
+        }}
+    }})();
+    """
+    # Use safe_evaluate for UI update
+    ui_result = safe_evaluate(
+        tab=controller.connections[account_index].tab,
+        js_code=update_ui_script,
+        operation_type=OperationType.IMPORTANT,
+        description=f"Legacy UI symbol update on account {account_index}"
+    )
+    
+    if ui_result.success:
+        logger.info(f"Legacy UI symbol update on account {account_index}: {ui_result.value}")
+        return {"status": "success", "message": ui_result.value}
+    else:
+        logger.error(f"Failed to update UI on account {account_index}: {ui_result.error}")
+        return {"status": "error", "message": ui_result.error}
 
 def process_trading_signal(data):
     """
@@ -397,8 +460,17 @@ def process_trading_signal(data):
             for i in target_account_indices:
                 try:
                     if i < len(controller.connections) and controller.connections[i].tab:
-                        controller.connections[i].tab.Runtime.evaluate(expression=account_switcher_js)
-                        logger.info(f"Injected account switcher script into connection {i}")
+                        # Use safe_evaluate to inject account switcher
+                        result = safe_evaluate(
+                            tab=controller.connections[i].tab,
+                            js_code=account_switcher_js,
+                            operation_type=OperationType.IMPORTANT,
+                            description=f"Inject account switcher for connection {i}"
+                        )
+                        if result.success:
+                            logger.info(f"Injected account switcher script into connection {i}")
+                        else:
+                            logger.error(f"Failed to inject account switcher into connection {i}: {result.error}")
                 except Exception as e:
                     logger.error(f"Error injecting account switcher into connection {i}: {e}")
     else:
@@ -428,31 +500,67 @@ def process_trading_signal(data):
                     for account_name in account_names:
                         logger.info(f"🔄 Attempting to switch to account: {account_name} on connection {account_index}")
                         
-                        # Call the account switching function in the browser context
-                        switch_script = f"""
-                        (async function() {{
-                            try {{
-                                // First check which function is available
-                                if (typeof changeAccount === 'function') {{
-                                    console.log("Using changeAccount function to switch to {account_name}");
-                                    const result = await changeAccount('{account_name}');
-                                    return {{ success: !result.includes("not found"), message: result }};
-                                }} else if (typeof clickAccountItemByName === 'function') {{
-                                    console.log("Using clickAccountItemByName function to switch to {account_name}");
-                                    const result = clickAccountItemByName('{account_name}');
-                                    return {{ success: result, message: "Called clickAccountItemByName for account {account_name}" }};
-                                }} else {{
-                                    return {{ success: false, message: "No account switching function available" }};
+                        # Use standardized account switching - DRY refactored
+                        try:
+                            # Try to use the standardized account switch function
+                            from src.utils.chrome_communication import execute_account_switch_with_validation
+                            
+                            logger.info(f"Using standardized account switch for {account_name}")
+                            validation_result = execute_account_switch_with_validation(
+                                tab=conn.tab,
+                                account_name=account_name,
+                                context={'connection_index': index, 'source': 'pinescript_webhook'}
+                            )
+                            
+                            # Create a result that matches the expected format
+                            if validation_result.get('success'):
+                                switch_result = type('', (), {
+                                    'success': True,
+                                    'value': {'success': True, 'message': 'Account switched successfully'}
+                                })()
+                            else:
+                                switch_result = type('', (), {
+                                    'success': False,
+                                    'error': validation_result.get('error', 'Switch failed'),
+                                    'value': {'success': False, 'message': validation_result.get('error', 'Switch failed')}
+                                })()
+                                
+                        except (ImportError, Exception) as e:
+                            logger.debug(f"Using fallback account switch: {e}")
+                            # Fallback to original implementation
+                            switch_script = f"""
+                            (async function() {{
+                                try {{
+                                    // First check which function is available
+                                    if (typeof changeAccount === 'function') {{
+                                        console.log("Using changeAccount function to switch to {account_name}");
+                                        const result = await changeAccount('{account_name}');
+                                        return {{ success: !result.includes("not found"), message: result }};
+                                    }} else if (typeof clickAccountItemByName === 'function') {{
+                                        console.log("Using clickAccountItemByName function to switch to {account_name}");
+                                        const result = clickAccountItemByName('{account_name}');
+                                        return {{ success: result, message: "Called clickAccountItemByName for account {account_name}" }};
+                                    }} else {{
+                                        return {{ success: false, message: "No account switching function available" }};
+                                    }}
+                                }} catch (error) {{
+                                    console.error("Error switching account:", error);
+                                    return {{ success: false, message: "Error switching account: " + error.toString() }};
                                 }}
-                            }} catch (error) {{
-                                console.error("Error switching account:", error);
-                                return {{ success: false, message: "Error switching account: " + error.toString() }};
-                            }}
-                        }})();
-                        """
+                            }})();
+                            """
+                            
+                            switch_result = safe_evaluate(
+                                tab=conn.tab,
+                                js_code=switch_script,
+                                operation_type=OperationType.CRITICAL,
+                                description=f"Switch account on connection {index}"
+                            )
                         
-                        switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
-                        switch_response = switch_result.get('result', {}).get('value', {})
+                        if switch_result.success:
+                            switch_response = switch_result.value
+                        else:
+                            switch_response = {"error": switch_result.error}
                         
                         # Parse the success status from the response
                         success = False
@@ -473,6 +581,17 @@ def process_trading_signal(data):
                             account_switch_success = True
                             # Give the UI time to update after successful account switch
                             time.sleep(0.5)
+                            
+                            # Sync account switch across tabs using DOM Intelligence
+                            try:
+                                from src.utils.chrome_communication import sync_account_switch_across_tabs
+                                tab_id = getattr(controller.connections[account_index].tab, 'id', f'tab_{account_index}')
+                                sync_result = sync_account_switch_across_tabs(tab_id, account_name)
+                                if sync_result.get('success', False):
+                                    logger.info(f"Account switch synced across {len(sync_result.get('synced_tabs', []))} tabs")
+                            except Exception as sync_error:
+                                logger.warning(f"Failed to sync account switch: {sync_error}")
+                            
                             break  # Exit the loop if we successfully switched to this account
                         else:
                             logger.warning(f"Failed to switch to account {account_name}, trying next account if available")
@@ -537,9 +656,16 @@ def process_trading_signal(data):
     try:
         if controller.connections:
             js_code = f"futuresTickData['{lookup_symbol}']?.tickSize || 0.25;"
-            tick_size_result = controller.connections[0].tab.Runtime.evaluate(expression=js_code)
-            if tick_size_result and 'result' in tick_size_result and 'value' in tick_size_result['result']:
-                tick_size = float(tick_size_result['result']['value'])
+            # Use safe_evaluate to get tick size
+            tick_size_result = safe_evaluate(
+                tab=controller.connections[0].tab,
+                js_code=js_code,
+                operation_type=OperationType.NON_CRITICAL,
+                description=f"Get tick size for {lookup_symbol}"
+            )
+            
+            if tick_size_result.success and tick_size_result.value:
+                tick_size = float(tick_size_result.value)
     except Exception as e:
         logger.error(f"Error getting tick size: {e}")
     
@@ -640,11 +766,15 @@ def process_trading_signal(data):
                             if (accountExists) {{
                                 console.log(`Account {account_name} exists in available accounts. Proceeding with switch.`);
                                 
-                                // Don't wait for the Promise, just initiate the switch
+                                // Use standardized account switching - DRY refactored
                                 if (typeof changeAccount === 'function') {{
+                                    // Primary method - aligned with execute_account_switch_with_validation
                                     changeAccount('{account_name}');
                                 }} else if (typeof clickAccountItemByName === 'function') {{
+                                    // Fallback method
                                     clickAccountItemByName('{account_name}');
+                                }} else {{
+                                    console.error("No account switching function available");
                                 }}
                                 
                                 return debugReturn({{ 
@@ -670,7 +800,13 @@ def process_trading_signal(data):
                     }})();
                     """
                     
-                    switch_result = conn.tab.Runtime.evaluate(expression=switch_script)
+                    # Use safe_evaluate for account switch
+                    switch_result = safe_evaluate(
+                        tab=conn.tab,
+                        js_code=switch_script,
+                        operation_type=OperationType.CRITICAL,
+                        description=f"Account switch on connection {index}"
+                    )
                     
                     # Log the raw response from JavaScript
                     logger.debug(f"DEBUG - Raw switch_result: {switch_result}")
@@ -722,6 +858,17 @@ def process_trading_signal(data):
                         account_switch_success = True
                         # Give the UI time to update after successful account switch
                         time.sleep(0.5)
+                        
+                        # Sync account switch across tabs using DOM Intelligence
+                        try:
+                            from src.utils.chrome_communication import sync_account_switch_across_tabs
+                            tab_id = getattr(controller.connections[account_index].tab, 'id', f'tab_{account_index}')
+                            sync_result = sync_account_switch_across_tabs(tab_id, account_name)
+                            if sync_result.get('success', False):
+                                logger.info(f"Account switch synced across {len(sync_result.get('synced_tabs', []))} tabs")
+                        except Exception as sync_error:
+                            logger.warning(f"Failed to sync account switch: {sync_error}")
+                        
                         break  # Exit the loop if we successfully switched to this account
                     else:
                         logger.warning(f"Failed to switch to account {account_name}, trying next account if available")

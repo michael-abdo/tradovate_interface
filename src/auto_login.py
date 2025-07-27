@@ -15,11 +15,11 @@ print("Warning: Chrome Process Monitor not available. Running without watchdog p
 WATCHDOG_AVAILABLE = False
 
 # Import connection health monitoring and Chrome Communication Framework
-from src.utils.chrome_stability import ChromeStabilityMonitor
-from src.utils.chrome_communication import safe_evaluate, OperationType
+from utils.chrome_stability import ChromeStabilityMonitor
+from utils.chrome_communication import safe_evaluate, OperationType
 
 # Configuration - Use unified Chrome configuration management
-from src.utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT
+from utils.check_chrome import get_unified_chrome_config, validate_chrome_port, BASE_DEBUGGING_PORT
 
 # Fallback for backwards compatibility
 try:
@@ -273,7 +273,7 @@ class ChromeInstance:
         """Check the health of this Chrome instance connection - DRY refactored"""
         try:
             # Use unified health check from ChromeStabilityMonitor
-            from src.utils.chrome_stability import ChromeStabilityMonitor
+            from utils.chrome_stability import ChromeStabilityMonitor
             
             # Create or get monitor instance  
             if not hasattr(self, '_health_monitor'):
@@ -781,7 +781,7 @@ def disable_alerts(tab):
 
 # Use unified credential loading from Chrome Communication Framework
 try:
-    from src.utils.chrome_communication import load_unified_credentials
+    from utils.chrome_communication import load_unified_credentials
     def load_credentials():
         """Load all credentials using unified authentication manager"""
         return load_unified_credentials(allow_duplicates=True)

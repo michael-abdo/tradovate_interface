@@ -7,7 +7,7 @@ from threading import Thread
 
 # Import Chrome Communication Framework for unified execution
 try:
-    from src.utils.chrome_communication import safe_evaluate, OperationType
+    from utils.chrome_communication import safe_evaluate, OperationType
     SAFE_EVAL_AVAILABLE = True
 except ImportError:
     SAFE_EVAL_AVAILABLE = False

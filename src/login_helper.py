@@ -11,14 +11,14 @@ sys.path.insert(0, project_root)
 
 # Optional Chrome Communication Framework integration
 try:
-    from src.utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
+    from utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
     FRAMEWORK_AVAILABLE = True
 except ImportError:
     FRAMEWORK_AVAILABLE = False
 
 # Unified Chrome Configuration
 try:
-    from src.utils.check_chrome import get_chrome_ports, validate_chrome_port, PROTECTED_PORT
+    from utils.check_chrome import get_chrome_ports, validate_chrome_port, PROTECTED_PORT
     CHROME_CONFIG_AVAILABLE = True
 except ImportError:
     CHROME_CONFIG_AVAILABLE = False
