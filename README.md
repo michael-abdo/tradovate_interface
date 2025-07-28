@@ -173,8 +173,20 @@ See [detailed troubleshooting guide](docs/TROUBLESHOOTING.md)
 - Port 9223 for dedicated Chrome instance (auto-managed)
 - Dashboard: port 6001, Webhook: port 6000
 
-## Chrome Management
-The application now uses a dedicated Chrome instance on port 9223 (separate from any existing Chrome on port 9222). This provides:
+## Chrome Management & Order Execution
+
+### Order Execution Infrastructure
+**CRITICAL**: See [Chrome-Tradovate Order Execution Guide](organized/docs/infrastructure/CHROME_TRADOVATE_ORDER_EXECUTION.md) for:
+- Daily verification procedures
+- Monitoring during trading
+- Emergency recovery steps
+- Quick reference: [QUICK_ORDER_REFERENCE.md](QUICK_ORDER_REFERENCE.md)
+
+### Chrome Instance Management
+The application uses dedicated Chrome instances (separate from any existing Chrome on port 9222):
+- **Port 9223**: Account 1 (Primary)
+- **Port 9224**: Account 2 (Copy Trading)
+- **Port 9225**: Account 3/APEX (Copy Trading)
 - **Complete isolation** from other Chrome instances
 - **Automatic startup** - Chrome starts automatically with most commands
 - **Console log capture** - All browser console output captured and included in trade results
