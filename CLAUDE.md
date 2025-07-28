@@ -152,6 +152,7 @@ Before submitting any code change, verify:
 ### **ALL ACCOUNTS MUST BE IDENTICAL COPY TRADERS**
 - **EVERY Chrome instance/port MUST execute the SAME trades simultaneously**
 - **NO primary/secondary designation** - ALL accounts are equal copy traders
+- **Three active accounts**: Account 1 (9223), Account 2 (9224), Account 3/APEX (9225)
 - **ONE auto-trade per signal PER account** - but ALL accounts trade together
 - **Perfect synchronization** across all trading accounts
 - **Identical trade execution** on every connected Chrome instance
