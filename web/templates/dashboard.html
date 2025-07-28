@@ -2227,15 +2227,24 @@
             const qtyRecommendation = document.getElementById('qtyRecommendation');
             const qtyInput = document.getElementById('qtyInput');
             
-            if (!accountSelect || !qtyRecommendation || !qtyInput || !accountData) return;
+            console.log('updateQuantityRecommendation called - accountData length:', accountData?.length);
+            
+            if (!accountSelect || !qtyRecommendation || !qtyInput || !accountData) {
+                console.warn('updateQuantityRecommendation: Missing required elements or data');
+                return;
+            }
             
             const selectedAccount = accountSelect.value;
+            console.log('Selected account:', selectedAccount);
             
             // Define phase-based quantity recommendations matching the QA test requirements
             const phaseQuantities = {
                 'Phase 1': 20,
                 'Phase 2': 10,
                 'Phase 3': 2,
+                '1': 20,        // Support numeric phase values from API
+                '2': 10,        // Support numeric phase values from API
+                '3': 2,         // Support numeric phase values from API
                 'Unknown': 1
             };
             
@@ -2252,7 +2261,9 @@
                 } else if (phases.size === 1) {
                     const phase = Array.from(phases)[0];
                     const recommendedQty = phaseQuantities[phase] || 1;
-                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phase})`;
+                    // Normalize phase display name
+                    const phaseDisplayName = phase.startsWith('Phase') ? phase : `Phase ${phase}`;
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phaseDisplayName})`;
                     // Update quantity input to recommended value
                     qtyInput.value = recommendedQty;
                 } else {
@@ -2265,7 +2276,10 @@
                 
                 if (account && account.Phase) {
                     const recommendedQty = phaseQuantities[account.Phase] || 1;
-                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${account.Phase})`;
+                    // Normalize phase display name
+                    const phaseDisplayName = account.Phase.toString().startsWith('Phase') ? account.Phase : `Phase ${account.Phase}`;
+                    console.log(`Account ${accountIndex}: Phase=${account.Phase}, RecommendedQty=${recommendedQty}, DisplayName=${phaseDisplayName}`);
+                    qtyRecommendation.textContent = `(Recommended: ${recommendedQty} for ${phaseDisplayName})`;
                     // Update quantity input to recommended value
                     qtyInput.value = recommendedQty;
                     
