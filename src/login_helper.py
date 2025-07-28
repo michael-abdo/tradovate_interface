@@ -11,7 +11,7 @@ sys.path.insert(0, project_root)
 
 # Optional Chrome Communication Framework integration
 try:
-    from utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
+    from src.utils.chrome_communication import safe_evaluate, OperationType, ChromeCommunicationManager
     FRAMEWORK_AVAILABLE = True
 except ImportError:
     FRAMEWORK_AVAILABLE = False
