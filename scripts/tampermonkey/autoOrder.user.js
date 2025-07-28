@@ -1492,6 +1492,9 @@
         }
 
         // Enhanced DOM Order Submission for clicking price cells first
+        // NOTE: This function DOES NOT WORK because Tradovate uses canvas-based DOM (KonvaJS)
+        // Price cells cannot be clicked as they are rendered on canvas, not as HTML elements
+        // This always fails and falls back to standard submission, which works correctly
         async function submitOrderWithDOM(orderType, priceValue, tradeData) {
             console.log(`🎯 Enhanced DOM Order: Starting submission for ${orderType} order`);
             
@@ -1664,6 +1667,8 @@
             const domVisible = domModule && domModule.offsetParent !== null;
             
             // Use enhanced DOM submission if in DOM trading mode
+            // NOTE: This code path always fails because DOM cells are canvas-based (not clickable)
+            // But the fallback to standard submission works correctly, so orders execute successfully
             if (domVisible) {
                 console.log('📊 DOM trading detected - using enhanced DOM order submission');
                 

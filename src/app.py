@@ -124,7 +124,11 @@ class TradovateConnection:
             return health_status
         
     def inject_tampermonkey(self):
-        """Inject the Tampermonkey functions into the tab"""
+        """Inject trading scripts directly into the browser tab via Chrome DevTools Protocol.
+        
+        NOTE: Despite the name, this does NOT use Tampermonkey extension. It directly
+        injects JavaScript code into the page using Chrome DevTools Protocol.
+        The name is historical - consider renaming to inject_trading_scripts()."""
         if not self.tab:
             print(f"No tab available for {self.account_name}")
             return False
