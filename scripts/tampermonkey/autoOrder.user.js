@@ -63,6 +63,116 @@
     };
 
     // ============================================================================
+    // VERIFICATION UTILITY FUNCTIONS (DRY CONSOLIDATION)
+    // ============================================================================
+    
+    /**
+     * Factory for creating consistent error response objects
+     * @param {string} failureReason - Reason from VERIFICATION_FAILURE_REASONS
+     * @param {string} customError - Custom error message
+     * @param {number} executionTime - Optional execution time in ms
+     * @returns {Object} Standardized error response
+     */
+    function createVerificationError(failureReason, customError, executionTime = null) {
+        return {
+            success: false,
+            failureReason: failureReason,
+            description: FAILURE_REASON_DESCRIPTIONS[failureReason] || 'Unknown verification failure',
+            error: customError,
+            timestamp: Date.now(),
+            ...(executionTime !== null && { executionTime })
+        };
+    }
+
+    /**
+     * Validate common parameter types with consistent error messages
+     * @param {*} value - Value to validate
+     * @param {string} paramName - Parameter name for error messages
+     * @param {string} expectedType - Expected type ('object', 'string', 'number')
+     * @param {Object} options - Additional validation options
+     * @returns {Object|null} Error object if invalid, null if valid
+     */
+    function validateParameter(value, paramName, expectedType, options = {}) {
+        const { allowEmpty = false, minLength = 0, maxValue = Infinity, minValue = -Infinity } = options;
+        
+        // Null/undefined check
+        if (value == null) {
+            return createVerificationError(
+                VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                `${paramName} cannot be null or undefined`
+            );
+        }
+        
+        // Type check
+        if (typeof value !== expectedType) {
+            return createVerificationError(
+                VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                `${paramName} must be of type ${expectedType}, got ${typeof value}`
+            );
+        }
+        
+        // String-specific validation
+        if (expectedType === 'string') {
+            if (!allowEmpty && value.trim().length === 0) {
+                return createVerificationError(
+                    VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                    `${paramName} cannot be empty`
+                );
+            }
+            if (value.trim().length < minLength) {
+                return createVerificationError(
+                    VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                    `${paramName} must be at least ${minLength} characters`
+                );
+            }
+        }
+        
+        // Number-specific validation
+        if (expectedType === 'number') {
+            if (value < minValue || value > maxValue) {
+                return createVerificationError(
+                    VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                    `${paramName} must be between ${minValue} and ${maxValue}`
+                );
+            }
+        }
+        
+        return null; // Valid
+    }
+
+    /**
+     * Consistent logging utility with emoji formatting
+     * @param {string} level - Log level ('info', 'warn', 'error', 'debug')
+     * @param {string} context - Context/function name
+     * @param {string} message - Log message
+     * @param {*} data - Optional data to log
+     */
+    function logVerification(level, context, message, data = null) {
+        const emojis = {
+            info: '🔍',
+            success: '✅',
+            warn: '⚠️',
+            error: '❌',
+            debug: '🐛',
+            start: '🚀',
+            complete: '🏁',
+            check: '🎯'
+        };
+        
+        const emoji = emojis[level] || '📝';
+        const timestamp = new Date().toISOString().substr(11, 12);
+        const logMessage = `${emoji} [${timestamp}] ${context}: ${message}`;
+        
+        const logLevel = level === 'error' ? 'error' : level === 'warn' ? 'warn' : 'log';
+        
+        if (data !== null) {
+            console[logLevel](logMessage, data);
+        } else {
+            console[logLevel](logMessage);
+        }
+    }
+
+    // ============================================================================
     // DOM INTELLIGENCE VALIDATION FUNCTIONS
     // ============================================================================
     
@@ -945,84 +1055,52 @@
      */
     async function verifyOrderExecution(beforeState, afterState, symbol, timeoutMs = VERIFICATION_TIMEOUT_MS) {
         const startTime = Date.now();
-        console.log(`🔍 Starting order verification for ${symbol} (timeout: ${timeoutMs}ms)`);
+        logVerification('start', 'verifyOrderExecution', `Starting verification for ${symbol}`, { timeout: timeoutMs });
         
         // ====================================================================
-        // INPUT VALIDATION
+        // INPUT VALIDATION (DRY CONSOLIDATED)
         // ====================================================================
         
-        // Validate beforeState parameter
-        if (!beforeState || typeof beforeState !== 'object') {
-            console.error('❌ Invalid beforeState parameter:', beforeState);
-            return {
-                success: false,
-                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
-                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
-                error: 'beforeState must be a valid object',
-                timestamp: Date.now()
-            };
-        }
+        // Validate parameters using consolidated validation utility
+        const validationErrors = [
+            validateParameter(beforeState, 'beforeState', 'object'),
+            validateParameter(afterState, 'afterState', 'object'),
+            validateParameter(symbol, 'symbol', 'string', { minLength: 1 }),
+            validateParameter(timeoutMs, 'timeoutMs', 'number', { minValue: 100, maxValue: 60000 })
+        ].filter(error => error !== null);
         
-        // Validate afterState parameter
-        if (!afterState || typeof afterState !== 'object') {
-            console.error('❌ Invalid afterState parameter:', afterState);
-            return {
-                success: false,
-                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
-                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
-                error: 'afterState must be a valid object',
-                timestamp: Date.now()
-            };
-        }
-        
-        // Validate symbol parameter
-        if (!symbol || typeof symbol !== 'string' || symbol.trim().length === 0) {
-            console.error('❌ Invalid symbol parameter:', symbol);
-            return {
-                success: false,
-                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
-                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
-                error: 'symbol must be a non-empty string',
-                timestamp: Date.now()
-            };
-        }
-        
-        // Validate timeout parameter
-        if (typeof timeoutMs !== 'number' || timeoutMs <= 0 || timeoutMs > 60000) {
-            console.warn('⚠️ Invalid timeout parameter, using default:', timeoutMs);
-            timeoutMs = VERIFICATION_TIMEOUT_MS;
+        if (validationErrors.length > 0) {
+            const firstError = validationErrors[0];
+            console.error('❌ Parameter validation failed:', firstError.error);
+            return firstError;
         }
         
         // Normalize symbol (remove whitespace, uppercase)
         const normalizedSymbol = symbol.trim().toUpperCase();
         
-        // Validate state structure (basic checks)
-        const requiredStateFields = ['timestamp', 'ordersCount', 'positionsCount'];
-        for (const field of requiredStateFields) {
-            if (!(field in beforeState)) {
-                console.error(`❌ Missing field '${field}' in beforeState`);
-                return {
-                    success: false,
-                    failureReason: VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED,
-                    description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED],
-                    error: `Missing required field '${field}' in beforeState`,
-                    timestamp: Date.now()
-                };
+        // Validate state structure using consolidated utility
+        const validateStateStructure = (state, stateName) => {
+            const requiredFields = ['timestamp', 'ordersCount', 'positionsCount'];
+            for (const field of requiredFields) {
+                if (!(field in state)) {
+                    return createVerificationError(
+                        VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED,
+                        `Missing required field '${field}' in ${stateName}`
+                    );
+                }
             }
-            
-            if (!(field in afterState)) {
-                console.error(`❌ Missing field '${field}' in afterState`);
-                return {
-                    success: false,
-                    failureReason: VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED,
-                    description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED],
-                    error: `Missing required field '${field}' in afterState`,
-                    timestamp: Date.now()
-                };
-            }
+            return null;
+        };
+        
+        const stateValidationError = validateStateStructure(beforeState, 'beforeState') || 
+                                   validateStateStructure(afterState, 'afterState');
+        
+        if (stateValidationError) {
+            console.error('❌ State structure validation failed:', stateValidationError.error);
+            return stateValidationError;
         }
         
-        console.log(`✅ Input validation passed for symbol: ${normalizedSymbol}`);
+        logVerification('success', 'verifyOrderExecution', `Input validation passed for ${normalizedSymbol}`);
         
         // ====================================================================
         // STATE COMPARISON
@@ -1047,27 +1125,21 @@
             
         } catch (error) {
             console.error('❌ Error during state comparison:', error);
-            return {
-                success: false,
-                failureReason: VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
-                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR],
-                error: `State comparison failed: ${error.message}`,
-                timestamp: Date.now(),
-                executionTime: Date.now() - startTime
-            };
+            return createVerificationError(
+                VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
+                `State comparison failed: ${error.message}`,
+                Date.now() - startTime
+            );
         }
         
         // Validate comparison result structure
         if (!comparison.positionChanges || !comparison.orderChanges || !comparison.validation) {
             console.error('❌ Invalid comparison result structure:', comparison);
-            return {
-                success: false,
-                failureReason: VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
-                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR],
-                error: 'compareOrderStates returned incomplete result structure',
-                timestamp: Date.now(),
-                executionTime: Date.now() - startTime
-            };
+            return createVerificationError(
+                VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
+                'compareOrderStates returned incomplete result structure',
+                Date.now() - startTime
+            );
         }
         
         // ====================================================================
@@ -1237,14 +1309,17 @@
             }
         };
         
-        // Final verification success/failure log
-        const logLevel = verificationSuccess ? 'log' : 'warn';
-        console[logLevel](`🏁 Verification complete for ${normalizedSymbol}:`, {
-            success: verificationSuccess,
-            confidence: requirements.confidenceLevel,
-            executionTime: `${executionTime}ms`,
-            result: verificationSuccess ? '✅ VERIFIED' : '❌ FAILED'
-        });
+        // Final verification success/failure log using consolidated utility
+        logVerification(
+            verificationSuccess ? 'complete' : 'error',
+            'verifyOrderExecution',
+            `Verification ${verificationSuccess ? 'VERIFIED' : 'FAILED'} for ${normalizedSymbol}`,
+            {
+                success: verificationSuccess,
+                confidence: requirements.confidenceLevel,
+                executionTime: `${executionTime}ms`
+            }
+        );
         
         return verificationResult;
     }
