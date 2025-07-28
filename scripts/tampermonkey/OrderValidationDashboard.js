@@ -29,6 +29,13 @@
     
     // Create dashboard container
     function createDashboard() {
+        // Check if dashboard already exists and remove it to prevent duplicates
+        const existingDashboard = document.querySelector('#order-validation-dashboard');
+        if (existingDashboard) {
+            console.log('Dashboard already exists, removing old one to prevent duplicates');
+            existingDashboard.remove();
+        }
+        
         const dashboard = document.createElement('div');
         dashboard.id = 'order-validation-dashboard';
         dashboard.style.cssText = `

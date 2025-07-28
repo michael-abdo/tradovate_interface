@@ -22,6 +22,13 @@
     }
 
     function createUI() {
+        // Check if UI already exists and remove it to prevent duplicates
+        const existingUI = document.querySelector('#sl-bracket-trade-box');
+        if (existingUI) {
+            console.log('UI already exists, removing old one to prevent duplicates');
+            existingUI.remove();
+        }
+        
         console.log('Creating UI');
         const storedDollarRisk = localStorage.getItem('bracketTradeSL_dollarRisk') || '200';
         const storedRiskReward = localStorage.getItem('bracketTradeSL_riskReward') || '3';

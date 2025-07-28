@@ -249,7 +249,15 @@
     };
 
     function createDropdown() {
+        // Check if dropdown already exists and remove it to prevent duplicates
+        const existingDropdown = document.querySelector('#account-selector-dropdown');
+        if (existingDropdown) {
+            console.log('Account dropdown already exists, removing old one to prevent duplicates');
+            existingDropdown.remove();
+        }
+        
         const container = document.createElement("div");
+        container.id = 'account-selector-dropdown';
         container.style.position = "fixed";
         container.style.top = "10px";
         container.style.right = "10px";

@@ -606,6 +606,13 @@
     
     // Add test control panel
     function createTestControlPanel() {
+        // Check if panel already exists and remove it to prevent duplicates
+        const existingPanel = document.querySelector('#validation-test-panel');
+        if (existingPanel) {
+            console.log('Test control panel already exists, removing old one to prevent duplicates');
+            existingPanel.remove();
+        }
+        
         const panel = document.createElement('div');
         panel.id = 'validation-test-panel';
         panel.style.cssText = `

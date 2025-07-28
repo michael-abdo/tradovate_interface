@@ -87,6 +87,13 @@ class OrderReconciliationReporting {
     }
     
     createReportingUI() {
+        // Check if panel already exists and remove it to prevent duplicates
+        const existingPanel = document.querySelector('#orderReportingPanel');
+        if (existingPanel) {
+            console.log('Reporting panel already exists, removing old one to prevent duplicates');
+            existingPanel.remove();
+        }
+        
         // Create floating report panel
         const panel = document.createElement('div');
         panel.id = 'orderReportingPanel';
