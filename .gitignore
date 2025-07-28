@@ -18,6 +18,21 @@ organized/temp/
 *.tmp
 *.temp
 
+# Test and debug files
+test_*.py
+check_*.py
+debug_*.py
+*_test.py
+*_debug.py
+trace_*.py
+inject_*.py
+fix_*.py
+reload_*.py
+investigate_*.py
+
+# Backup directories
+backup_files_*/
+
 # Backup files
 backups/root_cleanup_*/
 

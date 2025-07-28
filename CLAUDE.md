@@ -171,4 +171,46 @@ Before submitting any code change, verify:
 
 ---
 
+## 🧪 TESTING TOOLKIT FOR ORDER EXECUTION
+
+### **Comprehensive Test Suite Location**
+`docs/investigations/dom-order-fix/`
+
+### **Key Testing Tools**
+
+#### 1. **E2E Order Verification**
+- **File**: `final_order_verification.py`
+- **Purpose**: Verify orders execute by tracking DOM position changes
+- **Usage**: `python3 docs/investigations/dom-order-fix/final_order_verification.py`
+- **What it tests**: Buy/Sell orders, before/after positions, actual execution
+
+#### 2. **Multi-Account Test Suite**
+- **File**: `test_enhanced_dom_submission.py`
+- **Purpose**: Test order execution across all accounts (9223, 9224, 9225)
+- **Features**: DOM visibility checks, price cell detection, order submission flow
+- **Usage**: `python3 docs/investigations/dom-order-fix/test_enhanced_dom_submission.py`
+
+#### 3. **Execution Flow Tracer**
+- **File**: `trace_autoorder_execution.py`
+- **Purpose**: Deep debugging with complete execution trace
+- **Features**: Captures all console logs, shows step-by-step execution, identifies failures
+- **Usage**: `python3 docs/investigations/dom-order-fix/trace_autoorder_execution.py`
+
+#### 4. **Browser Console Tests**
+- **File**: `manual_dom_test.js`
+- **Purpose**: Quick manual testing in browser console
+- **File**: `verify_order_success.js`
+- **Purpose**: Verify orders with state comparison
+
+### **When to Use These Tools**
+- **Orders not executing**: Run `final_order_verification.py` first
+- **Need detailed debugging**: Use `trace_autoorder_execution.py`
+- **Testing all accounts**: Use `test_enhanced_dom_submission.py`
+- **Quick browser check**: Copy/paste from `manual_dom_test.js`
+
+### **Key Finding from Investigation**
+Orders execute successfully through standard submission path. DOM uses canvas (KonvaJS) which prevents clicking price cells, but fallback works correctly.
+
+---
+
 **REMEMBER: These principles exist to ensure 100% trading system reliability. Never compromise on any of these requirements.**
