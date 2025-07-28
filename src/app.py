@@ -186,6 +186,24 @@ class TradovateConnection:
                 else:
                     print(f"Failed to inject account data function for {self.account_name}: {result.error}")
             
+            # Inject the dismissWarningPopups.js script
+            dismiss_popups_path = os.path.join(project_root, 
+                                         'scripts/tampermonkey/dismissWarningPopups.js')
+            if os.path.exists(dismiss_popups_path):
+                with open(dismiss_popups_path, 'r') as file:
+                    dismiss_popups_js = file.read()
+                # Use safe_evaluate to inject popup dismisser
+                result = safe_evaluate(
+                    tab=self.tab,
+                    js_code=dismiss_popups_js,
+                    operation_type=OperationType.IMPORTANT,
+                    description=f"Inject popup dismisser for {self.account_name}"
+                )
+                if result.success:
+                    print(f"Warning popup dismisser injected for {self.account_name}")
+                else:
+                    print(f"Failed to inject popup dismisser for {self.account_name}: {result.error}")
+            
             # Inject the autoriskManagement.js script
             risk_management_path = os.path.join(project_root, 
                                          'scripts/tampermonkey/autoriskManagement.js')
