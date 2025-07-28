@@ -1,7 +1,20 @@
-# Integration Guide: DOM Order Fix into autoOrder
+# DEPRECATED: Integration Guide for DOM Order Fix
 
-## Overview
-This guide shows how to integrate the DOM order fix into the existing autoOrder function to resolve the false positive issue where orders return "SUCCESS" but don't actually execute.
+## ⚠️ IMPORTANT UPDATE
+This guide is now DEPRECATED. The investigation revealed that orders were executing correctly all along. The perceived issue was due to checking the wrong location for order confirmation.
+
+### Key Discovery:
+- **Orders WERE executing successfully** via standard submission
+- **We were checking the wrong place**: `.module.orders` (order tables) instead of `.module-dom .info-column .number` (DOM position display)
+- **The DOM fix cannot work** because Tradovate uses canvas-based rendering (KonvaJS), not HTML elements
+
+### Current Status:
+- The `submitOrderWithDOM` function exists in autoOrder.user.js but always fails and falls back to standard submission
+- This fallback pattern actually works correctly
+- No integration is needed - the system works as-is
+
+## Original Overview (OUTDATED)
+~~This guide shows how to integrate the DOM order fix into the existing autoOrder function to resolve the false positive issue where orders return "SUCCESS" but don't actually execute.~~
 
 ---
 

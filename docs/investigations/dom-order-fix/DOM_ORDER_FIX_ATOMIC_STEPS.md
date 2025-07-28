@@ -1,7 +1,16 @@
-# DOM Order Submission Fix - Atomic Step Breakdown
+# DEPRECATED: DOM Order Submission Fix - Atomic Step Breakdown
 
-## Overview
-The root cause of order submission failure is that the autoOrder function attempts to submit orders without first opening the order ticket through the DOM interface. This document breaks down the fix into atomic, executable steps.
+## ⚠️ IMPORTANT UPDATE
+This document is now DEPRECATED. The investigation revealed there was no order submission failure. Orders were executing correctly all along.
+
+### Key Discovery:
+- **There was NO order submission failure** - orders always worked
+- **The perceived issue** was checking `.module.orders` instead of `.module-dom .info-column .number`
+- **DOM clicking cannot work** because Tradovate uses canvas-based rendering (KonvaJS)
+- **The "fix" described below** was implemented but always fails and falls back to working standard submission
+
+## Original Overview (OUTDATED)
+~~The root cause of order submission failure is that the autoOrder function attempts to submit orders without first opening the order ticket through the DOM interface. This document breaks down the fix into atomic, executable steps.~~
 
 ---
 
