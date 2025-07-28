@@ -224,6 +224,13 @@
     }
 
     function createUI() {
+        // Check if UI already exists and remove it to prevent duplicates
+        const existingUI = document.querySelector('#bracket-trade-box');
+        if (existingUI) {
+            console.log('UI already exists, removing old one to prevent duplicates');
+            existingUI.remove();
+        }
+
         console.log('Creating UI');
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '120';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '40';
