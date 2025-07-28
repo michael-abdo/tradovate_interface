@@ -136,4 +136,27 @@ Before submitting any code change, verify:
 
 ---
 
+## 📈 COPY TRADING SYSTEM REQUIREMENTS
+
+### **ALL ACCOUNTS MUST BE IDENTICAL COPY TRADERS**
+- **EVERY Chrome instance/port MUST execute the SAME trades simultaneously**
+- **NO primary/secondary designation** - ALL accounts are equal copy traders
+- **ONE auto-trade per signal PER account** - but ALL accounts trade together
+- **Perfect synchronization** across all trading accounts
+- **Identical trade execution** on every connected Chrome instance
+
+### **Copy Trading Signal Flow:**
+1. **Signal arrives** → ALL accounts receive the same signal
+2. **Trade execution** → ALL accounts execute identical trades simultaneously  
+3. **No account exclusions** → Every active account participates
+4. **Synchronized results** → All accounts maintain identical positions
+
+### **Strategy Mapping Rules for Copy Trading:**
+- **ALL strategies** must include ALL available accounts
+- **ALL accounts** must be listed in every strategy mapping
+- **NO empty arrays** - every strategy maps to every account
+- **NO single-account configurations** - always full account list
+
+---
+
 **REMEMBER: These principles exist to ensure 100% trading system reliability. Never compromise on any of these requirements.**

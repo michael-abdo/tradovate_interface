@@ -1,8 +1,8 @@
 {
   "strategy_mappings": {
-    "L/H": ["Account 1"],
-    "Velocity Graph - Rebound": ["Account 1"],
-    "Velocity Graph - Velocity Push": ["Account 1"],
-    "DEFAULT": ["Account 1"]
+    "L/H": ["Account 1", "Account 2"],
+    "Velocity Graph - Rebound": ["Account 1", "Account 2"],
+    "Velocity Graph - Velocity Push": ["Account 1", "Account 2"],
+    "DEFAULT": ["Account 1", "Account 2"]
   }
 }
