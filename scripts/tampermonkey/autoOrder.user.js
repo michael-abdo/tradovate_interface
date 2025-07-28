@@ -17,6 +17,52 @@
     var debug = false;
 
     // ============================================================================
+    // ORDER VERIFICATION CONSTANTS
+    // ============================================================================
+    
+    // Verification timeout for order execution verification
+    const VERIFICATION_TIMEOUT_MS = 10000;
+    
+    // Minimum confidence level required for successful verification
+    const MINIMUM_CONFIDENCE_LEVEL = 'MEDIUM';
+    
+    // Verification requirements definition
+    const VERIFICATION_REQUIREMENTS = {
+        // Primary requirement: DOM position must change
+        domPositionRequired: true,
+        // Secondary requirement: Order table should update (optional)
+        orderTableRequired: false,
+        // Confidence must be at least MEDIUM
+        minimumConfidence: 'MEDIUM',
+        // At least one indicator must be present
+        requireAtLeastOne: ['domPositionChanged', 'orderTableUpdated']
+    };
+
+    // Verification failure reasons enumeration
+    const VERIFICATION_FAILURE_REASONS = {
+        NO_POSITION_CHANGE: 'NO_POSITION_CHANGE',
+        NO_ORDER_CHANGE: 'NO_ORDER_CHANGE',
+        LOW_CONFIDENCE: 'LOW_CONFIDENCE',
+        TIMEOUT: 'TIMEOUT',
+        STATE_CAPTURE_FAILED: 'STATE_CAPTURE_FAILED',
+        INVALID_PARAMETERS: 'INVALID_PARAMETERS',
+        COMPARISON_ERROR: 'COMPARISON_ERROR',
+        SYMBOL_MISMATCH: 'SYMBOL_MISMATCH'
+    };
+
+    // Human-readable failure reason descriptions
+    const FAILURE_REASON_DESCRIPTIONS = {
+        [VERIFICATION_FAILURE_REASONS.NO_POSITION_CHANGE]: 'Positions did not change after order execution',
+        [VERIFICATION_FAILURE_REASONS.NO_ORDER_CHANGE]: 'Order tables did not update after execution',
+        [VERIFICATION_FAILURE_REASONS.LOW_CONFIDENCE]: 'Confidence level too low for reliable verification',
+        [VERIFICATION_FAILURE_REASONS.TIMEOUT]: 'Verification timed out waiting for changes',
+        [VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED]: 'Failed to capture before/after state',
+        [VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS]: 'Invalid or missing verification parameters',
+        [VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR]: 'Error occurred during state comparison',
+        [VERIFICATION_FAILURE_REASONS.SYMBOL_MISMATCH]: 'Symbol not found in captured states'
+    };
+
+    // ============================================================================
     // DOM INTELLIGENCE VALIDATION FUNCTIONS
     // ============================================================================
     
@@ -869,6 +915,338 @@
             comparison.validation.warnings.push(`Comparison error: ${error.message}`);
             return comparison;
         }
+    }
+    
+    /**
+     * Verify order execution by comparing before/after states with strict requirements
+     * 
+     * @param {Object} beforeState - State captured before order execution
+     * @param {Object} afterState - State captured after order execution  
+     * @param {string} symbol - Trading symbol to verify (e.g., 'NQ', 'NQU5')
+     * @param {number} timeoutMs - Timeout in milliseconds for verification (default: 10000)
+     * 
+     * @returns {Promise<Object>} Verification result object:
+     *   - success: Boolean indicating if order execution was verified
+     *   - verification: Full comparison object from compareOrderStates
+     *   - requirements: Object showing which requirements passed/failed
+     *   - confidence: Confidence level achieved ('NONE', 'LOW', 'MEDIUM', 'HIGH')
+     *   - timestamp: When verification completed
+     *   - failureReason: Reason for failure if success is false
+     *   - description: Human-readable description of the result
+     * 
+     * @example
+     * const beforeState = await captureOrdersState('NQ');
+     * // ... execute order ...
+     * const afterState = await captureOrdersState('NQ');
+     * const result = await verifyOrderExecution(beforeState, afterState, 'NQ');
+     * if (result.success) {
+     *   console.log('Order verified successfully!');
+     * }
+     */
+    async function verifyOrderExecution(beforeState, afterState, symbol, timeoutMs = VERIFICATION_TIMEOUT_MS) {
+        const startTime = Date.now();
+        console.log(`🔍 Starting order verification for ${symbol} (timeout: ${timeoutMs}ms)`);
+        
+        // ====================================================================
+        // INPUT VALIDATION
+        // ====================================================================
+        
+        // Validate beforeState parameter
+        if (!beforeState || typeof beforeState !== 'object') {
+            console.error('❌ Invalid beforeState parameter:', beforeState);
+            return {
+                success: false,
+                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
+                error: 'beforeState must be a valid object',
+                timestamp: Date.now()
+            };
+        }
+        
+        // Validate afterState parameter
+        if (!afterState || typeof afterState !== 'object') {
+            console.error('❌ Invalid afterState parameter:', afterState);
+            return {
+                success: false,
+                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
+                error: 'afterState must be a valid object',
+                timestamp: Date.now()
+            };
+        }
+        
+        // Validate symbol parameter
+        if (!symbol || typeof symbol !== 'string' || symbol.trim().length === 0) {
+            console.error('❌ Invalid symbol parameter:', symbol);
+            return {
+                success: false,
+                failureReason: VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS,
+                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.INVALID_PARAMETERS],
+                error: 'symbol must be a non-empty string',
+                timestamp: Date.now()
+            };
+        }
+        
+        // Validate timeout parameter
+        if (typeof timeoutMs !== 'number' || timeoutMs <= 0 || timeoutMs > 60000) {
+            console.warn('⚠️ Invalid timeout parameter, using default:', timeoutMs);
+            timeoutMs = VERIFICATION_TIMEOUT_MS;
+        }
+        
+        // Normalize symbol (remove whitespace, uppercase)
+        const normalizedSymbol = symbol.trim().toUpperCase();
+        
+        // Validate state structure (basic checks)
+        const requiredStateFields = ['timestamp', 'ordersCount', 'positionsCount'];
+        for (const field of requiredStateFields) {
+            if (!(field in beforeState)) {
+                console.error(`❌ Missing field '${field}' in beforeState`);
+                return {
+                    success: false,
+                    failureReason: VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED,
+                    description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED],
+                    error: `Missing required field '${field}' in beforeState`,
+                    timestamp: Date.now()
+                };
+            }
+            
+            if (!(field in afterState)) {
+                console.error(`❌ Missing field '${field}' in afterState`);
+                return {
+                    success: false,
+                    failureReason: VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED,
+                    description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.STATE_CAPTURE_FAILED],
+                    error: `Missing required field '${field}' in afterState`,
+                    timestamp: Date.now()
+                };
+            }
+        }
+        
+        console.log(`✅ Input validation passed for symbol: ${normalizedSymbol}`);
+        
+        // ====================================================================
+        // STATE COMPARISON
+        // ====================================================================
+        
+        let comparison;
+        try {
+            console.log(`🔄 Calling compareOrderStates for ${normalizedSymbol}...`);
+            comparison = compareOrderStates(beforeState, afterState, normalizedSymbol);
+            
+            if (!comparison || typeof comparison !== 'object') {
+                throw new Error('compareOrderStates returned invalid result');
+            }
+            
+            console.log(`✅ State comparison completed for ${normalizedSymbol}`);
+            console.log(`📊 Comparison summary:`, {
+                positionChanges: comparison.positionChanges?.detected || false,
+                orderChanges: comparison.orderChanges?.detected || false,
+                confidence: comparison.validation?.confidence || 'UNKNOWN',
+                executionDetected: comparison.executionDetected || false
+            });
+            
+        } catch (error) {
+            console.error('❌ Error during state comparison:', error);
+            return {
+                success: false,
+                failureReason: VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
+                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR],
+                error: `State comparison failed: ${error.message}`,
+                timestamp: Date.now(),
+                executionTime: Date.now() - startTime
+            };
+        }
+        
+        // Validate comparison result structure
+        if (!comparison.positionChanges || !comparison.orderChanges || !comparison.validation) {
+            console.error('❌ Invalid comparison result structure:', comparison);
+            return {
+                success: false,
+                failureReason: VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR,
+                description: FAILURE_REASON_DESCRIPTIONS[VERIFICATION_FAILURE_REASONS.COMPARISON_ERROR],
+                error: 'compareOrderStates returned incomplete result structure',
+                timestamp: Date.now(),
+                executionTime: Date.now() - startTime
+            };
+        }
+        
+        // ====================================================================
+        // REQUIREMENTS CHECKING
+        // ====================================================================
+        
+        console.log(`🎯 Checking verification requirements for ${normalizedSymbol}...`);
+        
+        const requirements = {
+            domPositionChanged: comparison.positionChanges.detected === true,
+            orderTableUpdated: comparison.orderChanges.detected === true,
+            minimumConfidence: comparison.validation.confidence !== 'NONE',
+            confidenceLevel: comparison.validation.confidence,
+            timeWindow: (Date.now() - startTime) < timeoutMs
+        };
+        
+        // Log each requirement check
+        console.log(`📋 Requirement checks:`, {
+            '🏠 DOM Position Changed': requirements.domPositionChanged ? '✅' : '❌',
+            '📊 Order Table Updated': requirements.orderTableUpdated ? '✅' : '❌', 
+            '🎯 Minimum Confidence': requirements.minimumConfidence ? '✅' : '❌',
+            '⏰ Within Time Window': requirements.timeWindow ? '✅' : '❌',
+            '📈 Confidence Level': requirements.confidenceLevel
+        });
+        
+        // Determine specific failure reasons
+        const failureReasons = [];
+        let primaryFailureReason = null;
+        
+        if (!requirements.domPositionChanged) {
+            failureReasons.push(VERIFICATION_FAILURE_REASONS.NO_POSITION_CHANGE);
+            if (!primaryFailureReason) primaryFailureReason = VERIFICATION_FAILURE_REASONS.NO_POSITION_CHANGE;
+        }
+        
+        if (!requirements.orderTableUpdated) {
+            failureReasons.push(VERIFICATION_FAILURE_REASONS.NO_ORDER_CHANGE);
+        }
+        
+        if (!requirements.minimumConfidence) {
+            failureReasons.push(VERIFICATION_FAILURE_REASONS.LOW_CONFIDENCE);
+            if (!primaryFailureReason) primaryFailureReason = VERIFICATION_FAILURE_REASONS.LOW_CONFIDENCE;
+        }
+        
+        if (!requirements.timeWindow) {
+            failureReasons.push(VERIFICATION_FAILURE_REASONS.TIMEOUT);
+            if (!primaryFailureReason) primaryFailureReason = VERIFICATION_FAILURE_REASONS.TIMEOUT;
+        }
+        
+        // Check if symbol was found in states  
+        if (normalizedSymbol && !comparison.symbol) {
+            failureReasons.push(VERIFICATION_FAILURE_REASONS.SYMBOL_MISMATCH);
+            if (!primaryFailureReason) primaryFailureReason = VERIFICATION_FAILURE_REASONS.SYMBOL_MISMATCH;
+        }
+        
+        // ====================================================================
+        // SUCCESS DETERMINATION LOGIC
+        // ====================================================================
+        
+        console.log(`⚖️ Determining verification success for ${normalizedSymbol}...`);
+        
+        // STRICT VERIFICATION REQUIREMENTS (based on VERIFICATION_REQUIREMENTS)
+        // Primary requirement: DOM position MUST change (this is non-negotiable)
+        const primaryRequirementMet = requirements.domPositionChanged;
+        
+        // Secondary requirement: At least MEDIUM confidence
+        const confidenceRequirementMet = requirements.minimumConfidence && 
+            (requirements.confidenceLevel === 'MEDIUM' || requirements.confidenceLevel === 'HIGH');
+        
+        // Time requirement: Must complete within timeout
+        const timeRequirementMet = requirements.timeWindow;
+        
+        // Optional but helpful: Order table updated (not required but increases confidence)
+        const secondaryEvidence = requirements.orderTableUpdated;
+        
+        // DETERMINE SUCCESS
+        const verificationSuccess = primaryRequirementMet && confidenceRequirementMet && timeRequirementMet;
+        
+        // Enhanced logging for success determination
+        console.log(`🎯 Success determination breakdown:`, {
+            '🔑 Primary Requirement (DOM Position)': primaryRequirementMet ? '✅ MET' : '❌ FAILED',
+            '🎯 Confidence Requirement': confidenceRequirementMet ? '✅ MET' : '❌ FAILED',
+            '⏰ Time Requirement': timeRequirementMet ? '✅ MET' : '❌ FAILED',
+            '📊 Secondary Evidence (Order Table)': secondaryEvidence ? '✅ PRESENT' : '⚠️ MISSING',
+            '🏆 OVERALL RESULT': verificationSuccess ? '✅ SUCCESS' : '❌ FAILURE'
+        });
+        
+        // If successful, log celebration
+        if (verificationSuccess) {
+            console.log(`🎉 Verification SUCCESS for ${normalizedSymbol}! Order execution confirmed.`);
+        } else {
+            console.warn(`❌ Verification FAILED for ${normalizedSymbol}. Reason: ${primaryFailureReason || 'Unknown'}`);
+            
+            // Log specific failure guidance
+            if (!primaryRequirementMet) {
+                console.warn(`🚨 CRITICAL: DOM position did not change - order may not have executed!`);
+            }
+            if (!confidenceRequirementMet) {
+                console.warn(`⚠️ Confidence too low (${requirements.confidenceLevel}) - need MEDIUM or HIGH`);
+            }
+            if (!timeRequirementMet) {
+                console.warn(`⏰ Verification timed out after ${Date.now() - startTime}ms`);
+            }
+        }
+        
+        // ====================================================================
+        // COMPREHENSIVE RETURN STRUCTURE
+        // ====================================================================
+        
+        const executionTime = Date.now() - startTime;
+        const finalTimestamp = Date.now();
+        
+        // Create human-readable description
+        let description;
+        if (verificationSuccess) {
+            description = `Order execution verified successfully for ${normalizedSymbol}. DOM position changed with ${requirements.confidenceLevel} confidence.`;
+        } else {
+            const reasonText = primaryFailureReason ? 
+                FAILURE_REASON_DESCRIPTIONS[primaryFailureReason] : 
+                'Unknown verification failure';
+            description = `Order verification failed for ${normalizedSymbol}: ${reasonText}`;
+        }
+        
+        // Comprehensive result object matching JSDoc specification
+        const verificationResult = {
+            // Core success indicator (Boolean)
+            success: verificationSuccess,
+            
+            // Full comparison object from compareOrderStates
+            verification: comparison,
+            
+            // Requirements object showing which requirements passed/failed
+            requirements: {
+                domPositionChanged: requirements.domPositionChanged,
+                orderTableUpdated: requirements.orderTableUpdated,
+                minimumConfidence: requirements.minimumConfidence,
+                timeWindow: requirements.timeWindow,
+                confidenceLevel: requirements.confidenceLevel,
+                // Additional details
+                primaryRequirementMet: primaryRequirementMet,
+                confidenceRequirementMet: confidenceRequirementMet,
+                timeRequirementMet: timeRequirementMet,
+                secondaryEvidence: secondaryEvidence
+            },
+            
+            // Confidence level achieved ('NONE', 'LOW', 'MEDIUM', 'HIGH')
+            confidence: requirements.confidenceLevel,
+            
+            // When verification completed
+            timestamp: finalTimestamp,
+            
+            // Primary failure reason (null if success)
+            failureReason: verificationSuccess ? null : primaryFailureReason,
+            
+            // Human-readable description of the result
+            description: description,
+            
+            // Additional diagnostic information
+            diagnostics: {
+                symbol: normalizedSymbol,
+                originalSymbol: symbol,
+                executionTimeMs: executionTime,
+                timeoutMs: timeoutMs,
+                startTime: startTime,
+                allFailureReasons: failureReasons,
+                requirementsChecked: Object.keys(requirements).length,
+                comparisonValid: comparison !== null && typeof comparison === 'object'
+            }
+        };
+        
+        // Final verification success/failure log
+        const logLevel = verificationSuccess ? 'log' : 'warn';
+        console[logLevel](`🏁 Verification complete for ${normalizedSymbol}:`, {
+            success: verificationSuccess,
+            confidence: requirements.confidenceLevel,
+            executionTime: `${executionTime}ms`,
+            result: verificationSuccess ? '✅ VERIFIED' : '❌ FAILED'
+        });
+        
+        return verificationResult;
     }
     
     // Test function to verify compareOrderStates functionality
@@ -2618,7 +2996,51 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
     window.testCaptureOrdersState = testCaptureOrdersState;
     window.compareOrderStates = compareOrderStates;
     window.testCompareOrderStates = testCompareOrderStates;
+    window.verifyOrderExecution = verifyOrderExecution;
     console.log('✅ autoOrder function defined and made globally available');
+    console.log('✅ verifyOrderExecution function added for mandatory verification');
+    
+    // Quick verification function test
+    setTimeout(async () => {
+        try {
+            console.log('🧪 Testing verifyOrderExecution function...');
+            
+            // Test with invalid parameters (should fail gracefully)
+            const invalidTest = await verifyOrderExecution(null, null, '');
+            console.log('📝 Invalid parameters test:', invalidTest.success ? '❌ UNEXPECTED SUCCESS' : '✅ CORRECTLY FAILED');
+            
+            // Test with mock valid parameters
+            const mockBefore = {
+                timestamp: Date.now() - 1000,
+                ordersCount: 0,
+                positionsCount: 0,
+                orders: [],
+                positions: [],
+                domPositions: { 'NQ': '0' }
+            };
+            
+            const mockAfter = {
+                timestamp: Date.now(),
+                ordersCount: 0,
+                positionsCount: 1,
+                orders: [],
+                positions: [{ symbol: 'NQ', quantity: 1 }],
+                domPositions: { 'NQ': '1@23500.00' }
+            };
+            
+            const validTest = await verifyOrderExecution(mockBefore, mockAfter, 'NQ');
+            console.log('📝 Mock valid parameters test result:', {
+                success: validTest.success,
+                confidence: validTest.confidence,
+                failureReason: validTest.failureReason
+            });
+            
+            console.log('✅ verifyOrderExecution basic tests completed');
+            
+        } catch (error) {
+            console.error('❌ Error testing verifyOrderExecution:', error);
+        }
+    }, 1000); // Wait 1 second after script loads
 
     // --- EXAMPLE: build an NQ front-quarter symbol ---
     console.log('Creating example front-quarter symbol');
