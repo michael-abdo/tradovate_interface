@@ -96,14 +96,14 @@ function getAllAccountTableData() {
   
   // STEP 4: Validate header extraction
   console.log('🔍 Pre-validation: Extracting headers');
-  const headers = [...accountTable.querySelectorAll('[role="columnheader"]')];
+  const tableHeaders = [...accountTable.querySelectorAll('[role="columnheader"]')];
   
-  if (headers.length === 0) {
+  if (tableHeaders.length === 0) {
     console.error('❌ No headers found in account table');
     return JSON.stringify([]);
   }
   
-  console.log(`✅ Found ${headers.length} headers in account table`);
+  console.log(`✅ Found ${tableHeaders.length} headers in account table`);
   
   // STEP 5: Validate row extraction  
   console.log('🔍 Pre-validation: Extracting table rows');
