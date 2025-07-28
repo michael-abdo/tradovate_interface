@@ -4,7 +4,14 @@ function getAllAccountTableData() {
   
   // STEP 1: Validate that data tables exist
   console.log('🔍 Pre-validation: Checking for data tables');
-  const tableSelectors = ['.public_fixedDataTable_main', '.module.positions.data-table'];
+  const tableSelectors = [
+    '.public_fixedDataTable_main', 
+    '.module.positions.data-table',
+    '.positions .data-table',
+    '.positions',
+    '[role="table"]',
+    '.fixedDataTable'
+  ];
   let tableSelector = null;
   
   // Find which table selector actually works
@@ -55,11 +62,22 @@ function getAllAccountTableData() {
     
     console.log(`📋 Table ${i} headers:`, headers);
     
-    // Check if this table has account-related headers
-    if (headers.includes('Account ▲') || headers.includes('Total Available Margin')) {
-      console.log(`✅ Found account table at index ${i}`);
+    // Check if this table has account-related headers (more flexible)
+    const accountHeaders = headers.some(h => 
+      h.toLowerCase().includes('account') || 
+      h.toLowerCase().includes('margin') ||
+      h.toLowerCase().includes('balance') ||
+      h.toLowerCase().includes('equity') ||
+      h.toLowerCase().includes('available') ||
+      h.toLowerCase().includes('user')
+    );
+    
+    if (accountHeaders) {
+      console.log(`✅ Found account table at index ${i} with headers:`, headers);
       accountTable = table;
       break;
+    } else {
+      console.log(`❌ Table ${i} does not appear to be account table. Headers:`, headers);
     }
   }
   
@@ -67,6 +85,17 @@ function getAllAccountTableData() {
   if (!accountTable) {
     console.error('❌ No account table found after checking all tables');
     console.log('📋 Available tables searched:', tables.length);
+    console.log('📊 Page debugging info:');
+    console.log('   - URL:', window.location.href);
+    console.log('   - Title:', document.title);
+    console.log('   - First 200 chars of body:', document.body.innerText.substring(0, 200));
+    
+    // Try to find ANY table and report what we see
+    const anyTable = document.querySelector('table, [role="table"], .data-table, .table');
+    if (anyTable) {
+      console.log('   - Found a table-like element:', anyTable.tagName, anyTable.className);
+    }
+    
     return JSON.stringify([]);
   }
   

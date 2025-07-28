@@ -356,8 +356,22 @@ def update_phases():
                     // Enhanced getTableData function with real phase analysis
                     if (typeof getTableData === 'undefined') {
                         window.getTableData = function() {
-                            const accountTable = document.querySelector('.module.positions.data-table');
-                            if (!accountTable) return [];
+                            // Try multiple selectors to find account table
+                            const selectors = ['.module.positions.data-table', '.public_fixedDataTable_main'];
+                            let accountTable = null;
+                            
+                            for (const selector of selectors) {
+                                accountTable = document.querySelector(selector);
+                                if (accountTable) {
+                                    console.log('[Dashboard] Found account table with selector:', selector);
+                                    break;
+                                }
+                            }
+                            
+                            if (!accountTable) {
+                                console.error('[Dashboard] No account table found with any known selector');
+                                return [];
+                            }
                             
                             const rows = accountTable.querySelectorAll('.fixedDataTableRowLayout_rowWrapper');
                             if (!rows.length) return [];
