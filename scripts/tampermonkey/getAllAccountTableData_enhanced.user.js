@@ -358,7 +358,20 @@
     
     // Traditional extraction method as fallback
     async function getAllAccountTableDataTraditional() {
-        const tables = document.querySelectorAll('.public_fixedDataTable_main');
+        // Try multiple selectors to find account tables
+        const tableSelectors = ['.public_fixedDataTable_main', '.module.positions.data-table'];
+        let tables = [];
+        
+        for (const selector of tableSelectors) {
+            const foundTables = document.querySelectorAll(selector);
+            if (foundTables.length > 0) {
+                console.log(`✅ Found ${foundTables.length} tables with selector: ${selector}`);
+                tables = foundTables;
+                break;
+            } else {
+                console.warn(`❌ No tables found with selector: ${selector}`);
+            }
+        }
         
         let accountTable = null;
         for (let i = 0; i < tables.length; i++) {

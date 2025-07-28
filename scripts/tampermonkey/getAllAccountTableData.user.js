@@ -4,22 +4,23 @@ function getAllAccountTableData() {
   
   // STEP 1: Validate that data tables exist
   console.log('🔍 Pre-validation: Checking for data tables');
-  const tableSelector = '.public_fixedDataTable_main';
+  const tableSelectors = ['.public_fixedDataTable_main', '.module.positions.data-table'];
+  let tableSelector = null;
   
-  // Use basic validation if domHelpers not available
-  const validateElementExists = (selector) => {
+  // Find which table selector actually works
+  for (const selector of tableSelectors) {
     const element = document.querySelector(selector);
-    const exists = element !== null;
-    if (exists) {
-      console.log(`✅ Element exists: ${selector}`);
+    if (element !== null) {
+      console.log(`✅ Found table with selector: ${selector}`);
+      tableSelector = selector;
+      break;
     } else {
       console.warn(`❌ Element not found: ${selector}`);
     }
-    return exists;
-  };
+  }
   
-  if (!validateElementExists(tableSelector)) {
-    console.error('❌ No data tables found on page');
+  if (!tableSelector) {
+    console.error('❌ No data tables found with any known selector');
     return JSON.stringify([]);
   }
   
