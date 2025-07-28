@@ -27,12 +27,22 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Import watchdog to check availability
-sys.path.insert(0, os.path.join(project_root, 'tradovate_interface', 'src'))
+# Check if ChromeProcessMonitor is available in archived location
 try:
+    sys.path.insert(0, os.path.join(project_root, 'organized', 'archive', 'tradovate_interface', 'src'))
     from utils.process_monitor import ChromeProcessMonitor
     WATCHDOG_AVAILABLE = True
+    print("ChromeProcessMonitor loaded from archived location")
 except ImportError:
-    WATCHDOG_AVAILABLE = False
+    try:
+        # Fallback to original location
+        sys.path.insert(0, os.path.join(project_root, 'tradovate_interface', 'src'))
+        from utils.process_monitor import ChromeProcessMonitor
+        WATCHDOG_AVAILABLE = True
+        print("ChromeProcessMonitor loaded from original location")
+    except ImportError:
+        WATCHDOG_AVAILABLE = False
+        print("ChromeProcessMonitor not available - running without watchdog protection")
 
 # Global variables to track resources for proper cleanup
 auto_login_process = None

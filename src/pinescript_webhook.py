@@ -37,8 +37,8 @@ sys.path.insert(0, project_root)
 
 # Import the TradovateController and Chrome Communication Framework
 try:
-    from app import TradovateController
-    from utils.chrome_communication import safe_evaluate, OperationType
+    from src.app import TradovateController
+    from src.utils.chrome_communication import safe_evaluate, OperationType
     logger.info("Imported TradovateController directly from app")
 except ImportError as e:
     logger.error(f"Failed to import TradovateController: {e}")
