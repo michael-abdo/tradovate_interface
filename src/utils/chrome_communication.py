@@ -622,7 +622,7 @@ class TabHealthValidator:
         self.timeout = timeout
         self.logger = base_logger
     
-    def validate_tab_health(self, tab, operation_type: OperationType = OperationType.IMPORTANT) -> TabHealthStatus:
+    def validate_tab_health(self, tab, operation_type: OperationType = OperationType.IMPORTANT, description: str = "") -> TabHealthStatus:
         """
         Comprehensive tab health validation
         
@@ -645,7 +645,7 @@ class TabHealthValidator:
                 return health
             
             # Function availability check
-            if not self._validate_function_availability(tab, operation_type, health):
+            if not self._validate_function_availability(tab, operation_type, health, description):
                 return health
             
             # If we get here, tab is healthy
@@ -735,7 +735,7 @@ class TabHealthValidator:
             return False
     
     def _validate_function_availability(self, tab, operation_type: OperationType, 
-                                       health: TabHealthStatus) -> bool:
+                                       health: TabHealthStatus, description: str = "") -> bool:
         """Validate required JavaScript functions are available"""
         try:
             # Get all required functions for this operation type
@@ -795,7 +795,11 @@ class TabHealthValidator:
             critical_functions = self.REQUIRED_FUNCTIONS.get(operation_type, [])
             missing_critical = [f for f in critical_functions if f not in health.functions_available]
             
-            if missing_critical and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT]:
+            # Allow injection operations to bypass function validation to solve circular dependency
+            # If the description contains "inject" or "Inject", allow it to proceed
+            is_injection_operation = description and ("inject" in description.lower() or "Inject" in description)
+            
+            if missing_critical and operation_type in [OperationType.CRITICAL, OperationType.IMPORTANT] and not is_injection_operation:
                 health.errors.append(f"Missing critical functions: {missing_critical}")
                 return False
             
@@ -1120,7 +1124,7 @@ def safe_evaluate(tab, js_code: str, operation_type: OperationType = OperationTy
     
     try:
         # Validate tab health before execution
-        health_status = validator.validate_tab_health(tab, operation_type)
+        health_status = validator.validate_tab_health(tab, operation_type, description)
         if not health_status.healthy:
             result.error = f"Tab health validation failed: {'; '.join(health_status.errors)}"
             result.error_type = ErrorType.TAB_ERROR
