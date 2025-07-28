@@ -714,18 +714,48 @@
                 }
             }
             
-            // Capture positions from positions table
-            const positionRows = document.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.POSITION_ROWS || '.module.positions .fixedDataTableRowLayout_rowWrapper');
+            // Capture positions from positions table - enhanced selector priority
+            const positionSelectors = [
+                window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.POSITION_ROWS,
+                '.module.positions .fixedDataTableRowLayout_rowWrapper',
+                '.module.positions .public_fixedDataTable_bodyRow',
+                '.positions .fixedDataTableRowLayout_rowWrapper'
+            ].filter(Boolean);
+            
+            let positionRows = [];
+            for (const selector of positionSelectors) {
+                positionRows = document.querySelectorAll(selector);
+                if (positionRows.length > 0) {
+                    console.log(`📊 Found ${positionRows.length} position rows using selector: ${selector}`);
+                    break;
+                }
+            }
             for (const row of positionRows) {
                 const cells = row.querySelectorAll(window.TRADOVATE_UI_ELEMENTS?.ORDER_STATUS?.ORDER_CELLS || '.public_fixedDataTableCell_cellContent');
                 if (cells.length >= 2) {
                     const positionSymbol = cells[1]?.textContent?.trim();
                     if (!symbol || positionSymbol === symbol) {
-                        state.positions.push({
+                        const positionData = {
                             symbol: positionSymbol,
-                            quantity: cells[2]?.textContent?.trim(),
-                            avgPrice: cells[3]?.textContent?.trim()
-                        });
+                            quantity: cells[2]?.textContent?.trim() || '0',
+                            avgPrice: cells[3]?.textContent?.trim() || '0.00',
+                            marketValue: cells[4]?.textContent?.trim() || '0.00',
+                            pnl: cells[5]?.textContent?.trim() || '0.00',
+                            timestamp: Date.now()
+                        };
+                        
+                        // Convert numeric fields for comparison
+                        try {
+                            positionData.quantityNum = parseFloat(positionData.quantity.replace(/[^\d.-]/g, '')) || 0;
+                            positionData.avgPriceNum = parseFloat(positionData.avgPrice.replace(/[^\d.-]/g, '')) || 0;
+                        } catch (e) {
+                            console.warn('Failed to parse position numbers:', e);
+                            positionData.quantityNum = 0;
+                            positionData.avgPriceNum = 0;
+                        }
+                        
+                        state.positions.push(positionData);
+                        console.log(`📊 Captured position: ${positionSymbol} qty=${positionData.quantity} price=${positionData.avgPrice}`);
                     }
                 }
             }
@@ -746,6 +776,415 @@
                 positions: []
             };
         }
+    }
+    
+    // Test function to verify captureOrdersState() functionality
+    async function testCaptureOrdersState() {
+        console.log('🧪 Testing captureOrdersState() function...');
+        
+        try {
+            // Test 1: Capture all orders and positions
+            const allState = await captureOrdersState();
+            console.log('📊 All state captured:', allState);
+            console.log(`✅ Found ${allState.ordersCount} orders and ${allState.positionsCount} positions`);
+            
+            // Test 2: Capture for specific symbol (if any positions exist)
+            if (allState.positions.length > 0) {
+                const firstSymbol = allState.positions[0].symbol;
+                const symbolState = await captureOrdersState(firstSymbol);
+                console.log(`📊 State for ${firstSymbol}:`, symbolState);
+                console.log(`✅ Symbol-filtered: ${symbolState.ordersCount} orders, ${symbolState.positionsCount} positions`);
+            }
+            
+            // Test 3: Test with non-existent symbol
+            const noneState = await captureOrdersState('NONEXIST');
+            console.log('📊 Non-existent symbol state:', noneState);
+            console.log(`✅ Non-existent symbol: ${noneState.ordersCount} orders, ${noneState.positionsCount} positions`);
+            
+            return {
+                success: true,
+                allStateValid: allState.timestamp && Array.isArray(allState.orders) && Array.isArray(allState.positions),
+                hasData: allState.ordersCount > 0 || allState.positionsCount > 0
+            };
+            
+        } catch (error) {
+            console.error('❌ captureOrdersState test failed:', error);
+            return { success: false, error: error.message };
+        }
+    }
+    
+    // Function to compare two order states and detect changes
+    function compareOrderStates(beforeState, afterState, expectedSymbol = null) {
+        console.log('🔍 Comparing order states for execution verification...');
+        
+        const comparison = {
+            timestamp: Date.now(),
+            symbol: expectedSymbol,
+            executionDetected: false,
+            positionChanges: {
+                detected: false,
+                quantityChange: 0,
+                newPosition: false,
+                closedPosition: false,
+                details: []
+            },
+            orderChanges: {
+                detected: false,
+                newOrders: 0,
+                filledOrders: 0,
+                cancelledOrders: 0,
+                details: []
+            },
+            validation: {
+                success: false,
+                confidence: 'LOW', // LOW, MEDIUM, HIGH
+                indicators: [],
+                warnings: []
+            }
+        };
+        
+        try {
+            // Validate input states
+            if (!beforeState || !afterState) {
+                comparison.validation.warnings.push('Invalid state objects provided');
+                return comparison;
+            }
+            
+            console.log(`📊 Before: ${beforeState.ordersCount} orders, ${beforeState.positionsCount} positions`);
+            console.log(`📊 After: ${afterState.ordersCount} orders, ${afterState.positionsCount} positions`);
+            
+            // Analyze position changes
+            analyzePositionChanges(beforeState, afterState, expectedSymbol, comparison);
+            
+            // Analyze order changes  
+            analyzeOrderChanges(beforeState, afterState, expectedSymbol, comparison);
+            
+            // Determine overall execution detection
+            determineExecutionDetection(comparison);
+            
+            return comparison;
+            
+        } catch (error) {
+            console.error('❌ Error comparing order states:', error);
+            comparison.validation.warnings.push(`Comparison error: ${error.message}`);
+            return comparison;
+        }
+    }
+    
+    // Test function to verify compareOrderStates functionality
+    async function testCompareOrderStates() {
+        console.log('🧪 Testing compareOrderStates() function...');
+        
+        try {
+            // Create mock before state
+            const beforeState = {
+                timestamp: Date.now() - 5000,
+                symbol: 'NQU5',
+                ordersCount: 2,
+                positionsCount: 1,
+                orders: [
+                    { id: 'ORDER_123', symbol: 'NQU5', side: 'Buy', quantity: '1', status: 'Working' },
+                    { id: 'ORDER_124', symbol: 'NQU5', side: 'Sell', quantity: '1', status: 'Working' }
+                ],
+                positions: [
+                    { symbol: 'NQU5', quantity: '5', quantityNum: 5, avgPrice: '20000.50', avgPriceNum: 20000.50 }
+                ]
+            };
+            
+            // Test 1: Position quantity increase (order execution)
+            const afterStateExecution = {
+                timestamp: Date.now(),
+                symbol: 'NQU5',
+                ordersCount: 1,
+                positionsCount: 1,
+                orders: [
+                    { id: 'ORDER_124', symbol: 'NQU5', side: 'Sell', quantity: '1', status: 'Working' }
+                ],
+                positions: [
+                    { symbol: 'NQU5', quantity: '6', quantityNum: 6, avgPrice: '20000.25', avgPriceNum: 20000.25 }
+                ]
+            };
+            
+            console.log('🧪 Test 1: Order execution scenario');
+            const executionResult = compareOrderStates(beforeState, afterStateExecution, 'NQU5');
+            console.log('📊 Execution test result:', executionResult);
+            
+            // Test 2: No changes
+            console.log('🧪 Test 2: No changes scenario');
+            const noChangeResult = compareOrderStates(beforeState, beforeState, 'NQU5');
+            console.log('📊 No change test result:', noChangeResult);
+            
+            // Test 3: Position closed
+            const afterStateClosed = {
+                timestamp: Date.now(),
+                symbol: 'NQU5',
+                ordersCount: 0,
+                positionsCount: 0,
+                orders: [],
+                positions: []
+            };
+            
+            console.log('🧪 Test 3: Position closed scenario');
+            const closedResult = compareOrderStates(beforeState, afterStateClosed, 'NQU5');
+            console.log('📊 Position closed test result:', closedResult);
+            
+            return {
+                success: true,
+                executionDetected: executionResult.executionDetected,
+                noChangeDetected: !noChangeResult.executionDetected,
+                closedDetected: closedResult.executionDetected,
+                allTestsPassed: executionResult.executionDetected && 
+                               !noChangeResult.executionDetected && 
+                               closedResult.executionDetected
+            };
+            
+        } catch (error) {
+            console.error('❌ compareOrderStates test failed:', error);
+            return { success: false, error: error.message };
+        }
+    }
+    
+    // Analyze position changes between states
+    function analyzePositionChanges(beforeState, afterState, expectedSymbol, comparison) {
+        console.log('🔍 Analyzing position changes...');
+        
+        // Create position maps for easier comparison
+        const beforePositions = new Map();
+        const afterPositions = new Map();
+        
+        // Map before positions
+        beforeState.positions.forEach(pos => {
+            beforePositions.set(pos.symbol, pos);
+        });
+        
+        // Map after positions
+        afterState.positions.forEach(pos => {
+            afterPositions.set(pos.symbol, pos);
+        });
+        
+        // Check for position changes
+        const allSymbols = new Set([...beforePositions.keys(), ...afterPositions.keys()]);
+        
+        for (const symbol of allSymbols) {
+            // Skip if we're looking for specific symbol and this isn't it
+            if (expectedSymbol && symbol !== expectedSymbol) continue;
+            
+            const beforePos = beforePositions.get(symbol);
+            const afterPos = afterPositions.get(symbol);
+            
+            // New position created
+            if (!beforePos && afterPos) {
+                comparison.positionChanges.detected = true;
+                comparison.positionChanges.newPosition = true;
+                comparison.positionChanges.quantityChange += afterPos.quantityNum || 0;
+                comparison.positionChanges.details.push({
+                    type: 'NEW_POSITION',
+                    symbol: symbol,
+                    quantity: afterPos.quantityNum,
+                    avgPrice: afterPos.avgPriceNum
+                });
+                console.log(`✅ New position detected: ${symbol} qty=${afterPos.quantity}`);
+            }
+            // Position closed
+            else if (beforePos && !afterPos) {
+                comparison.positionChanges.detected = true;
+                comparison.positionChanges.closedPosition = true;
+                comparison.positionChanges.quantityChange -= beforePos.quantityNum || 0;
+                comparison.positionChanges.details.push({
+                    type: 'CLOSED_POSITION',
+                    symbol: symbol,
+                    quantity: -(beforePos.quantityNum || 0)
+                });
+                console.log(`✅ Position closed: ${symbol} qty=${beforePos.quantity}`);
+            }
+            // Position quantity changed
+            else if (beforePos && afterPos) {
+                const qtyBefore = beforePos.quantityNum || 0;
+                const qtyAfter = afterPos.quantityNum || 0;
+                const qtyChange = qtyAfter - qtyBefore;
+                
+                if (Math.abs(qtyChange) > 0.001) { // Account for floating point precision
+                    comparison.positionChanges.detected = true;
+                    comparison.positionChanges.quantityChange += qtyChange;
+                    comparison.positionChanges.details.push({
+                        type: 'QUANTITY_CHANGE',
+                        symbol: symbol,
+                        quantityBefore: qtyBefore,
+                        quantityAfter: qtyAfter,
+                        quantityChange: qtyChange,
+                        avgPriceBefore: beforePos.avgPriceNum,
+                        avgPriceAfter: afterPos.avgPriceNum
+                    });
+                    console.log(`✅ Position quantity changed: ${symbol} ${qtyBefore} → ${qtyAfter} (${qtyChange > 0 ? '+' : ''}${qtyChange})`);
+                }
+            }
+        }
+        
+        if (comparison.positionChanges.detected) {
+            comparison.validation.indicators.push('POSITION_CHANGE_DETECTED');
+            console.log(`📊 Position changes summary: ${comparison.positionChanges.details.length} changes, net quantity change: ${comparison.positionChanges.quantityChange}`);
+        }
+    }
+    
+    // Analyze order changes between states
+    function analyzeOrderChanges(beforeState, afterState, expectedSymbol, comparison) {
+        console.log('🔍 Analyzing order changes...');
+        
+        // Track order counts
+        const orderCountChange = afterState.ordersCount - beforeState.ordersCount;
+        if (orderCountChange !== 0) {
+            comparison.orderChanges.detected = true;
+            comparison.orderChanges.newOrders = Math.max(0, orderCountChange);
+            comparison.orderChanges.details.push({
+                type: 'ORDER_COUNT_CHANGE',
+                change: orderCountChange,
+                beforeCount: beforeState.ordersCount,
+                afterCount: afterState.ordersCount
+            });
+            console.log(`📋 Order count changed: ${beforeState.ordersCount} → ${afterState.ordersCount} (${orderCountChange > 0 ? '+' : ''}${orderCountChange})`);
+        }
+        
+        // Create order maps for detailed comparison
+        const beforeOrders = new Map();
+        const afterOrders = new Map();
+        
+        beforeState.orders.forEach(order => {
+            if (order.id) beforeOrders.set(order.id, order);
+        });
+        
+        afterState.orders.forEach(order => {
+            if (order.id) afterOrders.set(order.id, order);
+        });
+        
+        // Check for order status changes
+        for (const [orderId, beforeOrder] of beforeOrders) {
+            const afterOrder = afterOrders.get(orderId);
+            
+            // Skip if we're looking for specific symbol and this isn't it
+            if (expectedSymbol && beforeOrder.symbol !== expectedSymbol) continue;
+            
+            if (afterOrder) {
+                // Order status changed
+                if (beforeOrder.status !== afterOrder.status) {
+                    comparison.orderChanges.detected = true;
+                    
+                    const statusChange = {
+                        type: 'STATUS_CHANGE',
+                        orderId: orderId,
+                        symbol: beforeOrder.symbol,
+                        statusBefore: beforeOrder.status,
+                        statusAfter: afterOrder.status
+                    };
+                    
+                    // Track specific status changes
+                    if (afterOrder.status?.toLowerCase().includes('filled')) {
+                        comparison.orderChanges.filledOrders++;
+                        statusChange.type = 'ORDER_FILLED';
+                        comparison.validation.indicators.push('ORDER_FILLED_DETECTED');
+                    } else if (afterOrder.status?.toLowerCase().includes('cancelled')) {
+                        comparison.orderChanges.cancelledOrders++;
+                        statusChange.type = 'ORDER_CANCELLED';
+                    }
+                    
+                    comparison.orderChanges.details.push(statusChange);
+                    console.log(`📋 Order ${orderId} status: ${beforeOrder.status} → ${afterOrder.status}`);
+                }
+            } else {
+                // Order disappeared (likely filled or cancelled)
+                comparison.orderChanges.detected = true;
+                comparison.orderChanges.details.push({
+                    type: 'ORDER_DISAPPEARED',
+                    orderId: orderId,
+                    symbol: beforeOrder.symbol,
+                    lastStatus: beforeOrder.status
+                });
+                console.log(`📋 Order ${orderId} disappeared (likely filled/cancelled)`);
+            }
+        }
+        
+        // Check for new orders
+        for (const [orderId, afterOrder] of afterOrders) {
+            if (!beforeOrders.has(orderId)) {
+                // Skip if we're looking for specific symbol and this isn't it
+                if (expectedSymbol && afterOrder.symbol !== expectedSymbol) continue;
+                
+                comparison.orderChanges.detected = true;
+                comparison.orderChanges.newOrders++;
+                comparison.orderChanges.details.push({
+                    type: 'NEW_ORDER',
+                    orderId: orderId,
+                    symbol: afterOrder.symbol,
+                    status: afterOrder.status,
+                    side: afterOrder.side,
+                    quantity: afterOrder.quantity
+                });
+                console.log(`📋 New order detected: ${orderId} ${afterOrder.symbol} ${afterOrder.side} ${afterOrder.quantity}`);
+            }
+        }
+        
+        if (comparison.orderChanges.detected) {
+            comparison.validation.indicators.push('ORDER_CHANGE_DETECTED');
+            console.log(`📋 Order changes summary: ${comparison.orderChanges.details.length} changes`);
+        }
+    }
+    
+    // Determine overall execution detection based on all indicators
+    function determineExecutionDetection(comparison) {
+        console.log('🎯 Determining execution detection...');
+        
+        let confidenceScore = 0;
+        const indicators = comparison.validation.indicators;
+        
+        // High confidence indicators
+        if (indicators.includes('POSITION_CHANGE_DETECTED')) {
+            confidenceScore += 40;
+            console.log('✅ High confidence: Position change detected');
+        }
+        
+        if (indicators.includes('ORDER_FILLED_DETECTED')) {
+            confidenceScore += 30;
+            console.log('✅ High confidence: Order filled status detected');
+        }
+        
+        // Medium confidence indicators
+        if (comparison.orderChanges.newOrders > 0) {
+            confidenceScore += 20;
+            console.log('✅ Medium confidence: New orders created');
+        }
+        
+        if (comparison.orderChanges.details.some(d => d.type === 'ORDER_DISAPPEARED')) {
+            confidenceScore += 15;
+            console.log('✅ Medium confidence: Orders disappeared');
+        }
+        
+        // Low confidence indicators
+        if (indicators.includes('ORDER_CHANGE_DETECTED')) {
+            confidenceScore += 10;
+            console.log('✅ Low confidence: Order changes detected');
+        }
+        
+        // Determine execution detection and confidence
+        if (confidenceScore >= 70) {
+            comparison.executionDetected = true;
+            comparison.validation.success = true;
+            comparison.validation.confidence = 'HIGH';
+        } else if (confidenceScore >= 40) {
+            comparison.executionDetected = true;
+            comparison.validation.success = true;
+            comparison.validation.confidence = 'MEDIUM';
+        } else if (confidenceScore >= 20) {
+            comparison.executionDetected = true;
+            comparison.validation.success = false;
+            comparison.validation.confidence = 'LOW';
+            comparison.validation.warnings.push('Low confidence in execution detection');
+        } else {
+            comparison.executionDetected = false;
+            comparison.validation.success = false;
+            comparison.validation.confidence = 'NONE';
+            comparison.validation.warnings.push('No clear execution indicators found');
+        }
+        
+        console.log(`🎯 Execution detection result: ${comparison.executionDetected ? 'DETECTED' : 'NOT DETECTED'} (confidence: ${comparison.validation.confidence}, score: ${confidenceScore})`);
     }
     
     // Helper function to validate cancellation success
@@ -954,14 +1393,65 @@
             //if (tradeData.symbol) await updateSymbol(window.TRADOVATE_UI_ELEMENTS?.MARKET_DATA?.SYMBOL_DISPLAY || '.search-box--input', normalizeSymbol(tradeData.symbol));
             if (tradeData.action) {
                 console.log(`Setting action to: ${tradeData.action}`);
-                const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
-                console.log(`Found ${actionLabels.length} action labels`);
-                actionLabels.forEach(lbl => {
-                    if (lbl.textContent.trim() === tradeData.action) {
-                        console.log(`Clicking ${tradeData.action} label`);
-                        lbl.click();
+                
+                // Find the specific Buy/Sell action group (not duration or other groups)
+                const radioGroups = document.querySelectorAll('.radio-group.btn-group');
+                let actionGroup = null;
+                
+                for (const group of radioGroups) {
+                    const labels = group.querySelectorAll('label');
+                    const labelTexts = Array.from(labels).map(l => l.textContent?.trim());
+                    
+                    // Check if this group contains both Buy and Sell (action group)
+                    if (labelTexts.includes('Buy') && labelTexts.includes('Sell')) {
+                        actionGroup = group;
+                        console.log('✅ Found Buy/Sell action group');
+                        break;
                     }
-                });
+                }
+                
+                if (actionGroup) {
+                    // Find the target action label within the correct group
+                    const targetLabel = Array.from(actionGroup.querySelectorAll('label'))
+                        .find(label => label.textContent?.trim() === tradeData.action);
+                    
+                    if (targetLabel) {
+                        console.log(`✅ Found ${tradeData.action} label in action group`);
+                        
+                        // Bootstrap button group state management
+                        // Remove active class from all labels in this group
+                        actionGroup.querySelectorAll('label').forEach(label => {
+                            label.classList.remove('active', 'active-text');
+                        });
+                        
+                        // Add active class to target label
+                        targetLabel.classList.add('active', 'active-text');
+                        
+                        // Also trigger click for any event handlers
+                        targetLabel.click();
+                        
+                        // Wait for UI to update
+                        await delay(200);
+                        
+                        // Verify the selection worked
+                        const isActive = targetLabel.classList.contains('active');
+                        console.log(`${isActive ? '✅' : '❌'} Action selection verification: ${tradeData.action} active = ${isActive}`);
+                        
+                    } else {
+                        console.error(`❌ ${tradeData.action} label not found in action group`);
+                    }
+                } else {
+                    console.error('❌ Buy/Sell action group not found');
+                    // Fallback to old method
+                    const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
+                    console.log(`Fallback: Found ${actionLabels.length} action labels`);
+                    actionLabels.forEach(lbl => {
+                        if (lbl.textContent.trim() === tradeData.action) {
+                            console.log(`Fallback: Clicking ${tradeData.action} label`);
+                            lbl.click();
+                        }
+                    });
+                }
             }
             if (tradeData.qty) {
                 console.log(`Setting quantity to: ${tradeData.qty}`);
@@ -1001,10 +1491,210 @@
           target?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         }
 
+        // Enhanced DOM Order Submission for clicking price cells first
+        async function submitOrderWithDOM(orderType, priceValue, tradeData) {
+            console.log(`🎯 Enhanced DOM Order: Starting submission for ${orderType} order`);
+            
+            try {
+                // Step 1: Click on DOM price cell
+                const priceCellClicked = await clickDOMPriceCell(tradeData.action);
+                if (!priceCellClicked) {
+                    throw new Error('Failed to click DOM price cell');
+                }
+                
+                // Step 2: Wait for order ticket to appear
+                const orderTicket = await waitForOrderTicket();
+                if (!orderTicket) {
+                    throw new Error('Order ticket did not appear after clicking price cell');
+                }
+                
+                // Step 3: Fill order form
+                await fillOrderForm(orderType, priceValue, tradeData);
+                
+                // Step 4: Submit order
+                const submitButton = document.querySelector('.btn-primary:not([disabled])');
+                if (!submitButton) {
+                    throw new Error('Submit button not found or disabled');
+                }
+                
+                submitButton.click();
+                console.log('✅ Enhanced DOM order submitted');
+                
+                // Wait for ticket to close
+                await delay(500);
+                
+                // Check if ticket closed (success indicator)
+                const ticketStillVisible = orderTicket.offsetParent !== null;
+                return {
+                    success: !ticketStillVisible,
+                    method: 'ENHANCED_DOM'
+                };
+                
+            } catch (error) {
+                console.error('Enhanced DOM submission failed:', error);
+                return { success: false, error: error.message };
+            }
+        }
+        
+        async function clickDOMPriceCell(action) {
+            // Find all price cells
+            const cellSelectors = [
+                '.dom-cell-container-bid',
+                '.dom-cell-container-ask',
+                '.dom-price-cell',
+                '[class*="dom-cell"]',
+                '.dom-bid',
+                '.dom-ask'
+            ];
+            
+            let targetCells = [];
+            for (const selector of cellSelectors) {
+                const cells = document.querySelectorAll(selector);
+                if (cells.length > 0) {
+                    targetCells = targetCells.concat(Array.from(cells));
+                }
+            }
+            
+            if (targetCells.length === 0) {
+                console.error('No DOM price cells found');
+                return false;
+            }
+            
+            // Filter for bid/ask based on action
+            const filteredCells = targetCells.filter(cell => {
+                const className = cell.className.toLowerCase();
+                if (action === 'Buy') {
+                    return className.includes('ask');
+                } else {
+                    return className.includes('bid');
+                }
+            });
+            
+            // Use filtered cells or fall back to all cells
+            const cellsToUse = filteredCells.length > 0 ? filteredCells : targetCells;
+            
+            // Click middle cell
+            const middleIndex = Math.floor(cellsToUse.length / 2);
+            const cellToClick = cellsToUse[middleIndex];
+            
+            if (cellToClick && cellToClick.offsetParent !== null) {
+                console.log(`Clicking DOM cell: ${cellToClick.className}`);
+                cellToClick.click();
+                await delay(200);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        async function waitForOrderTicket(timeout = 5000) {
+            const startTime = Date.now();
+            const ticketSelectors = [
+                '.module.order-ticket',
+                '.order-entry-modal',
+                '.order-form-container',
+                '[class*="order-ticket"]',
+                '.order-entry'
+            ];
+            
+            while (Date.now() - startTime < timeout) {
+                for (const selector of ticketSelectors) {
+                    const ticket = document.querySelector(selector);
+                    if (ticket && ticket.offsetParent !== null) {
+                        console.log('Order ticket appeared');
+                        await delay(300); // Wait for animations
+                        return ticket;
+                    }
+                }
+                await delay(100);
+            }
+            
+            return null;
+        }
+        
+        async function fillOrderForm(orderType, priceValue, tradeData) {
+            // Set quantity
+            const qtyInput = document.querySelector('.select-input.combobox input, input[placeholder*="Qty"]');
+            if (qtyInput) {
+                qtyInput.focus();
+                qtyInput.value = tradeData.qty;
+                qtyInput.dispatchEvent(new Event('input', { bubbles: true }));
+                qtyInput.dispatchEvent(new Event('change', { bubbles: true }));
+                qtyInput.blur();
+                await delay(150);
+            }
+            
+            // Set order type if needed
+            if (orderType !== 'MARKET') {
+                const typeSelector = document.querySelector('.order-type [tabindex]');
+                if (typeSelector) {
+                    typeSelector.click();
+                    await delay(200);
+                    
+                    const options = document.querySelectorAll('.dropdown-menu li');
+                    for (const option of options) {
+                        if (option.textContent.trim().toUpperCase() === orderType) {
+                            option.click();
+                            break;
+                        }
+                    }
+                    await delay(150);
+                }
+            }
+            
+            // Set price for limit/stop orders
+            if (priceValue && orderType !== 'MARKET') {
+                const priceInput = document.querySelector('.numeric-input input, input[placeholder*="Price"]');
+                if (priceInput) {
+                    priceInput.focus();
+                    priceInput.value = priceValue;
+                    priceInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    priceInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    priceInput.blur();
+                    await delay(150);
+                }
+            }
+        }
+
         async function submitOrder(orderType, priceValue) {
             console.log(`🔍 Order Validation Framework: Starting submitOrder for ${orderType}`);
             
-            // Use unified framework if available for comprehensive validation and consistency
+            // Check if we're in DOM trading mode
+            const domModule = document.querySelector('.module.module-dom');
+            const domVisible = domModule && domModule.offsetParent !== null;
+            
+            // Use enhanced DOM submission if in DOM trading mode
+            if (domVisible) {
+                console.log('📊 DOM trading detected - using enhanced DOM order submission');
+                
+                try {
+                    const result = await submitOrderWithDOM(orderType, priceValue, tradeData);
+                    
+                    if (result.success) {
+                        console.log('✅ Enhanced DOM order submission successful');
+                        
+                        // Record in validation framework if available
+                        if (window.autoOrderValidator) {
+                            window.autoOrderValidator.recordOrderEvent(Date.now().toString(), 'SUBMISSION_COMPLETED', {
+                                orderType: orderType,
+                                completionTime: Date.now(),
+                                success: true,
+                                method: 'ENHANCED_DOM'
+                            });
+                        }
+                        
+                        return true;
+                    } else {
+                        console.error('❌ Enhanced DOM submission failed:', result.error);
+                        console.log('Falling back to standard submission...');
+                    }
+                } catch (error) {
+                    console.error('Failed to use enhanced DOM submission:', error);
+                    console.log('Falling back to standard submission...');
+                }
+            }
+            
+            // Try unified framework if available
             if (window.UNIFIED_TRADING_FRAMEWORK?.submitOrder) {
                 console.log(`Using unified framework for ${orderType} order submission`);
                 
@@ -1680,113 +2370,136 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             : inputSymbol.toUpperCase();
         console.log(`Using symbol: "${symbol}" for market data lookup`);
 
-        // 1️⃣ look for an existing row - updated to search more flexibly
-        console.log('Searching for symbol in data table rows');
+        // 1️⃣ Look for symbol in the quoteboard FixedDataTable structure
+        console.log('Searching for symbol in quoteboard module');
         
-        // First try the old selector for backwards compatibility
-        let symbolCells = document.querySelectorAll('.symbol-main');
-        console.log(`Found ${symbolCells.length} .symbol-main cells`);
-        
-        // If old selector doesn't work, search all elements for the symbol
-        if (symbolCells.length === 0) {
-            console.log('Trying flexible symbol search...');
-            const allElements = Array.from(document.querySelectorAll('*'));
-            symbolCells = allElements.filter(el => 
-                el.textContent && 
-                el.textContent.trim() === symbol &&
-                el.children.length === 0 // Only leaf elements
-            );
-            console.log(`Found ${symbolCells.length} elements containing "${symbol}"`);
+        // Find the quoteboard module containing market data
+        const quoteboard = document.querySelector('.quoteboard');
+        if (!quoteboard) {
+            console.error('Quoteboard module not found');
+            alert(`Cannot find quoteboard for ${inputSymbol}`);
+            return null;
         }
-
-        let row = null;
-        if (symbolCells.length > 0) {
-            // Try to find the row using old structure first
-            row = [...symbolCells]
-                .find(el => el.textContent.trim() === symbol)
-                ?.closest('.fixedDataTableRowLayout_rowWrapper');
-                
-            // If old structure doesn't work, try to find parent row element
-            if (!row && symbolCells.length > 0) {
-                console.log('Trying flexible row search...');
-                const symbolElement = [...symbolCells].find(el => el.textContent.trim() === symbol);
-                if (symbolElement) {
-                    // Look for parent elements that might be the row (tr, div with multiple cells, etc.)
-                    let parent = symbolElement.parentElement;
-                    while (parent && parent !== document.body) {
-                        // Check if this parent has multiple "cell-like" children
-                        const childCells = parent.querySelectorAll('*').length;
-                        if (childCells >= 5) { // A data row should have multiple cells
-                            row = parent;
-                            console.log(`Found potential row element: ${parent.tagName} with ${childCells} child elements`);
-                            break;
-                        }
-                        parent = parent.parentElement;
-                    }
-                }
+        
+        console.log('Found quoteboard module, searching for symbol...');
+        
+        // Look for symbol in span elements first (symbols are in spans)
+        const spanElements = quoteboard.querySelectorAll('span');
+        console.log(`Found ${spanElements.length} span elements in quoteboard`);
+        
+        // Find the span containing our symbol
+        let symbolSpan = null;
+        for (const span of spanElements) {
+            const spanText = span.textContent?.trim();
+            console.log(`Checking span: "${spanText}"`);
+            if (spanText === symbol) {
+                symbolSpan = span;
+                console.log(`✅ Found symbol span: "${spanText}"`);
+                break;
             }
         }
-
-        // 2️⃣ if missing, type the symbol into Tradovate’s search so it appears
-        if (row) {
-            console.log('Found matching row for symbol in data table');
-        } else {
-            console.error(`Row for symbol "${symbol}" not found in data table`);
-            alert(`Cannot Find ${inputSymbol}`);
+        
+        if (!symbolSpan) {
+            console.error(`Symbol "${symbol}" not found in quoteboard`);
+            alert(`Cannot Find ${inputSymbol} in market data`);
+            return null;
         }
 
+        // 2️⃣ Find the row containing this symbol span
+        const row = symbolSpan.closest('.fixedDataTableRowLayout_rowWrapper') || 
+                    symbolSpan.closest('[class*="rowWrapper"]') ||
+                    symbolSpan.closest('[class*="Row"]');
+                    
         if (!row) {
-            console.log('Aborting market data retrieval - no matching row');
-            return null; // still not there → abort
+            console.error('Could not find row wrapper for symbol');
+            return null;
         }
+        
+        console.log('Found row containing symbol, extracting price data...');
 
-        console.log('Extracting price data from cells');
+        // 3️⃣ Extract all cell content from this row
+        const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+        console.log(`Found ${cells.length} cells in symbol row`);
         
-        // Try old selector first
-        let cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
-        console.log(`Found ${cells.length} .public_fixedDataTableCell_cellContent cells`);
-        
-        // If old selector doesn't work, get all child elements as potential cells
         if (cells.length === 0) {
-            console.log('Trying flexible cell extraction...');
-            cells = Array.from(row.querySelectorAll('*')).filter(el => 
-                el.textContent && 
-                el.textContent.trim() && 
-                el.children.length === 0 // Only leaf elements with text
-            );
-            console.log(`Found ${cells.length} potential cell elements`);
+            console.error('No cell content found in row');
+            return null;
         }
 
-        let bidPrice, offerPrice;
+        // 4️⃣ Parse cells based on Tradovate quoteboard structure
+        // Column order: Symbol, Last Price, Change, %Change, Bid Price, Offer Price, Open, High, Low, Total Vol
+        let bidPrice = null, offerPrice = null, lastPrice = null;
         
+        // Log all cell contents for debugging
+        cells.forEach((cell, index) => {
+            const text = cell.textContent?.trim();
+            console.log(`Cell ${index}: "${text}"`);
+        });
+        
+        // Extract prices from expected positions
         if (cells.length >= 6) {
-            // Standard case: use expected positions
-            bidPrice = cells[4]?.textContent.trim();
-            offerPrice = cells[5]?.textContent.trim();
+            const symbolText = cells[0]?.textContent?.trim();
+            lastPrice = cells[1]?.textContent?.trim();
+            const change = cells[2]?.textContent?.trim();
+            const changePercent = cells[3]?.textContent?.trim();
+            bidPrice = cells[4]?.textContent?.trim();
+            offerPrice = cells[5]?.textContent?.trim();
+            
+            console.log(`Extracted from standard positions:`);
+            console.log(`  Symbol: ${symbolText}`);
+            console.log(`  Last: ${lastPrice}`);
+            console.log(`  Change: ${change}`);
+            console.log(`  %Change: ${changePercent}`);
+            console.log(`  Bid: ${bidPrice}`);
+            console.log(`  Offer: ${offerPrice}`);
         } else {
-            // Flexible case: search for price-like patterns
-            console.log('Searching for price patterns in cells...');
-            const pricePattern = /^\d+\.?\d*$/;
-            const priceCells = Array.from(cells).filter(cell => {
-                const text = cell.textContent.trim();
-                return pricePattern.test(text) && parseFloat(text) > 1000; // Futures prices are typically > 1000
+            // Fallback: search for price-like patterns
+            console.log('Using fallback price pattern search...');
+            const pricePattern = /^\d{4,5}(\.\d{1,2})?$/; // Match NQ-style prices like 23486.50
+            const priceCells = [];
+            
+            cells.forEach((cell, index) => {
+                const text = cell.textContent?.trim();
+                if (pricePattern.test(text)) {
+                    const price = parseFloat(text);
+                    if (price > 10000) { // NQ prices are typically above 10,000
+                        priceCells.push({ index, text, price });
+                        console.log(`Found price cell ${index}: ${text}`);
+                    }
+                }
             });
             
             if (priceCells.length >= 2) {
-                bidPrice = priceCells[0]?.textContent.trim();
-                offerPrice = priceCells[1]?.textContent.trim();
-                console.log(`Found price patterns: bid=${bidPrice}, offer=${offerPrice}`);
+                lastPrice = priceCells[0]?.text;
+                bidPrice = priceCells[1]?.text;
+                offerPrice = priceCells[2]?.text || priceCells[1]?.text; // Use same as bid if only 2 found
+                console.log(`Fallback extraction: Last=${lastPrice}, Bid=${bidPrice}, Offer=${offerPrice}`);
             } else {
-                console.log('Could not identify bid/offer prices from cell patterns');
+                console.error('Could not extract prices from cells');
             }
         }
         
-        console.log(`Extracted prices: bid=${bidPrice}, offer=${offerPrice}`);
+        // 5️⃣ Validate extracted prices
+        const bidNum = parseFloat(bidPrice);
+        const offerNum = parseFloat(offerPrice);
+        const lastNum = parseFloat(lastPrice);
+        
+        if (isNaN(bidNum) || isNaN(offerNum)) {
+            console.error(`Invalid prices extracted: bid=${bidPrice}, offer=${offerPrice}`);
+            return null;
+        }
+        
+        console.log(`✅ Successfully extracted market data:`);
+        console.log(`  Symbol: ${symbol}`);
+        console.log(`  Last: ${lastPrice} (${lastNum})`);
+        console.log(`  Bid: ${bidPrice} (${bidNum})`);
+        console.log(`  Offer: ${offerPrice} (${offerNum})`);
 
         return {
             symbol,
             bidPrice,
-            offerPrice
+            offerPrice,
+            lastPrice // Added lastPrice for reference
         };
     }
     // --- FUTURES MONTH LETTERS (Jan-Dec) ---
@@ -1832,6 +2545,75 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         console.log(`Calculated quarterly code: letter=${result.letter}, yearDigit=${result.yearDigit}`);
         return result;
     }
+
+    // --- MAIN AUTOORDER FUNCTION ---
+    /**
+     * Main autoOrder function for bracket trading
+     * @param {string} symbol - Trading symbol (e.g. 'NQ', 'NQU5')
+     * @param {number} qty - Quantity to trade
+     * @param {string} action - 'Buy' or 'Sell'
+     * @param {number} tp - Take profit points
+     * @param {number} sl - Stop loss points  
+     * @param {number} tickSize - Tick size for the instrument
+     * @returns {Promise<string>} - Result of the operation
+     */
+    async function autoOrder(symbol, qty, action, tp, sl, tickSize) {
+        console.log(`🚀 autoOrder called: symbol=${symbol}, qty=${qty}, action=${action}, tp=${tp}, sl=${sl}, tickSize=${tickSize}`);
+        
+        try {
+            // Validate parameters
+            if (!symbol || !qty || !action || !tp || !sl || !tickSize) {
+                throw new Error('Missing required parameters');
+            }
+            
+            if (!['Buy', 'Sell'].includes(action)) {
+                throw new Error('Action must be "Buy" or "Sell"');
+            }
+            
+            // Get market data for the symbol
+            console.log('📊 Getting market data...');
+            const marketData = getMarketData(symbol);
+            
+            if (!marketData) {
+                throw new Error(`Could not retrieve market data for ${symbol}`);
+            }
+            
+            console.log('✅ Market data retrieved:', marketData);
+            
+            // Prepare trade data
+            const tradeData = {
+                symbol: marketData.symbol,
+                qty: qty,
+                action: action,
+                tp: tp,
+                sl: sl,
+                tickSize: tickSize,
+                bidPrice: marketData.bidPrice,
+                offerPrice: marketData.offerPrice,
+                marketData: marketData
+            };
+            
+            console.log('📋 Trade data prepared:', tradeData);
+            
+            // Execute bracket order creation
+            console.log('🎯 Creating bracket orders...');
+            const result = await createBracketOrdersManual(tradeData);
+            
+            console.log('✅ AutoOrder completed successfully');
+            return result;
+            
+        } catch (error) {
+            console.error('❌ AutoOrder failed:', error);
+            throw error;
+        }
+    }
+    
+    // Make autoOrder function globally available
+    window.autoOrder = autoOrder;
+    window.testCaptureOrdersState = testCaptureOrdersState;
+    window.compareOrderStates = compareOrderStates;
+    window.testCompareOrderStates = testCompareOrderStates;
+    console.log('✅ autoOrder function defined and made globally available');
 
     // --- EXAMPLE: build an NQ front-quarter symbol ---
     console.log('Creating example front-quarter symbol');
