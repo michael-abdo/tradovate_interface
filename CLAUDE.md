@@ -3,6 +3,17 @@
 
 ---
 
+## 🌐 LOCALHOST ACCESS
+
+### **FULL DEBUG ACCESS AVAILABLE**
+- **Dashboard URL**: http://localhost:6001/
+- **Chrome Debug Ports**: Full access to all Chrome instances via debug ports
+- **Direct Browser Access**: Can inspect, debug, and test directly in running Chrome instances
+- **Real-time Testing**: Can execute JavaScript and inspect DOM directly
+- **No Manual Steps Required**: Can directly access and debug without user intervention
+
+---
+
 ## 🚨 CORE DEVELOPMENT RULES
 
 ### 0. **NEVER START/STOP CHROME**

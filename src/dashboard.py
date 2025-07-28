@@ -110,12 +110,30 @@ def get_accounts():
                 description="Chrome operation"
             )
                 
-                # Execute the getTableData() function with real phase analysis
+                # First, inject the getAllAccountTableData function
+                account_data_path = os.path.join(project_root, 
+                                       'scripts/tampermonkey/getAllAccountTableData.user.js')
+                with open(account_data_path, 'r') as file:
+                    get_account_data_js = file.read()
+                
+                # Inject the getAllAccountTableData function
+                inject_result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code=get_account_data_js,
+                    operation_type=OperationType.NON_CRITICAL,
+                    description=f"Inject getAllAccountTableData into {conn.account_name}"
+                )
+                
+                if not inject_result.success:
+                    print(f"[Accounts API] Failed to inject getAllAccountTableData: {inject_result.error}")
+                    continue
+                
+                # Execute the getAllAccountTableData() function with DOM Intelligence validation
                 result = safe_evaluate(
                     tab=conn.tab,
-                    js_code="JSON.stringify(getTableData())",
+                    js_code="getAllAccountTableData()",
                     operation_type=OperationType.CRITICAL,
-                    description=f"Get table data for {conn.account_name}"
+                    description=f"Get account table data for {conn.account_name}"
                 )
                 
                 print(f"[Accounts API] Raw result for {conn.account_name}: {result}")
@@ -451,10 +469,10 @@ def update_phases():
                             }
                             
                             console.log("[updateUserColumnPhaseStatus] Getting table data...");
-                            const tableData = getTableData();
+                            const tableData = JSON.parse(getAllAccountTableData());
                             console.log(`[updateUserColumnPhaseStatus] Table data: ${tableData.length} rows`);
                             if (tableData.length === 0) {
-                                console.error("[updateUserColumnPhaseStatus] No data from getTableData()");
+                                console.error("[updateUserColumnPhaseStatus] No data from getAllAccountTableData()");
                                 return;
                             }
                             
