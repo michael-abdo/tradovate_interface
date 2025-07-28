@@ -50,8 +50,7 @@ if FRAMEWORK_AVAILABLE:
                 print(f"Error executing script: {fallback_error}")
                 return None
     
-except ImportError:
-    FRAMEWORK_AVAILABLE = False
+else:
     print("ℹ️  Chrome Communication Framework not available - using standard execution")
     
     def execute_safe_js(tab, js_code, description="Login helper operation", operation_type=None):
@@ -120,23 +119,26 @@ def login_to_existing_chrome(port=None, username=None, password=None, tradovate_
             return False, None, None
     
     # Connect to Chrome - DRY refactored to use standardized connection
+    target_tab = None
+    browser = None
+    
     try:
         # First try to use the connect_to_chrome function from auto_login
-        try:
-            from src.auto_login import connect_to_chrome
-            print(f"Using standardized connect_to_chrome for port {port}")
-            browser, target_tab = connect_to_chrome(port)
-            
-            if target_tab:
-                print("Successfully connected via connect_to_chrome")
-                # Skip to after the connection logic
-                
-        except ImportError:
-            print("connect_to_chrome not available, using direct connection")
-            raise  # Fall through to original implementation
-            
-    except:
-        # Fallback to original implementation
+        from src.auto_login import connect_to_chrome
+        print(f"Using standardized connect_to_chrome for port {port}")
+        browser, target_tab = connect_to_chrome(port)
+        
+        if target_tab:
+            print("Successfully connected via connect_to_chrome")
+    except ImportError:
+        print("connect_to_chrome not available, using direct connection")
+        # Fall through to original implementation
+    except Exception as e:
+        print(f"Error using connect_to_chrome: {e}")
+        # Fall through to original implementation
+    
+    # If we don't have a target_tab yet, use the original implementation
+    if not target_tab:
         print(f"Connecting to Chrome on port {port}...")
         browser = pychrome.Browser(url=f"http://localhost:{port}")
         tabs = browser.list_tab()
@@ -178,38 +180,34 @@ def login_to_existing_chrome(port=None, username=None, password=None, tradovate_
             except Exception as e:
                 print(f"Error creating new tab: {e}")
                 return False, None, None
-        
-        # Inject login script and disable alerts
-        print(f"Injecting login script for {username}...")
-        inject_login_script(target_tab, username, password)
-        disable_alerts(target_tab)
-        
-        # Add a visual indicator that we're using the helper
-        visual_indicator = """
-        setTimeout(() => {
-            const helperDiv = document.createElement('div');
-            helperDiv.id = 'login-helper-indicator';
-            helperDiv.style.position = 'fixed';
-            helperDiv.style.bottom = '10px';
-            helperDiv.style.right = '10px';
-            helperDiv.style.background = 'green';
-            helperDiv.style.color = 'white';
-            helperDiv.style.padding = '5px 10px';
-            helperDiv.style.borderRadius = '5px';
-            helperDiv.style.zIndex = '9999';
-            helperDiv.style.opacity = '0.7';
-            helperDiv.innerHTML = 'Login Helper Active';
-            document.body.appendChild(helperDiv);
-        }, 2000);
-        """
-        execute_safe_js(target_tab, visual_indicator, "Login helper visual indicator injection")
-        
-        print("Login script injected successfully")
-        return True, target_tab, browser
     
-    except Exception as e:
-        print(f"Error connecting to Chrome or logging in: {e}")
-        return False, None, None
+    # Inject login script and disable alerts
+    print(f"Injecting login script for {username}...")
+    inject_login_script(target_tab, username, password)
+    disable_alerts(target_tab)
+    
+    # Add a visual indicator that we're using the helper
+    visual_indicator = """
+    setTimeout(() => {
+        const helperDiv = document.createElement('div');
+        helperDiv.id = 'login-helper-indicator';
+        helperDiv.style.position = 'fixed';
+        helperDiv.style.bottom = '10px';
+        helperDiv.style.right = '10px';
+        helperDiv.style.background = 'green';
+        helperDiv.style.color = 'white';
+        helperDiv.style.padding = '5px 10px';
+        helperDiv.style.borderRadius = '5px';
+        helperDiv.style.zIndex = '9999';
+        helperDiv.style.opacity = '0.7';
+        helperDiv.innerHTML = 'Login Helper Active';
+        document.body.appendChild(helperDiv);
+    }, 2000);
+    """
+    execute_safe_js(target_tab, visual_indicator, "Login helper visual indicator injection")
+    
+    print("Login script injected successfully")
+    return True, target_tab, browser
 
 def wait_for_element(tab, selector, timeout=10, visible=True):
     """
