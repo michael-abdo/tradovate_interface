@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tradovate Account Dashboard</title>
+    <title>Tradovate Account Dashboard - Notifications Disabled</title>
     <!-- Add viewport specific rules to ensure better mobile rendering -->
     <style>
         body {
@@ -725,9 +725,66 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        
+        .toast {
+            background-color: #34c759;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+            min-width: 300px;
+        }
+        
+        .toast.error {
+            background-color: #ff3b30;
+        }
+        
+        .toast.warning {
+            background-color: #ff9500;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        .toast.fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
     </style>
 </head>
 <body>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
     <div class="dashboard">
         <h1>Tradovate Account Dashboard</h1>
         
@@ -880,6 +937,28 @@
     </div>
 
     <script>
+        // Toast notification function - TEMPORARILY DISABLED
+        function showToast(message, type = 'success', duration = 4000) {
+            // TEMPORARILY DISABLED - Just log to console instead
+            console.log(`[TOAST ${type.toUpperCase()}]: ${message}`);
+            return; // Early return to disable toast display
+            
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            toastContainer.appendChild(toast);
+            
+            // Auto remove after duration
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, duration);
+        }
+        
         // Store the last fetched data
         let accountData = [];
         
@@ -2073,14 +2152,17 @@
             .then(response => response.json())
             .then(result => {
                 if (result.status === 'success') {
-                    console.log(`Auto risk management executed on ${result.accounts_affected} accounts.`);
+                    const accounts = result.accounts_affected || 0;
+                    showToast(`Auto risk management executed on ${accounts} account${accounts !== 1 ? 's' : ''}`, 'success');
                 } else {
                     showTradeError(result.message || 'Risk management execution failed');
+                    showToast(result.message || 'Risk management execution failed', 'error');
                 }
             })
             .catch(error => {
                 console.error('Error executing auto risk management:', error);
                 showTradeError('Error executing risk management. Check console for details.');
+                showToast('Error executing risk management', 'error');
             });
         }
         
@@ -2151,16 +2233,24 @@
             .then(response => response.json())
             .then(result => {
                 if (result.status === 'success') {
-                    // Show success feedback in P&L area or console
-                    console.log(`${action} action completed successfully on ${result.accounts_affected} accounts.`);
+                    // Show success toast
+                    const accounts = result.accounts_affected || 0;
+                    const accountText = selectedAccount === 'all' 
+                        ? `on ${accounts} account${accounts !== 1 ? 's' : ''}`
+                        : `on selected account`;
+                    showToast(`${action} ${qty} ${symbol} executed successfully ${accountText}`, 'success');
                     
                     // Reset price inputs
                     document.getElementById('entryPriceInput').value = '';
                     document.getElementById('tpPriceInput').value = '';
                     document.getElementById('slPriceInput').value = '';
+                    
+                    // Refresh account data to show updated positions
+                    fetchAccountData();
                 } else {
                     // Show error message
                     showTradeError(result.message || 'Action execution failed');
+                    showToast(result.message || 'Trade execution failed', 'error');
                 }
             })
             .catch(error => {
@@ -2172,6 +2262,7 @@
         // Execute cancel or close action
         function executeCancelAction(option) {
             const symbol = document.getElementById('symbolInput').value || 'NQ';
+            const selectedAccount = document.getElementById('accountSelect').value || 'all';
             
             // Send API request to cancel or close positions
             fetch('/api/exit', {
@@ -2182,25 +2273,35 @@
                 body: JSON.stringify({
                     symbol: symbol,
                     option: option,
-                    account: 'all' // Apply to all accounts
+                    account: selectedAccount
                 })
             })
             .then(response => response.json())
             .then(result => {
+                if (result.error) {
+                    showToast(`Error: ${result.error}`, 'error');
+                    return;
+                }
+                
                 // Show success message
                 let action;
                 if (option.includes('Exit')) {
-                    action = 'closed';
+                    action = 'exited';
                 } else if (option.includes('Reverse')) {
-                    action = 'reversed';
+                    action = 'flipped';
                 } else {
-                    action = 'canceled';
+                    action = 'cleared';
                 }
-                //alert(`Successfully ${action} orders for ${symbol} on ${result.accounts_affected} accounts.`);
+                
+                const accounts = result.accounts_affected || 0;
+                showToast(`Successfully ${action} ${symbol} positions on ${accounts} account${accounts !== 1 ? 's' : ''}`, 'success');
+                
+                // Refresh account data to show updated positions
+                fetchAccountData();
             })
             .catch(error => {
                 console.error('Error executing action:', error);
-                alert('Error executing action. See console for details.');
+                showToast('Error executing action. See console for details.', 'error');
             });
         }
         

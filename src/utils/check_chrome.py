@@ -113,6 +113,7 @@ def get_chrome_startup_args(port, profile_dir, target_url="https://trader.tradov
     """Get standardized Chrome startup arguments"""
     return [
         "--remote-debugging-port=" + str(port),
+        "--remote-allow-origins=*",
         "--user-data-dir=" + str(profile_dir),
         "--no-first-run",
         "--no-default-browser-check", 

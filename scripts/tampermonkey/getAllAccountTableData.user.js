@@ -1,6 +1,14 @@
 // Function to get account summary data with DOM Intelligence validation
 function getAllAccountTableData() {
   console.log('🔍 DOM Intelligence: Starting getAllAccountTableData with validation');
+  console.log('🔍 Current URL:', window.location.href);
+  console.log('🔍 Document ready state:', document.readyState);
+  
+  // Check if we're on the right page
+  if (!window.location.href.includes('tradovate')) {
+    console.error('❌ Not on Tradovate page! URL:', window.location.href);
+    return JSON.stringify([]);
+  }
   
   // STEP 1: Validate that data tables exist
   console.log('🔍 Pre-validation: Checking for data tables');
@@ -33,6 +41,31 @@ function getAllAccountTableData() {
   
   const tables = document.querySelectorAll(tableSelector);
   console.log(`✅ Found ${tables.length} data tables`);
+  
+  // Additional debugging - check what elements exist on the page
+  console.log('🔍 Debug: Checking for any table-like elements on page');
+  const debugSelectors = [
+    'table',
+    '[role="table"]',
+    '.table',
+    '.data-table',
+    '.fixedDataTable',
+    '.public_fixedDataTable_main',
+    'div[class*="table"]',
+    'div[class*="Table"]'
+  ];
+  
+  for (const selector of debugSelectors) {
+    const elements = document.querySelectorAll(selector);
+    if (elements.length > 0) {
+      console.log(`✅ Found ${elements.length} elements with selector: ${selector}`);
+      if (elements.length <= 3) {
+        elements.forEach((el, idx) => {
+          console.log(`   Element ${idx}: ${el.tagName}, classes: ${el.className}`);
+        });
+      }
+    }
+  }
   
   // STEP 2: Look for the table with account headers with validation
   console.log('🔍 Pre-validation: Searching for account table headers');

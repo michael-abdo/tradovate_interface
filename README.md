@@ -28,6 +28,11 @@ trading/
 ├── config/                   # Configuration files
 ├── scripts/                  # Utility scripts (ngrok, monitoring)
 ├── logs/                     # Application logs
+├── organized/               # Clean organized structure
+│   ├── debug/              # Debug scripts and utilities
+│   ├── tests/integration/  # Integration test files
+│   ├── docs/              # Comprehensive documentation
+│   └── archive/           # Historical/archived components
 ├── organized/                # Organized project structure
 │   ├── docs/                 # ALL documentation
 │   ├── tests/                # ALL test files

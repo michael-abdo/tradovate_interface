@@ -86,55 +86,162 @@ def inject_account_data_function():
 def dashboard():
     return render_template('dashboard.html')
 
+# API endpoint to reinitialize connections
+@app.route('/api/reinit-connections', methods=['POST'])
+def reinit_connections():
+    """Force reinitialize all Chrome connections"""
+    global controller
+    
+    print(f"\n[Reinit] Starting reinitialization at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"[Reinit] Current connections: {len(controller.connections)}")
+    
+    # Clear existing connections
+    controller.connections = []
+    
+    # Reinitialize
+    controller.initialize_connections()
+    
+    result = {
+        'status': 'success',
+        'connections_found': len(controller.connections),
+        'connections': []
+    }
+    
+    for conn in controller.connections:
+        result['connections'].append({
+            'account_name': conn.account_name,
+            'port': conn.port,
+            'has_tab': bool(conn.tab)
+        })
+    
+    print(f"[Reinit] After reinitialization: {len(controller.connections)} connections")
+    return jsonify(result)
+
+# API endpoint to test Chrome connections
+@app.route('/api/test-connections', methods=['GET'])
+def test_connections():
+    """Test endpoint to verify Chrome connections are working"""
+    test_results = []
+    
+    print(f"\n[Test Connections] Starting test at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"[Test Connections] Total connections: {len(controller.connections)}")
+    
+    for i, conn in enumerate(controller.connections):
+        result = {
+            'index': i,
+            'account_name': conn.account_name,
+            'port': conn.port,
+            'has_tab': bool(conn.tab),
+            'url': None,
+            'title': None,
+            'ready_state': None,
+            'error': None
+        }
+        
+        if conn.tab:
+            try:
+                # Test 1: Get URL
+                url_result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code="window.location.href",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Get URL"
+                )
+                if url_result.success:
+                    result['url'] = url_result.value
+                
+                # Test 2: Get title
+                title_result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code="document.title",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Get title"
+                )
+                if title_result.success:
+                    result['title'] = title_result.value
+                
+                # Test 3: Get ready state
+                ready_result = safe_evaluate(
+                    tab=conn.tab,
+                    js_code="document.readyState",
+                    operation_type=OperationType.NON_CRITICAL,
+                    description="Get ready state"
+                )
+                if ready_result.success:
+                    result['ready_state'] = ready_result.value
+                    
+            except Exception as e:
+                result['error'] = str(e)
+        
+        test_results.append(result)
+        print(f"[Test Connections] Connection {i}: {result}")
+    
+    return jsonify(test_results)
+
 # API endpoint to get all account data
 @app.route('/api/accounts', methods=['GET'])
 def get_accounts():
+    print(f"\n[Accounts API] ==> Starting get_accounts at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"[Accounts API] Total controller connections: {len(controller.connections)}")
     account_data = []
+    
+    # Check if we have any connections at all
+    if not controller.connections:
+        print("[Accounts API] ERROR: No connections available in controller")
+        print("[Accounts API] Attempting to reinitialize connections...")
+        controller.initialize_connections()
+        print(f"[Accounts API] After reinitialization: {len(controller.connections)} connections")
     
     # Fetch data from all tabs
     for i, conn in enumerate(controller.connections):
+        print(f"\n[Accounts API] Processing connection {i}: {conn.account_name} on port {conn.port}")
         if conn.tab:
             try:
-                # Inject the phase analysis logic from autoriskManagement.js
+                # Skip autorisk injection for now due to Chrome communication issues
+                print(f"[Accounts API] Skipping autorisk injection for {conn.account_name} (fixing Chrome communication)")
+                
+                # Use direct tab evaluation instead of safe_evaluate for now
                 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                autorisk_path = os.path.join(project_root, 'scripts/tampermonkey/autoriskManagement.js')
-                with open(autorisk_path, 'r') as file:
-                    autorisk_js = file.read()
-                
-                # Just inject the entire autorisk script and call getTableData directly
-                print(f"[Accounts API] Injecting phase logic for {conn.account_name}")
-                safe_evaluate(
-                tab=conn.tab,
-                js_code=autorisk_js,
-                operation_type=OperationType.NON_CRITICAL,
-                description="Chrome operation"
-            )
-                
-                # First, inject the getAllAccountTableData function
                 account_data_path = os.path.join(project_root, 
                                        'scripts/tampermonkey/getAllAccountTableData.user.js')
                 with open(account_data_path, 'r') as file:
                     get_account_data_js = file.read()
                 
-                # Inject the getAllAccountTableData function
-                inject_result = safe_evaluate(
-                    tab=conn.tab,
-                    js_code=get_account_data_js,
-                    operation_type=OperationType.NON_CRITICAL,
-                    description=f"Inject getAllAccountTableData into {conn.account_name}"
-                )
-                
-                if not inject_result.success:
-                    print(f"[Accounts API] Failed to inject getAllAccountTableData: {inject_result.error}")
+                print(f"[Accounts API] Injecting getAllAccountTableData directly for {conn.account_name}")
+                # Use direct tab evaluation to bypass Chrome communication issues
+                try:
+                    inject_result = conn.tab.Runtime.evaluate(expression=get_account_data_js)
+                    if inject_result and 'exceptionDetails' in inject_result:
+                        print(f"[Accounts API] Failed to inject getAllAccountTableData: {inject_result.get('exceptionDetails', {})}")
+                        continue
+                    print(f"[Accounts API] Successfully injected getAllAccountTableData for {conn.account_name}")
+                except Exception as e:
+                    print(f"[Accounts API] Exception injecting getAllAccountTableData: {e}")
                     continue
                 
-                # Execute the getAllAccountTableData() function with DOM Intelligence validation
-                result = safe_evaluate(
-                    tab=conn.tab,
-                    js_code="getAllAccountTableData()",
-                    operation_type=OperationType.CRITICAL,
-                    description=f"Get account table data for {conn.account_name}"
-                )
+                # Execute the getAllAccountTableData() function directly
+                print(f"[Accounts API] Executing getAllAccountTableData() for {conn.account_name}")
+                try:
+                    result = conn.tab.Runtime.evaluate(expression="getAllAccountTableData()")
+                    if result and 'exceptionDetails' in result:
+                        print(f"[Accounts API] Failed to execute getAllAccountTableData: {result.get('exceptionDetails', {})}")
+                        continue
+                    
+                    # Extract the result value
+                    result_value = result.get('result', {}).get('value', '[]')
+                    print(f"[Accounts API] Got result from {conn.account_name}: {result_value[:100]}...")
+                    
+                    # Create a mock OperationResult object for compatibility
+                    class MockResult:
+                        def __init__(self, success, value):
+                            self.success = success
+                            self.value = value
+                    
+                    result = MockResult(True, result_value)
+                    
+                except Exception as e:
+                    print(f"[Accounts API] Exception executing getAllAccountTableData: {e}")
+                    continue
                 
                 print(f"[Accounts API] Raw result for {conn.account_name}: {result}")
                 
@@ -145,6 +252,16 @@ def get_accounts():
                         print(f"[Accounts API] Parsed data for {conn.account_name}: {len(tab_data) if tab_data else 0} rows")
                         
                         if not tab_data:
+                            print(f"[Accounts API] WARNING: No data returned for {conn.account_name}")
+                            print(f"[Accounts API] Checking tab URL...")
+                            url_result = safe_evaluate(
+                                tab=conn.tab,
+                                js_code="window.location.href",
+                                operation_type=OperationType.NON_CRITICAL,
+                                description="Get current URL"
+                            )
+                            if url_result.success:
+                                print(f"[Accounts API] Tab URL: {url_result.value}")
                             continue
                             
                         # Add account identifier to each item
@@ -170,10 +287,20 @@ def get_accounts():
                     except json.JSONDecodeError as e:
                         print(f"Error parsing JSON from {conn.account_name}: {e}")
                 else:
-                    print(f"No valid result structure for {conn.account_name}")
+                    print(f"[Accounts API] ERROR: No valid result structure for {conn.account_name}")
+                    if result:
+                        print(f"[Accounts API] Result details - success: {result.success}, error: {result.error}")
+                    else:
+                        print(f"[Accounts API] Result is None")
             except Exception as e:
-                print(f"Error getting account data from {conn.account_name}: {e}")
+                print(f"[Accounts API] EXCEPTION getting account data from {conn.account_name}: {e}")
+                import traceback
+                traceback.print_exc()
+        else:
+            print(f"[Accounts API] WARNING: No tab available for connection {i}: {conn.account_name}")
     
+    print(f"\n[Accounts API] Total account data collected: {len(account_data)} rows")
+    print(f"[Accounts API] Returning data: {json.dumps(account_data)[:200]}...")
     return jsonify(account_data)
 
 # API endpoint to update phase status in Chrome tabs

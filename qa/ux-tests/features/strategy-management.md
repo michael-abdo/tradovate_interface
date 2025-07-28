@@ -20,7 +20,7 @@
 
 ---
 
-## Strategy Management Tests
+## Strategy Management Tests (NQ Only)
 
 1. Navigate to the demo dashboard at https://mike-development.ngrok-free.app
    * Expect to see "Tradovate Account Dashboard" title at top of page
@@ -38,45 +38,85 @@
 
 4. Test strategy selection functionality
    * Click on any account's strategy dropdown
-   * Should be able to select different strategy options from the dropdown
+   * Select a different strategy from the dropdown
    * ✅ Pass | ❌ Fail + reason
 
-5. Check strategy assignment per account
+5. Verify data refresh after strategy change
+   * Click "Refresh Data" button
+   * Verify the selected strategy is still displayed for the account
+   * Check that strategy assignment persists after refresh
+   * ✅ Pass | ❌ Fail + reason
+
+6. Check strategy assignment per account
    * Each account row shows its currently assigned strategy
    * Strategy dropdowns should be functional for each account
    * ✅ Pass | ❌ Fail + reason
 
-6. Test default strategy assignment
-   * "DEFAULT" strategy should be available and selectable
+7. Test multiple strategy assignments
+   * Assign different strategies to multiple accounts
+   * Click "Save All Strategy Mappings" button if available
+   * ✅ Pass | ❌ Fail + reason
+
+8. Verify data refresh after multiple strategy changes
+   * Click "Refresh Data" button
+   * Verify all strategy assignments are correctly displayed
+   * Each account should show its assigned strategy
+   * ✅ Pass | ❌ Fail + reason
+
+9. Test default strategy assignment
+   * Select "DEFAULT" strategy for an account
    * Should handle accounts not assigned to specific strategies
    * ✅ Pass | ❌ Fail + reason
 
-7. Verify L/H strategy option
-   * "L/H" strategy should be available in selection interface
-   * Should be distinct from other strategy options
-   * ✅ Pass | ❌ Fail + reason
-
-8. Test Velocity Graph strategy variants
-   * Should see "Velocity Graph - Rebound" and "Velocity Graph - Velocity Push"
-   * Both variants should be selectable as separate strategies
-   * ✅ Pass | ❌ Fail + reason
-
-9. Check strategy application to accounts
-   * Strategy changes should affect account routing or behavior
-   * Interface should show which accounts use which strategies
-   * ✅ Pass | ❌ Fail + reason
-
-10. Test strategy persistence
-    * Selected strategy settings should persist across page refreshes
-    * Strategy mappings should be maintained during dashboard reload
+10. Verify L/H strategy option
+    * Select "L/H" strategy for an account
+    * Should be distinct from other strategy options
     * ✅ Pass | ❌ Fail + reason
 
-11. Verify strategy integration with trading actions
-    * Trading actions should respect current strategy assignments
-    * Strategy selection should influence trade routing behavior
+11. Test Velocity Graph strategy variants
+    * Select "Velocity Graph - Rebound" for one account
+    * Select "Velocity Graph - Velocity Push" for another account
+    * Both variants should be selectable as separate strategies
     * ✅ Pass | ❌ Fail + reason
 
-12. Test strategy management error handling
+12. Verify data refresh with different strategy types
+    * Click "Refresh Data" button
+    * All strategy types should display correctly:
+      - DEFAULT
+      - L/H
+      - Velocity Graph variants
+    * ✅ Pass | ❌ Fail + reason
+
+13. Check strategy application to accounts
+    * Strategy changes should affect account routing or behavior
+    * Interface should show which accounts use which strategies
+    * ✅ Pass | ❌ Fail + reason
+
+14. Test strategy persistence after NQ trading actions
+    * Enter "NQ" in Symbol field (only test with NQ)
+    * Execute a trade with specific strategy assigned
+    * Click "Refresh Data" button
+    * Strategy assignment should remain unchanged after NQ trade
+    * ✅ Pass | ❌ Fail + reason
+
+15. Test rapid strategy changes with refresh
+    * Change strategies for multiple accounts quickly
+    * Click "Refresh Data" after each change
+    * All changes should be reflected accurately
+    * ✅ Pass | ❌ Fail + reason
+
+16. Verify strategy integration with NQ trading actions
+    * NQ trading actions should respect current strategy assignments
+    * Strategy selection should influence NQ trade routing behavior
+    * ✅ Pass | ❌ Fail + reason
+
+17. Test refresh button during strategy updates
+    * While making strategy changes, click "Refresh Data"
+    * Button should work smoothly without interrupting selections
+    * Data should update without losing unsaved changes
+    * ✅ Pass | ❌ Fail + reason
+
+18. Test strategy management error handling
     * Interface should handle invalid strategy selections gracefully
     * Should provide feedback when strategy changes are applied
     * ✅ Pass | ❌ Fail + reason
@@ -86,7 +126,7 @@
 ### QA Report
 
 ✅ **All tests passed:** 
-Strategy management interface functions correctly, strategy selection works, mapping controls are accessible, all strategy variants available, integration with trading actions works
+Strategy management interface functions correctly for NQ trading, strategy selection works, mapping controls are accessible, all strategy variants available, integration with NQ trading actions works
 
 ❌ **Failed tests:** 
 Step [#]: [Describe exact failure]

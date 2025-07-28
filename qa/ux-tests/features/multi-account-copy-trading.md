@@ -20,7 +20,7 @@
 
 ---
 
-## Multi-Account Copy Trading Tests
+## Multi-Account Copy Trading Tests (NQ Only)
 
 1. Navigate to the demo dashboard at https://mike-development.ngrok-free.app
    * Expect to see "Tradovate Account Dashboard" title at top of page
@@ -34,8 +34,8 @@
    * Should find section with Symbol, Quantity, Target Ticks, Stop Ticks input fields
    * ✅ Pass | ❌ Fail + reason
 
-4. Set up copy trading parameters
-   * Enter "NQ" in Symbol field
+4. Set up copy trading parameters for NQ
+   * Enter "NQ" in Symbol field (only test with NQ)
    * Enter "1" in Quantity field
    * Check both Target and Stop checkboxes
    * ✅ Pass | ❌ Fail + reason
@@ -47,29 +47,59 @@
 
 6. Execute copy trade across all accounts
    * Click green "In" button
-   * Should see success message indicating action executed on multiple accounts
+   * Visual feedback: positions will update in the account table after refreshing
    * ✅ Pass | ❌ Fail + reason
 
-7. Verify trade execution feedback
-   * Should see status message showing number of accounts affected
-   * Message should indicate successful execution across multiple accounts
+7. Verify data refresh after copy trade execution
+   * Click "Refresh Data" button
+   * Verify all accounts in the table show updated positions
+   * Check that all accounts have identical positions (copy trading verification)
+   * Visual feedback: position quantities and P&L values update across all accounts
    * ✅ Pass | ❌ Fail + reason
 
 8. Test individual account selection
    * Click account dropdown and select a specific account
    * Click "Out" button
-   * Should see success message for single account execution
+   * Visual feedback: selected account's position will flatten after refreshing
    * ✅ Pass | ❌ Fail + reason
 
-9. Test "Exit All" functionality across all accounts
-   * Ensure "All Accounts" is selected in dropdown
-   * Click "Exit All" button
-   * Should see confirmation of exit actions across all accounts
+9. Verify data refresh after individual account action
+   * Click "Refresh Data" button
+   * Verify only the selected account shows position change
+   * Other accounts should maintain their previous positions
    * ✅ Pass | ❌ Fail + reason
 
-10. Verify account status updates
+10. Test "Exit All" functionality across all accounts
+    * Ensure "All Accounts" is selected in dropdown
+    * Click "Exit All" button
+    * Visual feedback: all positions will flatten to zero after refreshing
+    * ✅ Pass | ❌ Fail + reason
+
+11. Verify data refresh after "Exit All"
+    * Click "Refresh Data" button
+    * Verify all accounts show zero positions
+    * P&L values should be updated for all accounts
+    * ✅ Pass | ❌ Fail + reason
+
+12. Verify account status updates
     * Check that account table shows updated information after trades
     * P&L values should reflect recent trading activity
+    * ✅ Pass | ❌ Fail + reason
+
+13. Test copy trading synchronization for NQ
+    * Execute a new "In" trade with "All Accounts" selected (NQ symbol)
+    * Click "Refresh Data" button
+    * Verify all accounts show identical:
+      - Position quantities for NQ
+      - Entry prices (should be similar)
+      - P&L calculations
+    * ✅ Pass | ❌ Fail + reason
+
+14. Test refresh button during rapid trading
+    * Execute multiple trades in quick succession
+    * Click "Refresh Data" between each trade
+    * Data should update correctly without errors
+    * All accounts should remain synchronized
     * ✅ Pass | ❌ Fail + reason
 
 ---
