@@ -386,8 +386,9 @@ def validate_pychrome_response(result: dict, expected_type: str = None) -> dict:
     # Check for undefined results
     if result_obj.get("type") == "undefined":
         return {
-            "status": ResponseStatus.VALIDATION_ERROR,
-            "error": "JavaScript returned undefined",
+            "status": ResponseStatus.SUCCESS,
+            "value": None,  # Python None for JS undefined
+            "js_type": "undefined",
             "retry_recommended": False
         }
     
