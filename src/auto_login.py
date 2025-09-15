@@ -378,6 +378,45 @@ class ChromeInstance:
             print(f"Stopping login monitor for {self.username}")
             self.login_monitor_thread.join(timeout=2)
             
+        # Try graceful Chrome shutdown through DevTools protocol first
+        if self.browser:
+            try:
+                print(f"[CHROME_STOP] Attempting graceful Chrome shutdown for port {self.port}...")
+                # Close all tabs first
+                if self.tab:
+                    try:
+                        print(f"[CHROME_STOP] About to close individual tab...")
+                        self.tab.Page.close()
+                        print(f"[CHROME_STOP] Individual tab closed successfully")
+                    except Exception as tab_e:
+                        print(f"[CHROME_STOP] Error closing individual tab: {tab_e}")
+                
+                # Close the browser gracefully with timeout protection
+                print(f"[CHROME_STOP] About to call browser.close_all_tabs()...")
+                import threading
+                import signal
+                
+                def close_tabs_with_timeout():
+                    self.browser.close_all_tabs()
+                
+                # Create a thread for the close_all_tabs operation
+                close_thread = threading.Thread(target=close_tabs_with_timeout)
+                close_thread.daemon = True
+                close_thread.start()
+                close_thread.join(timeout=3.0)  # 3 second timeout
+                
+                if close_thread.is_alive():
+                    print(f"[CHROME_STOP] WARNING: browser.close_all_tabs() timed out after 3 seconds")
+                else:
+                    print(f"[CHROME_STOP] browser.close_all_tabs() completed successfully")
+                
+                print(f"[CHROME_STOP] About to sleep 0.5s for Chrome graceful shutdown...")
+                time.sleep(0.5)  # Give Chrome time to close gracefully
+                print(f"[CHROME_STOP] Sleep completed, graceful shutdown finished")
+            except Exception as e:
+                print(f"[CHROME_STOP] Error during graceful Chrome shutdown: {e}")
+        
+        # Then terminate the process
         if self.process:
             try:
                 self.process.terminate()

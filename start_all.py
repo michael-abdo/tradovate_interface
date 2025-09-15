@@ -51,14 +51,15 @@ chrome_termination_lock = threading.Lock()
 
 def run_auto_login():
     """Run the auto_login process in background"""
+    global auto_login_process
     print("Starting auto-login process in background...")
     
     try:
         # Start auto_login as a background process
         auto_login_path = os.path.join(project_root, "src", "auto_login.py")
-        process = subprocess.Popen([sys.executable, auto_login_path])
+        auto_login_process = subprocess.Popen([sys.executable, auto_login_path])
         
-        print(f"✅ Auto-login started (PID: {process.pid})")
+        print(f"✅ Auto-login started (PID: {auto_login_process.pid})")
         
         # Give it time to start Chrome instances
         print("Waiting 10 seconds for Chrome instances to start...")
@@ -210,47 +211,73 @@ def cleanup_chrome_instances():
     """
     global chrome_processes, chrome_termination_lock
     
+    print(f"[CLEANUP] ENTRY: Starting cleanup_chrome_instances...")
+    print(f"[CLEANUP] About to acquire chrome_termination_lock...")
+    
     with chrome_termination_lock:
+        print(f"[CLEANUP] Acquired chrome_termination_lock successfully")
+        
         # Check if we've already cleaned up
+        print(f"[CLEANUP] Checking chrome_processes list: {len(chrome_processes) if chrome_processes else 0} processes")
         if not chrome_processes:
+            print(f"[CLEANUP] No chrome processes to clean up, returning early")
             return
             
-        print("\nShutting down Chrome instances...")
+        print(f"[CLEANUP] Starting shutdown of {len(chrome_processes)} Chrome instances...")
         
         # First try graceful termination through auto_login process if available
+        print(f"[CLEANUP] Checking auto_login_process: {auto_login_process is not None}")
+        if auto_login_process:
+            poll_result = auto_login_process.poll()
+            print(f"[CLEANUP] auto_login_process.poll() = {poll_result}")
+            
         if auto_login_process and auto_login_process.poll() is None:
             try:
-                print("Sending termination signal to auto_login process...")
+                print(f"[CLEANUP] About to send termination signal to auto_login process (PID: {auto_login_process.pid})...")
                 if platform.system() == "Windows":
                     auto_login_process.terminate()
+                    print(f"[CLEANUP] Called terminate() on Windows")
                 else:
                     auto_login_process.send_signal(signal.SIGINT)
-                # Give it a moment to clean up
+                    print(f"[CLEANUP] Sent SIGINT signal on Unix")
+                
+                print(f"[CLEANUP] About to wait for auto_login process (timeout=5s)...")
                 auto_login_process.wait(timeout=5)
+                print(f"[CLEANUP] auto_login process wait completed successfully")
             except Exception as e:
-                print(f"Error stopping auto_login process: {e}")
+                print(f"[CLEANUP] ERROR stopping auto_login process: {e}")
+        else:
+            print(f"[CLEANUP] Skipping auto_login process termination (not running)")
         
         # Fallback: Directly terminate Chrome processes we've tracked
-        for pid in chrome_processes:
+        print(f"[CLEANUP] About to terminate {len(chrome_processes)} Chrome processes directly...")
+        for i, pid in enumerate(chrome_processes):
             try:
-                print(f"Terminating Chrome process with PID: {pid}")
+                print(f"[CLEANUP] Terminating Chrome process {i+1}/{len(chrome_processes)} with PID: {pid}")
                 if platform.system() == "Windows":
-                    subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True)
+                    result = subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True)
+                    print(f"[CLEANUP] taskkill result for PID {pid}: {result.returncode}")
                 else:
                     os.kill(pid, signal.SIGTERM)
+                    print(f"[CLEANUP] Sent SIGTERM to PID {pid}")
             except Exception as e:
-                print(f"Error terminating Chrome process {pid}: {e}")
+                print(f"[CLEANUP] ERROR terminating Chrome process {pid}: {e}")
         
         # Last resort: Use pkill as a safety net (NEVER touch port 9222)
         # Only target specific trading ports to comply with CLAUDE.md Rule #0
+        print(f"[CLEANUP] About to run targeted pkill operations...")
         try:
             if platform.system() != "Windows":
-                print("Running targeted pkill for ports 9223+ only...")
+                print(f"[CLEANUP] Running targeted pkill for ports 9223+ only...")
                 # Kill only specific ports 9223, 9224, 9225, etc - NEVER 9222
                 for port in [9223, 9224, 9225, 9226, 9227, 9228, 9229, 9230]:
-                    subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"], capture_output=True)
+                    print(f"[CLEANUP] Running pkill for port {port}...")
+                    result = subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"], capture_output=True)
+                    print(f"[CLEANUP] pkill result for port {port}: {result.returncode}")
+            else:
+                print(f"[CLEANUP] Skipping pkill on Windows")
         except Exception as e:
-            print(f"Error running pkill: {e}")
+            print(f"[CLEANUP] ERROR running pkill: {e}")
             
         # Clear the list after termination
         chrome_processes.clear()
@@ -258,8 +285,15 @@ def cleanup_chrome_instances():
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
-    print(f"\nReceived signal {sig}, initiating graceful shutdown...")
-    cleanup_chrome_instances()
+    print(f"\n[SIGNAL_HANDLER] ENTRY: Received signal {sig}, initiating graceful shutdown...")
+    print(f"[SIGNAL_HANDLER] About to call cleanup_chrome_instances()...")
+    try:
+        cleanup_chrome_instances()
+        print(f"[SIGNAL_HANDLER] cleanup_chrome_instances() completed successfully")
+    except Exception as e:
+        print(f"[SIGNAL_HANDLER] ERROR in cleanup_chrome_instances(): {e}")
+    
+    print(f"[SIGNAL_HANDLER] About to call sys.exit(0)...")
     sys.exit(0)
 
 def show_watchdog_status():
@@ -280,13 +314,6 @@ def show_watchdog_status():
 def main():
     global auto_login_process
     
-    # NOTE: Cleanup handlers disabled - Chrome instances will persist after script exit
-    # This allows trading to continue even if dashboard script is stopped
-    # Uncomment below to enable cleanup on script exit:
-    # atexit.register(cleanup_chrome_instances)
-    # signal.signal(signal.SIGINT, signal_handler)
-    # signal.signal(signal.SIGTERM, signal_handler)
-    
     parser = argparse.ArgumentParser(description="Start the complete Tradovate Interface stack")
     parser.add_argument("--wait", type=int, default=15, 
                         help="Seconds to wait between auto-login and dashboard start (default: 15)")
@@ -296,7 +323,23 @@ def main():
                         help="Disable Chrome Process Watchdog monitoring")
     parser.add_argument("--ngrok", action="store_true",
                         help="Auto-start ngrok tunnel for public dashboard access")
+    parser.add_argument("--safe-shutdown", action="store_true",
+                        help="Enable safe Chrome shutdown (Chrome instances close with script)")
     args = parser.parse_args()
+    
+    # Configure cleanup handlers based on --safe-shutdown flag
+    if args.safe_shutdown:
+        # NOTE: Safe shutdown enabled - Chrome instances will be properly closed
+        # This prevents the "restore pages" message on next startup
+        print("🛡️  Safe Chrome shutdown: ENABLED - Chrome instances will close with script")
+        atexit.register(cleanup_chrome_instances)
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
+    else:
+        # NOTE: Safe shutdown disabled (default) - Chrome instances will persist after script exit
+        # This allows trading to continue even if dashboard script is stopped
+        print("⚠️  Safe Chrome shutdown: DISABLED (default) - Chrome instances will persist after exit")
+        print("   Use --safe-shutdown flag to enable cleanup on exit")
     
     # Show watchdog status
     if not args.no_watchdog:
