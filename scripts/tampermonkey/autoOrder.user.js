@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Auto Order
 // @namespace    http://tampermonkey.net/
-// @version      5.3
+// @version      5.4
 // @description  Tampermonkey UI for bracket auto trades with TP/SL checkboxes
 // @author       You
-// @match        https://trader.tradovate.com/
+// @match        https://trader.tradovate.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tradovate.com
 // @grant        none
 // @updateURL    http://localhost:8080/AutoOrder.user.js
@@ -485,10 +485,15 @@
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
         async function updateInputValue(selector, value) {
-            // wait for the live, visible field
+            // scope to the visible, active trading ticket
+            const ticket = [...document.querySelectorAll('.trading-ticket')]
+            .find(t => t.offsetParent);
+            if (!ticket) return console.error('No visible trading ticket');
+
+            // find a live, enabled input matching selector inside this ticket
             let input;
             for (let i = 0; i < 25; i++) {
-                input = [...document.querySelectorAll(selector)]
+                input = [...ticket.querySelectorAll(selector)]
                     .find(el => el.offsetParent && !el.disabled);
                 if (input) break;
                 await delay(100);
@@ -497,20 +502,30 @@
 
             const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;
 
-            // write-verify loop – commit with Enter so Tradovate locks the value
+            // Special handling for Tradovate combobox: seed when empty so it accepts typing
+            const isCombo = input.closest('.select-input.combobox');
+            if (isCombo && !input.value) {
+                // open dropdown and click the first item to "activate" the field
+                const btn = isCombo.querySelector('.btn');
+                btn?.click();
+                await delay(150);
+                const first = isCombo.querySelector('.dropdown-menu li');
+                first?.click();
+                await delay(150);
+            }
+
+            // write-verify loop with Enter to commit
             for (let tries = 0; tries < 3; tries++) {
                 input.focus();
                 setVal.call(input, value);
-                ['input','change'].forEach(ev =>
-                                           input.dispatchEvent(new Event(ev, { bubbles: true }))
-                                          );
+                input.dispatchEvent(new Event('input',  { bubbles: true }));
+                input.dispatchEvent(new Event('change', { bubbles: true }));
                 input.dispatchEvent(new KeyboardEvent('keydown', {
                     key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true
                 }));
-                input.blur();                      // force validation
-                await delay(300);                  // wait for repaint
-
-                if (+input.value === +value) break; // done
+                input.blur();
+                await delay(250);
+                if (`${input.value}`.trim() === `${value}`) break;
             }
         }
 
@@ -800,7 +815,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
     }
 
 
-    // helper – builds the front-quarter code for any root (e.g. 'NQ' → 'NQM5')
+    // helper – builds the front-quarter code for any root (e.g. 'NQ' → 'NQU5' or 'NQZ5' post-roll)
     function getFrontQuarter(root) {
         console.log(`getFrontQuarter called for root: "${root}"`);
         const { letter, yearDigit } = getQuarterlyCode();  // uses MONTH_CODES internally
@@ -812,46 +827,42 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
     function getMarketData(inputSymbol) {
         console.log(`getMarketData called for: "${inputSymbol}"`);
+
         const symbol = /^[A-Z]{1,3}$/.test(inputSymbol)
-            ? getFrontQuarter(inputSymbol)
-            : inputSymbol.toUpperCase();
+        ? getFrontQuarter(inputSymbol)
+        : inputSymbol.toUpperCase();
         console.log(`Using symbol: "${symbol}" for market data lookup`);
 
-        // 1️⃣ look for an existing row
-        console.log('Searching for symbol in data table rows');
-        const symbolCells = document.querySelectorAll('.symbol-main');
-        console.log(`Found ${symbolCells.length} symbol cells in the table`);
+        // Walk the fixedDataTable rows and match the Symbol column (first cell)
+        const root = document.querySelector('.quoteboard.module.data-table') || document;
+        const rows = root.querySelectorAll('.public_fixedDataTable_bodyRow');
 
-        let row = [...symbolCells]
-            .find(el => el.textContent.trim() === symbol)
-            ?.closest('.fixedDataTableRowLayout_rowWrapper');
+        let targetRow = null;
+        for (const row of rows) {
+            const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+            if (!cells.length) continue;
 
-        // 2️⃣ if missing, type the symbol into Tradovate’s search so it appears
-        if (row) {
-            console.log('Found matching row for symbol in data table');
-        } else {
+            const symCell = cells[0];
+            const cellText = (symCell.textContent || '').trim().toUpperCase();
+            if (cellText === symbol) {
+                targetRow = row;
+                break;
+            }
+        }
+
+        if (!targetRow) {
             console.error(`Row for symbol "${symbol}" not found in data table`);
             alert(`Cannot Find ${inputSymbol}`);
+            return null;
         }
 
-        if (!row) {
-            console.log('Aborting market data retrieval - no matching row');
-            return null; // still not there → abort
-        }
-
-        console.log('Extracting price data from cells');
-        const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
-        console.log(`Found ${cells.length} cells in the row`);
-
-        const bidPrice = cells[4]?.textContent.trim();
+        // Column order: [0]=Symbol, [1]=Last, [2]=Change, [3]=%Change, [4]=Bid, [5]=Offer, [6]=Open, [7]=High, [8]=Low, [9]=Total Vol.
+        const cells = targetRow.querySelectorAll('.public_fixedDataTableCell_cellContent');
+        const bidPrice   = cells[4]?.textContent.trim();
         const offerPrice = cells[5]?.textContent.trim();
-        console.log(`Extracted prices: bid=${bidPrice}, offer=${offerPrice}`);
 
-        return {
-            symbol,
-            bidPrice,
-            offerPrice
-        };
+        console.log(`Extracted prices for ${symbol}: bid=${bidPrice}, offer=${offerPrice}`);
+        return { symbol, bidPrice, offerPrice };
     }
     // --- FUTURES MONTH LETTERS (Jan-Dec) ---
     const MONTH_CODES = ['F','G','H','J','K','M','N','Q','U','V','X','Z'];
@@ -869,38 +880,52 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
     }
 
     /**
- * Returns the next quarterly contract (Mar (H), Jun (M), Sep (U), Dec (Z)).
- * Example: 2025-04-23  →  { letter:'M', yearDigit:'5' }   // Jun 2025
- */
+     * Returns ACTIVE quarterly contract code honoring CME roll (Mon before 3rd Fri).
+     * We approximate with UTC date flip on the 3rd Friday; CT session flip occurs the evening prior.
+     * Example: On/after 2025-09-19 UTC → { letter:'Z', yearDigit:'5' }
+     */
     function getQuarterlyCode(date = new Date()) {
         console.log(`getQuarterlyCode called with date: ${date.toISOString()}`);
-        const quarters = [2, 5, 8, 11];                  // month indexes
-        const quarterLetters = { 2:'H', 5:'M', 8:'U', 11:'Z' };
-        console.log(`Current month index: ${date.getUTCMonth()}`);
+        const QUARTER_MONTHS = [2, 5, 8, 11];            // Mar, Jun, Sep, Dec
+        const LETTERS = { 2:'H', 5:'M', 8:'U', 11:'Z' };
+
+        function thirdFridayUTC(y, m) {
+            const d1 = new Date(Date.UTC(y, m, 1));
+            const firstDow = d1.getUTCDay();             // 0=Sun..5=Fri..6=Sat
+            const offsetToFri = (5 - firstDow + 7) % 7;  // days to first Friday
+            const day = 1 + offsetToFri + 14;            // 3rd Friday
+            return new Date(Date.UTC(y, m, day, 0, 0, 0));
+        }
 
         let y = date.getUTCFullYear();
         let m = date.getUTCMonth();
+        console.log(`Current month index: ${m}`);
         console.log(`Starting calculation with year=${y}, month=${m}`);
 
         // bump forward until we land on a quarter month
-        let iterations = 0;
-        while (!quarters.includes(m)) {
-            console.log(`Month ${m} is not a quarter month, advancing...`);
+        let iter = 0;
+        while (!QUARTER_MONTHS.includes(m)) {
             m++;
             if (m > 11) { m = 0; y++; }
-            // Prevent infinite loops
-            if (++iterations > 12) break;
+            if (++iter > 12) break;
         }
 
-        const result = { letter: quarterLetters[m], yearDigit: (y % 10) + '' };
+        const rollDate = thirdFridayUTC(y, m);
+        // If we've reached/passed the UTC roll date, advance to next quarter
+        if (date.getTime() >= rollDate.getTime()) {
+            m += 3;
+            if (m > 11) { m -= 12; y++; }
+        }
+
+        const result = { letter: LETTERS[m], yearDigit: (y % 10) + '' };
         console.log(`Calculated quarterly code: letter=${result.letter}, yearDigit=${result.yearDigit}`);
         return result;
     }
 
     // --- EXAMPLE: build an NQ front-quarter symbol ---
     console.log('Creating example front-quarter symbol');
-    const { letter, yearDigit } = getQuarterlyCode();  // e.g. M & 5
-    const nqFront = `NQ${letter}${yearDigit}`;         // → "NQM5"
+    const { letter, yearDigit } = getQuarterlyCode();
+    const nqFront = `NQ${letter}${yearDigit}`;
     console.log(`Example front-quarter symbol created: ${nqFront}`);
 
 })();
