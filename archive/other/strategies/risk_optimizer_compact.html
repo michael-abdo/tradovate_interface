@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Risk Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #e0e6ed;
+            height: 100vh;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #61dafb;
+            font-size: 1.8em;
+            padding: 10px 0;
+            flex-shrink: 0;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 15px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .results-section {
+                grid-column: span 2;
+            }
+        }
+
+        .card {
+            background: #1a1f36;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            color: #61dafb;
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .inputs-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            color: #a8b2d1;
+            font-size: 0.85em;
+            font-weight: 500;
+            cursor: help;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            margin-bottom: 8px;
+            background: #1a1f36;
+            border: 2px solid #61dafb;
+            border-radius: 6px;
+            padding: 10px;
+            width: 250px;
+            font-size: 0.9em;
+            line-height: 1.4;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        label:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            border: 6px solid transparent;
+            border-top-color: #61dafb;
+        }
+
+        .tooltip-example {
+            color: #61dafb;
+            font-style: italic;
+            margin-top: 6px;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 6px 8px;
+            border: 2px solid #2a3f5f;
+            border-radius: 4px;
+            background: #0a0e27;
+            color: #e0e6ed;
+            font-size: 14px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #61dafb;
+        }
+
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .key-metrics {
+            background: #2a3f5f;
+            border-radius: 8px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 0.8em;
+            color: #a8b2d1;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #61dafb;
+        }
+
+        .strategy-comparison {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .strategy-table-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        .strategy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .strategy-table th, .strategy-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #3a4f6f;
+        }
+
+        .strategy-table th {
+            background: #2a3f5f;
+            color: #61dafb;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .strategy-table tr:hover {
+            background: rgba(97, 218, 251, 0.1);
+        }
+
+        .recommended {
+            background: rgba(97, 218, 251, 0.2);
+        }
+
+        .recommendation-box {
+            background: rgba(97, 218, 251, 0.1);
+            border: 1px solid #61dafb;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .recommendation-box strong {
+            color: #61dafb;
+        }
+
+        .explanation-section {
+            margin-top: 15px;
+        }
+
+        .explanation-content {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .explanation-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3a4f6f;
+        }
+
+        .explanation-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .explanation-item strong {
+            color: #61dafb;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .explanation-item p {
+            margin-bottom: 8px;
+        }
+
+        .explanation-item ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .explanation-item li {
+            margin-bottom: 4px;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .collapsible:hover {
+            background-color: rgba(97, 218, 251, 0.1);
+            border-radius: 4px;
+            margin: -4px;
+            padding: 4px;
+        }
+
+        .collapse-icon {
+            font-size: 0.8em;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        #explanationContent {
+            max-height: 500px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 1;
+        }
+
+        #explanationContent.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e27;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a4f6f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trading Risk Optimizer</h1>
+        
+        <div class="main-grid">
+            <div class="card">
+                <h2>Income & Account</h2>
+                <div class="inputs-wrapper">
+                    <div class="input-group">
+                        <label for="hourlyIncome">Hourly Income ($)
+                            <span class="tooltip">
+                                Your actual hourly earnings from your job or business. This determines how quickly you can replace blown accounts.
+                                <span class="tooltip-example">Example: $60/hr = can buy a new $60 account every hour of work</span>
+                            </span>
+                        </label>
+                        <input type="number" id="hourlyIncome" value="60" min="1" step="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="accountCost">Account Cost ($)
+                            <span class="tooltip">
+                                The fee to purchase one trading evaluation account. Lower costs mean you can afford more attempts.
+                                <span class="tooltip-example">Example: $60 account = 1 hour of work at $60/hr</span>
+                            </span>
+                        </label>
+                        <input type="number" id="accountCost" value="60" min="1" step="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="workHours">Work Hours for Risk (adjustable)
+                            <span class="tooltip">
+                                How many hours of work you're willing to dedicate to funding account resets each day. This sets your daily risk budget.
+                                <span class="tooltip-example">Example: 2 hours × $60/hr = $120 daily budget = 2 accounts/day</span>
+                            </span>
+                        </label>
+                        <input type="number" id="workHours" value="2" min="0.5" max="12" step="0.5">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="baseLoss">Base Loss Size ($)
+                            <span class="tooltip">
+                                Your standard position size when trading at f=1.0. The optimizer will multiply this by the f-value for aggressive strategies.
+                                <span class="tooltip-example">Example: $1000 base × f=7 = $7000 per trade</span>
+                            </span>
+                        </label>
+                        <input type="number" id="baseLoss" value="1000" min="100" step="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Trading Parameters</h2>
+                <div class="inputs-wrapper">
+                    <div class="input-group">
+                        <label for="winRate">Win Rate (%)</label>
+                        <input type="number" id="winRate" value="51" min="1" max="100" step="0.1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="rewardRisk">Reward:Risk Ratio</label>
+                        <input type="number" id="rewardRisk" value="1" min="0.1" max="10" step="0.1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="setupsPerDay">Setups per Day</label>
+                        <input type="number" id="setupsPerDay" value="1" min="0.1" max="20" step="0.1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="drawdown">Drawdown Limit ($)</label>
+                        <input type="number" id="drawdown" value="7000" min="100" step="100">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="targetProfit">Target Profit ($)</label>
+                        <input type="number" id="targetProfit" value="20000" min="100" step="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card results-section">
+                <div class="key-metrics">
+                    <div class="metric">
+                        <div class="metric-label">Replace Time</div>
+                        <div class="metric-value" id="replaceTime">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Daily Budget</div>
+                        <div class="metric-value" id="dailyRiskBudget">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Optimal f</div>
+                        <div class="metric-value" id="optimalF">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Trade Risk</div>
+                        <div class="metric-value" id="perTradeRisk">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Monthly Cost</div>
+                        <div class="metric-value" id="monthlyCost">-</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">Max Resets/Day</div>
+                        <div class="metric-value" id="maxResets">-</div>
+                    </div>
+                </div>
+
+                <div class="card strategy-comparison">
+                    <h2>Strategy Comparison</h2>
+                    <div class="strategy-table-wrapper">
+                        <table class="strategy-table">
+                            <thead>
+                                <tr>
+                                    <th>Strategy</th>
+                                    <th>f</th>
+                                    <th>Risk</th>
+                                    <th>Buffer</th>
+                                    <th>P(Win)</th>
+                                    <th>Days</th>
+                                </tr>
+                            </thead>
+                            <tbody id="strategyTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="recommendation-box">
+                    <strong>Optimal Strategy:</strong> <span id="recommendation"></span>
+                </div>
+
+                <div class="card explanation-section">
+                    <h2 class="collapsible" onclick="toggleExplanation()">
+                        <span class="collapse-icon">▼</span>
+                        Why This Strategy? Understanding the Math
+                    </h2>
+                    <div class="explanation-content" id="explanationContent">
+                        <div class="explanation-item">
+                            <strong>The Core Insight:</strong>
+                            <p>When setups are limited but accounts are cheap relative to income, maximizing attempt frequency beats maximizing individual survival.</p>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <strong>Time Arbitrage:</strong>
+                            <p>You're trading <span id="timeToReplace">-</span> hours of work for a <span id="successChance">-</span>% chance to save <span id="daysSaved">-</span> days of trading. That's a <span id="timeROI">-</span>x return on time invested.</p>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <strong>The Formula:</strong>
+                            <p>Optimal f = maximize(f × P(success|f)) where:</p>
+                            <ul>
+                                <li>f = front-load factor (position size multiplier)</li>
+                                <li>P(success|f) = probability of reaching target before drawdown</li>
+                                <li>Higher f → fewer trades needed but lower survival probability</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <strong>Why Aggressive Works Here:</strong>
+                            <ul>
+                                <li>Limited setups (1/day) → opportunity cost dominates</li>
+                                <li>Cheap accounts ($60) → low replacement cost</li>
+                                <li>Decent income ($60/hr) → can afford multiple attempts</li>
+                                <li>Positive expectancy (51% @ 1:1) → math favors more attempts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateSuccessProbability(winRate, winsNeeded, lossesAllowed) {
+            const p = winRate / 100;
+            const q = 1 - p;
+            const ratio = q / p;
+            
+            if (Math.abs(p - 0.5) < 0.001) {
+                return lossesAllowed / (winsNeeded + lossesAllowed);
+            }
+            
+            const numerator = 1 - Math.pow(ratio, winsNeeded);
+            const denominator = 1 - Math.pow(ratio, winsNeeded + lossesAllowed);
+            return numerator / denominator;
+        }
+
+        function formatCurrency(value) {
+            return value >= 1000 ? `$${(value/1000).toFixed(1)}k` : `$${value.toFixed(0)}`;
+        }
+
+        function calculateOptimalF() {
+            // Get input values
+            const hourlyIncome = parseFloat(document.getElementById('hourlyIncome').value);
+            const accountCost = parseFloat(document.getElementById('accountCost').value);
+            const workHours = parseFloat(document.getElementById('workHours').value);
+            const winRate = parseFloat(document.getElementById('winRate').value);
+            const rewardRisk = parseFloat(document.getElementById('rewardRisk').value);
+            const setupsPerDay = parseFloat(document.getElementById('setupsPerDay').value);
+            const drawdown = parseFloat(document.getElementById('drawdown').value);
+            const targetProfit = parseFloat(document.getElementById('targetProfit').value);
+            const baseLoss = parseFloat(document.getElementById('baseLoss').value);
+
+            // Calculate derived values
+            const baseWin = baseLoss * rewardRisk;
+            const replaceTime = accountCost / hourlyIncome;
+            const dailyRiskBudget = hourlyIncome * workHours;
+            
+            // Update key metrics
+            document.getElementById('replaceTime').textContent = replaceTime.toFixed(1) + 'h';
+            document.getElementById('dailyRiskBudget').textContent = formatCurrency(dailyRiskBudget);
+            
+            // Calculate monthly cost and max resets
+            const tradingDaysPerMonth = 20; // Standard trading month
+            const monthlyCost = dailyRiskBudget * tradingDaysPerMonth;
+            const maxResetsPerDay = Math.floor(dailyRiskBudget / accountCost);
+            
+            document.getElementById('monthlyCost').textContent = formatCurrency(monthlyCost);
+            document.getElementById('maxResets').textContent = maxResetsPerDay;
+
+            // Calculate strategies
+            const maxF = drawdown / baseLoss;
+            const strategies = [
+                { name: 'Conservative', f: 1 },
+                { name: 'Safe', f: Math.min(2.3, maxF) },
+                { name: 'Moderate', f: Math.min(3.5, maxF) },
+                { name: 'Aggressive', f: Math.min(7, maxF) },
+                { name: 'Max', f: Math.min(maxF, 10) }
+            ].filter(s => s.f <= maxF && s.f > 0);
+
+            let tableHTML = '';
+            let recommendedStrategy = null;
+            let maxScore = -Infinity;
+
+            strategies.forEach(strategy => {
+                const perTradeRisk = strategy.f * baseLoss;
+                const lossesAllowed = Math.floor(drawdown / perTradeRisk);
+                const winsNeeded = Math.ceil(targetProfit / (strategy.f * baseWin));
+                const successProb = calculateSuccessProbability(winRate, winsNeeded, lossesAllowed);
+                
+                // Expected time calculation
+                const expectedTrades = winsNeeded / (winRate / 100);
+                const expectedDays = expectedTrades / setupsPerDay;
+                const effectiveExpectedDays = successProb > 0 ? expectedDays / successProb : Infinity;
+                strategy.effectiveExpectedDays = effectiveExpectedDays;
+                
+                // Score based on speed (f) and probability
+                const score = strategy.f * successProb;
+                
+                // Consider income constraint
+                const canAffordRetries = dailyRiskBudget >= accountCost * 2;
+                const adjustedScore = canAffordRetries ? score : score * Math.min(1, strategy.f / 3.5);
+                
+                if (adjustedScore > maxScore && lossesAllowed >= 1) {
+                    maxScore = adjustedScore;
+                    recommendedStrategy = strategy;
+                }
+
+                const isRecommended = strategy === recommendedStrategy;
+                
+                tableHTML += `
+                    <tr class="${isRecommended ? 'recommended' : ''}">
+                        <td>${strategy.name}</td>
+                        <td>${strategy.f.toFixed(1)}</td>
+                        <td>${formatCurrency(perTradeRisk)}</td>
+                        <td>${lossesAllowed}</td>
+                        <td>${(successProb * 100).toFixed(0)}%</td>
+                        <td>${effectiveExpectedDays < 100 ? effectiveExpectedDays.toFixed(1) : '∞'}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('strategyTable').innerHTML = tableHTML;
+
+            // Set final recommendation
+            if (recommendedStrategy) {
+                const finalF = recommendedStrategy.f;
+                document.getElementById('optimalF').textContent = finalF.toFixed(1);
+                document.getElementById('perTradeRisk').textContent = formatCurrency(finalF * baseLoss);
+                
+                const lossesAllowed = Math.floor(drawdown / (finalF * baseLoss));
+                const winsNeeded = Math.ceil(targetProfit / (finalF * baseWin));
+                
+                let recText = `f=${finalF.toFixed(1)} (${formatCurrency(finalF * baseLoss)}/trade). `;
+                recText += `${lossesAllowed} loss buffer, ${winsNeeded} wins to target. `;
+                
+                // Add time arbitrage insight
+                const conservativeDays = strategies.find(s => s.name === 'Conservative')?.effectiveExpectedDays || 40;
+                const timeSaved = conservativeDays - recommendedStrategy.effectiveExpectedDays;
+                recText += `Time arbitrage: ${timeSaved.toFixed(0)} days saved vs conservative. `;
+                
+                if (dailyRiskBudget < accountCost * 2) {
+                    recText += `⚠️ Limited by income - consider smaller f.`;
+                } else {
+                    const maxResets = Math.floor(dailyRiskBudget / accountCost);
+                    recText += `✓ Income supports ${maxResets} daily resets.`;
+                }
+                
+                document.getElementById('recommendation').textContent = recText;
+                
+                // Update explanation section with live values
+                const finalStrategy = strategies.find(s => s.f === finalF);
+                const successProb = finalStrategy ? calculateSuccessProbability(
+                    winRate, 
+                    Math.ceil(targetProfit / (finalF * baseWin)),
+                    Math.floor(drawdown / (finalF * baseLoss))
+                ) : 0;
+                
+                document.getElementById('timeToReplace').textContent = replaceTime.toFixed(1);
+                document.getElementById('successChance').textContent = (successProb * 100).toFixed(0);
+                document.getElementById('daysSaved').textContent = timeSaved.toFixed(0);
+                
+                const timeROI = timeSaved / replaceTime;
+                document.getElementById('timeROI').textContent = timeROI.toFixed(0);
+            }
+        }
+
+        // Add event listeners
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateOptimalF);
+        });
+
+        // Toggle explanation section
+        function toggleExplanation() {
+            const content = document.getElementById('explanationContent');
+            const icon = document.querySelector('.collapse-icon');
+            const h2 = document.querySelector('.collapsible');
+            
+            content.classList.toggle('collapsed');
+            h2.classList.toggle('collapsed');
+        }
+
+        // Initial calculation
+        calculateOptimalF();
+        
+        // Start with explanation collapsed
+        toggleExplanation();
+    </script>
+</body>
+</html>

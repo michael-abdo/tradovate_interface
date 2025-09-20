@@ -1,0 +1,21 @@
+# Barchart Web Scraper Requirements
+
+# Web scraping and automation
+selenium>=4.15.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Chrome WebDriver (install separately)
+# Download from: https://chromedriver.chromium.org/
+# Or install via: brew install chromedriver (on macOS)
+
+# Optional: For webdriver management
+webdriver-manager>=4.0.0
+
+# Data validation and testing
+pytest>=7.4.0
+pytest-mock>=3.11.0

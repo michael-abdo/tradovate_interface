@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Test</title>
+</head>
+<body>
+    <h1>SSE Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="data"></div>
+    
+    <script>
+        const statusDiv = document.getElementById('status');
+        const dataDiv = document.getElementById('data');
+        
+        function log(message) {
+            console.log(message);
+            statusDiv.innerHTML += '<br>' + message;
+        }
+        
+        log('Starting SSE connection...');
+        
+        const eventSource = new EventSource('http://localhost:6001/api/events');
+        
+        eventSource.onopen = function(event) {
+            log('[SSE] Connection opened successfully');
+        };
+        
+        eventSource.onmessage = function(event) {
+            log('[SSE] Default message: ' + event.data);
+        };
+        
+        eventSource.onerror = function(event) {
+            log('[SSE] Error occurred: ' + JSON.stringify(event));
+        };
+        
+        eventSource.addEventListener('connected', function(event) {
+            log('[SSE] Connected event: ' + event.data);
+        });
+        
+        eventSource.addEventListener('account_data', function(event) {
+            log('[SSE] Account data event received');
+            const data = JSON.parse(event.data);
+            log('Parsed data: ' + JSON.stringify(data, null, 2));
+            
+            if (data.accounts && data.accounts.length > 0) {
+                dataDiv.innerHTML = '<h2>Account Data Received:</h2><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            }
+        });
+    </script>
+</body>
+</html>

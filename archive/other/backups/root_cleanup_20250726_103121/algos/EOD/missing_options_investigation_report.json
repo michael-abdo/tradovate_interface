@@ -1,0 +1,16 @@
+{
+  "investigation_date": "2025-07-16 15:23:57.702222",
+  "findings": [
+    "trades/NQU5: 10 records",
+    "ohlcv-1s/NQU5: 10 records",
+    "ohlcv-1m/NQU5: 10 records",
+    "definition/NQU5: 1 records"
+  ],
+  "cme_confirms": "Q3C options exist for Wednesday Week 3",
+  "databento_status": "API working, symbol not found",
+  "next_steps": [
+    "Contact Databento support about CME weekly options symbols",
+    "Check if these options are included in their data feed",
+    "Verify exact symbol format for weekly options"
+  ]
+}

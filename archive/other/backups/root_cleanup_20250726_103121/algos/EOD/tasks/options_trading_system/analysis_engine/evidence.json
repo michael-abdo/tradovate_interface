@@ -1,0 +1,56 @@
+{
+  "task": "analysis_engine",
+  "type": "parent",
+  "timestamp": "2025-07-03T16:31:43.534828",
+  "integration_tests": [
+    {
+      "name": "child_validations",
+      "passed": false,
+      "details": "All 1 children validated: False"
+    },
+    {
+      "name": "engine_initialization",
+      "passed": true,
+      "details": "Engine initialized successfully: True"
+    },
+    {
+      "name": "individual_analyses",
+      "passed": false,
+      "error": "'AnalysisEngine' object has no attribute 'run_momentum_analysis'"
+    },
+    {
+      "name": "results_synthesis",
+      "passed": false,
+      "error": "'AnalysisEngine' object has no attribute 'run_momentum_analysis'"
+    },
+    {
+      "name": "full_analysis_engine",
+      "passed": false,
+      "details": {
+        "status": "success",
+        "successful_analyses": 0,
+        "primary_recommendations": 0,
+        "execution_time": 32.638326
+      }
+    }
+  ],
+  "status": "FAILED",
+  "evidence": {
+    "full_analysis_result": {
+      "status": "success",
+      "execution_time": 32.638326,
+      "successful_analyses": 0,
+      "primary_recommendations": 0,
+      "primary_algorithm": "nq_ev_analysis",
+      "best_nq_ev_trade": null
+    }
+  },
+  "child_validations": [
+    {
+      "task": "expected_value_analysis",
+      "status": "FAILED",
+      "tests_passed": 1,
+      "tests_total": 2
+    }
+  ]
+}

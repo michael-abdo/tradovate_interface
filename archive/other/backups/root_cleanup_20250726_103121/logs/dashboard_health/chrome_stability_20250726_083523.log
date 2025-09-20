@@ -1,0 +1,65 @@
+2025-07-26 08:35:23,622 - INFO - Loading environment-specific config for: production
+2025-07-26 08:35:23,622 - INFO - Applied production environment overrides
+2025-07-26 08:35:23,622 - INFO - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+2025-07-26 08:35:23,623 - INFO - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+2025-07-26 08:35:23,623 - INFO - Loaded startup monitoring configuration from config file
+2025-07-26 08:35:23,623 - INFO - Startup monitoring mode: disabled
+2025-07-26 08:35:23,623 - INFO - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+2025-07-26 08:35:23,623 - INFO - Startup monitoring enabled in passive mode
+2025-07-26 08:35:23,624 - INFO - Startup monitoring loop started
+2025-07-26 08:35:23,624 - INFO - Started startup monitoring thread
+2025-07-26 08:35:23,625 - WARNING - Memory usage (9016.4MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:23,650 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6001
+ * Running on http://10.0.0.220:6001
+2025-07-26 08:35:23,650 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-26 08:35:24,459 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:24] "GET / HTTP/1.1" 200 -
+2025-07-26 08:35:24,703 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:24] "GET /api/strategies HTTP/1.1" 200 -
+2025-07-26 08:35:24,735 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:24] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:35:24,745 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 08:35:24,777 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:24] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:35:25,037 - WARNING - Memory usage (8980.5MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:27,233 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:27] "GET / HTTP/1.1" 200 -
+2025-07-26 08:35:27,596 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:27] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:35:27,618 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-26 08:35:27,619 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:27] "GET /api/strategies HTTP/1.1" 200 -
+2025-07-26 08:35:27,690 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:27] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:35:28,638 - WARNING - Memory usage (8925.7MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:30,042 - WARNING - Memory usage (8920.4MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:33,644 - WARNING - Memory usage (8841.9MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:36,048 - INFO - Adaptive resource limits updated: CPU=10.8%, Memory=70.8%, New max_memory=584MB, New max_concurrent=2
+2025-07-26 08:35:36,049 - WARNING - Memory usage (8856.0MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:35:38,649 - WARNING - Memory usage (8668.3MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:41,053 - WARNING - Memory usage (8759.7MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:35:43,655 - WARNING - Memory usage (8687.4MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:46,057 - WARNING - Memory usage (8744.7MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:35:48,658 - WARNING - Memory usage (8745.3MB) exceeds limit (1000MB), throttling startup monitoring
+2025-07-26 08:35:51,063 - WARNING - Memory usage (8737.3MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:35:54,664 - INFO - Adaptive resource limits updated: CPU=9.0%, Memory=70.5%, New max_memory=590MB, New max_concurrent=2
+2025-07-26 08:35:54,665 - WARNING - Memory usage (8785.9MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:35:55,306 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:55] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:35:55,347 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:55] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:35:56,067 - WARNING - Memory usage (8817.6MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:35:59,645 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:59] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:35:59,668 - WARNING - Memory usage (8826.2MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:35:59,729 - INFO - 127.0.0.1 - - [26/Jul/2025 08:35:59] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:36:01,071 - WARNING - Memory usage (8828.0MB) exceeds limit (584MB), throttling startup monitoring
+2025-07-26 08:36:04,674 - WARNING - Memory usage (8922.8MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:07,080 - INFO - Adaptive resource limits updated: CPU=10.3%, Memory=70.9%, New max_memory=581MB, New max_concurrent=2
+2025-07-26 08:36:07,080 - WARNING - Memory usage (8888.4MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:09,679 - WARNING - Memory usage (8887.7MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:12,086 - WARNING - Memory usage (8851.7MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:14,685 - WARNING - Memory usage (8842.7MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:17,091 - WARNING - Memory usage (8666.6MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:19,687 - WARNING - Memory usage (8730.6MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:22,096 - WARNING - Memory usage (8738.8MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:24,777 - INFO - 127.0.0.1 - - [26/Jul/2025 08:36:24] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:36:24,796 - INFO - 127.0.0.1 - - [26/Jul/2025 08:36:24] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:36:25,697 - WARNING - Memory usage (8771.1MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:27,101 - WARNING - Memory usage (8770.1MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:27,584 - INFO - 127.0.0.1 - - [26/Jul/2025 08:36:27] "GET /api/accounts HTTP/1.1" 200 -
+2025-07-26 08:36:27,675 - INFO - 127.0.0.1 - - [26/Jul/2025 08:36:27] "POST /api/update-phases HTTP/1.1" 200 -
+2025-07-26 08:36:30,700 - WARNING - Memory usage (8789.0MB) exceeds limit (590MB), throttling startup monitoring
+2025-07-26 08:36:32,103 - WARNING - Memory usage (8796.4MB) exceeds limit (581MB), throttling startup monitoring
+2025-07-26 08:36:35,704 - WARNING - Memory usage (8805.7MB) exceeds limit (590MB), throttling startup monitoring

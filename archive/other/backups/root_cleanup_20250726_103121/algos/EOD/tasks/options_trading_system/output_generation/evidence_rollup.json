@@ -1,0 +1,103 @@
+{
+  "task": "output_generation",
+  "type": "parent",
+  "timestamp": "2025-06-04T16:17:50.603709",
+  "integration_tests": [
+    {
+      "name": "child_validations",
+      "passed": true,
+      "details": "All 2 children validated: True"
+    },
+    {
+      "name": "engine_initialization",
+      "passed": true,
+      "details": "Engine initialized successfully: True"
+    },
+    {
+      "name": "individual_generation",
+      "passed": true,
+      "details": {
+        "report_generation": true,
+        "json_generation": true,
+        "report_length": 3440,
+        "json_size": 3817
+      }
+    },
+    {
+      "name": "file_saving",
+      "passed": true,
+      "details": {
+        "files_saved": 2,
+        "total_size": 7302,
+        "errors": [],
+        "saved_files": [
+          "nq_trading_report_20250604_161753.txt",
+          "nq_analysis_export_20250604_161753.json"
+        ]
+      }
+    },
+    {
+      "name": "full_output_generation",
+      "passed": true,
+      "details": {
+        "status": "success",
+        "successful_generations": 2,
+        "files_saved": 2,
+        "total_output_size": 7302,
+        "execution_time": 2.681443
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "full_generation_result": {
+      "status": "success",
+      "execution_time": 2.681443,
+      "successful_generations": 2,
+      "files_saved": 2,
+      "total_output_size": 7302,
+      "recommended_action": "short",
+      "output_summary": {
+        "timestamp": "2025-06-04T16:17:55.963042",
+        "generation_status": {
+          "report": "success",
+          "json": "success"
+        },
+        "content_summary": {
+          "report": {
+            "length_chars": 3440,
+            "sections": 6,
+            "style": "professional"
+          },
+          "json": {
+            "size_bytes": 3817,
+            "signals_count": 3,
+            "recommended_action": "short"
+          }
+        },
+        "recommendations": [
+          {
+            "priority": "PRIMARY",
+            "direction": "SHORT",
+            "expected_value": 5964.357177141185,
+            "confidence": "HIGH"
+          }
+        ]
+      }
+    }
+  },
+  "child_validations": [
+    {
+      "task": "report_generator",
+      "status": "VALIDATED",
+      "tests_passed": 5,
+      "tests_total": 5
+    },
+    {
+      "task": "json_exporter",
+      "status": "VALIDATED",
+      "tests_passed": 5,
+      "tests_total": 5
+    }
+  ]
+}

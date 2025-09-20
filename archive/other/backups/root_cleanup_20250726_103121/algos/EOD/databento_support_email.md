@@ -1,0 +1,177 @@
+# Databento Support Request: Missing Daily/Weekly NQ Options Data
+
+**Subject:** Discrepancy Between Documented NQ Options Coverage and Actual API Results
+
+**Date:** July 17, 2025
+
+---
+
+## Summary
+
+I am writing to report a significant discrepancy between Databento's documented coverage of NQ (E-mini Nasdaq-100) options and the actual data available through your API. Your documentation claims comprehensive coverage of all NQ options including daily and weekly expirations, but my comprehensive testing reveals only quarterly options are accessible.
+
+---
+
+## 1. DATABENTO'S DOCUMENTED CLAIMS
+
+Based on your official documentation (from the provided PDF: "Databento Support for Nasdaq-100 Futures and Options Data"), you explicitly state:
+
+### Key Claims:
+- **"Databento also supports market data for options on the E-mini Nasdaq-100 futures, encompassing ALL the different expirations and series (weekly, end-of-month, and quarterly options on NQ futures)"**
+- **"This includes the recently introduced Monday and Wednesday weekly options (e.g. Q3C for a Week-3 Wednesday expiry)"**
+- **"Every option contract on the NQ futures underlying is covered"**
+- **"Databento's CME feed encompasses all Nasdaq-100 futures options – from the quarterly cycle options (root symbol NQ) to weekly options (including Monday & Wednesday weeklies like Q1A, Q3C, etc.)"**
+
+### Specific Weekly Options Claims:
+- Q3C for Week-3 Wednesday expiry
+- Q1A for Week-1 Monday expiry
+- Monday & Wednesday weekly options
+- End-of-month options (QNE)
+
+---
+
+## 2. API CODE USED TO RETRIEVE ALL NQ OPTIONS
+
+I used the correct parent symbology format as confirmed by your API error messages:
+
+```python
+import databento as db
+import pandas as pd
+
+client = db.Historical("db-nYu9cNrisvKGWiUNFQVRcTdLcDYKQ")
+
+# Get ALL NQ option trades using parent symbology
+trades = client.timeseries.get_range(
+    dataset="GLBX.MDP3",
+    symbols="NQ.OPT",  # Correct parent format per your API
+    schema="trades",
+    start="2025-07-14",
+    end="2025-07-17",
+    stype_in="parent",
+    limit=5000
+)
+
+# Get option definitions for expiration mapping
+definitions = client.timeseries.get_range(
+    dataset="GLBX.MDP3",
+    symbols="NQ.OPT",
+    schema="definition",
+    start="2025-07-15",
+    end="2025-07-17",
+    stype_in="parent"
+)
+```
+
+---
+
+## 3. ACTUAL RESULTS FROM API
+
+### Summary Statistics:
+- **Total NQ options found:** 212 unique contracts
+- **Total volume:** 5,895 contracts
+- **Available expirations:** 6 dates only
+- **No weekly options found:** Zero Q3C, Q1A, or QNE symbols
+
+### Complete Expiration List:
+| Expiration Date | Contract Count | Total Volume | Highest Volume Option |
+|----------------|---------------|--------------|----------------------|
+| 2025-07-15     | 1             | 20           | UD:2V: GN 2534749   |
+| 2025-07-18     | 81            | 823          | UD:2V: VT 2524230   |
+| 2025-09-19     | 70            | 4,016        | NQU5 C25000 (756)   |
+| 2025-12-19     | 37            | 919          | NQZ5 C26500 (197)   |
+| 2026-03-20     | 18            | 111          | NQH6 P20000 (24)    |
+| 2026-06-18     | 5             | 6            | NQM6 P11000 (2)     |
+
+### Key Findings:
+1. **No Q3C symbols found** despite documentation claiming Wednesday Week-3 options
+2. **No Q1A symbols found** despite documentation claiming Monday Week-1 options  
+3. **No QNE symbols found** despite documentation claiming end-of-month options
+4. **Only quarterly contracts** (NQU5, NQZ5, NQH6, NQM6) with standard strikes
+5. **July 18 options** have unusual "UD:2V:" format, not standard NQ symbology
+
+---
+
+## 4. COMPREHENSIVE TESTING PERFORMED
+
+I conducted extensive testing to ensure no data was missed:
+
+### Tests Performed:
+1. **Parent symbology search** (`NQ.OPT` with `stype_in="parent"`)
+2. **Direct symbol resolution** for Q3C, Q1A, QNE formats
+3. **Multiple date ranges** (July 14-17, 2025)
+4. **All available schemas** (trades, definition, quotes)
+5. **Symbology resolution API** testing
+6. **Multiple dataset testing** (GLBX.MDP3, DBEQ.BASIC, OPRA.PILLAR)
+
+### Results:
+- **1,547 total option trades** retrieved
+- **2,617 option definitions** retrieved
+- **184 unique symbols** found
+- **Zero weekly options** matching your documented formats
+
+---
+
+## 5. SPECIFIC DISCREPANCIES
+
+### What Your Documentation Claims vs. What API Returns:
+
+| Documented Claim | API Reality |
+|------------------|-------------|
+| "ALL different expirations and series" | Only 6 expiration dates |
+| "Q3C for Week-3 Wednesday expiry" | No Q3C symbols found |
+| "Q1A for Week-1 Monday expiry" | No Q1A symbols found |
+| "End-of-month options (QNE)" | No QNE symbols found |
+| "Monday & Wednesday weekly options" | No weekly options found |
+| "Every option contract...is covered" | Only quarterly contracts available |
+
+---
+
+## 6. IMPACT AND REQUEST
+
+### Business Impact:
+- Cannot access daily/weekly NQ options for trading strategies
+- Documentation promises cannot be fulfilled
+- Alternative data sources required for weekly options
+
+### Specific Questions:
+1. **Are daily/weekly NQ options available** in a different dataset or format?
+2. **When will the documented weekly options** (Q3C, Q1A, QNE) be available?
+3. **Is there a subscription tier** that includes weekly options?
+4. **Are the unusual "UD:2V:" symbols** the weekly options in a different format?
+
+### Requested Actions:
+1. **Clarify the availability** of daily/weekly NQ options
+2. **Update documentation** to reflect actual data availability
+3. **Provide access** to the weekly options if they exist in your system
+4. **Explain the discrepancy** between claims and reality
+
+---
+
+## 7. SUPPORTING FILES
+
+I have comprehensive logs and data files available:
+- `comprehensive_nq_option_analysis.py` - Complete analysis code
+- `nq_options_comprehensive_analysis.csv` - Full results dataset
+- `nq_options_expiration_summary.csv` - Expiration summary
+- Multiple test scripts validating the findings
+
+---
+
+## Conclusion
+
+There is a clear and significant discrepancy between Databento's documented NQ options coverage and the actual data available through your API. Your documentation explicitly promises comprehensive coverage of weekly options (Q3C, Q1A, QNE) that are not accessible through the API.
+
+I respectfully request clarification on this matter and access to the weekly NQ options data as documented, or an update to your documentation to reflect the actual limitations of your dataset.
+
+Thank you for your prompt attention to this matter.
+
+Best regards,  
+[Your Name]  
+[Your Contact Information]
+
+---
+
+**API Key Used:** db-nYu9cNrisvKGWiUNFQVRcTdLcDYKQ  
+**Date Range Tested:** July 14-17, 2025  
+**Dataset:** GLBX.MDP3  
+**Total API Calls:** 15+ comprehensive tests

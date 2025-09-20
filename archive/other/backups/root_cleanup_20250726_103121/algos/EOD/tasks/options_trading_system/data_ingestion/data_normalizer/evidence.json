@@ -1,0 +1,157 @@
+{
+  "task": "data_normalizer",
+  "timestamp": "2025-06-04T14:52:04.547040",
+  "tests": [
+    {
+      "name": "normalizer_init",
+      "passed": true,
+      "details": "Normalizer initialized successfully"
+    },
+    {
+      "name": "barchart_loading",
+      "passed": true,
+      "details": {
+        "contracts": 576,
+        "volume_coverage": 0.5190972222222222
+      }
+    },
+    {
+      "name": "tradovate_loading",
+      "passed": true,
+      "details": {
+        "contracts": 42,
+        "data_source": "mock"
+      }
+    },
+    {
+      "name": "normalization",
+      "passed": true,
+      "details": {
+        "total_contracts": 618,
+        "sources": [
+          "barchart",
+          "tradovate"
+        ],
+        "by_source": {
+          "barchart": {
+            "calls": 288,
+            "puts": 288,
+            "total": 576
+          },
+          "tradovate": {
+            "calls": 21,
+            "puts": 21,
+            "total": 42
+          }
+        }
+      }
+    },
+    {
+      "name": "contract_format",
+      "passed": true,
+      "details": {
+        "sample_contract_source": "barchart",
+        "sample_contract_type": "call",
+        "fields_present": [
+          "source",
+          "type",
+          "symbol",
+          "strike",
+          "expiration",
+          "volume",
+          "open_interest",
+          "last_price",
+          "bid",
+          "ask",
+          "underlying_price",
+          "timestamp"
+        ]
+      }
+    },
+    {
+      "name": "quality_metrics",
+      "passed": true,
+      "details": {
+        "total_contracts": 618,
+        "overall_volume_coverage": 0.551779935275081,
+        "overall_oi_coverage": 0.6521035598705501,
+        "overall_price_coverage": 1.0,
+        "by_source": {
+          "barchart": {
+            "total": 576,
+            "volume_coverage": 0.5190972222222222,
+            "oi_coverage": 0.6267361111111112,
+            "price_coverage": 1.0
+          },
+          "tradovate": {
+            "total": 42,
+            "volume_coverage": 1.0,
+            "oi_coverage": 1.0,
+            "price_coverage": 1.0
+          }
+        },
+        "sources": [
+          "barchart",
+          "tradovate"
+        ]
+      }
+    },
+    {
+      "name": "integration_function",
+      "passed": true,
+      "details": {
+        "keys": [
+          "normalizer",
+          "normalized_data",
+          "quality_metrics",
+          "metadata"
+        ],
+        "total_normalized": 618
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "normalized_summary": {
+      "total_contracts": 618,
+      "sources_count": 2,
+      "timestamp": "2025-06-04T14:52:04.554951",
+      "by_source": {
+        "barchart": {
+          "calls": 288,
+          "puts": 288,
+          "total": 576
+        },
+        "tradovate": {
+          "calls": 21,
+          "puts": 21,
+          "total": 42
+        }
+      }
+    },
+    "quality_metrics": {
+      "total_contracts": 618,
+      "overall_volume_coverage": 0.551779935275081,
+      "overall_oi_coverage": 0.6521035598705501,
+      "overall_price_coverage": 1.0,
+      "by_source": {
+        "barchart": {
+          "total": 576,
+          "volume_coverage": 0.5190972222222222,
+          "oi_coverage": 0.6267361111111112,
+          "price_coverage": 1.0
+        },
+        "tradovate": {
+          "total": 42,
+          "volume_coverage": 1.0,
+          "oi_coverage": 1.0,
+          "price_coverage": 1.0
+        }
+      },
+      "sources": [
+        "barchart",
+        "tradovate"
+      ]
+    }
+  }
+}

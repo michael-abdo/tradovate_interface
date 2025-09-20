@@ -1,0 +1,113 @@
+Databento Support Request: Discrepancy Between Website Claims and API Results for NQ Options
+
+Subject: NQ Options Coverage - Website Claims vs API Results
+
+Date: July 17, 2025
+
+---
+
+Hello Databento Support Team,
+
+I hope this message finds you well. I'm writing to request clarification regarding a discrepancy I've encountered between your website's claims about NQ options coverage and the results I'm seeing through your API.
+
+---
+
+Website Claims
+
+Your options page (https://databento.com/options) states in the FAQ section:
+
+"Since we source our data from the full direct feeds, we cover every instrument on each exchange and trading venue—every strike and expiration. Across US equity options (OPRA), CME, and ICE, we currently cover almost 2 million options tickers that are actively listed on any given day."
+
+Additionally, your futures page (https://databento.com/futures) indicates:
+"Yes, we include every listed options contract across all of the venues that we cover."
+
+---
+
+API Testing Approach
+
+To access NQ options data, I used the parent symbology approach as documented:
+
+```python
+import databento as db
+
+client = db.Historical("db-nYu9cNrisvKGWiUNFQVRcTdLcDYKQ")
+
+# Retrieve NQ options using parent symbology
+trades = client.timeseries.get_range(
+    dataset="GLBX.MDP3",
+    symbols="NQ.OPT",
+    schema="trades",
+    start="2025-07-14",
+    end="2025-07-17",
+    stype_in="parent",
+    limit=5000
+)
+
+definitions = client.timeseries.get_range(
+    dataset="GLBX.MDP3",
+    symbols="NQ.OPT",
+    schema="definition",
+    start="2025-07-15",
+    end="2025-07-17",
+    stype_in="parent"
+)
+```
+
+---
+
+Results Summary
+
+The API returned:
+- 212 unique NQ option symbols
+- 6 expiration dates total:
+  - 2025-07-15: 1 contract
+  - 2025-07-18: 81 contracts
+  - 2025-09-19: 70 contracts
+  - 2025-12-19: 37 contracts
+  - 2026-03-20: 18 contracts
+  - 2026-06-18: 5 contracts
+
+The available contracts appear to be primarily quarterly expirations (NQU5, NQZ5, NQH6, NQM6) with standard strike prices.
+
+---
+
+Questions
+
+I'd appreciate clarification on the following:
+
+1. Should I expect to see weekly NQ options (such as those expiring on different days of the week) through the NQ.OPT parent symbology?
+
+2. Are there additional datasets or symbol formats I should use to access a more comprehensive set of NQ options?
+
+3. Is there a subscription tier or additional configuration needed to access the full range of NQ options contracts?
+
+4. Are the 212 options I found representative of the complete NQ options universe available through your platform?
+
+---
+
+Context
+
+I'm building a trading system that requires access to weekly and daily NQ options. Based on your website's description of comprehensive coverage, I expected to find a broader range of expiration dates and strike prices than what I'm currently seeing.
+
+---
+
+Request
+
+Could you please help me understand:
+- Whether additional NQ options data is available
+- The correct approach to access weekly/daily NQ options if they exist
+- Any limitations in the current dataset that I should be aware of
+
+I appreciate your time and assistance in resolving this matter.
+
+Best regards,
+[Your Name]
+[Your Contact Information]
+
+---
+
+Technical Details:
+API Key: db-nYu9cNrisvKGWiUNFQVRcTdLcDYKQ
+Dataset: GLBX.MDP3
+Date Range: July 14-17, 2025
+Total Records Retrieved: 1,547 trades, 2,617 definitions

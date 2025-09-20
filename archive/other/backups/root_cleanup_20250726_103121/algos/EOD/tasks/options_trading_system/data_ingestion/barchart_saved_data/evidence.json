@@ -1,0 +1,99 @@
+{
+  "task": "barchart_saved_data",
+  "timestamp": "2025-06-04T14:31:06.191414",
+  "tests": [
+    {
+      "name": "file_exists",
+      "passed": true,
+      "details": "File exists at /Users/Mike/trading/algos/EOD/data/api_responses/options_data_20250602_141553.json: True"
+    },
+    {
+      "name": "data_loading",
+      "passed": true,
+      "details": "Data loaded successfully: True"
+    },
+    {
+      "name": "options_extraction",
+      "passed": true,
+      "details": {
+        "calls_count": 288,
+        "puts_count": 288,
+        "total_contracts": 576
+      }
+    },
+    {
+      "name": "quality_metrics",
+      "passed": true,
+      "details": {
+        "total_contracts": 576,
+        "calls_count": 288,
+        "puts_count": 288,
+        "volume_coverage": 0.5190972222222222,
+        "oi_coverage": 0.6267361111111112,
+        "calls_with_volume": 129,
+        "puts_with_volume": 170,
+        "calls_with_oi": 151,
+        "puts_with_oi": 210
+      }
+    },
+    {
+      "name": "strike_range",
+      "passed": true,
+      "details": {
+        "min": 14000.0,
+        "max": 24500.0,
+        "count": 288
+      }
+    },
+    {
+      "name": "integration_function",
+      "passed": true,
+      "details": {
+        "keys_present": [
+          "loader",
+          "metadata",
+          "options_summary",
+          "quality_metrics",
+          "strike_range",
+          "raw_data_available"
+        ],
+        "metadata": {
+          "source": "barchart_saved",
+          "file_path": "/Users/Mike/trading/algos/EOD/data/api_responses/options_data_20250602_141553.json",
+          "file_size": 388374,
+          "loaded_at": "2025-06-04T14:31:06.208621"
+        }
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "data_structure": [
+      "count",
+      "total",
+      "data",
+      "meta"
+    ],
+    "options_data": {
+      "calls_count": 288,
+      "puts_count": 288,
+      "total_contracts": 576
+    },
+    "quality_metrics": {
+      "total_contracts": 576,
+      "calls_count": 288,
+      "puts_count": 288,
+      "volume_coverage": 0.5190972222222222,
+      "oi_coverage": 0.6267361111111112,
+      "calls_with_volume": 129,
+      "puts_with_volume": 170,
+      "calls_with_oi": 151,
+      "puts_with_oi": 210
+    },
+    "strike_range": {
+      "min": 14000.0,
+      "max": 24500.0,
+      "count": 288
+    }
+  }
+}

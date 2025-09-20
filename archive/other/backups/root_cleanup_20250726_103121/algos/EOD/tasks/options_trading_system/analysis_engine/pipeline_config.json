@@ -1,0 +1,169 @@
+{
+  "pipeline_strategies": {
+    "conservative": {
+      "description": "Risk-first approach for stable market conditions",
+      "analyses": [
+        {
+          "name": "RiskAnalysis",
+          "config": {
+            "min_risk_exposure": 50000,
+            "max_risk_ratio": 3.0,
+            "filter_insignificant_strikes": true,
+            "sort_by": "total_risk",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "EVAnalysis", 
+          "config": {
+            "min_ev": 20,
+            "min_probability": 0.70,
+            "max_risk": 120,
+            "min_risk_reward": 1.2,
+            "sort_by": "expected_value",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "MomentumAnalysis",
+          "config": {
+            "min_momentum_score": 0.8,
+            "momentum_window": 5,
+            "volume_confirmation": true,
+            "sort_by": "momentum_score", 
+            "sort_direction": "desc"
+          }
+        }
+      ]
+    },
+    
+    "aggressive": {
+      "description": "EV-first approach for high opportunity markets",
+      "analyses": [
+        {
+          "name": "EVAnalysis",
+          "config": {
+            "min_ev": 10,
+            "min_probability": 0.55,
+            "max_risk": 180,
+            "min_risk_reward": 0.8,
+            "sort_by": "expected_value",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "MomentumAnalysis", 
+          "config": {
+            "min_momentum_score": 0.6,
+            "momentum_window": 3,
+            "volume_confirmation": false,
+            "sort_by": "momentum_score",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "RiskAnalysis",
+          "config": {
+            "min_risk_exposure": 10000,
+            "max_risk_ratio": 5.0,
+            "filter_insignificant_strikes": false,
+            "sort_by": "risk_adjusted_score",
+            "sort_direction": "desc"
+          }
+        }
+      ]
+    },
+    
+    "technical": {
+      "description": "Pattern-first approach for technical traders",
+      "analyses": [
+        {
+          "name": "PatternAnalysis",
+          "config": {
+            "pattern_confidence": 0.8,
+            "min_volume_confirmation": 100,
+            "technical_indicators": ["support_resistance", "breakout", "reversal"],
+            "sort_by": "pattern_strength",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "EVAnalysis",
+          "config": {
+            "min_ev": 15,
+            "min_probability": 0.65,
+            "max_risk": 150,
+            "min_risk_reward": 1.0,
+            "sort_by": "expected_value", 
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "RiskAnalysis",
+          "config": {
+            "min_risk_exposure": 25000,
+            "max_risk_ratio": 4.0,
+            "filter_insignificant_strikes": true,
+            "sort_by": "total_risk",
+            "sort_direction": "desc"
+          }
+        }
+      ]
+    },
+    
+    "scalping": {
+      "description": "Fast execution for intraday scalping",
+      "analyses": [
+        {
+          "name": "TimingAnalysis",
+          "config": {
+            "min_timing_score": 0.9,
+            "time_decay_factor": 0.95,
+            "execution_window": "5min",
+            "sort_by": "timing_urgency",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "EVAnalysis",
+          "config": {
+            "min_ev": 5,
+            "min_probability": 0.50,
+            "max_risk": 50,
+            "min_risk_reward": 0.5,
+            "sort_by": "expected_value",
+            "sort_direction": "desc"
+          }
+        },
+        {
+          "name": "LiquidityAnalysis",
+          "config": {
+            "min_volume": 200,
+            "min_open_interest": 50,
+            "bid_ask_spread_max": 0.05,
+            "sort_by": "liquidity_score",
+            "sort_direction": "desc"
+          }
+        }
+      ]
+    }
+  },
+  
+  "analysis_registry": {
+    "RiskAnalysis": "risk_analysis.solution.RiskPipelineAnalysis",
+    "EVAnalysis": "expected_value_analysis.solution.EVPipelineAnalysis", 
+    "MomentumAnalysis": "momentum_analysis.solution.MomentumPipelineAnalysis",
+    "PatternAnalysis": "pattern_analysis.solution.PatternPipelineAnalysis",
+    "TimingAnalysis": "timing_analysis.solution.TimingPipelineAnalysis",
+    "LiquidityAnalysis": "liquidity_analysis.solution.LiquidityPipelineAnalysis"
+  },
+  
+  "global_settings": {
+    "max_pipeline_items": 1000,
+    "min_final_results": 1,
+    "max_final_results": 10,
+    "execution_timeout_seconds": 30,
+    "enable_pipeline_logging": true,
+    "cache_intermediate_results": true
+  }
+}

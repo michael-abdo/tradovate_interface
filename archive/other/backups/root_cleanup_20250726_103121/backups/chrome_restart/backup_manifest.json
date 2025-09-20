@@ -1,0 +1,78 @@
+{
+  "backups": [
+    {
+      "id": "backup_20250725_205823",
+      "timestamp": "20250725_205823",
+      "description": "Pre-implementation baseline backup",
+      "files": [
+        {
+          "original_path": "/Users/Mike/trading/start_all.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_205823/Users/Mike/trading/start_all.py",
+          "checksum": "8b15244e6f38be4b0ecd8a0414a828885b053eedf2e6767b36e0349671933261",
+          "size": 8661
+        },
+        {
+          "original_path": "/Users/Mike/trading/src/auto_login.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_205823/Users/Mike/trading/src/auto_login.py",
+          "checksum": "a137a69e034a93e6a09dd0d27b2efca39996f8ae84002df9cdbd12b3ee0dcd8d",
+          "size": 34130
+        },
+        {
+          "original_path": "/Users/Mike/trading/tradovate_interface/src/utils/process_monitor.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_205823/Users/Mike/trading/tradovate_interface/src/utils/process_monitor.py",
+          "checksum": "143ac35e753ec956e1eb599d9bb6cc0620b1c5393cfc1612256cf8316305837f",
+          "size": 34428
+        },
+        {
+          "original_path": "/Users/Mike/trading/config/connection_health.json",
+          "backup_path": "backups/chrome_restart/backup_20250725_205823/Users/Mike/trading/config/connection_health.json",
+          "checksum": "effe9d732bc5fdae801fe8b7b90cf80f28bf8df5da96265abfe50b04d2503c8c",
+          "size": 1813
+        },
+        {
+          "original_path": "/Users/Mike/trading/tradovate_interface/config/process_monitor.json",
+          "backup_path": "backups/chrome_restart/backup_20250725_205823/Users/Mike/trading/tradovate_interface/config/process_monitor.json",
+          "checksum": "d8bf357dff13728a6f2b48db3466ccbd6a5cb0a363d8526c34f777cb67b3854e",
+          "size": 283
+        }
+      ]
+    },
+    {
+      "id": "backup_20250725_211135",
+      "timestamp": "20250725_211135",
+      "description": "Phase 1 deployment backup - 20250725_211135",
+      "files": [
+        {
+          "original_path": "/Users/Mike/trading/start_all.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_211135/Users/Mike/trading/start_all.py",
+          "checksum": "8b15244e6f38be4b0ecd8a0414a828885b053eedf2e6767b36e0349671933261",
+          "size": 8661
+        },
+        {
+          "original_path": "/Users/Mike/trading/src/auto_login.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_211135/Users/Mike/trading/src/auto_login.py",
+          "checksum": "a137a69e034a93e6a09dd0d27b2efca39996f8ae84002df9cdbd12b3ee0dcd8d",
+          "size": 34130
+        },
+        {
+          "original_path": "/Users/Mike/trading/tradovate_interface/src/utils/process_monitor.py",
+          "backup_path": "backups/chrome_restart/backup_20250725_211135/Users/Mike/trading/tradovate_interface/src/utils/process_monitor.py",
+          "checksum": "143ac35e753ec956e1eb599d9bb6cc0620b1c5393cfc1612256cf8316305837f",
+          "size": 34428
+        },
+        {
+          "original_path": "/Users/Mike/trading/config/connection_health.json",
+          "backup_path": "backups/chrome_restart/backup_20250725_211135/Users/Mike/trading/config/connection_health.json",
+          "checksum": "effe9d732bc5fdae801fe8b7b90cf80f28bf8df5da96265abfe50b04d2503c8c",
+          "size": 1813
+        },
+        {
+          "original_path": "/Users/Mike/trading/tradovate_interface/config/process_monitor.json",
+          "backup_path": "backups/chrome_restart/backup_20250725_211135/Users/Mike/trading/tradovate_interface/config/process_monitor.json",
+          "checksum": "d8bf357dff13728a6f2b48db3466ccbd6a5cb0a363d8526c34f777cb67b3854e",
+          "size": 283
+        }
+      ]
+    }
+  ]
+}

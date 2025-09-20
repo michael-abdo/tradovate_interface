@@ -1,0 +1,237 @@
+{
+  "timestamp": "2025-07-25T12:51:00.271058",
+  "chrome_processes": [
+    {
+      "pid": 4771,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=42 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943165950853 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=361",
+      "start_time": "2025-07-25 12:51:00.560918"
+    },
+    {
+      "pid": 4724,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --remote-debugging-port=9222 --remote-allow-origins=* --no-first-run --no-default-browser-check --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --disable-blink-features=AutomationControlled --disable-features=VizDisplayCompositor --password-store=basic --use-mock-keychain",
+      "start_time": "2025-07-25 12:51:00.560952"
+    },
+    {
+      "pid": 4773,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=57 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943166111501 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=366",
+      "start_time": "2025-07-25 12:51:00.560962"
+    },
+    {
+      "pid": 4815,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=85 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178620985 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.560972"
+    },
+    {
+      "pid": 4802,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=40 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943176606990 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=392",
+      "start_time": "2025-07-25 12:51:00.560980"
+    },
+    {
+      "pid": 4785,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=63 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943169551875 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=382",
+      "start_time": "2025-07-25 12:51:00.560988"
+    },
+    {
+      "pid": 4809,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=71 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178340489 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.560993"
+    },
+    {
+      "pid": 4742,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=11 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161402523 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=178",
+      "start_time": "2025-07-25 12:51:00.560999"
+    },
+    {
+      "pid": 5924,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=121 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943548805542 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=81",
+      "start_time": "2025-07-25 12:51:00.561054"
+    },
+    {
+      "pid": 5290,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=119 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943443608276 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=71",
+      "start_time": "2025-07-25 12:51:00.561060"
+    },
+    {
+      "pid": 5013,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=83 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943326036371 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=306",
+      "start_time": "2025-07-25 12:51:00.561065"
+    },
+    {
+      "pid": 4848,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=108 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943191012515 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=417",
+      "start_time": "2025-07-25 12:51:00.561070"
+    },
+    {
+      "pid": 4838,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=104 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943185920755 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=394",
+      "start_time": "2025-07-25 12:51:00.561077"
+    },
+    {
+      "pid": 4832,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=102 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943184592750 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=394",
+      "start_time": "2025-07-25 12:51:00.561081"
+    },
+    {
+      "pid": 4819,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=100 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943179415852 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=394",
+      "start_time": "2025-07-25 12:51:00.561086"
+    },
+    {
+      "pid": 4818,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=99 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178876378 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561091"
+    },
+    {
+      "pid": 4817,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=88 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178805773 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561096"
+    },
+    {
+      "pid": 4813,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=84 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178582634 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561102"
+    },
+    {
+      "pid": 4812,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=81 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178495447 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561107"
+    },
+    {
+      "pid": 4811,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=79 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178455036 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561112"
+    },
+    {
+      "pid": 4810,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=70 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943178341250 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=393",
+      "start_time": "2025-07-25 12:51:00.561116"
+    },
+    {
+      "pid": 4808,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=39 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943177099995 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=387",
+      "start_time": "2025-07-25 12:51:00.561121"
+    },
+    {
+      "pid": 4799,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=43 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943175756615 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=388",
+      "start_time": "2025-07-25 12:51:00.561127"
+    },
+    {
+      "pid": 4797,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=68 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943175567930 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=387",
+      "start_time": "2025-07-25 12:51:00.561132"
+    },
+    {
+      "pid": 4796,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=67 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943175301127 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=387",
+      "start_time": "2025-07-25 12:51:00.561136"
+    },
+    {
+      "pid": 4794,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=66 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943173619132 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=387",
+      "start_time": "2025-07-25 12:51:00.561141"
+    },
+    {
+      "pid": 4793,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=65 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943173522544 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=382",
+      "start_time": "2025-07-25 12:51:00.561147"
+    },
+    {
+      "pid": 4790,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=41 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943173234411 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=382",
+      "start_time": "2025-07-25 12:51:00.561152"
+    },
+    {
+      "pid": 4789,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=54 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943172280837 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=382",
+      "start_time": "2025-07-25 12:51:00.561156"
+    },
+    {
+      "pid": 4787,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=55 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943171433679 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=382",
+      "start_time": "2025-07-25 12:51:00.561161"
+    },
+    {
+      "pid": 4784,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=62 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943169407983 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=381",
+      "start_time": "2025-07-25 12:51:00.561165"
+    },
+    {
+      "pid": 4774,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=56 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943166256395 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=370",
+      "start_time": "2025-07-25 12:51:00.561180"
+    },
+    {
+      "pid": 4772,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=52 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943166064556 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=366",
+      "start_time": "2025-07-25 12:51:00.561185"
+    },
+    {
+      "pid": 4746,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=15 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161443802 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=188",
+      "start_time": "2025-07-25 12:51:00.561192"
+    },
+    {
+      "pid": 4745,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=14 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161426753 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=186",
+      "start_time": "2025-07-25 12:51:00.561197"
+    },
+    {
+      "pid": 4744,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=13 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161421596 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=182",
+      "start_time": "2025-07-25 12:51:00.561205"
+    },
+    {
+      "pid": 4743,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=12 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161420175 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=179",
+      "start_time": "2025-07-25 12:51:00.561210"
+    },
+    {
+      "pid": 4741,
+      "port": 9222,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/138.0.7204.169/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=fe981e11-8962-40c1-b630-afaf701acbe6 --user-data-dir=/Users/Mike/Library/Application Support/Google/Chrome-Debug --extension-process --remote-debugging-port=9222 --disable-blink-features=AutomationControlled --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1751529507704983 --launch-time-ticks=1943161400871 --shared-files --field-trial-handle=1718379636,r,18062703397051874115,13652832490760104438,262144 --disable-features=VizDisplayCompositor --variations-seed-version --seatbelt-client=175",
+      "start_time": "2025-07-25 12:51:00.561214"
+    }
+  ],
+  "gpu_errors": [],
+  "recommendations": [
+    "High number of Chrome processes (38). Consider reducing concurrent instances."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "investigation_date": "2025-07-16 15:53:29.429196",
+  "pdf_claims": "NQ options fully supported including Q3C",
+  "api_reality": "NO options contracts found despite comprehensive testing",
+  "infrastructure_evidence": "API has options fields but only futures data",
+  "conclusion": "Options data likely requires upgraded subscription",
+  "recommendation": "Contact Databento support for options access"
+}

@@ -1,0 +1,89 @@
+{
+  "task": "report_generator",
+  "timestamp": "2025-06-04T16:08:21.635647",
+  "tests": [
+    {
+      "name": "generator_init",
+      "passed": true,
+      "details": {
+        "report_style": "professional",
+        "include_details": true,
+        "include_market_context": true
+      }
+    },
+    {
+      "name": "section_generation",
+      "passed": true,
+      "details": {
+        "header_valid": true,
+        "summary_valid": true,
+        "header_length": 398,
+        "summary_length": 351
+      }
+    },
+    {
+      "name": "complete_report_generation",
+      "passed": true,
+      "details": {
+        "report_structure_valid": true,
+        "content_checks": {
+          "has_header": true,
+          "has_executive_summary": true,
+          "has_nq_ev_section": true,
+          "has_execution_priorities": true,
+          "has_footer": true
+        },
+        "report_length": 3440,
+        "metadata": {
+          "generated_at": "2025-06-04T16:08:23.126601",
+          "report_style": "professional",
+          "sections_included": 6,
+          "total_length": 3440
+        }
+      }
+    },
+    {
+      "name": "report_formatting",
+      "passed": true,
+      "details": {
+        "format_checks": {
+          "has_section_dividers": true,
+          "has_headers": true,
+          "has_bullet_points": true,
+          "has_emojis": true,
+          "proper_line_breaks": true
+        },
+        "formatting_score": "5/5"
+      }
+    },
+    {
+      "name": "report_file_saving",
+      "passed": true,
+      "details": {
+        "file_created": true,
+        "file_size": 3485,
+        "file_path": "/Users/Mike/trading/algos/EOD/tasks/options_trading_system/output_generation/report_generator/test_report_20250604_160823.txt"
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "sample_report": {
+      "report_length": 3440,
+      "sections_included": 6,
+      "content_checks": {
+        "has_header": true,
+        "has_executive_summary": true,
+        "has_nq_ev_section": true,
+        "has_execution_priorities": true,
+        "has_footer": true
+      },
+      "first_100_chars": "================================================================================\nNQ OPTIONS TRADING ",
+      "analysis_summary": {
+        "successful_analyses": 3,
+        "primary_recommendations": 1,
+        "execution_time": 1.490686
+      }
+    }
+  }
+}

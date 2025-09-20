@@ -1,0 +1,22 @@
+{
+  "test_timestamp": "2025-06-08T18:57:00.240854",
+  "sample_size": 50,
+  "processing_latency_stats": {
+    "mean": 0.0003012180328369141,
+    "median": 0.0002932548522949219,
+    "p95": 0.0003368854522705078,
+    "p99": 0.0003571510314941406,
+    "max": 0.0003571510314941406,
+    "min": 0.0002818107604980469
+  },
+  "requirements_validation": {
+    "mean_under_50ms": true,
+    "p95_under_100ms": true,
+    "max_under_200ms": true
+  },
+  "performance_summary": {
+    "mean_latency_ms": 0.30121803283691406,
+    "p95_latency_ms": 0.3368854522705078,
+    "max_latency_ms": 0.3571510314941406
+  }
+}

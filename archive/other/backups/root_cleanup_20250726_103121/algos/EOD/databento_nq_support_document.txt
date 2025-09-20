@@ -1,0 +1,105 @@
+
+--- PAGE 1 ---
+Databento Support for Nasdaq-100 Futures and
+Options Data
+E-mini Nasdaq-100 Futures (CME Globex symbol: NQ)
+Databento does provide both real-time and historical data  for the E-mini Nasdaq-100 index futures. This
+includes  specific  contract  months  such  as  NQU5  (Sep  2025)  and  NQZ5  (Dec  2025),  which  offer  direct
+exposure to the Nasdaq-100 index. Key details of Databento’s futures data support: 
+Availability:  Supported on CME Globex  – Databento is a licensed distributor of CME market data,
+covering all CME futures  products. Historical data coverage goes back to 2010, and the same API
+can be used for live (real-time) streaming as well as historical download/replay . In short, you can
+access both intraday real-time feeds and deep historical archives for NQ futures via Databento. 
+Data Types: Tick-by-tick trade and quote data  are provided, with the option to obtain full order
+book depth  (all buy/sell orders at each price level) or top-of-book quotes as needed . Every
+execution (trade) and every update to bids/asks is available, along with market statistics and
+reference info from the CME feed . Data can be retrieved in various formats (e.g. CSV, JSON,
+Parquet, or Databento’s binary format) and in different schemas (e.g. time & sales, order book
+snapshots, OHLCV aggregates, etc.), according to the documentation. 
+Granularity:  The futures data is highly granular , delivered at the tick level with nanosecond
+timestamps  for each event . This means you get the exact timing and sequence of every
+trade or quote update. Such precision allows for detailed analysis or backtesting on NQ futures.
+Databento’s infrastructure ensures that the full tick history (including millions of ticks per day  for
+active contracts) is available, and you can also request continuous contract series if you prefer to
+handle contract rollovers seamlessly. 
+Options on E-mini Nasdaq-100 Futures (Weekly & Quarterly Series)
+Databento also supports market data for options on the E-mini Nasdaq-100 futures , encompassing all
+the different expirations and series (weekly, end-of-month, and quarterly options on NQ futures). This
+includes the recently introduced Monday and Wednesday weekly options (e.g. Q3C  for a Week-3 Wednesday
+expiry) as well as the standard Friday/quarterly options on NQ. All these options contracts are listed on
+CME’s Globex platform and are European-style  exercise (i.e. exercisable only at expiration) as specified by
+CME . Key points for the options data: 
+Supported Series: Every option contract on the NQ futures underlying is covered.  Databento’s
+CME feed encompasses all Nasdaq-100 futures options – from the quarterly cycle options (root
+symbol NQ) to weekly options  (including Monday & Wednesday weeklies like Q1A, Q3C, etc.), and
+even end-of-month options (e.g. QNE) . In other words, whether it’s an option on the Sep 2025
+NQ future or a Wednesday weekly that expires in between, Databento provides data for it. (Multi-
+legged option spreads and combinations are included as well, per Databento documentation .) • 
+1
+• 
+2
+1
+• 
+23
+4
+• 
+5
+5
+1
+--- PAGE 2 ---
+Data Types and Granularity:  The options data includes full tick-level detail  for trades and
+quotes, similar to the futures. You can stream or download every trade, quote update, and order
+book change for the options on NQ futures. Both top-of-book quotes and full market depth  are
+available from the CME Globex feed . Historical coverage for these options aligns with their
+introduction dates (CME’s feed data is available from 2010 onward, so all Nasdaq-100 options data
+since launch is accessible). The data comes with high timestamp precision as well, allowing you to
+analyze options markets with fine time resolution. Additionally, Databento’s API supports retrieving
+entire option chains in one call (using “parent” symbology for the underlying), making it convenient
+to get all strikes/expirations for , say, NQ weekly options at once . 
+Implied Volatility/Greeks: Note that implied volatilities or Greeks are not provided as pre-
+calculated fields  in Databento’s market data. According to Databento’s documentation, they do not
+currently include  implied vol or option Greeks in the feed (to maintain data transparency and let
+users derive these as needed) . Instead, you receive the raw option prices (bid/ask, trades) and
+can calculate IV or Greeks yourself using an options pricing model (Databento even provides
+examples, such as using the Black-76 model for index futures options). In summary, trades and
+quotes for the options are available , but you’ll need to compute metrics like IV or Delta from that
+data if required. 
+Additional Data:  For options on futures, Databento does provide reference information  and end-
+of-day statistics that can be useful. For example, you can query the instrument definitions to get 
+option contract details  (expiration date, strike, underlying future, option type, etc.) and you can
+retrieve open interest  and other stats via their APIs . This helps in identifying the exact option
+contracts (such as all options on a given NQ futures contract like NQU5) and analyzing volume/open-
+interest alongside the tick data. All of this is delivered under the CME Globex MDP 3.0 dataset on
+Databento, ensuring consistency with how the futures data is accessed. 
+Sources:  Databento  official  documentation  and  product  pages  confirm  support  for  CME  E-mini
+Nasdaq-100 futures and options  data. The CME Globex MDP 3.0 feed (which Databento offers) includes “all
+futures and options on CME… [with] full book, stats, reference data” , and Databento explicitly states that it
+covers options on futures  (CME and others) in its offerings . The platform provides tick-level, depth-of-
+market data  for these instruments  with nanosecond timestamps, available both in real-time streaming
+and via historical download. However , “Databento [doesn’t] provide pre-calculated implied volatility or Greeks”
+for options, so users would derive those from the price data if needed . For reference, CME’s own
+specifications note that the Monday/Wednesday weekly Nasdaq-100 options (e.g. Q3C) are European-style
+expirations on the nearest NQ future , and all such weekly and monthly option series on NQ are included
+in Databento’s data coverage. 
+Options Market Data - Live and historical options data APIs
+https://databento.com/options
+CME Globex MDP 3.0 | CME futures historical & live data API
+https://databento.com/datasets/GLBX.MDP3
+E-mini Nasdaq-100 Monday and Wednesday Weekly Options Frequently Asked Questions - CME Group
+https://www.cmegroup.com/education/articles-and-reports/e-mini-nasdaq-100-monday-and-wednesday-weekly-options-
+frequently-asked-questions.html• 
+1
+6
+• 
+7
+• 
+8
+1
+5
+2
+7
+4
+1 3 5 6 7 8
+2
+4
+2

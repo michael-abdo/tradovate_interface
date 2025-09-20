@@ -1,0 +1,196 @@
+2025-05-06 20:42:09,009 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:09,036 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:09,037 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:09,037 - webhook_server - INFO - Starting server anyway, but trades cannot be executed until connections are available.
+2025-05-06 20:42:09,037 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:09,037 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:09,053 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:09,053 - webhook_server - INFO - Watchdog thread started
+2025-05-06 20:42:09,053 - webhook_server - INFO - Starting ngrok with domain: stonkz92224.ngrok.app
+2025-05-06 20:42:09,573 - webhook_server - INFO - Ngrok tunnel URL confirmed: https://stonkz92224.ngrok.app
+2025-05-06 20:42:10,095 - webhook_server - INFO - Tunnel test response: 400
+2025-05-06 20:42:10,097 - webhook_server - INFO - Webhook now accessible at: https://stonkz92224.ngrok.app/webhook
+2025-05-06 20:42:10,108 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6000
+ * Running on http://10.0.0.220:6000
+2025-05-06 20:42:10,108 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-06 20:42:23,025 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:23] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:42:23,029 - webhook_server - INFO - 
+=============================================
+2025-05-06 20:42:23,030 - webhook_server - INFO - 📥 WEBHOOK REQUEST RECEIVED
+2025-05-06 20:42:23,030 - webhook_server - INFO - =============================================
+2025-05-06 20:42:23,030 - webhook_server - INFO - Request from: 127.0.0.1
+2025-05-06 20:42:23,030 - webhook_server - INFO - Content-Type: application/json
+2025-05-06 20:42:23,030 - webhook_server - INFO - User-Agent: python-requests/2.31.0
+2025-05-06 20:42:23,030 - webhook_server - INFO - 
+📋 Webhook Payload:
+2025-05-06 20:42:23,030 - webhook_server - INFO - {
+  "symbol": "NQ",
+  "action": "Buy",
+  "orderQty": 1,
+  "orderType": "Market",
+  "entryPrice": 20000,
+  "takeProfitPrice": 20100,
+  "tradeType": "Open",
+  "strategy": "DEFAULT"
+}
+2025-05-06 20:42:23,030 - webhook_server - INFO - 
+🎯 Strategy specified in webhook: 'DEFAULT'
+2025-05-06 20:42:23,030 - webhook_server - WARNING - No active controller or connections. Attempting to initialize...
+2025-05-06 20:42:23,030 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:23,047 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:23,047 - webhook_server - ERROR - No Tradovate connections available. Make sure auto_login.py is running.
+2025-05-06 20:42:23,047 - webhook_server - INFO - =============================================
+
+2025-05-06 20:42:23,048 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:23] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-05-06 20:42:24,056 - webhook_server - INFO - 
+=============================================
+2025-05-06 20:42:24,056 - webhook_server - INFO - 📥 WEBHOOK REQUEST RECEIVED
+2025-05-06 20:42:24,056 - webhook_server - INFO - =============================================
+2025-05-06 20:42:24,056 - webhook_server - INFO - Request from: 127.0.0.1
+2025-05-06 20:42:24,056 - webhook_server - INFO - Content-Type: text/plain
+2025-05-06 20:42:24,056 - webhook_server - INFO - User-Agent: python-requests/2.31.0
+2025-05-06 20:42:24,057 - webhook_server - ERROR - Error processing webhook: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+2025-05-06 20:42:24,068 - webhook_server - INFO - =============================================
+
+2025-05-06 20:42:24,068 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:24] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-05-06 20:42:25,077 - webhook_server - INFO - 
+=============================================
+2025-05-06 20:42:25,077 - webhook_server - INFO - 📥 WEBHOOK REQUEST RECEIVED
+2025-05-06 20:42:25,077 - webhook_server - INFO - =============================================
+2025-05-06 20:42:25,077 - webhook_server - INFO - Request from: 127.0.0.1
+2025-05-06 20:42:25,077 - webhook_server - INFO - Content-Type: text/plain
+2025-05-06 20:42:25,077 - webhook_server - INFO - User-Agent: python-requests/2.31.0
+2025-05-06 20:42:25,078 - webhook_server - ERROR - Error processing webhook: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+2025-05-06 20:42:25,079 - webhook_server - INFO - =============================================
+
+2025-05-06 20:42:25,079 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:25] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-05-06 20:42:26,086 - webhook_server - INFO - 
+=============================================
+2025-05-06 20:42:26,086 - webhook_server - INFO - 📥 WEBHOOK REQUEST RECEIVED
+2025-05-06 20:42:26,086 - webhook_server - INFO - =============================================
+2025-05-06 20:42:26,086 - webhook_server - INFO - Request from: 127.0.0.1
+2025-05-06 20:42:26,087 - webhook_server - INFO - Content-Type: application/json
+2025-05-06 20:42:26,087 - webhook_server - INFO - User-Agent: python-requests/2.31.0
+2025-05-06 20:42:26,087 - webhook_server - INFO - 
+📋 Webhook Payload:
+2025-05-06 20:42:26,087 - webhook_server - INFO - {
+  "symbol": "NQ"
+}
+2025-05-06 20:42:26,087 - webhook_server - INFO - 
+🎯 Strategy specified in webhook: 'DEFAULT'
+2025-05-06 20:42:26,087 - webhook_server - WARNING - No active controller or connections. Attempting to initialize...
+2025-05-06 20:42:26,087 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:26,104 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:26,104 - webhook_server - ERROR - No Tradovate connections available. Make sure auto_login.py is running.
+2025-05-06 20:42:26,104 - webhook_server - INFO - =============================================
+
+2025-05-06 20:42:26,105 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:26] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -
+2025-05-06 20:42:42,540 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:42] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:42:52,549 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:52] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:42:59,060 - webhook_server - INFO - Performing health check (idle for 33.0s)
+2025-05-06 20:42:59,060 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:42:59,060 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:42:59,079 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:42:59,600 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:42:59] "GET / HTTP/1.1" 200 -
+2025-05-06 20:42:59,649 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:02,555 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:02] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:43:09,650 - webhook_server - INFO - Performing health check (idle for 43.6s)
+2025-05-06 20:43:09,651 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:43:09,651 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:43:09,667 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:43:09,798 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:09] "GET / HTTP/1.1" 200 -
+2025-05-06 20:43:09,835 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:12,561 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:12] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:43:19,837 - webhook_server - INFO - Performing health check (idle for 53.8s)
+2025-05-06 20:43:19,850 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:43:19,850 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:43:19,867 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:43:20,003 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:20] "GET / HTTP/1.1" 200 -
+2025-05-06 20:43:20,044 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:22,574 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:22] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:43:30,049 - webhook_server - INFO - Performing health check (idle for 64.0s)
+2025-05-06 20:43:30,049 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:43:30,049 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:43:30,066 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:43:30,403 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:30] "GET / HTTP/1.1" 200 -
+2025-05-06 20:43:30,440 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:32,581 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:32] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:43:40,442 - webhook_server - INFO - Performing health check (idle for 74.4s)
+2025-05-06 20:43:40,443 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:43:40,443 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:43:40,460 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:43:40,591 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:40] "GET / HTTP/1.1" 200 -
+2025-05-06 20:43:40,629 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:42,591 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:42] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:43:50,634 - webhook_server - INFO - Performing health check (idle for 84.5s)
+2025-05-06 20:43:50,634 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:43:50,634 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:43:50,652 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:43:50,770 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:50] "GET / HTTP/1.1" 200 -
+2025-05-06 20:43:50,818 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:43:52,596 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:43:52] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:44:00,822 - webhook_server - INFO - Performing health check (idle for 94.7s)
+2025-05-06 20:44:00,822 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:00,823 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:00,839 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:00,958 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:00] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:01,001 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:44:02,605 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:02] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:44:11,006 - webhook_server - INFO - Performing health check (idle for 104.9s)
+2025-05-06 20:44:11,006 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:11,006 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:11,023 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:11,206 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:11] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:11,256 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:44:12,610 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:12] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:44:21,261 - webhook_server - INFO - Performing health check (idle for 115.2s)
+2025-05-06 20:44:21,262 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:21,262 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:21,280 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:21,406 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:21] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:21,442 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:44:22,620 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:22] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:44:31,447 - webhook_server - INFO - Performing health check (idle for 125.4s)
+2025-05-06 20:44:31,447 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:31,447 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:31,464 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:31,595 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:31] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:31,635 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:44:32,630 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:32] "GET /health HTTP/1.1" 200 -
+2025-05-06 20:44:41,639 - webhook_server - INFO - Performing health check (idle for 135.6s)
+2025-05-06 20:44:41,639 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:41,639 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:41,658 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:41,772 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:41] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:41,814 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:44:51,819 - webhook_server - INFO - Performing health check (idle for 145.7s)
+2025-05-06 20:44:51,819 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:44:51,819 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:44:51,836 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:44:52,185 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:44:52] "GET / HTTP/1.1" 200 -
+2025-05-06 20:44:52,227 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:45:02,232 - webhook_server - INFO - Performing health check (idle for 156.1s)
+2025-05-06 20:45:02,232 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:45:02,232 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:45:02,251 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:45:02,407 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:45:02] "GET / HTTP/1.1" 200 -
+2025-05-06 20:45:02,457 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:45:12,461 - webhook_server - INFO - Performing health check (idle for 166.4s)
+2025-05-06 20:45:12,462 - webhook_server - WARNING - No active Chrome connections, attempting to reinitialize controller...
+2025-05-06 20:45:12,462 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 20:45:12,481 - webhook_server - WARNING - No Tradovate connections found. Make sure auto_login.py is running.
+2025-05-06 20:45:12,616 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:45:12] "GET / HTTP/1.1" 200 -
+2025-05-06 20:45:12,652 - webhook_server - INFO - Health check complete: Chrome connections: FAIL, ngrok tunnel: OK
+2025-05-06 20:45:16,602 - webhook_server - INFO - 
+=============================================
+2025-05-06 20:45:16,602 - webhook_server - INFO - 📥 WEBHOOK REQUEST RECEIVED
+2025-05-06 20:45:16,602 - webhook_server - INFO - =============================================
+2025-05-06 20:45:16,602 - webhook_server - INFO - Request from: 127.0.0.1
+2025-05-06 20:45:16,602 - webhook_server - INFO - Content-Type: text/plain; charset=utf-8
+2025-05-06 20:45:16,602 - webhook_server - INFO - User-Agent: Go-http-client/1.1
+2025-05-06 20:45:16,603 - webhook_server - ERROR - Error processing webhook: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+2025-05-06 20:45:16,604 - webhook_server - INFO - =============================================
+
+2025-05-06 20:45:16,605 - werkzeug - INFO - 127.0.0.1 - - [06/May/2025 20:45:16] "[35m[1mPOST /webhook HTTP/1.1[0m" 500 -

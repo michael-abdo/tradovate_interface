@@ -1,0 +1,2607 @@
+{
+  "analysis": {
+    "total_symbols": 82,
+    "codes": {
+      "VT": [
+        {
+          "symbol": "UD:2V: VT 2688867",
+          "number": 2688867,
+          "price": 166.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2507523",
+          "number": 2507523,
+          "price": 561.0,
+          "volume": 3,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2504276",
+          "number": 2504276,
+          "price": 131.75,
+          "volume": 100,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2514851",
+          "number": 2514851,
+          "price": 110.0,
+          "volume": 3,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2515079",
+          "number": 2515079,
+          "price": 93.0,
+          "volume": 2,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2563735",
+          "number": 2563735,
+          "price": 4.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2524230",
+          "number": 2524230,
+          "price": 574.5,
+          "volume": 144,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2510836",
+          "number": 2510836,
+          "price": 233.0,
+          "volume": 10,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2525575",
+          "number": 2525575,
+          "price": 256.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2527849",
+          "number": 2527849,
+          "price": 25.75,
+          "volume": 6,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2530217",
+          "number": 2530217,
+          "price": 292.75,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2531170",
+          "number": 2531170,
+          "price": 24.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2531548",
+          "number": 2531548,
+          "price": 75.0,
+          "volume": 30,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2533931",
+          "number": 2533931,
+          "price": 233.25,
+          "volume": 65,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2530113",
+          "number": 2530113,
+          "price": 578.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2530179",
+          "number": 2530179,
+          "price": 146.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2532087",
+          "number": 2532087,
+          "price": 165.75,
+          "volume": 5,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2536455",
+          "number": 2536455,
+          "price": 11.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2538219",
+          "number": 2538219,
+          "price": 17.25,
+          "volume": 2,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2538234",
+          "number": 2538234,
+          "price": 7.75,
+          "volume": 2,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2540927",
+          "number": 2540927,
+          "price": 12.25,
+          "volume": 15,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2541068",
+          "number": 2541068,
+          "price": 120.0,
+          "volume": 50,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2541604",
+          "number": 2541604,
+          "price": 106.0,
+          "volume": 9,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2542831",
+          "number": 2542831,
+          "price": 48.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2570559",
+          "number": 2570559,
+          "price": 97.25,
+          "volume": 31,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2545026",
+          "number": 2545026,
+          "price": 3.25,
+          "volume": 8,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2545672",
+          "number": 2545672,
+          "price": 33.5,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2547518",
+          "number": 2547518,
+          "price": 138.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2547860",
+          "number": 2547860,
+          "price": 53.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2611214",
+          "number": 2611214,
+          "price": 1105.25,
+          "volume": 20,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2555675",
+          "number": 2555675,
+          "price": 360.5,
+          "volume": 2,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2568780",
+          "number": 2568780,
+          "price": 83.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2569165",
+          "number": 2569165,
+          "price": 51.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2567468",
+          "number": 2567468,
+          "price": 740.0,
+          "volume": 10,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2570292",
+          "number": 2570292,
+          "price": 402.5,
+          "volume": 5,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2572147",
+          "number": 2572147,
+          "price": 11.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2572236",
+          "number": 2572236,
+          "price": 330.75,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2684259",
+          "number": 2684259,
+          "price": 356.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2573488",
+          "number": 2573488,
+          "price": 23.0,
+          "volume": 19,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2560203",
+          "number": 2560203,
+          "price": 259.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: VT 2578222",
+          "number": 2578222,
+          "price": 560.5,
+          "volume": 3,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "GN": [
+        {
+          "symbol": "UD:2V: GN 2690020",
+          "number": 2690020,
+          "price": -28.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2517189",
+          "number": 2517189,
+          "price": -30.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2517885",
+          "number": 2517885,
+          "price": 962.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2518145",
+          "number": 2518145,
+          "price": 38.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2521601",
+          "number": 2521601,
+          "price": 1787.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2528552",
+          "number": 2528552,
+          "price": 243.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2531120",
+          "number": 2531120,
+          "price": 62.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2531143",
+          "number": 2531143,
+          "price": -49.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2534749",
+          "number": 2534749,
+          "price": 83.25,
+          "volume": 20,
+          "expiration": "2025-07-15",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2567398",
+          "number": 2567398,
+          "price": -7.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2538147",
+          "number": 2538147,
+          "price": 75.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2535513",
+          "number": 2535513,
+          "price": -0.25,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2538448",
+          "number": 2538448,
+          "price": -69.25,
+          "volume": 19,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2541012",
+          "number": 2541012,
+          "price": 130.25,
+          "volume": 5,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2543454",
+          "number": 2543454,
+          "price": 134.5,
+          "volume": 55,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2547691",
+          "number": 2547691,
+          "price": -52.25,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2556226",
+          "number": 2556226,
+          "price": -270.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2535905",
+          "number": 2535905,
+          "price": -129.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2566902",
+          "number": 2566902,
+          "price": -9.75,
+          "volume": 14,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: GN 2579511",
+          "number": 2579511,
+          "price": -48.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "DG": [
+        {
+          "symbol": "UD:2V: DG 2683053",
+          "number": 2683053,
+          "price": -340.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2519131",
+          "number": 2519131,
+          "price": -78.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2520805",
+          "number": 2520805,
+          "price": 48.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2682200",
+          "number": 2682200,
+          "price": -66.5,
+          "volume": 26,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2682205",
+          "number": 2682205,
+          "price": 261.25,
+          "volume": 11,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2682201",
+          "number": 2682201,
+          "price": -297.0,
+          "volume": 2,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2682227",
+          "number": 2682227,
+          "price": -38.5,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2530686",
+          "number": 2530686,
+          "price": -2734.25,
+          "volume": 31,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2527878",
+          "number": 2527878,
+          "price": -1500.75,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: DG 2562009",
+          "number": 2562009,
+          "price": 180.0,
+          "volume": 5,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "12": [
+        {
+          "symbol": "UD:2V: 12 2518496",
+          "number": 2518496,
+          "price": 168.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: 12 2531158",
+          "number": 2531158,
+          "price": -74.5,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: 12 2516644",
+          "number": 2516644,
+          "price": 450.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "IC": [
+        {
+          "symbol": "UD:2V: IC 2524221",
+          "number": 2524221,
+          "price": 185.0,
+          "volume": 17,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: IC 2535078",
+          "number": 2535078,
+          "price": 192.5,
+          "volume": 5,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: IC 2574027",
+          "number": 2574027,
+          "price": 45.75,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: IC 2575280",
+          "number": 2575280,
+          "price": 29.75,
+          "volume": 4,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "RR": [
+        {
+          "symbol": "UD:2V: RR 2523337",
+          "number": 2523337,
+          "price": -22.0,
+          "volume": 20,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ],
+      "CO": [
+        {
+          "symbol": "UD:2V: CO 2528619",
+          "number": 2528619,
+          "price": 81.75,
+          "volume": 3,
+          "expiration": "2025-07-18",
+          "option_type": "call",
+          "strike": NaN
+        }
+      ],
+      "BO": [
+        {
+          "symbol": "UD:2V: BO 2522612",
+          "number": 2522612,
+          "price": 263.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        },
+        {
+          "symbol": "UD:2V: BO 2500410",
+          "number": 2500410,
+          "price": 450.0,
+          "volume": 1,
+          "expiration": "2025-07-18",
+          "option_type": "unknown",
+          "strike": NaN
+        }
+      ]
+    },
+    "number_ranges": {
+      "VT": {
+        "min": 2504276,
+        "max": 2688867,
+        "count": 41,
+        "range": 184591
+      },
+      "GN": {
+        "min": 2517189,
+        "max": 2690020,
+        "count": 20,
+        "range": 172831
+      },
+      "DG": {
+        "min": 2519131,
+        "max": 2683053,
+        "count": 10,
+        "range": 163922
+      },
+      "12": {
+        "min": 2516644,
+        "max": 2531158,
+        "count": 3,
+        "range": 14514
+      },
+      "IC": {
+        "min": 2524221,
+        "max": 2575280,
+        "count": 4,
+        "range": 51059
+      },
+      "RR": {
+        "min": 2523337,
+        "max": 2523337,
+        "count": 1,
+        "range": 0
+      },
+      "CO": {
+        "min": 2528619,
+        "max": 2528619,
+        "count": 1,
+        "range": 0
+      },
+      "BO": {
+        "min": 2500410,
+        "max": 2522612,
+        "count": 2,
+        "range": 22202
+      }
+    },
+    "price_patterns": {
+      "VT": {
+        "min_price": 3.25,
+        "max_price": 1105.25,
+        "avg_price": 209.890243902439,
+        "negative_prices": 0
+      },
+      "GN": {
+        "min_price": -270.0,
+        "max_price": 1787.0,
+        "avg_price": 141.05,
+        "negative_prices": 11
+      },
+      "DG": {
+        "min_price": -2734.25,
+        "max_price": 261.25,
+        "avg_price": -456.575,
+        "negative_prices": 7
+      },
+      "12": {
+        "min_price": -74.5,
+        "max_price": 450.0,
+        "avg_price": 181.16666666666666,
+        "negative_prices": 1
+      },
+      "IC": {
+        "min_price": 29.75,
+        "max_price": 192.5,
+        "avg_price": 113.25,
+        "negative_prices": 0
+      },
+      "RR": {
+        "min_price": -22.0,
+        "max_price": -22.0,
+        "avg_price": -22.0,
+        "negative_prices": 1
+      },
+      "CO": {
+        "min_price": 81.75,
+        "max_price": 81.75,
+        "avg_price": 81.75,
+        "negative_prices": 0
+      },
+      "BO": {
+        "min_price": 263.0,
+        "max_price": 450.0,
+        "avg_price": 356.5,
+        "negative_prices": 0
+      }
+    },
+    "volume_patterns": {
+      "VT": {
+        "min_volume": 1,
+        "max_volume": 144,
+        "avg_volume": 13.926829268292684,
+        "total_volume": 571
+      },
+      "GN": {
+        "min_volume": 1,
+        "max_volume": 55,
+        "avg_volume": 6.55,
+        "total_volume": 131
+      },
+      "DG": {
+        "min_volume": 1,
+        "max_volume": 31,
+        "avg_volume": 8.6,
+        "total_volume": 86
+      },
+      "12": {
+        "min_volume": 1,
+        "max_volume": 1,
+        "avg_volume": 1.0,
+        "total_volume": 3
+      },
+      "IC": {
+        "min_volume": 1,
+        "max_volume": 17,
+        "avg_volume": 6.75,
+        "total_volume": 27
+      },
+      "RR": {
+        "min_volume": 20,
+        "max_volume": 20,
+        "avg_volume": 20.0,
+        "total_volume": 20
+      },
+      "CO": {
+        "min_volume": 3,
+        "max_volume": 3,
+        "avg_volume": 3.0,
+        "total_volume": 3
+      },
+      "BO": {
+        "min_volume": 1,
+        "max_volume": 1,
+        "avg_volume": 1.0,
+        "total_volume": 2
+      }
+    },
+    "expiration_patterns": {
+      "2025-07-18": 81,
+      "2025-07-15": 1
+    },
+    "option_type_patterns": {
+      "unknown": 81,
+      "call": 1
+    }
+  },
+  "number_patterns": {
+    "potential_strike_encoding": [
+      {
+        "symbol": "UD:2V: VT 2688867",
+        "number": 2688867,
+        "potential_strikes": [
+          26888.67,
+          26888.670000000002
+        ],
+        "actual_price": 166.0
+      },
+      {
+        "symbol": "UD:2V: GN 2690020",
+        "number": 2690020,
+        "potential_strikes": [
+          26900.2,
+          26900.2
+        ],
+        "actual_price": -28.75
+      },
+      {
+        "symbol": "UD:2V: DG 2683053",
+        "number": 2683053,
+        "potential_strikes": [
+          26830.53,
+          26830.53
+        ],
+        "actual_price": -340.0
+      },
+      {
+        "symbol": "UD:2V: VT 2507523",
+        "number": 2507523,
+        "potential_strikes": [
+          25075.23,
+          25075.23
+        ],
+        "actual_price": 561.0
+      },
+      {
+        "symbol": "UD:2V: VT 2504276",
+        "number": 2504276,
+        "potential_strikes": [
+          25042.76,
+          25042.760000000002
+        ],
+        "actual_price": 131.75
+      },
+      {
+        "symbol": "UD:2V: VT 2514851",
+        "number": 2514851,
+        "potential_strikes": [
+          25148.51,
+          25148.510000000002
+        ],
+        "actual_price": 110.0
+      },
+      {
+        "symbol": "UD:2V: VT 2515079",
+        "number": 2515079,
+        "potential_strikes": [
+          25150.79,
+          25150.79
+        ],
+        "actual_price": 93.0
+      },
+      {
+        "symbol": "UD:2V: GN 2517189",
+        "number": 2517189,
+        "potential_strikes": [
+          25171.89,
+          25171.89
+        ],
+        "actual_price": -30.5
+      },
+      {
+        "symbol": "UD:2V: GN 2517885",
+        "number": 2517885,
+        "potential_strikes": [
+          25178.85,
+          25178.850000000002
+        ],
+        "actual_price": 962.0
+      },
+      {
+        "symbol": "UD:2V: GN 2518145",
+        "number": 2518145,
+        "potential_strikes": [
+          25181.45,
+          25181.45
+        ],
+        "actual_price": 38.5
+      },
+      {
+        "symbol": "UD:2V: 12 2518496",
+        "number": 2518496,
+        "potential_strikes": [
+          25184.96,
+          25184.96
+        ],
+        "actual_price": 168.0
+      },
+      {
+        "symbol": "UD:2V: DG 2519131",
+        "number": 2519131,
+        "potential_strikes": [
+          25191.31,
+          25191.31
+        ],
+        "actual_price": -78.0
+      },
+      {
+        "symbol": "UD:2V: DG 2520805",
+        "number": 2520805,
+        "potential_strikes": [
+          25208.05,
+          25208.05
+        ],
+        "actual_price": 48.0
+      },
+      {
+        "symbol": "UD:2V: VT 2563735",
+        "number": 2563735,
+        "potential_strikes": [
+          25637.35,
+          25637.350000000002
+        ],
+        "actual_price": 4.75
+      },
+      {
+        "symbol": "UD:2V: GN 2521601",
+        "number": 2521601,
+        "potential_strikes": [
+          25216.01,
+          25216.010000000002
+        ],
+        "actual_price": 1787.0
+      },
+      {
+        "symbol": "UD:2V: IC 2524221",
+        "number": 2524221,
+        "potential_strikes": [
+          25242.21,
+          25242.21
+        ],
+        "actual_price": 185.0
+      },
+      {
+        "symbol": "UD:2V: VT 2524230",
+        "number": 2524230,
+        "potential_strikes": [
+          25242.3,
+          25242.3
+        ],
+        "actual_price": 574.5
+      },
+      {
+        "symbol": "UD:2V: VT 2510836",
+        "number": 2510836,
+        "potential_strikes": [
+          25108.36,
+          25108.36
+        ],
+        "actual_price": 233.0
+      },
+      {
+        "symbol": "UD:2V: VT 2525575",
+        "number": 2525575,
+        "potential_strikes": [
+          25255.75,
+          25255.75
+        ],
+        "actual_price": 256.75
+      },
+      {
+        "symbol": "UD:2V: DG 2682200",
+        "number": 2682200,
+        "potential_strikes": [
+          26822.0,
+          26822.0
+        ],
+        "actual_price": -66.5
+      },
+      {
+        "symbol": "UD:2V: DG 2682205",
+        "number": 2682205,
+        "potential_strikes": [
+          26822.05,
+          26822.05
+        ],
+        "actual_price": 261.25
+      },
+      {
+        "symbol": "UD:2V: VT 2527849",
+        "number": 2527849,
+        "potential_strikes": [
+          25278.49,
+          25278.49
+        ],
+        "actual_price": 25.75
+      },
+      {
+        "symbol": "UD:2V: RR 2523337",
+        "number": 2523337,
+        "potential_strikes": [
+          25233.37,
+          25233.37
+        ],
+        "actual_price": -22.0
+      },
+      {
+        "symbol": "UD:2V: GN 2528552",
+        "number": 2528552,
+        "potential_strikes": [
+          25285.52,
+          25285.52
+        ],
+        "actual_price": 243.0
+      },
+      {
+        "symbol": "UD:2V: CO 2528619",
+        "number": 2528619,
+        "potential_strikes": [
+          25286.19,
+          25286.190000000002
+        ],
+        "actual_price": 81.75
+      },
+      {
+        "symbol": "UD:2V: VT 2530217",
+        "number": 2530217,
+        "potential_strikes": [
+          25302.17,
+          25302.170000000002
+        ],
+        "actual_price": 292.75
+      },
+      {
+        "symbol": "UD:2V: GN 2531120",
+        "number": 2531120,
+        "potential_strikes": [
+          25311.2,
+          25311.2
+        ],
+        "actual_price": 62.0
+      },
+      {
+        "symbol": "UD:2V: 12 2531158",
+        "number": 2531158,
+        "potential_strikes": [
+          25311.58,
+          25311.58
+        ],
+        "actual_price": -74.5
+      },
+      {
+        "symbol": "UD:2V: GN 2531143",
+        "number": 2531143,
+        "potential_strikes": [
+          25311.43,
+          25311.43
+        ],
+        "actual_price": -49.0
+      },
+      {
+        "symbol": "UD:2V: VT 2531170",
+        "number": 2531170,
+        "potential_strikes": [
+          25311.7,
+          25311.7
+        ],
+        "actual_price": 24.75
+      },
+      {
+        "symbol": "UD:2V: VT 2531548",
+        "number": 2531548,
+        "potential_strikes": [
+          25315.48,
+          25315.48
+        ],
+        "actual_price": 75.0
+      },
+      {
+        "symbol": "UD:2V: DG 2682201",
+        "number": 2682201,
+        "potential_strikes": [
+          26822.01,
+          26822.010000000002
+        ],
+        "actual_price": -297.0
+      },
+      {
+        "symbol": "UD:2V: DG 2682227",
+        "number": 2682227,
+        "potential_strikes": [
+          26822.27,
+          26822.27
+        ],
+        "actual_price": -38.5
+      },
+      {
+        "symbol": "UD:2V: VT 2533931",
+        "number": 2533931,
+        "potential_strikes": [
+          25339.31,
+          25339.31
+        ],
+        "actual_price": 233.25
+      },
+      {
+        "symbol": "UD:2V: DG 2530686",
+        "number": 2530686,
+        "potential_strikes": [
+          25306.86,
+          25306.86
+        ],
+        "actual_price": -2734.25
+      },
+      {
+        "symbol": "UD:2V: VT 2530113",
+        "number": 2530113,
+        "potential_strikes": [
+          25301.13,
+          25301.13
+        ],
+        "actual_price": 578.0
+      },
+      {
+        "symbol": "UD:2V: VT 2530179",
+        "number": 2530179,
+        "potential_strikes": [
+          25301.79,
+          25301.79
+        ],
+        "actual_price": 146.0
+      },
+      {
+        "symbol": "UD:2V: GN 2534749",
+        "number": 2534749,
+        "potential_strikes": [
+          25347.49,
+          25347.49
+        ],
+        "actual_price": 83.25
+      },
+      {
+        "symbol": "UD:2V: IC 2535078",
+        "number": 2535078,
+        "potential_strikes": [
+          25350.78,
+          25350.78
+        ],
+        "actual_price": 192.5
+      },
+      {
+        "symbol": "UD:2V: BO 2522612",
+        "number": 2522612,
+        "potential_strikes": [
+          25226.12,
+          25226.12
+        ],
+        "actual_price": 263.0
+      },
+      {
+        "symbol": "UD:2V: VT 2532087",
+        "number": 2532087,
+        "potential_strikes": [
+          25320.87,
+          25320.87
+        ],
+        "actual_price": 165.75
+      },
+      {
+        "symbol": "UD:2V: VT 2536455",
+        "number": 2536455,
+        "potential_strikes": [
+          25364.55,
+          25364.55
+        ],
+        "actual_price": 11.5
+      },
+      {
+        "symbol": "UD:2V: GN 2567398",
+        "number": 2567398,
+        "potential_strikes": [
+          25673.98,
+          25673.98
+        ],
+        "actual_price": -7.5
+      },
+      {
+        "symbol": "UD:2V: GN 2538147",
+        "number": 2538147,
+        "potential_strikes": [
+          25381.47,
+          25381.47
+        ],
+        "actual_price": 75.5
+      },
+      {
+        "symbol": "UD:2V: VT 2538219",
+        "number": 2538219,
+        "potential_strikes": [
+          25382.19,
+          25382.190000000002
+        ],
+        "actual_price": 17.25
+      },
+      {
+        "symbol": "UD:2V: VT 2538234",
+        "number": 2538234,
+        "potential_strikes": [
+          25382.34,
+          25382.34
+        ],
+        "actual_price": 7.75
+      },
+      {
+        "symbol": "UD:2V: GN 2535513",
+        "number": 2535513,
+        "potential_strikes": [
+          25355.13,
+          25355.13
+        ],
+        "actual_price": -0.25
+      },
+      {
+        "symbol": "UD:2V: BO 2500410",
+        "number": 2500410,
+        "potential_strikes": [
+          25004.1,
+          25004.100000000002
+        ],
+        "actual_price": 450.0
+      },
+      {
+        "symbol": "UD:2V: GN 2538448",
+        "number": 2538448,
+        "potential_strikes": [
+          25384.48,
+          25384.48
+        ],
+        "actual_price": -69.25
+      },
+      {
+        "symbol": "UD:2V: VT 2540927",
+        "number": 2540927,
+        "potential_strikes": [
+          25409.27,
+          25409.27
+        ],
+        "actual_price": 12.25
+      },
+      {
+        "symbol": "UD:2V: GN 2541012",
+        "number": 2541012,
+        "potential_strikes": [
+          25410.12,
+          25410.12
+        ],
+        "actual_price": 130.25
+      },
+      {
+        "symbol": "UD:2V: VT 2541068",
+        "number": 2541068,
+        "potential_strikes": [
+          25410.68,
+          25410.68
+        ],
+        "actual_price": 120.0
+      },
+      {
+        "symbol": "UD:2V: VT 2541604",
+        "number": 2541604,
+        "potential_strikes": [
+          25416.04,
+          25416.04
+        ],
+        "actual_price": 106.0
+      },
+      {
+        "symbol": "UD:2V: VT 2542831",
+        "number": 2542831,
+        "potential_strikes": [
+          25428.31,
+          25428.31
+        ],
+        "actual_price": 48.5
+      },
+      {
+        "symbol": "UD:2V: GN 2543454",
+        "number": 2543454,
+        "potential_strikes": [
+          25434.54,
+          25434.54
+        ],
+        "actual_price": 134.5
+      },
+      {
+        "symbol": "UD:2V: VT 2570559",
+        "number": 2570559,
+        "potential_strikes": [
+          25705.59,
+          25705.59
+        ],
+        "actual_price": 97.25
+      },
+      {
+        "symbol": "UD:2V: VT 2545026",
+        "number": 2545026,
+        "potential_strikes": [
+          25450.26,
+          25450.260000000002
+        ],
+        "actual_price": 3.25
+      },
+      {
+        "symbol": "UD:2V: VT 2545672",
+        "number": 2545672,
+        "potential_strikes": [
+          25456.72,
+          25456.72
+        ],
+        "actual_price": 33.5
+      },
+      {
+        "symbol": "UD:2V: VT 2547518",
+        "number": 2547518,
+        "potential_strikes": [
+          25475.18,
+          25475.18
+        ],
+        "actual_price": 138.0
+      },
+      {
+        "symbol": "UD:2V: GN 2547691",
+        "number": 2547691,
+        "potential_strikes": [
+          25476.91,
+          25476.91
+        ],
+        "actual_price": -52.25
+      },
+      {
+        "symbol": "UD:2V: 12 2516644",
+        "number": 2516644,
+        "potential_strikes": [
+          25166.44,
+          25166.440000000002
+        ],
+        "actual_price": 450.0
+      },
+      {
+        "symbol": "UD:2V: VT 2547860",
+        "number": 2547860,
+        "potential_strikes": [
+          25478.6,
+          25478.600000000002
+        ],
+        "actual_price": 53.75
+      },
+      {
+        "symbol": "UD:2V: VT 2611214",
+        "number": 2611214,
+        "potential_strikes": [
+          26112.14,
+          26112.14
+        ],
+        "actual_price": 1105.25
+      },
+      {
+        "symbol": "UD:2V: DG 2527878",
+        "number": 2527878,
+        "potential_strikes": [
+          25278.78,
+          25278.78
+        ],
+        "actual_price": -1500.75
+      },
+      {
+        "symbol": "UD:2V: VT 2555675",
+        "number": 2555675,
+        "potential_strikes": [
+          25556.75,
+          25556.75
+        ],
+        "actual_price": 360.5
+      },
+      {
+        "symbol": "UD:2V: GN 2556226",
+        "number": 2556226,
+        "potential_strikes": [
+          25562.26,
+          25562.260000000002
+        ],
+        "actual_price": -270.0
+      },
+      {
+        "symbol": "UD:2V: GN 2535905",
+        "number": 2535905,
+        "potential_strikes": [
+          25359.05,
+          25359.05
+        ],
+        "actual_price": -129.75
+      },
+      {
+        "symbol": "UD:2V: GN 2566902",
+        "number": 2566902,
+        "potential_strikes": [
+          25669.02,
+          25669.02
+        ],
+        "actual_price": -9.75
+      },
+      {
+        "symbol": "UD:2V: VT 2568780",
+        "number": 2568780,
+        "potential_strikes": [
+          25687.8,
+          25687.8
+        ],
+        "actual_price": 83.0
+      },
+      {
+        "symbol": "UD:2V: VT 2569165",
+        "number": 2569165,
+        "potential_strikes": [
+          25691.65,
+          25691.65
+        ],
+        "actual_price": 51.75
+      },
+      {
+        "symbol": "UD:2V: VT 2567468",
+        "number": 2567468,
+        "potential_strikes": [
+          25674.68,
+          25674.68
+        ],
+        "actual_price": 740.0
+      },
+      {
+        "symbol": "UD:2V: VT 2570292",
+        "number": 2570292,
+        "potential_strikes": [
+          25702.92,
+          25702.920000000002
+        ],
+        "actual_price": 402.5
+      },
+      {
+        "symbol": "UD:2V: VT 2572147",
+        "number": 2572147,
+        "potential_strikes": [
+          25721.47,
+          25721.47
+        ],
+        "actual_price": 11.75
+      },
+      {
+        "symbol": "UD:2V: VT 2572236",
+        "number": 2572236,
+        "potential_strikes": [
+          25722.36,
+          25722.36
+        ],
+        "actual_price": 330.75
+      },
+      {
+        "symbol": "UD:2V: VT 2684259",
+        "number": 2684259,
+        "potential_strikes": [
+          26842.59,
+          26842.59
+        ],
+        "actual_price": 356.5
+      },
+      {
+        "symbol": "UD:2V: VT 2573488",
+        "number": 2573488,
+        "potential_strikes": [
+          25734.88,
+          25734.88
+        ],
+        "actual_price": 23.0
+      },
+      {
+        "symbol": "UD:2V: IC 2574027",
+        "number": 2574027,
+        "potential_strikes": [
+          25740.27,
+          25740.27
+        ],
+        "actual_price": 45.75
+      },
+      {
+        "symbol": "UD:2V: IC 2575280",
+        "number": 2575280,
+        "potential_strikes": [
+          25752.8,
+          25752.8
+        ],
+        "actual_price": 29.75
+      },
+      {
+        "symbol": "UD:2V: DG 2562009",
+        "number": 2562009,
+        "potential_strikes": [
+          25620.09,
+          25620.09
+        ],
+        "actual_price": 180.0
+      },
+      {
+        "symbol": "UD:2V: VT 2560203",
+        "number": 2560203,
+        "potential_strikes": [
+          25602.03,
+          25602.03
+        ],
+        "actual_price": 259.0
+      },
+      {
+        "symbol": "UD:2V: VT 2578222",
+        "number": 2578222,
+        "potential_strikes": [
+          25782.22,
+          25782.22
+        ],
+        "actual_price": 560.5
+      },
+      {
+        "symbol": "UD:2V: GN 2579511",
+        "number": 2579511,
+        "potential_strikes": [
+          25795.11,
+          25795.11
+        ],
+        "actual_price": -48.0
+      }
+    ],
+    "potential_date_encoding": [],
+    "potential_sequence": []
+  },
+  "comparison": {
+    "standard_count": 130,
+    "ud2v_count": 82,
+    "price_comparison": {
+      "standard_range": [
+        4.95,
+        4230.0
+      ],
+      "ud2v_range": [
+        -2734.25,
+        1787.0
+      ],
+      "standard_avg": 474.1976923076923,
+      "ud2v_avg": 105.2439024390244
+    },
+    "volume_comparison": {
+      "standard_range": [
+        1,
+        756
+      ],
+      "ud2v_range": [
+        1,
+        144
+      ],
+      "standard_avg": 38.86153846153846,
+      "ud2v_avg": 10.28048780487805
+    },
+    "expiration_comparison": {
+      "standard_expirations": {
+        "2025-09-19": 70,
+        "2025-12-19": 37,
+        "2026-03-20": 18,
+        "2026-06-18": 5
+      },
+      "ud2v_expirations": {
+        "2025-07-18": 81,
+        "2025-07-15": 1
+      }
+    }
+  },
+  "raw_data": [
+    {
+      "symbol": "UD:2V: VT 2688867",
+      "total_volume": 1,
+      "latest_price": 166.0,
+      "avg_price": 166.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2690020",
+      "total_volume": 1,
+      "latest_price": -28.75,
+      "avg_price": -28.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2683053",
+      "total_volume": 1,
+      "latest_price": -340.0,
+      "avg_price": -340.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2507523",
+      "total_volume": 3,
+      "latest_price": 561.0,
+      "avg_price": 561.0,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2504276",
+      "total_volume": 100,
+      "latest_price": 131.75,
+      "avg_price": 131.75,
+      "trades_count": 5,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2514851",
+      "total_volume": 3,
+      "latest_price": 110.0,
+      "avg_price": 114.83333333333331,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2515079",
+      "total_volume": 2,
+      "latest_price": 93.0,
+      "avg_price": 94.625,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2517189",
+      "total_volume": 1,
+      "latest_price": -30.5,
+      "avg_price": -30.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2517885",
+      "total_volume": 1,
+      "latest_price": 962.0,
+      "avg_price": 962.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2518145",
+      "total_volume": 1,
+      "latest_price": 38.5,
+      "avg_price": 38.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: 12 2518496",
+      "total_volume": 1,
+      "latest_price": 168.0,
+      "avg_price": 168.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2519131",
+      "total_volume": 1,
+      "latest_price": -78.0,
+      "avg_price": -78.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2520805",
+      "total_volume": 1,
+      "latest_price": 48.0,
+      "avg_price": 48.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2563735",
+      "total_volume": 1,
+      "latest_price": 4.75,
+      "avg_price": 4.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2521601",
+      "total_volume": 1,
+      "latest_price": 1787.0,
+      "avg_price": 1787.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: IC 2524221",
+      "total_volume": 17,
+      "latest_price": 185.0,
+      "avg_price": 178.08333333333334,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2524230",
+      "total_volume": 144,
+      "latest_price": 574.5,
+      "avg_price": 574.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2510836",
+      "total_volume": 10,
+      "latest_price": 233.0,
+      "avg_price": 233.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2525575",
+      "total_volume": 1,
+      "latest_price": 256.75,
+      "avg_price": 256.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2682200",
+      "total_volume": 26,
+      "latest_price": -66.5,
+      "avg_price": -94.8653846153846,
+      "trades_count": 26,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2682205",
+      "total_volume": 11,
+      "latest_price": 261.25,
+      "avg_price": 262.5,
+      "trades_count": 11,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2527849",
+      "total_volume": 6,
+      "latest_price": 25.75,
+      "avg_price": 25.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: RR 2523337",
+      "total_volume": 20,
+      "latest_price": -22.0,
+      "avg_price": -22.0,
+      "trades_count": 6,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2528552",
+      "total_volume": 1,
+      "latest_price": 243.0,
+      "avg_price": 243.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: CO 2528619",
+      "total_volume": 3,
+      "latest_price": 81.75,
+      "avg_price": 83.25,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "call",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2530217",
+      "total_volume": 4,
+      "latest_price": 292.75,
+      "avg_price": 292.0,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2531120",
+      "total_volume": 1,
+      "latest_price": 62.0,
+      "avg_price": 62.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: 12 2531158",
+      "total_volume": 1,
+      "latest_price": -74.5,
+      "avg_price": -74.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2531143",
+      "total_volume": 1,
+      "latest_price": -49.0,
+      "avg_price": -49.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2531170",
+      "total_volume": 1,
+      "latest_price": 24.75,
+      "avg_price": 24.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2531548",
+      "total_volume": 30,
+      "latest_price": 75.0,
+      "avg_price": 71.0,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2682201",
+      "total_volume": 2,
+      "latest_price": -297.0,
+      "avg_price": -295.0,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2682227",
+      "total_volume": 4,
+      "latest_price": -38.5,
+      "avg_price": -37.0,
+      "trades_count": 4,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2533931",
+      "total_volume": 65,
+      "latest_price": 233.25,
+      "avg_price": 217.05,
+      "trades_count": 10,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2530686",
+      "total_volume": 31,
+      "latest_price": -2734.25,
+      "avg_price": -2777.7419354838707,
+      "trades_count": 31,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2530113",
+      "total_volume": 1,
+      "latest_price": 578.0,
+      "avg_price": 578.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2530179",
+      "total_volume": 1,
+      "latest_price": 146.0,
+      "avg_price": 146.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2534749",
+      "total_volume": 20,
+      "latest_price": 83.25,
+      "avg_price": 83.25,
+      "trades_count": 1,
+      "expiration": "2025-07-15 20:00:00+00:00",
+      "expiration_date": "2025-07-15",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: IC 2535078",
+      "total_volume": 5,
+      "latest_price": 192.5,
+      "avg_price": 192.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: BO 2522612",
+      "total_volume": 1,
+      "latest_price": 263.0,
+      "avg_price": 263.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2532087",
+      "total_volume": 5,
+      "latest_price": 165.75,
+      "avg_price": 161.3,
+      "trades_count": 5,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2536455",
+      "total_volume": 1,
+      "latest_price": 11.5,
+      "avg_price": 11.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2567398",
+      "total_volume": 1,
+      "latest_price": -7.5,
+      "avg_price": -7.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2538147",
+      "total_volume": 1,
+      "latest_price": 75.5,
+      "avg_price": 75.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2538219",
+      "total_volume": 2,
+      "latest_price": 17.25,
+      "avg_price": 17.25,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2538234",
+      "total_volume": 2,
+      "latest_price": 7.75,
+      "avg_price": 7.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2535513",
+      "total_volume": 1,
+      "latest_price": -0.25,
+      "avg_price": -0.25,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: BO 2500410",
+      "total_volume": 1,
+      "latest_price": 450.0,
+      "avg_price": 450.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2538448",
+      "total_volume": 19,
+      "latest_price": -69.25,
+      "avg_price": -69.9375,
+      "trades_count": 4,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2540927",
+      "total_volume": 15,
+      "latest_price": 12.25,
+      "avg_price": 12.625,
+      "trades_count": 6,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2541012",
+      "total_volume": 5,
+      "latest_price": 130.25,
+      "avg_price": 129.5,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2541068",
+      "total_volume": 50,
+      "latest_price": 120.0,
+      "avg_price": 120.0,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2541604",
+      "total_volume": 9,
+      "latest_price": 106.0,
+      "avg_price": 103.5,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2542831",
+      "total_volume": 1,
+      "latest_price": 48.5,
+      "avg_price": 48.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2543454",
+      "total_volume": 55,
+      "latest_price": 134.5,
+      "avg_price": 132.29166666666666,
+      "trades_count": 6,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2570559",
+      "total_volume": 31,
+      "latest_price": 97.25,
+      "avg_price": 89.75,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2545026",
+      "total_volume": 8,
+      "latest_price": 3.25,
+      "avg_price": 3.25,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2545672",
+      "total_volume": 4,
+      "latest_price": 33.5,
+      "avg_price": 33.5,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2547518",
+      "total_volume": 1,
+      "latest_price": 138.0,
+      "avg_price": 138.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2547691",
+      "total_volume": 4,
+      "latest_price": -52.25,
+      "avg_price": -53.583333333333336,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: 12 2516644",
+      "total_volume": 1,
+      "latest_price": 450.0,
+      "avg_price": 450.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2547860",
+      "total_volume": 1,
+      "latest_price": 53.75,
+      "avg_price": 53.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2611214",
+      "total_volume": 20,
+      "latest_price": 1105.25,
+      "avg_price": 1105.125,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2527878",
+      "total_volume": 4,
+      "latest_price": -1500.75,
+      "avg_price": -1500.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2555675",
+      "total_volume": 2,
+      "latest_price": 360.5,
+      "avg_price": 361.25,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2556226",
+      "total_volume": 1,
+      "latest_price": -270.0,
+      "avg_price": -270.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2535905",
+      "total_volume": 1,
+      "latest_price": -129.75,
+      "avg_price": -129.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2566902",
+      "total_volume": 14,
+      "latest_price": -9.75,
+      "avg_price": -9.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2568780",
+      "total_volume": 1,
+      "latest_price": 83.0,
+      "avg_price": 83.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2569165",
+      "total_volume": 1,
+      "latest_price": 51.75,
+      "avg_price": 51.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2567468",
+      "total_volume": 10,
+      "latest_price": 740.0,
+      "avg_price": 740.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2570292",
+      "total_volume": 5,
+      "latest_price": 402.5,
+      "avg_price": 402.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2572147",
+      "total_volume": 1,
+      "latest_price": 11.75,
+      "avg_price": 11.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2572236",
+      "total_volume": 4,
+      "latest_price": 330.75,
+      "avg_price": 330.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2684259",
+      "total_volume": 1,
+      "latest_price": 356.5,
+      "avg_price": 356.5,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2573488",
+      "total_volume": 19,
+      "latest_price": 23.0,
+      "avg_price": 23.0,
+      "trades_count": 2,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: IC 2574027",
+      "total_volume": 1,
+      "latest_price": 45.75,
+      "avg_price": 45.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: IC 2575280",
+      "total_volume": 4,
+      "latest_price": 29.75,
+      "avg_price": 29.75,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: DG 2562009",
+      "total_volume": 5,
+      "latest_price": 180.0,
+      "avg_price": 180.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2560203",
+      "total_volume": 1,
+      "latest_price": 259.0,
+      "avg_price": 259.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: VT 2578222",
+      "total_volume": 3,
+      "latest_price": 560.5,
+      "avg_price": 560.75,
+      "trades_count": 3,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    },
+    {
+      "symbol": "UD:2V: GN 2579511",
+      "total_volume": 1,
+      "latest_price": -48.0,
+      "avg_price": -48.0,
+      "trades_count": 1,
+      "expiration": "2025-07-18 21:59:00+00:00",
+      "expiration_date": "2025-07-18",
+      "option_type": "unknown",
+      "strike": NaN
+    }
+  ]
+}

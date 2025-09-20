@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "export_timestamp": "2025-06-08T22:32:39.465262",
+    "export_version": "1.0",
+    "data_source": "nq_options_trading_system",
+    "exporter_config": {
+      "include_raw_data": false,
+      "include_metadata": true,
+      "format_pretty": true,
+      "include_analysis_details": true
+    }
+  },
+  "trading_signals": [
+    {
+      "signal_id": "nq_ev_1_20250608_223239",
+      "timestamp": "2025-06-08T22:32:39.465304",
+      "source": "nq_ev_algorithm",
+      "priority": "PRIMARY",
+      "confidence": "HIGH",
+      "trade": {
+        "direction": "SHORT",
+        "entry_price": 21376.75,
+        "target_price": 14000.0,
+        "stop_price": 21380.0,
+        "expected_value": 5964.357177141185,
+        "win_probability": 0.8086188586912175,
+        "position_size": "LARGE (15-20%)",
+        "risk_reward_ratio": 2269.77
+      },
+      "reasoning": "Your NQ EV algorithm found high-quality setup with EV=+5964.4 points",
+      "metadata": {
+        "rank": 1,
+        "total_signals": 3
+      }
+    },
+    {
+      "signal_id": "nq_ev_2_20250608_223239",
+      "timestamp": "2025-06-08T22:32:39.465322",
+      "source": "nq_ev_algorithm",
+      "priority": "SECONDARY",
+      "confidence": "MEDIUM",
+      "trade": {
+        "direction": "SHORT",
+        "entry_price": 0,
+        "target_price": 14000.0,
+        "stop_price": 21390.0,
+        "expected_value": 5962.443365728098,
+        "win_probability": 0.8086188586912175,
+        "position_size": "N/A",
+        "risk_reward_ratio": 0
+      },
+      "reasoning": "Your NQ EV algorithm setup #2 with EV=+5962.4",
+      "metadata": {
+        "rank": 2,
+        "total_signals": 3
+      }
+    },
+    {
+      "signal_id": "nq_ev_3_20250608_223239",
+      "timestamp": "2025-06-08T22:32:39.465334",
+      "source": "nq_ev_algorithm",
+      "priority": "SECONDARY",
+      "confidence": "MEDIUM",
+      "trade": {
+        "direction": "SHORT",
+        "entry_price": 0,
+        "target_price": 14000.0,
+        "stop_price": 21400.0,
+        "expected_value": 5960.52955431501,
+        "win_probability": 0.8086188586912175,
+        "position_size": "N/A",
+        "risk_reward_ratio": 0
+      },
+      "reasoning": "Your NQ EV algorithm setup #3 with EV=+5960.5",
+      "metadata": {
+        "rank": 3,
+        "total_signals": 3
+      }
+    }
+  ],
+  "market_analysis": {
+    "timestamp": "2025-06-08T22:32:39.465338",
+    "underlying": {
+      "symbol": "NQ",
+      "price": 21376.75,
+      "analysis_time": "2025-06-08T22:32:39.464523"
+    },
+    "sentiment": {
+      "overall": "neutral",
+      "momentum": "neutral",
+      "volatility_regime": "normal"
+    },
+    "quality_metrics": {
+      "nq_ev": {
+        "quality_setups": 5486,
+        "total_setups": 5492,
+        "strikes_analyzed": 309,
+        "best_ev": 5964.357177141185,
+        "avg_probability": 0.864139252087953
+      }
+    },
+    "analysis_summary": {
+      "successful_analyses": 2,
+      "total_analyses": 3,
+      "execution_time": 20.583743,
+      "primary_algorithm": "nq_ev_analysis"
+    }
+  },
+  "execution_summary": {
+    "total_signals": 3,
+    "high_priority_signals": 1,
+    "recommended_action": "short",
+    "next_analysis_recommended": "2025-06-08T22:32:39.465345"
+  },
+  "detailed_analysis": {
+    "raw_analysis_results": {},
+    "individual_analysis_status": {
+      "risk": "success",
+      "expected_value": "success"
+    }
+  }
+}

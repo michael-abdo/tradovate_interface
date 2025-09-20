@@ -1,0 +1,20 @@
+tradeNumber,type,signal,dateTime,price,contracts,profit
+,Sell,Example Signal,2024-11-03 15:56:46,,1,0
+,Buy,Example Signal,2024-11-03 16:01:30,,1,0
+,Buy,Example Signal,2024-11-03 16:01:30,,1,0
+,Buy,Example Signal,2024-11-03 16:01:32,,1,0
+,Buy,Example Signal,2024-11-03 16:01:32,,1,0
+,Sell,Example Signal,2024-11-03 16:02:00,,1,0
+,Sell,Example Signal,2024-11-03 16:02:00,,1,0
+,Buy,Example Signal,2024-11-03 16:03:15,,1,0
+,Buy,Example Signal,2024-11-03 16:03:15,,1,0
+,Buy,Example Signal,2024-11-03 16:04:01,,1,0
+,Buy,Example Signal,2024-11-03 16:04:01,,1,0
+,Buy,Example Signal,2024-11-03 16:05:30,,1,0
+,Buy,Example Signal,2024-11-03 16:05:30,,1,0
+,Sell,Example Signal,2024-11-03 16:07:15,,1,0
+,Sell,Example Signal,2024-11-03 16:07:15,,1,0
+,Buy,Example Signal,2024-11-03 16:08:10,,1,0
+,Buy,Example Signal,2024-11-03 16:08:10,,1,0
+,Sell,Example Signal,2024-11-03 16:12:40,,1,0
+,Sell,Example Signal,2024-11-03 16:12:40,,1,0

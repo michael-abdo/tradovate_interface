@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size Matrix Tests</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        #testResults {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .pass { color: green; }
+        .fail { color: red; }
+        .test-count {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Size Matrix Tests</h1>
+    <p>This page runs the JavaScript tests for the size matrix functionality.</p>
+    <button id="runTests">Run Tests</button>
+    <div id="testResults"></div>
+
+    <script>
+        // Mock objects needed for tests
+        const userPreferences = {
+            scalingEnabled: true,
+            currentOrderNumber: 1
+        };
+
+        const accountsData = [
+            { id: 1001, name: "Phase1Account", phase: 1 },
+            { id: 1002, name: "Phase2Account", phase: 2 },
+            { id: 1003, name: "Phase3Account", phase: 3 }
+        ];
+
+        // Setup mock DOM function
+        function setupMockDOM() {
+            // Create a clean testing div
+            const testDiv = document.createElement('div');
+            testDiv.id = 'test-container';
+            document.body.appendChild(testDiv);
+            
+            // Create matrix inputs
+            const phases = [1, 2, 3];
+            const orders = [1, 2, 3, 4];
+            
+            phases.forEach(phase => {
+                orders.forEach(order => {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.id = `phase${phase}_order${order}`;
+                    input.className = 'matrix-input';
+                    
+                    // Set test values: Phase 1 = order*5, Phase 2 = 10+order*5, Phase 3 = 20+order*5
+                    if (phase === 1) input.value = order * 5;
+                    else if (phase === 2) input.value = 10 + (order * 5);
+                    else input.value = 20 + (order * 5);
+                    
+                    testDiv.appendChild(input);
+                });
+            });
+            
+            // Create account checkboxes
+            const accountsContainer = document.createElement('div');
+            accountsData.forEach(account => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'accounts';
+                checkbox.value = account.name;
+                checkbox.setAttribute('data-account-id', account.id);
+                accountsContainer.appendChild(checkbox);
+            });
+            document.body.appendChild(accountsContainer);
+            
+            return testDiv;
+        }
+
+        // Cleanup mock DOM
+        function cleanupMockDOM() {
+            const testDiv = document.getElementById('test-container');
+            if (testDiv) document.body.removeChild(testDiv);
+            
+            // Remove account checkboxes
+            const checkboxes = document.querySelectorAll('input[name="accounts"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox.parentNode) checkbox.parentNode.removeChild(checkbox);
+            });
+        }
+
+        // Get matrix value function (simplified version of the one in the app)
+        function getMatrixValue(phase, orderNum) {
+            // Limit to valid ranges
+            phase = Math.min(Math.max(phase, 1), 3);
+            orderNum = Math.min(Math.max(orderNum, 1), 4);
+            
+            // Debug log
+            console.log(`DEBUG: getMatrixValue for phase ${phase}, order ${orderNum}`);
+            
+            // Get the value directly from the DOM input
+            const inputId = `phase${phase}_order${orderNum}`;
+            console.log(`DEBUG: Looking for input with ID ${inputId}`);
+            const input = document.getElementById(inputId);
+            
+            if (input) {
+                const value = parseInt(input.value) || 1;
+                console.log(`DEBUG: Found input, value = ${value}`);
+                return value;
+            }
+            
+            console.log(`DEBUG: Input not found`);
+            
+            // Default fallback values if all else fails
+            let defaultValue;
+            if (phase === 1) defaultValue = 5 * orderNum;
+            else if (phase === 2) defaultValue = 5 + (5 * orderNum);
+            else defaultValue = 15 + (5 * orderNum);
+            
+            console.log(`DEBUG: Using default value ${defaultValue}`);
+            return defaultValue;
+        }
+
+        // Get current order size based on sequence number and account phase
+        function getCurrentOrderSize() {
+            // Check if scaling is enabled
+            console.log(`DEBUG: Scaling enabled = ${userPreferences.scalingEnabled}`);
+            if (!userPreferences.scalingEnabled) {
+                return null;
+            }
+            
+            // Get the current order number
+            const orderNum = userPreferences.currentOrderNumber || 1;
+            console.log(`DEBUG: Current order number = ${orderNum}`);
+            
+            // Get the account phase from selected account(s)
+            let phase = 1; // Default to Phase 1 if no account is selected
+            
+            // Get all checked accounts
+            const selectedAccountCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            console.log(`DEBUG: Found ${selectedAccountCheckboxes.length} selected accounts`);
+            
+            if (selectedAccountCheckboxes.length > 0) {
+                // Get the account ID from the first selected checkbox
+                const accountId = parseInt(selectedAccountCheckboxes[0].getAttribute('data-account-id'));
+                console.log(`DEBUG: First selected account ID = ${accountId}`);
+                
+                // Find the account data to get the phase
+                const account = accountsData.find(acc => acc.id === accountId);
+                if (account && account.phase) {
+                    phase = parseInt(account.phase);
+                    console.log(`DEBUG: Account phase = ${phase}`);
+                }
+            }
+            
+            // Look up the lot size from the matrix by phase and order number
+            console.log(`DEBUG: Getting matrix value for phase ${phase}, order ${orderNum}`);
+            const size = getMatrixValue(phase, orderNum);
+            console.log(`DEBUG: Final size = ${size}`);
+            return size;
+        }
+
+        // Test helper function
+        function assertEqual(actual, expected, testName) {
+            const resultDiv = document.getElementById('testResults');
+            const testResult = document.createElement('div');
+            
+            if (actual === expected) {
+                testResult.className = 'pass';
+                testResult.textContent = `✅ PASS: ${testName}`;
+                return true;
+            } else {
+                testResult.className = 'fail';
+                testResult.textContent = `❌ FAIL: ${testName} - Expected ${expected}, got ${actual}`;
+                return false;
+            }
+            
+            resultDiv.appendChild(testResult);
+        }
+
+        // Test runner function
+        function runTests() {
+            const resultDiv = document.getElementById('testResults');
+            resultDiv.innerHTML = '<h2>Test Results</h2>';
+            
+            let passCount = 0;
+            let totalTests = 0;
+            
+            try {
+                // Setup the mock DOM
+                setupMockDOM();
+                
+                // Test 1: Basic matrix value retrieval
+                totalTests++;
+                const phase1Order2Value = getMatrixValue(1, 2);
+                const test1Result = phase1Order2Value === 10;
+                appendResult(test1Result, "Phase 1, Order 2 should be 10", phase1Order2Value, 10);
+                if (test1Result) passCount++;
+                
+                totalTests++;
+                const phase2Order3Value = getMatrixValue(2, 3);
+                const test2Result = phase2Order3Value === 25;
+                appendResult(test2Result, "Phase 2, Order 3 should be 25", phase2Order3Value, 25);
+                if (test2Result) passCount++;
+                
+                totalTests++;
+                const phase3Order4Value = getMatrixValue(3, 4);
+                const test3Result = phase3Order4Value === 35;
+                appendResult(test3Result, "Phase 3, Order 4 should be 35", phase3Order4Value, 35);
+                if (test3Result) passCount++;
+                
+                // Test 2: Default scaling enabled but no account selected
+                totalTests++;
+                userPreferences.currentOrderNumber = 2;
+                userPreferences.scalingEnabled = true;
+                const defaultPhaseOrder2Size = getCurrentOrderSize();
+                const test4Result = defaultPhaseOrder2Size === 10;
+                appendResult(test4Result, "Default Phase 1, Order 2 should be 10", defaultPhaseOrder2Size, 10);
+                if (test4Result) passCount++;
+                
+                // Test 3: Select a Phase 2 account
+                const phase2Checkbox = document.querySelector(`input[data-account-id="1002"]`);
+                phase2Checkbox.checked = true;
+                
+                totalTests++;
+                userPreferences.currentOrderNumber = 3;
+                const phase2Order3Size = getCurrentOrderSize();
+                const test5Result = phase2Order3Size === 25;
+                appendResult(test5Result, "Phase 2, Order 3 should be 25", phase2Order3Size, 25);
+                if (test5Result) passCount++;
+                
+                // Test 4: Change to a Phase 3 account
+                phase2Checkbox.checked = false;
+                const phase3Checkbox = document.querySelector(`input[data-account-id="1003"]`);
+                phase3Checkbox.checked = true;
+                
+                totalTests++;
+                userPreferences.currentOrderNumber = 4;
+                const phase3Order4Size = getCurrentOrderSize();
+                const test6Result = phase3Order4Size === 35;
+                appendResult(test6Result, "Phase 3, Order 4 should be 35", phase3Order4Size, 35);
+                if (test6Result) passCount++;
+                
+                // Test 5: Scaling disabled
+                totalTests++;
+                userPreferences.scalingEnabled = false;
+                const scalingDisabledSize = getCurrentOrderSize();
+                const test7Result = scalingDisabledSize === null;
+                appendResult(test7Result, "Scaling disabled should return null", scalingDisabledSize, null);
+                if (test7Result) passCount++;
+                
+                // Test 6: Re-enable scaling but select multiple accounts (should use first one)
+                userPreferences.scalingEnabled = true;
+                userPreferences.currentOrderNumber = 2;
+                phase3Checkbox.checked = true;
+                phase2Checkbox.checked = true;
+                
+                totalTests++;
+                const multiAccountSize = getCurrentOrderSize();
+                const test8Result = multiAccountSize === 15;
+                appendResult(test8Result, "Multiple accounts should use first selected (Phase 2, Order 2)", multiAccountSize, 15);
+                if (test8Result) passCount++;
+                
+            } finally {
+                // Clean up the DOM
+                cleanupMockDOM();
+            }
+            
+            // Add summary
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = 'test-count';
+            summaryDiv.textContent = `Test results: ${passCount} of ${totalTests} passed`;
+            resultDiv.appendChild(summaryDiv);
+            
+            return { passCount, totalTests };
+        }
+        
+        function appendResult(passed, testName, actual, expected) {
+            const resultDiv = document.getElementById('testResults');
+            const resultItem = document.createElement('div');
+            
+            if (passed) {
+                resultItem.className = 'pass';
+                resultItem.textContent = `✅ PASS: ${testName}`;
+            } else {
+                resultItem.className = 'fail';
+                resultItem.textContent = `❌ FAIL: ${testName} - Expected ${expected}, got ${actual}`;
+            }
+            
+            resultDiv.appendChild(resultItem);
+        }
+        
+        // Add event listener to run tests button
+        document.getElementById('runTests').addEventListener('click', runTests);
+    </script>
+</body>
+</html>

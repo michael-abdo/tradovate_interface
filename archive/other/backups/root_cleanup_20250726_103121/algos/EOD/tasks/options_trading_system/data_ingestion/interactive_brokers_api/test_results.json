@@ -1,0 +1,11 @@
+{
+  "total_tests": 11,
+  "successful": 8,
+  "failures": 1,
+  "errors": 2,
+  "skipped": 0,
+  "success_rate": 72.72727272727273,
+  "overall_success": false,
+  "databento_api_available": true,
+  "test_timestamp": 1749437188.13692
+}

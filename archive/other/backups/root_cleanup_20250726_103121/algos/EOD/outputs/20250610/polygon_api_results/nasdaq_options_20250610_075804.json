@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-06-10T07:57:52.279451",
+  "data_sources": {
+    "NDX": {
+      "name": "Nasdaq-100 Index Options",
+      "symbol": "NDX",
+      "contract_count": 5,
+      "contracts": [
+        {
+          "ticker": "O:NDX291221P30000000",
+          "type": "put",
+          "strike": 30000,
+          "expiration": "2029-12-21"
+        },
+        {
+          "ticker": "O:NDX291221P29500000",
+          "type": "put",
+          "strike": 29500,
+          "expiration": "2029-12-21"
+        },
+        {
+          "ticker": "O:NDX291221P29000000",
+          "type": "put",
+          "strike": 29000,
+          "expiration": "2029-12-21"
+        }
+      ]
+    },
+    "QQQ": {
+      "name": "Nasdaq-100 ETF Options",
+      "symbol": "QQQ",
+      "contract_count": 5,
+      "contracts": [
+        {
+          "ticker": "O:QQQ271217P00775000",
+          "type": "put",
+          "strike": 775,
+          "expiration": "2027-12-17"
+        },
+        {
+          "ticker": "O:QQQ271217P00770000",
+          "type": "put",
+          "strike": 770,
+          "expiration": "2027-12-17"
+        },
+        {
+          "ticker": "O:QQQ271217P00765000",
+          "type": "put",
+          "strike": 765,
+          "expiration": "2027-12-17"
+        }
+      ]
+    }
+  }
+}

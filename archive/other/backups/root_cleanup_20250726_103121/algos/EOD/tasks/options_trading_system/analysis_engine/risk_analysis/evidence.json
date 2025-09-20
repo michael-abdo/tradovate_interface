@@ -1,0 +1,82 @@
+{
+  "task": "risk_analysis",
+  "type": "leaf",
+  "timestamp": "2025-06-04T17:13:58.689775",
+  "tests": [
+    {
+      "name": "analyzer_init",
+      "passed": true,
+      "details": "Analyzer initialized with correct config: True"
+    },
+    {
+      "name": "risk_calculation",
+      "passed": true,
+      "details": {
+        "status": "success",
+        "total_call_risk": 4860.0,
+        "total_put_risk": 7875.0,
+        "battle_zones_found": 4
+      }
+    },
+    {
+      "name": "dominance_analysis",
+      "passed": true,
+      "details": {
+        "risk_ratio": 0.6171428571428571,
+        "verdict": "BALANCED RISK - Contested territory",
+        "bias": "SIDEWAYS/CHOPPY ACTION EXPECTED"
+      }
+    },
+    {
+      "name": "battle_zone_mapping",
+      "passed": true,
+      "details": {
+        "zones_found": 4,
+        "urgency_levels": [
+          "IMMEDIATE",
+          "NEAR TERM"
+        ],
+        "defense_types": [
+          "PUT DEFENSE",
+          "CALL DEFENSE"
+        ]
+      }
+    },
+    {
+      "name": "module_function",
+      "passed": true,
+      "details": {
+        "status": "success",
+        "signals_generated": 4,
+        "metrics_available": true
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "sample_result": {
+      "status": "success",
+      "summary": {
+        "total_call_risk": 4860.0,
+        "total_put_risk": 7875.0,
+        "risk_ratio": 0.6171428571428571,
+        "verdict": "BALANCED RISK - Contested territory",
+        "bias": "SIDEWAYS/CHOPPY ACTION EXPECTED"
+      },
+      "signals": [
+        "STRONG SUPPORT expected at 21770",
+        "STRONG RESISTANCE expected at 21760",
+        "DOWNWARD BIAS - Puts closer to danger",
+        "CRITICAL BATTLE ZONE: 21770 (CALL DEFENSE) - $4,860 at risk"
+      ],
+      "metrics": {
+        "total_positions_at_risk": 4,
+        "call_positions_at_risk": 1,
+        "put_positions_at_risk": 3,
+        "immediate_threats": 2,
+        "total_risk_exposure": 12735.0
+      },
+      "battle_zones_count": 4
+    }
+  }
+}

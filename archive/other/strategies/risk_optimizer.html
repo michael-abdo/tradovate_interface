@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Risk Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #e0e6ed;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #61dafb;
+            font-size: 2.5em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: #1a1f36;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #61dafb;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a8b2d1;
+            font-weight: 500;
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #2a3f5f;
+            border-radius: 5px;
+            background: #0a0e27;
+            color: #e0e6ed;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #61dafb;
+        }
+
+        input[type="range"] {
+            padding: 5px 0;
+        }
+
+        .range-value {
+            text-align: right;
+            color: #61dafb;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .results {
+            background: #2a3f5f;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #3a4f6f;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #a8b2d1;
+        }
+
+        .result-value {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #61dafb;
+        }
+
+        .strategy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .strategy-table th, .strategy-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #3a4f6f;
+        }
+
+        .strategy-table th {
+            background: #2a3f5f;
+            color: #61dafb;
+            font-weight: 600;
+        }
+
+        .strategy-table tr:hover {
+            background: rgba(97, 218, 251, 0.1);
+        }
+
+        .recommended {
+            background: rgba(97, 218, 251, 0.2);
+        }
+
+        .warning {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .info-box {
+            background: rgba(97, 218, 251, 0.1);
+            border: 1px solid #61dafb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .button {
+            background: #61dafb;
+            color: #0a0e27;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background: #4fa8c5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trading Risk Optimizer</h1>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>Income & Account Parameters</h2>
+                
+                <div class="input-group">
+                    <label for="hourlyIncome">Hourly Income ($)</label>
+                    <input type="number" id="hourlyIncome" value="60" min="1" step="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="accountCost">Account Cost ($)</label>
+                    <input type="number" id="accountCost" value="167" min="1" step="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="workHours">Acceptable Work Hours for Risk</label>
+                    <input type="range" id="workHours" value="4" min="1" max="12" step="0.5">
+                    <div class="range-value"><span id="workHoursValue">4</span> hours</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Trading Parameters</h2>
+                
+                <div class="input-group">
+                    <label for="winRate">Win Rate (%)</label>
+                    <input type="number" id="winRate" value="51" min="1" max="100" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="rewardRisk">Reward:Risk Ratio</label>
+                    <input type="number" id="rewardRisk" value="2" min="0.1" max="10" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="setupsPerDay">Setups per Day</label>
+                    <input type="number" id="setupsPerDay" value="2.5" min="0.1" max="20" step="0.1">
+                </div>
+
+                <div class="input-group">
+                    <label for="drawdown">Account Drawdown Limit ($)</label>
+                    <input type="number" id="drawdown" value="7000" min="100" step="100">
+                </div>
+
+                <div class="input-group">
+                    <label for="targetProfit">Target Profit ($)</label>
+                    <input type="number" id="targetProfit" value="10000" min="100" step="100">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Optimization Results</h2>
+            
+            <div class="results">
+                <div class="result-item">
+                    <span class="result-label">Time to Replace Account:</span>
+                    <span class="result-value" id="replaceTime">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Daily Risk Budget:</span>
+                    <span class="result-value" id="dailyRiskBudget">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Recommended Front-load Factor:</span>
+                    <span class="result-value" id="optimalF">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Recommended Per-trade Risk:</span>
+                    <span class="result-value" id="perTradeRisk">-</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px; color: #61dafb;">Strategy Comparison</h3>
+            <table class="strategy-table">
+                <thead>
+                    <tr>
+                        <th>Strategy</th>
+                        <th>f Value</th>
+                        <th>Per-trade Risk</th>
+                        <th>Losses Allowed</th>
+                        <th>Success Prob</th>
+                        <th>Expected Days</th>
+                    </tr>
+                </thead>
+                <tbody id="strategyTable">
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>Recommendation:</strong> <span id="recommendation"></span>
+            </div>
+
+            <div class="warning" id="warning"></div>
+        </div>
+    </div>
+
+    <script>
+        // Calculate gambler's ruin probability
+        function calculateSuccessProbability(winRate, winsNeeded, lossesAllowed) {
+            const p = winRate / 100;
+            const q = 1 - p;
+            const ratio = q / p;
+            
+            if (Math.abs(p - 0.5) < 0.001) {
+                // Special case for p ≈ 0.5
+                return lossesAllowed / (winsNeeded + lossesAllowed);
+            }
+            
+            const numerator = 1 - Math.pow(ratio, winsNeeded);
+            const denominator = 1 - Math.pow(ratio, winsNeeded + lossesAllowed);
+            return numerator / denominator;
+        }
+
+        function calculateOptimalF() {
+            // Get input values
+            const hourlyIncome = parseFloat(document.getElementById('hourlyIncome').value);
+            const accountCost = parseFloat(document.getElementById('accountCost').value);
+            const workHours = parseFloat(document.getElementById('workHours').value);
+            const winRate = parseFloat(document.getElementById('winRate').value);
+            const rewardRisk = parseFloat(document.getElementById('rewardRisk').value);
+            const setupsPerDay = parseFloat(document.getElementById('setupsPerDay').value);
+            const drawdown = parseFloat(document.getElementById('drawdown').value);
+            const targetProfit = parseFloat(document.getElementById('targetProfit').value);
+
+            // Calculate derived values
+            const baseLoss = 1000; // $1000 base loss
+            const baseWin = baseLoss * rewardRisk;
+            const replaceTime = accountCost / hourlyIncome;
+            const dailyRiskBudget = hourlyIncome * workHours;
+            
+            // Update basic results
+            document.getElementById('replaceTime').textContent = replaceTime.toFixed(1) + ' hours';
+            document.getElementById('dailyRiskBudget').textContent = '$' + dailyRiskBudget.toFixed(0);
+
+            // Calculate strategies
+            const strategies = [
+                { name: 'Conservative', f: 1 },
+                { name: 'Safe', f: 2.3 },
+                { name: 'Moderate', f: 3.5 },
+                { name: 'Aggressive', f: 7 }
+            ];
+
+            let tableHTML = '';
+            let recommendedStrategy = null;
+            let maxScore = -Infinity;
+
+            strategies.forEach(strategy => {
+                const perTradeRisk = strategy.f * baseLoss;
+                const lossesAllowed = Math.floor(drawdown / perTradeRisk);
+                const winsNeeded = Math.ceil(targetProfit / (strategy.f * baseWin));
+                const successProb = calculateSuccessProbability(winRate, winsNeeded, lossesAllowed);
+                
+                // Expected time calculation
+                const expectedTrades = winsNeeded / (winRate / 100);
+                const expectedDays = expectedTrades / setupsPerDay;
+                const effectiveExpectedDays = successProb > 0 ? expectedDays / successProb : Infinity;
+                
+                // Score based on speed (f) and probability
+                const score = strategy.f * successProb;
+                
+                if (score > maxScore && perTradeRisk <= drawdown) {
+                    maxScore = score;
+                    recommendedStrategy = strategy;
+                }
+
+                const isRecommended = strategy === recommendedStrategy;
+                
+                tableHTML += `
+                    <tr class="${isRecommended ? 'recommended' : ''}">
+                        <td>${strategy.name}</td>
+                        <td>${strategy.f.toFixed(1)}</td>
+                        <td>$${perTradeRisk.toFixed(0)}</td>
+                        <td>${lossesAllowed}</td>
+                        <td>${(successProb * 100).toFixed(1)}%</td>
+                        <td>${effectiveExpectedDays.toFixed(1)}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('strategyTable').innerHTML = tableHTML;
+
+            // Calculate income-adjusted optimal f
+            const replacementRate = (hourlyIncome * 8) / (accountCost * setupsPerDay);
+            const incomeAdjustedF = Math.sqrt(winRate / 100 * replacementRate);
+            
+            // Determine final recommendation
+            let finalF = recommendedStrategy.f;
+            if (dailyRiskBudget < accountCost * 2) {
+                // If can't afford to replace accounts easily, be more conservative
+                finalF = Math.min(finalF, 2.3);
+            }
+            
+            document.getElementById('optimalF').textContent = finalF.toFixed(1);
+            document.getElementById('perTradeRisk').textContent = '$' + (finalF * baseLoss).toFixed(0);
+            
+            // Update recommendation
+            let recText = `Use f=${finalF.toFixed(1)} (${finalF * baseLoss} per trade) for your rocket account. `;
+            recText += `This gives you ${Math.floor(drawdown / (finalF * baseLoss))} losses of buffer `;
+            recText += `and requires ${Math.ceil(targetProfit / (finalF * baseWin))} wins to reach target. `;
+            recText += `Keep other accounts at f=1.0 for stability.`;
+            
+            document.getElementById('recommendation').textContent = recText;
+
+            // Show warning if appropriate
+            const warning = document.getElementById('warning');
+            if (dailyRiskBudget < accountCost) {
+                warning.style.display = 'block';
+                warning.textContent = 'Warning: Your daily risk budget is less than one account cost. Consider using more conservative sizing.';
+            } else {
+                warning.style.display = 'none';
+            }
+        }
+
+        // Add event listeners
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateOptimalF);
+        });
+
+        // Update range display
+        document.getElementById('workHours').addEventListener('input', function() {
+            document.getElementById('workHoursValue').textContent = this.value;
+        });
+
+        // Initial calculation
+        calculateOptimalF();
+    </script>
+</body>
+</html>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop Firm Monte Carlo Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        input[type="number"], input[type="range"] {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .range-value {
+            text-align: right;
+            color: #007bff;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .result-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .result-value.positive {
+            color: #28a745;
+        }
+        
+        .result-value.negative {
+            color: #dc3545;
+        }
+        
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .progress {
+            display: none;
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #007bff;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+            color: #333;
+        }
+        
+        .info-text {
+            color: #666;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .breakeven-marker {
+            position: absolute;
+            background: #ffc107;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prop Firm Monte Carlo Simulator</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="winRate">Win Rate (%)</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="range" id="winRate" min="45" max="60" step="0.5" value="51" style="flex: 1;">
+                    <input type="number" id="winRateInput" min="45" max="60" step="0.5" value="51" style="width: 60px;">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="rrRatio">Risk:Reward Ratio</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="range" id="rrRatio" min="1.0" max="3.0" step="0.1" value="1.0" style="flex: 1;">
+                    <input type="number" id="rrRatioInput" min="1.0" max="3.0" step="0.1" value="1.0" style="width: 60px;">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="tradesPerDay">Trades Per Day</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="range" id="tradesPerDay" min="1" max="5" step="1" value="1" style="flex: 1;">
+                    <input type="number" id="tradesPerDayInput" min="1" max="5" step="1" value="1" style="width: 60px;">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="winAmount">Win Amount ($)</label>
+                <input type="number" id="winAmount" value="1000" min="100" step="100">
+            </div>
+            
+            <div class="control-group">
+                <label for="lossAmount">Loss Amount ($)</label>
+                <input type="number" id="lossAmount" value="1000" min="100" step="100">
+            </div>
+            
+            <div class="control-group">
+                <label for="passTarget">Pass Target ($)</label>
+                <input type="number" id="passTarget" value="20000" min="1000" step="1000">
+            </div>
+            
+            <div class="control-group">
+                <label for="maxDrawdown">Max Drawdown ($)</label>
+                <input type="number" id="maxDrawdown" value="7000" min="1000" step="500">
+            </div>
+            
+            <div class="control-group">
+                <label for="bufferTarget">Buffer Target ($)</label>
+                <input type="number" id="bufferTarget" value="10000" min="1000" step="1000">
+            </div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <button id="runSimulation" onclick="runSimulation()">Run Simulation</button>
+            <div class="info-text" style="margin: 0;">10,000 simulations</div>
+        </div>
+        
+        <div class="progress" id="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="section-title">Key Results</div>
+        <div class="results" id="results">
+            <div class="result-card">
+                <div class="result-label">Pass Rate/Attempt</div>
+                <div class="result-value" id="passRate">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Median Attempts</div>
+                <div class="result-value" id="medianAttempts">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Days to Fund</div>
+                <div class="result-value" id="daysToPass">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Total to Breakeven</div>
+                <div class="result-value" id="totalDaysBreakeven">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Cash Outlay</div>
+                <div class="result-value negative" id="totalFees">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">$/hr Income (1yr)</div>
+                <div class="result-value positive" id="yearlyHourly">-</div>
+            </div>
+        </div>
+        
+        <div class="section-title">Position Size Optimizer</div>
+        <div class="results" id="optimizer" style="grid-template-columns: repeat(5, 1fr); margin-bottom: 20px;">
+            <div class="result-card">
+                <div class="result-label">Optimal Size</div>
+                <div class="result-value positive" id="optimalSize">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Days/Attempt</div>
+                <div class="result-value" id="optimalDaysPerAttempt">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Success Rate</div>
+                <div class="result-value" id="optimalSuccessRate">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Expected Attempts</div>
+                <div class="result-value" id="optimalExpectedAttempts">-</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Total Days</div>
+                <div class="result-value positive" id="optimalTotalDays">-</div>
+            </div>
+        </div>
+        
+        <div class="section-title">Custom Percentile Analysis</div>
+        <div style="display: flex; align-items: center; gap: 20px; margin: 15px 0;">
+            <label for="percentileSlider" style="margin: 0;">Percentile:</label>
+            <input type="range" id="percentileSlider" min="1" max="99" step="1" value="50" style="flex: 1;">
+            <div class="range-value" id="percentileValue" style="margin: 0; min-width: 60px;">50%</div>
+            <div class="result-card" style="margin: 0; min-width: 200px;">
+                <div class="result-label">Days to Fund</div>
+                <div class="result-value" id="percentileResult">-</div>
+            </div>
+            <div class="result-card" style="margin: 0; min-width: 200px;">
+                <div class="result-label">Attempts Needed</div>
+                <div class="result-value" id="percentileAttempts">-</div>
+            </div>
+        </div>
+        
+        <div class="chart-container" style="height: 250px; margin-top: 20px;">
+            <canvas id="percentileChart"></canvas>
+        </div>
+        
+        <div class="section-title">Charts</div>
+        <div class="charts-wrapper">
+            <div class="chart-container">
+                <canvas id="incomeChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="hourlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let incomeChart = null;
+        let hourlyChart = null;
+        let percentileChart = null;
+        let globalDaysUntilPass = [];
+        let globalAttempts = [];
+        
+        // Win rate slider and input sync
+        document.getElementById('winRate').addEventListener('input', (e) => {
+            document.getElementById('winRateInput').value = e.target.value;
+            updateRRFromInputs();
+        });
+        
+        document.getElementById('winRateInput').addEventListener('input', (e) => {
+            document.getElementById('winRate').value = e.target.value;
+            updateRRFromInputs();
+        });
+        
+        // RR ratio slider and input sync
+        document.getElementById('rrRatio').addEventListener('input', (e) => {
+            document.getElementById('rrRatioInput').value = e.target.value;
+            updateWinAmountFromRR();
+        });
+        
+        document.getElementById('rrRatioInput').addEventListener('input', (e) => {
+            document.getElementById('rrRatio').value = e.target.value;
+            updateWinAmountFromRR();
+        });
+        
+        // Trades per day slider and input sync
+        document.getElementById('tradesPerDay').addEventListener('input', (e) => {
+            document.getElementById('tradesPerDayInput').value = e.target.value;
+        });
+        
+        document.getElementById('tradesPerDayInput').addEventListener('input', (e) => {
+            document.getElementById('tradesPerDay').value = e.target.value;
+        });
+        
+        // Percentile slider
+        document.getElementById('percentileSlider').addEventListener('input', (e) => {
+            const percentile = parseInt(e.target.value);
+            document.getElementById('percentileValue').textContent = percentile + '%';
+            updatePercentileDisplay(percentile);
+        });
+        
+        function updatePercentileDisplay(percentile) {
+            if (globalDaysUntilPass.length > 0) {
+                const sortedDays = [...globalDaysUntilPass].sort((a, b) => a - b);
+                const sortedAttempts = [...globalAttempts].sort((a, b) => a - b);
+                const index = Math.floor(sortedDays.length * percentile / 100);
+                
+                const percentileDays = sortedDays[index];
+                const percentileAttempts = sortedAttempts[index];
+                
+                document.getElementById('percentileResult').textContent = percentileDays.toFixed(0) + ' days';
+                document.getElementById('percentileAttempts').textContent = percentileAttempts;
+                
+                // Regenerate charts with percentile data
+                if (window.lastSimulationParams) {
+                    const params = window.lastSimulationParams;
+                    const percentileFees = params.evalFee + params.activationFee + ((percentileAttempts - 1) * params.resetFee);
+                    const totalDaysToUnlock = percentileDays + (window.avgBufferDays || 19); // Add buffer days
+                    const percentileHours = totalDaysToUnlock * params.tradesPerDay;
+                    generateCharts(percentileHours, percentileFees, params, totalDaysToUnlock);
+                    
+                    // Update percentile chart marker
+                    if (percentileChart) {
+                        percentileChart.options.plugins.annotation.annotations.line1.xMin = (percentile / 5) - 1;
+                        percentileChart.options.plugins.annotation.annotations.line1.xMax = (percentile / 5) - 1;
+                        percentileChart.update();
+                    }
+                }
+            }
+        }
+        
+        // Update RR ratio when amounts change
+        document.getElementById('winAmount').addEventListener('input', updateRRFromInputs);
+        document.getElementById('lossAmount').addEventListener('input', updateRRFromInputs);
+        
+        function updateRRFromInputs() {
+            const winAmount = parseFloat(document.getElementById('winAmount').value);
+            const lossAmount = parseFloat(document.getElementById('lossAmount').value);
+            const ratio = (winAmount / lossAmount).toFixed(1);
+            document.getElementById('rrRatio').value = ratio;
+            document.getElementById('rrRatioInput').value = ratio;
+        }
+        
+        function updateWinAmountFromRR() {
+            const ratio = parseFloat(document.getElementById('rrRatio').value);
+            const lossAmount = parseFloat(document.getElementById('lossAmount').value);
+            const winAmount = Math.round(ratio * lossAmount);
+            document.getElementById('winAmount').value = winAmount;
+        }
+        
+        // Simulation logic
+        function simulateEvaluation(params) {
+            let balance = 0;
+            let drawdown = 0;
+            let days = 0;
+            const maxDays = 365;
+            
+            while (days < maxDays) {
+                days++;
+                if (Math.random() < params.winRate) {
+                    balance += params.winAmount;
+                } else {
+                    balance -= params.lossAmount;
+                    drawdown += params.lossAmount;
+                }
+                
+                if (balance >= params.passTarget) {
+                    return { passed: true, days: days };
+                }
+                
+                if (drawdown >= params.maxDrawdown) {
+                    return { passed: false, days: days };
+                }
+            }
+            
+            return { passed: false, days: days };
+        }
+        
+        function simulateBuffer(params) {
+            let balance = 0;
+            let days = 0;
+            
+            while (balance < params.bufferTarget && days < 365) {
+                days++;
+                if (Math.random() < params.winRate) {
+                    balance += params.winAmount;
+                } else {
+                    balance -= params.lossAmount;
+                }
+            }
+            
+            return days;
+        }
+        
+        async function runSimulation() {
+            const button = document.getElementById('runSimulation');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            
+            button.disabled = true;
+            button.textContent = 'Running...';
+            progress.style.display = 'block';
+            
+            // Get parameters
+            const params = {
+                winRate: parseFloat(document.getElementById('winRate').value) / 100,
+                winAmount: parseFloat(document.getElementById('winAmount').value),
+                lossAmount: parseFloat(document.getElementById('lossAmount').value),
+                passTarget: parseFloat(document.getElementById('passTarget').value),
+                maxDrawdown: parseFloat(document.getElementById('maxDrawdown').value),
+                bufferTarget: parseFloat(document.getElementById('bufferTarget').value),
+                tradesPerDay: parseInt(document.getElementById('tradesPerDay').value),
+                evalFee: 60,
+                activationFee: 80,
+                resetFee: 60,
+                weeklyPayout: 3000
+            };
+            
+            // Calculate EV
+            params.evPerTrade = (params.winRate * params.winAmount) - ((1 - params.winRate) * params.lossAmount);
+            
+            // Run simulations
+            const numSims = 10000;
+            let passCount = 0;
+            let daysIfPass = [];
+            let daysIfFail = [];
+            let daysUntilFirstPass = [];
+            let failuresBeforePass = [];
+            
+            // First, single attempts to get pass rate
+            for (let i = 0; i < numSims; i++) {
+                if (i % 1000 === 0) {
+                    progressBar.style.width = (i / numSims * 50) + '%';
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+                
+                const result = simulateEvaluation(params);
+                if (result.passed) {
+                    passCount++;
+                    daysIfPass.push(result.days);
+                } else {
+                    daysIfFail.push(result.days);
+                }
+            }
+            
+            const passRate = passCount / numSims;
+            
+            // Simulate until first pass
+            for (let i = 0; i < Math.min(1000, numSims); i++) {
+                progressBar.style.width = 50 + (i / 1000 * 30) + '%';
+                let totalDays = 0;
+                let attempts = 0;
+                
+                while (attempts < 100) { // Safety limit
+                    const result = simulateEvaluation(params);
+                    totalDays += result.days;
+                    attempts++;
+                    
+                    if (result.passed) {
+                        daysUntilFirstPass.push(totalDays);
+                        failuresBeforePass.push(attempts - 1);
+                        break;
+                    }
+                }
+            }
+            
+            // Simulate buffer phase
+            progressBar.style.width = '80%';
+            let bufferDays = [];
+            for (let i = 0; i < 1000; i++) {
+                bufferDays.push(simulateBuffer(params));
+            }
+            
+            progressBar.style.width = '100%';
+            
+            // Calculate results
+            const avgDaysPass = daysIfPass.length > 0 ? daysIfPass.reduce((a, b) => a + b, 0) / daysIfPass.length : 0;
+            const avgDaysFail = daysIfFail.length > 0 ? daysIfFail.reduce((a, b) => a + b, 0) / daysIfFail.length : 0;
+            const avgDaysUntilPass = daysUntilFirstPass.reduce((a, b) => a + b, 0) / daysUntilFirstPass.length;
+            const avgFailures = failuresBeforePass.reduce((a, b) => a + b, 0) / failuresBeforePass.length;
+            const avgBufferDays = bufferDays.reduce((a, b) => a + b, 0) / bufferDays.length;
+            
+            // Calculate percentiles for days until first pass
+            const sortedDaysUntilPass = daysUntilFirstPass.sort((a, b) => a - b);
+            const p25 = sortedDaysUntilPass[Math.floor(sortedDaysUntilPass.length * 0.25)];
+            const p50 = sortedDaysUntilPass[Math.floor(sortedDaysUntilPass.length * 0.50)];
+            const p75 = sortedDaysUntilPass[Math.floor(sortedDaysUntilPass.length * 0.75)];
+            
+            // Calculate median attempts
+            const sortedAttempts = failuresBeforePass.map(f => f + 1).sort((a, b) => a - b);
+            const medianAttempts = sortedAttempts[Math.floor(sortedAttempts.length * 0.5)];
+            
+            // Adjust for trades per day
+            const hoursToPass = avgDaysUntilPass * params.tradesPerDay;
+            const hoursForBuffer = avgBufferDays * params.tradesPerDay;
+            const totalHoursToUnlock = hoursToPass + hoursForBuffer;
+            
+            // Calculate fees
+            const totalFees = params.evalFee + params.activationFee + (avgFailures * params.resetFee);
+            
+            // Breakeven
+            const weeksToBreakeven = totalFees / params.weeklyPayout;
+            const daysToBreakeven = weeksToBreakeven * 7;
+            const totalDaysToBreakeven = avgDaysUntilPass + avgBufferDays + daysToBreakeven;
+            
+            // Calculate 1-year effective hourly
+            const yearlyPayouts = 52 * params.weeklyPayout;
+            const yearlyHours = totalHoursToUnlock + (52 * 5 * params.tradesPerDay);
+            const yearlyEffectiveHourly = (yearlyPayouts - totalFees) / yearlyHours;
+            
+            // Store globally for percentile updates
+            globalDaysUntilPass = daysUntilFirstPass;
+            globalAttempts = sortedAttempts;
+            
+            // Generate percentile distribution chart
+            generatePercentileChart();
+            
+            // Run position size optimization
+            runPositionSizeOptimization(params);
+            
+            // Display results
+            document.getElementById('passRate').textContent = (passRate * 100).toFixed(1) + '%';
+            document.getElementById('medianAttempts').textContent = medianAttempts;
+            document.getElementById('daysToPass').textContent = avgDaysUntilPass.toFixed(0) + ' days';
+            document.getElementById('totalDaysBreakeven').textContent = totalDaysToBreakeven.toFixed(0) + ' days';
+            document.getElementById('totalFees').textContent = '$' + totalFees.toFixed(0);
+            document.getElementById('yearlyHourly').textContent = '$' + yearlyEffectiveHourly.toFixed(0);
+            
+            // Store params globally for percentile updates
+            window.lastSimulationParams = params;
+            window.avgBufferDays = avgBufferDays;
+            
+            // Update percentile display
+            updatePercentileDisplay(parseInt(document.getElementById('percentileSlider').value));
+            
+            // Generate charts with average values initially
+            const totalDaysToUnlock = avgDaysUntilPass + avgBufferDays;
+            generateCharts(totalDaysToUnlock * params.tradesPerDay, totalFees, params, totalDaysToUnlock);
+            
+            // Reset UI
+            button.disabled = false;
+            button.textContent = 'Run Simulation';
+            setTimeout(() => {
+                progress.style.display = 'none';
+                progressBar.style.width = '0%';
+            }, 500);
+        }
+        
+        function generateCharts(hoursToUnlock, totalFees, params, daysToPass) {
+            // Calculate days to unlock (use provided daysToPass if available)
+            const daysToUnlock = daysToPass || (hoursToUnlock / params.tradesPerDay);
+            
+            // Generate data points showing true timeline from day 0
+            const timePoints = [];
+            const labels = [];
+            const incomeData = [];
+            const costData = [];
+            const netData = [];
+            const hourlyRateData = [];
+            let breakevenDay = null;
+            
+            // Add pre-funding points (every 30 days during funding)
+            for (let d = 0; d <= Math.ceil(daysToUnlock); d += 30) {
+                timePoints.push(d);
+                labels.push('Day ' + d);
+                incomeData.push(0);
+                costData.push(totalFees); // All fees paid by end of funding
+                netData.push(-totalFees);
+                hourlyRateData.push(-totalFees / (d * params.tradesPerDay || 1));
+            }
+            
+            // Add post-funding points
+            const postFundingDays = [7, 14, 30, 60, 90, 180, 365];
+            postFundingDays.forEach(dayAfterFunding => {
+                const totalDay = Math.ceil(daysToUnlock) + dayAfterFunding;
+                timePoints.push(totalDay);
+                labels.push('Day ' + totalDay);
+                
+                const weeksAfterFunding = dayAfterFunding / 7;
+                const totalPayouts = params.weeklyPayout * weeksAfterFunding;
+                const net = totalPayouts - totalFees;
+                const totalHours = hoursToUnlock + (dayAfterFunding * params.tradesPerDay);
+                const effectiveHourly = totalHours > 0 ? net / totalHours : 0;
+                
+                incomeData.push(totalPayouts);
+                costData.push(totalFees);
+                netData.push(net);
+                hourlyRateData.push(effectiveHourly);
+                
+                if (breakevenDay === null && net >= 0) {
+                    breakevenDay = totalDay;
+                }
+            });
+            
+            // Income vs Cost Chart
+            const ctx1 = document.getElementById('incomeChart').getContext('2d');
+            if (incomeChart) incomeChart.destroy();
+            
+            incomeChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cumulative Income',
+                        data: incomeData,
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        borderWidth: 3,
+                        fill: true
+                    }, {
+                        label: 'Total Costs',
+                        data: costData,
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        borderWidth: 3,
+                        fill: true
+                    }, {
+                        label: 'Net Profit',
+                        data: netData,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Income vs Cost Over Time',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Hourly Rate Chart
+            const ctx2 = document.getElementById('hourlyChart').getContext('2d');
+            if (hourlyChart) hourlyChart.destroy();
+            
+            hourlyChart = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Effective $/hr',
+                        data: hourlyRateData,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Effective $/hr Progression',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(0) + '/hr';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function runPositionSizeOptimization(baseParams) {
+            // Test different position sizes to find optimal
+            const testSizes = [];
+            const maxSize = Math.floor(baseParams.maxDrawdown / 2); // At least survive 2 losses
+            const step = 100;
+            
+            for (let size = 100; size <= maxSize; size += step) {
+                testSizes.push(size);
+            }
+            
+            let bestSize = 0;
+            let bestExpectedDays = Infinity;
+            let bestData = {};
+            
+            testSizes.forEach(lossSize => {
+                // Create test params with this position size
+                const testParams = {...baseParams};
+                testParams.lossAmount = lossSize;
+                testParams.winAmount = lossSize * (baseParams.winAmount / baseParams.lossAmount); // Maintain R:R
+                
+                // Run mini simulation (1000 runs for speed)
+                let passes = 0;
+                let totalDaysIfPass = 0;
+                let totalDaysIfFail = 0;
+                
+                for (let i = 0; i < 1000; i++) {
+                    const result = simulateEvaluation(testParams);
+                    if (result.passed) {
+                        passes++;
+                        totalDaysIfPass += result.days;
+                    } else {
+                        totalDaysIfFail += result.days;
+                    }
+                }
+                
+                const passRate = passes / 1000;
+                const avgDaysIfPass = passes > 0 ? totalDaysIfPass / passes : 0;
+                const avgDaysIfFail = (1000 - passes) > 0 ? totalDaysIfFail / (1000 - passes) : 0;
+                
+                // Calculate expected attempts needed
+                const expectedAttempts = passRate > 0 ? 1 / passRate : Infinity;
+                
+                // Calculate total expected days including all attempts
+                const expectedDaysPerAttempt = passRate * avgDaysIfPass + (1 - passRate) * avgDaysIfFail;
+                const totalExpectedDays = expectedAttempts * expectedDaysPerAttempt;
+                
+                if (totalExpectedDays < bestExpectedDays && passRate > 0.01) { // At least 1% pass rate
+                    bestExpectedDays = totalExpectedDays;
+                    bestSize = lossSize;
+                    bestData = {
+                        size: lossSize,
+                        passRate: passRate,
+                        expectedAttempts: expectedAttempts,
+                        daysPerAttempt: expectedDaysPerAttempt,
+                        totalDays: totalExpectedDays
+                    };
+                }
+            });
+            
+            // Display optimization results
+            if (bestSize > 0) {
+                document.getElementById('optimalSize').textContent = '$' + bestSize;
+                document.getElementById('optimalDaysPerAttempt').textContent = bestData.daysPerAttempt.toFixed(1);
+                document.getElementById('optimalSuccessRate').textContent = (bestData.passRate * 100).toFixed(1) + '%';
+                document.getElementById('optimalExpectedAttempts').textContent = bestData.expectedAttempts.toFixed(1);
+                document.getElementById('optimalTotalDays').textContent = bestData.totalDays.toFixed(0) + ' days';
+            }
+        }
+        
+        function generatePercentileChart() {
+            if (globalDaysUntilPass.length === 0) return;
+            
+            // Generate data for all percentiles
+            const percentiles = [];
+            const daysData = [];
+            const attemptsData = [];
+            const currentPercentile = parseInt(document.getElementById('percentileSlider').value);
+            
+            const sortedDays = [...globalDaysUntilPass].sort((a, b) => a - b);
+            const sortedAttempts = [...globalAttempts].sort((a, b) => a - b);
+            
+            // Generate data points every 5%
+            for (let p = 5; p <= 95; p += 5) {
+                percentiles.push(p);
+                const index = Math.floor(sortedDays.length * p / 100);
+                daysData.push(sortedDays[index]);
+                attemptsData.push(sortedAttempts[index]);
+            }
+            
+            const ctx = document.getElementById('percentileChart').getContext('2d');
+            if (percentileChart) percentileChart.destroy();
+            
+            percentileChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: percentiles.map(p => p + '%'),
+                    datasets: [{
+                        label: 'Days to Fund',
+                        data: daysData,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        yAxisID: 'y',
+                        borderWidth: 2
+                    }, {
+                        label: 'Attempts Needed',
+                        data: attemptsData,
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        yAxisID: 'y1',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Percentile Distribution',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    xMin: currentPercentile / 5 - 1,
+                                    xMax: currentPercentile / 5 - 1,
+                                    borderColor: '#ffc107',
+                                    borderWidth: 2,
+                                    borderDash: [5, 5],
+                                    label: {
+                                        content: 'Current',
+                                        enabled: true,
+                                        position: 'start'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Days to Fund'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Attempts Needed'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Run initial simulation on load
+        window.addEventListener('load', () => {
+            runSimulation();
+        });
+    </script>
+</body>
+</html>

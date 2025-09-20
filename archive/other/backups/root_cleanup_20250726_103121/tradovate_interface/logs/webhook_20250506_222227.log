@@ -1,0 +1,19 @@
+2025-05-06 22:22:27,960 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 22:22:27,961 - webhook_server - INFO - Initializing TradovateController...
+2025-05-06 22:22:30,047 - webhook_server - INFO - Successfully initialized controller with 2 connections
+2025-05-06 22:22:30,048 - webhook_server - INFO - Watchdog thread started
+2025-05-06 22:22:30,048 - webhook_server - INFO - Starting ngrok with domain: stonkz92224.ngrok.app
+2025-05-06 22:22:30,687 - webhook_server - INFO - Ngrok tunnel URL confirmed: https://stonkz92224.ngrok.app
+2025-05-06 22:22:31,368 - webhook_server - INFO - Tunnel test response: 400
+2025-05-06 22:22:31,368 - webhook_server - INFO - Webhook now accessible at: https://stonkz92224.ngrok.app/webhook
+2025-05-06 22:22:31,381 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6000
+ * Running on http://10.0.0.220:6000
+2025-05-06 22:22:31,381 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-06 22:22:41,410 - webhook_server - INFO - Received signal 2, initiating graceful shutdown...
+2025-05-06 22:22:41,411 - webhook_server - INFO - Shutting down webhook server...
+2025-05-06 22:22:41,411 - webhook_server - INFO - Terminating ngrok process...
+2025-05-06 22:22:41,415 - webhook_server - INFO - Webhook server shutdown complete
+2025-05-06 22:22:41,415 - webhook_server - INFO - Shutting down webhook server...
+2025-05-06 22:22:41,415 - webhook_server - INFO - Webhook server shutdown complete

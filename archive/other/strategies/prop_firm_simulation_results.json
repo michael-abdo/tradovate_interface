@@ -1,0 +1,87 @@
+{
+  "simulation_params": {
+    "win_rate": 0.51,
+    "win_amount": 2000,
+    "loss_amount": 1000,
+    "ev_per_trade": 530.0,
+    "num_simulations": 50000
+  },
+  "evaluation_phase": {
+    "pass_rate_single_attempt": 0.105,
+    "avg_days_if_pass": 16.831809523809525,
+    "avg_days_if_fail": 13.4023687150838,
+    "avg_days_until_first_pass": 133.6502,
+    "avg_failures_before_pass": 8.7187
+  },
+  "buffer_phase": {
+    "avg_days_to_buffer": 6.794,
+    "theoretical_days": 18.867924528301888,
+    "formula": "$10,000 / $530/trade = 18.9 days"
+  },
+  "financial_analysis": {
+    "total_fees_to_pass": 663.122,
+    "total_hours_to_unlock": 140.44420000000002,
+    "weeks_to_breakeven": 0.22104066666666666,
+    "days_to_breakeven": 1.5472846666666666,
+    "breakeven_effective_hourly": 4.721604736970269
+  },
+  "hourly_rate_progression": {
+    "week_0": {
+      "total_payouts": 0,
+      "total_hours": 140.44420000000002,
+      "net_cash": -663.122,
+      "effective_hourly": -4.721604736970269
+    },
+    "week_1": {
+      "total_payouts": 3000,
+      "total_hours": 145.44420000000002,
+      "net_cash": 2336.878,
+      "effective_hourly": 16.067179028108374
+    },
+    "week_2": {
+      "total_payouts": 6000,
+      "total_hours": 150.44420000000002,
+      "net_cash": 5336.878,
+      "effective_hourly": 35.47413592547934
+    },
+    "week_4": {
+      "total_payouts": 12000,
+      "total_hours": 160.44420000000002,
+      "net_cash": 11336.878,
+      "effective_hourly": 70.65931956406027
+    },
+    "week_8": {
+      "total_payouts": 24000,
+      "total_hours": 180.44420000000002,
+      "net_cash": 23336.878,
+      "effective_hourly": 129.33016411721738
+    },
+    "week_12": {
+      "total_payouts": 36000,
+      "total_hours": 200.44420000000002,
+      "net_cash": 35336.878,
+      "effective_hourly": 176.29284359437685
+    },
+    "week_24": {
+      "total_payouts": 72000,
+      "total_hours": 260.4442,
+      "net_cash": 71336.878,
+      "effective_hourly": 273.9046521289397
+    },
+    "week_52": {
+      "total_payouts": 156000,
+      "total_hours": 400.4442,
+      "net_cash": 155336.878,
+      "effective_hourly": 387.9114193687909
+    },
+    "reference_calcs": {
+      "formula": "(3000*X - 674) / (155 + 5*X)",
+      "week_1_manual": 14.5375,
+      "week_2_manual": 32.27878787878788,
+      "week_4_manual": 64.72,
+      "week_8_manual": 119.62051282051281,
+      "week_12_manual": 164.30697674418604,
+      "week_24_manual": 259.36727272727273
+    }
+  }
+}

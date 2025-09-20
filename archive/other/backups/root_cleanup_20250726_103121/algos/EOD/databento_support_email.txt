@@ -1,0 +1,42 @@
+Subject: Missing NQ Weekly Options Despite Documentation Claims
+
+I'm unable to retrieve NQ weekly options (Q3C, Q1A, QNE) through your API, despite your documentation explicitly stating these are supported.
+
+YOUR CLAIMS:
+- "Monday & Wednesday weekly options (e.g. Q3C for Week-3 Wednesday, Q1A for Week-1 Monday)"
+- "Every option contract on NQ futures is covered"
+
+MY API TESTS:
+
+1. HISTORICAL API (Extended Date Range):
+```python
+client.timeseries.get_range(
+    dataset="GLBX.MDP3",
+    symbols="NQ.OPT",
+    schema="trades",
+    start="2025-07-14",
+    end="2025-07-28",
+    stype_in="parent"
+)
+```
+RESULT: 212 total NQ options, 0 weekly options (no Q3C, Q1A, or QNE)
+
+2. LIVE API (Your Suggested Example):
+```python
+import databento as db
+client = db.Live()
+client.subscribe(
+    dataset=db.Dataset.GLBX_MDP3,
+    schema=db.Schema.BBO_1M,
+    symbols=["ES.OPT"],  # Also tried "NQ.OPT"
+    stype_in=db.SType.PARENT,
+    start=0,
+)
+```
+RESULT: Error - "A live data license is required to access GLBX.MDP3"
+
+QUESTION:
+How do I access the weekly NQ options your documentation promises?
+
+API Key: db-i4VujYQdiwvJD3rpsEhqV8hanxdxc
+Dataset: GLBX.MDP3

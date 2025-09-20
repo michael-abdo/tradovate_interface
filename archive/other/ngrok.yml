@@ -1,0 +1,16 @@
+# Ngrok configuration file
+# Place this in ~/.ngrok2/ngrok.yml or use with: ngrok start dashboard
+
+version: "2"
+authtoken: 2acOggkvAAb9ZJQvQVoGcwZLKNn_4jhUvCNVEaFRdgRgfkqdG
+api_key: 2acOggkvAAb9ZJQvQVoGcwZLKNn_4jhUvCNVEaFRdgRgfkqdG
+
+tunnels:
+  dashboard:
+    proto: http
+    addr: 6001
+    domain: mike-development.ngrok-free.app
+    inspect: true
+    
+    # Optional: Basic auth for security
+    # auth: "username:password"

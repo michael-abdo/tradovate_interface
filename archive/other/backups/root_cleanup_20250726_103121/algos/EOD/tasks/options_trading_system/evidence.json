@@ -1,0 +1,72 @@
+{
+  "task": "options_trading_system",
+  "type": "root",
+  "timestamp": "2025-07-03T09:34:12.777520",
+  "integration_tests": [
+    {
+      "name": "child_validations",
+      "passed": true,
+      "details": "All 0 children validated: True"
+    },
+    {
+      "name": "system_initialization",
+      "passed": true,
+      "details": "System initialized successfully: True"
+    },
+    {
+      "name": "configuration_validation",
+      "passed": true,
+      "details": {
+        "status": "valid",
+        "checks": {
+          "data_config_valid": true,
+          "analysis_config_valid": true,
+          "output_config_valid": true,
+          "save_config_valid": true
+        },
+        "missing_sections": []
+      }
+    },
+    {
+      "name": "individual_pipelines",
+      "passed": false,
+      "details": {
+        "data_pipeline": false,
+        "analysis_pipeline": false,
+        "output_pipeline": false,
+        "data_status": "failed",
+        "analysis_status": "skipped",
+        "output_status": "skipped"
+      }
+    },
+    {
+      "name": "system_summary",
+      "passed": true,
+      "details": {
+        "system_health": "failed",
+        "successful_pipelines": 0,
+        "has_trading_summary": true,
+        "has_primary_recommendation": false
+      }
+    },
+    {
+      "name": "complete_system_execution",
+      "passed": false,
+      "details": {
+        "status": "failed",
+        "execution_time": null,
+        "system_health": "failed",
+        "pipeline_success_rate": 0.0,
+        "has_trading_recommendation": false
+      }
+    },
+    {
+      "name": "complete_system_execution",
+      "passed": false,
+      "error": "'execution_time_seconds'"
+    }
+  ],
+  "status": "FAILED",
+  "evidence": {},
+  "child_validations": []
+}

@@ -1,0 +1,11 @@
+{
+    "check_interval": 10,
+    "max_restart_attempts": 3,
+    "restart_delay": 5,
+    "health_check_timeout": 30,
+    "crash_confirmation_checks": 3,
+    "crash_confirmation_interval": 10,
+    "enable_state_preservation": true,
+    "recovery_timeout": 300,
+    "log_level": "INFO"
+}

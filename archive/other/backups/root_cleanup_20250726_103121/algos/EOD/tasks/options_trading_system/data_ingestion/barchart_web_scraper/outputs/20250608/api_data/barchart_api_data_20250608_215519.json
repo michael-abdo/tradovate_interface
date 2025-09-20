@@ -1,0 +1,66 @@
+{
+  "count": 0,
+  "total": 0,
+  "data": [],
+  "meta": {
+    "field": {
+      "shortName": {
+        "strike": "Strike",
+        "openPrice": "Open",
+        "highPrice": "High",
+        "lowPrice": "Low",
+        "lastPrice": "Last",
+        "priceChange": "Change",
+        "bidPrice": "Bid",
+        "askPrice": "Ask",
+        "volume": "Volume",
+        "openInterest": "Open Int",
+        "premium": "Premium",
+        "tradeTime": "Time",
+        "longSymbol": "Long Symbol",
+        "optionType": "Type",
+        "symbol": "Symbol",
+        "symbolCode": "Symbol Code",
+        "symbolType": "Type"
+      },
+      "description": {
+        "strike": "The price at which the holder of an option can buy (in the case of a call option) or sell (in the case of a put option) the underlying security when the option is exercised.",
+        "openPrice": "Opening price for the day.",
+        "highPrice": "The highest trade price for the day.",
+        "lowPrice": "The lowest trade price for the day.",
+        "lastPrice": "The last trade price.",
+        "priceChange": "The difference between the current price and the previous day's settlement price.",
+        "bidPrice": "The bid price.",
+        "askPrice": "The ask price.",
+        "volume": "The total number of shares or contracts traded for the day.",
+        "openInterest": "The total number of open contracts for the previous day that have been traded but not yet liquidated via offsetting trades.",
+        "premium": "The price of the options contract. (Option Last Price * Option Volume)",
+        "tradeTime": "The trade time.",
+        "longSymbol": "",
+        "optionType": "Put or Call. A Call option gives you the right to buy a stock and a Put option gives you the right to sell a stock.",
+        "symbol": "",
+        "symbolCode": "",
+        "symbolType": "A Call option gives you the right to buy a stock and a Put option gives you the right to sell a stock."
+      },
+      "type": {
+        "strike": "strikePrice",
+        "openPrice": "price",
+        "highPrice": "price",
+        "lowPrice": "price",
+        "lastPrice": "price",
+        "priceChange": "priceChange",
+        "bidPrice": "price",
+        "askPrice": "price",
+        "volume": "integer",
+        "openInterest": "integer",
+        "premium": "float",
+        "tradeTime": "time",
+        "longSymbol": "string",
+        "optionType": "string",
+        "symbol": "string",
+        "symbolCode": "string",
+        "symbolType": "string"
+      }
+    }
+  }
+}

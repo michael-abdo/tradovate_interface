@@ -1,0 +1,22 @@
+{
+  "NDX": {
+    "status": "success",
+    "count": 3,
+    "description": "Nasdaq-100 Index Options",
+    "example_contract": "O:NDX291221P30000000"
+  },
+  "QQQ": {
+    "status": "success",
+    "count": 3,
+    "description": "Nasdaq-100 ETF Options",
+    "example_contract": "O:QQQ271217P00775000"
+  },
+  "NQ": {
+    "status": "no_contracts",
+    "description": "NQ Futures Options"
+  },
+  "NQM25": {
+    "status": "no_contracts",
+    "description": "NQ June 2025 Futures Options"
+  }
+}

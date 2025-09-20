@@ -1,0 +1,107 @@
+{
+  "task": "json_exporter",
+  "timestamp": "2025-07-03T09:23:51.467917",
+  "tests": [
+    {
+      "name": "exporter_init",
+      "passed": true,
+      "details": {
+        "include_raw_data": false,
+        "include_metadata": true,
+        "format_pretty": true,
+        "include_analysis_details": true
+      }
+    },
+    {
+      "name": "data_serialization",
+      "passed": true,
+      "details": {
+        "original_keys": [
+          "string",
+          "number",
+          "boolean",
+          "null",
+          "list",
+          "nested_dict"
+        ],
+        "cleaned_keys": [
+          "string",
+          "number",
+          "boolean",
+          "null",
+          "list",
+          "nested_dict"
+        ],
+        "json_length": 119,
+        "round_trip_success": true
+      }
+    },
+    {
+      "name": "complete_json_export",
+      "passed": true,
+      "details": {
+        "export_structure_valid": true,
+        "json_structure_checks": {
+          "has_metadata": true,
+          "has_trading_signals": true,
+          "has_market_analysis": true,
+          "has_execution_summary": true,
+          "signals_is_list": true,
+          "market_analysis_is_dict": true
+        },
+        "json_size": 1259,
+        "signals_count": 0,
+        "metadata": {
+          "export_timestamp": "2025-07-03T09:24:15.847111",
+          "total_signals": 0,
+          "json_size_bytes": 1259,
+          "recommended_action": "hold"
+        }
+      }
+    },
+    {
+      "name": "trading_signals_extraction",
+      "passed": true,
+      "details": {
+        "signals_count": 0,
+        "signal_structure_checks": {
+          "no_signals_found": true
+        },
+        "sample_signal_keys": []
+      }
+    },
+    {
+      "name": "json_file_saving",
+      "passed": true,
+      "details": {
+        "file_created": true,
+        "file_size": 1259,
+        "json_valid": true,
+        "file_path": "/Users/Mike/trading/algos/EOD/tasks/options_trading_system/output_generation/json_exporter/test_export_20250703_092415.json"
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "export_sample": {
+      "json_size": 1259,
+      "signals_count": 0,
+      "structure_checks": {
+        "has_metadata": true,
+        "has_trading_signals": true,
+        "has_market_analysis": true,
+        "has_execution_summary": true,
+        "signals_is_list": true,
+        "market_analysis_is_dict": true
+      },
+      "metadata": {
+        "export_timestamp": "2025-07-03T09:24:15.847111",
+        "total_signals": 0,
+        "json_size_bytes": 1259,
+        "recommended_action": "hold"
+      },
+      "recommended_action": "hold",
+      "sample_signal": {}
+    }
+  }
+}

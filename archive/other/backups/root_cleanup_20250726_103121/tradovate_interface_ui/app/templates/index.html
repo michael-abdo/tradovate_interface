@@ -1,0 +1,3809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading App</title>
+    <style>
+        /* Base styles */
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --tertiary-bg: #2d2d2d;
+            --input-bg: #2d2d2d;
+            --border-color: #3d3d3d;
+            --text-color: #e0e0e0;
+            --accent-color: #90caf9;
+            --accent-color-rgb: 144, 202, 249; /* RGB values for accent color */
+            --buy-color: #4CAF50;
+            --buy-hover: #45a049;
+            --sell-color: #f44336;
+            --sell-hover: #d32f2f;
+            --cancel-color: #ff9800;
+            --cancel-hover: #e68900;
+            --normal-color: #2196F3;
+            --normal-hover: #0b7dda;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --padding-sm: 8px;
+            --padding-md: 15px;
+            --padding-lg: 20px;
+            --transition-speed: 0.3s;
+        }
+        
+        /* Animation for profit display */
+        @keyframes pulsate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Layout */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: var(--padding-md);
+            max-width: 100%;
+        }
+        
+        .controls {
+            padding: var(--padding-md);
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--padding-md);
+        }
+        
+        /* Drag and drop functionality */
+        .draggable-panel {
+            cursor: move;
+            margin-bottom: var(--padding-md);
+            position: relative;
+        }
+        
+        .drag-handle {
+            position: absolute;
+            right: 40px;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-color);
+            opacity: 0.5;
+            border-radius: 50%;
+            cursor: move;
+        }
+        
+        .drag-handle:hover {
+            opacity: 1;
+        }
+        
+        /* Forms & Inputs */
+        .form-group {
+            margin-bottom: var(--padding-md);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+            font-size: 14px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: var(--padding-sm);
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: var(--padding-md) 0;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px;
+            background-color: var(--normal-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+            margin: 0;
+            text-align: center;
+        }
+        
+        button:hover {
+            background-color: var(--normal-hover);
+        }
+        
+        .button-buy {
+            background-color: var(--buy-color);
+        }
+        
+        .button-buy:hover {
+            background-color: var(--buy-hover);
+        }
+        
+        .button-sell {
+            background-color: var(--sell-color);
+        }
+        
+        .button-sell:hover {
+            background-color: var(--sell-hover);
+        }
+        
+        .button-cancel {
+            background-color: var(--cancel-color);
+        }
+        
+        .button-cancel:hover {
+            background-color: var(--cancel-hover);
+        }
+        
+        /* Status area */
+        .status {
+            margin-top: var(--padding-md);
+            padding: var(--padding-md);
+            background-color: var(--tertiary-bg);
+            border-radius: 4px;
+        }
+        
+        h3, h4 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+        
+        pre {
+            background-color: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        /* Collapsible panels */
+        .panel {
+            background-color: var(--tertiary-bg);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--padding-md);
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--accent-color);
+            font-weight: bold;
+            padding: var(--padding-sm) var(--padding-md);
+            background-color: rgba(0,0,0,0.2);
+        }
+        
+        .panel-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-speed);
+            padding: 0 var(--padding-md);
+        }
+        
+        .panel-content.expanded {
+            max-height: 500px;
+            padding: var(--padding-md);
+            overflow-y: auto;
+        }
+        
+        /* Timer styles */
+        .timer-display {
+            font-size: 20px;
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: var(--secondary-bg);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timer-config {
+            margin-bottom: 15px;
+            background-color: rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .timer-input-group {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .timer-input-group input {
+            flex: 1;
+            max-width: 70px;
+        }
+        
+        .timer-input-group select {
+            flex: 2;
+        }
+        
+        .active-timers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .no-timers {
+            text-align: center;
+            padding: 10px;
+            color: var(--accent-color);
+            font-style: italic;
+        }
+        
+        .timer-item {
+            background-color: var(--secondary-bg);
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .timer-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 1s linear;
+        }
+        
+        .timer-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .timer-name {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .timer-interval {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .countdown {
+            color: var(--buy-color);
+            font-weight: bold;
+        }
+        
+        .countdown.warning {
+            color: var(--cancel-color);
+        }
+        
+        .countdown.danger {
+            color: var(--sell-color);
+        }
+        
+        .timer-delete {
+            background-color: var(--sell-color);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Account table styles */
+        .accounts-container {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: var(--padding-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .accounts-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: flex-end;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .filter-group label {
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 6px;
+            font-size: 13px;
+            background-color: var(--secondary-bg);
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .mini-button {
+            padding: 6px 10px;
+            font-size: 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .select-button {
+            background-color: var(--accent-color);
+            color: black;
+        }
+        
+        .clear-button {
+            background-color: #555;
+            color: white;
+        }
+        
+        .accounts-table-container {
+            overflow-x: auto;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .accounts-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .accounts-table th, 
+        .accounts-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+        
+        .accounts-table th {
+            background-color: var(--secondary-bg);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .accounts-table tr:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        .sortable {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .sortable::after {
+            content: "⇅";
+            position: absolute;
+            right: 5px;
+            opacity: 0.3;
+        }
+        
+        .sortable.sorted-asc::after {
+            content: "↑";
+            opacity: 1;
+        }
+        
+        .sortable.sorted-desc::after {
+            content: "↓";
+            opacity: 1;
+        }
+        
+        .checkbox-col {
+            width: 30px;
+        }
+        
+        .phase-col {
+            width: 100px;
+        }
+        
+        .status-col {
+            width: 60px;
+        }
+        
+        /* Phase dropdown in table */
+        .phase-select-cell {
+            width: 100%;
+            padding: 2px;
+            background-color: var(--secondary-bg);
+            border: none;
+            border-radius: 3px;
+        }
+        
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 11px;
+            text-align: center;
+        }
+        
+        .status-active {
+            background-color: var(--buy-color);
+            color: white;
+        }
+        
+        .status-inactive {
+            background-color: #666;
+            color: #ccc;
+        }
+        
+        /* Selection summary */
+        .selection-summary {
+            padding: 5px;
+            background-color: var(--secondary-bg);
+            border-radius: 3px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        /* Batch actions styles */
+        .batch-actions-container {
+            padding: 10px;
+            background-color: var(--secondary-bg);
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+        
+        .batch-actions-container h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .batch-action-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .batch-select {
+            flex: 2;
+            padding: 6px;
+            font-size: 13px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+        }
+        
+        /* Account row that is filtered out */
+        .filtered-out {
+            display: none;
+        }
+        
+        /* Toggle Switch and Control Panel Styles */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .control-description {
+            display: block;
+            color: var(--accent-color);
+            opacity: 0.8;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .cooldown-help {
+            display: block;
+            color: var(--accent-color);
+            opacity: 0.8;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--buy-color);
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--buy-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        .cooldown-status {
+            margin-top: 15px;
+        }
+        
+        .cooldown-indicator {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .indicator {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-indicator {
+            border: 1px solid var(--buy-color);
+            color: var(--buy-color);
+        }
+        
+        .sell-indicator {
+            border: 1px solid var(--sell-color);
+            color: var(--sell-color);
+        }
+        
+        .indicator.ready {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .indicator.cooling {
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .indicator.cooling::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+        }
+        
+        .cooldown-progress {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            transform-origin: right;
+        }
+        
+        @keyframes cooldown-progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+        
+        .cooldown-text {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        /* Responsive adjustments for account table */
+        @media (max-width: 768px) {
+            .accounts-table th, 
+            .accounts-table td {
+                padding: 6px 4px;
+                font-size: 12px;
+            }
+            
+            .filter-group {
+                min-width: 90px;
+            }
+            
+            .filter-select {
+                padding: 4px;
+                font-size: 12px;
+            }
+            
+            .mini-button {
+                padding: 4px 6px;
+                font-size: 11px;
+            }
+        }
+        
+        /* Phase settings */
+        .phase-select {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px;
+            min-width: 100px;
+            font-size: 14px;
+        }
+        
+        .phase-select option {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .control-description {
+            display: block;
+            color: var(--accent-color);
+            opacity: 0.8;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .cooldown-help {
+            display: block;
+            color: var(--accent-color);
+            opacity: 0.8;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--buy-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        /* Cooldown Indicators */
+        .cooldown-status {
+            margin-top: 15px;
+        }
+        
+        .cooldown-indicator {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .indicator {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-indicator {
+            border: 1px solid var(--buy-color);
+            color: var(--buy-color);
+        }
+        
+        .sell-indicator {
+            border: 1px solid var(--sell-color);
+            color: var(--sell-color);
+        }
+        
+        .indicator.ready {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .indicator.cooling {
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .indicator.cooling::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: cooldown-progress 10s linear forwards;
+            z-index: -1;
+        }
+        
+        @keyframes cooldown-progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .controls {
+                padding: var(--padding-sm);
+            }
+            
+            button {
+                padding: 10px;
+                font-size: 14px;
+                min-width: 70px;
+            }
+            
+            .panel-content.expanded {
+                max-height: 400px;
+            }
+            
+            .timer-display {
+                font-size: 20px;
+            }
+            
+            pre {
+                font-size: 11px;
+                max-height: 150px;
+            }
+        }
+        
+        /* Action bar for quick trading */
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--secondary-bg);
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            z-index: 100;
+        }
+        
+        .button-container {
+            flex: 1;
+            position: relative;
+            margin: 0 5px;
+        }
+        
+        .action-bar button {
+            width: 100%;
+            margin: 0;
+            padding: 10px 0;
+            border-radius: 20px;
+        }
+        
+        .button-cooldown {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            width: 0%;
+            border-radius: 0 0 20px 20px;
+            transition: width 1s linear;
+            opacity: 0.9;
+        }
+        
+        .buy-cooldown {
+            background: linear-gradient(to right, var(--buy-color), var(--buy-hover));
+        }
+        
+        .sell-cooldown {
+            background: linear-gradient(to right, var(--sell-color), var(--sell-hover));
+        }
+        
+        /* Cooldown text on button */
+        .countdown-text {
+            font-size: 16px;
+            margin-left: 10px;
+            font-weight: bold;
+            opacity: 0.9;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0,0,0,0.3);
+        }
+        
+        /* Pulsing effect for buttons in cooldown */
+        @keyframes cooldown-pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        button:disabled {
+            animation: cooldown-pulse 2s infinite;
+            cursor: not-allowed;
+        }
+        
+        /* Flash effect for ready buttons */
+        @keyframes ready-flash {
+            0% { background-color: rgba(255, 255, 255, 0.3); }
+            100% { background-color: transparent; }
+        }
+        
+        .ready-flash {
+            animation: ready-flash 0.5s ease-out;
+        }
+        
+        /* Pulse effect for when attempting during cooldown */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Size Matrix styles */
+        .matrix-container {
+            background-color: rgba(0,0,0,0.1);
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .order-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .order-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+        
+        .size-matrix {
+            overflow-x: auto;
+        }
+        
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-bottom: 10px;
+        }
+        
+        .size-table th, 
+        .size-table td {
+            padding: 6px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .size-table th {
+            background-color: var(--secondary-bg);
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .size-table td:first-child {
+            background-color: var(--secondary-bg);
+            font-weight: bold;
+            text-align: left;
+            padding-left: 10px;
+        }
+        
+        .matrix-input {
+            width: 100%;
+            max-width: 55px;
+            padding: 4px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 13px;
+        }
+        
+        /* Highlight current order column */
+        .size-table th.current-order,
+        .size-table td.current-order {
+            background-color: rgba(var(--accent-color-rgb), 0.1);
+        }
+        
+        /* Highlight current phase row */
+        .size-table tr.current-phase,
+        .size-table td.current-phase {
+            background-color: rgba(var(--accent-color-rgb), 0.05);
+            font-weight: bold;
+        }
+        
+        /* Highlight active cell (intersection of phase and order) */
+        .size-table td.active-cell {
+            background-color: rgba(var(--accent-color-rgb), 0.25);
+            position: relative;
+        }
+        
+        /* Add a subtle border around the active cell */
+        .size-table td.active-cell .matrix-input {
+            box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.5);
+            font-weight: bold;
+        }
+        
+        .pulse {
+            animation: pulse 0.3s ease-in-out;
+        }
+        
+        /* Container styling for buttons in cooldown */
+        .button-container.in-cooldown {
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+        }
+        
+        /* Config button to show/hide panels */
+        .config-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 101;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Configuration Button -->
+    <div class="config-button" id="configButton">
+        <i>⚙️</i>
+    </div>
+    
+    <div class="container">
+        <div id="panelsContainer" class="controls">
+            <h3>Trading App</h3>
+            
+            <!-- Control Panel -->
+            <div class="panel draggable-panel" id="controlPanel" data-panel-id="control">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="controlHeader">
+                    <span>⏳ Cooldown</span>
+                    <span id="controlCollapseIndicator">▶</span>
+                </div>
+                <div class="panel-content" id="controlContent">
+                    <div class="form-group">
+                        <div class="toggle-container">
+                            <label for="cooldownEnabled">Order Type Cooldown</label>
+                            <label class="switch">
+                                <input type="checkbox" id="cooldownEnabled" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <small class="control-description">Prevents ordering same type within cooldown period</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cooldownSeconds">Cooldown (seconds)</label>
+                        <input type="number" id="cooldownSeconds" value="10" min="1" max="300">
+                        <small class="cooldown-help">Time before allowing another order of same type</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Combined Size Matrix Panel -->
+            <div class="panel draggable-panel" id="phaseSettingsPanel" data-panel-id="phaseSettings">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="phaseSettingsHeader">
+                    <span>📊 Size Matrix</span>
+                    <span id="phaseSettingsCollapseIndicator">▶</span>
+                </div>
+                <div class="panel-content" id="phaseSettingsContent">
+                    <div class="form-group">
+                        <div class="toggle-container">
+                            <label for="scalingEnabled">Use Order Scaling</label>
+                            <label class="switch">
+                                <input type="checkbox" id="scalingEnabled" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <small class="control-description">Use fixed sizes for sequential orders</small>
+                    </div>
+                    
+                    <div class="matrix-container">
+                        <div class="order-info">
+                            <label>Current Order: <span id="currentOrderNumber" class="order-badge">1</span></label>
+                            <button id="resetOrderCount" class="mini-button clear-button">Reset</button>
+                        </div>
+                        
+                        <div class="size-matrix">
+                            <table class="size-table">
+                                <thead>
+                                    <tr>
+                                        <th>Phase / Order</th>
+                                        <th>Order #1</th>
+                                        <th>Order #2</th>
+                                        <th>Order #3</th>
+                                        <th>Order #4</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Phase 1</td>
+                                        <td><input type="number" id="phase1_order1" class="matrix-input" value="5" min="1"></td>
+                                        <td><input type="number" id="phase1_order2" class="matrix-input" value="10" min="1"></td>
+                                        <td><input type="number" id="phase1_order3" class="matrix-input" value="15" min="1"></td>
+                                        <td><input type="number" id="phase1_order4" class="matrix-input" value="20" min="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phase 2</td>
+                                        <td><input type="number" id="phase2_order1" class="matrix-input" value="10" min="1"></td>
+                                        <td><input type="number" id="phase2_order2" class="matrix-input" value="15" min="1"></td>
+                                        <td><input type="number" id="phase2_order3" class="matrix-input" value="20" min="1"></td>
+                                        <td><input type="number" id="phase2_order4" class="matrix-input" value="25" min="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phase 3</td>
+                                        <td><input type="number" id="phase3_order1" class="matrix-input" value="20" min="1"></td>
+                                        <td><input type="number" id="phase3_order2" class="matrix-input" value="25" min="1"></td>
+                                        <td><input type="number" id="phase3_order3" class="matrix-input" value="30" min="1"></td>
+                                        <td><input type="number" id="phase3_order4" class="matrix-input" value="35" min="1"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Hidden legacy inputs for backward compatibility -->
+                        <div style="display:none;">
+                            <input type="number" id="phase1Size" value="10" min="1">
+                            <input type="number" id="phase2Size" value="20" min="1">
+                            <input type="number" id="phase3Size" value="30" min="1">
+                            <input type="number" id="order1Size" value="5" min="1">
+                            <input type="number" id="order2Size" value="10" min="1">
+                            <input type="number" id="order3Size" value="15" min="1">
+                            <input type="number" id="order4Size" value="20" min="1">
+                            <input type="number" id="order5Size" value="25" min="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trade Settings Panel -->
+            <div class="panel draggable-panel" id="tradeSettingsPanel" data-panel-id="tradeSettings">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="settingsHeader">
+                    <span>🔍 Trade Settings</span>
+                    <span id="settingsCollapseIndicator">▶</span>
+                </div>
+                <div class="panel-content" id="settingsContent">
+                    <div class="form-group">
+                        <label for="symbol">Symbol</label>
+                        <input type="text" id="symbol" value="NQM5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Default Quantity</label>
+                        <input type="number" id="quantity" value="10" min="1">
+                        <small style="color: var(--accent-color); display: block; margin-top: 4px;">
+                            (Used as a fallback if phase sizes are not available)
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accounts Panel -->
+            <div class="panel draggable-panel" id="accountsPanel" data-panel-id="accounts">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="accountsHeader">
+                    <span>💼 Trading Accounts</span>
+                    <span id="accountsCollapseIndicator">▶</span>
+                </div>
+                <div class="panel-content" id="accountsContent">
+                    <div class="accounts-container">
+                        <!-- Batch actions -->
+                        <div class="batch-actions-container" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <select id="batch-phase" class="batch-select" style="margin-right: 5px; flex-grow: 0;">
+                                <option value="1">Phase 1</option>
+                                <option value="2">Phase 2</option>
+                                <option value="3">Phase 3</option>
+                            </select>
+                            <button id="apply-batch-phase" class="mini-button select-button" style="font-size: 11px; padding: 2px 8px;">Batch Apply</button>
+                        </div>
+
+                        <!-- Filter controls -->
+                        <div class="accounts-filters">
+                            <div class="filter-group">
+                                <label for="platform-filter">Platform:</label>
+                                <select id="platform-filter" class="filter-select">
+                                    <option value="all">All Platforms</option>
+                                    <!-- Platform options loaded dynamically -->
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="phase-filter">Phase:</label>
+                                <select id="phase-filter" class="filter-select">
+                                    <option value="all">All Phases</option>
+                                    <option value="1">Phase 1</option>
+                                    <option value="2">Phase 2</option>
+                                    <option value="3">Phase 3</option>
+                                </select>
+                            </div>
+                            <!-- Selection buttons removed as requested -->
+                        </div>
+                        
+                        <!-- Accounts table -->
+                        <div class="accounts-table-container">
+                            <table class="accounts-table" id="accounts-table">
+                                <thead>
+                                    <tr>
+                                        <th class="checkbox-col">
+                                            <input type="checkbox" id="select-all-header">
+                                        </th>
+                                        <th class="sortable" data-sort="name">Account</th>
+                                        <th class="sortable" data-sort="platform">Platform</th>
+                                        <th class="phase-col">Phase</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accounts-list">
+                                    <!-- Account rows loaded dynamically -->
+                                    <tr>
+                                        <td colspan="4" class="loading-accounts">Loading accounts...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Selection summary -->
+                        <div class="selection-summary" id="selection-summary">
+                            No accounts selected
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timer Panel -->
+            <div class="panel draggable-panel" id="timerPanel" data-panel-id="timer">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="timerHeader">
+                    <span>⏱️ Timers</span>
+                    <span id="timerCollapseIndicator">▼</span>
+                </div>
+                <div class="panel-content expanded" id="timerContent">
+                    <!-- Timer Configuration -->
+                    <div class="timer-config">
+                        <div class="form-group">
+                            <label for="timerValue">Interval</label>
+                            <div class="timer-input-group">
+                                <input type="number" id="timerValue" value="5" min="1" max="60">
+                                <select id="timerUnit">
+                                    <option value="seconds">Seconds</option>
+                                    <option value="minutes" selected>Minutes</option>
+                                    <option value="hours">Hours</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timerStartTime">Start Time (PST)</label>
+                            <div class="timer-input-group">
+                                <input type="time" id="timerStartTime" value="09:30">
+                                <select id="timerStartType">
+                                    <option value="immediate" selected>Start Now</option>
+                                    <option value="scheduled">Schedule Start</option>
+                                </select>
+                            </div>
+                            <small class="control-description">Time is in Pacific Time (PST/PDT)</small>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 10px; text-align: right;">
+                            <button id="addTimer" class="mini-button select-button">Add Timer</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Timers List -->
+                    <div class="active-timers" id="activeTimers">
+                        <div class="no-timers" id="noTimers">No active timers</div>
+                        <!-- Timer entries will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Panel -->
+            <div class="panel draggable-panel" id="statusPanel" data-panel-id="status">
+                <div class="drag-handle" title="Drag to reorder"></div>
+                <div class="panel-header" id="statusHeader">
+                    <span>📡 Status</span>
+                    <span id="statusCollapseIndicator">▶</span>
+                </div>
+                <div class="panel-content" id="statusContent">
+                    <p id="statusText">Ready to trade</p>
+                    <div id="celebrationContainer" style="display: none;"></div>
+                    <pre id="responseDetails"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Action Bar -->
+    <div class="action-bar">
+        <div class="button-container">
+            <button id="btnBuy" class="button-buy">Buy</button>
+            <div id="buyIndicator" class="button-cooldown buy-cooldown"></div>
+        </div>
+        <div class="button-container">
+            <button id="btnSell" class="button-sell">Sell</button>
+            <div id="sellIndicator" class="button-cooldown sell-cooldown"></div>
+        </div>
+        <button id="btnCancel" class="button-cancel">Close</button>
+    </div>
+
+    <script>
+        // Cash register sound effect
+        const cashRegisterSound = new Audio("https://soundbible.com/mp3/Cash%20Register%20Cha%20Ching-SoundBible.com-184076484.mp3");
+        
+        // Collection of motivational GIFs and affirmations for winning trades
+        // Load from external JSON file
+        let tradeWinContent = { gifs: [], affirmations: [] }; // Default empty values
+
+        // Fetch the gamification content from JSON file
+        fetch('/static/gamification.json')
+            .then(response => response.json())
+            .then(data => {
+                tradeWinContent = data;
+                console.log("Loaded gamification content:", tradeWinContent);
+            })
+            .catch(error => {
+                console.error("Error loading gamification content:", error);
+            });
+            
+        // Function to reset the status panel styling to default
+        function resetStatusPanelStyling() {
+            const statusText = document.getElementById('statusText');
+            if (statusText) {
+                statusText.style.color = "var(--text-color)";
+                statusText.style.fontWeight = "normal";
+                statusText.style.fontSize = "inherit";
+                statusText.style.textAlign = "left";
+                statusText.style.animation = "none";
+            }
+            
+            // Hide the celebration container
+            const celebrationContainer = document.getElementById('celebrationContainer');
+            if (celebrationContainer) {
+                celebrationContainer.style.display = 'none';
+                celebrationContainer.innerHTML = '';
+            }
+        }
+        
+        // Store all app preferences
+        const userPreferences = {
+            // Panel layout
+            panelOrder: ['status', 'tradeSettings', 'phaseSettings', 'accounts', 'control', 'timer'],
+            hiddenPanels: [],
+            collapsedPanels: ['status', 'tradeSettings', 'phaseSettings', 'accounts', 'control'],
+            
+            // Form inputs
+            symbol: 'NQM5',
+            quantity: 10,
+            
+            // Legacy sizing
+            phase1Size: 10,
+            phase2Size: 20,
+            phase3Size: 30,
+            
+            // Scaling settings
+            scalingEnabled: true,
+            currentOrderNumber: 1,
+            
+            // Legacy order sizes
+            order1Size: 5,
+            order2Size: 10,
+            order3Size: 15,
+            order4Size: 20,
+            order5Size: 25,
+            
+            // Matrix values (will be populated on first load)
+            phase1_order1: 5,
+            phase1_order2: 10,
+            phase1_order3: 15,
+            phase1_order4: 20,
+            phase2_order1: 10,
+            phase2_order2: 15,
+            phase2_order3: 20,
+            phase2_order4: 25,
+            phase3_order1: 20,
+            phase3_order2: 25,
+            phase3_order3: 30,
+            phase3_order4: 35,
+            
+            // Control settings
+            cooldownEnabled: true,
+            cooldownSeconds: 10,
+            
+            // Filters
+            platformFilter: 'all',
+            phaseFilter: 'all',
+            
+            // Selected accounts
+            selectedAccountIds: [],
+            
+            // Sorting
+            accountSort: { column: null, direction: 'asc' }
+        };
+        
+        // Initialize the app
+        // Function to update the timer start time to current time
+        function updateTimerStartTime() {
+            // Get current time in PST/PDT
+            const now = new Date();
+            const pstDate = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+            
+            // Format as HH:MM
+            const hours = pstDate.getHours().toString().padStart(2, '0');
+            const minutes = pstDate.getMinutes().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}`;
+            
+            // Update the time input
+            const timerStartTimeInput = document.getElementById('timerStartTime');
+            if (timerStartTimeInput) {
+                timerStartTimeInput.value = timeString;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved preferences from localStorage
+            loadPreferences();
+            
+            // Load accounts
+            loadAccounts();
+            
+            // Set up panel functionality
+            setupPanels();
+            
+            // Update timer start time initially
+            updateTimerStartTime();
+            
+            // Set interval to update time every minute
+            setInterval(updateTimerStartTime, 60000);
+            
+            // Set up drag and drop functionality
+            setupDragAndDrop();
+            
+            // Set up config button
+            setupConfigButton();
+            
+            // Apply initial panel state
+            applyPanelPreferences();
+            
+            // Apply saved form values and settings
+            applyPreferencesValues();
+            
+            // Set up control panel listeners
+            setupControlPanelListeners();
+            
+            // Set up scaling controls and listeners
+            setupScalingControls();
+            
+            // Set up change listeners for all form inputs
+            setupFormChangeListeners();
+        });
+        
+        // Set up listeners for all form elements to save changes
+        function setupFormChangeListeners() {
+            // Input fields
+            const formInputs = ['symbol', 'quantity', 'phase1Size', 'phase2Size', 'phase3Size', 'order1Size', 'order2Size', 'order3Size', 'order4Size', 'order5Size'];
+            formInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('change', savePreferences);
+                }
+            });
+            
+            // Checkboxes are handled by the accounts system
+            
+            // Add listener to save filters when they change
+            document.getElementById('platform-filter').addEventListener('change', function() {
+                userPreferences.platformFilter = this.value;
+                savePreferences();
+            });
+            
+            document.getElementById('phase-filter').addEventListener('change', function() {
+                userPreferences.phaseFilter = this.value;
+                savePreferences();
+            });
+        }
+        
+        // Set up scaling controls event listeners
+        function setupScalingControls() {
+            // Toggle scaling controls visibility based on checkbox
+            const scalingEnabledToggle = document.getElementById('scalingEnabled');
+            if (scalingEnabledToggle) {
+                scalingEnabledToggle.addEventListener('change', function() {
+                    userPreferences.scalingEnabled = this.checked;
+                    updateMatrixHighlights();
+                    savePreferences();
+                });
+            }
+            
+            // Reset button resets order count to 1
+            const resetButton = document.getElementById('resetOrderCount');
+            if (resetButton) {
+                resetButton.addEventListener('click', function() {
+                    userPreferences.currentOrderNumber = 1;
+                    document.getElementById('currentOrderNumber').textContent = '1';
+                    updateMatrixHighlights();
+                    savePreferences();
+                });
+            }
+            
+            // Set up listeners for all matrix inputs
+            setupMatrixInputListeners();
+            
+            // Initialize matrix highlights
+            updateMatrixHighlights();
+        }
+        
+        // Set up listeners for matrix inputs
+        function setupMatrixInputListeners() {
+            // Get all matrix inputs
+            const matrixInputs = document.querySelectorAll('.matrix-input');
+            
+            // Add change event listener to each input
+            matrixInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Update the corresponding legacy input for backward compatibility
+                    const [phase, order] = this.id.split('_');
+                    
+                    // Update phase sizes in legacy inputs
+                    if (order === 'order1') {
+                        document.getElementById(`${phase}Size`).value = this.value;
+                    }
+                    
+                    // Update order sizes in legacy inputs
+                    if (phase === 'phase1') {
+                        const orderNum = order.replace('order', '');
+                        document.getElementById(`order${orderNum}Size`).value = this.value;
+                    }
+                    
+                    // Save the matrix value to preferences
+                    userPreferences[this.id] = parseInt(this.value) || 1;
+                    savePreferences();
+                });
+            });
+            
+            // Set up account selection listeners to update current phase highlight
+            document.addEventListener('change', function(e) {
+                if (e.target && e.target.name === 'accounts') {
+                    updateMatrixHighlights();
+                }
+            });
+        }
+        
+        // Update all matrix highlights
+        function updateMatrixHighlights() {
+            // First update the order column highlight
+            updateCurrentOrderHighlight();
+            
+            // Then update the current phase row highlight based on selected account
+            updateCurrentPhaseHighlight();
+            
+            // Finally highlight the active cell (intersection of phase and order)
+            updateActiveCell();
+        }
+
+        // Update highlight on current order column
+        function updateCurrentOrderHighlight() {
+            const isEnabled = document.getElementById('scalingEnabled').checked;
+            const currentOrder = userPreferences.currentOrderNumber || 1;
+            
+            // Remove all current-order classes first
+            document.querySelectorAll('.current-order').forEach(el => {
+                el.classList.remove('current-order');
+            });
+            
+            // Add current-order class to appropriate cells if scaling is enabled
+            if (isEnabled && currentOrder <= 4) {
+                // +1 to account for the first column being the phase label
+                const columnIndex = currentOrder;
+                
+                // Add highlight to header
+                const headerCells = document.querySelectorAll('.size-table thead th');
+                if (headerCells.length > columnIndex) {
+                    headerCells[columnIndex].classList.add('current-order');
+                }
+                
+                // Add highlight to cells
+                const rows = document.querySelectorAll('.size-table tbody tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length > columnIndex) {
+                        cells[columnIndex].classList.add('current-order');
+                    }
+                });
+            }
+        }
+        
+        // Update highlight on current phase row based on selected account
+        function updateCurrentPhaseHighlight() {
+            // First remove any existing phase highlights
+            document.querySelectorAll('.current-phase').forEach(el => {
+                el.classList.remove('current-phase');
+            });
+            
+            // Get the current phase from selected account
+            let currentPhase = 1; // Default to Phase 1
+            
+            // Get all checked accounts
+            const selectedAccountCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            if (selectedAccountCheckboxes.length > 0) {
+                // Get the account ID from the first selected checkbox
+                const accountId = parseInt(selectedAccountCheckboxes[0].getAttribute('data-account-id'));
+                
+                // Find the account data to get the phase
+                const account = accountsData.find(acc => acc.id === accountId);
+                if (account && account.phase) {
+                    currentPhase = parseInt(account.phase);
+                }
+            }
+            
+            // Highlight the appropriate row (phase 1-3)
+            const phaseIndex = currentPhase - 1; // 0-based index
+            const rows = document.querySelectorAll('.size-table tbody tr');
+            if (rows.length > phaseIndex) {
+                rows[phaseIndex].classList.add('current-phase');
+                
+                // Also highlight the first cell (phase label)
+                const phaseCell = rows[phaseIndex].querySelector('td:first-child');
+                if (phaseCell) {
+                    phaseCell.classList.add('current-phase');
+                }
+            }
+        }
+        
+        // Update active cell highlight (intersection of current phase and order)
+        function updateActiveCell() {
+            // Remove any existing active cell highlight
+            document.querySelectorAll('.active-cell').forEach(el => {
+                el.classList.remove('active-cell');
+            });
+            
+            // Check if scaling is enabled
+            const isEnabled = document.getElementById('scalingEnabled').checked;
+            if (!isEnabled) return;
+            
+            // Get current order
+            const orderNum = userPreferences.currentOrderNumber || 1;
+            
+            // Get current phase from selected account
+            let phase = 1; // Default to Phase 1
+            
+            // Get selected account
+            const selectedAccountCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            if (selectedAccountCheckboxes.length > 0) {
+                const accountId = parseInt(selectedAccountCheckboxes[0].getAttribute('data-account-id'));
+                const account = accountsData.find(acc => acc.id === accountId);
+                if (account && account.phase) {
+                    phase = parseInt(account.phase);
+                }
+            }
+            
+            // Highlight the intersection cell if in range
+            if (phase >= 1 && phase <= 3 && orderNum >= 1 && orderNum <= 4) {
+                const rowIndex = phase - 1;
+                const colIndex = orderNum;
+                
+                const rows = document.querySelectorAll('.size-table tbody tr');
+                if (rows.length > rowIndex) {
+                    const cells = rows[rowIndex].querySelectorAll('td');
+                    if (cells.length > colIndex) {
+                        cells[colIndex].classList.add('active-cell');
+                    }
+                }
+            }
+        }
+        
+        // Get current order size based on sequence number and account phase
+        function getCurrentOrderSize() {
+            // Check if scaling is enabled
+            if (!userPreferences.scalingEnabled) {
+                return null; // Let the default quantity be used
+            }
+            
+            // Get the current order number
+            const orderNum = userPreferences.currentOrderNumber || 1;
+            
+            // Get the account phase from selected account(s)
+            let phase = 1; // Default to Phase 1 if no account is selected
+            
+            // Get all checked accounts
+            const selectedAccountCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            
+            if (selectedAccountCheckboxes.length > 0) {
+                // Get the account ID from the first selected checkbox
+                const accountId = parseInt(selectedAccountCheckboxes[0].getAttribute('data-account-id'));
+                
+                // Find the account data to get the phase
+                const account = accountsData.find(acc => acc.id === accountId);
+                if (account && account.phase) {
+                    phase = parseInt(account.phase);
+                }
+            }
+            
+            // Look up the lot size from the matrix by phase and order number
+            const size = getMatrixValue(phase, orderNum);
+            return size;
+        }
+        
+        // Get value from the size matrix
+        function getMatrixValue(phase, orderNum) {
+            // Limit to valid ranges
+            phase = Math.min(Math.max(phase, 1), 3);
+            orderNum = Math.min(Math.max(orderNum, 1), 4);
+            
+            // Get the value directly from the DOM input
+            // The HTML uses underscore format (phase1_order1) for IDs
+            const inputId = `phase${phase}_order${orderNum}`;
+            
+            const input = document.getElementById(inputId);
+            
+            if (input) {
+                // Parse the input value and handle NaN cases
+                const value = parseInt(input.value) || 1; // Fall back to 1 if parsing fails
+                return value;
+            }
+            
+            // If input not found, fall back to stored preference
+            if (userPreferences[inputId]) {
+                return parseInt(userPreferences[inputId]) || 1;
+            }
+            
+            // Default fallback values if all else fails
+            let defaultValue;
+            if (phase === 1) defaultValue = 5 * orderNum;
+            else if (phase === 2) defaultValue = 5 + (5 * orderNum);
+            else defaultValue = 15 + (5 * orderNum); // Phase 3
+            
+            return defaultValue;
+        }
+        
+        // Increment the order counter after successful order
+        function incrementOrderCount() {
+            if (!userPreferences.scalingEnabled) {
+                return;
+            }
+            
+            const currentOrder = userPreferences.currentOrderNumber || 1;
+            const nextOrder = currentOrder + 1;
+            
+            // Update UI and preferences (limit to 4 orders)
+            userPreferences.currentOrderNumber = Math.min(nextOrder, 4);
+            document.getElementById('currentOrderNumber').textContent = userPreferences.currentOrderNumber;
+            
+            // Update all matrix highlights
+            updateMatrixHighlights();
+            
+            // Save preferences
+            savePreferences();
+        }
+        
+        // Setup control panel listeners
+        function setupControlPanelListeners() {
+            // Cooldown toggle
+            document.getElementById('cooldownEnabled').addEventListener('change', function() {
+                // Save preference
+                userPreferences.cooldownEnabled = this.checked;
+                savePreferences();
+                
+                // If disabled, reset any active cooldowns
+                if (!this.checked) {
+                    resetCooldown('buy');
+                    resetCooldown('sell');
+                }
+            });
+            
+            // Cooldown seconds
+            document.getElementById('cooldownSeconds').addEventListener('change', function() {
+                const value = parseInt(this.value) || 10;
+                this.value = value; // Ensure it's a valid number
+                userPreferences.cooldownSeconds = value;
+                savePreferences();
+                
+                // Update any active cooldown animations
+                updateCooldownAnimations();
+            });
+            
+            // Apply saved cooldown settings
+            document.getElementById('cooldownEnabled').checked = userPreferences.cooldownEnabled !== false;
+            document.getElementById('cooldownSeconds').value = userPreferences.cooldownSeconds || 10;
+        }
+        
+        // Start a cooldown for a specific order type
+        function startCooldown(orderType) {
+            // Check if cooldown is enabled
+            if (!userPreferences.cooldownEnabled) {
+                return true; // Allow order if cooldown is disabled
+            }
+            
+            // Get cooldown seconds
+            const cooldownSeconds = userPreferences.cooldownSeconds || 10;
+            
+            // Check if already in cooldown
+            if (orderCooldowns[orderType].active) {
+                const remainingSeconds = Math.ceil((orderCooldowns[orderType].endTime - Date.now()) / 1000);
+                
+                // Show message
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = `${orderType.charAt(0).toUpperCase() + orderType.slice(1)} in cooldown (${remainingSeconds}s remaining)`;
+                
+                // Pulse the button to provide visual feedback
+                const button = document.getElementById(`btn${orderType.charAt(0).toUpperCase() + orderType.slice(1)}`);
+                button.classList.add('pulse');
+                setTimeout(() => button.classList.remove('pulse'), 500);
+                
+                return false; // Don't allow order during cooldown
+            }
+            
+            // Start cooldown
+            const endTime = Date.now() + (cooldownSeconds * 1000);
+            orderCooldowns[orderType].active = true;
+            orderCooldowns[orderType].endTime = endTime;
+            
+            // Update button indicator
+            const indicator = document.getElementById(`${orderType}Indicator`);
+            
+            // Set transition duration based on cooldown length for smoother animation
+            indicator.style.transition = `width ${cooldownSeconds}s linear`;
+            indicator.style.width = '100%';
+            
+            // Force browser to acknowledge the style change before animating
+            setTimeout(() => {
+                indicator.style.width = '0%';
+            }, 10);
+            
+            // Create and add countdown text to button
+            const button = document.getElementById(`btn${orderType.charAt(0).toUpperCase() + orderType.slice(1)}`);
+            const originalButtonText = orderType.charAt(0).toUpperCase() + orderType.slice(1);
+            button.innerHTML = `<span>${originalButtonText}</span><span class="countdown-text">${cooldownSeconds}s</span>`;
+            
+            // Add a class to the button container to show it's in cooldown
+            const buttonContainer = button.closest('.button-container');
+            if (buttonContainer) {
+                buttonContainer.classList.add('in-cooldown');
+            }
+            
+            // Disable the button during cooldown
+            button.disabled = true;
+            
+            // Start countdown timer
+            let remaining = cooldownSeconds;
+            orderCooldowns[orderType].timer = setInterval(() => {
+                remaining--;
+                
+                if (remaining <= 0) {
+                    resetCooldown(orderType);
+                } else {
+                    // Update countdown text
+                    const countdownEl = button.querySelector('.countdown-text');
+                    if (countdownEl) {
+                        // Change color based on remaining time
+                        if (remaining <= 3) {
+                            countdownEl.style.color = 'var(--sell-color)';
+                        } else if (remaining <= 5) {
+                            countdownEl.style.color = 'var(--cancel-color)';
+                        }
+                        
+                        countdownEl.textContent = `${remaining}s`;
+                    }
+                }
+            }, 1000);
+            
+            return true; // Allow initial order
+        }
+        
+        // Reset cooldown for a specific order type
+        function resetCooldown(orderType) {
+            // Clear timer
+            if (orderCooldowns[orderType].timer) {
+                clearInterval(orderCooldowns[orderType].timer);
+                orderCooldowns[orderType].timer = null;
+            }
+            
+            // Reset state
+            orderCooldowns[orderType].active = false;
+            orderCooldowns[orderType].endTime = 0;
+            
+            // Update indicator
+            const indicator = document.getElementById(`${orderType}Indicator`);
+            indicator.style.transition = 'width 0.3s ease'; // Faster transition on reset
+            indicator.style.width = '0%';
+            
+            // Reset button text
+            const button = document.getElementById(`btn${orderType.charAt(0).toUpperCase() + orderType.slice(1)}`);
+            button.innerHTML = orderType.charAt(0).toUpperCase() + orderType.slice(1);
+            button.disabled = false;
+            button.classList.remove('pulse');
+            
+            // Remove cooldown class from container
+            const buttonContainer = button.closest('.button-container');
+            if (buttonContainer) {
+                buttonContainer.classList.remove('in-cooldown');
+            }
+            
+            // Add a flash effect to indicate ready
+            button.classList.add('ready-flash');
+            setTimeout(() => button.classList.remove('ready-flash'), 500);
+        }
+        
+        // Update cooldown durations for active cooldowns
+        function updateCooldownAnimations() {
+            const cooldownSeconds = userPreferences.cooldownSeconds || 10;
+            
+            ['buy', 'sell'].forEach(orderType => {
+                if (orderCooldowns[orderType].active) {
+                    // Restart the cooldown with new duration
+                    resetCooldown(orderType);
+                    startCooldown(orderType);
+                }
+            });
+        }
+        
+        // Setup collapsible panels
+        function setupPanels() {
+            // Get all panels
+            const panels = document.querySelectorAll('.panel');
+            
+            // Setup each panel
+            panels.forEach(panel => {
+                const header = panel.querySelector('.panel-header');
+                const content = panel.querySelector('.panel-content');
+                const indicator = panel.querySelector('.panel-header span:last-child');
+                const panelId = panel.getAttribute('data-panel-id');
+                
+                // Toggle panel expansion
+                header.addEventListener('click', function(e) {
+                    // Don't toggle if clicking on the drag handle
+                    if (e.target.classList.contains('drag-handle')) return;
+                    
+                    const isExpanded = content.classList.contains('expanded');
+                    content.classList.toggle('expanded');
+                    indicator.textContent = isExpanded ? '▶' : '▼';
+                    
+                    // Save preference
+                    if (isExpanded) {
+                        userPreferences.collapsedPanels.push(panelId);
+                    } else {
+                        userPreferences.collapsedPanels = userPreferences.collapsedPanels.filter(id => id !== panelId);
+                    }
+                    savePreferences();
+                });
+            });
+        }
+        
+        // Setup drag and drop functionality
+        function setupDragAndDrop() {
+            const container = document.getElementById('panelsContainer');
+            const panels = Array.from(document.querySelectorAll('.draggable-panel'));
+            
+            let draggedPanel = null;
+            
+            panels.forEach(panel => {
+                const handle = panel.querySelector('.drag-handle');
+                
+                handle.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    draggedPanel = panel;
+                    panel.style.opacity = '0.8';
+                    panel.style.zIndex = '1000';
+                    
+                    // Add placeholders and visual feedback
+                    panels.forEach(p => {
+                        if (p !== panel) {
+                            p.style.transition = 'transform 0.2s ease';
+                        }
+                    });
+                    
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            });
+            
+            function onMouseMove(e) {
+                if (!draggedPanel) return;
+                
+                // Find the panel under the cursor
+                const hoveredPanel = panels.find(panel => {
+                    const rect = panel.getBoundingClientRect();
+                    return (
+                        e.clientY > rect.top &&
+                        e.clientY < rect.bottom &&
+                        panel !== draggedPanel
+                    );
+                });
+                
+                if (hoveredPanel) {
+                    // Get indices
+                    const currentIndex = panels.indexOf(draggedPanel);
+                    const targetIndex = panels.indexOf(hoveredPanel);
+                    
+                    // Moving up or down
+                    if (currentIndex < targetIndex) {
+                        container.insertBefore(draggedPanel, hoveredPanel.nextSibling);
+                    } else {
+                        container.insertBefore(draggedPanel, hoveredPanel);
+                    }
+                    
+                    // Update panel order
+                    panels.splice(currentIndex, 1);
+                    panels.splice(targetIndex, 0, draggedPanel);
+                    
+                    // Update preferences
+                    userPreferences.panelOrder = panels.map(panel => panel.getAttribute('data-panel-id'));
+                }
+            }
+            
+            function onMouseUp() {
+                if (draggedPanel) {
+                    draggedPanel.style.opacity = '1';
+                    draggedPanel.style.zIndex = '';
+                    draggedPanel = null;
+                    
+                    // Remove event listeners
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                    
+                    // Save preferences
+                    savePreferences();
+                }
+            }
+            
+            // Touch support for mobile
+            panels.forEach(panel => {
+                const handle = panel.querySelector('.drag-handle');
+                
+                handle.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    draggedPanel = panel;
+                    panel.style.opacity = '0.8';
+                    panel.style.zIndex = '1000';
+                    
+                    document.addEventListener('touchmove', onTouchMove);
+                    document.addEventListener('touchend', onTouchEnd);
+                });
+            });
+            
+            function onTouchMove(e) {
+                if (!draggedPanel) return;
+                
+                const touch = e.touches[0];
+                const touchY = touch.clientY;
+                
+                // Find the panel under the touch
+                const hoveredPanel = panels.find(panel => {
+                    const rect = panel.getBoundingClientRect();
+                    return (
+                        touchY > rect.top &&
+                        touchY < rect.bottom &&
+                        panel !== draggedPanel
+                    );
+                });
+                
+                if (hoveredPanel) {
+                    // Get indices
+                    const currentIndex = panels.indexOf(draggedPanel);
+                    const targetIndex = panels.indexOf(hoveredPanel);
+                    
+                    // Moving up or down
+                    if (currentIndex < targetIndex) {
+                        container.insertBefore(draggedPanel, hoveredPanel.nextSibling);
+                    } else {
+                        container.insertBefore(draggedPanel, hoveredPanel);
+                    }
+                    
+                    // Update panel order
+                    panels.splice(currentIndex, 1);
+                    panels.splice(targetIndex, 0, draggedPanel);
+                    
+                    // Update preferences
+                    userPreferences.panelOrder = panels.map(panel => panel.getAttribute('data-panel-id'));
+                }
+            }
+            
+            function onTouchEnd() {
+                if (draggedPanel) {
+                    draggedPanel.style.opacity = '1';
+                    draggedPanel.style.zIndex = '';
+                    draggedPanel = null;
+                    
+                    // Remove event listeners
+                    document.removeEventListener('touchmove', onTouchMove);
+                    document.removeEventListener('touchend', onTouchEnd);
+                    
+                    // Save preferences
+                    savePreferences();
+                }
+            }
+        }
+        
+        // Setup config button
+        function setupConfigButton() {
+            const configButton = document.getElementById('configButton');
+            
+            configButton.addEventListener('click', function() {
+                // Create a modal dialog for panel configuration
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                modal.style.zIndex = '1000';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                
+                // Create modal content
+                const content = document.createElement('div');
+                content.style.backgroundColor = 'var(--secondary-bg)';
+                content.style.borderRadius = 'var(--border-radius)';
+                content.style.padding = '20px';
+                content.style.maxWidth = '90%';
+                content.style.maxHeight = '90%';
+                content.style.overflow = 'auto';
+                
+                // Add title
+                const title = document.createElement('h3');
+                title.textContent = 'Panel Configuration';
+                title.style.marginTop = '0';
+                content.appendChild(title);
+                
+                // Add panel visibility options
+                const panels = document.querySelectorAll('.panel');
+                panels.forEach(panel => {
+                    const panelId = panel.getAttribute('data-panel-id');
+                    const panelName = panel.querySelector('.panel-header span:first-child').textContent;
+                    
+                    const checkboxContainer = document.createElement('div');
+                    checkboxContainer.style.marginBottom = '10px';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `config-${panelId}`;
+                    checkbox.checked = !userPreferences.hiddenPanels.includes(panelId);
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = `config-${panelId}`;
+                    label.textContent = `Show ${panelName}`;
+                    label.style.marginLeft = '10px';
+                    label.style.color = 'var(--text-color)';
+                    
+                    checkboxContainer.appendChild(checkbox);
+                    checkboxContainer.appendChild(label);
+                    content.appendChild(checkboxContainer);
+                });
+                
+                // Add save button
+                const saveButton = document.createElement('button');
+                saveButton.textContent = 'Save Configuration';
+                saveButton.style.marginTop = '20px';
+                saveButton.style.padding = '10px';
+                saveButton.style.backgroundColor = 'var(--accent-color)';
+                saveButton.style.color = 'black';
+                saveButton.style.border = 'none';
+                saveButton.style.borderRadius = '4px';
+                saveButton.style.cursor = 'pointer';
+                saveButton.style.width = '100%';
+                
+                saveButton.addEventListener('click', function() {
+                    // Update panel visibility preferences
+                    userPreferences.hiddenPanels = [];
+                    panels.forEach(panel => {
+                        const panelId = panel.getAttribute('data-panel-id');
+                        const checkbox = document.getElementById(`config-${panelId}`);
+                        
+                        if (!checkbox.checked) {
+                            userPreferences.hiddenPanels.push(panelId);
+                        }
+                    });
+                    
+                    // Save and apply preferences
+                    savePreferences();
+                    applyPanelPreferences();
+                    
+                    // Close modal
+                    document.body.removeChild(modal);
+                });
+                
+                content.appendChild(saveButton);
+                modal.appendChild(content);
+                document.body.appendChild(modal);
+                
+                // Close when clicking outside
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
+            });
+        }
+        
+        // Save all preferences to localStorage
+        function savePreferences() {
+            // Read current form values before saving
+            updatePreferencesFromUI();
+            
+            // Ensure the panel order is always maintained as specified
+            userPreferences.panelOrder = ['status', 'tradeSettings', 'phaseSettings', 'accounts', 'control', 'timer'];
+            userPreferences.collapsedPanels = ['tradeSettings', 'phaseSettings', 'accounts', 'control'];
+            
+            // Save to localStorage
+            localStorage.setItem('tradingAppPreferences', JSON.stringify(userPreferences));
+            console.log('Saved preferences:', userPreferences);
+        }
+        
+        // Update the preferences object with current UI values
+        function updatePreferencesFromUI() {
+            // Form inputs
+            userPreferences.symbol = document.getElementById('symbol').value;
+            userPreferences.quantity = parseInt(document.getElementById('quantity').value) || 10;
+            
+            // Legacy phase and order size inputs
+            userPreferences.phase1Size = parseInt(document.getElementById('phase1Size').value) || 10;
+            userPreferences.phase2Size = parseInt(document.getElementById('phase2Size').value) || 20;
+            userPreferences.phase3Size = parseInt(document.getElementById('phase3Size').value) || 30;
+            userPreferences.order1Size = parseInt(document.getElementById('order1Size').value) || 5;
+            userPreferences.order2Size = parseInt(document.getElementById('order2Size').value) || 10;
+            userPreferences.order3Size = parseInt(document.getElementById('order3Size').value) || 15;
+            userPreferences.order4Size = parseInt(document.getElementById('order4Size').value) || 20;
+            userPreferences.order5Size = parseInt(document.getElementById('order5Size').value) || 25;
+            
+            // Scaling settings
+            userPreferences.scalingEnabled = document.getElementById('scalingEnabled').checked;
+            userPreferences.currentOrderNumber = parseInt(document.getElementById('currentOrderNumber').textContent) || 1;
+            
+            // Matrix inputs - save all values
+            document.querySelectorAll('.matrix-input').forEach(input => {
+                userPreferences[input.id] = parseInt(input.value) || 1;
+            });
+            
+            // Filters
+            userPreferences.platformFilter = document.getElementById('platform-filter').value;
+            userPreferences.phaseFilter = document.getElementById('phase-filter').value;
+            
+            // Selected accounts
+            userPreferences.selectedAccountIds = Array.from(
+                document.querySelectorAll('input[name="accounts"]:checked')
+            ).map(el => parseInt(el.getAttribute('data-account-id')));
+            
+            // Sorting
+            userPreferences.accountSort = { ...currentSort };
+        }
+        
+        // Load all preferences from localStorage
+        function loadPreferences() {
+            // First ensure the default panel order is always as specified
+            userPreferences.panelOrder = ['status', 'tradeSettings', 'phaseSettings', 'accounts', 'control', 'timer'];
+            userPreferences.collapsedPanels = ['tradeSettings', 'phaseSettings', 'accounts', 'control'];
+            
+            const savedPreferences = localStorage.getItem('tradingAppPreferences');
+            if (savedPreferences) {
+                try {
+                    const parsed = JSON.parse(savedPreferences);
+                    // Apply saved preferences but always keep our specified panel order
+                    const panelOrder = userPreferences.panelOrder;
+                    const collapsedPanels = userPreferences.collapsedPanels;
+                    Object.assign(userPreferences, parsed);
+                    // Force our panel order regardless of saved preferences
+                    userPreferences.panelOrder = panelOrder;
+                    userPreferences.collapsedPanels = collapsedPanels;
+                    console.log('Loaded preferences:', userPreferences);
+                } catch (e) {
+                    console.error('Error parsing saved preferences:', e);
+                }
+            }
+        }
+        
+        // Apply form values and other settings from preferences
+        function applyPreferencesValues() {
+            // Set form input values
+            document.getElementById('symbol').value = userPreferences.symbol || 'NQM5';
+            document.getElementById('quantity').value = userPreferences.quantity || 10;
+            
+            // Set legacy phase/order size inputs
+            document.getElementById('phase1Size').value = userPreferences.phase1Size || 10;
+            document.getElementById('phase2Size').value = userPreferences.phase2Size || 20;
+            document.getElementById('phase3Size').value = userPreferences.phase3Size || 30;
+            document.getElementById('order1Size').value = userPreferences.order1Size || 5;
+            document.getElementById('order2Size').value = userPreferences.order2Size || 10;
+            document.getElementById('order3Size').value = userPreferences.order3Size || 15;
+            document.getElementById('order4Size').value = userPreferences.order4Size || 20;
+            document.getElementById('order5Size').value = userPreferences.order5Size || 25;
+            
+            // Set scaling enabled toggle
+            document.getElementById('scalingEnabled').checked = userPreferences.scalingEnabled !== false; // Default to true
+            document.getElementById('currentOrderNumber').textContent = userPreferences.currentOrderNumber || 1;
+            
+            // Set size matrix values
+            for (let phase = 1; phase <= 3; phase++) {
+                for (let order = 1; order <= 4; order++) {
+                    const inputId = `phase${phase}_order${order}`;
+                    const input = document.getElementById(inputId);
+                    
+                    if (input) {
+                        // If we have a saved value, use it
+                        if (userPreferences[inputId]) {
+                            input.value = userPreferences[inputId];
+                        } else {
+                            // Otherwise, initialize with calculated defaults or legacy values
+                            if (order === 1 && userPreferences[`phase${phase}Size`]) {
+                                input.value = userPreferences[`phase${phase}Size`]; 
+                            } else if (phase === 1 && userPreferences[`order${order}Size`]) {
+                                input.value = userPreferences[`order${order}Size`];
+                            } else {
+                                // Use phase-appropriate default value
+                                let defaultValue = order * 5; // Base for phase 1
+                                if (phase === 2) defaultValue += 5; // Phase 2 adds 5
+                                if (phase === 3) defaultValue += 15; // Phase 3 adds 15
+                                input.value = defaultValue;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Set filter values (will be applied once accounts are loaded)
+            if (userPreferences.platformFilter) {
+                document.getElementById('platform-filter').value = userPreferences.platformFilter;
+            }
+            
+            if (userPreferences.phaseFilter) {
+                document.getElementById('phase-filter').value = userPreferences.phaseFilter;
+            }
+            
+            // Restore sorting if saved
+            if (userPreferences.accountSort && userPreferences.accountSort.column) {
+                currentSort = { ...userPreferences.accountSort };
+            }
+            
+            // Set cooldown settings
+            document.getElementById('cooldownEnabled').checked = userPreferences.cooldownEnabled !== false; // Default to true
+            document.getElementById('cooldownSeconds').value = userPreferences.cooldownSeconds || 10;
+            
+            // Update all matrix highlights
+            updateMatrixHighlights();
+        }
+        
+        // Apply panel preferences
+        function applyPanelPreferences() {
+            const container = document.getElementById('panelsContainer');
+            const panels = Array.from(document.querySelectorAll('.panel'));
+            
+            // Force the panel order to our specified configuration
+            userPreferences.panelOrder = ['status', 'tradeSettings', 'phaseSettings', 'accounts', 'control', 'timer'];
+            userPreferences.collapsedPanels = ['tradeSettings', 'phaseSettings', 'accounts', 'control'];
+            
+            // Reorder panels
+            userPreferences.panelOrder.forEach(panelId => {
+                const panel = document.querySelector(`.panel[data-panel-id="${panelId}"]`);
+                if (panel) {
+                    container.appendChild(panel);
+                }
+            });
+            
+            // Set visibility
+            panels.forEach(panel => {
+                const panelId = panel.getAttribute('data-panel-id');
+                panel.style.display = userPreferences.hiddenPanels.includes(panelId) ? 'none' : 'block';
+            });
+            
+            // Set collapsed state
+            panels.forEach(panel => {
+                const panelId = panel.getAttribute('data-panel-id');
+                const content = panel.querySelector('.panel-content');
+                const indicator = panel.querySelector('.panel-header span:last-child');
+                
+                if (userPreferences.collapsedPanels.includes(panelId)) {
+                    content.classList.remove('expanded');
+                    indicator.textContent = '▶';
+                } else {
+                    content.classList.add('expanded');
+                    indicator.textContent = '▼';
+                }
+            });
+        }
+        
+        // Global variables
+        let accountsData = [];
+        let currentSort = { column: null, direction: 'asc' };
+        let filters = {
+            platform: 'all',
+            phase: 'all'
+        };
+        
+        // This will be called after filters are initialized
+        function restoreFiltersFromPreferences() {
+            if (userPreferences.platformFilter) {
+                filters.platform = userPreferences.platformFilter;
+                document.getElementById('platform-filter').value = userPreferences.platformFilter;
+            }
+            
+            if (userPreferences.phaseFilter) {
+                filters.phase = userPreferences.phaseFilter;
+                document.getElementById('phase-filter').value = userPreferences.phaseFilter;
+            }
+        }
+        
+        // Cooldown tracking
+        let orderCooldowns = {
+            buy: {
+                active: false,
+                timer: null,
+                endTime: 0
+            },
+            sell: {
+                active: false,
+                timer: null,
+                endTime: 0
+            }
+        };
+        
+        // Function to load platform filters
+        function loadFilters() {
+            // Load platforms
+            fetch('/api/platforms')
+                .then(response => response.json())
+                .then(platforms => {
+                    const platformFilter = document.getElementById('platform-filter');
+                    platforms.forEach(platform => {
+                        const option = document.createElement('option');
+                        option.value = platform;
+                        option.textContent = platform;
+                        platformFilter.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading platforms:', error);
+                });
+        }
+        
+        // Function to load accounts from API
+        function loadAccounts() {
+            // First load the filters
+            loadFilters();
+            
+            // Then load the accounts
+            fetch('/api/accounts')
+                .then(response => response.json())
+                .then(accounts => {
+                    // Store accounts data globally
+                    accountsData = accounts;
+                    
+                    // Restore filters from saved preferences
+                    restoreFiltersFromPreferences();
+                    
+                    // Render accounts with saved preferences
+                    renderAccountsTable();
+                    
+                    // Apply filters based on preferences
+                    applyFilters();
+                    
+                    // Restore sort if needed
+                    if (userPreferences.accountSort && userPreferences.accountSort.column) {
+                        sortAccounts(userPreferences.accountSort.column, false); // Don't re-render
+                    }
+                    
+                    // Add event listeners for filter changes
+                    document.getElementById('platform-filter').addEventListener('change', function() {
+                        filters.platform = this.value;
+                        userPreferences.platformFilter = this.value;
+                        savePreferences();
+                        applyFilters();
+                    });
+                    
+                    document.getElementById('phase-filter').addEventListener('change', function() {
+                        filters.phase = this.value;
+                        userPreferences.phaseFilter = this.value;
+                        savePreferences();
+                        applyFilters();
+                    });
+                    
+                    // Add event listeners for sorting
+                    document.querySelectorAll('.sortable').forEach(header => {
+                        header.addEventListener('click', function() {
+                            const column = this.getAttribute('data-sort');
+                            sortAccounts(column);
+                        });
+                    });
+                    
+                    // Add event listener for select all header checkbox
+                    document.getElementById('select-all-header').addEventListener('change', function() {
+                        const isChecked = this.checked;
+                        document.querySelectorAll('input[name="accounts"]').forEach(checkbox => {
+                            // Only select visible rows
+                            const row = checkbox.closest('tr');
+                            if (!row.classList.contains('filtered-out')) {
+                                checkbox.checked = isChecked;
+                            }
+                        });
+                        updateSelectionSummary();
+                    });
+                    
+                    // Selection button event listeners removed as requested
+                })
+                .catch(error => {
+                    console.error('Error loading accounts:', error);
+                    document.getElementById('accounts-list').innerHTML = `
+                        <tr>
+                            <td colspan="4" class="error-message" style="color: var(--sell-color);">
+                                Error loading accounts. Please refresh the page.
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+        
+        // Function to render the accounts table
+        function renderAccountsTable() {
+            const tableBody = document.getElementById('accounts-list');
+            tableBody.innerHTML = ''; // Clear loading message
+            
+            // Add each account as a table row
+            accountsData.forEach(account => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-account-id', account.id);
+                row.setAttribute('data-platform', account.platform);
+                row.setAttribute('data-type', account.account_type);
+                row.setAttribute('data-active', account.active.toString());
+                row.setAttribute('data-phase', account.phase);
+                
+                // Apply initial filters
+                if (shouldBeFiltered(account)) {
+                    row.classList.add('filtered-out');
+                }
+                
+                // Checkbox cell
+                const checkboxCell = document.createElement('td');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `account-${account.id}`;
+                checkbox.name = 'accounts';
+                checkbox.value = account.strategy || '';
+                checkbox.setAttribute('data-account-id', account.id);
+                // Restore checked state from saved preferences
+                if (userPreferences.selectedAccountIds && userPreferences.selectedAccountIds.includes(account.id)) {
+                    checkbox.checked = true;
+                } else if (account.id === 20653801 && account.active && (!userPreferences.selectedAccountIds || userPreferences.selectedAccountIds.length === 0)) {
+                    checkbox.checked = true; // Check the first active account only if no saved selection
+                }
+                checkbox.addEventListener('change', function() {
+                    updateSelectionSummary();
+                    // Save selected accounts
+                    userPreferences.selectedAccountIds = Array.from(
+                        document.querySelectorAll('input[name="accounts"]:checked')
+                    ).map(el => parseInt(el.getAttribute('data-account-id')));
+                    savePreferences();
+                });
+                checkboxCell.appendChild(checkbox);
+                
+                // Account name cell
+                const nameCell = document.createElement('td');
+                nameCell.textContent = account.name;
+                
+                // Platform cell
+                const platformCell = document.createElement('td');
+                platformCell.textContent = account.platform;
+                
+                // Phase cell
+                const phaseCell = document.createElement('td');
+                const phaseSelect = document.createElement('select');
+                phaseSelect.className = 'phase-select-cell';
+                phaseSelect.setAttribute('data-account-id', account.id);
+                
+                // Add phase options
+                for (let i = 1; i <= 3; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = `Phase ${i}`;
+                    if (i === account.phase) option.selected = true;
+                    phaseSelect.appendChild(option);
+                }
+                
+                // Add event listener to update phase when changed
+                phaseSelect.addEventListener('change', function() {
+                    updateAccountPhase(account.id, this.value);
+                    // Save selected accounts with their phases
+                    savePreferences();
+                });
+                
+                phaseCell.appendChild(phaseSelect);
+                
+                // Add all cells to the row
+                row.appendChild(checkboxCell);
+                row.appendChild(nameCell);
+                row.appendChild(platformCell);
+                row.appendChild(phaseCell);
+                
+                // Add row to table
+                tableBody.appendChild(row);
+            });
+            
+            // Initial selection summary
+            updateSelectionSummary();
+        }
+        
+        // Check if account should be filtered out based on current filters
+        function shouldBeFiltered(account) {
+            // Platform filter
+            if (filters.platform !== 'all' && account.platform !== filters.platform) {
+                return true;
+            }
+            
+            // Phase filter
+            if (filters.phase !== 'all' && account.phase !== parseInt(filters.phase)) {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Apply filters to the table
+        function applyFilters() {
+            const rows = document.querySelectorAll('#accounts-list tr');
+            let visibleCount = 0;
+            
+            rows.forEach(row => {
+                const platform = row.getAttribute('data-platform');
+                
+                let shouldHide = false;
+                
+                // Platform filter
+                if (filters.platform !== 'all' && platform !== filters.platform) {
+                    shouldHide = true;
+                }
+                
+                // Phase filter
+                const phase = parseInt(row.getAttribute('data-phase') || '0');
+                if (filters.phase !== 'all' && phase !== parseInt(filters.phase)) {
+                    shouldHide = true;
+                }
+                
+                // Apply the hide/show
+                if (shouldHide) {
+                    row.classList.add('filtered-out');
+                } else {
+                    row.classList.remove('filtered-out');
+                    visibleCount++;
+                }
+            });
+            
+            // Uncheck the select all header if needed
+            document.getElementById('select-all-header').checked = false;
+            
+            // Update the selection summary
+            updateSelectionSummary();
+        }
+        
+        // Sort the accounts table
+        function sortAccounts(column, shouldRender = true) {
+            // Update sort direction
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            
+            // Update UI to show sort direction
+            document.querySelectorAll('.sortable').forEach(header => {
+                header.classList.remove('sorted-asc', 'sorted-desc');
+            });
+            
+            const currentHeader = document.querySelector(`.sortable[data-sort="${column}"]`);
+            if (currentHeader) {
+                currentHeader.classList.add(
+                    currentSort.direction === 'asc' ? 'sorted-asc' : 'sorted-desc'
+                );
+            }
+            
+            // Sort the accounts data
+            accountsData.sort((a, b) => {
+                let valueA = a[column];
+                let valueB = b[column];
+                
+                // Handle string comparison case-insensitive
+                if (typeof valueA === 'string') {
+                    valueA = valueA.toLowerCase();
+                    valueB = valueB.toLowerCase();
+                }
+                
+                // Compare based on direction
+                if (currentSort.direction === 'asc') {
+                    return valueA > valueB ? 1 : -1;
+                } else {
+                    return valueA < valueB ? 1 : -1;
+                }
+            });
+            
+            // Save sort preferences
+            userPreferences.accountSort = { ...currentSort };
+            savePreferences();
+            
+            // Only re-render if needed (not during initial load from preferences)
+            if (shouldRender) {
+                // Re-render the table
+                renderAccountsTable();
+                
+                // Re-apply filters
+                applyFilters();
+            }
+        }
+        
+        // Update the selection summary
+        function updateSelectionSummary() {
+            const selectedCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            const visibleRows = document.querySelectorAll('#accounts-list tr:not(.filtered-out)');
+            
+            const summaryElement = document.getElementById('selection-summary');
+            
+            if (selectedCheckboxes.length === 0) {
+                summaryElement.textContent = 'No accounts selected';
+            } else {
+                const selectedNames = Array.from(selectedCheckboxes).map(checkbox => {
+                    const row = checkbox.closest('tr');
+                    return row.querySelector('td:nth-child(2)').textContent;
+                });
+                
+                summaryElement.textContent = `Selected ${selectedCheckboxes.length} of ${visibleRows.length} accounts: ${selectedNames.join(', ')}`;
+            }
+        }
+        
+        // Function to update account phase
+        function updateAccountPhase(accountId, phase) {
+            fetch(`/api/accounts/${accountId}/phase`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phase: parseInt(phase)
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Phase updated:', result);
+                
+                // Show feedback
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = `Account phase updated to Phase ${phase}`;
+                setTimeout(() => {
+                    statusText.textContent = 'Ready to trade';
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Error updating phase:', error);
+                
+                // Show error
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = 'Error updating account phase';
+                setTimeout(() => {
+                    statusText.textContent = 'Ready to trade';
+                }, 2000);
+            });
+        }
+        
+        // Helper function to get phase sizes
+        function getPhaseSettings() {
+            // CRITICAL FIX: Get sizes from the matrix instead of hidden legacy inputs
+            // For each phase, we need to use the value for the current order number
+            const orderNum = userPreferences.currentOrderNumber || 1;
+            
+            // Get all values from the matrix for the current order number
+            const phase1Size = parseInt(document.getElementById(`phase1_order${orderNum}`).value) || 10;
+            const phase2Size = parseInt(document.getElementById(`phase2_order${orderNum}`).value) || 20;  
+            const phase3Size = parseInt(document.getElementById(`phase3_order${orderNum}`).value) || 30;
+            
+            console.log(`MATRIX SIZES for Order #${orderNum}:`, { phase1Size, phase2Size, phase3Size });
+            
+            return {
+                phase1Size: phase1Size,
+                phase2Size: phase2Size,
+                phase3Size: phase3Size
+            };
+        }
+        
+        // Trading functions
+        function placeBuyOrder() {
+            
+            // Check if in cooldown
+            if (!startCooldown('buy')) {
+                return; // In cooldown, don't place the order
+            }
+            
+            const symbol = document.getElementById('symbol').value;
+            const defaultQuantity = document.getElementById('quantity').value;
+            const phaseSettings = getPhaseSettings();
+            
+            // Get all selected accounts
+            const selectedAccounts = [];
+            document.querySelectorAll('input[name="accounts"]:checked').forEach(function(checkbox) {
+                // Find the full account data from the global array
+                const accountId = parseInt(checkbox.getAttribute('data-account-id'));
+                const accountData = accountsData.find(acc => acc.id === accountId);
+                
+                if (accountData) {
+                    selectedAccounts.push({
+                        text: checkbox.value,
+                        accountId: accountId,
+                        platform: accountData.platform
+                    });
+                }
+            });
+            
+            // Filter to only include Tradovate accounts
+            const tradovateAccounts = selectedAccounts.filter(acc => acc.platform === 'Tradovate');
+            
+            if (tradovateAccounts.length === 0) {
+                // Show error in status
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = 'Error: No Tradovate accounts selected';
+                
+                // Show status panel if hidden
+                const statusPanel = document.getElementById('statusPanel');
+                if (getComputedStyle(statusPanel).display === 'none') {
+                    userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                    applyPanelPreferences();
+                }
+                
+                // Expand status panel if collapsed
+                const statusContent = document.getElementById('statusContent');
+                if (!statusContent.classList.contains('expanded')) {
+                    statusContent.classList.add('expanded');
+                    document.getElementById('statusCollapseIndicator').textContent = '▼';
+                    userPreferences.collapsedPanels = userPreferences.collapsedPanels.filter(id => id !== 'status');
+                    savePreferences();
+                }
+                
+                return;
+            }
+            
+            // Update status first for better UX and reset styling
+            resetStatusPanelStyling();
+            document.getElementById('statusText').textContent = 'Placing buy orders...';
+            document.getElementById('responseDetails').textContent = '';
+            
+            // Vibrate for mobile feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+            
+            // Create array to hold all promises
+            const orderPromises = [];
+            
+            // Place an order for each selected Tradovate account
+            tradovateAccounts.forEach(function(account) {
+                const orderPromise = fetch('/api/buy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        orderQty: (() => {
+                            const scaledSize = getCurrentOrderSize();
+                            const fallbackSize = parseInt(defaultQuantity);
+                            console.log(`DEBUG-ORDER: Account ID ${account.accountId}, Size from matrix: ${scaledSize}, Fallback size: ${fallbackSize}`);
+                            const finalSize = scaledSize || fallbackSize;
+                            console.log(`DEBUG-ORDER: SENDING SIZE: ${finalSize}`);
+                            return finalSize;
+                        })(),
+                        text: account.text || 'test',
+                        accountId: account.accountId,
+                        phase1Size: phaseSettings.phase1Size,
+                        phase2Size: phaseSettings.phase2Size,
+                        phase3Size: phaseSettings.phase3Size
+                    })
+                }).then(response => response.json());
+                
+                orderPromises.push(orderPromise);
+            });
+            
+            // Wait for all orders to complete
+            Promise.all(orderPromises)
+                .then(results => {
+                    const successCount = results.filter(result => result.status === 'success').length;
+                    
+                    // Show status panel if hidden
+                    const statusPanel = document.getElementById('statusPanel');
+                    if (getComputedStyle(statusPanel).display === 'none') {
+                        userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                        applyPanelPreferences();
+                    }
+                    
+                    // Get status content but don't auto-expand
+                    const statusContent = document.getElementById('statusContent');
+                    
+                    document.getElementById('statusText').textContent = 
+                        `Placed ${successCount} of ${results.length} buy orders`;
+                    document.getElementById('responseDetails').textContent = 
+                        JSON.stringify(results, null, 2);
+                        
+                    // Increment order counter if scaling is enabled and we had successful orders
+                    if (successCount > 0) {
+                        incrementOrderCount();
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('statusText').textContent = 'Error: ' + error;
+                    document.getElementById('responseDetails').textContent = '';
+                });
+        }
+        
+        function placeSellOrder() {
+            
+            // Check if in cooldown
+            if (!startCooldown('sell')) {
+                return; // In cooldown, don't place the order
+            }
+            
+            const symbol = document.getElementById('symbol').value;
+            const defaultQuantity = document.getElementById('quantity').value;
+            const phaseSettings = getPhaseSettings();
+            
+            // Get all selected accounts
+            const selectedAccounts = [];
+            document.querySelectorAll('input[name="accounts"]:checked').forEach(function(checkbox) {
+                // Find the full account data from the global array
+                const accountId = parseInt(checkbox.getAttribute('data-account-id'));
+                const accountData = accountsData.find(acc => acc.id === accountId);
+                
+                if (accountData) {
+                    selectedAccounts.push({
+                        text: checkbox.value,
+                        accountId: accountId,
+                        platform: accountData.platform
+                    });
+                }
+            });
+            
+            // Filter to only include Tradovate accounts
+            const tradovateAccounts = selectedAccounts.filter(acc => acc.platform === 'Tradovate');
+            
+            if (tradovateAccounts.length === 0) {
+                // Show error in status
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = 'Error: No Tradovate accounts selected';
+                
+                // Show status panel if hidden
+                const statusPanel = document.getElementById('statusPanel');
+                if (getComputedStyle(statusPanel).display === 'none') {
+                    userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                    applyPanelPreferences();
+                }
+                
+                // Expand status panel if collapsed
+                const statusContent = document.getElementById('statusContent');
+                if (!statusContent.classList.contains('expanded')) {
+                    statusContent.classList.add('expanded');
+                    document.getElementById('statusCollapseIndicator').textContent = '▼';
+                    userPreferences.collapsedPanels = userPreferences.collapsedPanels.filter(id => id !== 'status');
+                    savePreferences();
+                }
+                
+                return;
+            }
+            
+            // Update status first for better UX and reset styling
+            resetStatusPanelStyling();
+            document.getElementById('statusText').textContent = 'Placing sell orders...';
+            document.getElementById('responseDetails').textContent = '';
+            
+            // Vibrate for mobile feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+            
+            // Create array to hold all promises
+            const orderPromises = [];
+            
+            // Place an order for each selected Tradovate account
+            tradovateAccounts.forEach(function(account) {
+                const orderPromise = fetch('/api/sell', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        orderQty: (() => {
+                            const scaledSize = getCurrentOrderSize();
+                            const fallbackSize = parseInt(defaultQuantity);
+                            console.log(`DEBUG-ORDER: Account ID ${account.accountId}, Size from matrix: ${scaledSize}, Fallback size: ${fallbackSize}`);
+                            const finalSize = scaledSize || fallbackSize;
+                            console.log(`DEBUG-ORDER: SENDING SIZE: ${finalSize}`);
+                            return finalSize;
+                        })(),
+                        text: account.text || 'test',
+                        accountId: account.accountId,
+                        phase1Size: phaseSettings.phase1Size,
+                        phase2Size: phaseSettings.phase2Size,
+                        phase3Size: phaseSettings.phase3Size
+                    })
+                }).then(response => response.json());
+                
+                orderPromises.push(orderPromise);
+            });
+            
+            // Wait for all orders to complete
+            Promise.all(orderPromises)
+                .then(results => {
+                    const successCount = results.filter(result => result.status === 'success').length;
+                    
+                    // Show status panel if hidden
+                    const statusPanel = document.getElementById('statusPanel');
+                    if (getComputedStyle(statusPanel).display === 'none') {
+                        userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                        applyPanelPreferences();
+                    }
+                    
+                    // Get status content but don't auto-expand
+                    const statusContent = document.getElementById('statusContent');
+                    
+                    document.getElementById('statusText').textContent = 
+                        `Placed ${successCount} of ${results.length} sell orders`;
+                    document.getElementById('responseDetails').textContent = 
+                        JSON.stringify(results, null, 2);
+                        
+                    // Increment order counter if scaling is enabled and we had successful orders
+                    if (successCount > 0) {
+                        incrementOrderCount();
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('statusText').textContent = 'Error: ' + error;
+                    document.getElementById('responseDetails').textContent = '';
+                });
+        }
+        
+        function cancelOrders() {
+            // Get all selected accounts
+            const selectedAccounts = [];
+            document.querySelectorAll('input[name="accounts"]:checked').forEach(function(checkbox) {
+                // Find the full account data from the global array
+                const accountId = parseInt(checkbox.getAttribute('data-account-id'));
+                const accountData = accountsData.find(acc => acc.id === accountId);
+                
+                if (accountData) {
+                    selectedAccounts.push({
+                        text: checkbox.value,
+                        accountId: accountId,
+                        platform: accountData.platform
+                    });
+                }
+            });
+            
+            // Filter to only include Tradovate accounts
+            const tradovateAccounts = selectedAccounts.filter(acc => acc.platform === 'Tradovate');
+            
+            if (tradovateAccounts.length === 0) {
+                // Show error in status
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = 'Error: No Tradovate accounts selected';
+                
+                // Show status panel if hidden
+                const statusPanel = document.getElementById('statusPanel');
+                if (getComputedStyle(statusPanel).display === 'none') {
+                    userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                    applyPanelPreferences();
+                }
+                
+                // Expand status panel if collapsed
+                const statusContent = document.getElementById('statusContent');
+                if (!statusContent.classList.contains('expanded')) {
+                    statusContent.classList.add('expanded');
+                    document.getElementById('statusCollapseIndicator').textContent = '▼';
+                    userPreferences.collapsedPanels = userPreferences.collapsedPanels.filter(id => id !== 'status');
+                    savePreferences();
+                }
+                
+                return;
+            }
+            
+            // No confirmation needed - removed for faster trade closing
+            
+            // Update status first for better UX and reset styling
+            resetStatusPanelStyling();
+            document.getElementById('statusText').textContent = 'Liquidating all positions and canceling orders...';
+            document.getElementById('responseDetails').textContent = '';
+            
+            // Vibrate for mobile feedback
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]); // pattern for cancel
+            }
+            
+            // Create array to hold all promises
+            const cancelPromises = [];
+            
+            // Cancel orders for each selected Tradovate account
+            tradovateAccounts.forEach(function(account) {
+                const cancelPromise = fetch('/api/cancel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accountId: account.accountId
+                    })
+                }).then(response => response.json());
+                
+                cancelPromises.push(cancelPromise);
+            });
+            
+            // Wait for all cancel operations to complete
+            Promise.all(cancelPromises)
+                .then(results => {
+                    const successCount = results.filter(result => result.status === 'success').length;
+                    
+                    // Show status panel if hidden
+                    const statusPanel = document.getElementById('statusPanel');
+                    if (getComputedStyle(statusPanel).display === 'none') {
+                        userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                        applyPanelPreferences();
+                    }
+                    
+                    // Get status content but don't auto-expand
+                    const statusContent = document.getElementById('statusContent');
+                    
+                    // Check if there's profit info in any of the results
+                    let totalProfit = 0;
+                    let hasProfitInfo = false;
+                    
+                    results.forEach(result => {
+                        if (result.details && result.details.profit_info && result.details.profit_info.length > 0) {
+                            hasProfitInfo = true;
+                            result.details.profit_info.forEach(info => {
+                                totalProfit += info.profit;
+                            });
+                        }
+                    });
+                    
+                    // Create exciting gamified profit message - focused just on the profit
+                    let statusMessage = "";
+                    
+                    if (hasProfitInfo) {
+                        // Style based on profit amount
+                        const statusText = document.getElementById('statusText');
+                        
+                        // Reset and set common styles
+                        statusText.style.fontSize = "24px";
+                        statusText.style.margin = "0px";                        
+                        statusText.style.fontWeight = "bold";
+                        statusText.style.textAlign = "center";
+                        statusText.style.animation = "none"; // Reset any previous animation
+                        
+                        if (totalProfit > 0) {
+                            // Play cash register sound for positive profits
+                            cashRegisterSound.play();
+                            
+                            // Get random affirmation and GIF
+                            const randomAffirmation = tradeWinContent.affirmations[Math.floor(Math.random() * tradeWinContent.affirmations.length)];
+                            const randomGifUrl = tradeWinContent.gifs[Math.floor(Math.random() * tradeWinContent.gifs.length)];
+                            
+                            // Positive profit - show value with emojis and add affirmation
+                            statusMessage = "💰 $" + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " 💰";
+                            statusText.style.color = "#4CAF50"; // Green
+                            
+                            // Add animation for extra excitement
+                            statusText.style.animation = "pulsate 1.5s infinite";
+                            
+                            // Trigger vibration for mobile if available
+                            if (navigator.vibrate) {
+                                navigator.vibrate([100, 50, 100, 50, 100]); // Success pattern
+                            }
+                            
+                            // Get the dedicated celebration container
+                            const celebrationContainer = document.getElementById('celebrationContainer');
+                            
+                            // Make it visible
+                            celebrationContainer.style.display = 'block';
+                            
+                            // Create the celebration element (GIF or video)
+                            celebrationContainer.innerHTML = `
+                                <div style="text-align: center; margin: 20px 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <p style="font-size: 20px; font-weight: bold; color: #4CAF50; margin: 0px;">${randomAffirmation}</p>
+                                    ${randomGifUrl && typeof randomGifUrl === 'string' && randomGifUrl.endsWith('.webm') ? 
+                                        `<video autoplay controls src="${randomGifUrl}" style="width: 80%; height: auto; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: block; margin: 0 auto;"></video>` : 
+                                        `<img src="${randomGifUrl || 'https://media.giphy.com/media/67ThRZlYBvibtdF9JH/giphy.gif'}" alt="Celebration" style="width: 80%; height: auto; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: block; margin: 0 auto;">`
+                                    }
+                                </div>
+                            `;
+                            
+                            // Clear previous response details content
+                            const responseDetails = document.getElementById('responseDetails');
+                            responseDetails.innerHTML = "";
+                            
+                            // Show the actual result as JSON after the GIF
+                            const resultText = document.createElement('pre');
+                            resultText.textContent = JSON.stringify(results, null, 2);
+                            resultText.style.marginTop = "15px";
+                            responseDetails.appendChild(resultText);
+                            
+                        } else if (totalProfit < 0) {
+                            // Loss - just show the value 
+                            statusMessage = "$" + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                            statusText.style.color = "#f44336"; // Red
+                        } else {
+                            // Breakeven
+                            statusMessage = "$" + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                            statusText.style.color = "#ff9800"; // Orange
+                        }
+                    } else {
+                        // Default message if no profit info
+                        statusMessage = `Closed positions`;
+                        statusText.style.color = "var(--text-color)"; // Reset to default color
+                        statusText.style.fontWeight = "normal";
+                        statusText.style.fontSize = "inherit";
+                        statusText.style.textAlign = "left";
+                    }
+                    
+                    document.getElementById('statusText').textContent = statusMessage;
+                    
+                    // Only set response details if not already handled by the profit section
+                    if (!hasProfitInfo || totalProfit <= 0) {
+                        document.getElementById('responseDetails').textContent = 
+                            JSON.stringify(results, null, 2);
+                    }
+                    
+                    // Reset order counter to 1 when canceling all orders
+                    if (userPreferences.scalingEnabled) {
+                        // Simulate clicking the reset button
+                        const resetButton = document.getElementById('resetOrderCount');
+                        if (resetButton) {
+                            resetButton.click(); // This will trigger the button's event listener
+                        } else {
+                            // Fallback to direct value setting if button not found
+                            userPreferences.currentOrderNumber = 1;
+                            document.getElementById('currentOrderNumber').textContent = '1';
+                            savePreferences();
+                        }
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('statusText').textContent = 'Error: ' + error;
+                    document.getElementById('responseDetails').textContent = '';
+                });
+        }
+        
+        // Function to apply a phase to multiple selected accounts
+        function applyBatchPhaseUpdate() {
+            const selectedCheckboxes = document.querySelectorAll('input[name="accounts"]:checked');
+            const phase = document.getElementById('batch-phase').value;
+            
+            if (selectedCheckboxes.length === 0) {
+                alert('Please select at least one account');
+                return;
+            }
+            
+            // Show status
+            document.getElementById('statusText').textContent = `Updating ${selectedCheckboxes.length} accounts to Phase ${phase}...`;
+            
+            // Vibrate for mobile feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+            
+            // Create promises for all account updates
+            const updatePromises = [];
+            const accountIds = [];
+            
+            selectedCheckboxes.forEach(checkbox => {
+                const accountId = parseInt(checkbox.getAttribute('data-account-id'));
+                accountIds.push(accountId);
+                
+                const updatePromise = fetch(`/api/accounts/${accountId}/phase`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phase: parseInt(phase)
+                    })
+                }).then(response => response.json());
+                
+                updatePromises.push(updatePromise);
+            });
+            
+            // Wait for all updates to complete
+            Promise.all(updatePromises)
+                .then(results => {
+                    const successCount = results.filter(result => result.status === 'success').length;
+                    
+                    // Show status panel if hidden
+                    const statusPanel = document.getElementById('statusPanel');
+                    if (getComputedStyle(statusPanel).display === 'none') {
+                        userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'status');
+                        applyPanelPreferences();
+                    }
+                    
+                    // Get status content but don't auto-expand
+                    const statusContent = document.getElementById('statusContent');
+                    
+                    document.getElementById('statusText').textContent = 
+                        `Updated ${successCount} of ${results.length} accounts to Phase ${phase}`;
+                    
+                    // Update the phase dropdowns in the table rows
+                    accountIds.forEach(accountId => {
+                        const phaseDropdown = document.querySelector(`select[data-account-id="${accountId}"]`);
+                        if (phaseDropdown) {
+                            phaseDropdown.value = phase;
+                        }
+                        
+                        // Update the data attribute for filtering
+                        const row = document.querySelector(`tr[data-account-id="${accountId}"]`);
+                        if (row) {
+                            row.setAttribute('data-phase', phase);
+                        }
+                    });
+                    
+                    // Update the accountsData array
+                    accountIds.forEach(accountId => {
+                        const account = accountsData.find(a => a.id === accountId);
+                        if (account) {
+                            account.phase = parseInt(phase);
+                        }
+                    });
+                    
+                    // Reapply filters
+                    applyFilters();
+                })
+                .catch(error => {
+                    document.getElementById('statusText').textContent = 'Error updating accounts: ' + error;
+                });
+        }
+
+        // Attach event listeners to buttons
+        document.getElementById('btnBuy').addEventListener('click', placeBuyOrder);
+        document.getElementById('btnSell').addEventListener('click', placeSellOrder);
+        document.getElementById('btnCancel').addEventListener('click', cancelOrders);
+        document.getElementById('apply-batch-phase').addEventListener('click', applyBatchPhaseUpdate);
+
+        // Multi-timers implementation
+        (function() {
+            'use strict';
+            
+            // Audio for bell sound
+            const bell = new Audio("https://bigsoundbank.com/UPLOAD/mp3/0028.mp3");
+            
+            // Store all active timers
+            let timers = [];
+            let nextTimerId = 1;
+            
+            // Timer class to manage individual timers
+            class Timer {
+                constructor(id, value, unit, startType, startTime) {
+                    this.id = id;
+                    this.value = value;
+                    this.unit = unit;
+                    this.startType = startType || 'immediate';
+                    this.startTime = startTime || '';
+                    this.interval = this.calculateInterval();
+                    this.scheduled = this.startType === 'scheduled';
+                    
+                    // Calculate next ring time based on settings
+                    if (this.scheduled && this.startTime) {
+                        this.nextRingTime = this.calculateScheduledStartTime();
+                    } else {
+                        this.nextRingTime = Date.now() + this.interval;
+                    }
+                    
+                    this.element = null;
+                    this.countdownElement = null;
+                    this.progressElement = null;
+                    this.timeoutId = null;
+                    this.checkIntervalId = null;
+                    this.lastRung = 0;
+                    
+                    this.createTimerElement();
+                    this.startTimer();
+                }
+                
+                // Calculate scheduled start time in PST/PDT
+                calculateScheduledStartTime() {
+                    // Get current date in PST
+                    const now = new Date();
+                    const pstDate = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+                    
+                    // Parse the start time "HH:MM"
+                    const [hours, minutes] = this.startTime.split(':').map(num => parseInt(num));
+                    
+                    // Set the target time on today's date in PST
+                    const targetDate = new Date(pstDate);
+                    targetDate.setHours(hours, minutes, 0, 0);
+                    
+                    // Convert PST time to local browser time
+                    const pstOffset = pstDate.getTime() - now.getTime();
+                    const localStartTime = targetDate.getTime() - pstOffset;
+                    
+                    // If the time is already passed for today, schedule for tomorrow
+                    if (localStartTime < Date.now()) {
+                        return localStartTime + (24 * 60 * 60 * 1000); // Add one day
+                    }
+                    
+                    return localStartTime;
+                }
+                
+                // Calculate interval in milliseconds
+                calculateInterval() {
+                    const value = parseInt(this.value);
+                    switch(this.unit) {
+                        case 'seconds':
+                            return value * 1000;
+                        case 'minutes':
+                            return value * 60 * 1000;
+                        case 'hours':
+                            return value * 60 * 60 * 1000;
+                        default:
+                            return value * 60 * 1000; // Default to minutes
+                    }
+                }
+                
+                // Format the display name of the timer
+                getDisplayName() {
+                    return `${this.value} ${this.unit.charAt(0).toUpperCase() + this.unit.slice(1)}`;
+                }
+                
+                // Create the timer DOM element
+                createTimerElement() {
+                    const timerEl = document.createElement('div');
+                    timerEl.className = 'timer-item';
+                    timerEl.id = `timer-${this.id}`;
+                    
+                    // Timer information
+                    const timerInfo = document.createElement('div');
+                    timerInfo.className = 'timer-info';
+                    
+                    const timerName = document.createElement('div');
+                    timerName.className = 'timer-name';
+                    timerName.textContent = this.getDisplayName();
+                    
+                    const timerInterval = document.createElement('div');
+                    timerInterval.className = 'timer-interval';
+                    timerInterval.textContent = `Repeats every ${this.getDisplayName()}`;
+                    
+                    // Add scheduled start time info if applicable
+                    let scheduledInfo;
+                    if (this.scheduled && this.startTime) {
+                        scheduledInfo = document.createElement('div');
+                        scheduledInfo.className = 'timer-scheduled';
+                        
+                        // Format the next start time for display
+                        const nextStart = new Date(this.nextRingTime);
+                        const pstTime = nextStart.toLocaleString("en-US", {
+                            timeZone: "America/Los_Angeles",
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                        
+                        // Add date if it's not today
+                        const today = new Date();
+                        const tomorrow = new Date(today);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        
+                        let datePrefix = '';
+                        if (nextStart.toDateString() === today.toDateString()) {
+                            datePrefix = 'Today at ';
+                        } else if (nextStart.toDateString() === tomorrow.toDateString()) {
+                            datePrefix = 'Tomorrow at ';
+                        } else {
+                            // Full date format
+                            datePrefix = nextStart.toLocaleDateString("en-US", {
+                                timeZone: "America/Los_Angeles",
+                                month: 'short',
+                                day: 'numeric'
+                            }) + ' at ';
+                        }
+                        
+                        scheduledInfo.textContent = `Next start: ${datePrefix}${pstTime} PST`;
+                        scheduledInfo.style.fontSize = '11px';
+                        scheduledInfo.style.opacity = '0.8';
+                    }
+                    
+                    timerInfo.appendChild(timerName);
+                    timerInfo.appendChild(timerInterval);
+                    
+                    // Add scheduled info if it exists
+                    if (this.scheduled && this.startTime) {
+                        timerInfo.appendChild(scheduledInfo);
+                    }
+                    
+                    // Timer countdown
+                    const timerCountdown = document.createElement('div');
+                    timerCountdown.className = 'countdown';
+                    timerCountdown.textContent = '00:00';
+                    this.countdownElement = timerCountdown;
+                    
+                    // Timer controls
+                    const timerControls = document.createElement('div');
+                    timerControls.className = 'timer-controls';
+                    
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'timer-delete';
+                    deleteButton.innerHTML = '×';
+                    deleteButton.title = 'Delete timer';
+                    deleteButton.addEventListener('click', () => this.delete());
+                    
+                    timerControls.appendChild(deleteButton);
+                    
+                    // Progress bar
+                    const progressBar = document.createElement('div');
+                    progressBar.className = 'timer-progress';
+                    this.progressElement = progressBar;
+                    
+                    // Assemble the timer element
+                    timerEl.appendChild(timerInfo);
+                    timerEl.appendChild(timerCountdown);
+                    timerEl.appendChild(timerControls);
+                    timerEl.appendChild(progressBar);
+                    
+                    this.element = timerEl;
+                    
+                    // Add to active timers container
+                    document.getElementById('activeTimers').appendChild(timerEl);
+                    
+                    // Hide "no timers" message if this is the first timer
+                    updateNoTimersMessage();
+                }
+                
+                // Start the timer
+                startTimer() {
+                    // Update countdown immediately
+                    this.updateCountdown();
+                    
+                    // Check and update every second
+                    this.checkIntervalId = setInterval(() => {
+                        this.updateCountdown();
+                        
+                        // Check if it's time to ring
+                        const now = Date.now();
+                        if (now >= this.nextRingTime) {
+                            this.ringBell();
+                            
+                            // Calculate next ring time based on timer type
+                            if (this.scheduled) {
+                                // For the first ring of a scheduled timer, transition it to a normal recurring timer
+                                this.scheduled = false;
+                                // After a scheduled timer rings, it behaves like a normal timer
+                                this.nextRingTime = now + this.interval;
+                                
+                                // Update the display to show it's now a recurring timer
+                                if (this.element) {
+                                    const scheduledInfo = this.element.querySelector('.timer-scheduled');
+                                    if (scheduledInfo) {
+                                        scheduledInfo.textContent = 'Timer active - recurring';
+                                    }
+                                }
+                            } else {
+                                // Normal recurring timer
+                                this.nextRingTime = now + this.interval;
+                            }
+                        }
+                    }, 1000);
+                }
+                
+                // Update the countdown display
+                updateCountdown() {
+                    const now = Date.now();
+                    const remaining = this.nextRingTime - now;
+                    
+                    if (remaining <= 0) {
+                        this.countdownElement.textContent = '00:00';
+                        this.progressElement.style.width = '0%';
+                        return;
+                    }
+                    
+                    // Calculate minutes and seconds
+                    const totalSeconds = Math.ceil(remaining / 1000);
+                    const minutes = Math.floor(totalSeconds / 60);
+                    const seconds = totalSeconds % 60;
+                    
+                    // Format countdown
+                    const formattedMinutes = String(minutes).padStart(2, '0');
+                    const formattedSeconds = String(seconds).padStart(2, '0');
+                    this.countdownElement.textContent = `${formattedMinutes}:${formattedSeconds}`;
+                    
+                    // Update progress bar
+                    const progressPercent = ((this.interval - remaining) / this.interval) * 100;
+                    this.progressElement.style.width = `${100 - progressPercent}%`;
+                    
+                    // Update countdown color based on time remaining
+                    if (minutes === 0 && seconds <= 10) {
+                        this.countdownElement.className = 'countdown danger';
+                    } else if (minutes === 0) {
+                        this.countdownElement.className = 'countdown warning';
+                    } else {
+                        this.countdownElement.className = 'countdown';
+                    }
+                }
+                
+                // Ring the bell when timer completes
+                ringBell() {
+                    // Prevent multiple rings if interval is very small
+                    const now = Date.now();
+                    if (now - this.lastRung < 1000) return;
+                    
+                    // For scheduled timers, after the first ring, they become normal recurring timers
+                    if (this.scheduled && this.startTime) {
+                        this.scheduled = false; // Convert to normal recurring timer after first ring
+                    }
+                    
+                    this.lastRung = now;
+                    
+                    // Play bell sound
+                    bell.play();
+                    
+                    // Show timer panel if hidden
+                    const timerPanel = document.getElementById('timerPanel');
+                    if (getComputedStyle(timerPanel).display === 'none') {
+                        userPreferences.hiddenPanels = userPreferences.hiddenPanels.filter(id => id !== 'timer');
+                        applyPanelPreferences();
+                    }
+                    
+                    // Flash the timer element
+                    this.element.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    setTimeout(() => {
+                        this.element.style.backgroundColor = '';
+                    }, 500);
+                    
+                    // Show notification if supported
+                    if (("Notification" in window) && Notification.permission === "granted") {
+                        new Notification('Timer Alert', {
+                            body: `${this.getDisplayName()} timer has completed!`,
+                            icon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="white" stroke-width="5" fill="blue" /></svg>'
+                        });
+                    }
+                    
+                    // Vibrate for mobile feedback
+                    if (navigator.vibrate) {
+                        navigator.vibrate([200, 100, 200]);
+                    }
+                }
+                
+                // Delete this timer
+                delete() {
+                    // Stop intervals
+                    clearInterval(this.checkIntervalId);
+                    
+                    // Remove from DOM
+                    if (this.element && this.element.parentNode) {
+                        this.element.parentNode.removeChild(this.element);
+                    }
+                    
+                    // Remove from timers array
+                    timers = timers.filter(timer => timer.id !== this.id);
+                    
+                    // Update no timers message
+                    updateNoTimersMessage();
+                    
+                    // Save timers to localStorage
+                    saveTimers();
+                }
+            }
+            
+            // Check if we should show "No timers" message
+            function updateNoTimersMessage() {
+                const noTimersMessage = document.getElementById('noTimers');
+                if (timers.length === 0) {
+                    noTimersMessage.style.display = 'block';
+                } else {
+                    noTimersMessage.style.display = 'none';
+                }
+            }
+            
+            // Add a new timer
+            function addTimer() {
+                const value = parseInt(document.getElementById('timerValue').value) || 5;
+                const unit = document.getElementById('timerUnit').value;
+                const startType = document.getElementById('timerStartType').value;
+                const startTime = document.getElementById('timerStartTime').value;
+                
+                // Create and add the timer
+                const timer = new Timer(nextTimerId++, value, unit, startType, startTime);
+                timers.push(timer);
+                
+                // Save timers to localStorage
+                saveTimers();
+            }
+            
+            // Save timers to localStorage
+            function saveTimers() {
+                const timerData = timers.map(timer => ({
+                    id: timer.id,
+                    value: timer.value,
+                    unit: timer.unit,
+                    startType: timer.startType,
+                    startTime: timer.startTime,
+                    nextRingTime: timer.nextRingTime
+                }));
+                
+                localStorage.setItem('timers', JSON.stringify(timerData));
+            }
+            
+            // Load timers from localStorage
+            function loadTimers() {
+                const savedTimers = localStorage.getItem('timers');
+                if (savedTimers) {
+                    try {
+                        const timerData = JSON.parse(savedTimers);
+                        timerData.forEach(data => {
+                            const timer = new Timer(
+                                data.id, 
+                                data.value, 
+                                data.unit,
+                                data.startType || 'immediate',
+                                data.startTime || ''
+                            );
+                            timers.push(timer);
+                            nextTimerId = Math.max(nextTimerId, data.id + 1);
+                        });
+                    } catch (e) {
+                        console.error('Error loading saved timers:', e);
+                    }
+                }
+                
+                updateNoTimersMessage();
+            }
+            
+            // Request notification permission for mobile
+            if (("Notification" in window) && Notification.permission !== "granted" && Notification.permission !== "denied") {
+                // Wait a bit before asking
+                setTimeout(function() {
+                    Notification.requestPermission();
+                }, 5000);
+            }
+            
+            // Set up event listeners
+            document.getElementById('addTimer').addEventListener('click', addTimer);
+            
+            // Load saved timers on startup
+            loadTimers();
+        })();
+    </script>
+</body>
+</html>

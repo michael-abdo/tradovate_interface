@@ -1,0 +1,117 @@
+{
+  "results": [
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 30000,
+      "ticker": "O:NDX291221P30000000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 29500,
+      "ticker": "O:NDX291221P29500000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 29000,
+      "ticker": "O:NDX291221P29000000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 28500,
+      "ticker": "O:NDX291221P28500000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 28000,
+      "ticker": "O:NDX291221P28000000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 27500,
+      "ticker": "O:NDX291221P27500000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 27000,
+      "ticker": "O:NDX291221P27000000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 26500,
+      "ticker": "O:NDX291221P26500000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 26000,
+      "ticker": "O:NDX291221P26000000",
+      "underlying_ticker": "NDX"
+    },
+    {
+      "cfi": "OPEICS",
+      "contract_type": "put",
+      "exercise_style": "european",
+      "expiration_date": "2029-12-21",
+      "primary_exchange": "GMNI",
+      "shares_per_contract": 100,
+      "strike_price": 25500,
+      "ticker": "O:NDX291221P25500000",
+      "underlying_ticker": "NDX"
+    }
+  ],
+  "status": "OK",
+  "request_id": "8667751a840705b7c386ae965528b27c",
+  "next_url": "https://api.polygon.io/v3/reference/options/contracts?cursor=YXA9JTdCJTIySUQlMjIlM0ElMjIxMjgzNTgwNzAxMzMxMjIwMzkwOSUyMiUyQyUyMlN0YXJ0RGF0ZVV0YyUyMiUzQSU3QiUyMlRpbWUlMjIlM0ElMjIyMDI1LTA1LTE5VDAwJTNBMDAlM0EwMFolMjIlMkMlMjJWYWxpZCUyMiUzQXRydWUlN0QlMkMlMjJFbmREYXRlVXRjJTIyJTNBJTdCJTIyVGltZSUyMiUzQSUyMjAwMDEtMDEtMDFUMDAlM0EwMCUzQTAwWiUyMiUyQyUyMlZhbGlkJTIyJTNBZmFsc2UlN0QlMkMlMjJ1bmRlcmx5aW5nX3RpY2tlciUyMiUzQSUyMk5EWCUyMiUyQyUyMnRpY2tlciUyMiUzQSUyMk8lM0FORFgyOTEyMjFQMjU1MDAwMDAlMjIlMkMlMjJleHBpcmF0aW9uX2RhdGUlMjIlM0ElMjIyMDI5LTEyLTIxVDAwJTNBMDAlM0EwMFolMjIlMkMlMjJzdHJpa2VfcHJpY2UlMjIlM0EyNTUwMCUyQyUyMmNmaSUyMiUzQSUyMk9QRUlDUyUyMiUyQyUyMmNvbnRyYWN0X3R5cGUlMjIlM0ElMjJwdXQlMjIlMkMlMjJleGVyY2lzZV9zdHlsZSUyMiUzQSUyMmV1cm9wZWFuJTIyJTJDJTIycHJpbWFyeV9leGNoYW5nZSUyMiUzQSU3QiUyMlN0cmluZyUyMiUzQSUyMkdNTkklMjIlMkMlMjJWYWxpZCUyMiUzQXRydWUlN0QlMkMlMjJzaGFyZXNfcGVyX2NvbnRyYWN0JTIyJTNBMTAwJTJDJTIyYWRkaXRpb25hbF91bmRlcmx5aW5ncyUyMiUzQSUyMiU1QiU1RCUyMiU3RCZhcz0mbGltaXQ9MTAmb3JkZXI9ZGVzYyZzb3J0PWV4cGlyYXRpb25fZGF0ZSZ1bmRlcmx5aW5nX3RpY2tlcj1ORFg"
+}

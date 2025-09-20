@@ -1,0 +1,251 @@
+{
+  "task": "data_ingestion",
+  "type": "parent",
+  "status": "VALIDATED",
+  "timestamp": "2025-06-04T14:56:33.274279",
+  "integration_tests": [
+    {
+      "name": "child_validations",
+      "passed": true,
+      "details": "All 3 children validated: True"
+    },
+    {
+      "name": "pipeline_creation",
+      "passed": true,
+      "details": "Pipeline created successfully: True"
+    },
+    {
+      "name": "source_loading",
+      "passed": true,
+      "details": {
+        "barchart_status": "success",
+        "barchart_contracts": 576,
+        "tradovate_status": "success",
+        "tradovate_contracts": 42
+      }
+    },
+    {
+      "name": "data_normalization",
+      "passed": true,
+      "details": {
+        "total_contracts": 618,
+        "sources": [
+          "barchart",
+          "tradovate"
+        ]
+      }
+    },
+    {
+      "name": "pipeline_summary",
+      "passed": true,
+      "details": {
+        "pipeline_metadata": {
+          "pipeline_version": "1.0",
+          "created_at": "2025-06-04T14:56:33.276375",
+          "sources_configured": [
+            "barchart",
+            "tradovate"
+          ]
+        },
+        "sources_loaded": 2,
+        "sources_failed": 0,
+        "total_contracts": 618,
+        "data_quality": {
+          "total_contracts": 618,
+          "overall_volume_coverage": 0.551779935275081,
+          "overall_oi_coverage": 0.6521035598705501,
+          "overall_price_coverage": 1.0,
+          "by_source": {
+            "barchart": {
+              "total": 576,
+              "volume_coverage": 0.5190972222222222,
+              "oi_coverage": 0.6267361111111112,
+              "price_coverage": 1.0
+            },
+            "tradovate": {
+              "total": 42,
+              "volume_coverage": 1.0,
+              "oi_coverage": 1.0,
+              "price_coverage": 1.0
+            }
+          },
+          "sources": [
+            "barchart",
+            "tradovate"
+          ]
+        },
+        "timestamp": "2025-06-04T14:56:33.295658",
+        "source_details": {
+          "barchart": {
+            "contracts": 576,
+            "volume_coverage": 0.5190972222222222,
+            "oi_coverage": 0.6267361111111112
+          },
+          "tradovate": {
+            "contracts": 42,
+            "volume_coverage": 1.0,
+            "oi_coverage": 1.0
+          }
+        }
+      }
+    },
+    {
+      "name": "full_pipeline",
+      "passed": true,
+      "details": {
+        "status": "success",
+        "total_contracts": 618,
+        "overall_volume_coverage": 0.551779935275081,
+        "overall_oi_coverage": 0.6521035598705501
+      }
+    }
+  ],
+  "child_validations": [
+    {
+      "task": "barchart_saved_data",
+      "status": "VALIDATED",
+      "tests_passed": 6,
+      "tests_total": 6
+    },
+    {
+      "task": "tradovate_api_data",
+      "status": "VALIDATED",
+      "tests_passed": 8,
+      "tests_total": 8
+    },
+    {
+      "task": "data_normalizer",
+      "status": "VALIDATED",
+      "tests_passed": 7,
+      "tests_total": 7
+    }
+  ],
+  "evidence": {
+    "normalized_summary": {
+      "total_contracts": 618,
+      "sources_count": 2,
+      "timestamp": "2025-06-04T14:56:33.292580",
+      "by_source": {
+        "barchart": {
+          "calls": 288,
+          "puts": 288,
+          "total": 576
+        },
+        "tradovate": {
+          "calls": 21,
+          "puts": 21,
+          "total": 42
+        }
+      }
+    },
+    "pipeline_summary": {
+      "pipeline_metadata": {
+        "pipeline_version": "1.0",
+        "created_at": "2025-06-04T14:56:33.276375",
+        "sources_configured": [
+          "barchart",
+          "tradovate"
+        ]
+      },
+      "sources_loaded": 2,
+      "sources_failed": 0,
+      "total_contracts": 618,
+      "data_quality": {
+        "total_contracts": 618,
+        "overall_volume_coverage": 0.551779935275081,
+        "overall_oi_coverage": 0.6521035598705501,
+        "overall_price_coverage": 1.0,
+        "by_source": {
+          "barchart": {
+            "total": 576,
+            "volume_coverage": 0.5190972222222222,
+            "oi_coverage": 0.6267361111111112,
+            "price_coverage": 1.0
+          },
+          "tradovate": {
+            "total": 42,
+            "volume_coverage": 1.0,
+            "oi_coverage": 1.0,
+            "price_coverage": 1.0
+          }
+        },
+        "sources": [
+          "barchart",
+          "tradovate"
+        ]
+      },
+      "timestamp": "2025-06-04T14:56:33.295658",
+      "source_details": {
+        "barchart": {
+          "contracts": 576,
+          "volume_coverage": 0.5190972222222222,
+          "oi_coverage": 0.6267361111111112
+        },
+        "tradovate": {
+          "contracts": 42,
+          "volume_coverage": 1.0,
+          "oi_coverage": 1.0
+        }
+      }
+    },
+    "full_pipeline_result": {
+      "status": "success",
+      "summary": {
+        "pipeline_metadata": {
+          "pipeline_version": "1.0",
+          "created_at": "2025-06-04T14:56:33.295674",
+          "sources_configured": [
+            "barchart",
+            "tradovate"
+          ]
+        },
+        "sources_loaded": 2,
+        "sources_failed": 0,
+        "total_contracts": 618,
+        "data_quality": {
+          "total_contracts": 618,
+          "overall_volume_coverage": 0.551779935275081,
+          "overall_oi_coverage": 0.6521035598705501,
+          "overall_price_coverage": 1.0,
+          "by_source": {
+            "barchart": {
+              "total": 576,
+              "volume_coverage": 0.5190972222222222,
+              "oi_coverage": 0.6267361111111112,
+              "price_coverage": 1.0
+            },
+            "tradovate": {
+              "total": 42,
+              "volume_coverage": 1.0,
+              "oi_coverage": 1.0,
+              "price_coverage": 1.0
+            }
+          },
+          "sources": [
+            "barchart",
+            "tradovate"
+          ]
+        },
+        "timestamp": "2025-06-04T14:56:33.312025",
+        "source_details": {
+          "barchart": {
+            "contracts": 576,
+            "volume_coverage": 0.5190972222222222,
+            "oi_coverage": 0.6267361111111112
+          },
+          "tradovate": {
+            "contracts": 42,
+            "volume_coverage": 1.0,
+            "oi_coverage": 1.0
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 6,
+    "tests_passed": 6,
+    "children_validated": 3,
+    "total_children": 3
+  }
+}

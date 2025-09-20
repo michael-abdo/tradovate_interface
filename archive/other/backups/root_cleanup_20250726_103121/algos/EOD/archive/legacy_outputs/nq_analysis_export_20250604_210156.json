@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "export_timestamp": "2025-06-04T21:01:56.003252",
+    "export_version": "1.0",
+    "data_source": "nq_options_trading_system"
+  },
+  "trading_signals": [
+    {
+      "signal_id": "nq_ev_1_20250604_210156",
+      "timestamp": "2025-06-04T21:01:56.003276",
+      "source": "nq_ev_algorithm",
+      "priority": "PRIMARY",
+      "confidence": "HIGH",
+      "trade": {
+        "direction": "SHORT",
+        "entry_price": 21376.75,
+        "target_price": 14000.0,
+        "stop_price": 21380.0,
+        "expected_value": 5964.357177141185,
+        "win_probability": 0.8086188586912175,
+        "position_size": "LARGE (15-20%)",
+        "risk_reward_ratio": 2269.77
+      }
+    }
+  ],
+  "execution_summary": {
+    "total_signals": 3,
+    "high_priority_signals": 1,
+    "recommended_action": "short"
+  }
+}

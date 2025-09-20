@@ -1,0 +1,69 @@
+{
+    "check_interval": 10,
+    "max_restart_attempts": 3,
+    "restart_delay": 5,
+    "health_check_timeout": 30,
+    "crash_confirmation_checks": 3,
+    "crash_confirmation_interval": 10,
+    "enable_state_preservation": true,
+    "recovery_timeout": 300,
+    "log_level": "INFO",
+    "startup_monitoring": {
+        "enabled": false,
+        "startup_timeout_seconds": 60,
+        "max_startup_attempts": 3,
+        "startup_check_interval": 2,
+        "phase_transition_timeout": 15,
+        "resource_limits": {
+            "max_memory_mb": 1000,
+            "max_cpu_percent": 50,
+            "max_concurrent_startups": 3
+        }
+    },
+    "environments": {
+        "development": {
+            "log_level": "DEBUG",
+            "check_interval": 5,
+            "startup_monitoring": {
+                "enabled": true,
+                "startup_timeout_seconds": 120,
+                "startup_check_interval": 1,
+                "resource_limits": {
+                    "max_memory_mb": 2000,
+                    "max_cpu_percent": 70,
+                    "max_concurrent_startups": 2
+                }
+            }
+        },
+        "staging": {
+            "log_level": "INFO",  
+            "check_interval": 8,
+            "startup_monitoring": {
+                "enabled": true,
+                "startup_timeout_seconds": 90,
+                "startup_check_interval": 1.5,
+                "resource_limits": {
+                    "max_memory_mb": 1500,
+                    "max_cpu_percent": 60,
+                    "max_concurrent_startups": 3
+                }
+            }
+        },
+        "production": {
+            "log_level": "INFO",
+            "check_interval": 10,
+            "max_restart_attempts": 5,
+            "health_check_timeout": 45,
+            "startup_monitoring": {
+                "enabled": true,
+                "startup_timeout_seconds": 60,
+                "startup_check_interval": 2,
+                "resource_limits": {
+                    "max_memory_mb": 1000,
+                    "max_cpu_percent": 40,
+                    "max_concurrent_startups": 5
+                }
+            }
+        }
+    }
+}

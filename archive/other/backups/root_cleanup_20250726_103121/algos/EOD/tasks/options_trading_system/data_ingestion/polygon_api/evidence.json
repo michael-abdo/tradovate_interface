@@ -1,0 +1,63 @@
+{
+  "task": "polygon_api",
+  "timestamp": "2025-06-10T08:11:30.329351",
+  "tests": [
+    {
+      "name": "client_initialization",
+      "passed": true,
+      "details": "Client initialized with API key: True"
+    },
+    {
+      "name": "ndx_contracts_retrieval",
+      "passed": true,
+      "details": "Retrieved 3 NDX contracts, all valid: True"
+    },
+    {
+      "name": "qqq_contracts_retrieval",
+      "passed": true,
+      "details": "Retrieved 3 QQQ contracts, all valid: True"
+    },
+    {
+      "name": "nq_futures_unavailable",
+      "passed": true,
+      "details": "NQ futures options unavailable as expected: True"
+    },
+    {
+      "name": "data_loading_function",
+      "passed": true,
+      "details": "Data loading complete - summary: True, data: True, metrics: True"
+    },
+    {
+      "name": "rate_limiting",
+      "passed": false,
+      "details": "Rate limiting test failed: API request failed: 429 Client Error: Too Many Requests for url: https://api.polygon.io/v3/reference/options/contracts?underlying_ticker=QQQ&limit=1&order=desc&sort=expiration_date&apiKey=BntRhHbKto_R7jQfiSrfL9WMc7XaHXFu"
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "ndx_sample_contract": {
+      "ticker": "O:NDX291221P30000000",
+      "strike": 30000.0,
+      "type": "put",
+      "expiration": "2029-12-21"
+    },
+    "qqq_sample_contract": {
+      "ticker": "O:QQQ271217P00775000",
+      "strike": 775.0,
+      "type": "put",
+      "expiration": "2027-12-17"
+    },
+    "data_loading_sample": {
+      "total_contracts": 2,
+      "data_source": "live_api",
+      "tickers_tested": [
+        "NDX"
+      ]
+    },
+    "summary": {
+      "tests_passed": 5,
+      "tests_total": 6,
+      "success_rate": "83.3%"
+    }
+  }
+}

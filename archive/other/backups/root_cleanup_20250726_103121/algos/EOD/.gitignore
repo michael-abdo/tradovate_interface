@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Virtual Environment
+bin/
+lib/
+include/
+pip-selfcheck.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+logs/
+reports/
+
+# HTML files (scraped data)
+data/html_snapshots/
+tasks/options_trading_system/data_ingestion/barchart_web_scraper/html_snapshots/
+tasks/options_trading_system/data_ingestion/barchart_web_scraper/screenshots/
+tasks/options_trading_system/data_ingestion/barchart_web_scraper/api_data/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Chrome debug
+/tmp/chrome-debug/

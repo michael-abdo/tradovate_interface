@@ -1,0 +1,76 @@
+//@version=5
+strategy("Webhook Test Strategy", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=10)
+
+// Timeframe options
+resOptions = ['5', '15', '30', '60', '240', '1D']
+timeframe = input.string('60', 'Timeframe', options=resOptions)
+
+// Strategy Parameters
+useLongStrategy = input.bool(true, "Enable Long Strategy")
+useShortStrategy = input.bool(true, "Enable Short Strategy")
+strategy_name = input.string("DEFAULT", "Strategy Name for Webhook", tooltip="This name is sent with the webhook to route trades to specific accounts")
+
+// Generate a signal for testing
+long_signal = useLongStrategy and ta.crossover(ta.sma(close, 14), ta.sma(close, 28))
+short_signal = useShortStrategy and ta.crossunder(ta.sma(close, 14), ta.sma(close, 28))
+exit_long = ta.crossunder(ta.sma(close, 14), ta.sma(close, 28))
+exit_short = ta.crossover(ta.sma(close, 14), ta.sma(close, 28))
+
+// Strategy Entry/Exit
+if (long_signal)
+    strategy.entry("Long", strategy.long)
+    
+    // Send webhook for entry
+    alert_message = "{\n" +
+                    '"symbol": "' + syminfo.ticker + '",\n' +
+                    '"action": "Buy",\n' +
+                    '"orderQty": 1,\n' +
+                    '"orderType": "Market",\n' +
+                    '"entryPrice": ' + str.tostring(close) + ',\n' +
+                    '"takeProfitPrice": ' + str.tostring(close * 1.01) + ',\n' +
+                    '"tradeType": "Open",\n' +
+                    '"strategy": "' + strategy_name + '"\n' +
+                    "}"
+    alert(alert_message, alert.freq_once_per_bar)
+
+if (short_signal)
+    strategy.entry("Short", strategy.short)
+    
+    // Send webhook for entry
+    alert_message = "{\n" +
+                    '"symbol": "' + syminfo.ticker + '",\n' +
+                    '"action": "Sell",\n' +
+                    '"orderQty": 1,\n' +
+                    '"orderType": "Market",\n' +
+                    '"entryPrice": ' + str.tostring(close) + ',\n' +
+                    '"takeProfitPrice": ' + str.tostring(close * 0.99) + ',\n' +
+                    '"tradeType": "Open",\n' +
+                    '"strategy": "' + strategy_name + '"\n' +
+                    "}"
+    alert(alert_message, alert.freq_once_per_bar)
+
+if (exit_long)
+    strategy.close("Long")
+    
+    // Send webhook for exit
+    alert_message = "{\n" +
+                    '"symbol": "' + syminfo.ticker + '",\n' +
+                    '"tradeType": "Close",\n' +
+                    '"strategy": "' + strategy_name + '"\n' +
+                    "}"
+    alert(alert_message, alert.freq_once_per_bar)
+
+if (exit_short)
+    strategy.close("Short")
+    
+    // Send webhook for exit
+    alert_message = "{\n" +
+                    '"symbol": "' + syminfo.ticker + '",\n' +
+                    '"tradeType": "Close",\n' +
+                    '"strategy": "' + strategy_name + '"\n' +
+                    "}"
+    alert(alert_message, alert.freq_once_per_bar)
+
+// Plotting
+plot(ta.sma(close, 14), "Fast MA", color=color.blue)
+plot(ta.sma(close, 28), "Slow MA", color=color.red)

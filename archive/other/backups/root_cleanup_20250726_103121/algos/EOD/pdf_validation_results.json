@@ -1,0 +1,11 @@
+{
+  "validation_date": "2025-07-16 15:51:55.843636",
+  "pdf_claims": [
+    "Q3C options exist for Week-3 Wednesday expiry",
+    "Parent symbology works for option chains",
+    "All weekly options (Q1A, Q3C, etc.) supported",
+    "Full tick-level options data available"
+  ],
+  "api_findings": [],
+  "conclusion": "PDF claims not validated by API testing"
+}

@@ -1,0 +1,227 @@
+{
+  "task": "expected_value_analysis",
+  "timestamp": "2025-06-04T15:50:23.192997",
+  "tests": [
+    {
+      "name": "analyzer_init",
+      "passed": true,
+      "details": {
+        "weights": {
+          "oi_factor": 0.35,
+          "vol_factor": 0.25,
+          "pcr_factor": 0.25,
+          "distance_factor": 0.15
+        },
+        "min_ev": 15,
+        "min_probability": 0.6,
+        "max_risk": 150
+      }
+    },
+    {
+      "name": "data_loading",
+      "passed": true,
+      "details": {
+        "contracts_count": 618,
+        "underlying_price": 21376.75,
+        "data_quality": {
+          "total_contracts": 618,
+          "overall_volume_coverage": 0.551779935275081,
+          "overall_oi_coverage": 0.6521035598705501,
+          "overall_price_coverage": 1.0,
+          "by_source": {
+            "barchart": {
+              "total": 576,
+              "volume_coverage": 0.5190972222222222,
+              "oi_coverage": 0.6267361111111112,
+              "price_coverage": 1.0
+            },
+            "tradovate": {
+              "total": 42,
+              "volume_coverage": 1.0,
+              "oi_coverage": 1.0,
+              "price_coverage": 1.0
+            }
+          },
+          "sources": [
+            "barchart",
+            "tradovate"
+          ]
+        }
+      }
+    },
+    {
+      "name": "options_strike_conversion",
+      "passed": true,
+      "details": {
+        "strikes_created": 309,
+        "sample_strike_price": 14000.0,
+        "sample_call_oi": 0
+      }
+    },
+    {
+      "name": "probability_calculation",
+      "passed": true,
+      "details": {
+        "current_price": 21376.75,
+        "tp": 21476.75,
+        "sl": 21326.75,
+        "probability": 0.8889170155646914,
+        "direction": "long"
+      }
+    },
+    {
+      "name": "ev_combinations",
+      "passed": true,
+      "details": {
+        "strikes_tested": 309,
+        "setups_generated": 5492,
+        "best_setup": {
+          "direction": "short",
+          "ev": 5964.357177141185,
+          "tp": 14000.0,
+          "sl": 21380.0
+        }
+      }
+    },
+    {
+      "name": "quality_filtering",
+      "passed": true,
+      "details": {
+        "total_setups": 5492,
+        "quality_setups": 5486,
+        "filter_criteria": {
+          "min_ev": 15,
+          "min_probability": 0.6,
+          "max_risk": 150
+        }
+      }
+    },
+    {
+      "name": "full_analysis",
+      "passed": true,
+      "details": {
+        "contracts_analyzed": 618,
+        "strikes_analyzed": 309,
+        "setups_generated": 5492,
+        "quality_setups": 5486,
+        "has_trading_report": true
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "data_summary": {
+      "contracts": 618,
+      "underlying_price": 21376.75,
+      "quality": {
+        "total_contracts": 618,
+        "overall_volume_coverage": 0.551779935275081,
+        "overall_oi_coverage": 0.6521035598705501,
+        "overall_price_coverage": 1.0,
+        "by_source": {
+          "barchart": {
+            "total": 576,
+            "volume_coverage": 0.5190972222222222,
+            "oi_coverage": 0.6267361111111112,
+            "price_coverage": 1.0
+          },
+          "tradovate": {
+            "total": 42,
+            "volume_coverage": 1.0,
+            "oi_coverage": 1.0,
+            "price_coverage": 1.0
+          }
+        },
+        "sources": [
+          "barchart",
+          "tradovate"
+        ]
+      }
+    },
+    "analysis_result": {
+      "contracts_analyzed": 618,
+      "strikes_analyzed": 309,
+      "quality_setups": 5486,
+      "trading_report": {
+        "timestamp": "2025-06-04T15:50:25.485686",
+        "current_nq_price": 21376.75,
+        "total_setups": 5486,
+        "top_opportunities": [
+          {
+            "rank": 1,
+            "direction": "short",
+            "tp": 14000.0,
+            "sl": 21380.0,
+            "probability": 0.8086188586912175,
+            "risk_reward": 2269.769230769231,
+            "expected_value": 5964.357177141185,
+            "reward": 7376.75,
+            "risk": 3.25
+          },
+          {
+            "rank": 2,
+            "direction": "short",
+            "tp": 14000.0,
+            "sl": 21390.0,
+            "probability": 0.8086188586912175,
+            "risk_reward": 556.7358490566038,
+            "expected_value": 5962.443365728098,
+            "reward": 7376.75,
+            "risk": 13.25
+          },
+          {
+            "rank": 3,
+            "direction": "short",
+            "tp": 14000.0,
+            "sl": 21400.0,
+            "probability": 0.8086188586912175,
+            "risk_reward": 317.2795698924731,
+            "expected_value": 5960.52955431501,
+            "reward": 7376.75,
+            "risk": 23.25
+          },
+          {
+            "rank": 4,
+            "direction": "short",
+            "tp": 14000.0,
+            "sl": 21410.0,
+            "probability": 0.8086188586912175,
+            "risk_reward": 221.85714285714286,
+            "expected_value": 5958.615742901922,
+            "reward": 7376.75,
+            "risk": 33.25
+          },
+          {
+            "rank": 5,
+            "direction": "short",
+            "tp": 14000.0,
+            "sl": 21420.0,
+            "probability": 0.8086188586912175,
+            "risk_reward": 170.56069364161849,
+            "expected_value": 5956.701931488834,
+            "reward": 7376.75,
+            "risk": 43.25
+          }
+        ],
+        "execution_recommendation": {
+          "trade_direction": "SHORT",
+          "entry_price": 21376.75,
+          "target": 14000.0,
+          "stop": 21380.0,
+          "position_size": "LARGE (15-20%)",
+          "expected_value": 5964.357177141185,
+          "reward_points": 7376.75,
+          "risk_points": -3.25,
+          "probability": 0.8086188586912175
+        }
+      },
+      "metrics": {
+        "total_strikes": 309,
+        "valid_combinations": 5492,
+        "quality_ratio": 0.9989075018208303,
+        "best_ev": 5964.357177141185,
+        "avg_probability": 0.864139252087953
+      }
+    }
+  }
+}

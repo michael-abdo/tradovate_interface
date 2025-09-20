@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-07-25T17:50:00.830525",
+  "account": "Account 1",
+  "credentials": {},
+  "trading_state": {
+    "error": "HTTPConnectionPool(host='localhost', port=9223): Max retries exceeded with url: /json (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10983bce0>: Failed to establish a new connection: [Errno 61] Connection refused'))"
+  },
+  "ui_state": {
+    "placeholder": "UI state capture"
+  },
+  "connection_state": {
+    "port": 9223,
+    "pid": 61334,
+    "uptime": "0:00:52.436629"
+  }
+}

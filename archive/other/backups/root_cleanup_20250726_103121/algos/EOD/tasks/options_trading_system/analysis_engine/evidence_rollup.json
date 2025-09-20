@@ -1,0 +1,88 @@
+{
+  "task": "analysis_engine",
+  "type": "parent",
+  "timestamp": "2025-06-04T15:54:53.135167",
+  "integration_tests": [
+    {
+      "name": "child_validations",
+      "passed": true,
+      "details": "All 3 children validated: True"
+    },
+    {
+      "name": "engine_initialization",
+      "passed": true,
+      "details": "Engine initialized successfully: True"
+    },
+    {
+      "name": "individual_analyses",
+      "passed": true,
+      "details": {
+        "nq_ev_analysis": true,
+        "momentum_analysis": true,
+        "volatility_analysis": true
+      }
+    },
+    {
+      "name": "results_synthesis",
+      "passed": true,
+      "details": {
+        "trading_recommendations": 3,
+        "primary_algorithm": "nq_ev_analysis",
+        "execution_priorities": 3
+      }
+    },
+    {
+      "name": "full_analysis_engine",
+      "passed": true,
+      "details": {
+        "status": "success",
+        "successful_analyses": 3,
+        "primary_recommendations": 1,
+        "execution_time": 1.659939
+      }
+    }
+  ],
+  "status": "VALIDATED",
+  "evidence": {
+    "full_analysis_result": {
+      "status": "success",
+      "execution_time": 1.659939,
+      "successful_analyses": 3,
+      "primary_recommendations": 1,
+      "primary_algorithm": "nq_ev_analysis",
+      "best_nq_ev_trade": {
+        "source": "nq_ev_algorithm",
+        "priority": "PRIMARY",
+        "trade_direction": "SHORT",
+        "entry_price": 21376.75,
+        "target": 14000.0,
+        "stop": 21380.0,
+        "expected_value": 5964.357177141185,
+        "probability": 0.8086188586912175,
+        "position_size": "LARGE (15-20%)",
+        "confidence": "HIGH",
+        "reasoning": "Your NQ EV algorithm found high-quality setup with EV=+5964.4 points"
+      }
+    }
+  },
+  "child_validations": [
+    {
+      "task": "expected_value_analysis",
+      "status": "VALIDATED",
+      "tests_passed": 7,
+      "tests_total": 7
+    },
+    {
+      "task": "momentum_analysis",
+      "status": "VALIDATED",
+      "tests_passed": 7,
+      "tests_total": 7
+    },
+    {
+      "task": "volatility_analysis",
+      "status": "VALIDATED",
+      "tests_passed": 7,
+      "tests_total": 7
+    }
+  ]
+}

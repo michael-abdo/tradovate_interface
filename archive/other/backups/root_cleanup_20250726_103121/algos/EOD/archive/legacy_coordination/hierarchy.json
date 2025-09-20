@@ -1,0 +1,115 @@
+{
+  "root_task": "options_trading_system",
+  "hierarchy": {
+    "options_trading_system": {
+      "type": "root",
+      "status": "validated",
+      "subtasks": [
+        "data_ingestion",
+        "analysis_engine",
+        "output_generation"
+      ],
+      "validated_at": "2025-06-04T16:26:19",
+      "evidence_path": "tasks/options_trading_system/evidence.json"
+    },
+    "data_ingestion": {
+      "type": "parent", 
+      "status": "validated",
+      "parent": "options_trading_system",
+      "subtasks": [
+        "barchart_saved_data",
+        "tradovate_api_data",
+        "data_normalizer"
+      ],
+      "validated_at": "2025-06-04T14:46:12",
+      "evidence_path": "tasks/options_trading_system/data_ingestion/evidence_rollup.json"
+    },
+    "barchart_saved_data": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "data_ingestion",
+      "description": "Load saved Barchart API data from JSON file",
+      "validated_at": "2025-06-04T14:31:06",
+      "evidence_path": "tasks/options_trading_system/data_ingestion/barchart_saved_data/evidence.json"
+    },
+    "tradovate_api_data": {
+      "type": "leaf",
+      "status": "validated", 
+      "parent": "data_ingestion",
+      "description": "Fetch data from Tradovate API",
+      "validated_at": "2025-06-04T14:36:25",
+      "evidence_path": "tasks/options_trading_system/data_ingestion/tradovate_api_data/evidence.json"
+    },
+    "data_normalizer": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "data_ingestion",
+      "description": "Normalize data to standard format",
+      "validated_at": "2025-06-04T14:43:45",
+      "evidence_path": "tasks/options_trading_system/data_ingestion/data_normalizer/evidence.json"
+    },
+    "analysis_engine": {
+      "type": "parent",
+      "status": "validated",
+      "parent": "options_trading_system",
+      "subtasks": [
+        "expected_value_analysis",
+        "momentum_analysis",
+        "volatility_analysis"
+      ],
+      "validated_at": "2025-06-04T15:30:45",
+      "evidence_path": "tasks/options_trading_system/analysis_engine/evidence_rollup.json"
+    },
+    "expected_value_analysis": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "analysis_engine",
+      "description": "Calculate expected value for trading opportunities",
+      "validated_at": "2025-06-04T15:23:45",
+      "evidence_path": "tasks/options_trading_system/analysis_engine/expected_value_analysis/evidence.json"
+    },
+    "momentum_analysis": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "analysis_engine",
+      "description": "Analyze options momentum patterns",
+      "validated_at": "2025-06-04T15:26:30",
+      "evidence_path": "tasks/options_trading_system/analysis_engine/momentum_analysis/evidence.json"
+    },
+    "volatility_analysis": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "analysis_engine",
+      "description": "Analyze implied volatility patterns",
+      "validated_at": "2025-06-04T15:28:15",
+      "evidence_path": "tasks/options_trading_system/analysis_engine/volatility_analysis/evidence.json"
+    },
+    "output_generation": {
+      "type": "parent",
+      "status": "validated",
+      "parent": "options_trading_system",
+      "subtasks": [
+        "report_generator",
+        "json_exporter"
+      ],
+      "validated_at": "2025-06-04T16:18:00",
+      "evidence_path": "tasks/options_trading_system/output_generation/evidence_rollup.json"
+    },
+    "report_generator": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "output_generation",
+      "description": "Generate human-readable trading reports",
+      "validated_at": "2025-06-04T16:08:25",
+      "evidence_path": "tasks/options_trading_system/output_generation/report_generator/evidence.json"
+    },
+    "json_exporter": {
+      "type": "leaf",
+      "status": "validated",
+      "parent": "output_generation",
+      "description": "Export analysis results as JSON",
+      "validated_at": "2025-06-04T16:13:05",
+      "evidence_path": "tasks/options_trading_system/output_generation/json_exporter/evidence.json"
+    }
+  }
+}

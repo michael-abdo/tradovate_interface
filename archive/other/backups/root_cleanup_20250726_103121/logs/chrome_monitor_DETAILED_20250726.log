@@ -1,0 +1,38 @@
+[2025-07-26 08:24:27,958] DEBUG [process_monitor.py:646] [_setup_logger] - DEBUG mode enabled - Enhanced logging active
+[2025-07-26 08:24:27,958] DEBUG [process_monitor.py:647] [_setup_logger] - DEBUG session started at: 2025-07-26 08:24:27.958779
+[2025-07-26 08:24:27,959] DEBUG [process_monitor.py:648] [_setup_logger] - Process ID: 88389
+[2025-07-26 08:24:27,959] DEBUG [process_monitor.py:649] [_setup_logger] - Working directory: /Users/Mike/trading
+[2025-07-26 08:24:27,959] INFO [process_monitor.py:811] [_load_config] - Loading environment-specific config for: development
+[2025-07-26 08:24:27,959] INFO [process_monitor.py:816] [_load_config] - Applied development environment overrides
+[2025-07-26 08:24:27,959] INFO [process_monitor.py:820] [_load_config] - Loaded config from tradovate_interface/config/process_monitor.json (env: development)
+[2025-07-26 08:24:27,959] INFO [process_monitor.py:839] [_load_config] - Final config loaded - Environment: development, Check interval: 5s, Log level: DEBUG, Startup monitoring: True
+[2025-07-26 08:24:27,959] INFO [process_monitor.py:890] [_load_startup_config] - Loaded startup monitoring configuration from config file
+[2025-07-26 08:24:27,960] INFO [process_monitor.py:901] [_load_startup_config] - Startup monitoring mode: disabled
+[2025-07-26 08:24:27,960] INFO [process_monitor.py:909] [_load_startup_config] - Startup monitoring configured: timeout=120s, attempts=3, mode=disabled
+[2025-07-26 08:24:27,960] INFO [process_monitor.py:811] [_load_config] - Loading environment-specific config for: staging
+[2025-07-26 08:24:27,960] INFO [process_monitor.py:816] [_load_config] - Applied staging environment overrides
+[2025-07-26 08:24:27,960] INFO [process_monitor.py:820] [_load_config] - Loaded config from tradovate_interface/config/process_monitor.json (env: staging)
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:839] [_load_config] - Final config loaded - Environment: staging, Check interval: 8s, Log level: INFO, Startup monitoring: True
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:890] [_load_startup_config] - Loaded startup monitoring configuration from config file
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:901] [_load_startup_config] - Startup monitoring mode: disabled
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:909] [_load_startup_config] - Startup monitoring configured: timeout=90s, attempts=3, mode=disabled
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:811] [_load_config] - Loading environment-specific config for: production
+[2025-07-26 08:24:27,961] INFO [process_monitor.py:816] [_load_config] - Applied production environment overrides
+[2025-07-26 08:24:27,962] INFO [process_monitor.py:820] [_load_config] - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+[2025-07-26 08:24:27,962] INFO [process_monitor.py:839] [_load_config] - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+[2025-07-26 08:24:27,962] INFO [process_monitor.py:890] [_load_startup_config] - Loaded startup monitoring configuration from config file
+[2025-07-26 08:24:27,962] INFO [process_monitor.py:901] [_load_startup_config] - Startup monitoring mode: disabled
+[2025-07-26 08:24:27,962] INFO [process_monitor.py:909] [_load_startup_config] - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+[2025-07-26 08:24:27,963] WARNING [process_monitor.py:818] [_load_config] - Environment 'unknown_env' not found in config, using base config
+[2025-07-26 08:24:27,963] INFO [process_monitor.py:820] [_load_config] - Loaded config from tradovate_interface/config/process_monitor.json (env: unknown_env)
+[2025-07-26 08:24:27,963] INFO [process_monitor.py:839] [_load_config] - Final config loaded - Environment: unknown_env, Check interval: 10s, Log level: INFO, Startup monitoring: False
+[2025-07-26 08:24:27,963] INFO [process_monitor.py:890] [_load_startup_config] - Loaded startup monitoring configuration from config file
+[2025-07-26 08:24:27,963] INFO [process_monitor.py:901] [_load_startup_config] - Startup monitoring mode: disabled
+[2025-07-26 08:24:27,963] INFO [process_monitor.py:909] [_load_startup_config] - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:811] [_load_config] - Loading environment-specific config for: production
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:816] [_load_config] - Applied production environment overrides
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:820] [_load_config] - Loaded config from tradovate_interface/config/process_monitor.json (env: production)
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:839] [_load_config] - Final config loaded - Environment: production, Check interval: 10s, Log level: INFO, Startup monitoring: True
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:890] [_load_startup_config] - Loaded startup monitoring configuration from config file
+[2025-07-26 08:24:27,964] INFO [process_monitor.py:901] [_load_startup_config] - Startup monitoring mode: disabled
+[2025-07-26 08:24:27,965] INFO [process_monitor.py:909] [_load_startup_config] - Startup monitoring configured: timeout=60s, attempts=3, mode=disabled

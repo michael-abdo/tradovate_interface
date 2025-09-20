@@ -1,0 +1,14 @@
+2025-05-06 20:42:42,528 - INFO - Starting webhook monitor, checking http://localhost:6000/health every 10 seconds
+2025-05-06 20:42:42,541 - INFO - Webhook service is online
+2025-05-06 20:42:42,541 - INFO - [2025-05-06 20:42:42] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:42:52,550 - INFO - [2025-05-06 20:42:52] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:02,556 - INFO - [2025-05-06 20:43:02] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:12,568 - INFO - [2025-05-06 20:43:12] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:22,575 - INFO - [2025-05-06 20:43:22] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:32,582 - INFO - [2025-05-06 20:43:32] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:42,591 - INFO - [2025-05-06 20:43:42] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:43:52,597 - INFO - [2025-05-06 20:43:52] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:44:02,605 - INFO - [2025-05-06 20:44:02] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:44:12,611 - INFO - [2025-05-06 20:44:12] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:44:22,620 - INFO - [2025-05-06 20:44:22] Health check: OK | Connections: 0 | Live connections: 0
+2025-05-06 20:44:32,631 - INFO - [2025-05-06 20:44:32] Health check: OK | Connections: 0 | Live connections: 0

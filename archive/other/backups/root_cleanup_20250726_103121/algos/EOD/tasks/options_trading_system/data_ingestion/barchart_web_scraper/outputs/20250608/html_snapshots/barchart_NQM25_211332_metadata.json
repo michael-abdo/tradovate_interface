@@ -1,0 +1,8 @@
+{
+  "url": "https://www.barchart.com/futures/quotes/NQM25/options/MC7M25?futuresOptionsView=merged",
+  "symbol": "NQM25",
+  "timestamp": "2025-06-08T21:13:32.531614",
+  "page_title": "Nasdaq 100 E-Mini Jun '25 Futures Options Prices - Barchart.com",
+  "file_path": "/Users/Mike/trading/algos/EOD/tasks/options_trading_system/data_ingestion/barchart_web_scraper/html_snapshots/20250608/barchart_NQM25_211332.html",
+  "content_length": 713516
+}
