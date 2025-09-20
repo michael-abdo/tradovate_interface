@@ -2,6 +2,7 @@
 import time
 import datetime
 import os
+import json
 import pychrome
 from threading import Thread
 
@@ -19,6 +20,8 @@ class ChromeLogger:
         self.callbacks = []
         self.is_running = False
         self.log_thread = None
+        self.dom_snapshot_enabled = False
+        self.combined_log_entries = []  # Store combined log + DOM data for Claude Code analysis
         
         # Create log file directory if needed
         if log_file:
@@ -34,6 +37,8 @@ class ChromeLogger:
             self.tab.Log.enable()
             self.tab.Runtime.enable()
             self.tab.Console.enable()
+            self.tab.DOM.enable()  # Enable DOM for snapshot capability
+            self.tab.Page.enable()  # Enable Page events
             
             # Set up event listeners
             self.tab.Log.entryAdded = self._on_log_entry
@@ -76,6 +81,232 @@ class ChromeLogger:
             return True
         return False
     
+    def inject_script(self, script_file_path):
+        """
+        🔥 LAYER 3: Inject a script file into the Chrome tab via CDP
+        
+        Args:
+            script_file_path (str): Path to the script file to inject
+            
+        Returns:
+            bool: True if injection successful, False otherwise
+        """
+        print(f"🔥 LAYER 3: CDP Injection requested for: {script_file_path}")
+        
+        # Validate tab is available
+        if not self.tab:
+            print(f"🔴 LAYER 3: ERROR - No Chrome tab available for injection")
+            return False
+            
+        # Validate file exists
+        if not os.path.exists(script_file_path):
+            print(f"🔴 LAYER 3: ERROR - Script file not found: {script_file_path}")
+            return False
+            
+        if not os.path.isfile(script_file_path):
+            print(f"🔴 LAYER 3: ERROR - Path is not a file: {script_file_path}")
+            return False
+            
+        # Extract filename for logging
+        filename = os.path.basename(script_file_path)
+        print(f"🔥 LAYER 3: Processing script: {filename}")
+        
+        # Special logging for critical autoOrder.user.js
+        if 'autoOrder' in filename.lower():
+            print(f"💥 LAYER 3: CRITICAL INJECTION - {filename}")
+            print(f"💥 LAYER 3: Trading script injection via CDP!")
+        else:
+            print(f"📄 LAYER 3: Standard script injection - {filename}")
+            
+        try:
+            # Read script file content
+            print(f"🔥 LAYER 3: Reading script content from {filename}")
+            with open(script_file_path, 'r', encoding='utf-8') as f:
+                script_content = f.read()
+                
+            if not script_content.strip():
+                print(f"⚠️ LAYER 3: WARNING - Script file is empty: {filename}")
+                return False
+                
+            print(f"🔥 LAYER 3: Script content loaded ({len(script_content)} characters)")
+            
+            # Basic script validation for userscripts
+            if script_file_path.endswith('.user.js'):
+                if '// ==UserScript==' not in script_content:
+                    print(f"⚠️ LAYER 3: WARNING - Missing UserScript header in {filename}")
+                else:
+                    print(f"✅ LAYER 3: UserScript header validated in {filename}")
+            
+            # Inject script via Chrome DevTools Protocol
+            print(f"🔥 LAYER 3: Executing Runtime.evaluate for {filename}")
+            result = self.tab.Runtime.evaluate(expression=script_content)
+            
+            # Check injection result
+            if result.get('wasThrown'):
+                error_msg = result.get('result', {}).get('description', 'Unknown error')
+                print(f"🔴 LAYER 3: ERROR - Script injection failed for {filename}: {error_msg}")
+                return False
+            else:
+                print(f"✅ LAYER 3: Script injection successful for {filename}")
+                
+                # Special success logging for critical files
+                if 'autoOrder' in filename.lower():
+                    print(f"⭐ LAYER 3: CRITICAL SUCCESS - {filename} injected via CDP!")
+                    
+                return True
+                
+        except FileNotFoundError:
+            print(f"🔴 LAYER 3: ERROR - File not found during read: {filename}")
+            return False
+        except UnicodeDecodeError as e:
+            print(f"🔴 LAYER 3: ERROR - Unicode decode error in {filename}: {e}")
+            return False
+        except IOError as e:
+            print(f"🔴 LAYER 3: ERROR - IO error reading {filename}: {e}")
+            return False
+        except Exception as e:
+            print(f"🔴 LAYER 3: ERROR - CDP injection failed for {filename}: {e}")
+            return False
+    
+    def enable_dom_snapshots(self):
+        """
+        Enable DOM snapshot capture for comprehensive debugging
+        
+        When enabled, DOM snapshots will be captured automatically on:
+        - Console errors
+        - JavaScript exceptions  
+        - Critical console.log events (configurable)
+        """
+        self.dom_snapshot_enabled = True
+        print("🔍 DOM Snapshot capture enabled for comprehensive debugging")
+    
+    def disable_dom_snapshots(self):
+        """Disable DOM snapshot capture to reduce overhead"""
+        self.dom_snapshot_enabled = False
+        print("🔍 DOM Snapshot capture disabled")
+        
+    def capture_dom_snapshot(self, trigger_event=None):
+        """
+        Capture complete DOM snapshot using CDP DOMSnapshot domain
+        
+        Args:
+            trigger_event (str): Optional description of what triggered the snapshot
+            
+        Returns:
+            dict: DOM snapshot data or None if failed
+        """
+        if not self.tab:
+            print("🔴 ERROR: No Chrome tab available for DOM snapshot")
+            return None
+            
+        try:
+            print(f"🔍 Capturing DOM snapshot{f' (trigger: {trigger_event})' if trigger_event else ''}")
+            
+            # Capture DOM snapshot with comprehensive data
+            snapshot_result = self.tab.DOMSnapshot.captureSnapshot(
+                computedStyles=[],  # Include computed styles for elements
+                includePaintOrder=True,  # Include paint order information
+                includeDOMRects=True,   # Include element positioning rectangles  
+                includeBlendedBackgroundColors=True  # Include background color info
+            )
+            
+            if snapshot_result:
+                # Add metadata
+                snapshot_data = {
+                    'timestamp': datetime.datetime.now().isoformat(),
+                    'trigger_event': trigger_event,
+                    'url': self._get_current_url(),
+                    'snapshot': snapshot_result
+                }
+                
+                print(f"✅ DOM snapshot captured successfully ({len(str(snapshot_result))} chars)")
+                return snapshot_data
+            else:
+                print("🔴 ERROR: DOM snapshot capture returned empty result")
+                return None
+                
+        except Exception as e:
+            print(f"🔴 ERROR: DOM snapshot capture failed: {e}")
+            return None
+    
+    def _get_current_url(self):
+        """Get the current page URL"""
+        try:
+            target_info = self.tab.Target.getTargetInfo(targetId=self.tab.target_id)
+            return target_info.get('targetInfo', {}).get('url', 'unknown')
+        except Exception:
+            return 'unknown'
+    
+    def get_combined_debug_data(self, include_snapshots=True):
+        """
+        Get comprehensive debugging data for Claude Code analysis
+        
+        Args:
+            include_snapshots (bool): Whether to include DOM snapshots in output
+            
+        Returns:
+            dict: Combined log entries and DOM snapshots formatted for analysis
+        """
+        debug_data = {
+            'session_info': {
+                'timestamp': datetime.datetime.now().isoformat(),
+                'url': self._get_current_url(),
+                'dom_snapshots_enabled': self.dom_snapshot_enabled,
+                'total_log_entries': len(self.combined_log_entries)
+            },
+            'log_entries': self.combined_log_entries.copy()
+        }
+        
+        if include_snapshots:
+            # Filter entries that have DOM snapshots
+            entries_with_snapshots = [
+                entry for entry in self.combined_log_entries 
+                if entry.get('dom_snapshot') is not None
+            ]
+            debug_data['entries_with_dom_snapshots'] = len(entries_with_snapshots)
+        else:
+            # Remove DOM snapshot data to reduce size
+            for entry in debug_data['log_entries']:
+                entry.pop('dom_snapshot', None)
+            
+        return debug_data
+    
+    def save_debug_data_for_claude(self, output_file=None):
+        """
+        Save comprehensive debugging data in a format optimized for Claude Code analysis
+        
+        Args:
+            output_file (str): Optional output file path. If None, auto-generates filename.
+            
+        Returns:
+            str: Path to saved debug data file
+        """
+        if not output_file:
+            timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+            log_dir = os.path.dirname(self.log_file) if self.log_file else 'logs'
+            output_file = os.path.join(log_dir, f'claude_debug_data_{timestamp}.json')
+            
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
+        
+        debug_data = self.get_combined_debug_data(include_snapshots=True)
+        
+        try:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(debug_data, f, indent=2, ensure_ascii=False)
+                
+            print(f"💾 Debug data saved for Claude Code analysis: {output_file}")
+            print(f"📊 Data includes {len(debug_data['log_entries'])} log entries")
+            
+            if debug_data.get('entries_with_dom_snapshots', 0) > 0:
+                print(f"🔍 Includes {debug_data['entries_with_dom_snapshots']} DOM snapshots")
+                
+            return output_file
+            
+        except Exception as e:
+            print(f"🔴 ERROR: Failed to save debug data: {e}")
+            return None
+    
     def _write_to_file(self, entry):
         """Write log entry to file if configured"""
         if not self.log_file:
@@ -108,6 +339,14 @@ class ChromeLogger:
             'raw': entry
         }
         
+        # Capture DOM snapshot for errors if enabled
+        if self.dom_snapshot_enabled and entry.get('level') in ['error', 'ERROR']:
+            dom_snapshot = self.capture_dom_snapshot(f"Browser error: {entry.get('text', '')[:100]}")
+            log_entry['dom_snapshot'] = dom_snapshot
+            
+        # Add to combined log entries for Claude Code analysis
+        self.combined_log_entries.append(log_entry.copy())
+        
         self._write_to_file(log_entry)
         self._process_callbacks(log_entry)
     
@@ -115,15 +354,32 @@ class ChromeLogger:
         """Handle Runtime.consoleAPICalled event"""
         args = kwargs.get('args', [])
         message = ' '.join([arg.get('value', str(arg)) for arg in args if 'value' in arg])
+        console_type = kwargs.get('type', 'log').upper()
         
         log_entry = {
             'source': 'console',
-            'level': kwargs.get('type', 'log').upper(),
+            'level': console_type,
             'text': message,
             'url': kwargs.get('stackTrace', {}).get('callFrames', [{}])[0].get('url', ''),
             'timestamp': time.time(),
             'raw': kwargs
         }
+        
+        # Capture DOM snapshot for errors and critical events if enabled
+        should_capture_snapshot = False
+        if self.dom_snapshot_enabled:
+            if console_type in ['ERROR', 'WARN']:
+                should_capture_snapshot = True
+            elif console_type == 'LOG' and any(keyword in message.lower() for keyword in 
+                ['error', 'fail', 'critical', 'exception', 'crash', 'timeout']):
+                should_capture_snapshot = True
+                
+        if should_capture_snapshot:
+            dom_snapshot = self.capture_dom_snapshot(f"Console {console_type}: {message[:100]}")
+            log_entry['dom_snapshot'] = dom_snapshot
+            
+        # Add to combined log entries for Claude Code analysis
+        self.combined_log_entries.append(log_entry.copy())
         
         self._write_to_file(log_entry)
         self._process_callbacks(log_entry)
@@ -132,15 +388,24 @@ class ChromeLogger:
         """Handle Runtime.exceptionThrown event"""
         exception_details = kwargs.get('exceptionDetails', {})
         exception = exception_details.get('exception', {})
+        exception_text = f"Exception: {exception.get('description', exception.get('value', 'Unknown error'))}"
         
         log_entry = {
             'source': 'exception',
             'level': 'ERROR',
-            'text': f"Exception: {exception.get('description', exception.get('value', 'Unknown error'))}",
+            'text': exception_text,
             'url': exception_details.get('url', ''),
             'timestamp': time.time(),
             'raw': kwargs
         }
+        
+        # Always capture DOM snapshot for exceptions if enabled
+        if self.dom_snapshot_enabled:
+            dom_snapshot = self.capture_dom_snapshot(f"JavaScript Exception: {exception_text[:100]}")
+            log_entry['dom_snapshot'] = dom_snapshot
+            
+        # Add to combined log entries for Claude Code analysis
+        self.combined_log_entries.append(log_entry.copy())
         
         self._write_to_file(log_entry)
         self._process_callbacks(log_entry)
@@ -148,15 +413,25 @@ class ChromeLogger:
     def _on_console_message(self, **kwargs):
         """Handle Console.messageAdded event"""
         message = kwargs.get('message', {})
+        message_level = message.get('level', 'INFO').upper()
+        message_text = message.get('text', '')
         
         log_entry = {
             'source': 'console',
-            'level': message.get('level', 'INFO').upper(),
-            'text': message.get('text', ''),
+            'level': message_level,
+            'text': message_text,
             'url': message.get('url', ''),
             'timestamp': time.time(),
             'raw': kwargs
         }
+        
+        # Capture DOM snapshot for console messages with errors if enabled
+        if self.dom_snapshot_enabled and message_level in ['ERROR', 'WARNING']:
+            dom_snapshot = self.capture_dom_snapshot(f"Console {message_level}: {message_text[:100]}")
+            log_entry['dom_snapshot'] = dom_snapshot
+            
+        # Add to combined log entries for Claude Code analysis
+        self.combined_log_entries.append(log_entry.copy())
         
         self._write_to_file(log_entry)
         self._process_callbacks(log_entry)
@@ -233,10 +508,27 @@ def main():
             """
             tab.Runtime.evaluate(expression=test_js)
             
+            # Enable DOM snapshots for comprehensive debugging
+            logger.enable_dom_snapshots()
+            print("🔍 DOM snapshots enabled for comprehensive debugging")
+            
+            # Test DOM snapshot capture
+            print("🧪 Testing DOM snapshot capture...")
+            snapshot = logger.capture_dom_snapshot("Test snapshot")
+            if snapshot:
+                print("✅ DOM snapshot test successful")
+            else:
+                print("🔴 DOM snapshot test failed")
+            
             try:
                 while True:
                     time.sleep(1)
             except KeyboardInterrupt:
+                # Save debug data for Claude Code analysis before stopping
+                debug_file = logger.save_debug_data_for_claude()
+                if debug_file:
+                    print(f"🔄 Debug data saved: {debug_file}")
+                    
                 logger.stop()
                 print("Logger stopped")
                 return 0
