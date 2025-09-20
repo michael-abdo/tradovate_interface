@@ -167,13 +167,39 @@ def run_auto_login():
     # Run auto login
     result = auto_login_main()
     
-    # Open dashboard window EXACTLY like Tradovate windows
-    print("Opening dashboard window...")
+    # Dashboard window will be opened by run_dashboard() after Flask starts
+    
+    return result
+
+def run_dashboard():
+    """Run the dashboard process"""
+    from src.dashboard import run_flask_dashboard
+    
+    # Start dashboard in a thread so we can open the window after it's running
+    def start_flask():
+        print("Starting dashboard server...")
+        run_flask_dashboard()
+    
+    dashboard_thread = threading.Thread(target=start_flask)
+    dashboard_thread.daemon = True
+    dashboard_thread.start()
+    
+    # Wait for Flask to start
+    print("Waiting for dashboard server to start...")
+    time.sleep(2)
+    
+    # NOW open the dashboard window
+    print("\n=== OPENING DASHBOARD WINDOW (after server started) ===")
     try:
         chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         dashboard_url = "http://localhost:6001"
         dashboard_port = 9321  # Fixed port for dashboard
         profile_dir = os.path.join("/tmp", f"tradovate_dashboard_profile_{dashboard_port}")
+        
+        print(f"Chrome path exists: {os.path.exists(chrome_path)}")
+        print(f"Dashboard URL: {dashboard_url}")
+        print(f"Profile dir: {profile_dir}")
+        
         os.makedirs(profile_dir, exist_ok=True)
         
         chrome_cmd = [
@@ -197,20 +223,26 @@ def run_auto_login():
             dashboard_url,
         ]
         
-        process = subprocess.Popen(chrome_cmd,
-                                 stdout=subprocess.DEVNULL,
-                                 stderr=subprocess.DEVNULL)
-        print(f"Dashboard window opened at {dashboard_url} (PID: {process.pid})")
+        print(f"Executing command: {' '.join(chrome_cmd[:3])}...")
+        
+        # Try running without suppressing output to see errors
+        process = subprocess.Popen(chrome_cmd)
+        print(f"Dashboard process started with PID: {process.pid}")
+        
+        # Check if process is still running after a brief moment
+        time.sleep(0.5)
+        if process.poll() is None:
+            print(f"Dashboard window opened successfully at {dashboard_url}")
+        else:
+            print(f"Dashboard process exited with code: {process.poll()}")
+            
     except Exception as e:
-        print(f"Failed to open dashboard window: {e}")
+        print(f"EXCEPTION opening dashboard window: {e}")
+        import traceback
+        traceback.print_exc()
     
-    return result
-
-def run_dashboard():
-    """Run the dashboard process"""
-    from src.dashboard import run_flask_dashboard
-    print("Starting dashboard...")
-    run_flask_dashboard()
+    # Keep the main thread alive
+    dashboard_thread.join()
 
 def collect_chrome_processes():
     """Find all Chrome processes with remote-debugging-port and track them"""
@@ -366,42 +398,7 @@ def main():
         # Collect Chrome processes for proper cleanup
         collect_chrome_processes()
         
-        # Open dashboard window EXACTLY like Tradovate windows
-        print("Opening dashboard window...")
-        try:
-            chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-            dashboard_url = "http://localhost:6001"
-            dashboard_port = 9321  # Fixed port for dashboard
-            profile_dir = os.path.join("/tmp", f"tradovate_dashboard_profile_{dashboard_port}")
-            os.makedirs(profile_dir, exist_ok=True)
-            
-            chrome_cmd = [
-                chrome_path,
-                f"--remote-debugging-port={dashboard_port}",
-                f"--user-data-dir={profile_dir}",
-                "--no-first-run",
-                "--no-default-browser-check",
-                "--new-window",
-                "--disable-notifications",
-                "--disable-popup-blocking",
-                "--disable-infobars",
-                "--disable-session-crashed-bubble",
-                "--disable-save-password-bubble",
-                "--disable-features=InfiniteSessionRestore",
-                "--hide-crash-restore-bubble",
-                "--no-crash-upload",
-                "--disable-backgrounding-occluded-windows",
-                "--disable-dev-shm-usage",
-                "--no-sandbox",
-                dashboard_url,
-            ]
-            
-            process = subprocess.Popen(chrome_cmd,
-                                     stdout=subprocess.DEVNULL,
-                                     stderr=subprocess.DEVNULL)
-            print(f"Dashboard window opened at {dashboard_url} (PID: {process.pid})")
-        except Exception as e:
-            print(f"Failed to open dashboard window: {e}")
+        # Dashboard window will be opened by run_dashboard() after Flask starts
         
         # Development mode reminder
         if dev_mode:

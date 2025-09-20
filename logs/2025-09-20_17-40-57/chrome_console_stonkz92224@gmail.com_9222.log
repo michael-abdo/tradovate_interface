@@ -406,3 +406,5 @@
 [2025-09-20 17:41:28.589] ERROR - 22:41:28.587Z Cannot execute indicator http call
 [2025-09-20 17:42:07.132] INFO - 22:42:07.130Z time stats. avg diff: -63, min: -63, max: -63, roundtrip: 22 msec, #1
 [2025-09-20 17:42:07.133] INFO - 22:42:07.130Z time stats. avg diff: -63, min: -63, max: -63, roundtrip: 22 msec, #1
+[2025-09-20 17:42:33.424] INFO - 22:42:33.402Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:42:33.427] INFO - 22:42:33.402Z visibilitychange: hidden, gd: 1000
