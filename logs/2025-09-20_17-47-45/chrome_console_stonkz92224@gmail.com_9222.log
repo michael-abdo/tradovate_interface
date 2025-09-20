@@ -1,0 +1,1025 @@
+[2025-09-20 17:47:50.606] LOG - 22:47:50.604Z Starting login process for: stonkz92224@gmail.com
+[2025-09-20 17:47:50.607] LOG - 22:47:50.604Z Starting login process for: stonkz92224@gmail.com
+[2025-09-20 17:47:50.607] LOG - 22:47:50.605Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Login form found, filling credentials...
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Login form found, filling credentials...
+[2025-09-20 17:47:50.728] LOG - 22:47:50.629Z Test element added to DOM
+[2025-09-20 17:47:50.729] LOG - 22:47:50.629Z Test element added to DOM
+[2025-09-20 17:47:50.730] LOG - 22:47:50.729Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:47:50.731] LOG - 22:47:50.729Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:47:51.117] LOG - 22:47:51.116Z Clicking login button...
+[2025-09-20 17:47:51.118] LOG - 22:47:51.116Z Clicking login button...
+[2025-09-20 17:47:51.131] LOG - 22:47:51.126Z authentication starting
+[2025-09-20 17:47:51.131] LOG - 22:47:51.126Z authentication starting
+[2025-09-20 17:47:51.471] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:47:51.473] LOG - 22:47:51.453Z Watching for account selection page...
+[2025-09-20 17:47:51.474] LOG - 22:47:51.453Z Watching for account selection page...
+[2025-09-20 17:47:51.732] LOG - 22:47:51.731Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:51 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:51.732] LOG - 22:47:51.731Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:51 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.126] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:52.129] ERROR - 22:47:52.115Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.130] ERROR - 22:47:52.115Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.132] ERROR - 22:47:52.117Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.134] ERROR - 22:47:52.117Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.135] ERROR - 22:47:52.118Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.136] ERROR - 22:47:52.118Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.136] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:52.136] ERROR - Exception: t
+[2025-09-20 17:47:52.136] ERROR - Exception: t
+[2025-09-20 17:47:52.137] ERROR - Exception: t
+[2025-09-20 17:47:53.454] LOG - 22:47:53.453Z Account selection page detected, clicking button...
+[2025-09-20 17:47:53.454] LOG - 22:47:53.453Z Account selection page detected, clicking button...
+[2025-09-20 17:47:53.587] LOG - 22:47:53.563Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:53 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:53.587] LOG - 22:47:53.563Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:53 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:54.407] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=e24890eb-5603-4c89-8063-183ae3017bca&bo=2&sid=2801add0965411f09165ab2c93c38bf7&vid=2801c1c0965411f0afa211e8ba13cf6d&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-20 17:47:54.410] INFO - 22:47:54.403Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:47:54.411] INFO - 22:47:54.403Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:47:54.411] WARNING - 22:47:54.405Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 827 milliseconds.
+[2025-09-20 17:47:54.411] WARNING - 22:47:54.405Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 827 milliseconds.
+[2025-09-20 17:47:54.412] INFO - 22:47:54.405Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:47:54.412] INFO - 22:47:54.405Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:47:54.609] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.611] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.612] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.613] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.614] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.615] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.615] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.617] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.617] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.618] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.620] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.622] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.622] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.623] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.624] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.625] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.626] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.627] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.629] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.630] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.631] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.635] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.636] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.636] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.638] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.638] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.638] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.639] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.640] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.641] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.642] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.642] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.642] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.642] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.642] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.643] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.643] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.643] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.643] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.643] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.644] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.644] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.644] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.644] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:54.644] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:47:54.644] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:47:54.644] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:47:54.645] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:47:54.645] INFO - Time: Sat Sep 20 2025 17:47:54 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:54.645] INFO - Time:
+[2025-09-20 17:47:54.698] LOG - 22:47:54.696Z Try to restore session
+[2025-09-20 17:47:54.699] LOG - 22:47:54.696Z Try to restore session
+[2025-09-20 17:47:54.699] LOG - 22:47:54.697Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:54 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:54.699] LOG - 22:47:54.697Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:54 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:54.704] WARNING - 22:47:54.703Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:47:54.704] WARNING - 22:47:54.703Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:47:54.708] INFO - 22:47:54.708Z chart cache state: islands=1, bars=395
+[2025-09-20 17:47:54.709] INFO - 22:47:54.708Z chart cache state: islands=1, bars=395
+[2025-09-20 17:47:54.709] INFO - 22:47:54.708Z Chart history database initialized
+[2025-09-20 17:47:54.709] INFO - 22:47:54.708Z Chart history database initialized
+[2025-09-20 17:47:54.717] INFO - 22:47:54.716Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:47:54.718] INFO - 22:47:54.716Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:47:54.718] INFO - 22:47:54.716Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:47:54.718] INFO - 22:47:54.716Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:47:55.409] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:55.409] ERROR - 22:47:55.409Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:55.410] ERROR - 22:47:55.409Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:55.411] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:55.418] ERROR - Exception: t
+[2025-09-20 17:47:55.456] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:55.458] ERROR - 22:47:55.456Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:55.459] ERROR - 22:47:55.456Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:55.459] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:55.460] ERROR - Exception: t
+[2025-09-20 17:47:56.117] LOG - 22:47:56.113Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:47:56.117] LOG - 22:47:56.113Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:47:56.122] LOG - 22:47:56.121Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:47:56.123] LOG - 22:47:56.121Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:47:56.193] LOG - 22:47:56.192Z websocket opened
+[2025-09-20 17:47:56.193] LOG - 22:47:56.192Z websocket opened
+[2025-09-20 17:47:56.297] LOG - 22:47:56.295Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:47:56.297] LOG - 22:47:56.295Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:47:56.298] LOG - 22:47:56.296Z Connection:  open
+[2025-09-20 17:47:56.298] LOG - 22:47:56.296Z Connection:  open
+[2025-09-20 17:47:56.351] LOG - 22:47:56.349Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:47:56.354] LOG - 22:47:56.350Z Canvas size: 1258 933 dpp:  2
+[2025-09-20 17:47:56.367] LOG - 22:47:56.361Z Loading App-level Plugins
+[2025-09-20 17:47:56.373] LOG - 22:47:56.361Z Loading App-level Plugins
+[2025-09-20 17:47:56.381] LOG - 22:47:56.375Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:47:56.384] LOG - 22:47:56.376Z Canvas size: 1258 933 dpp:  2
+[2025-09-20 17:47:56.476] LOG - 22:47:56.436Z websocket opened
+[2025-09-20 17:47:56.477] LOG - 22:47:56.436Z websocket opened
+[2025-09-20 17:47:56.500] LOG - 22:47:56.496Z loadAppLevelPlugins:  [object Object]
+[2025-09-20 17:47:56.501] LOG - 22:47:56.496Z loadAppLevelPlugins: 
+[2025-09-20 17:47:56.656] LOG - 22:47:56.655Z sync to remote accountGroups
+[2025-09-20 17:47:56.656] LOG - 22:47:56.655Z sync to remote accountGroups
+[2025-09-20 17:47:57.427] LOG - 22:47:57.426Z jailing is in progress
+[2025-09-20 17:47:57.428] LOG - 22:47:57.426Z jailing is in progress
+[2025-09-20 17:47:57.492] LOG - 22:47:57.490Z created chart 1
+[2025-09-20 17:47:57.741] LOG - 22:47:57.740Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":392}}
+[2025-09-20 17:47:57.742] LOG - 22:47:57.740Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":392}}
+[2025-09-20 17:47:57.742] LOG - 22:47:57.740Z mdMgApi open
+[2025-09-20 17:47:57.743] LOG - 22:47:57.740Z mdMgApi open
+[2025-09-20 17:47:57.744] LOG - 22:47:57.742Z pending jailing done. next starts
+[2025-09-20 17:47:57.744] LOG - 22:47:57.742Z pending jailing done. next starts
+[2025-09-20 17:47:58.836] LOG - 22:47:58.835Z updating the shared isolation
+[2025-09-20 17:47:58.837] LOG - 22:47:58.835Z updating the shared isolation
+[2025-09-20 17:47:59.154] LOG - 22:47:59.153Z updating the shared isolation
+[2025-09-20 17:47:59.154] LOG - 22:47:59.153Z updating the shared isolation
+[2025-09-20 17:48:00.622] LOG - 22:48:00.621Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:48:00.623] LOG - 22:48:00.621Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:48:00.623] LOG - 22:48:00.622Z Creating UI...
+[2025-09-20 17:48:00.624] LOG - 22:48:00.622Z Creating UI...
+[2025-09-20 17:48:00.624] LOG - 22:48:00.622Z Creating UI
+[2025-09-20 17:48:00.624] LOG - 22:48:00.622Z Creating UI
+[2025-09-20 17:48:00.624] LOG - 22:48:00.622Z Stored values: TP=120, SL=40, Qty=30, Tick=0.25, Symbol=NQ
+[2025-09-20 17:48:00.624] LOG - 22:48:00.622Z Stored values: TP=120, SL=40, Qty=30, Tick=0.25, Symbol=NQ
+[2025-09-20 17:48:00.625] LOG - 22:48:00.624Z UI container added to DOM
+[2025-09-20 17:48:00.625] LOG - 22:48:00.624Z UI container added to DOM
+[2025-09-20 17:48:00.626] LOG - 22:48:00.624Z Setting up UI event handlers
+[2025-09-20 17:48:00.626] LOG - 22:48:00.624Z Setting up UI event handlers
+[2025-09-20 17:48:00.627] LOG - 22:48:00.624Z Setting up persistent settings
+[2025-09-20 17:48:00.628] LOG - 22:48:00.624Z Setting up persistent settings
+[2025-09-20 17:48:00.629] LOG - 22:48:00.624Z Setting up drag functionality
+[2025-09-20 17:48:00.629] LOG - 22:48:00.624Z Setting up drag functionality
+[2025-09-20 17:48:00.630] LOG - 22:48:00.624Z Setting up trade buttons
+[2025-09-20 17:48:00.630] LOG - 22:48:00.624Z Setting up trade buttons
+[2025-09-20 17:48:00.631] LOG - 22:48:00.624Z UI creation complete
+[2025-09-20 17:48:00.631] LOG - 22:48:00.624Z UI creation complete
+[2025-09-20 17:48:00.631] LOG - 22:48:00.624Z Creating example front-quarter symbol
+[2025-09-20 17:48:00.631] LOG - 22:48:00.624Z Creating example front-quarter symbol
+[2025-09-20 17:48:00.631] LOG - 22:48:00.625Z getQuarterlyCode called with date: 2025-09-20T22:48:00.624Z
+[2025-09-20 17:48:00.631] LOG - 22:48:00.625Z getQuarterlyCode called with date: 2025-09-20T22:48:00.624Z
+[2025-09-20 17:48:00.631] LOG - 22:48:00.625Z Current month index: 8
+[2025-09-20 17:48:00.631] LOG - 22:48:00.625Z Current month index: 8
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:48:00.632] LOG - 22:48:00.625Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:48:00.639] LOG - 22:48:00.638Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:48:00.640] LOG - 22:48:00.638Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:48:00.641] LOG - 22:48:00.639Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:00.641] LOG - 22:48:00.639Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:00.642] LOG - 22:48:00.639Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:00.643] LOG - 22:48:00.639Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:00.644] LOG - 22:48:00.639Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:00.644] LOG - 22:48:00.639Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:00.645] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:48:00.645] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:48:00.646] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-20 17:48:00.647] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-20 17:48:00.647] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-20 17:48:00.648] LOG - 22:48:00.640Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-20 17:48:00.648] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:00.649] LOG - 22:48:00.641Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-20 17:48:00.650] LOG - 22:48:00.641Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-20 17:48:00.650] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=2, active=true
+[2025-09-20 17:48:00.650] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=2, active=true
+[2025-09-20 17:48:00.651] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=false
+[2025-09-20 17:48:00.651] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=false
+[2025-09-20 17:48:00.651] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Completed
+[2025-09-20 17:48:00.651] LOG - 22:48:00.642Z [updateUserColumnPhaseStatus] Completed
+[2025-09-20 17:48:00.663] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:48:00.663] LOG - 22:48:00.652Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:48:00.663] LOG - 22:48:00.652Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:48:01.667] LOG - 22:48:01.665Z Executing initial risk management assessment...
+[2025-09-20 17:48:01.668] LOG - 22:48:01.665Z Executing initial risk management assessment...
+[2025-09-20 17:48:01.671] ERROR - 22:48:01.666Z getTableData function not found
+[2025-09-20 17:48:01.671] ERROR - 22:48:01.666Z getTableData function not found
+[2025-09-20 17:48:01.672] ERROR - 22:48:01.666Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:48:01.672] ERROR - 22:48:01.666Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:48:01.672] ERROR - 22:48:01.666Z performAccountActions function not found
+[2025-09-20 17:48:01.673] ERROR - 22:48:01.666Z performAccountActions function not found
+[2025-09-20 17:48:01.673] LOG - 22:48:01.666Z Risk management assessment completed
+[2025-09-20 17:48:01.673] LOG - 22:48:01.666Z Risk management assessment completed
+[2025-09-20 17:48:01.695] LOG - 22:48:01.694Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.696] LOG - 22:48:01.694Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.697] LOG - 22:48:01.695Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.697] LOG - 22:48:01.695Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.697] LOG - 22:48:01.695Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:01.697] LOG - 22:48:01.695Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.198] LOG - 22:48:02.196Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.199] LOG - 22:48:02.196Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.201] LOG - 22:48:02.196Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.202] LOG - 22:48:02.196Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.203] LOG - 22:48:02.196Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.204] LOG - 22:48:02.196Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.205] LOG - 22:48:02.197Z Set DEMO3655059 qty to 20
+[2025-09-20 17:48:02.206] LOG - 22:48:02.197Z Set DEMO3655059-1 qty to 10
+[2025-09-20 17:48:02.207] LOG - 22:48:02.198Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.207] LOG - 22:48:02.198Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.207] LOG - 22:48:02.198Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.208] LOG - 22:48:02.198Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.208] LOG - 22:48:02.198Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.208] LOG - 22:48:02.198Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:03.744] LOG - 22:48:03.743Z Updated master quantity to 30
+[2025-09-20 17:48:03.746] LOG - 22:48:03.743Z Quantity input changed to: 30
+[2025-09-20 17:48:03.746] LOG - 22:48:03.743Z Quantity input changed to: 30
+[2025-09-20 17:48:03.747] LOG - 22:48:03.744Z Updated bracket trade quantity to 30
+[2025-09-20 17:48:15.816] LOG - 22:48:15.805Z Canvas size: 1258 964 dpp:  2
+[2025-09-20 17:48:15.986] LOG - 22:48:15.816Z Canvas size: 1258 964 dpp:  2
+[2025-09-20 17:48:16.016] LOG - 22:48:15.966Z Canvas size: 1258 998 dpp:  2
+[2025-09-20 17:48:16.017] LOG - 22:48:15.990Z Canvas size: 1258 998 dpp:  2
+[2025-09-20 17:48:19.509] LOG - 22:48:19.507Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:19.510] LOG - 22:48:19.507Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:19.510] LOG - 22:48:19.508Z Is root symbol: true
+[2025-09-20 17:48:19.512] LOG - 22:48:19.508Z Is root symbol: true
+[2025-09-20 17:48:19.513] LOG - 22:48:19.508Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:19.513] LOG - 22:48:19.508Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z getQuarterlyCode called with date: 2025-09-20T22:48:19.508Z
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z getQuarterlyCode called with date: 2025-09-20T22:48:19.508Z
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z Current month index: 8
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z Current month index: 8
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:19.514] LOG - 22:48:19.508Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:19.515] LOG - 22:48:19.508Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:19.548] LOG - 22:48:19.526Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:19.647] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:19.648] ERROR - 22:48:19.647Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.649] ERROR - 22:48:19.647Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.649] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:19.650] ERROR - Exception: t
+[2025-09-20 17:48:19.683] LOG - 22:48:19.657Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:19.744] LOG - 22:48:19.743Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:19.776] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:19.777] ERROR - 22:48:19.775Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.777] ERROR - 22:48:19.775Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.777] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:19.778] ERROR - Exception: t
+[2025-09-20 17:48:20.659] LOG - 22:48:20.658Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:20.662] LOG - 22:48:20.658Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:20.662] LOG - 22:48:20.658Z Is root symbol: true
+[2025-09-20 17:48:20.663] LOG - 22:48:20.658Z Is root symbol: true
+[2025-09-20 17:48:20.664] LOG - 22:48:20.658Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:20.664] LOG - 22:48:20.658Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:20.664] LOG - 22:48:20.658Z getQuarterlyCode called with date: 2025-09-20T22:48:20.658Z
+[2025-09-20 17:48:20.665] LOG - 22:48:20.658Z getQuarterlyCode called with date: 2025-09-20T22:48:20.658Z
+[2025-09-20 17:48:20.665] LOG - 22:48:20.658Z Current month index: 8
+[2025-09-20 17:48:20.665] LOG - 22:48:20.658Z Current month index: 8
+[2025-09-20 17:48:20.665] LOG - 22:48:20.658Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:20.665] LOG - 22:48:20.658Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:20.666] LOG - 22:48:20.658Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.666] LOG - 22:48:20.658Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.666] LOG - 22:48:20.658Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.666] LOG - 22:48:20.658Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.666] LOG - 22:48:20.658Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:20.667] LOG - 22:48:20.658Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:20.667] LOG - 22:48:20.659Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:20.667] LOG - 22:48:20.659Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:20.826] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:20.826] ERROR - 22:48:20.802Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.827] ERROR - 22:48:20.802Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.827] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:20.827] ERROR - Exception: t
+[2025-09-20 17:48:20.918] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:20.919] ERROR - 22:48:20.917Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.919] ERROR - 22:48:20.917Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.919] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:20.920] ERROR - Exception: t
+[2025-09-20 17:48:21.957] LOG - 22:48:21.956Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:21.959] LOG - 22:48:21.956Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:21.959] LOG - 22:48:21.957Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:21.960] LOG - 22:48:21.957Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:21.961] LOG - 22:48:21.957Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:21.962] LOG - 22:48:21.957Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:21.963] LOG - 22:48:21.957Z No position data found for NQ
+[2025-09-20 17:48:21.964] LOG - 22:48:21.957Z No position data found for NQ
+[2025-09-20 17:48:21.964] LOG - 22:48:21.958Z No open position found for NQ
+[2025-09-20 17:48:21.965] LOG - 22:48:21.958Z No open position found for NQ
+[2025-09-20 17:48:23.531] LOG - 22:48:23.530Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:23.532] LOG - 22:48:23.530Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:23.533] LOG - 22:48:23.531Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:23.534] LOG - 22:48:23.531Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:23.536] LOG - 22:48:23.531Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:23.538] LOG - 22:48:23.531Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:23.539] LOG - 22:48:23.531Z No position data found for NQ
+[2025-09-20 17:48:23.539] LOG - 22:48:23.531Z No position data found for NQ
+[2025-09-20 17:48:23.540] LOG - 22:48:23.531Z No open position found for NQ
+[2025-09-20 17:48:23.541] LOG - 22:48:23.531Z No open position found for NQ
+[2025-09-20 17:48:24.884] LOG - 22:48:24.883Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:24.885] LOG - 22:48:24.883Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:24.885] LOG - 22:48:24.883Z Is root symbol: true
+[2025-09-20 17:48:24.886] LOG - 22:48:24.883Z Is root symbol: true
+[2025-09-20 17:48:24.887] LOG - 22:48:24.883Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:24.888] LOG - 22:48:24.883Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:24.889] LOG - 22:48:24.883Z getQuarterlyCode called with date: 2025-09-20T22:48:24.883Z
+[2025-09-20 17:48:24.889] LOG - 22:48:24.883Z getQuarterlyCode called with date: 2025-09-20T22:48:24.883Z
+[2025-09-20 17:48:24.890] LOG - 22:48:24.883Z Current month index: 8
+[2025-09-20 17:48:24.891] LOG - 22:48:24.883Z Current month index: 8
+[2025-09-20 17:48:24.891] LOG - 22:48:24.883Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:24.891] LOG - 22:48:24.883Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:24.891] LOG - 22:48:24.883Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.891] LOG - 22:48:24.883Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:24.892] LOG - 22:48:24.884Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:24.922] LOG - 22:48:24.897Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:25.054] LOG - 22:48:25.024Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:25.056] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:25.056] ERROR - 22:48:25.052Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.057] ERROR - 22:48:25.052Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.057] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:25.057] ERROR - Exception: t
+[2025-09-20 17:48:25.109] LOG - 22:48:25.108Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:25.147] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:25.148] ERROR - 22:48:25.146Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.149] ERROR - 22:48:25.146Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.149] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:25.150] ERROR - Exception: t
+[2025-09-20 17:48:28.142] LOG - 22:48:28.141Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.143] LOG - 22:48:28.141Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.143] LOG - 22:48:28.141Z Is root symbol: true
+[2025-09-20 17:48:28.144] LOG - 22:48:28.141Z Is root symbol: true
+[2025-09-20 17:48:28.144] LOG - 22:48:28.141Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.146] LOG - 22:48:28.141Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.147] LOG - 22:48:28.141Z getQuarterlyCode called with date: 2025-09-20T22:48:28.141Z
+[2025-09-20 17:48:28.148] LOG - 22:48:28.141Z getQuarterlyCode called with date: 2025-09-20T22:48:28.141Z
+[2025-09-20 17:48:28.149] LOG - 22:48:28.141Z Current month index: 8
+[2025-09-20 17:48:28.150] LOG - 22:48:28.141Z Current month index: 8
+[2025-09-20 17:48:28.151] LOG - 22:48:28.141Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.152] LOG - 22:48:28.141Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.153] LOG - 22:48:28.141Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.155] LOG - 22:48:28.141Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.155] LOG - 22:48:28.141Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.156] LOG - 22:48:28.141Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.158] LOG - 22:48:28.141Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.158] LOG - 22:48:28.141Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.160] LOG - 22:48:28.141Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.160] LOG - 22:48:28.141Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.161] LOG - 22:48:28.145Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:28.850] LOG - 22:48:28.849Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.850] LOG - 22:48:28.849Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.851] LOG - 22:48:28.849Z Is root symbol: true
+[2025-09-20 17:48:28.852] LOG - 22:48:28.849Z Is root symbol: true
+[2025-09-20 17:48:28.854] LOG - 22:48:28.849Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.855] LOG - 22:48:28.849Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.856] LOG - 22:48:28.849Z getQuarterlyCode called with date: 2025-09-20T22:48:28.849Z
+[2025-09-20 17:48:28.857] LOG - 22:48:28.849Z getQuarterlyCode called with date: 2025-09-20T22:48:28.849Z
+[2025-09-20 17:48:28.858] LOG - 22:48:28.850Z Current month index: 8
+[2025-09-20 17:48:28.859] LOG - 22:48:28.850Z Current month index: 8
+[2025-09-20 17:48:28.860] LOG - 22:48:28.850Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.861] LOG - 22:48:28.850Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.862] LOG - 22:48:28.850Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.863] LOG - 22:48:28.850Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.864] LOG - 22:48:28.850Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.865] LOG - 22:48:28.850Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.866] LOG - 22:48:28.850Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.867] LOG - 22:48:28.850Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.868] LOG - 22:48:28.850Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.868] LOG - 22:48:28.850Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.869] LOG - 22:48:28.851Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:29.432] LOG - 22:48:29.431Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:29.433] LOG - 22:48:29.431Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:29.434] LOG - 22:48:29.431Z Is root symbol: true
+[2025-09-20 17:48:29.435] LOG - 22:48:29.431Z Is root symbol: true
+[2025-09-20 17:48:29.436] LOG - 22:48:29.431Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:29.437] LOG - 22:48:29.431Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:29.438] LOG - 22:48:29.431Z getQuarterlyCode called with date: 2025-09-20T22:48:29.431Z
+[2025-09-20 17:48:29.438] LOG - 22:48:29.431Z getQuarterlyCode called with date: 2025-09-20T22:48:29.431Z
+[2025-09-20 17:48:29.438] LOG - 22:48:29.431Z Current month index: 8
+[2025-09-20 17:48:29.439] LOG - 22:48:29.431Z Current month index: 8
+[2025-09-20 17:48:29.439] LOG - 22:48:29.431Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:29.439] LOG - 22:48:29.431Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:29.439] LOG - 22:48:29.432Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.439] LOG - 22:48:29.432Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.439] LOG - 22:48:29.432Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.440] LOG - 22:48:29.432Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.440] LOG - 22:48:29.432Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:29.440] LOG - 22:48:29.432Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:29.440] LOG - 22:48:29.432Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:29.440] LOG - 22:48:29.432Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:29.606] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:29.606] ERROR - 22:48:29.603Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.607] ERROR - 22:48:29.603Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.607] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:29.607] ERROR - Exception: t
+[2025-09-20 17:48:29.700] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:29.702] ERROR - 22:48:29.698Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.702] ERROR - 22:48:29.698Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.702] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:29.703] ERROR - Exception: t
+[2025-09-20 17:48:30.256] LOG - 22:48:30.255Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:30.257] LOG - 22:48:30.255Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:30.258] LOG - 22:48:30.255Z Is root symbol: true
+[2025-09-20 17:48:30.258] LOG - 22:48:30.255Z Is root symbol: true
+[2025-09-20 17:48:30.259] LOG - 22:48:30.256Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:30.260] LOG - 22:48:30.256Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:30.261] LOG - 22:48:30.256Z getQuarterlyCode called with date: 2025-09-20T22:48:30.256Z
+[2025-09-20 17:48:30.261] LOG - 22:48:30.256Z getQuarterlyCode called with date: 2025-09-20T22:48:30.256Z
+[2025-09-20 17:48:30.262] LOG - 22:48:30.256Z Current month index: 8
+[2025-09-20 17:48:30.262] LOG - 22:48:30.256Z Current month index: 8
+[2025-09-20 17:48:30.262] LOG - 22:48:30.256Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:30.262] LOG - 22:48:30.256Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:30.263] LOG - 22:48:30.256Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:30.264] LOG - 22:48:30.256Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:30.301] LOG - 22:48:30.265Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:30.436] LOG - 22:48:30.398Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:30.440] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:30.444] ERROR - 22:48:30.438Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.447] ERROR - 22:48:30.438Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.447] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:30.448] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.448] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.448] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.448] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.448] ERROR - Exception: t
+[2025-09-20 17:48:30.488] LOG - 22:48:30.486Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:30.537] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:30.539] ERROR - 22:48:30.536Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.540] ERROR - 22:48:30.536Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.545] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:30.547] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.548] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.549] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.549] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.549] ERROR - Exception: t
+[2025-09-20 17:48:30.983] LOG - 22:48:30.982Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:30.984] LOG - 22:48:30.982Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:30.985] LOG - 22:48:30.982Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:30.987] LOG - 22:48:30.982Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:30.989] LOG - 22:48:30.982Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:30.991] LOG - 22:48:30.982Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:30.992] LOG - 22:48:30.982Z No position data found for NQ
+[2025-09-20 17:48:30.993] LOG - 22:48:30.982Z No position data found for NQ
+[2025-09-20 17:48:30.994] LOG - 22:48:30.982Z No open position found for NQ
+[2025-09-20 17:48:30.995] LOG - 22:48:30.982Z No open position found for NQ
+[2025-09-20 17:48:31.588] LOG - 22:48:31.586Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:31.589] LOG - 22:48:31.586Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:31.590] LOG - 22:48:31.586Z Is root symbol: true
+[2025-09-20 17:48:31.590] LOG - 22:48:31.586Z Is root symbol: true
+[2025-09-20 17:48:31.592] LOG - 22:48:31.587Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:31.593] LOG - 22:48:31.587Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z getQuarterlyCode called with date: 2025-09-20T22:48:31.587Z
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z getQuarterlyCode called with date: 2025-09-20T22:48:31.587Z
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z Current month index: 8
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z Current month index: 8
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:31.594] LOG - 22:48:31.587Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:31.595] LOG - 22:48:31.587Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:31.596] LOG - 22:48:31.587Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:31.623] LOG - 22:48:31.598Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:31.715] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:31.717] ERROR - 22:48:31.715Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.720] ERROR - 22:48:31.715Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.722] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:31.722] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.722] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.723] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.723] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.723] ERROR - Exception: t
+[2025-09-20 17:48:31.768] LOG - 22:48:31.727Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:31.810] LOG - 22:48:31.809Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:31.865] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:31.867] ERROR - 22:48:31.864Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.873] ERROR - 22:48:31.864Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.874] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:31.874] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.875] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.875] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.875] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.876] ERROR - Exception: t
+[2025-09-20 17:48:32.765] LOG - 22:48:32.763Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:32.765] LOG - 22:48:32.763Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:32.767] LOG - 22:48:32.763Z Is root symbol: true
+[2025-09-20 17:48:32.768] LOG - 22:48:32.763Z Is root symbol: true
+[2025-09-20 17:48:32.769] LOG - 22:48:32.764Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:32.770] LOG - 22:48:32.764Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:32.771] LOG - 22:48:32.764Z getQuarterlyCode called with date: 2025-09-20T22:48:32.764Z
+[2025-09-20 17:48:32.772] LOG - 22:48:32.764Z getQuarterlyCode called with date: 2025-09-20T22:48:32.764Z
+[2025-09-20 17:48:32.773] LOG - 22:48:32.764Z Current month index: 8
+[2025-09-20 17:48:32.774] LOG - 22:48:32.764Z Current month index: 8
+[2025-09-20 17:48:32.775] LOG - 22:48:32.764Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:32.776] LOG - 22:48:32.764Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:32.777] LOG - 22:48:32.764Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.778] LOG - 22:48:32.764Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.779] LOG - 22:48:32.764Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.780] LOG - 22:48:32.764Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.781] LOG - 22:48:32.764Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:32.782] LOG - 22:48:32.764Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:32.783] LOG - 22:48:32.764Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:32.783] LOG - 22:48:32.764Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:32.783] LOG - 22:48:32.767Z orders-to-cancel:  [object Object] true
+[2025-09-20 17:48:35.848] LOG - 22:48:35.847Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:35.849] LOG - 22:48:35.847Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:35.850] LOG - 22:48:35.847Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:35.851] LOG - 22:48:35.847Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:35.853] LOG - 22:48:35.847Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:35.854] LOG - 22:48:35.847Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:35.854] LOG - 22:48:35.847Z No position data found for NQ
+[2025-09-20 17:48:35.855] LOG - 22:48:35.847Z No position data found for NQ
+[2025-09-20 17:48:35.856] LOG - 22:48:35.847Z No open position found for NQ
+[2025-09-20 17:48:35.856] LOG - 22:48:35.847Z No open position found for NQ
+[2025-09-20 17:48:38.651] LOG - 22:48:38.649Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=100, SL=40, tickSize=0.25
+[2025-09-20 17:48:38.652] LOG - 22:48:38.649Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=100, SL=40, tickSize=0.25
+[2025-09-20 17:48:38.653] LOG - 22:48:38.650Z Using symbol: NQ
+[2025-09-20 17:48:38.654] LOG - 22:48:38.650Z Using symbol: NQ
+[2025-09-20 17:48:38.655] LOG - 22:48:38.650Z Root symbol: NQ
+[2025-09-20 17:48:38.655] LOG - 22:48:38.650Z Root symbol: NQ
+[2025-09-20 17:48:38.656] LOG - 22:48:38.650Z Using tick size 0.25 (from dictionary)
+[2025-09-20 17:48:38.657] LOG - 22:48:38.650Z Using tick size 0.25 (from dictionary)
+[2025-09-20 17:48:38.658] LOG - 22:48:38.650Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-20 17:48:38.658] LOG - 22:48:38.650Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-20 17:48:38.659] LOG - 22:48:38.650Z Getting market data for NQ
+[2025-09-20 17:48:38.660] LOG - 22:48:38.650Z Getting market data for NQ
+[2025-09-20 17:48:38.660] LOG - 22:48:38.650Z getMarketData called for: "NQ"
+[2025-09-20 17:48:38.661] LOG - 22:48:38.650Z getMarketData called for: "NQ"
+[2025-09-20 17:48:38.662] LOG - 22:48:38.651Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:38.663] LOG - 22:48:38.651Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:38.664] LOG - 22:48:38.651Z getQuarterlyCode called with date: 2025-09-20T22:48:38.651Z
+[2025-09-20 17:48:38.665] LOG - 22:48:38.651Z getQuarterlyCode called with date: 2025-09-20T22:48:38.651Z
+[2025-09-20 17:48:38.666] LOG - 22:48:38.651Z Current month index: 8
+[2025-09-20 17:48:38.666] LOG - 22:48:38.651Z Current month index: 8
+[2025-09-20 17:48:38.667] LOG - 22:48:38.651Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:38.667] LOG - 22:48:38.651Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:38.668] LOG - 22:48:38.651Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.669] LOG - 22:48:38.651Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.669] LOG - 22:48:38.651Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.669] LOG - 22:48:38.651Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.669] LOG - 22:48:38.651Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Extracted prices for NQZ5: bid=24853.75, offer=24868.75
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Extracted prices for NQZ5: bid=24853.75, offer=24868.75
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Market data: [object Object]
+[2025-09-20 17:48:38.670] LOG - 22:48:38.651Z Market data:
+[2025-09-20 17:48:38.671] LOG - 22:48:38.652Z Market price: 24868.75 (offer price)
+[2025-09-20 17:48:38.671] LOG - 22:48:38.652Z Market price: 24868.75 (offer price)
+[2025-09-20 17:48:38.671] LOG - 22:48:38.652Z No custom entry price provided, using market order at 24868.75
+[2025-09-20 17:48:38.671] LOG - 22:48:38.652Z No custom entry price provided, using market order at 24868.75
+[2025-09-20 17:48:38.671] LOG - 22:48:38.652Z Using price precision: 2 decimal places
+[2025-09-20 17:48:38.672] LOG - 22:48:38.652Z Using price precision: 2 decimal places
+[2025-09-20 17:48:38.672] LOG - 22:48:38.652Z Calculated SL price: 24858.75 (entry - 40 ticks)
+[2025-09-20 17:48:38.673] LOG - 22:48:38.652Z Calculated SL price: 24858.75 (entry - 40 ticks)
+[2025-09-20 17:48:38.673] LOG - 22:48:38.652Z Calculated TP price: 24893.75 (entry + 100 ticks)
+[2025-09-20 17:48:38.673] LOG - 22:48:38.652Z Calculated TP price: 24893.75 (entry + 100 ticks)
+[2025-09-20 17:48:38.673] LOG - 22:48:38.652Z Trade data prepared: [object Object]
+[2025-09-20 17:48:38.673] LOG - 22:48:38.652Z Trade data prepared:
+[2025-09-20 17:48:38.674] LOG - 22:48:38.652Z Submitting bracket orders
+[2025-09-20 17:48:38.675] LOG - 22:48:38.652Z Submitting bracket orders
+[2025-09-20 17:48:38.676] LOG - 22:48:38.652Z Creating bracket orders with data: [object Object]
+[2025-09-20 17:48:38.676] LOG - 22:48:38.652Z Creating bracket orders with data:
+[2025-09-20 17:48:38.677] LOG - 22:48:38.653Z TP enabled: true, SL enabled: true
+[2025-09-20 17:48:38.678] LOG - 22:48:38.653Z TP enabled: true, SL enabled: true
+[2025-09-20 17:48:38.679] LOG - 22:48:38.653Z Submitting initial MARKET order
+[2025-09-20 17:48:38.680] LOG - 22:48:38.653Z Submitting initial MARKET order
+[2025-09-20 17:48:38.680] LOG - 22:48:38.653Z Setting common order fields
+[2025-09-20 17:48:38.681] LOG - 22:48:38.653Z Setting common order fields
+[2025-09-20 17:48:38.682] LOG - 22:48:38.653Z Setting action to: Buy
+[2025-09-20 17:48:38.683] LOG - 22:48:38.653Z Setting action to: Buy
+[2025-09-20 17:48:38.684] LOG - 22:48:38.653Z Found 9 action labels
+[2025-09-20 17:48:38.685] LOG - 22:48:38.653Z Found 9 action labels
+[2025-09-20 17:48:38.685] LOG - 22:48:38.653Z Clicking Buy label
+[2025-09-20 17:48:38.686] LOG - 22:48:38.653Z Clicking Buy label
+[2025-09-20 17:48:38.687] LOG - 22:48:38.656Z Setting quantity to: 1
+[2025-09-20 17:48:38.688] LOG - 22:48:38.656Z Setting quantity to: 1
+[2025-09-20 17:48:38.689] LOG - 22:48:38.671Z Delaying for 250ms
+[2025-09-20 17:48:38.689] LOG - 22:48:38.671Z Delaying for 250ms
+[2025-09-20 17:48:38.942] LOG - 22:48:38.941Z Delaying for 200ms
+[2025-09-20 17:48:38.942] LOG - 22:48:38.941Z Delaying for 200ms
+[2025-09-20 17:48:39.143] LOG - 22:48:39.142Z [object Object],[object Object],[object Object]
+[2025-09-20 17:48:39.144] LOG - 22:48:39.142Z
+[2025-09-20 17:48:39.145] LOG - 22:48:39.143Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:39.145] LOG - 22:48:39.143Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:39.145] LOG - 22:48:39.143Z Delaying for 500ms
+[2025-09-20 17:48:39.145] LOG - 22:48:39.143Z Delaying for 500ms
+[2025-09-20 17:48:39.650] LOG - 22:48:39.647Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:39.651] LOG - 22:48:39.647Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:39.652] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:39.659] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:39.665] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:39.666] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:39.667] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:39.668] LOG - 22:48:39.648Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:39.668] LOG - 22:48:39.648Z 📊 EVENT 1: [object Object]
+[2025-09-20 17:48:39.669] LOG - 22:48:39.648Z 📊 EVENT 1:
+[2025-09-20 17:48:39.669] LOG - 22:48:39.649Z 📊 EVENT 2: [object Object]
+[2025-09-20 17:48:39.669] LOG - 22:48:39.649Z 📊 EVENT 2:
+[2025-09-20 17:48:39.669] LOG - 22:48:39.649Z 📊 EVENT 3: [object Object]
+[2025-09-20 17:48:39.669] LOG - 22:48:39.649Z 📊 EVENT 3:
+[2025-09-20 17:48:39.670] LOG - 22:48:39.649Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:39.670] LOG - 22:48:39.649Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:39.670] LOG - 22:48:39.650Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029048 </small><span class="text-success">Buy</span> 1 NQZ5 MKT  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.032Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029048" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029048</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Buy 1 MKT" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Buy 1 MKT</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.035Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029049" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029049</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.036Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029050" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029050</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:39.672] LOG - 22:48:39.650Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029048 </small><span class="text-success">Buy</span> 1 NQZ5 MKT  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.032Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029048" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029048</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Buy 1 MKT" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Buy 1 MKT</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.035Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029049" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029049</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:39.036Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:39 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029050" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029050</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:39.673] LOG - 22:48:39.650Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:39.673] LOG - 22:48:39.650Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:39.674] LOG - 22:48:39.650Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:39.674] LOG - 22:48:39.650Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:39.674] LOG - 22:48:39.650Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:39.674] LOG - 22:48:39.650Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:39.674] LOG - 22:48:39.657Z Delaying for 200ms
+[2025-09-20 17:48:39.674] LOG - 22:48:39.657Z Delaying for 200ms
+[2025-09-20 17:48:39.861] LOG - 22:48:39.858Z Flipping action to Sell for TP/SL orders
+[2025-09-20 17:48:39.862] LOG - 22:48:39.858Z Flipping action to Sell for TP/SL orders
+[2025-09-20 17:48:39.862] LOG - 22:48:39.858Z Creating take profit order at 24893.75
+[2025-09-20 17:48:39.862] LOG - 22:48:39.858Z Creating take profit order at 24893.75
+[2025-09-20 17:48:39.863] LOG - 22:48:39.858Z Setting common order fields
+[2025-09-20 17:48:39.863] LOG - 22:48:39.858Z Setting common order fields
+[2025-09-20 17:48:39.863] LOG - 22:48:39.858Z Setting action to: Sell
+[2025-09-20 17:48:39.863] LOG - 22:48:39.858Z Setting action to: Sell
+[2025-09-20 17:48:39.863] LOG - 22:48:39.859Z Found 9 action labels
+[2025-09-20 17:48:39.863] LOG - 22:48:39.859Z Found 9 action labels
+[2025-09-20 17:48:39.864] LOG - 22:48:39.859Z Clicking Sell label
+[2025-09-20 17:48:39.864] LOG - 22:48:39.859Z Clicking Sell label
+[2025-09-20 17:48:39.871] LOG - 22:48:39.870Z Setting quantity to: 1
+[2025-09-20 17:48:39.872] LOG - 22:48:39.870Z Setting quantity to: 1
+[2025-09-20 17:48:39.873] LOG - 22:48:39.872Z Delaying for 150ms
+[2025-09-20 17:48:39.873] LOG - 22:48:39.872Z Delaying for 150ms
+[2025-09-20 17:48:40.037] LOG - 22:48:40.036Z Delaying for 150ms
+[2025-09-20 17:48:40.037] LOG - 22:48:40.036Z Delaying for 150ms
+[2025-09-20 17:48:40.190] LOG - 22:48:40.189Z Delaying for 250ms
+[2025-09-20 17:48:40.191] LOG - 22:48:40.189Z Delaying for 250ms
+[2025-09-20 17:48:40.464] LOG - 22:48:40.463Z Delaying for 250ms
+[2025-09-20 17:48:40.464] LOG - 22:48:40.463Z Delaying for 250ms
+[2025-09-20 17:48:40.727] LOG - 22:48:40.725Z Delaying for 200ms
+[2025-09-20 17:48:40.727] LOG - 22:48:40.725Z Delaying for 200ms
+[2025-09-20 17:48:40.929] LOG - 22:48:40.927Z [object Object],[object Object],[object Object]
+[2025-09-20 17:48:40.930] LOG - 22:48:40.927Z
+[2025-09-20 17:48:40.931] LOG - 22:48:40.928Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:40.931] LOG - 22:48:40.928Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:40.931] LOG - 22:48:40.928Z Delaying for 500ms
+[2025-09-20 17:48:40.931] LOG - 22:48:40.928Z Delaying for 500ms
+[2025-09-20 17:48:41.432] LOG - 22:48:41.430Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:41.434] LOG - 22:48:41.430Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:41.435] LOG - 22:48:41.430Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:41.436] LOG - 22:48:41.430Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:41.437] LOG - 22:48:41.431Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:41.438] LOG - 22:48:41.431Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:41.448] LOG - 22:48:41.431Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:41.449] LOG - 22:48:41.431Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:41.450] LOG - 22:48:41.431Z 📊 EVENT 1: [object Object]
+[2025-09-20 17:48:41.450] LOG - 22:48:41.431Z 📊 EVENT 1:
+[2025-09-20 17:48:41.451] LOG - 22:48:41.431Z 📊 EVENT 2: [object Object]
+[2025-09-20 17:48:41.451] LOG - 22:48:41.431Z 📊 EVENT 2:
+[2025-09-20 17:48:41.451] LOG - 22:48:41.432Z 📊 EVENT 3: [object Object]
+[2025-09-20 17:48:41.451] LOG - 22:48:41.432Z 📊 EVENT 3:
+[2025-09-20 17:48:41.451] LOG - 22:48:41.432Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:41.451] LOG - 22:48:41.432Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:41.452] LOG - 22:48:41.432Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029051 </small><span class="text-danger">Sell</span> 1 NQZ5 LMT at 24894.00  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.817Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029051" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029051</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 LMT at 24894.00" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 LMT at 24894.00</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.820Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029052" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029052</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.820Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029053" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029053</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:41.453] LOG - 22:48:41.432Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029051 </small><span class="text-danger">Sell</span> 1 NQZ5 LMT at 24894.00  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.817Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029051" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029051</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 LMT at 24894.00" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 LMT at 24894.00</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.820Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029052" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029052</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:40.820Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:40 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029053" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029053</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:41.456] LOG - 22:48:41.433Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:41.456] LOG - 22:48:41.433Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:41.456] LOG - 22:48:41.433Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:41.456] LOG - 22:48:41.433Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:41.457] LOG - 22:48:41.433Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:41.457] LOG - 22:48:41.433Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:41.457] LOG - 22:48:41.440Z Delaying for 200ms
+[2025-09-20 17:48:41.457] LOG - 22:48:41.440Z Delaying for 200ms
+[2025-09-20 17:48:41.643] LOG - 22:48:41.641Z Creating stop loss order at 24858.75
+[2025-09-20 17:48:41.644] LOG - 22:48:41.641Z Creating stop loss order at 24858.75
+[2025-09-20 17:48:41.646] LOG - 22:48:41.642Z Setting common order fields
+[2025-09-20 17:48:41.647] LOG - 22:48:41.642Z Setting common order fields
+[2025-09-20 17:48:41.647] LOG - 22:48:41.642Z Setting action to: Sell
+[2025-09-20 17:48:41.647] LOG - 22:48:41.642Z Setting action to: Sell
+[2025-09-20 17:48:41.648] LOG - 22:48:41.642Z Found 9 action labels
+[2025-09-20 17:48:41.648] LOG - 22:48:41.642Z Found 9 action labels
+[2025-09-20 17:48:41.648] LOG - 22:48:41.642Z Clicking Sell label
+[2025-09-20 17:48:41.648] LOG - 22:48:41.642Z Clicking Sell label
+[2025-09-20 17:48:41.648] LOG - 22:48:41.644Z Setting quantity to: 1
+[2025-09-20 17:48:41.648] LOG - 22:48:41.644Z Setting quantity to: 1
+[2025-09-20 17:48:41.649] LOG - 22:48:41.646Z Delaying for 150ms
+[2025-09-20 17:48:41.649] LOG - 22:48:41.646Z Delaying for 150ms
+[2025-09-20 17:48:41.813] LOG - 22:48:41.812Z Delaying for 150ms
+[2025-09-20 17:48:41.813] LOG - 22:48:41.812Z Delaying for 150ms
+[2025-09-20 17:48:41.965] LOG - 22:48:41.964Z Delaying for 250ms
+[2025-09-20 17:48:41.965] LOG - 22:48:41.964Z Delaying for 250ms
+[2025-09-20 17:48:42.239] LOG - 22:48:42.237Z Delaying for 250ms
+[2025-09-20 17:48:42.239] LOG - 22:48:42.237Z Delaying for 250ms
+[2025-09-20 17:48:42.503] LOG - 22:48:42.502Z Delaying for 200ms
+[2025-09-20 17:48:42.503] LOG - 22:48:42.502Z Delaying for 200ms
+[2025-09-20 17:48:42.704] LOG - 22:48:42.703Z [object Object],[object Object],[object Object]
+[2025-09-20 17:48:42.705] LOG - 22:48:42.703Z
+[2025-09-20 17:48:42.705] LOG - 22:48:42.703Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:42.705] LOG - 22:48:42.703Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:42.705] LOG - 22:48:42.703Z Delaying for 500ms
+[2025-09-20 17:48:42.705] LOG - 22:48:42.703Z Delaying for 500ms
+[2025-09-20 17:48:43.207] LOG - 22:48:43.205Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:43.208] LOG - 22:48:43.205Z ✅ Found order history div - capturing feedback...
+[2025-09-20 17:48:43.209] LOG - 22:48:43.205Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:43.210] LOG - 22:48:43.205Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 17:48:43.210] LOG - 22:48:43.205Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:43.211] LOG - 22:48:43.205Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 17:48:43.212] LOG - 22:48:43.206Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:43.212] LOG - 22:48:43.206Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 17:48:43.213] LOG - 22:48:43.206Z 📊 EVENT 1: [object Object]
+[2025-09-20 17:48:43.223] LOG - 22:48:43.206Z 📊 EVENT 1:
+[2025-09-20 17:48:43.225] LOG - 22:48:43.206Z 📊 EVENT 2: [object Object]
+[2025-09-20 17:48:43.225] LOG - 22:48:43.206Z 📊 EVENT 2:
+[2025-09-20 17:48:43.225] LOG - 22:48:43.206Z 📊 EVENT 3: [object Object]
+[2025-09-20 17:48:43.226] LOG - 22:48:43.206Z 📊 EVENT 3:
+[2025-09-20 17:48:43.226] LOG - 22:48:43.206Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:43.226] LOG - 22:48:43.206Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 17:48:43.226] LOG - 22:48:43.207Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029054 </small><span class="text-danger">Sell</span> 1 NQZ5 STP at 24859.00  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.597Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029054" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029054</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 STP at 24859.00" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 STP at 24859.00</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.600Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029055" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029055</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.602Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029056" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029056</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:43.229] LOG - 22:48:43.207Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141029054 </small><span class="text-danger">Sell</span> 1 NQZ5 STP at 24859.00  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 295px; width: 396px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 278px; width: 396px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 295px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 295px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 396px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.597Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029054" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029054</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 STP at 24859.00" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 STP at 24859.00</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.600Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029055" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029055</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 396px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 396px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 396px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T22:48:42.602Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 5:48:42 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141029056" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141029056</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 396px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 396px;"><div style="height: 15px; overflow: hidden; width: 396px; top: 278px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 396px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 179.804px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 17:48:43.230] LOG - 22:48:43.208Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:43.231] LOG - 22:48:43.208Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 17:48:43.231] LOG - 22:48:43.208Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:43.231] LOG - 22:48:43.208Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 17:48:43.231] LOG - 22:48:43.208Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:43.231] LOG - 22:48:43.208Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 17:48:43.231] LOG - 22:48:43.213Z Delaying for 200ms
+[2025-09-20 17:48:43.232] LOG - 22:48:43.213Z Delaying for 200ms
+[2025-09-20 17:48:43.416] LOG - 22:48:43.414Z Bracket order creation complete
+[2025-09-20 17:48:43.417] LOG - 22:48:43.414Z Bracket order creation complete
+[2025-09-20 17:48:44.243] LOG - 22:48:44.242Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:44.244] LOG - 22:48:44.242Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:44.245] LOG - 22:48:44.242Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:44.245] LOG - 22:48:44.242Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:44.246] LOG - 22:48:44.242Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:44.248] LOG - 22:48:44.242Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:44.249] LOG - 22:48:44.242Z No position data found for NQ
+[2025-09-20 17:48:44.250] LOG - 22:48:44.242Z No position data found for NQ
+[2025-09-20 17:48:44.250] LOG - 22:48:44.242Z No open position found for NQ
+[2025-09-20 17:48:44.251] LOG - 22:48:44.242Z No open position found for NQ
+[2025-09-20 17:48:46.190] LOG - 22:48:46.187Z Container mousedown event detected
+[2025-09-20 17:48:46.191] LOG - 22:48:46.187Z Container mousedown event detected
+[2025-09-20 17:48:46.191] LOG - 22:48:46.188Z Drag started at offset X:85, Y:233
+[2025-09-20 17:48:46.191] LOG - 22:48:46.188Z Drag started at offset X:85, Y:233
+[2025-09-20 17:48:46.274] LOG - 22:48:46.273Z Container drop position: Left:521px, Top:566px
+[2025-09-20 17:48:46.275] LOG - 22:48:46.273Z Container drop position: Left:521px, Top:566px
+[2025-09-20 17:48:46.276] LOG - 22:48:46.275Z Breakeven button clicked
+[2025-09-20 17:48:46.277] LOG - 22:48:46.275Z Breakeven button clicked
+[2025-09-20 17:48:46.278] LOG - 22:48:46.275Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:46.279] LOG - 22:48:46.275Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:46.279] LOG - 22:48:46.275Z Is root symbol: true
+[2025-09-20 17:48:46.280] LOG - 22:48:46.275Z Is root symbol: true
+[2025-09-20 17:48:46.281] LOG - 22:48:46.275Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:46.282] LOG - 22:48:46.275Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:46.283] LOG - 22:48:46.275Z getQuarterlyCode called with date: 2025-09-20T22:48:46.275Z
+[2025-09-20 17:48:46.283] LOG - 22:48:46.275Z getQuarterlyCode called with date: 2025-09-20T22:48:46.275Z
+[2025-09-20 17:48:46.284] LOG - 22:48:46.275Z Current month index: 8
+[2025-09-20 17:48:46.284] LOG - 22:48:46.275Z Current month index: 8
+[2025-09-20 17:48:46.285] LOG - 22:48:46.275Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:46.286] LOG - 22:48:46.275Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:46.286] LOG - 22:48:46.276Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:46.286] LOG - 22:48:46.276Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:46.287] LOG - 22:48:46.276Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:46.287] LOG - 22:48:46.276Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:46.287] LOG - 22:48:46.276Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:46.287] LOG - 22:48:46.276Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:46.287] LOG - 22:48:46.276Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:46.288] LOG - 22:48:46.276Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:46.288] LOG - 22:48:46.276Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:48:46.288] LOG - 22:48:46.276Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:48:46.288] LOG - 22:48:46.276Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:48:46.288] LOG - 22:48:46.276Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:48:46.289] LOG - 22:48:46.276Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:48:46.289] LOG - 22:48:46.276Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:48:46.289] LOG - 22:48:46.276Z No position data found for NQZ5
+[2025-09-20 17:48:46.289] LOG - 22:48:46.276Z No position data found for NQZ5
+[2025-09-20 17:48:46.289] LOG - 22:48:46.276Z No open position found for NQZ5
+[2025-09-20 17:48:46.290] LOG - 22:48:46.276Z No open position found for NQZ5
+[2025-09-20 17:48:46.290] LOG - 22:48:46.276Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:48:46.290] LOG - 22:48:46.276Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:48:47.075] LOG - 22:48:47.074Z Container mousedown event detected
+[2025-09-20 17:48:47.076] LOG - 22:48:47.074Z Container mousedown event detected
+[2025-09-20 17:48:47.076] LOG - 22:48:47.074Z Drag started at offset X:68, Y:244
+[2025-09-20 17:48:47.076] LOG - 22:48:47.074Z Drag started at offset X:68, Y:244
+[2025-09-20 17:48:47.158] LOG - 22:48:47.156Z Container drop position: Left:521px, Top:566px
+[2025-09-20 17:48:47.160] LOG - 22:48:47.156Z Container drop position: Left:521px, Top:566px
+[2025-09-20 17:48:47.160] LOG - 22:48:47.157Z Breakeven button clicked
+[2025-09-20 17:48:47.163] LOG - 22:48:47.157Z Breakeven button clicked
+[2025-09-20 17:48:47.164] LOG - 22:48:47.157Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:47.164] LOG - 22:48:47.157Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:47.165] LOG - 22:48:47.157Z Is root symbol: true
+[2025-09-20 17:48:47.166] LOG - 22:48:47.157Z Is root symbol: true
+[2025-09-20 17:48:47.166] LOG - 22:48:47.157Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:47.166] LOG - 22:48:47.157Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z getQuarterlyCode called with date: 2025-09-20T22:48:47.157Z
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z getQuarterlyCode called with date: 2025-09-20T22:48:47.157Z
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Current month index: 8
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Current month index: 8
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:47.167] LOG - 22:48:47.157Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:47.168] LOG - 22:48:47.157Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:47.168] LOG - 22:48:47.157Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:48:47.168] LOG - 22:48:47.158Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z No position data found for NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z No position data found for NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z No open position found for NQZ5
+[2025-09-20 17:48:47.169] LOG - 22:48:47.158Z No open position found for NQZ5
+[2025-09-20 17:48:47.170] LOG - 22:48:47.158Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:48:47.170] LOG - 22:48:47.158Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:48:54.732] INFO - 22:48:54.730Z time stats. avg diff: -66, min: -66, max: -66, roundtrip: 26 msec, #1
+[2025-09-20 17:48:54.732] INFO - 22:48:54.730Z time stats. avg diff: -66, min: -66, max: -66, roundtrip: 26 msec, #1
+[2025-09-20 17:49:20.055] INFO - 22:49:20.042Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:49:20.073] INFO - 22:49:20.042Z visibilitychange: hidden, gd: 1000

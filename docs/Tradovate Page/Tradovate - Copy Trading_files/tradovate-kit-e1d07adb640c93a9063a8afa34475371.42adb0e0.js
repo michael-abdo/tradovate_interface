@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktradovate_trader=self.webpackChunktradovate_trader||[]).push([[6877],{1968:()=>{}},a=>{var e;e=1968,a(a.s=e)}]);

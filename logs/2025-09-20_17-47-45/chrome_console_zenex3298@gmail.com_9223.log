@@ -1,0 +1,874 @@
+[2025-09-20 17:47:50.605] LOG - 22:47:50.604Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:47:50.606] LOG - 22:47:50.604Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:47:50.607] LOG - 22:47:50.605Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Login form found, filling credentials...
+[2025-09-20 17:47:50.608] LOG - 22:47:50.605Z Login form found, filling credentials...
+[2025-09-20 17:47:50.729] LOG - 22:47:50.629Z Test element added to DOM
+[2025-09-20 17:47:50.730] LOG - 22:47:50.629Z Test element added to DOM
+[2025-09-20 17:47:50.732] LOG - 22:47:50.730Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:47:50.733] LOG - 22:47:50.730Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:47:51.119] LOG - 22:47:51.118Z Clicking login button...
+[2025-09-20 17:47:51.119] LOG - 22:47:51.118Z Clicking login button...
+[2025-09-20 17:47:51.131] LOG - 22:47:51.127Z authentication starting
+[2025-09-20 17:47:51.131] LOG - 22:47:51.127Z authentication starting
+[2025-09-20 17:47:51.466] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:47:51.471] LOG - 22:47:51.453Z Watching for account selection page...
+[2025-09-20 17:47:51.472] LOG - 22:47:51.453Z Watching for account selection page...
+[2025-09-20 17:47:51.748] LOG - 22:47:51.747Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:51 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:51.748] LOG - 22:47:51.747Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:51 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.126] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:52.129] ERROR - 22:47:52.116Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.130] ERROR - 22:47:52.116Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.131] ERROR - 22:47:52.117Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.134] ERROR - 22:47:52.117Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:52.135] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:52.136] ERROR - Exception: t
+[2025-09-20 17:47:52.136] ERROR - Exception: t
+[2025-09-20 17:47:52.454] LOG - 22:47:52.454Z Account selection page detected, clicking button...
+[2025-09-20 17:47:52.455] LOG - 22:47:52.454Z Account selection page detected, clicking button...
+[2025-09-20 17:47:52.643] LOG - 22:47:52.619Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:52 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.644] LOG - 22:47:52.619Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:52 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.710] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=50a09192-0d4a-408c-90a3-bb8737acc3f1&bo=2&sid=49ffa650964611f0b1c77d72422fc1b9&vid=99c3288092fe11f0bc7275adc39e6add&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-20 17:47:52.710] INFO - 22:47:52.709Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:47:52.711] INFO - 22:47:52.709Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:47:52.714] WARNING - 22:47:52.712Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 765 milliseconds.
+[2025-09-20 17:47:52.715] WARNING - 22:47:52.712Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 765 milliseconds.
+[2025-09-20 17:47:52.716] INFO - 22:47:52.713Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:47:52.716] INFO - 22:47:52.713Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:47:52.872] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.873] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.874] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.875] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.877] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.877] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.878] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.881] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.882] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.884] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.886] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.887] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.889] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.891] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.892] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.894] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.895] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.895] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.896] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.897] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.898] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.899] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.900] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.901] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.902] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.903] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.904] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:47:52.905] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:47:52.905] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:47:52.905] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:47:52.905] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:47:52.905] INFO - Time: Sat Sep 20 2025 17:47:52 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.905] INFO - Time:
+[2025-09-20 17:47:52.964] LOG - 22:47:52.961Z Try to restore session
+[2025-09-20 17:47:52.964] LOG - 22:47:52.961Z Try to restore session
+[2025-09-20 17:47:52.964] LOG - 22:47:52.963Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:52 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.964] LOG - 22:47:52.963Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 19:07:51 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:47:52 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:47:52.969] WARNING - 22:47:52.969Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:47:52.970] WARNING - 22:47:52.969Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:47:52.979] INFO - 22:47:52.977Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:47:52.979] INFO - 22:47:52.977Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:47:52.979] INFO - 22:47:52.978Z Chart history database initialized
+[2025-09-20 17:47:52.979] INFO - 22:47:52.978Z Chart history database initialized
+[2025-09-20 17:47:52.984] INFO - 22:47:52.983Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:47:52.985] INFO - 22:47:52.983Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:47:52.985] INFO - 22:47:52.983Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:47:52.985] INFO - 22:47:52.983Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:47:53.522] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:53.522] ERROR - 22:47:53.520Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:53.523] ERROR - 22:47:53.520Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:53.523] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:53.525] ERROR - Exception: t
+[2025-09-20 17:47:53.624] LOG - 22:47:53.620Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:47:53.625] LOG - 22:47:53.620Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:47:53.629] LOG - 22:47:53.627Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:47:53.630] LOG - 22:47:53.627Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:47:53.718] LOG - 22:47:53.717Z websocket opened
+[2025-09-20 17:47:53.718] LOG - 22:47:53.717Z websocket opened
+[2025-09-20 17:47:53.779] LOG - 22:47:53.778Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:47:53.779] LOG - 22:47:53.778Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:47:53.780] LOG - 22:47:53.779Z Connection:  open
+[2025-09-20 17:47:53.780] LOG - 22:47:53.779Z Connection:  open
+[2025-09-20 17:47:54.750] LOG - 22:47:54.748Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:47:54.759] LOG - 22:47:54.748Z Canvas size: 500 932 dpp:  2
+[2025-09-20 17:47:54.782] LOG - 22:47:54.759Z Loading App-level Plugins
+[2025-09-20 17:47:54.783] LOG - 22:47:54.759Z Loading App-level Plugins
+[2025-09-20 17:47:54.785] LOG - 22:47:54.774Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:47:54.788] LOG - 22:47:54.774Z Canvas size: 500 932 dpp:  2
+[2025-09-20 17:47:54.880] LOG - 22:47:54.827Z websocket opened
+[2025-09-20 17:47:54.880] LOG - 22:47:54.827Z websocket opened
+[2025-09-20 17:47:55.087] LOG - 22:47:55.085Z loadAppLevelPlugins:  [object Object]
+[2025-09-20 17:47:55.087] LOG - 22:47:55.085Z loadAppLevelPlugins: 
+[2025-09-20 17:47:55.829] LOG - 22:47:55.828Z jailing is in progress
+[2025-09-20 17:47:55.830] LOG - 22:47:55.828Z jailing is in progress
+[2025-09-20 17:47:56.166] LOG - 22:47:56.165Z pending jailing done. next starts
+[2025-09-20 17:47:56.166] LOG - 22:47:56.165Z pending jailing done. next starts
+[2025-09-20 17:47:57.030] LOG - 22:47:57.028Z created chart 1
+[2025-09-20 17:47:57.265] LOG - 22:47:57.264Z updating the shared isolation
+[2025-09-20 17:47:57.265] LOG - 22:47:57.264Z updating the shared isolation
+[2025-09-20 17:47:57.273] LOG - 22:47:57.268Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-20 17:47:57.273] LOG - 22:47:57.268Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-20 17:47:57.274] LOG - 22:47:57.268Z mdMgApi open
+[2025-09-20 17:47:57.274] LOG - 22:47:57.268Z mdMgApi open
+[2025-09-20 17:47:58.154] LOG - 22:47:58.139Z Canvas size: 640 742 dpp:  2
+[2025-09-20 17:47:58.312] LOG - 22:47:58.170Z Canvas size: 640 742 dpp:  2
+[2025-09-20 17:47:58.450] LOG - 22:47:58.398Z Canvas size: 882 413 dpp:  2
+[2025-09-20 17:47:58.452] LOG - 22:47:58.420Z Canvas size: 882 413 dpp:  2
+[2025-09-20 17:47:58.454] LOG - 22:47:58.433Z Canvas size: 882 413 dpp:  2
+[2025-09-20 17:47:58.455] LOG - 22:47:58.434Z Canvas size: 882 413 dpp:  2
+[2025-09-20 17:47:58.616] LOG - 22:47:58.581Z Canvas size: 884 410 dpp:  2
+[2025-09-20 17:47:58.617] LOG - 22:47:58.589Z Canvas size: 884 410 dpp:  2
+[2025-09-20 17:47:58.711] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:47:58.712] ERROR - 22:47:58.711Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:58.713] ERROR - 22:47:58.711Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:47:58.713] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:47:58.714] ERROR - Exception: t
+[2025-09-20 17:48:00.077] LOG - 22:48:00.065Z Canvas size: 859 414 dpp:  2
+[2025-09-20 17:48:00.081] LOG - 22:48:00.080Z Canvas size: 859 414 dpp:  2
+[2025-09-20 17:48:00.108] LOG - 22:48:00.097Z Canvas size: 821 418 dpp:  2
+[2025-09-20 17:48:00.114] LOG - 22:48:00.110Z Canvas size: 821 418 dpp:  2
+[2025-09-20 17:48:00.180] LOG - 22:48:00.165Z Canvas size: 689 418 dpp:  2
+[2025-09-20 17:48:00.181] LOG - 22:48:00.170Z Canvas size: 689 418 dpp:  2
+[2025-09-20 17:48:00.245] LOG - 22:48:00.228Z Canvas size: 500 418 dpp:  2
+[2025-09-20 17:48:00.247] LOG - 22:48:00.241Z Canvas size: 500 418 dpp:  2
+[2025-09-20 17:48:00.357] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:00.358] ERROR - 22:48:00.356Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:00.358] ERROR - 22:48:00.356Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:00.359] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:00.359] ERROR - Exception: t
+[2025-09-20 17:48:01.679] LOG - 22:48:01.678Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:48:01.680] LOG - 22:48:01.678Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:48:01.681] LOG - 22:48:01.679Z Creating UI...
+[2025-09-20 17:48:01.681] LOG - 22:48:01.679Z Creating UI...
+[2025-09-20 17:48:01.681] LOG - 22:48:01.679Z Creating UI
+[2025-09-20 17:48:01.681] LOG - 22:48:01.679Z Creating UI
+[2025-09-20 17:48:01.682] LOG - 22:48:01.680Z Stored values: TP=120, SL=40, Qty=2, Tick=0.25, Symbol=NQ
+[2025-09-20 17:48:01.682] LOG - 22:48:01.680Z Stored values: TP=120, SL=40, Qty=2, Tick=0.25, Symbol=NQ
+[2025-09-20 17:48:01.683] LOG - 22:48:01.682Z UI container added to DOM
+[2025-09-20 17:48:01.683] LOG - 22:48:01.682Z UI container added to DOM
+[2025-09-20 17:48:01.684] LOG - 22:48:01.682Z Setting up UI event handlers
+[2025-09-20 17:48:01.685] LOG - 22:48:01.682Z Setting up UI event handlers
+[2025-09-20 17:48:01.686] LOG - 22:48:01.682Z Setting up persistent settings
+[2025-09-20 17:48:01.686] LOG - 22:48:01.682Z Setting up persistent settings
+[2025-09-20 17:48:01.686] LOG - 22:48:01.682Z Setting up drag functionality
+[2025-09-20 17:48:01.687] LOG - 22:48:01.682Z Setting up drag functionality
+[2025-09-20 17:48:01.688] LOG - 22:48:01.682Z Setting up trade buttons
+[2025-09-20 17:48:01.688] LOG - 22:48:01.682Z Setting up trade buttons
+[2025-09-20 17:48:01.689] LOG - 22:48:01.682Z UI creation complete
+[2025-09-20 17:48:01.689] LOG - 22:48:01.682Z UI creation complete
+[2025-09-20 17:48:01.689] LOG - 22:48:01.682Z Creating example front-quarter symbol
+[2025-09-20 17:48:01.689] LOG - 22:48:01.682Z Creating example front-quarter symbol
+[2025-09-20 17:48:01.690] LOG - 22:48:01.682Z getQuarterlyCode called with date: 2025-09-20T22:48:01.682Z
+[2025-09-20 17:48:01.690] LOG - 22:48:01.682Z getQuarterlyCode called with date: 2025-09-20T22:48:01.682Z
+[2025-09-20 17:48:01.690] LOG - 22:48:01.683Z Current month index: 8
+[2025-09-20 17:48:01.690] LOG - 22:48:01.683Z Current month index: 8
+[2025-09-20 17:48:01.690] LOG - 22:48:01.683Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:01.690] LOG - 22:48:01.683Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:01.690] LOG - 22:48:01.683Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:01.691] LOG - 22:48:01.683Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:01.691] LOG - 22:48:01.683Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:48:01.691] LOG - 22:48:01.683Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:48:01.697] LOG - 22:48:01.696Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:48:01.698] LOG - 22:48:01.696Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:48:01.698] LOG - 22:48:01.697Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.699] LOG - 22:48:01.697Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.700] LOG - 22:48:01.698Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.701] LOG - 22:48:01.698Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.701] LOG - 22:48:01.698Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:01.702] LOG - 22:48:01.698Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:01.703] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:48:01.704] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:48:01.704] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-20 17:48:01.705] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-20 17:48:01.705] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-20 17:48:01.706] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-20 17:48:01.706] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:48:01.706] LOG - 22:48:01.698Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:48:01.706] LOG - 22:48:01.699Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:48:01.706] LOG - 22:48:01.699Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:01.707] LOG - 22:48:01.699Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:01.708] LOG - 22:48:01.699Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-20 17:48:01.708] LOG - 22:48:01.699Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-20 17:48:01.708] ERROR - 22:48:01.699Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-20 17:48:01.708] ERROR - 22:48:01.699Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-20 17:48:01.722] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:48:01.723] LOG - 22:48:01.711Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:48:01.723] LOG - 22:48:01.711Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:48:02.137] LOG - 22:48:02.130Z Canvas size: 500 450 dpp:  2
+[2025-09-20 17:48:02.139] LOG - 22:48:02.135Z Canvas size: 500 450 dpp:  2
+[2025-09-20 17:48:02.192] LOG - 22:48:02.177Z Canvas size: 502 497 dpp:  2
+[2025-09-20 17:48:02.199] LOG - 22:48:02.194Z Canvas size: 502 497 dpp:  2
+[2025-09-20 17:48:02.278] LOG - 22:48:02.257Z Canvas size: 534 768 dpp:  2
+[2025-09-20 17:48:02.280] LOG - 22:48:02.277Z Canvas size: 534 768 dpp:  2
+[2025-09-20 17:48:02.489] LOG - 22:48:02.472Z Canvas size: 539 939 dpp:  2
+[2025-09-20 17:48:02.491] LOG - 22:48:02.482Z Canvas size: 539 939 dpp:  2
+[2025-09-20 17:48:02.655] LOG - 22:48:02.610Z Canvas size: 537 939 dpp:  2
+[2025-09-20 17:48:02.656] LOG - 22:48:02.624Z Canvas size: 537 939 dpp:  2
+[2025-09-20 17:48:02.709] LOG - 22:48:02.689Z Canvas size: 500 939 dpp:  2
+[2025-09-20 17:48:02.711] LOG - 22:48:02.706Z Canvas size: 500 939 dpp:  2
+[2025-09-20 17:48:02.728] LOG - 22:48:02.727Z Executing initial risk management assessment...
+[2025-09-20 17:48:02.729] LOG - 22:48:02.727Z Executing initial risk management assessment...
+[2025-09-20 17:48:02.730] ERROR - 22:48:02.727Z getTableData function not found
+[2025-09-20 17:48:02.731] ERROR - 22:48:02.727Z getTableData function not found
+[2025-09-20 17:48:02.732] ERROR - 22:48:02.727Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:48:02.733] ERROR - 22:48:02.727Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:48:02.733] ERROR - 22:48:02.727Z performAccountActions function not found
+[2025-09-20 17:48:02.734] ERROR - 22:48:02.727Z performAccountActions function not found
+[2025-09-20 17:48:02.735] LOG - 22:48:02.728Z Risk management assessment completed
+[2025-09-20 17:48:02.735] LOG - 22:48:02.728Z Risk management assessment completed
+[2025-09-20 17:48:02.758] LOG - 22:48:02.756Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.760] LOG - 22:48:02.756Z [analyzePhase] resetting phaseData
+[2025-09-20 17:48:02.761] LOG - 22:48:02.757Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.761] LOG - 22:48:02.757Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:48:02.762] LOG - 22:48:02.757Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.763] LOG - 22:48:02.757Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:48:02.763] WARNING - 22:48:02.757Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/8623.bc07fac1.js:2:4608552),    at https://cdn.tradovate.com/tradovate/scripts/8623.bc07fac1.js:2:3545147
+[2025-09-20 17:48:02.763] WARNING - 22:48:02.757Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-20 17:48:13.317] LOG - 22:48:13.311Z Canvas size: 500 952 dpp:  2
+[2025-09-20 17:48:13.319] LOG - 22:48:13.316Z Canvas size: 500 952 dpp:  2
+[2025-09-20 17:48:13.343] LOG - 22:48:13.333Z Canvas size: 500 961 dpp:  2
+[2025-09-20 17:48:13.346] LOG - 22:48:13.342Z Canvas size: 500 961 dpp:  2
+[2025-09-20 17:48:13.368] LOG - 22:48:13.363Z Canvas size: 500 972 dpp:  2
+[2025-09-20 17:48:13.370] LOG - 22:48:13.367Z Canvas size: 500 972 dpp:  2
+[2025-09-20 17:48:13.378] LOG - 22:48:13.377Z Canvas size: 500 998 dpp:  2
+[2025-09-20 17:48:13.385] LOG - 22:48:13.383Z Canvas size: 500 998 dpp:  2
+[2025-09-20 17:48:19.549] LOG - 22:48:19.548Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:19.551] LOG - 22:48:19.548Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:19.553] LOG - 22:48:19.548Z Is root symbol: true
+[2025-09-20 17:48:19.553] LOG - 22:48:19.548Z Is root symbol: true
+[2025-09-20 17:48:19.554] LOG - 22:48:19.548Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:19.554] LOG - 22:48:19.548Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:19.556] LOG - 22:48:19.548Z getQuarterlyCode called with date: 2025-09-20T22:48:19.548Z
+[2025-09-20 17:48:19.556] LOG - 22:48:19.548Z getQuarterlyCode called with date: 2025-09-20T22:48:19.548Z
+[2025-09-20 17:48:19.556] LOG - 22:48:19.548Z Current month index: 8
+[2025-09-20 17:48:19.557] LOG - 22:48:19.548Z Current month index: 8
+[2025-09-20 17:48:19.557] LOG - 22:48:19.548Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:19.557] LOG - 22:48:19.548Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:19.557] LOG - 22:48:19.548Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.557] LOG - 22:48:19.548Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.558] LOG - 22:48:19.548Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.558] LOG - 22:48:19.548Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:19.559] LOG - 22:48:19.548Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:19.559] LOG - 22:48:19.548Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:19.559] LOG - 22:48:19.549Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:19.559] LOG - 22:48:19.549Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:19.730] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:19.731] ERROR - 22:48:19.704Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.731] ERROR - 22:48:19.704Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.731] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:19.731] ERROR - Exception: t
+[2025-09-20 17:48:19.826] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:19.827] ERROR - 22:48:19.826Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.827] ERROR - 22:48:19.826Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:19.828] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:19.828] ERROR - Exception: t
+[2025-09-20 17:48:20.696] LOG - 22:48:20.696Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:20.697] LOG - 22:48:20.696Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:20.698] LOG - 22:48:20.696Z Is root symbol: true
+[2025-09-20 17:48:20.699] LOG - 22:48:20.696Z Is root symbol: true
+[2025-09-20 17:48:20.700] LOG - 22:48:20.696Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:20.700] LOG - 22:48:20.696Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:20.701] LOG - 22:48:20.696Z getQuarterlyCode called with date: 2025-09-20T22:48:20.696Z
+[2025-09-20 17:48:20.702] LOG - 22:48:20.696Z getQuarterlyCode called with date: 2025-09-20T22:48:20.696Z
+[2025-09-20 17:48:20.702] LOG - 22:48:20.696Z Current month index: 8
+[2025-09-20 17:48:20.703] LOG - 22:48:20.696Z Current month index: 8
+[2025-09-20 17:48:20.703] LOG - 22:48:20.696Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:20.704] LOG - 22:48:20.696Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:20.704] LOG - 22:48:20.696Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.704] LOG - 22:48:20.696Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.704] LOG - 22:48:20.696Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.705] LOG - 22:48:20.696Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:20.705] LOG - 22:48:20.696Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:20.705] LOG - 22:48:20.696Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:20.705] LOG - 22:48:20.696Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:20.706] LOG - 22:48:20.696Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:20.831] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:20.832] ERROR - 22:48:20.831Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.832] ERROR - 22:48:20.831Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.832] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:20.833] ERROR - Exception: t
+[2025-09-20 17:48:20.971] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:20.987] ERROR - 22:48:20.971Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.987] ERROR - 22:48:20.971Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:20.988] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:20.988] ERROR - Exception: t
+[2025-09-20 17:48:21.960] LOG - 22:48:21.959Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:21.963] LOG - 22:48:21.959Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:21.963] LOG - 22:48:21.959Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:21.964] LOG - 22:48:21.959Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:21.965] LOG - 22:48:21.960Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:21.965] LOG - 22:48:21.960Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:21.966] LOG - 22:48:21.960Z No position data found for NQ
+[2025-09-20 17:48:21.966] LOG - 22:48:21.960Z No position data found for NQ
+[2025-09-20 17:48:21.966] LOG - 22:48:21.960Z No open position found for NQ
+[2025-09-20 17:48:21.966] LOG - 22:48:21.960Z No open position found for NQ
+[2025-09-20 17:48:23.535] LOG - 22:48:23.533Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:23.537] LOG - 22:48:23.533Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:23.538] LOG - 22:48:23.533Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:23.539] LOG - 22:48:23.533Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:23.540] LOG - 22:48:23.533Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:23.541] LOG - 22:48:23.533Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:23.542] LOG - 22:48:23.533Z No position data found for NQ
+[2025-09-20 17:48:23.542] LOG - 22:48:23.533Z No position data found for NQ
+[2025-09-20 17:48:23.542] LOG - 22:48:23.533Z No open position found for NQ
+[2025-09-20 17:48:23.542] LOG - 22:48:23.533Z No open position found for NQ
+[2025-09-20 17:48:24.924] LOG - 22:48:24.922Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:24.925] LOG - 22:48:24.922Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:24.925] LOG - 22:48:24.923Z Is root symbol: true
+[2025-09-20 17:48:24.926] LOG - 22:48:24.923Z Is root symbol: true
+[2025-09-20 17:48:24.927] LOG - 22:48:24.923Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:24.928] LOG - 22:48:24.923Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:24.928] LOG - 22:48:24.923Z getQuarterlyCode called with date: 2025-09-20T22:48:24.923Z
+[2025-09-20 17:48:24.929] LOG - 22:48:24.923Z getQuarterlyCode called with date: 2025-09-20T22:48:24.923Z
+[2025-09-20 17:48:24.930] LOG - 22:48:24.923Z Current month index: 8
+[2025-09-20 17:48:24.930] LOG - 22:48:24.923Z Current month index: 8
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:24.931] LOG - 22:48:24.923Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:24.932] LOG - 22:48:24.923Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:24.932] LOG - 22:48:24.923Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:24.932] LOG - 22:48:24.923Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:25.098] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:25.099] ERROR - 22:48:25.073Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.099] ERROR - 22:48:25.073Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.100] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:25.100] ERROR - Exception: t
+[2025-09-20 17:48:25.190] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:25.191] ERROR - 22:48:25.189Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.191] ERROR - 22:48:25.189Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:25.191] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:25.192] ERROR - Exception: t
+[2025-09-20 17:48:28.147] LOG - 22:48:28.146Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.148] LOG - 22:48:28.146Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.150] LOG - 22:48:28.146Z Is root symbol: true
+[2025-09-20 17:48:28.150] LOG - 22:48:28.146Z Is root symbol: true
+[2025-09-20 17:48:28.151] LOG - 22:48:28.146Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.152] LOG - 22:48:28.146Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.153] LOG - 22:48:28.146Z getQuarterlyCode called with date: 2025-09-20T22:48:28.146Z
+[2025-09-20 17:48:28.154] LOG - 22:48:28.146Z getQuarterlyCode called with date: 2025-09-20T22:48:28.146Z
+[2025-09-20 17:48:28.155] LOG - 22:48:28.146Z Current month index: 8
+[2025-09-20 17:48:28.157] LOG - 22:48:28.146Z Current month index: 8
+[2025-09-20 17:48:28.158] LOG - 22:48:28.146Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.159] LOG - 22:48:28.146Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.160] LOG - 22:48:28.146Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.160] LOG - 22:48:28.146Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.161] LOG - 22:48:28.146Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.161] LOG - 22:48:28.146Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.162] LOG - 22:48:28.146Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.162] LOG - 22:48:28.146Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.162] LOG - 22:48:28.146Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.162] LOG - 22:48:28.146Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.856] LOG - 22:48:28.854Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.857] LOG - 22:48:28.854Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:28.858] LOG - 22:48:28.854Z Is root symbol: true
+[2025-09-20 17:48:28.858] LOG - 22:48:28.854Z Is root symbol: true
+[2025-09-20 17:48:28.861] LOG - 22:48:28.854Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.862] LOG - 22:48:28.854Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:28.863] LOG - 22:48:28.854Z getQuarterlyCode called with date: 2025-09-20T22:48:28.854Z
+[2025-09-20 17:48:28.864] LOG - 22:48:28.854Z getQuarterlyCode called with date: 2025-09-20T22:48:28.854Z
+[2025-09-20 17:48:28.865] LOG - 22:48:28.854Z Current month index: 8
+[2025-09-20 17:48:28.866] LOG - 22:48:28.854Z Current month index: 8
+[2025-09-20 17:48:28.867] LOG - 22:48:28.855Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.868] LOG - 22:48:28.855Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:28.868] LOG - 22:48:28.855Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.869] LOG - 22:48:28.855Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.870] LOG - 22:48:28.855Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.870] LOG - 22:48:28.855Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:28.870] LOG - 22:48:28.855Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.870] LOG - 22:48:28.855Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:28.870] LOG - 22:48:28.855Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:28.871] LOG - 22:48:28.855Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:29.467] LOG - 22:48:29.466Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:29.468] LOG - 22:48:29.466Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:29.469] LOG - 22:48:29.466Z Is root symbol: true
+[2025-09-20 17:48:29.470] LOG - 22:48:29.466Z Is root symbol: true
+[2025-09-20 17:48:29.470] LOG - 22:48:29.466Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:29.471] LOG - 22:48:29.466Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:29.471] LOG - 22:48:29.466Z getQuarterlyCode called with date: 2025-09-20T22:48:29.466Z
+[2025-09-20 17:48:29.472] LOG - 22:48:29.466Z getQuarterlyCode called with date: 2025-09-20T22:48:29.466Z
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Current month index: 8
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Current month index: 8
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.473] LOG - 22:48:29.466Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.474] LOG - 22:48:29.466Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.474] LOG - 22:48:29.466Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:29.474] LOG - 22:48:29.467Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:29.474] LOG - 22:48:29.467Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:29.475] LOG - 22:48:29.467Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:29.475] LOG - 22:48:29.467Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:29.659] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:29.660] ERROR - 22:48:29.658Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.661] ERROR - 22:48:29.658Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.661] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:29.663] ERROR - Exception: t
+[2025-09-20 17:48:29.738] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:29.740] ERROR - 22:48:29.738Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.743] ERROR - 22:48:29.738Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:29.744] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:29.744] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:29.744] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:29.744] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:29.745] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:29.745] ERROR - Exception: t
+[2025-09-20 17:48:30.304] LOG - 22:48:30.300Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:30.307] LOG - 22:48:30.300Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:30.308] LOG - 22:48:30.300Z Is root symbol: true
+[2025-09-20 17:48:30.309] LOG - 22:48:30.300Z Is root symbol: true
+[2025-09-20 17:48:30.317] LOG - 22:48:30.300Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:30.318] LOG - 22:48:30.300Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:30.318] LOG - 22:48:30.300Z getQuarterlyCode called with date: 2025-09-20T22:48:30.300Z
+[2025-09-20 17:48:30.318] LOG - 22:48:30.300Z getQuarterlyCode called with date: 2025-09-20T22:48:30.300Z
+[2025-09-20 17:48:30.318] LOG - 22:48:30.300Z Current month index: 8
+[2025-09-20 17:48:30.318] LOG - 22:48:30.300Z Current month index: 8
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:30.319] LOG - 22:48:30.301Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:30.320] LOG - 22:48:30.301Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:30.320] LOG - 22:48:30.301Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:30.320] LOG - 22:48:30.301Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:30.497] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:30.502] ERROR - 22:48:30.464Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.502] ERROR - 22:48:30.464Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.502] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:30.503] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.503] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.503] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.504] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.504] ERROR - Exception: t
+[2025-09-20 17:48:30.602] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:30.602] ERROR - 22:48:30.601Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.603] ERROR - 22:48:30.601Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:30.605] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:30.607] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.608] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:30.608] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.608] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:30.608] ERROR - Exception: t
+[2025-09-20 17:48:30.987] LOG - 22:48:30.984Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:30.988] LOG - 22:48:30.984Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:30.990] LOG - 22:48:30.984Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:30.991] LOG - 22:48:30.984Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:30.992] LOG - 22:48:30.984Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:30.994] LOG - 22:48:30.984Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:30.995] LOG - 22:48:30.985Z No position data found for NQ
+[2025-09-20 17:48:30.995] LOG - 22:48:30.985Z No position data found for NQ
+[2025-09-20 17:48:30.996] LOG - 22:48:30.985Z No open position found for NQ
+[2025-09-20 17:48:30.996] LOG - 22:48:30.985Z No open position found for NQ
+[2025-09-20 17:48:31.625] LOG - 22:48:31.622Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:31.626] LOG - 22:48:31.622Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:31.627] LOG - 22:48:31.622Z Is root symbol: true
+[2025-09-20 17:48:31.627] LOG - 22:48:31.622Z Is root symbol: true
+[2025-09-20 17:48:31.628] LOG - 22:48:31.622Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:31.628] LOG - 22:48:31.622Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:31.629] LOG - 22:48:31.623Z getQuarterlyCode called with date: 2025-09-20T22:48:31.623Z
+[2025-09-20 17:48:31.629] LOG - 22:48:31.623Z getQuarterlyCode called with date: 2025-09-20T22:48:31.623Z
+[2025-09-20 17:48:31.630] LOG - 22:48:31.623Z Current month index: 8
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Current month index: 8
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.631] LOG - 22:48:31.623Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.632] LOG - 22:48:31.623Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:31.632] LOG - 22:48:31.623Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:31.633] LOG - 22:48:31.623Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:31.633] LOG - 22:48:31.623Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:31.633] LOG - 22:48:31.623Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:31.758] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:31.760] ERROR - 22:48:31.758Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.763] ERROR - 22:48:31.758Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.765] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:31.768] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.770] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.772] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.773] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.774] ERROR - Exception: t
+[2025-09-20 17:48:31.937] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:48:31.940] ERROR - 22:48:31.936Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.943] ERROR - 22:48:31.936Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:48:31.946] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:48:31.947] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.948] WARNING - [bugsnag] Cancelling event send due to maxEvents per session limit of 10 being reached
+[2025-09-20 17:48:31.948] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.948] DEBUG - [bugsnag] Event not sent due to onError callback
+[2025-09-20 17:48:31.948] ERROR - Exception: t
+[2025-09-20 17:48:32.771] LOG - 22:48:32.769Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:32.772] LOG - 22:48:32.769Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:48:32.774] LOG - 22:48:32.769Z Is root symbol: true
+[2025-09-20 17:48:32.775] LOG - 22:48:32.769Z Is root symbol: true
+[2025-09-20 17:48:32.776] LOG - 22:48:32.769Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:32.776] LOG - 22:48:32.769Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:32.778] LOG - 22:48:32.769Z getQuarterlyCode called with date: 2025-09-20T22:48:32.769Z
+[2025-09-20 17:48:32.779] LOG - 22:48:32.769Z getQuarterlyCode called with date: 2025-09-20T22:48:32.769Z
+[2025-09-20 17:48:32.779] LOG - 22:48:32.769Z Current month index: 8
+[2025-09-20 17:48:32.780] LOG - 22:48:32.769Z Current month index: 8
+[2025-09-20 17:48:32.781] LOG - 22:48:32.769Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:32.782] LOG - 22:48:32.769Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:32.782] LOG - 22:48:32.769Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.783] LOG - 22:48:32.769Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.783] LOG - 22:48:32.769Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.784] LOG - 22:48:32.769Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:32.785] LOG - 22:48:32.769Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:32.785] LOG - 22:48:32.769Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:32.786] LOG - 22:48:32.769Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:32.786] LOG - 22:48:32.769Z Normalized symbol: "NQZ5"
+[2025-09-20 17:48:35.851] LOG - 22:48:35.848Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:35.852] LOG - 22:48:35.848Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:35.853] LOG - 22:48:35.848Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:35.854] LOG - 22:48:35.848Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:35.855] LOG - 22:48:35.849Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:35.855] LOG - 22:48:35.849Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:35.856] LOG - 22:48:35.849Z No position data found for NQ
+[2025-09-20 17:48:35.856] LOG - 22:48:35.849Z No position data found for NQ
+[2025-09-20 17:48:35.856] LOG - 22:48:35.849Z No open position found for NQ
+[2025-09-20 17:48:35.857] LOG - 22:48:35.849Z No open position found for NQ
+[2025-09-20 17:48:38.674] LOG - 22:48:38.673Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=100, SL=40, tickSize=0.25
+[2025-09-20 17:48:38.675] LOG - 22:48:38.673Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=100, SL=40, tickSize=0.25
+[2025-09-20 17:48:38.676] LOG - 22:48:38.673Z Using symbol: NQ
+[2025-09-20 17:48:38.677] LOG - 22:48:38.673Z Using symbol: NQ
+[2025-09-20 17:48:38.677] LOG - 22:48:38.673Z Root symbol: NQ
+[2025-09-20 17:48:38.678] LOG - 22:48:38.673Z Root symbol: NQ
+[2025-09-20 17:48:38.678] LOG - 22:48:38.673Z Using tick size 0.25 (from dictionary)
+[2025-09-20 17:48:38.679] LOG - 22:48:38.673Z Using tick size 0.25 (from dictionary)
+[2025-09-20 17:48:38.680] LOG - 22:48:38.674Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-20 17:48:38.680] LOG - 22:48:38.674Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-20 17:48:38.681] LOG - 22:48:38.674Z Getting market data for NQ
+[2025-09-20 17:48:38.682] LOG - 22:48:38.674Z Getting market data for NQ
+[2025-09-20 17:48:38.683] LOG - 22:48:38.674Z getMarketData called for: "NQ"
+[2025-09-20 17:48:38.684] LOG - 22:48:38.674Z getMarketData called for: "NQ"
+[2025-09-20 17:48:38.685] LOG - 22:48:38.674Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:38.685] LOG - 22:48:38.674Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:48:38.686] LOG - 22:48:38.674Z getQuarterlyCode called with date: 2025-09-20T22:48:38.674Z
+[2025-09-20 17:48:38.687] LOG - 22:48:38.674Z getQuarterlyCode called with date: 2025-09-20T22:48:38.674Z
+[2025-09-20 17:48:38.688] LOG - 22:48:38.674Z Current month index: 8
+[2025-09-20 17:48:38.689] LOG - 22:48:38.674Z Current month index: 8
+[2025-09-20 17:48:38.690] LOG - 22:48:38.674Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:38.690] LOG - 22:48:38.674Z Starting calculation with year=2025, month=8
+[2025-09-20 17:48:38.691] LOG - 22:48:38.674Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.692] LOG - 22:48:38.674Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.693] LOG - 22:48:38.674Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.695] LOG - 22:48:38.674Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:48:38.697] LOG - 22:48:38.674Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:38.697] LOG - 22:48:38.674Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:48:38.698] LOG - 22:48:38.674Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 17:48:38.699] LOG - 22:48:38.674Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 17:48:38.700] LOG - 22:48:38.675Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-20 17:48:38.701] LOG - 22:48:38.675Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-20 17:48:38.701] LOG - 22:48:38.675Z Market data: [object Object]
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z Market data:
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z Market price: NaN (offer price)
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z Market price: NaN (offer price)
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z No custom entry price provided, using market order at NaN
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z No custom entry price provided, using market order at NaN
+[2025-09-20 17:48:38.702] LOG - 22:48:38.675Z Using price precision: 2 decimal places
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Using price precision: 2 decimal places
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Calculated SL price: NaN (entry - 40 ticks)
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Calculated SL price: NaN (entry - 40 ticks)
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Calculated TP price: NaN (entry + 100 ticks)
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Calculated TP price: NaN (entry + 100 ticks)
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Trade data prepared: [object Object]
+[2025-09-20 17:48:38.703] LOG - 22:48:38.675Z Trade data prepared:
+[2025-09-20 17:48:38.704] LOG - 22:48:38.675Z Submitting bracket orders
+[2025-09-20 17:48:38.704] LOG - 22:48:38.675Z Submitting bracket orders
+[2025-09-20 17:48:38.704] LOG - 22:48:38.675Z Creating bracket orders with data: [object Object]
+[2025-09-20 17:48:38.704] LOG - 22:48:38.675Z Creating bracket orders with data:
+[2025-09-20 17:48:38.704] LOG - 22:48:38.676Z TP enabled: true, SL enabled: true
+[2025-09-20 17:48:38.704] LOG - 22:48:38.676Z TP enabled: true, SL enabled: true
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Submitting initial MARKET order
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Submitting initial MARKET order
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Setting common order fields
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Setting common order fields
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Setting action to: Buy
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Setting action to: Buy
+[2025-09-20 17:48:38.705] LOG - 22:48:38.676Z Found 9 action labels
+[2025-09-20 17:48:38.706] LOG - 22:48:38.676Z Found 9 action labels
+[2025-09-20 17:48:38.706] LOG - 22:48:38.677Z Clicking Buy label
+[2025-09-20 17:48:38.706] LOG - 22:48:38.677Z Clicking Buy label
+[2025-09-20 17:48:38.706] LOG - 22:48:38.679Z Setting quantity to: 1
+[2025-09-20 17:48:38.706] LOG - 22:48:38.679Z Setting quantity to: 1
+[2025-09-20 17:48:38.706] LOG - 22:48:38.692Z Delaying for 250ms
+[2025-09-20 17:48:38.706] LOG - 22:48:38.692Z Delaying for 250ms
+[2025-09-20 17:48:38.961] LOG - 22:48:38.960Z Delaying for 200ms
+[2025-09-20 17:48:38.961] LOG - 22:48:38.960Z Delaying for 200ms
+[2025-09-20 17:48:39.164] LOG - 22:48:39.162Z 
+[2025-09-20 17:48:39.165] LOG - 22:48:39.162Z
+[2025-09-20 17:48:39.165] LOG - 22:48:39.162Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:39.165] LOG - 22:48:39.162Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:39.165] LOG - 22:48:39.162Z Delaying for 500ms
+[2025-09-20 17:48:39.165] LOG - 22:48:39.162Z Delaying for 500ms
+[2025-09-20 17:48:39.665] LOG - 22:48:39.664Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:39.666] LOG - 22:48:39.664Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:39.667] LOG - 22:48:39.664Z Delaying for 200ms
+[2025-09-20 17:48:39.668] LOG - 22:48:39.664Z Delaying for 200ms
+[2025-09-20 17:48:39.866] LOG - 22:48:39.865Z Flipping action to Sell for TP/SL orders
+[2025-09-20 17:48:39.867] LOG - 22:48:39.865Z Flipping action to Sell for TP/SL orders
+[2025-09-20 17:48:39.868] LOG - 22:48:39.866Z Creating take profit order at NaN
+[2025-09-20 17:48:39.869] LOG - 22:48:39.866Z Creating take profit order at NaN
+[2025-09-20 17:48:39.869] LOG - 22:48:39.866Z Setting common order fields
+[2025-09-20 17:48:39.870] LOG - 22:48:39.866Z Setting common order fields
+[2025-09-20 17:48:39.870] LOG - 22:48:39.866Z Setting action to: Sell
+[2025-09-20 17:48:39.870] LOG - 22:48:39.866Z Setting action to: Sell
+[2025-09-20 17:48:39.871] LOG - 22:48:39.866Z Found 9 action labels
+[2025-09-20 17:48:39.871] LOG - 22:48:39.866Z Found 9 action labels
+[2025-09-20 17:48:39.871] LOG - 22:48:39.866Z Clicking Sell label
+[2025-09-20 17:48:39.872] LOG - 22:48:39.866Z Clicking Sell label
+[2025-09-20 17:48:39.880] LOG - 22:48:39.879Z Setting quantity to: 1
+[2025-09-20 17:48:39.880] LOG - 22:48:39.879Z Setting quantity to: 1
+[2025-09-20 17:48:39.881] LOG - 22:48:39.881Z Delaying for 250ms
+[2025-09-20 17:48:39.882] LOG - 22:48:39.881Z Delaying for 250ms
+[2025-09-20 17:48:40.157] LOG - 22:48:40.156Z Delaying for 250ms
+[2025-09-20 17:48:40.157] LOG - 22:48:40.156Z Delaying for 250ms
+[2025-09-20 17:48:40.419] LOG - 22:48:40.419Z Delaying for 250ms
+[2025-09-20 17:48:40.420] LOG - 22:48:40.419Z Delaying for 250ms
+[2025-09-20 17:48:40.683] LOG - 22:48:40.682Z Delaying for 250ms
+[2025-09-20 17:48:40.684] LOG - 22:48:40.682Z Delaying for 250ms
+[2025-09-20 17:48:40.947] LOG - 22:48:40.946Z Delaying for 200ms
+[2025-09-20 17:48:40.948] LOG - 22:48:40.946Z Delaying for 200ms
+[2025-09-20 17:48:41.149] LOG - 22:48:41.147Z 
+[2025-09-20 17:48:41.150] LOG - 22:48:41.147Z
+[2025-09-20 17:48:41.150] LOG - 22:48:41.148Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:41.150] LOG - 22:48:41.148Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:41.151] LOG - 22:48:41.148Z Delaying for 500ms
+[2025-09-20 17:48:41.151] LOG - 22:48:41.148Z Delaying for 500ms
+[2025-09-20 17:48:41.650] LOG - 22:48:41.649Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:41.650] LOG - 22:48:41.649Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:41.650] LOG - 22:48:41.649Z Delaying for 200ms
+[2025-09-20 17:48:41.651] LOG - 22:48:41.649Z Delaying for 200ms
+[2025-09-20 17:48:41.851] LOG - 22:48:41.849Z Creating stop loss order at NaN
+[2025-09-20 17:48:41.853] LOG - 22:48:41.849Z Creating stop loss order at NaN
+[2025-09-20 17:48:41.854] LOG - 22:48:41.850Z Setting common order fields
+[2025-09-20 17:48:41.854] LOG - 22:48:41.850Z Setting common order fields
+[2025-09-20 17:48:41.854] LOG - 22:48:41.850Z Setting action to: Sell
+[2025-09-20 17:48:41.855] LOG - 22:48:41.850Z Setting action to: Sell
+[2025-09-20 17:48:41.855] LOG - 22:48:41.850Z Found 9 action labels
+[2025-09-20 17:48:41.855] LOG - 22:48:41.850Z Found 9 action labels
+[2025-09-20 17:48:41.855] LOG - 22:48:41.850Z Clicking Sell label
+[2025-09-20 17:48:41.855] LOG - 22:48:41.850Z Clicking Sell label
+[2025-09-20 17:48:41.855] LOG - 22:48:41.851Z Setting quantity to: 1
+[2025-09-20 17:48:41.856] LOG - 22:48:41.851Z Setting quantity to: 1
+[2025-09-20 17:48:41.856] LOG - 22:48:41.853Z Delaying for 250ms
+[2025-09-20 17:48:41.856] LOG - 22:48:41.853Z Delaying for 250ms
+[2025-09-20 17:48:42.126] LOG - 22:48:42.125Z Delaying for 250ms
+[2025-09-20 17:48:42.127] LOG - 22:48:42.125Z Delaying for 250ms
+[2025-09-20 17:48:42.386] LOG - 22:48:42.385Z Delaying for 250ms
+[2025-09-20 17:48:42.386] LOG - 22:48:42.385Z Delaying for 250ms
+[2025-09-20 17:48:42.646] LOG - 22:48:42.645Z Delaying for 250ms
+[2025-09-20 17:48:42.647] LOG - 22:48:42.645Z Delaying for 250ms
+[2025-09-20 17:48:42.912] LOG - 22:48:42.911Z Delaying for 200ms
+[2025-09-20 17:48:42.913] LOG - 22:48:42.911Z Delaying for 200ms
+[2025-09-20 17:48:43.114] LOG - 22:48:43.113Z 
+[2025-09-20 17:48:43.115] LOG - 22:48:43.113Z
+[2025-09-20 17:48:43.116] LOG - 22:48:43.113Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:43.116] LOG - 22:48:43.113Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 17:48:43.116] LOG - 22:48:43.113Z Delaying for 500ms
+[2025-09-20 17:48:43.117] LOG - 22:48:43.113Z Delaying for 500ms
+[2025-09-20 17:48:43.617] LOG - 22:48:43.615Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:43.617] LOG - 22:48:43.615Z ❌ Order history div not found - no feedback to capture
+[2025-09-20 17:48:43.618] LOG - 22:48:43.615Z Delaying for 200ms
+[2025-09-20 17:48:43.618] LOG - 22:48:43.615Z Delaying for 200ms
+[2025-09-20 17:48:43.818] LOG - 22:48:43.816Z Bracket order creation complete
+[2025-09-20 17:48:43.819] LOG - 22:48:43.816Z Bracket order creation complete
+[2025-09-20 17:48:44.245] LOG - 22:48:44.244Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:44.248] LOG - 22:48:44.244Z Calling moveStopLossToBreakeven for symbol: NQ
+[2025-09-20 17:48:44.249] LOG - 22:48:44.244Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:44.250] LOG - 22:48:44.244Z moveStopLossToBreakeven called for symbol: NQ
+[2025-09-20 17:48:44.250] LOG - 22:48:44.244Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:44.251] LOG - 22:48:44.244Z getCurrentPosition called for symbol: NQ
+[2025-09-20 17:48:44.251] LOG - 22:48:44.244Z No position data found for NQ
+[2025-09-20 17:48:44.251] LOG - 22:48:44.244Z No position data found for NQ
+[2025-09-20 17:48:44.252] LOG - 22:48:44.244Z No open position found for NQ
+[2025-09-20 17:48:44.252] LOG - 22:48:44.244Z No open position found for NQ
+[2025-09-20 17:48:52.994] INFO - 22:48:52.993Z time stats. avg diff: -66, min: -66, max: -66, roundtrip: 25 msec, #1
+[2025-09-20 17:48:52.995] INFO - 22:48:52.993Z time stats. avg diff: -66, min: -66, max: -66, roundtrip: 25 msec, #1
+[2025-09-20 17:49:20.091] INFO - 22:49:20.043Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:49:20.095] INFO - 22:49:20.043Z visibilitychange: hidden, gd: 1000

@@ -10,3 +10,7 @@ venv/
 
 # OS specific files
 .DS_Store
+
+# Saved web pages (may contain third-party API keys)
+docs/Tradovate\ Page/
+docs/Tradovate Page/
