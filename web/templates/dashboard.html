@@ -860,6 +860,7 @@
                 <button id="closeAllBtn" class="close-button">Close All Positions</button>
             </div>
             <div class="trade-controls-row" style="margin-top: 10px;">
+                <button id="breakevenBtn" class="breakeven-button" style="flex:1;padding:12px 8px;background:#6c5ce7;color:#fff;border:none;border-radius:4px;font-weight:bold;">Breakeven</button>
                 <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse Position</button>
             </div>
         </div>
@@ -1946,6 +1947,11 @@
             document.getElementById('reverseBtn').addEventListener('click', () => {
                 executeCancelAction('cancel-option-Reverse-Cxl');
             });
+            
+            // Breakeven button handler
+            document.getElementById('breakevenBtn').addEventListener('click', () => {
+                executeBreakevenAction();
+            });
         }
         
         // Execute a trade action (Buy or Sell)
@@ -2009,6 +2015,33 @@
             .catch(error => {
                 console.error('Error executing trade:', error);
                 alert('Error placing order. See console for details.');
+            });
+        }
+        
+        // Execute breakeven action
+        function executeBreakevenAction() {
+            const symbol = document.getElementById('symbolInput').value || 'NQ';
+            
+            // Send API request to move stop losses to breakeven
+            fetch('/api/breakeven', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    symbol: symbol,
+                    account: 'all' // Apply to all accounts
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Show success message
+                console.log('Breakeven action completed:', result);
+                //alert(`Successfully moved stop losses to breakeven for ${symbol} on ${result.accounts_affected} accounts.`);
+            })
+            .catch(error => {
+                console.error('Error executing breakeven action:', error);
+                alert('Error moving stop losses to breakeven. See console for details.');
             });
         }
         

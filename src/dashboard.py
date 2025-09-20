@@ -418,6 +418,87 @@ def update_quantity():
             'message': str(e)
         }), 500
 
+# API endpoint to move stop losses to breakeven
+@app.route('/api/breakeven', methods=['POST'])
+def move_to_breakeven():
+    try:
+        data = request.json
+        
+        # Extract parameters from request
+        symbol = data.get('symbol', 'NQ')
+        account_index = data.get('account', 'all')
+        
+        # JavaScript code to call the breakeven function
+        js_code = f"""
+        (function() {{
+            try {{
+                // Check if moveStopLossToBreakeven function exists
+                if (typeof moveStopLossToBreakeven === 'function') {{
+                    console.log('Calling moveStopLossToBreakeven for symbol: {symbol}');
+                    moveStopLossToBreakeven('{symbol}');
+                    return 'Breakeven function executed successfully';
+                }} else {{
+                    console.error('moveStopLossToBreakeven function not found');
+                    return 'Error: moveStopLossToBreakeven function not found';
+                }}
+            }} catch (err) {{
+                console.error('Error executing breakeven:', err);
+                return 'Error: ' + err.toString();
+            }}
+        }})();
+        """
+        
+        # Check if we should execute on all accounts or just one
+        if account_index == 'all':
+            results = []
+            for i, conn in enumerate(controller.connections):
+                if conn.tab:
+                    try:
+                        result = conn.tab.Runtime.evaluate(expression=js_code)
+                        result_value = result.get('result', {}).get('value', 'Unknown')
+                        results.append({"account": i, "result": result_value})
+                    except Exception as e:
+                        results.append({"account": i, "error": str(e)})
+            
+            # Count successful operations
+            accounts_affected = sum(1 for r in results if "error" not in r)
+            
+            return jsonify({
+                'status': 'success',
+                'message': f'Breakeven action executed on {accounts_affected} accounts',
+                'accounts_affected': accounts_affected,
+                'details': results
+            })
+        else:
+            # Execute on specific account
+            account_index = int(account_index)
+            if account_index < len(controller.connections) and controller.connections[account_index].tab:
+                try:
+                    result = controller.connections[account_index].tab.Runtime.evaluate(expression=js_code)
+                    result_value = result.get('result', {}).get('value', 'Unknown')
+                    
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'Breakeven action executed on account {account_index}',
+                        'accounts_affected': 1,
+                        'details': result_value
+                    })
+                except Exception as e:
+                    return jsonify({
+                        'status': 'error',
+                        'message': str(e)
+                    }), 500
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Account {account_index} not found or not available'
+                }), 404
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
 # API endpoint to run auto risk management
 @app.route('/api/risk-management', methods=['POST'])
 def run_risk_management():
