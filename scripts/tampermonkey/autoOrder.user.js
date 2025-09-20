@@ -342,87 +342,124 @@
     }
 
 
-    // Function to click dropdown option for a specific symbol
-    function clickExitForSymbol(symbol, optionId = 'cancel-option-Exit-at-Mkt-Cxl') {
-        console.log(`clickExitForSymbol called for symbol: ${symbol}, option: ${optionId}`);
-        const modules = document.querySelectorAll('.module.module-dom');
-        for (const module of modules) {
-            const symEl = module.querySelector('.contract-symbol span');
-            if (symEl && symEl.textContent.trim() === symbol) {
-                console.log(`Found matching module for symbol: ${symbol}`);
-                
-                // First, click the dropdown button to open the menu
-                const dropdownBtn = module.querySelector('button.btn.dropdown-toggle');
-                if (dropdownBtn) {
-                    console.log('Clicking dropdown button');
-                    dropdownBtn.click();
-                    
-                    // Give the dropdown menu time to appear
-                    setTimeout(() => {
-                        // Look for visible dropdown menu WITHIN this module or closest to it
-                        const dropdownMenu = module.querySelector('.dropdown-menu') || 
-                                            document.querySelector('.dropdown-menu[style*="display: block"]');
-                        
-                        if (dropdownMenu) {
-                            console.log('Found dropdown menu');
-                            // Find the option within the dropdown menu by ID
-                            const option = dropdownMenu.querySelector(`#${optionId}`);
-                            
-                            if (option) {
-                                console.log(`Found and clicking option: ${optionId} within the correct dropdown`);
-                                option.click();
-                            } else {
-                                console.error(`Option ${optionId} not found in this module's dropdown`);
-                                
-                                // Try finding by option text if ID doesn't work
-                                const optionByText = Array.from(dropdownMenu.querySelectorAll('a[role="menuitem"]'))
-                                    .find(link => link.textContent.includes('Exit at Mkt'));
-                                
-                                if (optionByText) {
-                                    console.log('Found option by text: Exit at Mkt');
-                                    optionByText.click();
-                                } else {
-                                    // Fallback to Exit at Mkt button if dropdown option not found
-                                    const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                                        .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                                    if (exitBtn) {
-                                        console.log('Fallback to Exit at Mkt button');
-                                        exitBtn.click();
-                                    } else {
-                                        console.error('No Exit at Mkt button found either');
-                                    }
-                                }
-                            }
-                        } else {
-                            console.error('Dropdown menu not found or not visible');
-                            
-                            // Fallback to Exit at Mkt button
-                            const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                                .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                            if (exitBtn) {
-                                console.log('Fallback to Exit at Mkt button');
-                                exitBtn.click();
-                            } else {
-                                console.error('No Exit at Mkt button found either');
-                            }
-                        }
-                    }, 200); // Increased delay to ensure dropdown is visible
-                } else {
-                    console.error('Dropdown button not found');
-                    
-                    // Fallback to original behavior
-                    const exitBtn = Array.from(module.querySelectorAll('button.btn.btn-default'))
-                        .find(btn => btn.textContent.replace(/\s+/g, ' ').includes('Exit at Mkt'));
-                    if (exitBtn) {
-                        console.log('Fallback to Exit at Mkt button');
-                        exitBtn.click();
-                    } else {
-                        console.error('No Exit at Mkt button found either');
-                    }
-                }
-                break; // stop after first match
+    async function clickExitForSymbol(symbol, actionIdOrAlias = 'cancel-option-Exit-at-Mkt-Cxl') {
+        // Aliases supported for convenience
+        const ALIAS_TO_ID = {
+            exit:          'cancel-option-Exit-at-Mkt-Cxl',
+            reverse:       'cancel-option-Reverse-Cxl',
+            'cancel-all':  'cancel-option-Cancel-All',
+            'cancel-bids': 'cancel-option-Cancel-Bids',
+            'cancel-offers':'cancel-option-Cancel-Offers',
+        };
+        const ID_TO_LABEL_RE = {
+            'cancel-option-Exit-at-Mkt-Cxl': /EXIT\s*AT\s*MKT/i,
+            'cancel-option-Reverse-Cxl':     /REVERSE\s*&\s*CXL/i,
+            'cancel-option-Cancel-All':      /CANCEL\s*ALL/i,
+            'cancel-option-Cancel-Bids':     /CANCEL\s*BIDS/i,
+            'cancel-option-Cancel-Offers':   /CANCEL\s*OFFERS/i,
+        };
+
+        const normalize = s => (s||'')
+        .replace(/[\u2000-\u200F\u2028\u2029\u202F\u00A0]/g,' ')
+        .replace(/\s+/g,' ')
+        .trim()
+        .toUpperCase();
+
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        async function waitFor(fn, {timeout=1200, interval=50}={}) {
+            const t0 = performance.now();
+            while (performance.now() - t0 < timeout) {
+                const v = fn();
+                if (v) return v;
+                await wait(interval);
+            }
+            return null;
+        }
+
+        // Resolve target id
+        const alias = actionIdOrAlias.toLowerCase();
+        const wantId = ALIAS_TO_ID[alias] || actionIdOrAlias; // allow raw id
+        const wantRe = ID_TO_LABEL_RE[wantId] || null;
+
+        const wantSym = normalize(symbol);
+        const isRoot  = /^[A-Z]{1,3}$/.test(wantSym);
+
+        // Find the correct header/module
+        const span = [...document.querySelectorAll('.header .contract-symbol span')]
+        .find(s => {
+            const got = normalize(s.textContent);
+            return got === wantSym || (isRoot && got.startsWith(wantSym));
+        });
+        if (!span) { console.error('clickExitForSymbol: contract header not found'); return false; }
+        const header  = span.closest('.header');
+        const split   = header?.querySelector('.dropdown.btn-group.btn-split.btn-group-default');
+        const primary = split?.querySelector('.btn.btn-default:not(.dropdown-toggle)');
+        const toggle  = split?.querySelector('.dropdown-toggle.btn.btn-default');
+        if (!split || !primary || !toggle) { console.error('clickExitForSymbol: split button not found'); return false; }
+
+        const primaryMatches = () => wantRe ? wantRe.test(normalize(primary.textContent)) : false;
+
+        // 1) If primary already shows desired action → click and done
+        if (primaryMatches()) { primary.click(); return true; }
+
+        // 2) Open dropdown
+        toggle.dispatchEvent(new MouseEvent('click', {bubbles:true}));
+
+        // 2a) Wait for ANY visible dropdown menu
+        const getVisibleMenus = () => [...document.querySelectorAll('.dropdown-menu')]
+        .filter(m => m.offsetParent !== null ||
+                /display\s*:\s*block/i.test(m.getAttribute('style')||'') ||
+                !!m.closest('.open'));
+        let menus = await waitFor(getVisibleMenus, {timeout: 900, interval: 40});
+        if (!menus || !menus.length) { console.error('clickExitForSymbol: dropdown menu not visible'); return false; }
+
+        // 2b) Prefer the menu nearest the toggle button
+        const tb = toggle.getBoundingClientRect();
+        menus.sort((a,b)=>{
+            const ar=a.getBoundingClientRect(), br=b.getBoundingClientRect();
+            const da=Math.hypot(ar.left-tb.left, ar.top-tb.bottom);
+            const db=Math.hypot(br.left-tb.left, br.top-tb.bottom);
+            return da-db;
+        });
+        let menu = menus[0];
+
+        // 2c) Try to find the item by ID *globally* (Tradovate may attach menus to portals)
+        let item = document.getElementById(wantId);
+
+        // If not found by ID, try by text inside any visible menu
+        if (!item && wantRe) {
+            for (const m of menus) {
+                item = [...m.querySelectorAll('a[role="menuitem"], a, button, li, span')]
+                    .find(el => wantRe.test(normalize(el.textContent)));
+                if (item) { menu = m; break; }
             }
         }
+        if (!item) { console.error('clickExitForSymbol: desired menu item not found'); return false; }
+
+        // 2d) Click the menu item
+        const clickable = item.tagName ? (item.matches('a,button') ? item : (item.querySelector('a,button') || item)) : item;
+        ['mousedown','mouseup','click'].forEach(type =>
+            clickable.dispatchEvent(new MouseEvent(type, {bubbles:true}))
+        );
+
+        // Fallback: brief re-open & re-select once
+        toggle.click();
+        await wait(120);
+        menus = getVisibleMenus();
+        item = document.getElementById(wantId) ||
+            (wantRe ? menus?.flatMap(m=>[...m.querySelectorAll('a[role="menuitem"], a, button, li, span')])
+             .find(el => wantRe.test(normalize(el.textContent))) : null);
+        if (item) {
+            ['mousedown','mouseup','click'].forEach(type =>
+                (item.querySelector('a,button')||item).dispatchEvent(new MouseEvent(type, {bubbles:true}))
+            );
+            await wait(80);
+            primary.click();
+            return true;
+        }
+
+        console.error('clickExitForSymbol: primary did not update; giving up');
+        return false;
     }
     
     // Function to move stop loss to breakeven for a specific symbol

@@ -1,12 +1,12 @@
 # Expanded Prompt-Handling Checklist
 
-## Hot-Reload Workflow
+## Script Reload Workflow
 When making changes to Tampermonkey scripts (scripts/tampermonkey/*.user.js):
 1. Make your changes to the script files
-2. Run: `python3 manual_hot_reload.py` to inject updates into Chrome instances
+2. Run: `python3 reload.py` to inject updates into all Chrome instances
 3. Verify the changes in the browser
 
-This replaces the previous automatic hot-reload system with a simple manual approach.
+This uses the existing Chrome DevTools Protocol infrastructure to directly inject scripts.
 
 ## 1. Read the prompt
 
