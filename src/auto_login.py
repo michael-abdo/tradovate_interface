@@ -742,6 +742,91 @@ def load_credentials():
             return [(username, password)]
         return []
 
+def load_dashboard_config():
+    """Load saved dashboard window configuration"""
+    try:
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        config_path = os.path.join(project_root, 'config/dashboard_window.json')
+        
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load dashboard config: {e}")
+    
+    # Default configuration
+    return {
+        "x": 100,
+        "y": 100,
+        "width": 1200,
+        "height": 800
+    }
+
+def save_dashboard_config(config):
+    """Save dashboard window configuration"""
+    try:
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        config_dir = os.path.join(project_root, 'config')
+        os.makedirs(config_dir, exist_ok=True)
+        
+        config_path = os.path.join(config_dir, 'dashboard_window.json')
+        with open(config_path, 'w') as f:
+            json.dump(config, f, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save dashboard config: {e}")
+
+def open_dashboard_window():
+    """Open a Chrome window for the dashboard at localhost:6001"""
+    try:
+        # Load saved window configuration
+        config = load_dashboard_config()
+        
+        # Find the next available debugging port
+        port = BASE_DEBUGGING_PORT + 99  # Use port 9321 for dashboard
+        
+        # Get Chrome path
+        chrome_path = find_chrome_executable()
+        if not chrome_path:
+            logger.error("Chrome not found, cannot open dashboard")
+            return None
+        
+        # Set up profile for dashboard
+        user_data_dir = os.path.join(os.path.expanduser("~"), ".tradovate-dashboard")
+        os.makedirs(user_data_dir, exist_ok=True)
+        
+        # Chrome command with window size and position
+        chrome_cmd = [
+            chrome_path,
+            "--new-window",
+            "http://localhost:6001",
+            f"--window-size={config['width']},{config['height']}",
+            f"--window-position={config['x']},{config['y']}",
+            f"--user-data-dir={user_data_dir}",
+            f"--remote-debugging-port={port}",
+            "--no-first-run",
+            "--no-default-browser-check",
+            "--disable-features=ChromeWhatsNewUI"
+        ]
+        
+        # Start Chrome process
+        process = subprocess.Popen(chrome_cmd,
+                                   stdout=subprocess.DEVNULL,
+                                   stderr=subprocess.DEVNULL)
+        
+        # Create a minimal ChromeInstance for the dashboard
+        dashboard_instance = ChromeInstance(port, "dashboard", "")
+        dashboard_instance.process = process
+        
+        # Note: We'll need to implement window position tracking later
+        # For now, just save the initial config
+        save_dashboard_config(config)
+        
+        return dashboard_instance
+        
+    except Exception as e:
+        logger.error(f"Failed to open dashboard window: {e}")
+        return None
+
 def handle_exit(chrome_instances):
     """Clean up before exiting"""
     logger.info("Cleaning up and exiting...")
@@ -816,7 +901,13 @@ def main():
         logger.info(f"{len(chrome_instances)} Chrome instances running:")
         for idx, instance in enumerate(chrome_instances):
             logger.info(f"  {idx+1}: {instance.username} - Port: {instance.port}")
-            
+        
+        # Open dashboard window
+        dashboard_window = open_dashboard_window()
+        if dashboard_window:
+            chrome_instances.append(dashboard_window)
+            logger.info("Dashboard window opened at http://localhost:6001")
+        
         logger.info("Press Ctrl+C to exit and close all Chrome instances")
         while True:
             time.sleep(1)
