@@ -902,12 +902,6 @@ def main():
         for idx, instance in enumerate(chrome_instances):
             logger.info(f"  {idx+1}: {instance.username} - Port: {instance.port}")
         
-        # Open dashboard window
-        dashboard_window = open_dashboard_window()
-        if dashboard_window:
-            chrome_instances.append(dashboard_window)
-            logger.info("Dashboard window opened at http://localhost:6001")
-        
         logger.info("Press Ctrl+C to exit and close all Chrome instances")
         while True:
             time.sleep(1)

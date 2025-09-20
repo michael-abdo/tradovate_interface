@@ -145,7 +145,7 @@ def cleanup_chrome_loggers():
 
 def run_auto_login():
     """Run the auto_login process to start Chrome and log in"""
-    from src.auto_login import main as auto_login_main, set_log_directory, set_terminal_callback, set_register_chrome_logger, open_dashboard_window
+    from src.auto_login import main as auto_login_main, set_log_directory, set_terminal_callback, set_register_chrome_logger
     print("Starting Chrome and auto-login process...")
     
     # Set the log directory for Chrome console logging
@@ -167,14 +167,15 @@ def run_auto_login():
     # Run auto login
     result = auto_login_main()
     
-    # Open dashboard window
+    # Open dashboard window - simple approach
     print("Opening dashboard window...")
-    dashboard_window = open_dashboard_window()
-    if dashboard_window:
-        print("Dashboard window opened at http://localhost:6001")
-        # Track the dashboard Chrome process
-        if dashboard_window.process:
-            chrome_processes.append(dashboard_window.process.pid)
+    try:
+        chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        dashboard_url = "http://localhost:6001"
+        subprocess.run([chrome_path, "--new-window", dashboard_url])
+        print(f"Dashboard window opened at {dashboard_url}")
+    except Exception as e:
+        print(f"Failed to open dashboard window: {e}")
     
     return result
 
@@ -338,14 +339,15 @@ def main():
         # Collect Chrome processes for proper cleanup
         collect_chrome_processes()
         
-        # Open dashboard window
-        from src.auto_login import open_dashboard_window
+        # Open dashboard window - simple approach
         print("Opening dashboard window...")
-        dashboard_window = open_dashboard_window()
-        if dashboard_window:
-            print("Dashboard window opened at http://localhost:6001")
-            if dashboard_window.process:
-                chrome_processes.append(dashboard_window.process.pid)
+        try:
+            chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+            dashboard_url = "http://localhost:6001"
+            subprocess.run([chrome_path, "--new-window", dashboard_url])
+            print(f"Dashboard window opened at {dashboard_url}")
+        except Exception as e:
+            print(f"Failed to open dashboard window: {e}")
         
         # Development mode reminder
         if dev_mode:
