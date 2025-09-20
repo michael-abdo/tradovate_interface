@@ -600,6 +600,10 @@
             document.querySelector('.btn-group .btn-primary')?.click();
             await delay(200);
             console.log(getOrderEvents());
+            
+            // 🔄 CAPTURE ORDER FEEDBACK BEFORE CLICKING BACK BUTTON
+            await captureOrderFeedback();
+            
             document.querySelector('.icon.icon-back')?.click();
             await delay(200);
         }
@@ -647,13 +651,80 @@
         const eventTxt  = cells[2]?.textContent.trim() || '';
         const comment   = cells[3]?.textContent.trim() || '';
 
-        // extract fill price patterns like “1@18747.25 NQM5”
+        // extract fill price patterns like "1@18747.25 NQM5"
         let fillPrice = null;
         const m = eventTxt.match(/@([\d.]+)/);
         if (m) fillPrice = Number(m[1]);
 
         return { timestamp, id, event: eventTxt, comment, fillPrice };
       });
+    }
+
+    // 🔄 CAPTURE TRADOVATE ORDER FEEDBACK SYSTEM
+    async function captureOrderFeedback() {
+        console.log('🔄 CAPTURING TRADOVATE ORDER FEEDBACK...');
+        
+        // Wait a moment for order feedback to load
+        await delay(500);
+        
+        // Look for the order history container
+        const orderHistoryDiv = document.querySelector('.order-history');
+        if (!orderHistoryDiv) {
+            console.log('❌ Order history div not found - no feedback to capture');
+            return;
+        }
+        
+        console.log('✅ Found order history div - capturing feedback...');
+        
+        // Extract the trading ticket header information
+        const ticketHeader = orderHistoryDiv.querySelector('.trading-ticket-header');
+        if (ticketHeader) {
+            // Extract symbol info
+            const symbolDiv = ticketHeader.querySelector('div[style*="font-size: 160%"]');
+            const symbol = symbolDiv ? symbolDiv.textContent.trim() : 'UNKNOWN';
+            
+            // Extract order summary
+            const orderSummaryDiv = ticketHeader.querySelector('div:last-child');
+            const orderSummary = orderSummaryDiv ? orderSummaryDiv.textContent.trim() : 'No summary';
+            
+            console.log(`📊 ORDER FEEDBACK - Symbol: ${symbol}`);
+            console.log(`📊 ORDER FEEDBACK - Summary: ${orderSummary}`);
+        }
+        
+        // Extract detailed order events from the data table
+        const orderEvents = getOrderEvents(orderHistoryDiv);
+        console.log(`📊 ORDER FEEDBACK - Events (${orderEvents.length} found):`);
+        
+        orderEvents.forEach((event, index) => {
+            console.log(`📊 EVENT ${index + 1}:`, {
+                timestamp: event.timestamp,
+                id: event.id,
+                event: event.event,
+                comment: event.comment,
+                fillPrice: event.fillPrice
+            });
+        });
+        
+        // Extract the entire order history HTML for complete analysis
+        console.log('📊 ORDER FEEDBACK - Full HTML Structure:');
+        console.log(orderHistoryDiv.outerHTML);
+        
+        // Check for specific rejection reasons or success indicators
+        const rejectionText = orderHistoryDiv.textContent;
+        if (rejectionText.includes('Rejected')) {
+            console.log('❌ ORDER REJECTED - checking rejection reason...');
+            if (rejectionText.includes('outside of market hours')) {
+                console.log('❌ REJECTION REASON: Order placed outside market hours');
+            } else if (rejectionText.includes('Risk')) {
+                console.log('❌ REJECTION REASON: Risk management violation');
+            } else {
+                console.log('❌ REJECTION REASON: Other - check full feedback above');
+            }
+        } else if (rejectionText.includes('Risk Passed')) {
+            console.log('✅ RISK MANAGEMENT: Order passed risk checks');
+        }
+        
+        console.log('🔄 ORDER FEEDBACK CAPTURE COMPLETE');
     }
 
 
