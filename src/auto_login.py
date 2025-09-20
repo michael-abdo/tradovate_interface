@@ -295,6 +295,63 @@ class ChromeInstance:
             except Exception as e:
                 logger.error(f"Error terminating Chrome: {e}")
 
+def fix_chrome_crash_preferences(profile_dir):
+    """Fix Chrome preferences to prevent 'restore pages' popup after crashes"""
+    try:
+        import json
+        
+        # Paths to Chrome preferences files
+        preferences_file = os.path.join(profile_dir, "Preferences")
+        local_state_file = os.path.join(profile_dir, "..", "Local State")
+        
+        # Fix main Preferences file
+        if os.path.exists(preferences_file):
+            try:
+                with open(preferences_file, 'r') as f:
+                    prefs = json.load(f)
+                
+                # Set clean exit flags
+                if 'profile' not in prefs:
+                    prefs['profile'] = {}
+                prefs['profile']['exited_cleanly'] = True
+                prefs['profile']['exit_type'] = 'Normal'
+                
+                with open(preferences_file, 'w') as f:
+                    json.dump(prefs, f, indent=2)
+                logger.debug(f"Fixed preferences file: {preferences_file}")
+            except (json.JSONDecodeError, KeyError) as e:
+                logger.warning(f"Could not modify preferences JSON: {e}")
+                # Fallback to sed-like replacement
+                try:
+                    with open(preferences_file, 'r') as f:
+                        content = f.read()
+                    content = content.replace('"exited_cleanly":false', '"exited_cleanly":true')
+                    content = content.replace('"exit_type":"Crashed"', '"exit_type":"Normal"')
+                    with open(preferences_file, 'w') as f:
+                        f.write(content)
+                    logger.debug(f"Fixed preferences file using text replacement: {preferences_file}")
+                except Exception as e2:
+                    logger.warning(f"Failed to fix preferences file: {e2}")
+        
+        # Fix Local State file if it exists
+        if os.path.exists(local_state_file):
+            try:
+                with open(local_state_file, 'r') as f:
+                    local_state = json.load(f)
+                
+                if 'profile' not in local_state:
+                    local_state['profile'] = {}
+                local_state['profile']['exited_cleanly'] = True
+                
+                with open(local_state_file, 'w') as f:
+                    json.dump(local_state, f, indent=2)
+                logger.debug(f"Fixed local state file: {local_state_file}")
+            except (json.JSONDecodeError, KeyError, FileNotFoundError) as e:
+                logger.debug(f"Could not modify local state (this is normal for new profiles): {e}")
+                
+    except Exception as e:
+        logger.warning(f"Error fixing Chrome crash preferences: {e}")
+
 def start_chrome_with_debugging(port):
     """Start a *new* isolated Chrome instance with remote-debugging enabled."""
     logger.info(f"Starting Chrome with remote debugging on port {port}...")
@@ -302,6 +359,9 @@ def start_chrome_with_debugging(port):
     # Separate profile → forces a brand-new Chrome process even if one is already open
     profile_dir = os.path.join("/tmp", f"tradovate_debug_profile_{port}")
     os.makedirs(profile_dir, exist_ok=True)
+    
+    # Fix Chrome preferences to prevent crash restore dialogs
+    fix_chrome_crash_preferences(profile_dir)
 
     # Stop any Chrome that's already using this debugging port
     subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
@@ -319,6 +379,12 @@ def start_chrome_with_debugging(port):
         "--disable-infobars",
         "--disable-session-crashed-bubble",
         "--disable-save-password-bubble",
+        "--disable-features=InfiniteSessionRestore",
+        "--hide-crash-restore-bubble",
+        "--no-crash-upload",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
         TRADOVATE_URL,
     ]
 
