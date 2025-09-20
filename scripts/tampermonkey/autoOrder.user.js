@@ -13,7 +13,7 @@
 
 (function () {
     'use strict';
-    console.log('Auto Order script initialized');
+    console.log('Auto Order script initialized - HOT RELOAD WORKING!');
     var debug = false;
 
     function delay(ms) {
@@ -25,7 +25,7 @@
         console.log('Creating UI');
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '120';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '40';
-        const storedQty  = localStorage.getItem('bracketTrade_qty') || '9';
+        const storedQty  = localStorage.getItem('bracketTrade_qty') || '5';
         const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
         const storedSym  = localStorage.getItem('bracketTrade_symbol') || 'NQ';
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);

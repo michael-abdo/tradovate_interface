@@ -60,6 +60,28 @@ def verify_log_directory():
     print(f"Log directory verified: {log_directory}")
     return True
 
+def kill_process_on_port(port):
+    """Kill any process using the specified port"""
+    try:
+        # Find process using the port
+        result = subprocess.run(['lsof', '-i', f':{port}'], capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout:
+            lines = result.stdout.strip().split('\n')
+            if len(lines) > 1:  # Skip header line
+                for line in lines[1:]:
+                    parts = line.split()
+                    if len(parts) >= 2:
+                        pid = parts[1]
+                        try:
+                            subprocess.run(['kill', '-9', pid], check=True)
+                            print(f"🔧 Killed process {pid} on port {port}")
+                        except subprocess.CalledProcessError:
+                            print(f"⚠️  Failed to kill process {pid} on port {port}")
+        else:
+            print(f"✅ Port {port} is available")
+    except Exception as e:
+        print(f"⚠️  Error checking port {port}: {e}")
+
 def test_chrome_debugging_connections():
     """Test Chrome debugging connections before starting logging"""
     print("Testing Chrome debugging connections...")
@@ -347,6 +369,9 @@ def main():
             try:
                 print("🚀 SCRIPT RELOADER: Starting initialization...")
                 
+                # Kill any existing process on port 8080
+                kill_process_on_port(8080)
+                
                 # Initialize Layer 1: HTTP Server
                 script_server = ScriptServer(port=8080)
                 script_server.start()
@@ -367,16 +392,29 @@ def main():
                 # Override the existing registration to include script watcher connection
                 original_register_chrome_logger = register_chrome_logger
                 def enhanced_register_chrome_logger(chrome_logger):
+                    print(f"🔧 DEV MODE: Enhanced ChromeLogger registration called for {chrome_logger}")
                     # Call original registration for cleanup
                     original_register_chrome_logger(chrome_logger)
                     # Add to script watcher for Layer 2 → Layer 3 handoff
                     dev_mode_chrome_logger_callback(chrome_logger)
+                    print(f"🔧 DEV MODE: ChromeLogger added to script watcher registry")
                 
                 # Replace the registration function for dev mode
                 globals()['register_chrome_logger'] = enhanced_register_chrome_logger
                 
+                # Re-set the registration function in auto_login to use the enhanced version
+                set_register_chrome_logger(enhanced_register_chrome_logger)
+                print("🔧 DEV MODE: Enhanced registration function set in auto_login")
+                
                 print("✅ SCRIPT RELOADER: All layers initialized successfully")
                 print("🔍→🔥 Layer 2 → Layer 3 connection established")
+                
+                # Register any existing ChromeLoggers that were created before script watcher
+                print(f"🔧 DEV MODE: Checking for existing ChromeLoggers to register...")
+                print(f"🔧 DEV MODE: Found {len(chrome_loggers)} existing ChromeLoggers")
+                for chrome_logger in chrome_loggers:
+                    print(f"🔧 DEV MODE: Registering existing ChromeLogger: {chrome_logger}")
+                    dev_mode_chrome_logger_callback(chrome_logger)
                 
             except Exception as e:
                 print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")
@@ -407,6 +445,9 @@ def main():
             try:
                 print("🚀 SCRIPT RELOADER: Starting initialization...")
                 
+                # Kill any existing process on port 8080
+                kill_process_on_port(8080)
+                
                 # Initialize Layer 1: HTTP Server  
                 script_server = ScriptServer(port=8080)
                 script_server.start()
@@ -427,16 +468,29 @@ def main():
                 # Override the existing registration to include script watcher connection
                 original_register_chrome_logger = register_chrome_logger
                 def enhanced_register_chrome_logger(chrome_logger):
+                    print(f"🔧 DEV MODE: Enhanced ChromeLogger registration called for {chrome_logger}")
                     # Call original registration for cleanup
                     original_register_chrome_logger(chrome_logger)
                     # Add to script watcher for Layer 2 → Layer 3 handoff
                     dev_mode_chrome_logger_callback(chrome_logger)
+                    print(f"🔧 DEV MODE: ChromeLogger added to script watcher registry")
                 
                 # Replace the registration function for dev mode
                 globals()['register_chrome_logger'] = enhanced_register_chrome_logger
                 
+                # Re-set the registration function in auto_login to use the enhanced version
+                set_register_chrome_logger(enhanced_register_chrome_logger)
+                print("🔧 DEV MODE: Enhanced registration function set in auto_login")
+                
                 print("✅ SCRIPT RELOADER: All layers initialized successfully")
                 print("🔍→🔥 Layer 2 → Layer 3 connection established")
+                
+                # Register any existing ChromeLoggers that were created before script watcher
+                print(f"🔧 DEV MODE: Checking for existing ChromeLoggers to register...")
+                print(f"🔧 DEV MODE: Found {len(chrome_loggers)} existing ChromeLoggers")
+                for chrome_logger in chrome_loggers:
+                    print(f"🔧 DEV MODE: Registering existing ChromeLogger: {chrome_logger}")
+                    dev_mode_chrome_logger_callback(chrome_logger)
                 
             except Exception as e:
                 print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")

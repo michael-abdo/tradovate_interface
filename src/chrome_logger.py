@@ -137,6 +137,23 @@ class ChromeLogger:
                 else:
                     print(f"✅ LAYER 3: UserScript header validated in {filename}")
             
+            # Hot-reload cleanup for autoOrder script
+            if 'autoOrder' in filename.lower():
+                print(f"🔥 LAYER 3: HOT-RELOAD - Cleaning up existing autoOrder UI")
+                cleanup_script = """
+                console.log('🔥 HOT RELOAD: Removing old autoOrder UI...');
+                let oldUI = document.getElementById('bracket-trade-box');
+                if (oldUI) {
+                    oldUI.remove();
+                    console.log('🔥 HOT RELOAD: Old UI removed');
+                }
+                // Clear localStorage quantity to force new defaults
+                localStorage.removeItem('bracketTrade_qty');
+                console.log('🔥 HOT RELOAD: localStorage cleared for fresh defaults');
+                """
+                cleanup_result = self.tab.Runtime.evaluate(expression=cleanup_script)
+                print(f"🔥 LAYER 3: HOT-RELOAD cleanup completed")
+            
             # Inject script via Chrome DevTools Protocol
             print(f"🔥 LAYER 3: Executing Runtime.evaluate for {filename}")
             result = self.tab.Runtime.evaluate(expression=script_content)

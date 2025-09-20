@@ -123,11 +123,11 @@ class ScriptWatcher:
         
         try:
             # Create the file system event handler with Layer 2 → Layer 3 callback
-            event_handler = ScriptFileHandler(callback=self.inject_script_to_all_chrome_loggers)
+            self.event_handler = ScriptFileHandler(callback=self.inject_script_to_all_chrome_loggers)
             
             # Create and configure the observer
             self.observer = Observer()
-            self.observer.schedule(event_handler, self.script_directory, recursive=False)
+            self.observer.schedule(self.event_handler, self.script_directory, recursive=False)
             
             # Start the observer
             self.observer.start()
@@ -158,6 +158,16 @@ class ScriptWatcher:
             self.is_running = False
             self.observer = None
             return False
+    
+    def set_callback(self, callback):
+        """Set the callback function for file change notifications"""
+        self.callback = callback
+        print(f"🔍 LAYER 2: Callback function updated: {'SET' if callback else 'NOT SET'}")
+        
+        # Also update the event handler if it exists
+        if hasattr(self, 'event_handler') and self.event_handler:
+            self.event_handler.callback = callback
+            print(f"🔍 LAYER 2: Event handler callback updated")
     
     def stop(self):
         """Stop the file system watcher"""
