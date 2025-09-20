@@ -24,6 +24,35 @@ if not logger.handlers:
 # Try to detect Chrome path based on OS
 import platform
 
+# Global variables for logging (set by start_all.py)
+log_directory = None
+terminal_callback = None
+register_chrome_logger = None
+
+def set_log_directory(directory):
+    """Set the log directory for Chrome console logging"""
+    global log_directory
+    log_directory = directory
+    print(f"Log directory set to: {log_directory}")
+
+def set_terminal_callback(callback):
+    """Set the terminal callback for real-time Chrome console output"""
+    global terminal_callback
+    terminal_callback = callback
+    print("Terminal callback set for real-time console output")
+
+def set_register_chrome_logger(register_func):
+    """Set the function to register ChromeLoggers with start_all.py"""
+    global register_chrome_logger
+    register_chrome_logger = register_func
+    print("ChromeLogger registration function set")
+
+def create_log_file_path(username, port):
+    """Create a unique log file path for a Chrome instance"""
+    if not log_directory:
+        return None
+    return os.path.join(log_directory, f"chrome_console_{username}_{port}.log")
+
 def find_chrome_path():
     """Find the Chrome executable path based on the operating system"""
     if platform.system() == "Darwin":  # macOS

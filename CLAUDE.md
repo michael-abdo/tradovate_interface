@@ -1,5 +1,13 @@
 # Expanded Prompt-Handling Checklist
 
+## Hot-Reload Workflow
+When making changes to Tampermonkey scripts (scripts/tampermonkey/*.user.js):
+1. Make your changes to the script files
+2. Run: `python3 manual_hot_reload.py` to inject updates into Chrome instances
+3. Verify the changes in the browser
+
+This replaces the previous automatic hot-reload system with a simple manual approach.
+
 ## 1. Read the prompt
 
 * **Action:** Read all new user text, attachments, and prior-turn context.

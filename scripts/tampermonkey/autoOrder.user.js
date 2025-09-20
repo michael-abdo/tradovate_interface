@@ -13,7 +13,7 @@
 
 (function () {
     'use strict';
-    console.log('Auto Order script initialized');
+    console.log('Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!');
     var debug = false;
 
     function delay(ms) {
@@ -25,7 +25,7 @@
         console.log('Creating UI');
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '120';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '40';
-        const storedQty  = localStorage.getItem('bracketTrade_qty') || '9';
+        const storedQty  = localStorage.getItem('bracketTrade_qty') || '5';
         const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
         const storedSym  = localStorage.getItem('bracketTrade_symbol') || 'NQ';
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);
@@ -106,6 +106,10 @@
             <div style="display:flex;gap:10px;margin-bottom:2px;">
                 <button id="cancelAllBtn" style="flex:1;padding:12px 8px;background:#e6b800;color:#000;border:none;border-radius:4px;font-weight:bold;">Cancel</button>
                 <button id="closeAllBtn" style="flex:3;padding:12px 8px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Close All</button>
+            </div>
+            <!-- NEW: Breakeven button above Reverse -->
+            <div style="display:flex;gap:10px;margin-top:6px;">
+                <button id="breakevenBtn" style="flex:1;padding:12px 8px;background:#6c5ce7;color:#fff;border:none;border-radius:4px;font-weight:bold;">Breakeven</button>
             </div>
             <div style="display:flex;gap:10px;margin-top:6px;">
                 <button id="reverseBtn" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse</button>
@@ -193,6 +197,22 @@
                 console.log('Reverse Position action triggered for symbol:', normalizedSymbol);
             } catch (err) {
                 console.error("Reverse Position operation failed:", err);
+            }
+        });
+        
+        // Add event listener for the Breakeven button
+        document.getElementById('breakevenBtn').addEventListener('click', () => {
+            console.log('Breakeven button clicked');
+            try {
+                const symbol = document.getElementById('symbolInput').value || 'NQ';
+                const normalizedSymbol = normalizeSymbol(symbol);
+                console.log(`Processing breakeven for symbol: ${normalizedSymbol}`);
+                
+                // Call the breakeven function
+                moveStopLossToBreakeven(normalizedSymbol);
+                console.log('Breakeven action triggered for symbol:', normalizedSymbol);
+            } catch (err) {
+                console.error("Breakeven operation failed:", err);
             }
         });
 
@@ -403,6 +423,135 @@
                 break; // stop after first match
             }
         }
+    }
+    
+    // Function to move stop loss to breakeven for a specific symbol
+    function moveStopLossToBreakeven(symbol) {
+        console.log(`moveStopLossToBreakeven called for symbol: ${symbol}`);
+        
+        // First, get current position data to find entry price
+        const positionData = getCurrentPosition(symbol);
+        if (!positionData) {
+            console.log(`No open position found for ${symbol}`);
+            return;
+        }
+        
+        console.log(`Found position for ${symbol}:`, positionData);
+        
+        // Calculate breakeven price (entry price with small buffer for commissions)
+        const entryPrice = positionData.entryPrice;
+        const isLong = positionData.quantity > 0;
+        
+        // Get tick size for the symbol
+        const rootSymbol = symbol.replace(/[A-Z]\d+$/, '');
+        const symbolData = futuresTickData[rootSymbol];
+        const tickSize = symbolData?.tickSize || 0.25;
+        
+        // Add small buffer (1-2 ticks) to account for commissions
+        const breakevenBuffer = tickSize * 2;
+        const breakevenPrice = isLong 
+            ? (entryPrice + breakevenBuffer).toFixed(symbolData?.precision || 2)
+            : (entryPrice - breakevenBuffer).toFixed(symbolData?.precision || 2);
+        
+        console.log(`Calculated breakeven price: ${breakevenPrice} (entry: ${entryPrice}, isLong: ${isLong}, buffer: ${breakevenBuffer})`);
+        
+        // Find and update stop loss orders
+        const modules = document.querySelectorAll('.module.module-dom');
+        let stopOrdersUpdated = 0;
+        
+        for (const module of modules) {
+            const symEl = module.querySelector('.contract-symbol span');
+            if (symEl && symEl.textContent.trim() === symbol) {
+                // Check if this is a stop order
+                const orderTypeEl = module.querySelector('.order-type');
+                if (orderTypeEl && orderTypeEl.textContent.includes('STOP')) {
+                    console.log(`Found stop order for ${symbol}, updating to breakeven`);
+                    
+                    // Click on the price field to edit it
+                    const priceInput = module.querySelector('input[type="number"], .numeric-input input');
+                    if (priceInput) {
+                        console.log(`Updating stop price from ${priceInput.value} to ${breakevenPrice}`);
+                        
+                        // Focus and update the price
+                        priceInput.focus();
+                        priceInput.value = breakevenPrice;
+                        
+                        // Trigger change events
+                        priceInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        priceInput.dispatchEvent(new Event('change', { bubbles: true }));
+                        priceInput.dispatchEvent(new KeyboardEvent('keydown', {
+                            key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true
+                        }));
+                        
+                        stopOrdersUpdated++;
+                        console.log(`Stop order ${stopOrdersUpdated} updated to breakeven`);
+                    } else {
+                        console.log('Price input not found for stop order');
+                    }
+                }
+            }
+        }
+        
+        if (stopOrdersUpdated > 0) {
+            console.log(`✅ Successfully moved ${stopOrdersUpdated} stop order(s) to breakeven for ${symbol}`);
+        } else {
+            console.log(`⚠️ No stop orders found to update for ${symbol}`);
+        }
+    }
+    
+    // Helper function to get current position data for a symbol
+    function getCurrentPosition(symbol) {
+        console.log(`getCurrentPosition called for symbol: ${symbol}`);
+        
+        // Look for position information in the trading interface
+        const positionModules = document.querySelectorAll('.module.module-dom');
+        
+        for (const module of positionModules) {
+            const symEl = module.querySelector('.contract-symbol span');
+            if (symEl && symEl.textContent.trim() === symbol) {
+                // Check if this shows position info (not just orders)
+                const qtyEl = module.querySelector('.position-quantity, .quantity');
+                const priceEl = module.querySelector('.avg-price, .entry-price, .price');
+                
+                if (qtyEl && priceEl) {
+                    const quantity = parseFloat(qtyEl.textContent.replace(/[^\d.-]/g, ''));
+                    const entryPrice = parseFloat(priceEl.textContent.replace(/[^\d.-]/g, ''));
+                    
+                    if (!isNaN(quantity) && !isNaN(entryPrice) && quantity !== 0) {
+                        console.log(`Found position: qty=${quantity}, entry=${entryPrice}`);
+                        return { quantity, entryPrice };
+                    }
+                }
+            }
+        }
+        
+        // Fallback: try to get position from portfolio/account view
+        const portfolioRows = document.querySelectorAll('.portfolio-row, .position-row');
+        for (const row of portfolioRows) {
+            const symbolCell = row.querySelector('.symbol, .contract-symbol');
+            if (symbolCell && symbolCell.textContent.includes(symbol)) {
+                const cells = row.querySelectorAll('td, .cell');
+                // Try to extract quantity and price from table cells
+                for (let i = 0; i < cells.length; i++) {
+                    const text = cells[i].textContent.trim();
+                    const qty = parseFloat(text.replace(/[^\d.-]/g, ''));
+                    if (!isNaN(qty) && qty !== 0) {
+                        // Look for price in nearby cells
+                        for (let j = i + 1; j < Math.min(i + 4, cells.length); j++) {
+                            const priceText = cells[j].textContent.trim();
+                            const price = parseFloat(priceText.replace(/[^\d.-]/g, ''));
+                            if (!isNaN(price) && price > 0) {
+                                console.log(`Found position from portfolio: qty=${qty}, entry=${price}`);
+                                return { quantity: qty, entryPrice: price };
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        console.log(`No position data found for ${symbol}`);
+        return null;
     }
     
     console.log('Creating UI...');

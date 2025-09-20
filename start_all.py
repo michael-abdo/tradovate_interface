@@ -60,6 +60,28 @@ def verify_log_directory():
     print(f"Log directory verified: {log_directory}")
     return True
 
+def kill_process_on_port(port):
+    """Kill any process using the specified port"""
+    try:
+        # Find process using the port
+        result = subprocess.run(['lsof', '-i', f':{port}'], capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout:
+            lines = result.stdout.strip().split('\n')
+            if len(lines) > 1:  # Skip header line
+                for line in lines[1:]:
+                    parts = line.split()
+                    if len(parts) >= 2:
+                        pid = parts[1]
+                        try:
+                            subprocess.run(['kill', '-9', pid], check=True)
+                            print(f"🔧 Killed process {pid} on port {port}")
+                        except subprocess.CalledProcessError:
+                            print(f"⚠️  Failed to kill process {pid} on port {port}")
+        else:
+            print(f"✅ Port {port} is available")
+    except Exception as e:
+        print(f"⚠️  Error checking port {port}: {e}")
+
 def test_chrome_debugging_connections():
     """Test Chrome debugging connections before starting logging"""
     print("Testing Chrome debugging connections...")
@@ -265,6 +287,8 @@ def main():
                         help="Seconds to wait between auto-login and dashboard start (default: 15)")
     parser.add_argument("--background", action="store_true", 
                         help="Run auto-login in the background")
+    parser.add_argument("--dev", action="store_true",
+                        help="Enable development mode with script reloader (HTTP server for manual updates)")
     args = parser.parse_args()
     
     # Create log directory for this session
@@ -281,6 +305,26 @@ def main():
     if not test_chrome_debugging_connections():
         print("Warning: Chrome debugging connection test failed")
         return 1
+    
+    # Check for development mode activation
+    dev_mode = args.dev
+    if dev_mode:
+        print("🚀 DEVELOPMENT MODE ACTIVATED")
+        print("🔧 Enabling script reloader system:")
+        print("🔧 HTTP server for Tampermonkey script serving")
+        print("📝 Manual script updates via manual_hot_reload.py")
+        
+        # Conditional imports for development mode only
+        try:
+            print("📦 Loading script reloader modules...")
+            from scripts.tampermonkey.serve_scripts import ScriptServer
+            print("✅ Script reloader modules loaded successfully")
+        except ImportError as e:
+            print(f"🔴 ERROR: Failed to import script reloader modules: {e}")
+            print("🔴 Script reloader will not be available")
+            dev_mode = False  # Disable dev mode if imports fail
+    else:
+        print("🔒 Development mode disabled (use --dev to enable script reloader)")
     
     if args.background:
         # Set the log directory for Chrome console logging
@@ -317,6 +361,26 @@ def main():
         # Collect Chrome processes for proper cleanup
         collect_chrome_processes()
         
+        # Initialize script reloader in dev mode  
+        if dev_mode:
+            try:
+                print("🚀 SCRIPT RELOADER: Starting initialization...")
+                
+                # Kill any existing process on port 8080
+                kill_process_on_port(8080)
+                
+                # Initialize Layer 1: HTTP Server
+                script_server = ScriptServer(port=8080)
+                script_server.start()
+                print("🔧 LAYER 1: HTTP server started on http://localhost:8080")
+                
+                print("✅ SCRIPT RELOADER: HTTP server started")
+                print("📝 To update scripts, run: python3 manual_hot_reload.py")
+                
+            except Exception as e:
+                print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")
+                print("🔴 Script reloader disabled due to initialization failure")
+        
         # Start the dashboard in the foreground
         run_dashboard()
     else:
@@ -336,6 +400,26 @@ def main():
             print("ChromeLogger registration enabled")
         else:
             print("Warning: No log directory available for Chrome console logging")
+        
+        # Initialize script reloader in dev mode
+        if dev_mode:
+            try:
+                print("🚀 SCRIPT RELOADER: Starting initialization...")
+                
+                # Kill any existing process on port 8080
+                kill_process_on_port(8080)
+                
+                # Initialize Layer 1: HTTP Server  
+                script_server = ScriptServer(port=8080)
+                script_server.start()
+                print("🔧 LAYER 1: HTTP server started on http://localhost:8080")
+                
+                print("✅ SCRIPT RELOADER: HTTP server started")
+                print("📝 To update scripts, run: python3 manual_hot_reload.py")
+                
+            except Exception as e:
+                print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")
+                print("🔴 Script reloader disabled due to initialization failure")
         
         # Start auto-login in a separate thread
         auto_login_thread = threading.Thread(target=run_auto_login)
