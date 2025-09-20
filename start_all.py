@@ -288,7 +288,7 @@ def main():
     parser.add_argument("--background", action="store_true", 
                         help="Run auto-login in the background")
     parser.add_argument("--dev", action="store_true",
-                        help="Enable development mode with script reloader (HTTP server + file watcher + CDP injection)")
+                        help="Enable development mode with script reloader (HTTP server for manual updates)")
     args = parser.parse_args()
     
     # Create log directory for this session
@@ -310,17 +310,14 @@ def main():
     dev_mode = args.dev
     if dev_mode:
         print("🚀 DEVELOPMENT MODE ACTIVATED")
-        print("🔧🔍🔥 Enabling 3-layer script reloader system:")
-        print("🔧 LAYER 1: HTTP server for Tampermonkey script serving")
-        print("🔍 LAYER 2: File watcher for automatic change detection") 
-        print("🔥 LAYER 3: Chrome DevTools Protocol injection")
-        print("📡 Real-time script updates across all Chrome instances")
+        print("🔧 Enabling script reloader system:")
+        print("🔧 HTTP server for Tampermonkey script serving")
+        print("📝 Manual script updates via manual_hot_reload.py")
         
         # Conditional imports for development mode only
         try:
             print("📦 Loading script reloader modules...")
             from scripts.tampermonkey.serve_scripts import ScriptServer
-            from src.script_watcher import ScriptWatcher
             print("✅ Script reloader modules loaded successfully")
         except ImportError as e:
             print(f"🔴 ERROR: Failed to import script reloader modules: {e}")
@@ -377,44 +374,8 @@ def main():
                 script_server.start()
                 print("🔧 LAYER 1: HTTP server started on http://localhost:8080")
                 
-                # Initialize Layer 2: File Watcher  
-                script_watcher = ScriptWatcher()
-                script_watcher.start()
-                print("🔍 LAYER 2: File watcher started monitoring scripts/tampermonkey")
-                
-                # Layer 2 → Layer 3 Connection: Register script_watcher with ChromeLogger system
-                def dev_mode_chrome_logger_callback(chrome_logger):
-                    """Connect new ChromeLoggers to the script watcher for Layer 2 → Layer 3 handoff"""
-                    if chrome_logger:
-                        script_watcher.add_chrome_logger(chrome_logger)
-                        print(f"🔍→🔥 LAYER CONNECTION: ChromeLogger registered with script watcher")
-                
-                # Override the existing registration to include script watcher connection
-                original_register_chrome_logger = register_chrome_logger
-                def enhanced_register_chrome_logger(chrome_logger):
-                    print(f"🔧 DEV MODE: Enhanced ChromeLogger registration called for {chrome_logger}")
-                    # Call original registration for cleanup
-                    original_register_chrome_logger(chrome_logger)
-                    # Add to script watcher for Layer 2 → Layer 3 handoff
-                    dev_mode_chrome_logger_callback(chrome_logger)
-                    print(f"🔧 DEV MODE: ChromeLogger added to script watcher registry")
-                
-                # Replace the registration function for dev mode
-                globals()['register_chrome_logger'] = enhanced_register_chrome_logger
-                
-                # Re-set the registration function in auto_login to use the enhanced version
-                set_register_chrome_logger(enhanced_register_chrome_logger)
-                print("🔧 DEV MODE: Enhanced registration function set in auto_login")
-                
-                print("✅ SCRIPT RELOADER: All layers initialized successfully")
-                print("🔍→🔥 Layer 2 → Layer 3 connection established")
-                
-                # Register any existing ChromeLoggers that were created before script watcher
-                print(f"🔧 DEV MODE: Checking for existing ChromeLoggers to register...")
-                print(f"🔧 DEV MODE: Found {len(chrome_loggers)} existing ChromeLoggers")
-                for chrome_logger in chrome_loggers:
-                    print(f"🔧 DEV MODE: Registering existing ChromeLogger: {chrome_logger}")
-                    dev_mode_chrome_logger_callback(chrome_logger)
+                print("✅ SCRIPT RELOADER: HTTP server started")
+                print("📝 To update scripts, run: python3 manual_hot_reload.py")
                 
             except Exception as e:
                 print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")
@@ -453,44 +414,8 @@ def main():
                 script_server.start()
                 print("🔧 LAYER 1: HTTP server started on http://localhost:8080")
                 
-                # Initialize Layer 2: File Watcher
-                script_watcher = ScriptWatcher()
-                script_watcher.start()
-                print("🔍 LAYER 2: File watcher started monitoring scripts/tampermonkey")
-                
-                # Layer 2 → Layer 3 Connection: Register script_watcher with ChromeLogger system
-                def dev_mode_chrome_logger_callback(chrome_logger):
-                    """Connect new ChromeLoggers to the script watcher for Layer 2 → Layer 3 handoff"""
-                    if chrome_logger:
-                        script_watcher.add_chrome_logger(chrome_logger)
-                        print(f"🔍→🔥 LAYER CONNECTION: ChromeLogger registered with script watcher")
-                
-                # Override the existing registration to include script watcher connection
-                original_register_chrome_logger = register_chrome_logger
-                def enhanced_register_chrome_logger(chrome_logger):
-                    print(f"🔧 DEV MODE: Enhanced ChromeLogger registration called for {chrome_logger}")
-                    # Call original registration for cleanup
-                    original_register_chrome_logger(chrome_logger)
-                    # Add to script watcher for Layer 2 → Layer 3 handoff
-                    dev_mode_chrome_logger_callback(chrome_logger)
-                    print(f"🔧 DEV MODE: ChromeLogger added to script watcher registry")
-                
-                # Replace the registration function for dev mode
-                globals()['register_chrome_logger'] = enhanced_register_chrome_logger
-                
-                # Re-set the registration function in auto_login to use the enhanced version
-                set_register_chrome_logger(enhanced_register_chrome_logger)
-                print("🔧 DEV MODE: Enhanced registration function set in auto_login")
-                
-                print("✅ SCRIPT RELOADER: All layers initialized successfully")
-                print("🔍→🔥 Layer 2 → Layer 3 connection established")
-                
-                # Register any existing ChromeLoggers that were created before script watcher
-                print(f"🔧 DEV MODE: Checking for existing ChromeLoggers to register...")
-                print(f"🔧 DEV MODE: Found {len(chrome_loggers)} existing ChromeLoggers")
-                for chrome_logger in chrome_loggers:
-                    print(f"🔧 DEV MODE: Registering existing ChromeLogger: {chrome_logger}")
-                    dev_mode_chrome_logger_callback(chrome_logger)
+                print("✅ SCRIPT RELOADER: HTTP server started")
+                print("📝 To update scripts, run: python3 manual_hot_reload.py")
                 
             except Exception as e:
                 print(f"🔴 SCRIPT RELOADER: ERROR during initialization: {e}")
