@@ -8,6 +8,17 @@ import sys
 import json
 import random
 import threading
+import logging
+from . import chrome_logger
+
+# Set up logger for this module
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 # Configuration
 # Try to detect Chrome path based on OS
@@ -43,7 +54,7 @@ def find_chrome_path():
     # Try each path
     for path in paths:
         if os.path.exists(path):
-            print(f"Found Chrome at: {path}")
+            logger.info(f"Found Chrome at: {path}")
             return path
     
     # If Chrome is not found in the common paths, try to find it in PATH
@@ -56,20 +67,49 @@ def find_chrome_path():
         
         if result.returncode == 0 and result.stdout.strip():
             path = result.stdout.strip()
-            print(f"Found Chrome in PATH: {path}")
+            logger.info(f"Found Chrome in PATH: {path}")
             return path
     except Exception as e:
-        print(f"Error finding Chrome in PATH: {e}")
+        logger.warning(f"Error finding Chrome in PATH: {e}")
     
     # Default path as fallback
     default_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    print(f"Chrome not found, will try with default path: {default_path}")
+    logger.warning(f"Chrome not found, will try with default path: {default_path}")
     return default_path
 
 CHROME_PATH = find_chrome_path()
 BASE_DEBUGGING_PORT = 9222
 TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
+
+# Global variables for logging (set by start_all.py)
+log_directory = None
+terminal_callback = None
+register_chrome_logger = None
+
+def set_log_directory(directory):
+    """Set the log directory for Chrome console logging"""
+    global log_directory
+    log_directory = directory
+    logger.info(f"Log directory set to: {log_directory}")
+
+def set_terminal_callback(callback):
+    """Set the terminal callback for real-time Chrome console output"""
+    global terminal_callback
+    terminal_callback = callback
+    logger.info("Terminal callback set for real-time console output")
+
+def set_register_chrome_logger(register_func):
+    """Set the function to register ChromeLoggers with start_all.py"""
+    global register_chrome_logger
+    register_chrome_logger = register_func
+    logger.info("ChromeLogger registration function set")
+
+def create_log_file_path(username, port):
+    """Create a unique log file path for a Chrome instance"""
+    if not log_directory:
+        return None
+    return os.path.join(log_directory, f"chrome_console_{username}_{port}.log")
 
 class ChromeInstance:
     def __init__(self, port, username, password):
@@ -82,6 +122,12 @@ class ChromeInstance:
         self.login_check_interval = 30  # Check login status every 30 seconds
         self.login_monitor_thread = None
         self.is_running = False
+        self.chrome_logger = None
+        self.log_file_path = None
+    
+    def set_log_file_path(self, log_file_path):
+        """Set the log file path for Chrome console logging"""
+        self.log_file_path = log_file_path
         
     def start(self):
         """Start Chrome with remote debugging on the specified port"""
@@ -89,6 +135,22 @@ class ChromeInstance:
         if self.process:
             self.browser, self.tab = connect_to_chrome(self.port)
             if self.tab:
+                # Initialize Chrome logger if log file path is set
+                if self.log_file_path:
+                    try:
+                        logger.info(f"Initializing Chrome logger for {self.username}...")
+                        self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback)
+                        if self.chrome_logger:
+                            logger.info(f"Chrome logger started for {self.username} -> {self.log_file_path}")
+                            # Register with start_all.py for centralized cleanup
+                            if register_chrome_logger:
+                                register_chrome_logger(self.chrome_logger)
+                        else:
+                            logger.error(f"Failed to start Chrome logger for {self.username}")
+                    except Exception as e:
+                        logger.error(f"Error initializing Chrome logger for {self.username}: {e}")
+                        self.chrome_logger = None
+                
                 # Check if we're on the login page and log in if needed
                 self.check_and_login_if_needed()
                 disable_alerts(self.tab)
@@ -146,15 +208,15 @@ class ChromeInstance:
             result = self.tab.Runtime.evaluate(expression=check_js)
             page_status = result.get("result", {}).get("value", "unknown")
             
-            print(f"Current page status for {self.username}: {page_status}")
+            logger.debug(f"Current page status for {self.username}: {page_status}")
             
             if page_status == "login_page":
-                print(f"Found login page for {self.username}, injecting login script")
+                logger.info(f"Found login page for {self.username}, injecting login script")
                 inject_login_script(self.tab, self.username, self.password)
                 return True
                 
             elif page_status == "account_selection":
-                print(f"Found account selection page for {self.username}, clicking Access Simulation")
+                logger.info(f"Found account selection page for {self.username}, clicking Access Simulation")
                 access_js = """
                 (function() {
                     const accessButtons = Array.from(document.querySelectorAll("button.tm"))
@@ -175,20 +237,20 @@ class ChromeInstance:
                 return True
                 
             elif page_status == "logged_in":
-                print(f"Already logged in for {self.username}")
+                logger.info(f"Already logged in for {self.username}")
                 return False
                 
             else:
-                print(f"Unknown page status for {self.username}: {page_status}")
+                logger.warning(f"Unknown page status for {self.username}: {page_status}")
                 return False
                 
         except Exception as e:
-            print(f"Error checking login status: {e}")
+            logger.error(f"Error checking login status: {e}")
             return False
     
     def monitor_login_status(self):
         """Monitor login status and automatically log in again if logged out"""
-        print(f"Starting login monitor for {self.username} on port {self.port}")
+        logger.info(f"Starting login monitor for {self.username} on port {self.port}")
         
         while self.is_running and self.tab:
             try:
@@ -202,30 +264,40 @@ class ChromeInstance:
                 self.check_and_login_if_needed()
                 
             except Exception as e:
-                print(f"Error in login monitor for {self.username}: {e}")
+                logger.error(f"Error in login monitor for {self.username}: {e}")
                 time.sleep(5)  # Shorter sleep after error
         
-        print(f"Login monitor stopped for {self.username}")
+        logger.info(f"Login monitor stopped for {self.username}")
         
     def stop(self):
         """Stop this Chrome instance"""
         self.is_running = False
         
+        # Stop Chrome logger if running
+        if self.chrome_logger:
+            try:
+                logger.info(f"Stopping Chrome logger for {self.username}")
+                self.chrome_logger.stop()
+            except Exception as e:
+                logger.error(f"Error stopping Chrome logger for {self.username}: {e}")
+            finally:
+                self.chrome_logger = None
+        
         # Stop the login monitor thread
         if self.login_monitor_thread and self.login_monitor_thread.is_alive():
-            print(f"Stopping login monitor for {self.username}")
+            logger.info(f"Stopping login monitor for {self.username}")
             self.login_monitor_thread.join(timeout=2)
             
         if self.process:
             try:
                 self.process.terminate()
-                print(f"Chrome on port {self.port} terminated")
+                logger.info(f"Chrome on port {self.port} terminated")
             except Exception as e:
-                print(f"Error terminating Chrome: {e}")
+                logger.error(f"Error terminating Chrome: {e}")
 
 def start_chrome_with_debugging(port):
     """Start a *new* isolated Chrome instance with remote-debugging enabled."""
-    print(f"Starting Chrome with remote debugging on port {port}...")
+    logger.info(f"Starting Chrome with remote debugging on port {port}...")
 
     # Separate profile → forces a brand-new Chrome process even if one is already open
     profile_dir = os.path.join("/tmp", f"tradovate_debug_profile_{port}")
@@ -254,15 +326,15 @@ def start_chrome_with_debugging(port):
         process = subprocess.Popen(chrome_cmd,
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL)
-        print(f"Chrome started with PID: {process.pid}")
+        logger.info(f"Chrome started with PID: {process.pid}")
         return process
     except Exception as e:
-        print(f"Failed to start Chrome: {e}")
+        logger.error(f"Failed to start Chrome: {e}")
         return None
 
 def connect_to_chrome(port):
     """Connect to Chrome via remote debugging protocol"""
-    print(f"Connecting to Chrome on port {port}...")
+    logger.info(f"Connecting to Chrome on port {port}...")
     browser = pychrome.Browser(url=f"http://localhost:{port}")
     
     # Make sure Chrome is ready
@@ -278,20 +350,20 @@ def connect_to_chrome(port):
             tab.Page.enable()
             result = tab.Runtime.evaluate(expression="document.location.href")
             url = result.get("result", {}).get("value", "")
-            print(f"Found tab with URL: {url}")
+            logger.debug(f"Found tab with URL: {url}")
             
             if "tradovate" in url:
                 target_tab = tab
-                print("Found Tradovate tab")
+                logger.info("Found Tradovate tab")
             else:
                 tab.stop()
         except Exception as e:
-            print(f"Error checking tab: {e}")
+            logger.warning(f"Error checking tab: {e}")
             tab.stop()
     
     if not target_tab:
         # If no Tradovate tab found, try to create one
-        print("No Tradovate tab found, creating one...")
+        logger.info("No Tradovate tab found, creating one...")
         target_tab = browser.new_tab(url=TRADOVATE_URL)
         target_tab.start()
         target_tab.Page.enable()
@@ -301,7 +373,7 @@ def connect_to_chrome(port):
 
 def inject_login_script(tab, username, password):
     """Inject and execute auto-login script with specific credentials"""
-    print(f"Injecting auto-login script for {username}...")
+    logger.info(f"Injecting auto-login script for {username}...")
     
     # Create a more robust login function with retries and DOM readiness checks
     auto_login_js = '''
@@ -421,7 +493,7 @@ def inject_login_script(tab, username, password):
     
     # Execute the login script in the browser
     try:
-        print("Executing login script...")
+        logger.info("Executing login script...")
         result = tab.Runtime.evaluate(expression=auto_login_js)
         
         # Append test element to DOM to verify script is running
@@ -472,10 +544,10 @@ def inject_login_script(tab, username, password):
         '''
         tab.Runtime.evaluate(expression=test_script)
         
-        print(f"Login script executed for {username}")
+        logger.info(f"Login script executed for {username}")
         return result
     except Exception as e:
-        print(f"Error executing login script: {e}")
+        logger.error(f"Error executing login script: {e}")
         return None
 
 def disable_alerts(tab):
@@ -504,10 +576,10 @@ def disable_alerts(tab):
     
     try:
         tab.Runtime.evaluate(expression=disable_js)
-        print("Disabled browser alerts and confirmations")
+        logger.info("Disabled browser alerts and confirmations")
         return True
     except Exception as e:
-        print(f"Error disabling alerts: {e}")
+        logger.error(f"Error disabling alerts: {e}")
         return False
 
 def load_credentials():
@@ -515,7 +587,7 @@ def load_credentials():
     try:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         credentials_path = os.path.join(project_root, 'config/credentials.json')
-        print(f"Loading credentials from {credentials_path}")
+        logger.info(f"Loading credentials from {credentials_path}")
         
         with open(credentials_path, 'r') as file:
             file_content = file.read()
@@ -524,7 +596,7 @@ def load_credentials():
             try:
                 credentials = json.loads(file_content)
             except json.JSONDecodeError:
-                print("Error parsing JSON, attempting custom parsing for duplicate keys")
+                logger.warning("Error parsing JSON, attempting custom parsing for duplicate keys")
                 # Custom parsing for duplicate keys
                 # This creates a list of all key-value pairs in the order they appear
                 import re
@@ -564,10 +636,10 @@ def load_credentials():
             if username and password:
                 cred_pairs.append((username, password))
         
-        print(f"Loaded {len(cred_pairs)} credential pairs (including duplicates)")            
+        logger.info(f"Loaded {len(cred_pairs)} credential pairs (including duplicates)")
         return cred_pairs
     except Exception as e:
-        print(f"Error loading credentials from file: {e}")
+        logger.error(f"Error loading credentials from file: {e}")
         # Fall back to environment variables
         username = os.environ.get('TRADOVATE_USERNAME', '')
         password = os.environ.get('TRADOVATE_PASSWORD', '')
@@ -577,7 +649,7 @@ def load_credentials():
 
 def handle_exit(chrome_instances):
     """Clean up before exiting"""
-    print("Cleaning up and exiting...")
+    logger.info("Cleaning up and exiting...")
     for instance in chrome_instances:
         instance.stop()
 
@@ -588,10 +660,10 @@ def main():
         # Load credential pairs
         credentials = load_credentials()
         if not credentials:
-            print("No credentials found, exiting")
+            logger.error("No credentials found, exiting")
             return 1
             
-        print(f"Found {len(credentials)} credential pair(s)")
+        logger.info(f"Found {len(credentials)} credential pair(s)")
         
         # Make sure any existing Chrome instances are stopped
         subprocess.run(["pkill", "-f", f"remote-debugging-port={BASE_DEBUGGING_PORT}"],
@@ -605,15 +677,22 @@ def main():
         def start_chrome_instance(idx, username, password):
             # Assign a unique port for each Chrome instance
             port = BASE_DEBUGGING_PORT + idx
-            print(f"Preparing Chrome instance {idx+1} for {username} on port {port}")
+            logger.info(f"Preparing Chrome instance {idx+1} for {username} on port {port}")
             
             # Create and start a new Chrome instance
             instance = ChromeInstance(port, username, password)
+            
+            # Set up log file path if log directory is available
+            log_file_path = create_log_file_path(username, port)
+            if log_file_path:
+                instance.set_log_file_path(log_file_path)
+                logger.info(f"Log file set for {username}: {log_file_path}")
+            
             if instance.start():
-                print(f"Chrome instance for {username} started successfully")
+                logger.info(f"Chrome instance for {username} started successfully")
                 results.append((instance, True))
             else:
-                print(f"Failed to start Chrome instance for {username}")
+                logger.error(f"Failed to start Chrome instance for {username}")
                 results.append((instance, False))
         
         # Create and start a thread for each credential pair
@@ -635,22 +714,22 @@ def main():
                 chrome_instances.append(instance)
         
         if not chrome_instances:
-            print("Failed to start any Chrome instances, exiting")
+            logger.error("Failed to start any Chrome instances, exiting")
             return 1
         
         # Print summary
-        print(f"\n{len(chrome_instances)} Chrome instances running:")
+        logger.info(f"{len(chrome_instances)} Chrome instances running:")
         for idx, instance in enumerate(chrome_instances):
-            print(f"  {idx+1}: {instance.username} - Port: {instance.port}")
+            logger.info(f"  {idx+1}: {instance.username} - Port: {instance.port}")
             
-        print("\nPress Ctrl+C to exit and close all Chrome instances")
+        logger.info("Press Ctrl+C to exit and close all Chrome instances")
         while True:
             time.sleep(1)
     
     except KeyboardInterrupt:
-        print("\nExiting due to user interrupt...")
+        logger.info("Exiting due to user interrupt...")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}")
     finally:
         handle_exit(chrome_instances)
     

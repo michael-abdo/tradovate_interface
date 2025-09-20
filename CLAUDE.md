@@ -54,6 +54,39 @@
   * Section headers (`=== Starting Order Placement ===`)
   * Capture stdout & stderr; mark failures with `!!! ERROR !!!`.
 
+### Chrome Console Logging
+
+The project includes integrated Chrome console logging that captures browser events, JavaScript errors, and runtime logs:
+
+* **Automatic Setup**: When `start_all.py` runs, it creates timestamped log directories (`logs/YYYY-MM-DD_HH-MM-SS/`)
+* **Per-Instance Logging**: Each Chrome instance gets a unique log file (`chrome_console_{username}_{port}.log`)
+* **Real-Time Terminal Output**: Console logs are displayed in terminal with color-coded log levels
+* **Centralized Cleanup**: All ChromeLogger instances are registered and cleaned up properly on shutdown
+* **Thread-Safe**: Multiple Chrome instances can log simultaneously without conflicts
+
+**Log File Locations:**
+```
+logs/
+└── 2025-09-20_14-30-00/           # Timestamped session directory
+    ├── chrome_console_user1_9222.log
+    ├── chrome_console_user2_9223.log
+    └── ...
+```
+
+**Terminal Output Format:**
+```
+[14:30:15] [console:INFO] Auto-login active: user1
+[14:30:16] [browser:ERROR] Failed to load resource
+[14:30:17] [console:WARNING] Session timeout warning
+```
+
+**Key Features:**
+* Captures all browser console messages (log, info, warning, error)
+* Records JavaScript exceptions and runtime errors  
+* Logs network failures and resource loading issues
+* Structured logging with Python's logging module integration
+* Fail-safe error handling to prevent Chrome instance failures
+
 ## 8. Write unit tests
 
 * One test file per touched module.
