@@ -1,0 +1,255 @@
+[2025-09-20 17:00:26.460] LOG - 22:00:26.458Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:00:26.461] LOG - 22:00:26.458Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:00:26.462] LOG - 22:00:26.459Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:00:26.462] LOG - 22:00:26.459Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:00:26.462] LOG - 22:00:26.459Z Login form found, filling credentials...
+[2025-09-20 17:00:26.462] LOG - 22:00:26.459Z Login form found, filling credentials...
+[2025-09-20 17:00:26.630] LOG - 22:00:26.509Z Test element added to DOM
+[2025-09-20 17:00:26.633] LOG - 22:00:26.509Z Test element added to DOM
+[2025-09-20 17:00:26.635] LOG - 22:00:26.634Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:00:26.636] LOG - 22:00:26.634Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:00:26.977] LOG - 22:00:26.975Z Clicking login button...
+[2025-09-20 17:00:26.977] LOG - 22:00:26.975Z Clicking login button...
+[2025-09-20 17:00:26.989] LOG - 22:00:26.986Z authentication starting
+[2025-09-20 17:00:26.990] LOG - 22:00:26.986Z authentication starting
+[2025-09-20 17:00:27.387] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:00:27.391] LOG - 22:00:27.369Z Watching for account selection page...
+[2025-09-20 17:00:27.394] LOG - 22:00:27.369Z Watching for account selection page...
+[2025-09-20 17:00:27.677] LOG - 22:00:27.676Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:27 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:27.677] LOG - 22:00:27.676Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:27 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:28.086] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:00:28.087] ERROR - 22:00:28.085Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:00:28.087] ERROR - 22:00:28.085Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:00:28.088] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:00:28.107] ERROR - Exception: t
+[2025-09-20 17:00:28.123] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:00:28.124] ERROR - 22:00:28.121Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:00:28.124] ERROR - 22:00:28.121Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:00:28.124] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:00:28.125] ERROR - Exception: t
+[2025-09-20 17:00:28.893] LOG - 22:00:28.892Z Account selection page detected, clicking button...
+[2025-09-20 17:00:28.893] LOG - 22:00:28.892Z Account selection page detected, clicking button...
+[2025-09-20 17:00:29.272] LOG - 22:00:29.031Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:29 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:29.272] LOG - 22:00:29.031Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:29 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:29.405] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=4e643e0f-8574-489d-ba1d-e354ae31f96e&bo=2&sid=49ffa650964611f0b1c77d72422fc1b9&vid=99c3288092fe11f0bc7275adc39e6add&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-20 17:00:29.411] INFO - 22:00:29.398Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:00:29.418] INFO - 22:00:29.398Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:00:29.419] WARNING - 22:00:29.400Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 912 milliseconds.
+[2025-09-20 17:00:29.420] WARNING - 22:00:29.400Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 912 milliseconds.
+[2025-09-20 17:00:29.420] INFO - 22:00:29.401Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:00:29.421] INFO - 22:00:29.401Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:00:29.944] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.948] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.949] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.951] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.953] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.954] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.956] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.958] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.960] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.961] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.961] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.963] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.964] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.966] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.973] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.976] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.980] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.981] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.983] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.985] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.989] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.994] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.996] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:29.999] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.000] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.002] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.003] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.003] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.003] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.004] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.004] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.005] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.005] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.005] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.005] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.006] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.006] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.007] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.007] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.008] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.008] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.009] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.009] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.010] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.010] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.011] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.011] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.012] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.012] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.012] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.013] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.013] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.014] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.014] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.014] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.015] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.018] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.018] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.019] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.019] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.019] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.020] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.020] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.022] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:00:30.023] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:00:30.024] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:00:30.024] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:00:30.025] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:00:30.026] INFO - Time: Sat Sep 20 2025 17:00:29 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:30.026] INFO - Time:
+[2025-09-20 17:00:30.110] LOG - 22:00:30.105Z Try to restore session
+[2025-09-20 17:00:30.110] LOG - 22:00:30.105Z Try to restore session
+[2025-09-20 17:00:30.111] LOG - 22:00:30.108Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:30 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:30.111] LOG - 22:00:30.108Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:20:27 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:00:30 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:00:30.121] WARNING - 22:00:30.118Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:00:30.122] WARNING - 22:00:30.118Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:00:30.139] INFO - 22:00:30.136Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:00:30.141] INFO - 22:00:30.136Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:00:30.143] INFO - 22:00:30.138Z Chart history database initialized
+[2025-09-20 17:00:30.144] INFO - 22:00:30.138Z Chart history database initialized
+[2025-09-20 17:00:30.144] INFO - 22:00:30.139Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:00:30.145] INFO - 22:00:30.139Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:00:30.145] INFO - 22:00:30.139Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:00:30.146] INFO - 22:00:30.139Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:00:30.954] INFO - 22:00:30.953Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:00:30.955] INFO - 22:00:30.953Z visibilitychange: hidden, gd: 1000

@@ -1,0 +1,582 @@
+[2025-09-20 17:06:03.663] LOG - 22:06:03.661Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:06:03.663] LOG - 22:06:03.661Z Starting login process for: zenex3298@gmail.com
+[2025-09-20 17:06:03.664] LOG - 22:06:03.662Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:06:03.664] LOG - 22:06:03.662Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-20 17:06:03.665] LOG - 22:06:03.662Z Login form found, filling credentials...
+[2025-09-20 17:06:03.665] LOG - 22:06:03.662Z Login form found, filling credentials...
+[2025-09-20 17:06:03.824] LOG - 22:06:03.696Z Test element added to DOM
+[2025-09-20 17:06:03.825] LOG - 22:06:03.696Z Test element added to DOM
+[2025-09-20 17:06:03.829] LOG - 22:06:03.827Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:06:03.830] LOG - 22:06:03.827Z All browser alerts and confirmations have been disabled
+[2025-09-20 17:06:04.180] LOG - 22:06:04.179Z Clicking login button...
+[2025-09-20 17:06:04.180] LOG - 22:06:04.179Z Clicking login button...
+[2025-09-20 17:06:04.189] LOG - 22:06:04.188Z authentication starting
+[2025-09-20 17:06:04.190] LOG - 22:06:04.188Z authentication starting
+[2025-09-20 17:06:04.561] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:06:04.563] LOG - 22:06:04.545Z Watching for account selection page...
+[2025-09-20 17:06:04.565] LOG - 22:06:04.545Z Watching for account selection page...
+[2025-09-20 17:06:04.845] LOG - 22:06:04.844Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:04 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:04.846] LOG - 22:06:04.844Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:04 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.251] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:06:05.252] ERROR - 22:06:05.251Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:05.252] ERROR - 22:06:05.251Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:05.253] ERROR - 22:06:05.252Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:05.254] ERROR - 22:06:05.252Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:05.254] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:06:05.259] ERROR - Exception: t
+[2025-09-20 17:06:05.261] ERROR - Exception: t
+[2025-09-20 17:06:05.547] LOG - 22:06:05.546Z Account selection page detected, clicking button...
+[2025-09-20 17:06:05.548] LOG - 22:06:05.546Z Account selection page detected, clicking button...
+[2025-09-20 17:06:05.686] LOG - 22:06:05.663Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:05 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.687] LOG - 22:06:05.663Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:05 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.753] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=ba82f48b-8043-449f-9a82-b5defc35bfe8&bo=2&sid=49ffa650964611f0b1c77d72422fc1b9&vid=99c3288092fe11f0bc7275adc39e6add&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-20 17:06:05.759] INFO - 22:06:05.752Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:06:05.759] INFO - 22:06:05.752Z visibilitychange: hidden, gd: 1000
+[2025-09-20 17:06:05.759] WARNING - 22:06:05.754Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 647 milliseconds.
+[2025-09-20 17:06:05.760] WARNING - 22:06:05.754Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 647 milliseconds.
+[2025-09-20 17:06:05.760] INFO - 22:06:05.754Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:06:05.761] INFO - 22:06:05.754Z [LaunchDarkly] Closing stream connection
+[2025-09-20 17:06:05.916] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.917] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.918] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.919] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.921] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.922] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.922] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.923] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.924] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.926] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.927] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.928] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.929] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.930] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.931] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.933] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.934] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.935] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.936] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.937] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.938] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.939] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.940] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.940] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.942] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.942] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.942] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.942] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.942] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.943] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.944] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.945] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.946] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.947] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.947] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.947] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.947] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.947] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.948] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.948] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 17:06:05.948] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:06:05.948] DEBUG - [bugsnag] Loaded!
+[2025-09-20 17:06:05.948] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:06:05.949] INFO - Version 3.250912.0 prod production 
+[2025-09-20 17:06:05.949] INFO - Time: Sat Sep 20 2025 17:06:05 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.949] INFO - Time:
+[2025-09-20 17:06:05.968] LOG - 22:06:05.966Z Try to restore session
+[2025-09-20 17:06:05.969] LOG - 22:06:05.966Z Try to restore session
+[2025-09-20 17:06:05.969] LOG - 22:06:05.967Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:05 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.969] LOG - 22:06:05.967Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 18:26:04 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 17:06:05 GMT-0500 (Central Daylight Time)
+[2025-09-20 17:06:05.977] WARNING - 22:06:05.976Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:06:05.977] WARNING - 22:06:05.976Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 17:06:05.982] INFO - 22:06:05.981Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:06:05.983] INFO - 22:06:05.981Z chart cache state: islands=3, bars=1532
+[2025-09-20 17:06:05.983] INFO - 22:06:05.981Z Chart history database initialized
+[2025-09-20 17:06:05.983] INFO - 22:06:05.981Z Chart history database initialized
+[2025-09-20 17:06:05.992] INFO - 22:06:05.990Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:06:05.992] INFO - 22:06:05.990Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 17:06:05.992] INFO - 22:06:05.991Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:06:05.993] INFO - 22:06:05.991Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 17:06:06.550] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 17:06:06.551] ERROR - 22:06:06.550Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:06.551] ERROR - 22:06:06.550Z [LaunchDarkly] network error (Error)
+[2025-09-20 17:06:06.552] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 17:06:06.555] ERROR - Exception: t
+[2025-09-20 17:06:06.660] LOG - 22:06:06.658Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:06:06.661] LOG - 22:06:06.658Z opening https://demo.tradovateapi.com/
+[2025-09-20 17:06:06.665] LOG - 22:06:06.664Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:06:06.666] LOG - 22:06:06.664Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 17:06:06.732] LOG - 22:06:06.731Z websocket opened
+[2025-09-20 17:06:06.733] LOG - 22:06:06.731Z websocket opened
+[2025-09-20 17:06:06.789] LOG - 22:06:06.787Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:06:06.790] LOG - 22:06:06.787Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 17:06:06.790] LOG - 22:06:06.789Z Connection:  open
+[2025-09-20 17:06:06.790] LOG - 22:06:06.789Z Connection:  open
+[2025-09-20 17:06:07.773] LOG - 22:06:07.769Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:06:07.777] LOG - 22:06:07.770Z Canvas size: 500 896 dpp:  2
+[2025-09-20 17:06:07.787] LOG - 22:06:07.780Z Loading App-level Plugins
+[2025-09-20 17:06:07.790] LOG - 22:06:07.780Z Loading App-level Plugins
+[2025-09-20 17:06:07.797] LOG - 22:06:07.793Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 17:06:07.800] LOG - 22:06:07.793Z Canvas size: 500 896 dpp:  2
+[2025-09-20 17:06:07.885] LOG - 22:06:07.839Z websocket opened
+[2025-09-20 17:06:07.886] LOG - 22:06:07.839Z websocket opened
+[2025-09-20 17:06:08.098] LOG - 22:06:08.096Z loadAppLevelPlugins:  [object Object]
+[2025-09-20 17:06:08.098] LOG - 22:06:08.096Z loadAppLevelPlugins: 
+[2025-09-20 17:06:08.939] LOG - 22:06:08.934Z jailing is in progress
+[2025-09-20 17:06:08.940] LOG - 22:06:08.934Z jailing is in progress
+[2025-09-20 17:06:09.126] LOG - 22:06:09.125Z pending jailing done. next starts
+[2025-09-20 17:06:09.127] LOG - 22:06:09.125Z pending jailing done. next starts
+[2025-09-20 17:06:09.972] LOG - 22:06:09.970Z created chart 1
+[2025-09-20 17:06:10.169] LOG - 22:06:10.141Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-20 17:06:10.169] LOG - 22:06:10.141Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-20 17:06:10.169] LOG - 22:06:10.141Z mdMgApi open
+[2025-09-20 17:06:10.169] LOG - 22:06:10.141Z mdMgApi open
+[2025-09-20 17:06:10.252] LOG - 22:06:10.250Z updating the shared isolation
+[2025-09-20 17:06:10.252] LOG - 22:06:10.250Z updating the shared isolation
+[2025-09-20 17:06:14.748] LOG - 22:06:14.746Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:06:14.748] LOG - 22:06:14.746Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-20 17:06:14.749] LOG - 22:06:14.747Z Creating UI...
+[2025-09-20 17:06:14.750] LOG - 22:06:14.747Z Creating UI...
+[2025-09-20 17:06:14.750] LOG - 22:06:14.748Z Creating UI
+[2025-09-20 17:06:14.750] LOG - 22:06:14.748Z Creating UI
+[2025-09-20 17:06:14.750] LOG - 22:06:14.748Z Stored values: TP=120, SL=40, Qty=5, Tick=0.25, Symbol=NQ
+[2025-09-20 17:06:14.750] LOG - 22:06:14.748Z Stored values: TP=120, SL=40, Qty=5, Tick=0.25, Symbol=NQ
+[2025-09-20 17:06:14.752] LOG - 22:06:14.750Z UI container added to DOM
+[2025-09-20 17:06:14.752] LOG - 22:06:14.750Z UI container added to DOM
+[2025-09-20 17:06:14.753] LOG - 22:06:14.750Z Setting up UI event handlers
+[2025-09-20 17:06:14.754] LOG - 22:06:14.750Z Setting up UI event handlers
+[2025-09-20 17:06:14.754] LOG - 22:06:14.750Z Setting up persistent settings
+[2025-09-20 17:06:14.755] LOG - 22:06:14.750Z Setting up persistent settings
+[2025-09-20 17:06:14.756] LOG - 22:06:14.750Z Setting up drag functionality
+[2025-09-20 17:06:14.757] LOG - 22:06:14.750Z Setting up drag functionality
+[2025-09-20 17:06:14.758] LOG - 22:06:14.750Z Setting up trade buttons
+[2025-09-20 17:06:14.759] LOG - 22:06:14.750Z Setting up trade buttons
+[2025-09-20 17:06:14.760] LOG - 22:06:14.751Z UI creation complete
+[2025-09-20 17:06:14.760] LOG - 22:06:14.751Z UI creation complete
+[2025-09-20 17:06:14.761] LOG - 22:06:14.751Z Creating example front-quarter symbol
+[2025-09-20 17:06:14.761] LOG - 22:06:14.751Z Creating example front-quarter symbol
+[2025-09-20 17:06:14.761] LOG - 22:06:14.751Z getQuarterlyCode called with date: 2025-09-20T22:06:14.751Z
+[2025-09-20 17:06:14.761] LOG - 22:06:14.751Z getQuarterlyCode called with date: 2025-09-20T22:06:14.751Z
+[2025-09-20 17:06:14.761] LOG - 22:06:14.751Z Current month index: 8
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Current month index: 8
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Starting calculation with year=2025, month=8
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Starting calculation with year=2025, month=8
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:06:14.762] LOG - 22:06:14.751Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:06:14.763] LOG - 22:06:14.751Z Example front-quarter symbol created: NQZ5
+[2025-09-20 17:06:14.767] LOG - 22:06:14.765Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:06:14.768] LOG - 22:06:14.765Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 17:06:14.768] LOG - 22:06:14.766Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:14.769] LOG - 22:06:14.766Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:14.770] LOG - 22:06:14.767Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:14.771] LOG - 22:06:14.767Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:14.772] LOG - 22:06:14.767Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:14.773] LOG - 22:06:14.767Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:14.773] LOG - 22:06:14.767Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:06:14.774] LOG - 22:06:14.767Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 17:06:14.775] LOG - 22:06:14.767Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-20 17:06:14.775] LOG - 22:06:14.767Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-20 17:06:14.775] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 17:06:14.776] LOG - 22:06:14.768Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:14.777] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-20 17:06:14.778] LOG - 22:06:14.768Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-20 17:06:14.778] ERROR - 22:06:14.768Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-20 17:06:14.778] ERROR - 22:06:14.768Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-20 17:06:14.795] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 17:06:14.796] LOG - 22:06:14.782Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:06:14.796] LOG - 22:06:14.782Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 17:06:15.786] LOG - 22:06:15.784Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:15.787] LOG - 22:06:15.784Z [analyzePhase] resetting phaseData
+[2025-09-20 17:06:15.788] LOG - 22:06:15.784Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:15.788] LOG - 22:06:15.784Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 17:06:15.788] LOG - 22:06:15.784Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:15.789] LOG - 22:06:15.784Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 17:06:15.789] WARNING - 22:06:15.785Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/8623.bc07fac1.js:2:4608552),    at https://cdn.tradovate.com/tradovate/scripts/8623.bc07fac1.js:2:3545147
+[2025-09-20 17:06:15.789] WARNING - 22:06:15.785Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-20 17:06:15.800] LOG - 22:06:15.799Z Executing initial risk management assessment...
+[2025-09-20 17:06:15.801] LOG - 22:06:15.799Z Executing initial risk management assessment...
+[2025-09-20 17:06:15.802] ERROR - 22:06:15.799Z getTableData function not found
+[2025-09-20 17:06:15.804] ERROR - 22:06:15.799Z getTableData function not found
+[2025-09-20 17:06:15.805] ERROR - 22:06:15.800Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:06:15.805] ERROR - 22:06:15.800Z updateUserColumnPhaseStatus function not found
+[2025-09-20 17:06:15.806] ERROR - 22:06:15.800Z performAccountActions function not found
+[2025-09-20 17:06:15.806] ERROR - 22:06:15.800Z performAccountActions function not found
+[2025-09-20 17:06:15.807] LOG - 22:06:15.800Z Risk management assessment completed
+[2025-09-20 17:06:15.807] LOG - 22:06:15.800Z Risk management assessment completed
+[2025-09-20 17:07:05.998] INFO - 22:07:05.997Z time stats. avg diff: -26, min: -26, max: -26, roundtrip: 21 msec, #1
+[2025-09-20 17:07:05.999] INFO - 22:07:05.997Z time stats. avg diff: -26, min: -26, max: -26, roundtrip: 21 msec, #1
+[2025-09-20 17:08:07.807] LOG - 22:08:07.805Z WebGL:  {"geometries":65,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-20 17:10:07.806] LOG - 22:10:07.805Z WebGL:  {"geometries":65,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-20 17:10:31.719] LOG - 22:10:31.716Z Container mousedown event detected
+[2025-09-20 17:10:31.719] LOG - 22:10:31.716Z Container mousedown event detected
+[2025-09-20 17:10:31.720] LOG - 22:10:31.717Z Drag started at offset X:38, Y:192
+[2025-09-20 17:10:31.720] LOG - 22:10:31.717Z Drag started at offset X:38, Y:192
+[2025-09-20 17:10:31.780] LOG - 22:10:31.779Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:31.780] LOG - 22:10:31.779Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:31.782] LOG - 22:10:31.781Z Cancel All button clicked
+[2025-09-20 17:10:31.783] LOG - 22:10:31.781Z Cancel All button clicked
+[2025-09-20 17:10:31.784] LOG - 22:10:31.781Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:31.784] LOG - 22:10:31.781Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:31.785] LOG - 22:10:31.781Z Is root symbol: true
+[2025-09-20 17:10:31.786] LOG - 22:10:31.781Z Is root symbol: true
+[2025-09-20 17:10:31.787] LOG - 22:10:31.781Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:31.788] LOG - 22:10:31.781Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:31.789] LOG - 22:10:31.782Z getQuarterlyCode called with date: 2025-09-20T22:10:31.782Z
+[2025-09-20 17:10:31.790] LOG - 22:10:31.782Z getQuarterlyCode called with date: 2025-09-20T22:10:31.782Z
+[2025-09-20 17:10:31.790] LOG - 22:10:31.782Z Current month index: 8
+[2025-09-20 17:10:31.790] LOG - 22:10:31.782Z Current month index: 8
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:31.791] LOG - 22:10:31.782Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:31.792] LOG - 22:10:31.782Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:31.792] LOG - 22:10:31.782Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:31.792] LOG - 22:10:31.782Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:31.792] LOG - 22:10:31.782Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:31.792] LOG - 22:10:31.782Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:31.792] LOG - 22:10:31.783Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:31.792] LOG - 22:10:31.783Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:31.793] LOG - 22:10:31.783Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:31.793] LOG - 22:10:31.783Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:34.628] LOG - 22:10:34.627Z Container mousedown event detected
+[2025-09-20 17:10:34.628] LOG - 22:10:34.627Z Container mousedown event detected
+[2025-09-20 17:10:34.629] LOG - 22:10:34.627Z Drag started at offset X:119, Y:188
+[2025-09-20 17:10:34.629] LOG - 22:10:34.627Z Drag started at offset X:119, Y:188
+[2025-09-20 17:10:34.711] LOG - 22:10:34.710Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:34.712] LOG - 22:10:34.710Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:34.713] LOG - 22:10:34.712Z Close All button clicked
+[2025-09-20 17:10:34.714] LOG - 22:10:34.712Z Close All button clicked
+[2025-09-20 17:10:34.715] LOG - 22:10:34.712Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:34.716] LOG - 22:10:34.712Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:34.716] LOG - 22:10:34.712Z Is root symbol: true
+[2025-09-20 17:10:34.717] LOG - 22:10:34.712Z Is root symbol: true
+[2025-09-20 17:10:34.718] LOG - 22:10:34.712Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:34.719] LOG - 22:10:34.712Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:34.719] LOG - 22:10:34.712Z getQuarterlyCode called with date: 2025-09-20T22:10:34.712Z
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z getQuarterlyCode called with date: 2025-09-20T22:10:34.712Z
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z Current month index: 8
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z Current month index: 8
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:34.720] LOG - 22:10:34.712Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:34.721] LOG - 22:10:34.712Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:34.721] LOG - 22:10:34.713Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z Calling clickExitForSymbol for: NQZ5 with Exit at Mkt & Cxl option
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z Calling clickExitForSymbol for: NQZ5 with Exit at Mkt & Cxl option
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Exit-at-Mkt-Cxl
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Exit-at-Mkt-Cxl
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z Exit action triggered for symbol: NQZ5
+[2025-09-20 17:10:34.722] LOG - 22:10:34.713Z Exit action triggered for symbol: NQZ5
+[2025-09-20 17:10:36.112] LOG - 22:10:36.111Z Container mousedown event detected
+[2025-09-20 17:10:36.113] LOG - 22:10:36.111Z Container mousedown event detected
+[2025-09-20 17:10:36.114] LOG - 22:10:36.112Z Drag started at offset X:69, Y:237
+[2025-09-20 17:10:36.114] LOG - 22:10:36.112Z Drag started at offset X:69, Y:237
+[2025-09-20 17:10:36.211] LOG - 22:10:36.210Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:36.212] LOG - 22:10:36.210Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:36.213] LOG - 22:10:36.212Z Breakeven button clicked
+[2025-09-20 17:10:36.215] LOG - 22:10:36.212Z Breakeven button clicked
+[2025-09-20 17:10:36.215] LOG - 22:10:36.212Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:36.216] LOG - 22:10:36.212Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:36.217] LOG - 22:10:36.212Z Is root symbol: true
+[2025-09-20 17:10:36.218] LOG - 22:10:36.212Z Is root symbol: true
+[2025-09-20 17:10:36.219] LOG - 22:10:36.212Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:36.219] LOG - 22:10:36.212Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:36.220] LOG - 22:10:36.212Z getQuarterlyCode called with date: 2025-09-20T22:10:36.212Z
+[2025-09-20 17:10:36.221] LOG - 22:10:36.212Z getQuarterlyCode called with date: 2025-09-20T22:10:36.212Z
+[2025-09-20 17:10:36.222] LOG - 22:10:36.212Z Current month index: 8
+[2025-09-20 17:10:36.223] LOG - 22:10:36.212Z Current month index: 8
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.223] LOG - 22:10:36.213Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z Processing breakeven for symbol: NQZ5
+[2025-09-20 17:10:36.224] LOG - 22:10:36.213Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.213Z moveStopLossToBreakeven called for symbol: NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z getCurrentPosition called for symbol: NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z No position data found for NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z No position data found for NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z No open position found for NQZ5
+[2025-09-20 17:10:36.225] LOG - 22:10:36.214Z No open position found for NQZ5
+[2025-09-20 17:10:36.226] LOG - 22:10:36.214Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:10:36.226] LOG - 22:10:36.214Z Breakeven action triggered for symbol: NQZ5
+[2025-09-20 17:10:36.546] LOG - 22:10:36.545Z Container mousedown event detected
+[2025-09-20 17:10:36.547] LOG - 22:10:36.545Z Container mousedown event detected
+[2025-09-20 17:10:36.547] LOG - 22:10:36.545Z Drag started at offset X:46, Y:211
+[2025-09-20 17:10:36.547] LOG - 22:10:36.545Z Drag started at offset X:46, Y:211
+[2025-09-20 17:10:36.629] LOG - 22:10:36.627Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:36.630] LOG - 22:10:36.627Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:36.631] LOG - 22:10:36.628Z Cancel All button clicked
+[2025-09-20 17:10:36.632] LOG - 22:10:36.628Z Cancel All button clicked
+[2025-09-20 17:10:36.633] LOG - 22:10:36.628Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:36.634] LOG - 22:10:36.628Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:36.635] LOG - 22:10:36.628Z Is root symbol: true
+[2025-09-20 17:10:36.635] LOG - 22:10:36.628Z Is root symbol: true
+[2025-09-20 17:10:36.636] LOG - 22:10:36.628Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:36.637] LOG - 22:10:36.628Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:36.637] LOG - 22:10:36.628Z getQuarterlyCode called with date: 2025-09-20T22:10:36.628Z
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z getQuarterlyCode called with date: 2025-09-20T22:10:36.628Z
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z Current month index: 8
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z Current month index: 8
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:36.638] LOG - 22:10:36.628Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.639] LOG - 22:10:36.628Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.639] LOG - 22:10:36.629Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.639] LOG - 22:10:36.629Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:36.639] LOG - 22:10:36.629Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:36.639] LOG - 22:10:36.629Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:36.639] LOG - 22:10:36.629Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:36.640] LOG - 22:10:36.629Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:37.046] LOG - 22:10:37.045Z Container mousedown event detected
+[2025-09-20 17:10:37.046] LOG - 22:10:37.045Z Container mousedown event detected
+[2025-09-20 17:10:37.047] LOG - 22:10:37.045Z Drag started at offset X:48, Y:188
+[2025-09-20 17:10:37.047] LOG - 22:10:37.045Z Drag started at offset X:48, Y:188
+[2025-09-20 17:10:37.144] LOG - 22:10:37.143Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:37.145] LOG - 22:10:37.143Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:37.146] LOG - 22:10:37.143Z Cancel All button clicked
+[2025-09-20 17:10:37.146] LOG - 22:10:37.143Z Cancel All button clicked
+[2025-09-20 17:10:37.147] LOG - 22:10:37.143Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:37.148] LOG - 22:10:37.143Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:37.148] LOG - 22:10:37.144Z Is root symbol: true
+[2025-09-20 17:10:37.149] LOG - 22:10:37.144Z Is root symbol: true
+[2025-09-20 17:10:37.150] LOG - 22:10:37.144Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:37.150] LOG - 22:10:37.144Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:37.151] LOG - 22:10:37.144Z getQuarterlyCode called with date: 2025-09-20T22:10:37.144Z
+[2025-09-20 17:10:37.151] LOG - 22:10:37.144Z getQuarterlyCode called with date: 2025-09-20T22:10:37.144Z
+[2025-09-20 17:10:37.151] LOG - 22:10:37.144Z Current month index: 8
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Current month index: 8
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.152] LOG - 22:10:37.144Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Calling clickExitForSymbol for: NQZ5 with Cancel All option
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Cancel-All
+[2025-09-20 17:10:37.153] LOG - 22:10:37.144Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:37.154] LOG - 22:10:37.144Z Cancel All action triggered for symbol: NQZ5
+[2025-09-20 17:10:37.546] LOG - 22:10:37.544Z Container mousedown event detected
+[2025-09-20 17:10:37.546] LOG - 22:10:37.544Z Container mousedown event detected
+[2025-09-20 17:10:37.547] LOG - 22:10:37.545Z Drag started at offset X:47, Y:283
+[2025-09-20 17:10:37.547] LOG - 22:10:37.545Z Drag started at offset X:47, Y:283
+[2025-09-20 17:10:37.662] LOG - 22:10:37.661Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:37.662] LOG - 22:10:37.661Z Container drop position: Left:170px, Top:446px
+[2025-09-20 17:10:37.664] LOG - 22:10:37.663Z Reverse Position button clicked
+[2025-09-20 17:10:37.665] LOG - 22:10:37.663Z Reverse Position button clicked
+[2025-09-20 17:10:37.665] LOG - 22:10:37.663Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:37.666] LOG - 22:10:37.663Z normalizeSymbol called with: "NQ"
+[2025-09-20 17:10:37.666] LOG - 22:10:37.663Z Is root symbol: true
+[2025-09-20 17:10:37.667] LOG - 22:10:37.663Z Is root symbol: true
+[2025-09-20 17:10:37.668] LOG - 22:10:37.663Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:37.669] LOG - 22:10:37.663Z getFrontQuarter called for root: "NQ"
+[2025-09-20 17:10:37.670] LOG - 22:10:37.663Z getQuarterlyCode called with date: 2025-09-20T22:10:37.663Z
+[2025-09-20 17:10:37.670] LOG - 22:10:37.663Z getQuarterlyCode called with date: 2025-09-20T22:10:37.663Z
+[2025-09-20 17:10:37.671] LOG - 22:10:37.663Z Current month index: 8
+[2025-09-20 17:10:37.672] LOG - 22:10:37.663Z Current month index: 8
+[2025-09-20 17:10:37.672] LOG - 22:10:37.663Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:37.673] LOG - 22:10:37.663Z Starting calculation with year=2025, month=8
+[2025-09-20 17:10:37.673] LOG - 22:10:37.663Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.673] LOG - 22:10:37.663Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.673] LOG - 22:10:37.663Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.673] LOG - 22:10:37.663Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 17:10:37.673] LOG - 22:10:37.664Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z Normalized symbol: "NQZ5"
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z Calling clickExitForSymbol for: NQZ5 with Reverse & Cxl option
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z Calling clickExitForSymbol for: NQZ5 with Reverse & Cxl option
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Reverse-Cxl
+[2025-09-20 17:10:37.674] LOG - 22:10:37.664Z clickExitForSymbol called for symbol: NQZ5, option: cancel-option-Reverse-Cxl
+[2025-09-20 17:10:37.675] LOG - 22:10:37.664Z Reverse Position action triggered for symbol: NQZ5
+[2025-09-20 17:10:37.675] LOG - 22:10:37.664Z Reverse Position action triggered for symbol: NQZ5

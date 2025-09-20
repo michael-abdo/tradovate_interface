@@ -167,13 +167,40 @@ def run_auto_login():
     # Run auto login
     result = auto_login_main()
     
-    # Open dashboard window - simple approach
+    # Open dashboard window EXACTLY like Tradovate windows
     print("Opening dashboard window...")
     try:
         chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         dashboard_url = "http://localhost:6001"
-        subprocess.run([chrome_path, "--new-window", dashboard_url])
-        print(f"Dashboard window opened at {dashboard_url}")
+        dashboard_port = 9321  # Fixed port for dashboard
+        profile_dir = os.path.join("/tmp", f"tradovate_dashboard_profile_{dashboard_port}")
+        os.makedirs(profile_dir, exist_ok=True)
+        
+        chrome_cmd = [
+            chrome_path,
+            f"--remote-debugging-port={dashboard_port}",
+            f"--user-data-dir={profile_dir}",
+            "--no-first-run",
+            "--no-default-browser-check",
+            "--new-window",
+            "--disable-notifications",
+            "--disable-popup-blocking",
+            "--disable-infobars",
+            "--disable-session-crashed-bubble",
+            "--disable-save-password-bubble",
+            "--disable-features=InfiniteSessionRestore",
+            "--hide-crash-restore-bubble",
+            "--no-crash-upload",
+            "--disable-backgrounding-occluded-windows",
+            "--disable-dev-shm-usage",
+            "--no-sandbox",
+            dashboard_url,
+        ]
+        
+        process = subprocess.Popen(chrome_cmd,
+                                 stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL)
+        print(f"Dashboard window opened at {dashboard_url} (PID: {process.pid})")
     except Exception as e:
         print(f"Failed to open dashboard window: {e}")
     
@@ -339,13 +366,40 @@ def main():
         # Collect Chrome processes for proper cleanup
         collect_chrome_processes()
         
-        # Open dashboard window - simple approach
+        # Open dashboard window EXACTLY like Tradovate windows
         print("Opening dashboard window...")
         try:
             chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
             dashboard_url = "http://localhost:6001"
-            subprocess.run([chrome_path, "--new-window", dashboard_url])
-            print(f"Dashboard window opened at {dashboard_url}")
+            dashboard_port = 9321  # Fixed port for dashboard
+            profile_dir = os.path.join("/tmp", f"tradovate_dashboard_profile_{dashboard_port}")
+            os.makedirs(profile_dir, exist_ok=True)
+            
+            chrome_cmd = [
+                chrome_path,
+                f"--remote-debugging-port={dashboard_port}",
+                f"--user-data-dir={profile_dir}",
+                "--no-first-run",
+                "--no-default-browser-check",
+                "--new-window",
+                "--disable-notifications",
+                "--disable-popup-blocking",
+                "--disable-infobars",
+                "--disable-session-crashed-bubble",
+                "--disable-save-password-bubble",
+                "--disable-features=InfiniteSessionRestore",
+                "--hide-crash-restore-bubble",
+                "--no-crash-upload",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-dev-shm-usage",
+                "--no-sandbox",
+                dashboard_url,
+            ]
+            
+            process = subprocess.Popen(chrome_cmd,
+                                     stdout=subprocess.DEVNULL,
+                                     stderr=subprocess.DEVNULL)
+            print(f"Dashboard window opened at {dashboard_url} (PID: {process.pid})")
         except Exception as e:
             print(f"Failed to open dashboard window: {e}")
         

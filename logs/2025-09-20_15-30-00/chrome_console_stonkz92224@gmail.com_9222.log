@@ -1,0 +1,553 @@
+[2025-09-20 15:30:05.561] LOG - 20:30:05.560Z Starting login process for: stonkz92224@gmail.com
+[2025-09-20 15:30:05.563] LOG - 20:30:05.560Z Starting login process for: stonkz92224@gmail.com
+[2025-09-20 15:30:05.563] LOG - 20:30:05.560Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-20 15:30:05.564] LOG - 20:30:05.560Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-20 15:30:05.564] LOG - 20:30:05.561Z Login form found, filling credentials...
+[2025-09-20 15:30:05.565] LOG - 20:30:05.561Z Login form found, filling credentials...
+[2025-09-20 15:30:05.684] LOG - 20:30:05.585Z Test element added to DOM
+[2025-09-20 15:30:05.686] LOG - 20:30:05.585Z Test element added to DOM
+[2025-09-20 15:30:05.687] LOG - 20:30:05.685Z All browser alerts and confirmations have been disabled
+[2025-09-20 15:30:05.688] LOG - 20:30:05.685Z All browser alerts and confirmations have been disabled
+[2025-09-20 15:30:06.076] LOG - 20:30:06.076Z Clicking login button...
+[2025-09-20 15:30:06.077] LOG - 20:30:06.076Z Clicking login button...
+[2025-09-20 15:30:06.085] LOG - 20:30:06.084Z authentication starting
+[2025-09-20 15:30:06.087] LOG - 20:30:06.084Z authentication starting
+[2025-09-20 15:30:06.387] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 15:30:06.389] LOG - 20:30:06.373Z Watching for account selection page...
+[2025-09-20 15:30:06.390] LOG - 20:30:06.373Z Watching for account selection page...
+[2025-09-20 15:30:06.663] LOG - 20:30:06.661Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:06 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:06.666] LOG - 20:30:06.661Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:06 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:06.967] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 15:30:06.968] ERROR - 20:30:06.966Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:06.968] ERROR - 20:30:06.966Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:06.969] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 15:30:06.980] ERROR - Exception: t
+[2025-09-20 15:30:06.993] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 15:30:06.994] ERROR - 20:30:06.993Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:06.994] ERROR - 20:30:06.993Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:06.994] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 15:30:06.995] ERROR - Exception: t
+[2025-09-20 15:30:07.065] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 15:30:07.066] ERROR - 20:30:07.064Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:07.066] ERROR - 20:30:07.064Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:07.066] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 15:30:07.068] ERROR - Exception: t
+[2025-09-20 15:30:08.377] LOG - 20:30:08.376Z Account selection page detected, clicking button...
+[2025-09-20 15:30:08.377] LOG - 20:30:08.376Z Account selection page detected, clicking button...
+[2025-09-20 15:30:08.510] LOG - 20:30:08.484Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:08 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:08.511] LOG - 20:30:08.484Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:08 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:08.575] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=94f49ece-fc51-460b-9760-382eb526004a&bo=2&sid=2801add0965411f09165ab2c93c38bf7&vid=2801c1c0965411f0afa211e8ba13cf6d&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-20 15:30:08.577] INFO - 20:30:08.573Z visibilitychange: hidden, gd: 1000
+[2025-09-20 15:30:08.578] INFO - 20:30:08.573Z visibilitychange: hidden, gd: 1000
+[2025-09-20 15:30:08.578] WARNING - 20:30:08.574Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 656 milliseconds.
+[2025-09-20 15:30:08.579] WARNING - 20:30:08.574Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 656 milliseconds.
+[2025-09-20 15:30:08.579] INFO - 20:30:08.574Z [LaunchDarkly] Closing stream connection
+[2025-09-20 15:30:08.579] INFO - 20:30:08.574Z [LaunchDarkly] Closing stream connection
+[2025-09-20 15:30:08.949] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.950] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.951] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.952] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.953] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.954] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.954] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.956] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.957] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.958] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.959] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.960] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.960] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.962] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.962] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.963] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.964] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.965] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.966] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.967] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.968] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.969] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.970] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.971] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.972] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.973] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.975] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.976] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.977] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.978] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.979] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.980] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.981] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.981] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.981] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.981] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.981] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-20 15:30:08.982] DEBUG - [bugsnag] Loaded!
+[2025-09-20 15:30:08.983] DEBUG - [bugsnag] Loaded!
+[2025-09-20 15:30:08.983] INFO - Version 3.250912.0 prod production 
+[2025-09-20 15:30:08.983] INFO - Version 3.250912.0 prod production 
+[2025-09-20 15:30:08.983] INFO - Time: Sat Sep 20 2025 15:30:08 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:08.983] INFO - Time:
+[2025-09-20 15:30:09.043] LOG - 20:30:09.040Z Try to restore session
+[2025-09-20 15:30:09.043] LOG - 20:30:09.040Z Try to restore session
+[2025-09-20 15:30:09.043] LOG - 20:30:09.042Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:09 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:09.044] LOG - 20:30:09.042Z Access token will be renewed in 75 minutes; expired: Sat Sep 20 2025 16:50:06 GMT-0500 (Central Daylight Time), now: Sat Sep 20 2025 15:30:09 GMT-0500 (Central Daylight Time)
+[2025-09-20 15:30:09.049] WARNING - 20:30:09.048Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 15:30:09.049] WARNING - 20:30:09.048Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-20 15:30:09.054] INFO - 20:30:09.052Z chart cache state: islands=1, bars=395
+[2025-09-20 15:30:09.054] INFO - 20:30:09.052Z chart cache state: islands=1, bars=395
+[2025-09-20 15:30:09.055] INFO - 20:30:09.053Z Chart history database initialized
+[2025-09-20 15:30:09.055] INFO - 20:30:09.053Z Chart history database initialized
+[2025-09-20 15:30:09.062] INFO - 20:30:09.061Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 15:30:09.063] INFO - 20:30:09.061Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-20 15:30:09.063] INFO - 20:30:09.062Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 15:30:09.063] INFO - 20:30:09.062Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-20 15:30:09.645] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 15:30:09.645] ERROR - 20:30:09.644Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:09.646] ERROR - 20:30:09.644Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:09.646] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 15:30:09.649] ERROR - Exception: t
+[2025-09-20 15:30:09.674] error - Access to XMLHttpRequest at 'https://app.launchdarkly.com/sdk/evalx/66cdf5b9cf61891061b4e437/contexts/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0' from origin 'https://trader.tradovate.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+[2025-09-20 15:30:09.675] ERROR - 20:30:09.674Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:09.676] ERROR - 20:30:09.674Z [LaunchDarkly] network error (Error)
+[2025-09-20 15:30:09.676] error - Failed to load resource: net::ERR_FAILED
+[2025-09-20 15:30:09.676] ERROR - Exception: t
+[2025-09-20 15:30:10.330] LOG - 20:30:10.327Z opening https://demo.tradovateapi.com/
+[2025-09-20 15:30:10.331] LOG - 20:30:10.327Z opening https://demo.tradovateapi.com/
+[2025-09-20 15:30:10.334] LOG - 20:30:10.333Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 15:30:10.335] LOG - 20:30:10.333Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-20 15:30:10.404] LOG - 20:30:10.403Z websocket opened
+[2025-09-20 15:30:10.405] LOG - 20:30:10.403Z websocket opened
+[2025-09-20 15:30:10.487] LOG - 20:30:10.485Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 15:30:10.487] LOG - 20:30:10.485Z opening https://md-demo.tradovateapi.com/
+[2025-09-20 15:30:10.488] LOG - 20:30:10.486Z Connection:  open
+[2025-09-20 15:30:10.488] LOG - 20:30:10.486Z Connection:  open
+[2025-09-20 15:30:10.535] LOG - 20:30:10.532Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 15:30:10.537] LOG - 20:30:10.533Z Canvas size: 1228 992 dpp:  2
+[2025-09-20 15:30:10.565] LOG - 20:30:10.544Z Loading App-level Plugins
+[2025-09-20 15:30:10.566] LOG - 20:30:10.544Z Loading App-level Plugins
+[2025-09-20 15:30:10.567] LOG - 20:30:10.553Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-20 15:30:10.571] LOG - 20:30:10.553Z Canvas size: 1228 992 dpp:  2
+[2025-09-20 15:30:10.629] LOG - 20:30:10.625Z websocket opened
+[2025-09-20 15:30:10.630] LOG - 20:30:10.625Z websocket opened
+[2025-09-20 15:30:10.700] LOG - 20:30:10.698Z loadAppLevelPlugins:  [object Object]
+[2025-09-20 15:30:10.700] LOG - 20:30:10.698Z loadAppLevelPlugins: 
+[2025-09-20 15:30:11.575] LOG - 20:30:11.568Z jailing is in progress
+[2025-09-20 15:30:11.575] LOG - 20:30:11.568Z jailing is in progress
+[2025-09-20 15:30:11.576] LOG - 20:30:11.574Z created chart 1
+[2025-09-20 15:30:11.893] LOG - 20:30:11.882Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":398}}
+[2025-09-20 15:30:11.894] LOG - 20:30:11.882Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":398}}
+[2025-09-20 15:30:11.895] LOG - 20:30:11.882Z mdMgApi open
+[2025-09-20 15:30:11.895] LOG - 20:30:11.882Z mdMgApi open
+[2025-09-20 15:30:11.986] LOG - 20:30:11.984Z pending jailing done. next starts
+[2025-09-20 15:30:11.986] LOG - 20:30:11.984Z pending jailing done. next starts
+[2025-09-20 15:30:12.625] LOG - 20:30:12.623Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":1,"closestTimestamp":"2025-09-07T22:00:00.053Z"}}
+[2025-09-20 15:30:12.626] LOG - 20:30:12.623Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":1,"closestTimestamp":"2025-09-07T22:00:00.053Z"}}
+[2025-09-20 15:30:12.626] LOG - 20:30:12.623Z mdMgApi open
+[2025-09-20 15:30:12.627] LOG - 20:30:12.623Z mdMgApi open
+[2025-09-20 15:30:13.077] LOG - 20:30:13.076Z updating the shared isolation
+[2025-09-20 15:30:13.077] LOG - 20:30:13.076Z updating the shared isolation
+[2025-09-20 15:30:13.417] LOG - 20:30:13.416Z updating the shared isolation
+[2025-09-20 15:30:13.417] LOG - 20:30:13.416Z updating the shared isolation
+[2025-09-20 15:30:15.558] LOG - 20:30:15.557Z Auto Order script initialized
+[2025-09-20 15:30:15.559] LOG - 20:30:15.557Z Auto Order script initialized
+[2025-09-20 15:30:15.559] LOG - 20:30:15.558Z Creating UI...
+[2025-09-20 15:30:15.559] LOG - 20:30:15.558Z Creating UI...
+[2025-09-20 15:30:15.560] LOG - 20:30:15.558Z Creating UI
+[2025-09-20 15:30:15.560] LOG - 20:30:15.558Z Creating UI
+[2025-09-20 15:30:15.560] LOG - 20:30:15.558Z Stored values: TP=120, SL=40, Qty=1, Tick=0.25, Symbol=NQ
+[2025-09-20 15:30:15.561] LOG - 20:30:15.558Z Stored values: TP=120, SL=40, Qty=1, Tick=0.25, Symbol=NQ
+[2025-09-20 15:30:15.562] LOG - 20:30:15.560Z UI container added to DOM
+[2025-09-20 15:30:15.562] LOG - 20:30:15.560Z UI container added to DOM
+[2025-09-20 15:30:15.563] LOG - 20:30:15.560Z Setting up UI event handlers
+[2025-09-20 15:30:15.563] LOG - 20:30:15.560Z Setting up UI event handlers
+[2025-09-20 15:30:15.564] LOG - 20:30:15.560Z Setting up persistent settings
+[2025-09-20 15:30:15.564] LOG - 20:30:15.560Z Setting up persistent settings
+[2025-09-20 15:30:15.565] LOG - 20:30:15.560Z Setting up drag functionality
+[2025-09-20 15:30:15.565] LOG - 20:30:15.560Z Setting up drag functionality
+[2025-09-20 15:30:15.566] LOG - 20:30:15.560Z Setting up trade buttons
+[2025-09-20 15:30:15.566] LOG - 20:30:15.560Z Setting up trade buttons
+[2025-09-20 15:30:15.566] LOG - 20:30:15.560Z UI creation complete
+[2025-09-20 15:30:15.566] LOG - 20:30:15.560Z UI creation complete
+[2025-09-20 15:30:15.566] LOG - 20:30:15.560Z Creating example front-quarter symbol
+[2025-09-20 15:30:15.567] LOG - 20:30:15.560Z Creating example front-quarter symbol
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z getQuarterlyCode called with date: 2025-09-20T20:30:15.561Z
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z getQuarterlyCode called with date: 2025-09-20T20:30:15.561Z
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z Current month index: 8
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z Current month index: 8
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z Starting calculation with year=2025, month=8
+[2025-09-20 15:30:15.567] LOG - 20:30:15.561Z Starting calculation with year=2025, month=8
+[2025-09-20 15:30:15.568] LOG - 20:30:15.561Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:15.568] LOG - 20:30:15.561Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:15.568] LOG - 20:30:15.561Z Example front-quarter symbol created: NQZ5
+[2025-09-20 15:30:15.568] LOG - 20:30:15.561Z Example front-quarter symbol created: NQZ5
+[2025-09-20 15:30:15.575] LOG - 20:30:15.574Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 15:30:15.576] LOG - 20:30:15.574Z Auto Risk Management: Running initial risk assessment...
+[2025-09-20 15:30:15.577] LOG - 20:30:15.575Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:15.577] LOG - 20:30:15.575Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:15.578] LOG - 20:30:15.575Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:15.578] LOG - 20:30:15.575Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:15.579] LOG - 20:30:15.575Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:15.580] LOG - 20:30:15.575Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:15.580] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 15:30:15.581] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-20 15:30:15.582] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-20 15:30:15.582] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-20 15:30:15.583] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-20 15:30:15.583] LOG - 20:30:15.576Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-20 15:30:15.584] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 15:30:15.584] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:15.585] LOG - 20:30:15.577Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-20 15:30:15.586] LOG - 20:30:15.577Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-20 15:30:15.586] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=2, active=true
+[2025-09-20 15:30:15.587] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=2, active=true
+[2025-09-20 15:30:15.587] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=false
+[2025-09-20 15:30:15.587] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=false
+[2025-09-20 15:30:15.587] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Completed
+[2025-09-20 15:30:15.587] LOG - 20:30:15.578Z [updateUserColumnPhaseStatus] Completed
+[2025-09-20 15:30:15.599] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-20 15:30:15.599] LOG - 20:30:15.588Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 15:30:15.599] LOG - 20:30:15.588Z Auto Risk Management: Initial risk assessment completed
+[2025-09-20 15:30:16.606] LOG - 20:30:16.604Z Executing initial risk management assessment...
+[2025-09-20 15:30:16.607] LOG - 20:30:16.604Z Executing initial risk management assessment...
+[2025-09-20 15:30:16.608] ERROR - 20:30:16.604Z getTableData function not found
+[2025-09-20 15:30:16.608] ERROR - 20:30:16.604Z getTableData function not found
+[2025-09-20 15:30:16.608] ERROR - 20:30:16.604Z updateUserColumnPhaseStatus function not found
+[2025-09-20 15:30:16.609] ERROR - 20:30:16.604Z updateUserColumnPhaseStatus function not found
+[2025-09-20 15:30:16.609] ERROR - 20:30:16.605Z performAccountActions function not found
+[2025-09-20 15:30:16.609] ERROR - 20:30:16.605Z performAccountActions function not found
+[2025-09-20 15:30:16.609] LOG - 20:30:16.605Z Risk management assessment completed
+[2025-09-20 15:30:16.610] LOG - 20:30:16.605Z Risk management assessment completed
+[2025-09-20 15:30:16.642] LOG - 20:30:16.641Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:16.643] LOG - 20:30:16.641Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:16.644] LOG - 20:30:16.641Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:16.644] LOG - 20:30:16.641Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:16.644] LOG - 20:30:16.642Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:16.644] LOG - 20:30:16.642Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:17.150] LOG - 20:30:17.147Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:17.151] LOG - 20:30:17.147Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:17.152] LOG - 20:30:17.147Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:17.154] LOG - 20:30:17.147Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:17.154] LOG - 20:30:17.147Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:17.155] LOG - 20:30:17.147Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:17.155] LOG - 20:30:17.149Z Set DEMO3655059 qty to 20
+[2025-09-20 15:30:17.156] LOG - 20:30:17.150Z Set DEMO3655059-1 qty to 10
+[2025-09-20 15:30:17.157] LOG - 20:30:17.150Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:17.157] LOG - 20:30:17.150Z [analyzePhase] resetting phaseData
+[2025-09-20 15:30:17.157] LOG - 20:30:17.150Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:17.157] LOG - 20:30:17.150Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-20 15:30:17.157] LOG - 20:30:17.150Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:17.158] LOG - 20:30:17.150Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-20 15:30:18.690] LOG - 20:30:18.688Z Updated master quantity to 30
+[2025-09-20 15:30:18.692] LOG - 20:30:18.689Z Quantity input changed to: 30
+[2025-09-20 15:30:18.693] LOG - 20:30:18.689Z Quantity input changed to: 30
+[2025-09-20 15:30:18.693] LOG - 20:30:18.689Z Updated bracket trade quantity to 30
+[2025-09-20 15:30:19.736] LOG - 20:30:19.734Z Container mousedown event detected
+[2025-09-20 15:30:19.736] LOG - 20:30:19.734Z Container mousedown event detected
+[2025-09-20 15:30:19.737] LOG - 20:30:19.734Z Drag started at offset X:85, Y:141
+[2025-09-20 15:30:19.737] LOG - 20:30:19.734Z Drag started at offset X:85, Y:141
+[2025-09-20 15:30:19.839] LOG - 20:30:19.839Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:19.852] LOG - 20:30:19.839Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:19.904] LOG - 20:30:19.903Z Container mousedown event detected
+[2025-09-20 15:30:19.905] LOG - 20:30:19.903Z Container mousedown event detected
+[2025-09-20 15:30:19.905] LOG - 20:30:19.904Z Drag started at offset X:85, Y:141
+[2025-09-20 15:30:19.905] LOG - 20:30:19.904Z Drag started at offset X:85, Y:141
+[2025-09-20 15:30:19.974] LOG - 20:30:19.973Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:19.974] LOG - 20:30:19.973Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:20.867] LOG - 20:30:20.865Z Quantity input changed to: 1
+[2025-09-20 15:30:20.867] LOG - 20:30:20.865Z Quantity input changed to: 1
+[2025-09-20 15:30:21.388] LOG - 20:30:21.386Z Container mousedown event detected
+[2025-09-20 15:30:21.388] LOG - 20:30:21.386Z Container mousedown event detected
+[2025-09-20 15:30:21.388] LOG - 20:30:21.386Z Drag started at offset X:18, Y:90
+[2025-09-20 15:30:21.388] LOG - 20:30:21.386Z Drag started at offset X:18, Y:90
+[2025-09-20 15:30:21.492] LOG - 20:30:21.491Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:21.492] LOG - 20:30:21.491Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:22.029] LOG - 20:30:22.028Z Container mousedown event detected
+[2025-09-20 15:30:22.029] LOG - 20:30:22.028Z Container mousedown event detected
+[2025-09-20 15:30:22.030] LOG - 20:30:22.028Z Drag started at offset X:23, Y:59
+[2025-09-20 15:30:22.030] LOG - 20:30:22.028Z Drag started at offset X:23, Y:59
+[2025-09-20 15:30:22.133] LOG - 20:30:22.132Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:22.133] LOG - 20:30:22.132Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:23.570] LOG - 20:30:23.569Z Container mousedown event detected
+[2025-09-20 15:30:23.571] LOG - 20:30:23.569Z Container mousedown event detected
+[2025-09-20 15:30:23.571] LOG - 20:30:23.569Z Drag started at offset X:174, Y:129
+[2025-09-20 15:30:23.571] LOG - 20:30:23.569Z Drag started at offset X:174, Y:129
+[2025-09-20 15:30:23.640] LOG - 20:30:23.638Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:23.641] LOG - 20:30:23.638Z Container drop position: Left:535px, Top:602px
+[2025-09-20 15:30:23.642] LOG - 20:30:23.639Z SELL button clicked
+[2025-09-20 15:30:23.643] LOG - 20:30:23.639Z SELL button clicked
+[2025-09-20 15:30:23.644] LOG - 20:30:23.639Z Initiating SELL order: Symbol=NQ, Qty=1, TP=120, SL=40, TickSize=0.25
+[2025-09-20 15:30:23.644] LOG - 20:30:23.639Z Initiating SELL order: Symbol=NQ, Qty=1, TP=120, SL=40, TickSize=0.25
+[2025-09-20 15:30:23.645] LOG - 20:30:23.639Z autoTrade called with: symbol=NQ, qty=1, action=Sell, TP=120, SL=40, tickSize=0.25
+[2025-09-20 15:30:23.646] LOG - 20:30:23.639Z autoTrade called with: symbol=NQ, qty=1, action=Sell, TP=120, SL=40, tickSize=0.25
+[2025-09-20 15:30:23.647] LOG - 20:30:23.640Z Using symbol: NQ
+[2025-09-20 15:30:23.648] LOG - 20:30:23.640Z Using symbol: NQ
+[2025-09-20 15:30:23.649] LOG - 20:30:23.640Z Root symbol: NQ
+[2025-09-20 15:30:23.649] LOG - 20:30:23.640Z Root symbol: NQ
+[2025-09-20 15:30:23.650] LOG - 20:30:23.640Z Using tick size 0.25 (from dictionary)
+[2025-09-20 15:30:23.651] LOG - 20:30:23.640Z Using tick size 0.25 (from dictionary)
+[2025-09-20 15:30:23.652] LOG - 20:30:23.640Z Using SL: 40 ticks, TP: 120 ticks
+[2025-09-20 15:30:23.653] LOG - 20:30:23.640Z Using SL: 40 ticks, TP: 120 ticks
+[2025-09-20 15:30:23.653] LOG - 20:30:23.640Z Getting market data for NQ
+[2025-09-20 15:30:23.654] LOG - 20:30:23.640Z Getting market data for NQ
+[2025-09-20 15:30:23.655] LOG - 20:30:23.640Z getMarketData called for: "NQ"
+[2025-09-20 15:30:23.656] LOG - 20:30:23.640Z getMarketData called for: "NQ"
+[2025-09-20 15:30:23.657] LOG - 20:30:23.640Z getFrontQuarter called for root: "NQ"
+[2025-09-20 15:30:23.658] LOG - 20:30:23.640Z getFrontQuarter called for root: "NQ"
+[2025-09-20 15:30:23.658] LOG - 20:30:23.641Z getQuarterlyCode called with date: 2025-09-20T20:30:23.641Z
+[2025-09-20 15:30:23.659] LOG - 20:30:23.641Z getQuarterlyCode called with date: 2025-09-20T20:30:23.641Z
+[2025-09-20 15:30:23.660] LOG - 20:30:23.641Z Current month index: 8
+[2025-09-20 15:30:23.660] LOG - 20:30:23.641Z Current month index: 8
+[2025-09-20 15:30:23.661] LOG - 20:30:23.641Z Starting calculation with year=2025, month=8
+[2025-09-20 15:30:23.662] LOG - 20:30:23.641Z Starting calculation with year=2025, month=8
+[2025-09-20 15:30:23.662] LOG - 20:30:23.641Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:23.662] LOG - 20:30:23.641Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Returning front quarter symbol: "NQZ5"
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Using symbol: "NQZ5" for market data lookup
+[2025-09-20 15:30:23.663] LOG - 20:30:23.641Z Extracted prices for NQZ5: bid=24853.75, offer=24868.75
+[2025-09-20 15:30:23.664] LOG - 20:30:23.641Z Extracted prices for NQZ5: bid=24853.75, offer=24868.75
+[2025-09-20 15:30:23.664] LOG - 20:30:23.641Z Market data: [object Object]
+[2025-09-20 15:30:23.664] LOG - 20:30:23.641Z Market data:
+[2025-09-20 15:30:23.664] LOG - 20:30:23.642Z Market price: 24853.75 (bid price)
+[2025-09-20 15:30:23.664] LOG - 20:30:23.642Z Market price: 24853.75 (bid price)
+[2025-09-20 15:30:23.664] LOG - 20:30:23.642Z No custom entry price provided, using market order at 24853.75
+[2025-09-20 15:30:23.665] LOG - 20:30:23.642Z No custom entry price provided, using market order at 24853.75
+[2025-09-20 15:30:23.665] LOG - 20:30:23.642Z Using price precision: 2 decimal places
+[2025-09-20 15:30:23.665] LOG - 20:30:23.642Z Using price precision: 2 decimal places
+[2025-09-20 15:30:23.665] LOG - 20:30:23.642Z Calculated SL price: 24863.75 (entry + 40 ticks)
+[2025-09-20 15:30:23.665] LOG - 20:30:23.642Z Calculated SL price: 24863.75 (entry + 40 ticks)
+[2025-09-20 15:30:23.666] LOG - 20:30:23.642Z Calculated TP price: 24823.75 (entry - 120 ticks)
+[2025-09-20 15:30:23.666] LOG - 20:30:23.642Z Calculated TP price: 24823.75 (entry - 120 ticks)
+[2025-09-20 15:30:23.666] LOG - 20:30:23.642Z Trade data prepared: [object Object]
+[2025-09-20 15:30:23.666] LOG - 20:30:23.642Z Trade data prepared:
+[2025-09-20 15:30:23.666] LOG - 20:30:23.642Z Submitting bracket orders
+[2025-09-20 15:30:23.667] LOG - 20:30:23.642Z Submitting bracket orders
+[2025-09-20 15:30:23.667] LOG - 20:30:23.642Z Creating bracket orders with data: [object Object]
+[2025-09-20 15:30:23.668] LOG - 20:30:23.642Z Creating bracket orders with data:
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z TP enabled: false, SL enabled: false
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z TP enabled: false, SL enabled: false
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z Submitting initial MARKET order
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z Submitting initial MARKET order
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z Setting common order fields
+[2025-09-20 15:30:23.668] LOG - 20:30:23.643Z Setting common order fields
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Setting action to: Sell
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Setting action to: Sell
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Found 9 action labels
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Found 9 action labels
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Clicking Sell label
+[2025-09-20 15:30:23.669] LOG - 20:30:23.643Z Clicking Sell label
+[2025-09-20 15:30:23.669] LOG - 20:30:23.645Z Setting quantity to: 1
+[2025-09-20 15:30:23.670] LOG - 20:30:23.645Z Setting quantity to: 1
+[2025-09-20 15:30:23.670] LOG - 20:30:23.648Z Delaying for 250ms
+[2025-09-20 15:30:23.670] LOG - 20:30:23.648Z Delaying for 250ms
+[2025-09-20 15:30:23.917] LOG - 20:30:23.916Z Delaying for 200ms
+[2025-09-20 15:30:23.917] LOG - 20:30:23.916Z Delaying for 200ms
+[2025-09-20 15:30:24.119] LOG - 20:30:24.117Z [object Object],[object Object],[object Object]
+[2025-09-20 15:30:24.119] LOG - 20:30:24.117Z
+[2025-09-20 15:30:24.120] LOG - 20:30:24.118Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 15:30:24.120] LOG - 20:30:24.118Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-20 15:30:24.120] LOG - 20:30:24.118Z Delaying for 500ms
+[2025-09-20 15:30:24.120] LOG - 20:30:24.118Z Delaying for 500ms
+[2025-09-20 15:30:24.629] LOG - 20:30:24.626Z ✅ Found order history div - capturing feedback...
+[2025-09-20 15:30:24.630] LOG - 20:30:24.626Z ✅ Found order history div - capturing feedback...
+[2025-09-20 15:30:24.632] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 15:30:24.633] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Symbol: NQZ5
+[2025-09-20 15:30:24.639] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 15:30:24.646] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-20 15:30:24.646] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 15:30:24.646] LOG - 20:30:24.627Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 1: [object Object]
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 1:
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 2: [object Object]
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 2:
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 3: [object Object]
+[2025-09-20 15:30:24.647] LOG - 20:30:24.628Z 📊 EVENT 3:
+[2025-09-20 15:30:24.648] LOG - 20:30:24.628Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 15:30:24.648] LOG - 20:30:24.628Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-20 15:30:24.648] LOG - 20:30:24.629Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141028988 </small><span class="text-danger">Sell</span> 1 NQZ5 MKT  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 293px; width: 386px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 276px; width: 386px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 293px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 293px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 386px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:23.998Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:23 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028988" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028988</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 MKT" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 MKT</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:24.001Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:24 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028989" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028989</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:24.001Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:24 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028990" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028990</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 386px;"><div style="height: 15px; overflow: hidden; width: 386px; top: 276px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 386px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 170.438px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 15:30:24.650] LOG - 20:30:24.629Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">NQZ5</div></div><div class=""><small class="text-muted">#268141028988 </small><span class="text-danger">Sell</span> 1 NQZ5 MKT  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 293px; width: 386px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 276px; width: 386px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 293px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 293px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 386px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:23.998Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:23 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028988" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028988</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 MKT" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 MKT</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:24.001Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:24 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028989" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028989</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 386px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 386px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 386px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-20T20:30:24.001Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/20/2025 3:30:24 PM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="268141028990" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">268141028990</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 386px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 386px;"><div style="height: 15px; overflow: hidden; width: 386px; top: 276px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 386px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 170.438px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-20 15:30:24.652] LOG - 20:30:24.629Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 15:30:24.652] LOG - 20:30:24.629Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-20 15:30:24.652] LOG - 20:30:24.629Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 15:30:24.653] LOG - 20:30:24.629Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-20 15:30:24.653] LOG - 20:30:24.630Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 15:30:24.653] LOG - 20:30:24.630Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-20 15:30:24.653] LOG - 20:30:24.635Z Delaying for 200ms
+[2025-09-20 15:30:24.653] LOG - 20:30:24.635Z Delaying for 200ms
+[2025-09-20 15:30:24.842] LOG - 20:30:24.839Z Flipping action to Buy for TP/SL orders
+[2025-09-20 15:30:24.842] LOG - 20:30:24.839Z Flipping action to Buy for TP/SL orders
+[2025-09-20 15:30:24.843] LOG - 20:30:24.839Z Bracket order creation complete
+[2025-09-20 15:30:24.843] LOG - 20:30:24.839Z Bracket order creation complete
+[2025-09-20 15:30:24.843] LOG - 20:30:24.840Z Price inputs reset after SELL order
+[2025-09-20 15:30:24.843] LOG - 20:30:24.840Z Price inputs reset after SELL order
+[2025-09-20 15:30:31.711] INFO - 20:30:31.670Z visibilitychange: hidden, gd: 1000
