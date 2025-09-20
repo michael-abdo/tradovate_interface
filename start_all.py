@@ -145,7 +145,7 @@ def cleanup_chrome_loggers():
 
 def run_auto_login():
     """Run the auto_login process to start Chrome and log in"""
-    from src.auto_login import main as auto_login_main, set_log_directory, set_terminal_callback, set_register_chrome_logger
+    from src.auto_login import main as auto_login_main, set_log_directory, set_terminal_callback, set_register_chrome_logger, open_dashboard_window
     print("Starting Chrome and auto-login process...")
     
     # Set the log directory for Chrome console logging
@@ -164,7 +164,19 @@ def run_auto_login():
     else:
         print("Warning: No log directory available for Chrome console logging")
     
-    return auto_login_main()
+    # Run auto login
+    result = auto_login_main()
+    
+    # Open dashboard window
+    print("Opening dashboard window...")
+    dashboard_window = open_dashboard_window()
+    if dashboard_window:
+        print("Dashboard window opened at http://localhost:6001")
+        # Track the dashboard Chrome process
+        if dashboard_window.process:
+            chrome_processes.append(dashboard_window.process.pid)
+    
+    return result
 
 def run_dashboard():
     """Run the dashboard process"""
@@ -325,6 +337,15 @@ def main():
         
         # Collect Chrome processes for proper cleanup
         collect_chrome_processes()
+        
+        # Open dashboard window
+        from src.auto_login import open_dashboard_window
+        print("Opening dashboard window...")
+        dashboard_window = open_dashboard_window()
+        if dashboard_window:
+            print("Dashboard window opened at http://localhost:6001")
+            if dashboard_window.process:
+                chrome_processes.append(dashboard_window.process.pid)
         
         # Development mode reminder
         if dev_mode:
