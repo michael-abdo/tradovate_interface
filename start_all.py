@@ -69,7 +69,7 @@ def test_chrome_debugging_connections():
         import pychrome
         
         # Test base debugging port and a few others
-        base_port = 9222
+        base_port = 9223
         test_ports = [base_port + i for i in range(3)]  # Test first 3 ports
         
         active_connections = []
@@ -245,30 +245,194 @@ def run_dashboard():
     dashboard_thread.join()
 
 def collect_chrome_processes():
-    """Find all Chrome processes with remote-debugging-port and track them"""
+    """Find all Chrome processes with remote-debugging-port>=9223 and track them"""
     global chrome_processes
     
     try:
+        # Get all Chrome processes with debugging ports
         if platform.system() == "Darwin":  # macOS
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
+            cmd = ["ps", "aux"]
         elif platform.system() == "Windows":
-            cmd = ["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/FO", "CSV"]
+            cmd = ["wmic", "process", "where", "name='chrome.exe'", "get", "ProcessId,CommandLine", "/FORMAT:CSV"]
         else:  # Linux
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
+            cmd = ["ps", "aux"]
             
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode == 0 and result.stdout.strip():
-            pids = result.stdout.strip().split('\n')
-            for pid in pids:
-                if pid.isdigit():  # Ensure it's a valid PID
-                    chrome_processes.append(int(pid))
-            print(f"Tracking {len(chrome_processes)} Chrome processes for cleanup")
+            # Parse output to find only Chrome instances on ports 9223+
+            lines = result.stdout.strip().split('\n')
+            for line in lines:
+                if "remote-debugging-port=" in line:
+                    # Extract port number
+                    import re
+                    port_match = re.search(r'remote-debugging-port=(\d+)', line)
+                    if port_match:
+                        port = int(port_match.group(1))
+                        if port >= 9223:  # Only track ports 9223 and above
+                            # Extract PID
+                            pid_match = re.match(r'\S+\s+(\d+)', line)
+                            if pid_match:
+                                pid = int(pid_match.group(1))
+                                chrome_processes.append(pid)
+                                print(f"Tracking Chrome process on port {port} (PID: {pid})")
+                        else:
+                            print(f"Skipping Chrome process on protected port {port}")
+            
+            if chrome_processes:
+                print(f"Tracking {len(chrome_processes)} Chrome processes (ports 9223+) for cleanup")
+            else:
+                print("No Chrome processes found on ports 9223+")
     except Exception as e:
         print(f"Error collecting Chrome processes: {e}")
 
+def list_chrome_instances():
+    """List all Chrome debugging instances, marking port 9222 as protected"""
+    print("=== Chrome Debugging Instances ===")
+    print("Protected port: 9222 (will never be touched)")
+    print("Managed ports: 9223+")
+    print("")
+    
+    found = False
+    try:
+        if platform.system() == "Darwin":  # macOS
+            cmd = ["ps", "aux"]
+        else:  # Linux
+            cmd = ["ps", "aux"]
+            
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout.strip():
+            lines = result.stdout.strip().split('\n')
+            chrome_instances = []
+            
+            for line in lines:
+                if "remote-debugging-port=" in line and "grep" not in line:
+                    import re
+                    port_match = re.search(r'remote-debugging-port=(\d+)', line)
+                    if port_match:
+                        port = int(port_match.group(1))
+                        pid_match = re.match(r'\S+\s+(\d+)', line)
+                        if pid_match:
+                            pid = int(pid_match.group(1))
+                            chrome_instances.append((port, pid))
+            
+            # Sort by port number
+            chrome_instances.sort(key=lambda x: x[0])
+            
+            for port, pid in chrome_instances:
+                if port == 9222:
+                    print(f"[PROTECTED] Port {port} - PID: {pid}")
+                else:
+                    print(f"[MANAGED]   Port {port} - PID: {pid}")
+                found = True
+                
+    except Exception as e:
+        print(f"Error listing Chrome instances: {e}")
+    
+    if not found:
+        print("No Chrome instances with remote debugging found.")
+
+def stop_chrome_safe():
+    """Stop Chrome instances on ports 9223+ only (port 9222 is protected)"""
+    print("Stopping Chrome processes on ports 9223+ only...")
+    print("Port 9222 will NOT be affected.")
+    
+    pids_to_stop = []
+    
+    try:
+        if platform.system() == "Darwin":  # macOS
+            cmd = ["ps", "aux"]
+        else:  # Linux
+            cmd = ["ps", "aux"]
+            
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout.strip():
+            lines = result.stdout.strip().split('\n')
+            
+            for line in lines:
+                if "remote-debugging-port=" in line and "grep" not in line:
+                    import re
+                    port_match = re.search(r'remote-debugging-port=(\d+)', line)
+                    if port_match:
+                        port = int(port_match.group(1))
+                        if port >= 9223:  # Only stop ports 9223 and above
+                            pid_match = re.match(r'\S+\s+(\d+)', line)
+                            if pid_match:
+                                pid = int(pid_match.group(1))
+                                pids_to_stop.append((port, pid))
+                                print(f"Found Chrome on port {port} (PID: {pid})")
+                        else:
+                            print(f"Skipping Chrome on port {port} (protected)")
+    except Exception as e:
+        print(f"Error finding Chrome processes: {e}")
+        return
+    
+    if not pids_to_stop:
+        print("No Chrome processes found on ports 9223+")
+        return
+    
+    print(f"\nStopping {len(pids_to_stop)} Chrome process(es)...")
+    
+    # First try graceful termination
+    for port, pid in pids_to_stop:
+        try:
+            print(f"Sending SIGTERM to port {port} (PID {pid})...")
+            os.kill(pid, signal.SIGTERM)
+        except Exception as e:
+            print(f"Error sending SIGTERM to PID {pid}: {e}")
+    
+    # Wait a bit
+    time.sleep(2)
+    
+    # Force kill if still running
+    for port, pid in pids_to_stop:
+        try:
+            # Check if process still exists
+            os.kill(pid, 0)  # This will raise an exception if process doesn't exist
+            print(f"Force killing port {port} (PID {pid})...")
+            os.kill(pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass  # Process already terminated
+        except Exception as e:
+            print(f"Error force killing PID {pid}: {e}")
+    
+    print("\nChrome cleanup complete (ports 9223+ only)")
+
+def check_port(port):
+    """Check if a specific port is in use"""
+    if port < 9223:
+        print(f"Port {port} is protected and cannot be managed by this script.")
+        if port == 9222:
+            print("Port 9222 is reserved for external use and will never be touched.")
+        return
+    
+    print(f"Checking port {port}...")
+    try:
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        result = sock.connect_ex(('localhost', port))
+        sock.close()
+        
+        if result == 0:
+            print(f"Port {port} is in use")
+            # Try to find which process is using it
+            if platform.system() != "Windows":
+                try:
+                    cmd = ["lsof", "-i", f":{port}"]
+                    result = subprocess.run(cmd, capture_output=True, text=True)
+                    if result.stdout:
+                        print("Process details:")
+                        print(result.stdout)
+                except:
+                    pass
+        else:
+            print(f"Port {port} is available")
+    except Exception as e:
+        print(f"Error checking port {port}: {e}")
+
 def cleanup_chrome_instances():
     """
-    Terminate all Chrome instances properly
+    Terminate all Chrome instances properly (only ports 9223+)
     This function will be called by both signal handlers and atexit
     """
     global chrome_processes, chrome_termination_lock
@@ -281,7 +445,8 @@ def cleanup_chrome_instances():
         if not chrome_processes:
             return
             
-        print("\nShutting down Chrome instances...")
+        print("\nShutting down Chrome instances (ports 9223+ only)...")
+        print("Port 9222 is protected and will not be affected.")
         
         # First try graceful termination through auto_login process if available
         if auto_login_process and auto_login_process.poll() is None:
@@ -296,7 +461,7 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error stopping auto_login process: {e}")
         
-        # Fallback: Directly terminate Chrome processes we've tracked
+        # Fallback: Directly terminate Chrome processes we've tracked (only 9223+)
         for pid in chrome_processes:
             try:
                 print(f"Terminating Chrome process with PID: {pid}")
@@ -307,17 +472,9 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error terminating Chrome process {pid}: {e}")
         
-        # Last resort: Use pkill as a safety net
-        try:
-            if platform.system() != "Windows":
-                print("Running pkill as final cleanup...")
-                subprocess.run(["pkill", "-f", "remote-debugging-port"], capture_output=True)
-        except Exception as e:
-            print(f"Error running pkill: {e}")
-            
         # Clear the list after termination
         chrome_processes.clear()
-        print("Chrome instances terminated")
+        print("Chrome instances terminated (9223+ only)")
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
@@ -340,9 +497,31 @@ def main():
                         help="Run auto-login in the background")
     parser.add_argument("--dev", action="store_true",
                         help="Enable development mode (reserved for future use)")
+    
+    # Chrome management commands
+    parser.add_argument("--list-chrome", action="store_true",
+                        help="List all Chrome debugging instances (port 9222 is protected)")
+    parser.add_argument("--stop-chrome", action="store_true",
+                        help="Stop Chrome instances on ports 9223+ only (port 9222 is protected)")
+    parser.add_argument("--check-port", type=int,
+                        help="Check if a specific port is in use")
+    
     args = parser.parse_args()
     
-    # Create log directory for this session
+    # Handle Chrome management commands first (don't need log directory for these)
+    if args.list_chrome:
+        list_chrome_instances()
+        return 0
+    
+    if args.stop_chrome:
+        stop_chrome_safe()
+        return 0
+    
+    if args.check_port is not None:
+        check_port(args.check_port)
+        return 0
+    
+    # For normal operation, create log directory
     if not create_log_directory():
         print("Warning: Failed to create log directory, logging may be impaired")
         return 1
