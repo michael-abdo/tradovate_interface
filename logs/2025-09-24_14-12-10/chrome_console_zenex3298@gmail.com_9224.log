@@ -3538,3 +3538,6 @@
 [2025-09-24 15:08:12.948] INFO - 20:08:12.944Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
 [2025-09-24 15:08:12.948] INFO - 20:08:12.944Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
 [2025-09-24 15:08:19.925] LOG - 20:08:19.924Z WebGL:  {"geometries":57,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:10:19.924] LOG - 20:10:19.923Z WebGL:  {"geometries":58,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:10:41.420] INFO - 20:10:41.415Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:10:41.420] INFO - 20:10:41.415Z visibilitychange: hidden, gd: 1000
