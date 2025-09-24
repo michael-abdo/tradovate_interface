@@ -245,30 +245,49 @@ def run_dashboard():
     dashboard_thread.join()
 
 def collect_chrome_processes():
-    """Find all Chrome processes with remote-debugging-port and track them"""
+    """Find Chrome processes with remote-debugging-port >= 9223 and track them"""
     global chrome_processes
+    
+    MIN_MANAGED_PORT = 9223  # We only manage ports 9223 and above
     
     try:
         if platform.system() == "Darwin":  # macOS
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
+            cmd = ["ps", "aux"]
         elif platform.system() == "Windows":
-            cmd = ["tasklist", "/FI", "IMAGENAME eq chrome.exe", "/FO", "CSV"]
+            cmd = ["wmic", "process", "where", "name='chrome.exe'", "get", "ProcessId,CommandLine", "/FORMAT:CSV"]
         else:  # Linux
-            cmd = ["pgrep", "-f", "remote-debugging-port"]
+            cmd = ["ps", "aux"]
             
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode == 0 and result.stdout.strip():
-            pids = result.stdout.strip().split('\n')
-            for pid in pids:
-                if pid.isdigit():  # Ensure it's a valid PID
-                    chrome_processes.append(int(pid))
-            print(f"Tracking {len(chrome_processes)} Chrome processes for cleanup")
+            lines = result.stdout.strip().split('\n')
+            for line in lines:
+                if "remote-debugging-port=" in line:
+                    # Extract port number
+                    import re
+                    port_match = re.search(r'remote-debugging-port=(\d+)', line)
+                    if port_match:
+                        port = int(port_match.group(1))
+                        if port >= MIN_MANAGED_PORT:  # Only track ports 9223+
+                            # Extract PID
+                            pid_match = re.match(r'\S+\s+(\d+)', line)
+                            if pid_match:
+                                pid = int(pid_match.group(1))
+                                chrome_processes.append(pid)
+                                print(f"Tracking Chrome process on port {port} (PID: {pid})")
+                        else:
+                            print(f"Skipping Chrome process on protected port {port}")
+            
+            if chrome_processes:
+                print(f"Tracking {len(chrome_processes)} Chrome processes (ports 9223+) for cleanup")
+            else:
+                print("No Chrome processes found on managed ports (9223+)")
     except Exception as e:
         print(f"Error collecting Chrome processes: {e}")
 
 def cleanup_chrome_instances():
     """
-    Terminate all Chrome instances properly
+    Terminate Chrome instances on ports 9223+ only (port 9222 is protected)
     This function will be called by both signal handlers and atexit
     """
     global chrome_processes, chrome_termination_lock
@@ -281,7 +300,8 @@ def cleanup_chrome_instances():
         if not chrome_processes:
             return
             
-        print("\nShutting down Chrome instances...")
+        print("\nShutting down Chrome instances (ports 9223+ only)...")
+        print("Port 9222 is protected and will not be affected.")
         
         # First try graceful termination through auto_login process if available
         if auto_login_process and auto_login_process.poll() is None:
@@ -296,7 +316,7 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error stopping auto_login process: {e}")
         
-        # Fallback: Directly terminate Chrome processes we've tracked
+        # Terminate only the Chrome processes we've explicitly tracked (ports 9223+)
         for pid in chrome_processes:
             try:
                 print(f"Terminating Chrome process with PID: {pid}")
@@ -307,17 +327,24 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error terminating Chrome process {pid}: {e}")
         
-        # Last resort: Use pkill as a safety net
-        try:
-            if platform.system() != "Windows":
-                print("Running pkill as final cleanup...")
-                subprocess.run(["pkill", "-f", "remote-debugging-port"], capture_output=True)
-        except Exception as e:
-            print(f"Error running pkill: {e}")
+        # Wait a bit for graceful termination
+        time.sleep(1)
+        
+        # Force kill any that are still running
+        for pid in chrome_processes[:]:  # Copy list to avoid modification during iteration
+            try:
+                # Check if process still exists
+                os.kill(pid, 0)  # This will raise an exception if process doesn't exist
+                print(f"Force killing Chrome process {pid}")
+                os.kill(pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass  # Process already terminated
+            except Exception as e:
+                print(f"Error force killing Chrome process {pid}: {e}")
             
         # Clear the list after termination
         chrome_processes.clear()
-        print("Chrome instances terminated")
+        print("Chrome instances terminated (ports 9223+ only)")
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
