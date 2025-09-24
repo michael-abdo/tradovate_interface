@@ -1727,9 +1727,9 @@
         // Load saved trade settings from localStorage
         function loadTradeSettings() {
             document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || 'NQ';
-            document.getElementById('qtyInput').value = localStorage.getItem('bracketTrade_qty') || '1';
-            document.getElementById('tpInput').value = localStorage.getItem('bracketTrade_tp') || '100';
-            document.getElementById('slInput').value = localStorage.getItem('bracketTrade_sl') || '40';
+            document.getElementById('qtyInput').value = localStorage.getItem('bracketTrade_qty') || '9';
+            document.getElementById('tpInput').value = localStorage.getItem('bracketTrade_tp') || '53';
+            document.getElementById('slInput').value = localStorage.getItem('bracketTrade_sl') || '15';
             document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
         }
         
@@ -1803,7 +1803,7 @@
                 
                 const slVal = parseFloat(slInput.value);
                 if (!isNaN(slVal)) {
-                    tpInput.value = slVal * 3;
+                    tpInput.value = Math.round(slVal * 3.5);
                 }
                 
                 saveTradeSettings();
