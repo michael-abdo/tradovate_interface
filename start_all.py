@@ -69,7 +69,7 @@ def test_chrome_debugging_connections():
         import pychrome
         
         # Test base debugging port and a few others
-        base_port = 9222
+        base_port = 9223  # Changed from 9222 to protect that port
         test_ports = [base_port + i for i in range(3)]  # Test first 3 ports
         
         active_connections = []

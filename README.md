@@ -84,7 +84,7 @@ python main.py login
 
 This will:
 - Start a new Chrome instance for each credential pair in `config/credentials.json`
-- Each instance will run on a different debugging port (starting at 9222)
+- Each instance will run on a different debugging port (starting at 9223, port 9222 is protected)
 - Automatically log in to Tradovate
 - Keep running until you press Ctrl+C
 
@@ -161,7 +161,7 @@ python main.py logger
 Connect to an existing Chrome instance on a specific port:
 
 ```bash
-python main.py login-helper --port 9222
+python main.py login-helper --port 9223
 ```
 
 ## Available Commands
@@ -258,7 +258,7 @@ To use this feature:
 ## Notes
 
 - Requires Chrome to be installed
-- Uses sequential ports starting at 9222 for remote debugging (one port per account)
+- Uses sequential ports starting at 9223 for remote debugging (one port per account, port 9222 is protected)
 - Makes use of Tampermonkey functions without needing the extension installed
 - Each account instance runs in its own separate browser window with isolated user profile
 - Dashboard runs on port 6001, webhook server on port 5000
