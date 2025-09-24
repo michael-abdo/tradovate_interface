@@ -32,6 +32,32 @@ except FileNotFoundError:
         "risk_reward_ratio": 3.5
     }
     SYMBOL_DEFAULTS = {}
+except json.JSONDecodeError as e:
+    print(f"Error: Trading defaults config is malformed: {e}")
+    print("Using fallback defaults")
+    # Fallback defaults
+    TRADING_DEFAULTS = {
+        "symbol": "NQ",
+        "quantity": 10,
+        "stop_loss_ticks": 15,
+        "take_profit_ticks": 53,
+        "tick_size": 0.25,
+        "risk_reward_ratio": 3.5
+    }
+    SYMBOL_DEFAULTS = {}
+except Exception as e:
+    print(f"Error loading trading defaults: {e}")
+    print("Using fallback defaults")
+    # Fallback defaults
+    TRADING_DEFAULTS = {
+        "symbol": "NQ",
+        "quantity": 10,
+        "stop_loss_ticks": 15,
+        "take_profit_ticks": 53,
+        "tick_size": 0.25,
+        "risk_reward_ratio": 3.5
+    }
+    SYMBOL_DEFAULTS = {}
 app = Flask(__name__, 
             static_folder=os.path.join(project_root, 'web/static'),
             template_folder=os.path.join(project_root, 'web/templates'))
@@ -578,8 +604,11 @@ def reload_trading_defaults():
         global TRADING_DEFAULTS, SYMBOL_DEFAULTS
         with open(trading_defaults_path, 'r') as f:
             trading_config = json.load(f)
-            TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
-            SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+            # Clear and update dictionaries in place to maintain references
+            TRADING_DEFAULTS.clear()
+            TRADING_DEFAULTS.update(trading_config.get('trading_defaults', {}))
+            SYMBOL_DEFAULTS.clear()
+            SYMBOL_DEFAULTS.update(trading_config.get('symbol_defaults', {}))
         return jsonify({"status": "success", "message": "Trading defaults reloaded"}), 200
     except Exception as e:
         print(f"Error reloading trading defaults: {e}")
