@@ -2,6 +2,51 @@
 
 A Python interface for automating trading operations with multiple Tradovate accounts simultaneously. Features a web dashboard for visual monitoring and control of all accounts.
 
+## Configuration
+
+### Trading Defaults Configuration
+
+The system now supports configurable trading defaults via `config/trading_defaults.json`. This allows you to easily change default values without modifying code.
+
+#### Configuration File Location
+`config/trading_defaults.json`
+
+#### Configuration Structure
+```json
+{
+  "trading_defaults": {
+    "symbol": "NQ",          // Default trading symbol
+    "quantity": 10,          // Default quantity
+    "stop_loss_ticks": 15,   // Default stop loss in ticks
+    "take_profit_ticks": 53, // Default take profit in ticks
+    "tick_size": 0.25,       // Default tick size
+    "risk_reward_ratio": 3.5 // Risk/reward ratio for auto-calculation
+  },
+  "symbol_defaults": {
+    // Per-symbol default settings
+    "NQ": {
+      "tick_size": 0.25,
+      "tick_value": 5.0,
+      "default_sl": 15,
+      "default_tp": 53,
+      "precision": 2
+    }
+    // ... other symbols
+  }
+}
+```
+
+#### API Endpoints
+- `GET /api/trading-defaults` - Get current trading defaults
+- `POST /api/trading-defaults/reload` - Reload defaults from config file
+
+#### Changing Defaults
+1. Edit `config/trading_defaults.json`
+2. Either restart the dashboard or call the reload endpoint:
+   ```bash
+   curl -X POST http://localhost:6001/api/trading-defaults/reload
+   ```
+
 ## Features
 
 - Auto-login to multiple Tradovate accounts in separate browser windows

@@ -1,0 +1,117 @@
+{
+  "_comment": "Trading Defaults Configuration File",
+  "_description": "This file controls default values for the trading interface. Copy to trading_defaults.json and modify as needed.",
+  
+  "trading_defaults": {
+    "_comment": "Global default values used across all trading operations",
+    
+    "symbol": "NQ",
+    "_symbol_comment": "Default trading symbol (e.g., NQ, ES, CL)",
+    
+    "quantity": 10,
+    "_quantity_comment": "Default number of contracts to trade",
+    
+    "stop_loss_ticks": 15,
+    "_stop_loss_comment": "Default stop loss distance in ticks",
+    
+    "take_profit_ticks": 53,
+    "_take_profit_comment": "Default take profit distance in ticks (calculated as stop_loss_ticks * risk_reward_ratio)",
+    
+    "tick_size": 0.25,
+    "_tick_size_comment": "Default tick size (price increment)",
+    
+    "risk_reward_ratio": 3.5,
+    "_risk_reward_comment": "Risk/reward ratio used for auto-calculating TP from SL",
+    
+    "enable_take_profit": true,
+    "_enable_tp_comment": "Whether take profit is enabled by default",
+    
+    "enable_stop_loss": true,
+    "_enable_sl_comment": "Whether stop loss is enabled by default"
+  },
+  
+  "symbol_defaults": {
+    "_comment": "Per-symbol default settings. When a symbol is selected, these values override the global defaults",
+    
+    "NQ": {
+      "_comment": "E-mini Nasdaq-100 Futures",
+      "tick_size": 0.25,
+      "tick_value": 5.0,
+      "default_sl": 15,
+      "default_tp": 53,
+      "precision": 2
+    },
+    
+    "MNQ": {
+      "_comment": "Micro E-mini Nasdaq-100 Futures",
+      "tick_size": 0.25,
+      "tick_value": 0.5,
+      "default_sl": 15,
+      "default_tp": 53,
+      "precision": 2
+    },
+    
+    "ES": {
+      "_comment": "E-mini S&P 500 Futures",
+      "tick_size": 0.25,
+      "tick_value": 12.5,
+      "default_sl": 40,
+      "default_tp": 100,
+      "precision": 2
+    },
+    
+    "MES": {
+      "_comment": "Micro E-mini S&P 500 Futures",
+      "tick_size": 0.25,
+      "tick_value": 1.25,
+      "default_sl": 40,
+      "default_tp": 100,
+      "precision": 2
+    },
+    
+    "RTY": {
+      "_comment": "E-mini Russell 2000 Futures",
+      "tick_size": 0.1,
+      "tick_value": 5.0,
+      "default_sl": 90,
+      "default_tp": 225,
+      "precision": 1
+    },
+    
+    "YM": {
+      "_comment": "E-mini Dow Jones Futures",
+      "tick_size": 1.0,
+      "tick_value": 5.0,
+      "default_sl": 10,
+      "default_tp": 25,
+      "precision": 0
+    },
+    
+    "CL": {
+      "_comment": "Crude Oil Futures",
+      "tick_size": 0.01,
+      "tick_value": 10.0,
+      "default_sl": 50,
+      "default_tp": 100,
+      "precision": 2
+    },
+    
+    "GC": {
+      "_comment": "Gold Futures",
+      "tick_size": 0.1,
+      "tick_value": 10.0,
+      "default_sl": 15,
+      "default_tp": 30,
+      "precision": 1
+    },
+    
+    "MGC": {
+      "_comment": "Micro Gold Futures",
+      "tick_size": 0.1,
+      "tick_value": 1.0,
+      "default_sl": 15,
+      "default_tp": 30,
+      "precision": 1
+    }
+  }
+}

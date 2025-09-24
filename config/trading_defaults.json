@@ -1,0 +1,70 @@
+{
+  "trading_defaults": {
+    "symbol": "NQ",
+    "quantity": 10,
+    "stop_loss_ticks": 15,
+    "take_profit_ticks": 53,
+    "tick_size": 0.25,
+    "risk_reward_ratio": 3.5,
+    "enable_take_profit": true,
+    "enable_stop_loss": true
+  },
+  "symbol_defaults": {
+    "NQ": {
+      "tick_size": 0.25,
+      "tick_value": 5.0,
+      "default_sl": 15,
+      "default_tp": 53,
+      "precision": 2
+    },
+    "MNQ": {
+      "tick_size": 0.25,
+      "tick_value": 0.5,
+      "default_sl": 15,
+      "default_tp": 53,
+      "precision": 2
+    },
+    "ES": {
+      "tick_size": 0.25,
+      "tick_value": 12.5,
+      "default_sl": 40,
+      "default_tp": 100,
+      "precision": 2
+    },
+    "RTY": {
+      "tick_size": 0.1,
+      "tick_value": 5.0,
+      "default_sl": 90,
+      "default_tp": 225,
+      "precision": 1
+    },
+    "YM": {
+      "tick_size": 1.0,
+      "tick_value": 5.0,
+      "default_sl": 10,
+      "default_tp": 25,
+      "precision": 0
+    },
+    "CL": {
+      "tick_size": 0.01,
+      "tick_value": 10.0,
+      "default_sl": 50,
+      "default_tp": 100,
+      "precision": 2
+    },
+    "GC": {
+      "tick_size": 0.1,
+      "tick_value": 10.0,
+      "default_sl": 15,
+      "default_tp": 30,
+      "precision": 1
+    },
+    "MGC": {
+      "tick_size": 0.1,
+      "tick_value": 1.0,
+      "default_sl": 15,
+      "default_tp": 30,
+      "precision": 1
+    }
+  }
+}

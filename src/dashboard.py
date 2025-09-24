@@ -12,6 +12,26 @@ from flask import request
 
 # Create Flask app
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Load trading defaults from config
+trading_defaults_path = os.path.join(project_root, 'config/trading_defaults.json')
+try:
+    with open(trading_defaults_path, 'r') as f:
+        trading_config = json.load(f)
+        TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
+        SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+except FileNotFoundError:
+    print(f"Warning: Trading defaults config not found at {trading_defaults_path}")
+    # Fallback defaults
+    TRADING_DEFAULTS = {
+        "symbol": "NQ",
+        "quantity": 10,
+        "stop_loss_ticks": 15,
+        "take_profit_ticks": 53,
+        "tick_size": 0.25,
+        "risk_reward_ratio": 3.5
+    }
+    SYMBOL_DEFAULTS = {}
 app = Flask(__name__, 
             static_folder=os.path.join(project_root, 'web/static'),
             template_folder=os.path.join(project_root, 'web/templates'))
@@ -156,20 +176,20 @@ def execute_trade():
     try:
         data = request.json
         
-        # Extract parameters from request
-        symbol = data.get('symbol', 'NQ')
-        quantity = data.get('quantity', 9)
+        # Extract parameters from request with config defaults
+        symbol = data.get('symbol', TRADING_DEFAULTS.get('symbol', 'NQ'))
+        quantity = data.get('quantity', TRADING_DEFAULTS.get('quantity', 10))
         action = data.get('action', 'Buy')
-        tick_size = data.get('tick_size', 0.25)
+        tick_size = data.get('tick_size', TRADING_DEFAULTS.get('tick_size', 0.25))
         account_index = data.get('account', 'all')
         
         # Check TP/SL enable flags
         enable_tp = data.get('enable_tp', True)
         enable_sl = data.get('enable_sl', True)
         
-        # Only get TP/SL values if they are enabled
-        tp_ticks = data.get('tp_ticks', 53) if enable_tp else 0
-        sl_ticks = data.get('sl_ticks', 15) if enable_sl else 0
+        # Only get TP/SL values if they are enabled with config defaults
+        tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
+        sl_ticks = data.get('sl_ticks', TRADING_DEFAULTS.get('stop_loss_ticks', 15)) if enable_sl else 0
         
         # Ensure tp_ticks and sl_ticks are integers
         tp_ticks = int(tp_ticks) if tp_ticks else 0
@@ -340,8 +360,8 @@ def update_quantity():
     try:
         data = request.json
         
-        # Extract parameters from request
-        quantity = data.get('quantity', 9)
+        # Extract parameters from request with config defaults
+        quantity = data.get('quantity', TRADING_DEFAULTS.get('quantity', 10))
         account_index = data.get('account', 'all')
         
         # Update quantity in Chrome UI
@@ -538,6 +558,32 @@ def run_risk_management():
             'status': 'error',
             'message': str(e)
         }), 500
+
+# API endpoint to get trading defaults
+@app.route('/api/trading-defaults', methods=['GET'])
+def get_trading_defaults():
+    try:
+        return jsonify({
+            'trading_defaults': TRADING_DEFAULTS,
+            'symbol_defaults': SYMBOL_DEFAULTS
+        }), 200
+    except Exception as e:
+        print(f"Error getting trading defaults: {e}")
+        return jsonify({"error": f"Failed to get trading defaults: {str(e)}"}), 500
+
+# API endpoint to reload trading defaults from config file
+@app.route('/api/trading-defaults/reload', methods=['POST'])
+def reload_trading_defaults():
+    try:
+        global TRADING_DEFAULTS, SYMBOL_DEFAULTS
+        with open(trading_defaults_path, 'r') as f:
+            trading_config = json.load(f)
+            TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
+            SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+        return jsonify({"status": "success", "message": "Trading defaults reloaded"}), 200
+    except Exception as e:
+        print(f"Error reloading trading defaults: {e}")
+        return jsonify({"error": f"Failed to reload trading defaults: {str(e)}"}), 500
 
 # API endpoint to get strategy mappings
 @app.route('/api/strategies', methods=['GET'])

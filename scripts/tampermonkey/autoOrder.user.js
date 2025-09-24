@@ -25,7 +25,7 @@
         console.log('Creating UI');
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '53';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '15';
-        const storedQty  = localStorage.getItem('bracketTrade_qty') || '9';
+        const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
         const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
         const storedSym  = localStorage.getItem('bracketTrade_symbol') || 'NQ';
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);

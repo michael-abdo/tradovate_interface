@@ -813,7 +813,7 @@
                 </div>
                 <div class="input-group">
                     <label for="qtyInput">Quantity</label>
-                    <input type="number" id="qtyInput" value="9" min="1" class="trade-input">
+                    <input type="number" id="qtyInput" value="10" min="1" class="trade-input">
                 </div>
                 <div class="input-group">
                     <label for="tickInput">Tick Size</label>
@@ -1724,13 +1724,40 @@
         
         // ---- Trade Controls Functionality ----
         
+        // Store default values from config
+        let configDefaults = {
+            symbol: 'NQ',
+            quantity: 10,
+            stop_loss_ticks: 15,
+            take_profit_ticks: 53,
+            tick_size: 0.25
+        };
+        
         // Load saved trade settings from localStorage
         function loadTradeSettings() {
-            document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || 'NQ';
-            document.getElementById('qtyInput').value = localStorage.getItem('bracketTrade_qty') || '9';
-            document.getElementById('tpInput').value = localStorage.getItem('bracketTrade_tp') || '53';
-            document.getElementById('slInput').value = localStorage.getItem('bracketTrade_sl') || '15';
-            document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
+            document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || configDefaults.symbol;
+            document.getElementById('qtyInput').value = localStorage.getItem('bracketTrade_qty') || configDefaults.quantity;
+            document.getElementById('tpInput').value = localStorage.getItem('bracketTrade_tp') || configDefaults.take_profit_ticks;
+            document.getElementById('slInput').value = localStorage.getItem('bracketTrade_sl') || configDefaults.stop_loss_ticks;
+            document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || configDefaults.tick_size;
+        }
+        
+        // Fetch trading defaults from backend
+        async function fetchTradingDefaults() {
+            try {
+                const response = await fetch('/api/trading-defaults');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.trading_defaults) {
+                        configDefaults = data.trading_defaults;
+                        console.log('Loaded trading defaults from config:', configDefaults);
+                        // Reload settings with new defaults if localStorage is empty
+                        loadTradeSettings();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching trading defaults:', error);
+            }
         }
         
         // Store trade settings in localStorage
@@ -1757,8 +1784,10 @@
         
         // Set up trade controls event handlers
         function setupTradeControls() {
-            // Load saved settings
-            loadTradeSettings();
+            // First fetch defaults from backend, then load saved settings
+            fetchTradingDefaults().then(() => {
+                loadTradeSettings();
+            });
             
             // Symbol input change handler
             document.getElementById('symbolInput').addEventListener('change', e => {
