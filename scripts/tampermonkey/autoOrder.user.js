@@ -128,8 +128,8 @@
             console.log(`SL input changed to: ${slInput.value}`);
             const slVal = parseFloat(slInput.value);
             if (!isNaN(slVal)) {
-                tpInput.value = slVal * 3;
-                console.log(`Calculated TP: ${tpInput.value} (SL × 3)`);
+                tpInput.value = Math.round(slVal * 3.5);
+                console.log(`Calculated TP: ${tpInput.value} (SL × 3.5)`);
             }
             localStorage.setItem('bracketTrade_sl', slInput.value);
             localStorage.setItem('bracketTrade_tp', tpInput.value);
@@ -917,8 +917,8 @@
     // Futures tick data dictionary with default SL/TP settings for each instrument
     const futuresTickData = {
       // Symbol: { tickSize, tickValue, defaultSL (ticks), defaultTP (ticks), precision (decimal places) }
-      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // Micro E-mini Nasdaq-100
-      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini Nasdaq-100
+      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // Micro E-mini Nasdaq-100
+      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // E-mini Nasdaq-100
       ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini S&P 500
       RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },  // E-mini Russell 2000
       YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },  // E-mini Dow Jones

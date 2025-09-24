@@ -367,3 +367,8 @@
 [2025-09-24 15:13:00.669] LOG - 20:13:00.664Z Risk management assessment completed
 [2025-09-24 15:13:50.711] INFO - 20:13:50.709Z time stats. avg diff: -58, min: -58, max: -58, roundtrip: 56 msec, #1
 [2025-09-24 15:13:50.712] INFO - 20:13:50.709Z time stats. avg diff: -58, min: -58, max: -58, roundtrip: 56 msec, #1
+[2025-09-24 15:14:52.375] LOG - 20:14:52.374Z WebGL:  {"geometries":60,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:16:52.375] LOG - 20:16:52.374Z WebGL:  {"geometries":60,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:18:52.376] LOG - 20:18:52.374Z WebGL:  {"geometries":60,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:19:32.628] INFO - 20:19:32.626Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:19:32.629] INFO - 20:19:32.626Z visibilitychange: hidden, gd: 1000

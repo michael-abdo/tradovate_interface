@@ -402,3 +402,8 @@
 [2025-09-24 15:13:51.669] INFO - 20:13:51.665Z time stats. avg diff: -90, min: -90, max: -90, roundtrip: 23 msec, #1
 [2025-09-24 15:14:02.541] LOG - 20:14:02.537Z timeViewChanged [object Object]
 [2025-09-24 15:14:02.541] LOG - 20:14:02.537Z timeViewChanged
+[2025-09-24 15:14:53.169] LOG - 20:14:53.167Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:16:53.169] LOG - 20:16:53.168Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:18:53.170] LOG - 20:18:53.168Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:19:32.625] INFO - 20:19:32.623Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:19:32.626] INFO - 20:19:32.623Z visibilitychange: hidden, gd: 1000

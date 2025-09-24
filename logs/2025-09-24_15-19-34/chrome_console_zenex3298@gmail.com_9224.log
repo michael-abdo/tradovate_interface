@@ -1,0 +1,376 @@
+[2025-09-24 15:19:40.232] LOG - 20:19:40.229Z Starting login process for: zenex3298@gmail.com
+[2025-09-24 15:19:40.232] LOG - 20:19:40.229Z Starting login process for: zenex3298@gmail.com
+[2025-09-24 15:19:40.234] LOG - 20:19:40.229Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-24 15:19:40.234] LOG - 20:19:40.229Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-24 15:19:40.234] LOG - 20:19:40.230Z Login form found, filling credentials...
+[2025-09-24 15:19:40.235] LOG - 20:19:40.230Z Login form found, filling credentials...
+[2025-09-24 15:19:40.353] LOG - 20:19:40.255Z Test element added to DOM
+[2025-09-24 15:19:40.353] LOG - 20:19:40.255Z Test element added to DOM
+[2025-09-24 15:19:40.355] LOG - 20:19:40.354Z All browser alerts and confirmations have been disabled
+[2025-09-24 15:19:40.356] LOG - 20:19:40.354Z All browser alerts and confirmations have been disabled
+[2025-09-24 15:19:40.745] LOG - 20:19:40.744Z Clicking login button...
+[2025-09-24 15:19:40.745] LOG - 20:19:40.744Z Clicking login button...
+[2025-09-24 15:19:40.757] LOG - 20:19:40.755Z authentication starting
+[2025-09-24 15:19:40.757] LOG - 20:19:40.755Z authentication starting
+[2025-09-24 15:19:41.087] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-24 15:19:41.089] LOG - 20:19:41.075Z Watching for account selection page...
+[2025-09-24 15:19:41.092] LOG - 20:19:41.075Z Watching for account selection page...
+[2025-09-24 15:19:41.484] LOG - 20:19:41.483Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:41 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:41.485] LOG - 20:19:41.483Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:41 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:41.808] INFO - 20:19:41.807Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:41.810] INFO - 20:19:41.807Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:41.811] INFO - 20:19:41.807Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-24 15:19:41.811] INFO - 20:19:41.807Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-24 15:19:41.811] INFO - 20:19:41.808Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:41.811] INFO - 20:19:41.808Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:41.811] INFO - 20:19:41.808Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-24 15:19:41.812] INFO - 20:19:41.808Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-24 15:19:42.578] LOG - 20:19:42.577Z Account selection page detected, clicking button...
+[2025-09-24 15:19:42.579] LOG - 20:19:42.577Z Account selection page detected, clicking button...
+[2025-09-24 15:19:42.720] LOG - 20:19:42.688Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:42 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:42.720] LOG - 20:19:42.688Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:42 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:42.806] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=e617ea7d-3343-492b-a338-3e2f02705e54&bo=2&sid=e921826097c611f09785499b91a2dd7e&vid=9abf384092fe11f0b30e9fac449e4642&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-24 15:19:42.810] INFO - 20:19:42.804Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:19:42.810] INFO - 20:19:42.804Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:19:42.811] WARNING - 20:19:42.805Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 702 milliseconds.
+[2025-09-24 15:19:42.811] WARNING - 20:19:42.805Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 702 milliseconds.
+[2025-09-24 15:19:42.811] INFO - 20:19:42.806Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:42.811] INFO - 20:19:42.806Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:43.213] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.213] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.215] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.216] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.217] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.218] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.222] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.224] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.231] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.232] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.236] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.239] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.243] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.246] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.258] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.259] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.259] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.259] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.260] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.261] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.263] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.266] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.266] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.269] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.270] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.272] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.272] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.275] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.275] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.276] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.276] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.276] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.276] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.276] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.277] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.277] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.277] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.278] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.278] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.278] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.278] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.279] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.280] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.280] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.280] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.280] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.280] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.281] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.281] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.281] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.282] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.282] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.282] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.282] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.283] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.283] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.283] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.283] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.284] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-24 15:19:43.284] DEBUG - [bugsnag] Loaded!
+[2025-09-24 15:19:43.284] DEBUG - [bugsnag] Loaded!
+[2025-09-24 15:19:43.285] INFO - Version 3.250919.0 prod production 
+[2025-09-24 15:19:43.285] INFO - Version 3.250919.0 prod production 
+[2025-09-24 15:19:43.286] INFO - Time: Wed Sep 24 2025 15:19:43 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:43.286] INFO - Time:
+[2025-09-24 15:19:43.292] LOG - 20:19:43.289Z Try to restore session
+[2025-09-24 15:19:43.294] LOG - 20:19:43.289Z Try to restore session
+[2025-09-24 15:19:43.294] LOG - 20:19:43.291Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:43 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:43.294] LOG - 20:19:43.291Z Access token will be renewed in 75 minutes; expired: Wed Sep 24 2025 16:39:41 GMT-0500 (Central Daylight Time), now: Wed Sep 24 2025 15:19:43 GMT-0500 (Central Daylight Time)
+[2025-09-24 15:19:43.300] WARNING - 20:19:43.298Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-24 15:19:43.300] WARNING - 20:19:43.298Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-24 15:19:43.304] INFO - 20:19:43.301Z chart cache state: islands=1, bars=453
+[2025-09-24 15:19:43.304] INFO - 20:19:43.301Z chart cache state: islands=1, bars=453
+[2025-09-24 15:19:43.304] INFO - 20:19:43.301Z Chart history database initialized
+[2025-09-24 15:19:43.305] INFO - 20:19:43.301Z Chart history database initialized
+[2025-09-24 15:19:43.317] INFO - 20:19:43.316Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-24 15:19:43.318] INFO - 20:19:43.316Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-24 15:19:43.319] INFO - 20:19:43.316Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-24 15:19:43.319] INFO - 20:19:43.316Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-24 15:19:43.761] INFO - 20:19:43.759Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:43.803] INFO - 20:19:43.759Z [LaunchDarkly] Closing stream connection
+[2025-09-24 15:19:43.804] INFO - 20:19:43.759Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-24 15:19:43.806] INFO - 20:19:43.759Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-24 15:19:43.904] LOG - 20:19:43.898Z opening https://demo.tradovateapi.com/
+[2025-09-24 15:19:43.907] LOG - 20:19:43.898Z opening https://demo.tradovateapi.com/
+[2025-09-24 15:19:43.918] LOG - 20:19:43.906Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-24 15:19:43.918] LOG - 20:19:43.906Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-24 15:19:43.983] LOG - 20:19:43.981Z websocket opened
+[2025-09-24 15:19:43.984] LOG - 20:19:43.981Z websocket opened
+[2025-09-24 15:19:44.039] LOG - 20:19:44.038Z opening https://md-demo.tradovateapi.com/
+[2025-09-24 15:19:44.040] LOG - 20:19:44.038Z opening https://md-demo.tradovateapi.com/
+[2025-09-24 15:19:44.040] LOG - 20:19:44.039Z Connection:  open
+[2025-09-24 15:19:44.041] LOG - 20:19:44.039Z Connection:  open
+[2025-09-24 15:19:45.021] LOG - 20:19:45.019Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-24 15:19:45.025] LOG - 20:19:45.019Z Canvas size: 501 897 dpp:  2
+[2025-09-24 15:19:45.029] LOG - 20:19:45.027Z Loading App-level Plugins
+[2025-09-24 15:19:45.029] LOG - 20:19:45.027Z Loading App-level Plugins
+[2025-09-24 15:19:45.042] LOG - 20:19:45.037Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-24 15:19:45.046] LOG - 20:19:45.038Z Canvas size: 501 897 dpp:  2
+[2025-09-24 15:19:45.130] LOG - 20:19:45.085Z websocket opened
+[2025-09-24 15:19:45.130] LOG - 20:19:45.085Z websocket opened
+[2025-09-24 15:19:45.327] LOG - 20:19:45.326Z loadAppLevelPlugins:  [object Object]
+[2025-09-24 15:19:45.327] LOG - 20:19:45.326Z loadAppLevelPlugins: 
+[2025-09-24 15:19:46.074] LOG - 20:19:46.073Z jailing is in progress
+[2025-09-24 15:19:46.075] LOG - 20:19:46.073Z jailing is in progress
+[2025-09-24 15:19:46.217] LOG - 20:19:46.216Z pending jailing done. next starts
+[2025-09-24 15:19:46.218] LOG - 20:19:46.216Z pending jailing done. next starts
+[2025-09-24 15:19:47.158] LOG - 20:19:47.157Z created chart 1
+[2025-09-24 15:19:47.392] LOG - 20:19:47.390Z updating the shared isolation
+[2025-09-24 15:19:47.392] LOG - 20:19:47.390Z updating the shared isolation
+[2025-09-24 15:19:47.406] LOG - 20:19:47.404Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-24 15:19:47.406] LOG - 20:19:47.404Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-24 15:19:47.407] LOG - 20:19:47.405Z mdMgApi open
+[2025-09-24 15:19:47.407] LOG - 20:19:47.405Z mdMgApi open
+[2025-09-24 15:19:51.588] LOG - 20:19:51.586Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-24 15:19:51.589] LOG - 20:19:51.586Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-24 15:19:51.589] LOG - 20:19:51.587Z Creating UI...
+[2025-09-24 15:19:51.589] LOG - 20:19:51.587Z Creating UI...
+[2025-09-24 15:19:51.590] LOG - 20:19:51.588Z Creating UI
+[2025-09-24 15:19:51.590] LOG - 20:19:51.588Z Creating UI
+[2025-09-24 15:19:51.590] LOG - 20:19:51.588Z Stored values: TP=60, SL=20, Qty=10, Tick=0.25, Symbol=NQ
+[2025-09-24 15:19:51.590] LOG - 20:19:51.588Z Stored values: TP=60, SL=20, Qty=10, Tick=0.25, Symbol=NQ
+[2025-09-24 15:19:51.591] LOG - 20:19:51.590Z UI container added to DOM
+[2025-09-24 15:19:51.591] LOG - 20:19:51.590Z UI container added to DOM
+[2025-09-24 15:19:51.592] LOG - 20:19:51.590Z Setting up UI event handlers
+[2025-09-24 15:19:51.593] LOG - 20:19:51.590Z Setting up UI event handlers
+[2025-09-24 15:19:51.593] LOG - 20:19:51.590Z Setting up persistent settings
+[2025-09-24 15:19:51.594] LOG - 20:19:51.590Z Setting up persistent settings
+[2025-09-24 15:19:51.595] LOG - 20:19:51.590Z Setting up drag functionality
+[2025-09-24 15:19:51.595] LOG - 20:19:51.590Z Setting up drag functionality
+[2025-09-24 15:19:51.596] LOG - 20:19:51.590Z Setting up trade buttons
+[2025-09-24 15:19:51.597] LOG - 20:19:51.590Z Setting up trade buttons
+[2025-09-24 15:19:51.597] LOG - 20:19:51.590Z UI creation complete
+[2025-09-24 15:19:51.598] LOG - 20:19:51.590Z UI creation complete
+[2025-09-24 15:19:51.599] LOG - 20:19:51.590Z Creating example front-quarter symbol
+[2025-09-24 15:19:51.599] LOG - 20:19:51.590Z Creating example front-quarter symbol
+[2025-09-24 15:19:51.600] LOG - 20:19:51.591Z getQuarterlyCode called with date: 2025-09-24T20:19:51.591Z
+[2025-09-24 15:19:51.600] LOG - 20:19:51.591Z getQuarterlyCode called with date: 2025-09-24T20:19:51.591Z
+[2025-09-24 15:19:51.601] LOG - 20:19:51.591Z Current month index: 8
+[2025-09-24 15:19:51.602] LOG - 20:19:51.591Z Current month index: 8
+[2025-09-24 15:19:51.603] LOG - 20:19:51.591Z Starting calculation with year=2025, month=8
+[2025-09-24 15:19:51.603] LOG - 20:19:51.591Z Starting calculation with year=2025, month=8
+[2025-09-24 15:19:51.604] LOG - 20:19:51.591Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-24 15:19:51.605] LOG - 20:19:51.591Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-24 15:19:51.605] LOG - 20:19:51.591Z Example front-quarter symbol created: NQZ5
+[2025-09-24 15:19:51.606] LOG - 20:19:51.591Z Example front-quarter symbol created: NQZ5
+[2025-09-24 15:19:51.606] LOG - 20:19:51.596Z Auto Risk Management: Running initial risk assessment...
+[2025-09-24 15:19:51.607] LOG - 20:19:51.596Z Auto Risk Management: Running initial risk assessment...
+[2025-09-24 15:19:51.607] LOG - 20:19:51.598Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-24 15:19:51.608] LOG - 20:19:51.598Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-24 15:19:51.609] LOG - 20:19:51.598Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-24 15:19:51.609] LOG - 20:19:51.598Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-24 15:19:51.609] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-24 15:19:51.609] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-24 15:19:51.609] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-24 15:19:51.609] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-24 15:19:51.610] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-24 15:19:51.611] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-24 15:19:51.611] LOG - 20:19:51.599Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:51.612] LOG - 20:19:51.599Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:51.612] LOG - 20:19:51.599Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:51.613] LOG - 20:19:51.599Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:51.613] LOG - 20:19:51.599Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:51.613] LOG - 20:19:51.599Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:51.613] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-24 15:19:51.613] LOG - 20:19:51.599Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-24 15:19:51.613] ERROR - 20:19:51.599Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-24 15:19:51.613] ERROR - 20:19:51.599Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-24 15:19:51.634] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-24 15:19:51.635] LOG - 20:19:51.622Z Auto Risk Management: Initial risk assessment completed
+[2025-09-24 15:19:51.635] LOG - 20:19:51.622Z Auto Risk Management: Initial risk assessment completed
+[2025-09-24 15:19:52.626] LOG - 20:19:52.625Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:52.627] LOG - 20:19:52.625Z [analyzePhase] resetting phaseData
+[2025-09-24 15:19:52.629] LOG - 20:19:52.625Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:52.630] LOG - 20:19:52.625Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-24 15:19:52.630] LOG - 20:19:52.625Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:52.630] LOG - 20:19:52.625Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-24 15:19:52.630] WARNING - 20:19:52.626Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/4418.33639a7d.js:2:4608573),    at https://cdn.tradovate.com/tradovate/scripts/4418.33639a7d.js:2:3542342
+[2025-09-24 15:19:52.630] WARNING - 20:19:52.626Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-24 15:19:52.640] LOG - 20:19:52.639Z Executing initial risk management assessment...
+[2025-09-24 15:19:52.641] LOG - 20:19:52.639Z Executing initial risk management assessment...
+[2025-09-24 15:19:52.642] ERROR - 20:19:52.639Z getTableData function not found
+[2025-09-24 15:19:52.643] ERROR - 20:19:52.639Z getTableData function not found
+[2025-09-24 15:19:52.644] ERROR - 20:19:52.640Z updateUserColumnPhaseStatus function not found
+[2025-09-24 15:19:52.645] ERROR - 20:19:52.640Z updateUserColumnPhaseStatus function not found
+[2025-09-24 15:19:52.646] ERROR - 20:19:52.640Z performAccountActions function not found
+[2025-09-24 15:19:52.647] ERROR - 20:19:52.640Z performAccountActions function not found
+[2025-09-24 15:19:52.648] LOG - 20:19:52.640Z Risk management assessment completed
+[2025-09-24 15:19:52.648] LOG - 20:19:52.640Z Risk management assessment completed
+[2025-09-24 15:20:26.277] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-24 15:20:43.336] INFO - 20:20:43.327Z time stats. avg diff: -86, min: -86, max: -86, roundtrip: 28 msec, #1
+[2025-09-24 15:20:43.336] INFO - 20:20:43.327Z time stats. avg diff: -86, min: -86, max: -86, roundtrip: 28 msec, #1
+[2025-09-24 15:21:45.053] LOG - 20:21:45.052Z WebGL:  {"geometries":63,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:23:45.058] LOG - 20:23:45.052Z WebGL:  {"geometries":63,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:25:45.055] LOG - 20:25:45.053Z WebGL:  {"geometries":62,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:27:45.056] LOG - 20:27:45.054Z WebGL:  {"geometries":63,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-24 15:28:54.556] INFO - 20:28:54.554Z visibilitychange: hidden, gd: 1000
+[2025-09-24 15:28:54.556] INFO - 20:28:54.554Z visibilitychange: hidden, gd: 1000
