@@ -168,8 +168,8 @@ def execute_trade():
         enable_sl = data.get('enable_sl', True)
         
         # Only get TP/SL values if they are enabled
-        tp_ticks = data.get('tp_ticks', 60) if enable_tp else 0
-        sl_ticks = data.get('sl_ticks', 20) if enable_sl else 0
+        tp_ticks = data.get('tp_ticks', 53) if enable_tp else 0
+        sl_ticks = data.get('sl_ticks', 15) if enable_sl else 0
         
         # Ensure tp_ticks and sl_ticks are integers
         tp_ticks = int(tp_ticks) if tp_ticks else 0

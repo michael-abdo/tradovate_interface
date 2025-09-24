@@ -398,3 +398,7 @@
 [2025-09-24 15:13:01.714] LOG - 20:13:01.709Z Quantity input changed to: 10
 [2025-09-24 15:13:01.714] LOG - 20:13:01.709Z Quantity input changed to: 10
 [2025-09-24 15:13:01.714] LOG - 20:13:01.709Z Updated bracket trade quantity to 10
+[2025-09-24 15:13:51.667] INFO - 20:13:51.665Z time stats. avg diff: -90, min: -90, max: -90, roundtrip: 23 msec, #1
+[2025-09-24 15:13:51.669] INFO - 20:13:51.665Z time stats. avg diff: -90, min: -90, max: -90, roundtrip: 23 msec, #1
+[2025-09-24 15:14:02.541] LOG - 20:14:02.537Z timeViewChanged [object Object]
+[2025-09-24 15:14:02.541] LOG - 20:14:02.537Z timeViewChanged
