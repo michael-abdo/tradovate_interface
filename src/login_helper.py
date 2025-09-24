@@ -6,7 +6,7 @@ import os
 import sys
 from src.auto_login import inject_login_script, disable_alerts
 
-def login_to_existing_chrome(port=9222, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
+def login_to_existing_chrome(port=9223, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
     """
     Login to Tradovate on an existing Chrome instance running with remote debugging.
     
@@ -172,7 +172,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="Login to Tradovate via Chrome DevTools Protocol")
-    parser.add_argument("--port", type=int, default=9222, help="Chrome debugging port")
+    parser.add_argument("--port", type=int, default=9223, help="Chrome debugging port")
     parser.add_argument("--username", help="Tradovate username (optional, will use credentials.json if not provided)")
     parser.add_argument("--password", help="Tradovate password (optional)")
     args = parser.parse_args()

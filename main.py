@@ -95,7 +95,7 @@ def main():
         "login-helper", 
         help="Connect to existing Chrome instance (equivalent to login_helper_launcher.py)"
     )
-    login_helper_parser.add_argument("--port", type=int, default=9222, help="Chrome debugging port")
+    login_helper_parser.add_argument("--port", type=int, default=9223, help="Chrome debugging port")
     
     # Chrome logger command
     chrome_logger_parser = subparsers.add_parser(
