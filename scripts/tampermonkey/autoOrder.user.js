@@ -262,7 +262,9 @@
             }
 
             // Update the symbol in Tradovate's interface
-            updateSymbol('.search-box--input', normalizedSymbol);
+            // FIXED: Use more specific selector for order ticket instead of market analyzer
+            // Old selector '.search-box--input' was too generic and hit market analyzer first
+            updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
         });
 
         document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
@@ -597,14 +599,43 @@
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);
-            const inputs = document.querySelectorAll(selector);
-            console.log(`Found ${inputs.length} matching inputs`);
-            const input = inputs[1] || inputs[0];
+            let inputs = document.querySelectorAll(selector);
+            console.log(`Found ${inputs.length} matching inputs with selector: ${selector}`);
+            
+            // If no inputs found with primary selector, try fallback selectors
+            if (inputs.length === 0) {
+                const fallbackSelectors = [
+                    '.trading-ticket input[type="text"]',  // First text input in trading ticket
+                    '.order-entry .search-box--input',      // Order entry search box
+                    '.order-ticket .search-box--input',     // Order ticket search box  
+                    '.search-box--input'                    // Generic fallback (old behavior)
+                ];
+                
+                for (const fallbackSelector of fallbackSelectors) {
+                    inputs = document.querySelectorAll(fallbackSelector);
+                    if (inputs.length > 0) {
+                        console.log(`Using fallback selector: ${fallbackSelector}, found ${inputs.length} inputs`);
+                        break;
+                    }
+                }
+            }
+            
+            // Select the appropriate input - prefer first one now since we're using specific selectors
+            const input = inputs[0] || inputs[1];  // Changed order - first is now preferred
             if (!input) {
-                console.error('No matching input elements found!');
+                console.error('No matching input elements found with any selector!');
+                console.error('Tried selectors:', selector, 'and fallbacks');
                 return;
             }
+            
+            // Log which element we're updating for debugging
             console.log('Selected input:', input);
+            console.log('Input location:', {
+                inTradingTicket: !!input.closest('.trading-ticket'),
+                inMarketAnalyzer: !!input.closest('.market-analyzer, .market-watchlist'),
+                parentClasses: input.parentElement?.className,
+                placeholder: input.placeholder
+            });
 
             const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
             const fireKey = type =>
