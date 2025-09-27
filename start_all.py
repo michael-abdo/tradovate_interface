@@ -25,6 +25,7 @@ sys.path.insert(0, project_root)
 # Global variables to track resources for proper cleanup
 auto_login_process = None
 flask_process = None  # Track Flask dashboard process for cleanup
+dashboard_chrome_process = None  # Track dashboard Chrome window process for cleanup
 chrome_processes = []
 chrome_termination_lock = threading.Lock()
 log_directory = None
@@ -173,7 +174,7 @@ def run_auto_login():
 
 def run_dashboard():
     """Run the dashboard process"""
-    global flask_process
+    global flask_process, dashboard_chrome_process
     
     # Run Flask dashboard as a separate process for proper shutdown control
     print("Starting dashboard server as separate process...")
@@ -229,7 +230,12 @@ def run_dashboard():
         
         # Try running without suppressing output to see errors
         process = subprocess.Popen(chrome_cmd)
+        dashboard_chrome_process = process  # Track for cleanup
         print(f"Dashboard process started with PID: {process.pid}")
+        
+        # Add dashboard Chrome process to cleanup list
+        chrome_processes.append(process.pid)
+        print(f"Added dashboard Chrome process (PID: {process.pid}) to cleanup list")
         
         # Check if process is still running after a brief moment
         time.sleep(0.5)
@@ -297,7 +303,7 @@ def cleanup_chrome_instances():
     Terminate Chrome instances on ports 9223+ only (port 9222 is protected)
     This function will be called by both signal handlers and atexit
     """
-    global chrome_processes, chrome_termination_lock, flask_process
+    global chrome_processes, chrome_termination_lock, flask_process, dashboard_chrome_process
     
     with chrome_termination_lock:
         # First clean up Flask dashboard process
@@ -318,6 +324,22 @@ def cleanup_chrome_instances():
         
         # Then clean up ChromeLoggers before terminating Chrome
         cleanup_chrome_loggers()
+        
+        # Also try to gracefully terminate dashboard Chrome window if it exists
+        if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
+            try:
+                print("Terminating dashboard Chrome window...")
+                dashboard_chrome_process.terminate()
+                # Give it a moment to terminate gracefully
+                try:
+                    dashboard_chrome_process.wait(timeout=3)
+                    print("Dashboard Chrome window terminated gracefully")
+                except subprocess.TimeoutExpired:
+                    print("Force killing dashboard Chrome window...")
+                    dashboard_chrome_process.kill()
+                    dashboard_chrome_process.wait()
+            except Exception as e:
+                print(f"Error terminating dashboard Chrome window: {e}")
         
         # Check if we've already cleaned up
         if not chrome_processes:
