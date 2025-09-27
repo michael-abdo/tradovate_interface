@@ -593,9 +593,10 @@
         return null;
     }
     
-    console.log('Creating UI...');
-    createUI();
-    console.log('UI creation complete');
+    // Initialize the UI when the page loads - COMMENTED OUT to disable floating popup
+    // console.log('Creating UI...');
+    // createUI();
+    // console.log('UI creation complete');
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);
