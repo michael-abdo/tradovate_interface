@@ -28,6 +28,7 @@ chrome_processes = []
 chrome_termination_lock = threading.Lock()
 log_directory = None
 chrome_loggers = []  # Track ChromeLogger instances for cleanup
+flask_process = None  # Track Flask dashboard process for cleanup
 
 def create_log_directory():
     """Create timestamped log directory for this session"""
@@ -173,16 +174,18 @@ def run_auto_login():
 
 def run_dashboard():
     """Run the dashboard process"""
-    from src.dashboard import run_flask_dashboard
+    global flask_process
     
-    # Start dashboard in a thread so we can open the window after it's running
-    def start_flask():
-        print("Starting dashboard server...")
-        run_flask_dashboard()
-    
-    dashboard_thread = threading.Thread(target=start_flask)
-    dashboard_thread.daemon = True
-    dashboard_thread.start()
+    # Run Flask dashboard as a separate process for proper shutdown control
+    print("Starting dashboard server as separate process...")
+    flask_process = subprocess.Popen(
+        [sys.executable, "-c", 
+         "from src.dashboard import run_flask_dashboard; run_flask_dashboard()"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True
+    )
+    print(f"Dashboard server started (PID: {flask_process.pid})")
     
     # Wait for Flask to start
     print("Waiting for dashboard server to start...")
@@ -241,8 +244,12 @@ def run_dashboard():
         import traceback
         traceback.print_exc()
     
-    # Keep the main thread alive
-    dashboard_thread.join()
+    # Keep the main thread alive - wait for Flask process
+    try:
+        flask_process.wait()
+    except KeyboardInterrupt:
+        print("Received interrupt signal, shutting down...")
+        cleanup_chrome_instances()
 
 def collect_chrome_processes():
     """Find Chrome processes with remote-debugging-port >= 9223 and track them"""
@@ -436,10 +443,26 @@ def cleanup_chrome_instances():
     Terminate Chrome instances on ports 9223+ only (port 9222 is protected)
     This function will be called by both signal handlers and atexit
     """
-    global chrome_processes, chrome_termination_lock
+    global chrome_processes, chrome_termination_lock, flask_process
     
     with chrome_termination_lock:
-        # First clean up ChromeLoggers before terminating Chrome
+        # First clean up Flask dashboard process
+        if flask_process and flask_process.poll() is None:
+            try:
+                print("Stopping Flask dashboard server...")
+                flask_process.terminate()
+                # Wait for graceful termination
+                try:
+                    flask_process.wait(timeout=5)
+                    print("Flask dashboard stopped gracefully")
+                except subprocess.TimeoutExpired:
+                    print("Force killing Flask dashboard...")
+                    flask_process.kill()
+                    flask_process.wait()
+            except Exception as e:
+                print(f"Error stopping Flask dashboard: {e}")
+        
+        # Then clean up ChromeLoggers before terminating Chrome
         cleanup_chrome_loggers()
         
         # Check if we've already cleaned up
