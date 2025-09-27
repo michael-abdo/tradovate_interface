@@ -1007,13 +1007,15 @@
                 <span id="cooldownTimer" style="font-size: 24px; color: #ff3b30; font-weight: bold;">Please wait: 10 seconds</span><br><br>
                 
                 After the cooldown, if you truly believe this trade serves your purpose, type:<br>
-                <strong>"Yes, I am 100% confident this will help me take care of him sooner"</strong>
+                <strong style="user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;" 
+                        ondragstart="return false" onselectstart="return false">"Yes, I am 100% confident this will help me take care of him sooner"</strong>
             </p>
             <input type="text" 
                    id="lotProtectionConfirmInput" 
                    class="lot-protection-input" 
                    placeholder="Type confirmation phrase here"
-                   autocomplete="off">
+                   autocomplete="off"
+                   spellcheck="false">
             <div class="lot-protection-buttons">
                 <button class="lot-protection-cancel" id="lotProtectionCancelBtn">No, save me from myself</button>
                 <button class="lot-protection-confirm" id="lotProtectionConfirmBtn" disabled>Confirm Trade</button>
@@ -2295,6 +2297,32 @@
                 const inputValue = this.value.trim().toLowerCase();
                 const expectedPhrase = "yes, i am 100% confident this will help me take care of him sooner";
                 confirmBtn.disabled = inputValue !== expectedPhrase;
+            });
+            
+            // Anti-paste and anti-shortcut protection
+            confirmInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                console.log('Paste blocked - you must type the phrase manually');
+                return false;
+            });
+            
+            confirmInput.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            confirmInput.addEventListener('drop', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            confirmInput.addEventListener('keydown', function(e) {
+                // Block Ctrl+V, Cmd+V, Ctrl+A, Cmd+A
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V' || e.key === 'a' || e.key === 'A')) {
+                    e.preventDefault();
+                    console.log('Keyboard shortcut blocked - you must type manually');
+                    return false;
+                }
             });
             
             // Handle confirm button click
