@@ -998,9 +998,12 @@ def main():
             
         logger.info(f"Found {len(credentials)} credential pair(s)")
         
-        # Make sure any existing Chrome instances are stopped
-        subprocess.run(["pkill", "-f", f"remote-debugging-port={BASE_DEBUGGING_PORT}"],
-                      capture_output=True)
+        # Make sure any existing Chrome instances on our managed ports are stopped
+        # Kill Chrome instances on ports 9223, 9224, 9225, etc.
+        for i in range(10):  # Support up to 10 instances
+            port = BASE_DEBUGGING_PORT + i
+            subprocess.run(["pkill", "-f", f"remote-debugging-port={port}"],
+                          capture_output=True)
         
         # Start Chrome instances for each credential pair simultaneously using threads
         threads = []

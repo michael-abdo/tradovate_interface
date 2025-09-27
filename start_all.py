@@ -590,11 +590,14 @@ def main():
         # Monitor auto_login output for cleanup status file path
         def monitor_auto_login_output():
             global cleanup_status_file
-            for line in auto_login_process.stdout:
-                print(f"[auto_login] {line.rstrip()}")
-                if line.startswith("CLEANUP_STATUS_FILE:"):
-                    cleanup_status_file = line.split(":", 1)[1].strip()
-                    print(f"Detected cleanup status file: {cleanup_status_file}")
+            try:
+                for line in auto_login_process.stdout:
+                    print(f"[auto_login] {line.rstrip()}")
+                    if line.startswith("CLEANUP_STATUS_FILE:"):
+                        cleanup_status_file = line.split(":", 1)[1].strip()
+                        print(f"Detected cleanup status file: {cleanup_status_file}")
+            except Exception as e:
+                print(f"Error in output monitor: {e}")
         
         output_monitor = threading.Thread(target=monitor_auto_login_output, daemon=True)
         output_monitor.start()
