@@ -585,7 +585,7 @@ def main():
             stderr=subprocess.STDOUT,
             text=True
         )
-        print(f"Auto-login started (PID: {auto_login_process.pid}")
+        print(f"Auto-login started (PID: {auto_login_process.pid})")
         
         # Monitor auto_login output for cleanup status file path
         def monitor_auto_login_output():
