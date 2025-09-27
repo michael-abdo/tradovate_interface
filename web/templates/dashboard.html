@@ -993,16 +993,21 @@
     <div id="lotProtectionModal" class="lot-protection-modal">
         <div class="lot-protection-content">
             <span class="lot-protection-close">&times;</span>
-            <h2 class="lot-protection-warning">⚠️ HIGH RISK TRADE ALERT ⚠️</h2>
+            <h2 class="lot-protection-warning">⚠️ STOP - THINK OF HIM ⚠️</h2>
             <img src="{{ url_for('static', filename='images/protection-reminder.jpeg') }}" 
                  alt="Protection Reminder" 
                  class="lot-protection-image">
             <p class="lot-protection-message">
-                You are about to place a trade with <span id="lotQtyDisplay"></span> contracts.<br>
-                This is a large position size that carries significant risk.<br><br>
-                To allow <strong>one trade</strong> over 5 contracts, please type:<br>
-                <strong>"Yes, I am 100% confident this will help me take care of him sooner"</strong><br><br>
-                After confirming, click the Buy or Sell button to execute your trade.
+                You're about to risk <span id="lotQtyDisplay" style="color: #ff3b30; font-weight: bold;"></span> contracts.<br>
+                <span style="font-size: 20px; color: #ff9500;">Is this revenge trading? Are you trying to "make it back"?</span><br><br>
+                
+                Remember: <strong>He needs you to be here tomorrow.</strong><br>
+                This isn't just about money - it's about being able to care for him.<br><br>
+                
+                <span id="cooldownTimer" style="font-size: 24px; color: #ff3b30; font-weight: bold;">Please wait: 10 seconds</span><br><br>
+                
+                After the cooldown, if you truly believe this trade serves your purpose, type:<br>
+                <strong>"Yes, I am 100% confident this will help me take care of him sooner"</strong>
             </p>
             <input type="text" 
                    id="lotProtectionConfirmInput" 
@@ -1010,7 +1015,7 @@
                    placeholder="Type confirmation phrase here"
                    autocomplete="off">
             <div class="lot-protection-buttons">
-                <button class="lot-protection-cancel" id="lotProtectionCancelBtn">Cancel Trade</button>
+                <button class="lot-protection-cancel" id="lotProtectionCancelBtn">No, save me from myself</button>
                 <button class="lot-protection-confirm" id="lotProtectionConfirmBtn" disabled>Confirm Trade</button>
             </div>
         </div>
@@ -2260,6 +2265,7 @@
             // Reset modal state
             confirmInput.value = '';
             confirmBtn.disabled = true;
+            confirmInput.disabled = true; // Disable input during cooldown
             
             // Set the quantity display
             qtyDisplay.textContent = qty;
@@ -2267,8 +2273,22 @@
             // Show modal
             modal.style.display = 'block';
             
-            // Focus the input
-            setTimeout(() => confirmInput.focus(), 100);
+            // Start 10-second cooldown
+            let cooldownSeconds = 10;
+            const cooldownTimer = document.getElementById('cooldownTimer');
+            
+            const cooldownInterval = setInterval(() => {
+                cooldownSeconds--;
+                if (cooldownSeconds > 0) {
+                    cooldownTimer.textContent = `Please wait: ${cooldownSeconds} seconds`;
+                } else {
+                    clearInterval(cooldownInterval);
+                    cooldownTimer.textContent = 'You may now type the confirmation phrase';
+                    cooldownTimer.style.color = '#4cd964';
+                    confirmInput.disabled = false;
+                    confirmInput.focus();
+                }
+            }, 1000);
             
             // Enable confirm button when correct phrase is typed
             confirmInput.addEventListener('input', function() {
