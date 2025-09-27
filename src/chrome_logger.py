@@ -387,7 +387,14 @@ class ChromeLogger:
     def _on_console_api(self, **kwargs):
         """Handle Runtime.consoleAPICalled event"""
         args = kwargs.get('args', [])
-        message = ' '.join([arg.get('value', str(arg)) for arg in args if 'value' in arg])
+        # Fix: Ensure all values are properly converted to strings before joining
+        message_parts = []
+        for arg in args:
+            if 'value' in arg:
+                value = arg['value']
+                # Convert all types to string safely
+                message_parts.append(str(value))
+        message = ' '.join(message_parts)
         console_type = kwargs.get('type', 'log').upper()
         
         log_entry = {
