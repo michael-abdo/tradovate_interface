@@ -527,35 +527,29 @@ def force_shutdown():
     print("Graceful shutdown timeout exceeded, force killing all processes...")
     
     try:
-        # Kill auto_login process immediately
-        if auto_login_process and auto_login_process.poll() is None:
-            try:
-                print(f"Force killing auto_login process (PID: {auto_login_process.pid})...")
-                auto_login_process.kill()
-                auto_login_process.wait(timeout=1)
-                print("Auto_login process killed")
-            except Exception as e:
-                print(f"Error force killing auto_login: {e}")
+        # Try SIGTERM first (graceful), then SIGKILL (force) - best practice escalation
+        processes_to_kill = [
+            ("auto_login", auto_login_process),
+            ("Flask", flask_process), 
+            ("dashboard Chrome", dashboard_chrome_process)
+        ]
         
-        # Kill Flask process immediately
-        if flask_process and flask_process.poll() is None:
-            try:
-                print(f"Force killing Flask process (PID: {flask_process.pid})...")
-                flask_process.kill()
-                flask_process.wait(timeout=1)
-                print("Flask process killed")
-            except Exception as e:
-                print(f"Error force killing Flask: {e}")
-        
-        # Kill dashboard Chrome immediately
-        if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
-            try:
-                print(f"Force killing dashboard Chrome (PID: {dashboard_chrome_process.pid})...")
-                dashboard_chrome_process.kill()
-                dashboard_chrome_process.wait(timeout=1)
-                print("Dashboard Chrome killed")
-            except Exception as e:
-                print(f"Error force killing dashboard Chrome: {e}")
+        for name, process in processes_to_kill:
+            if process and process.poll() is None:
+                try:
+                    print(f"Force terminating {name} process (PID: {process.pid})...")
+                    # First try SIGTERM for graceful shutdown
+                    process.terminate()
+                    try:
+                        process.wait(timeout=2)
+                        print(f"{name} process terminated gracefully")
+                    except subprocess.TimeoutExpired:
+                        print(f"{name} process didn't respond to SIGTERM, using SIGKILL...")
+                        process.kill()
+                        process.wait(timeout=1)
+                        print(f"{name} process killed")
+                except Exception as e:
+                    print(f"Error force killing {name}: {e}")
         
         # Force kill all tracked Chrome processes
         killed_count = 0
@@ -578,6 +572,12 @@ def force_shutdown():
         print(f"Error in force shutdown: {e}")
     finally:
         print("Force shutdown exiting...")
+        # Call registered exit functions before immediate exit (best practice)
+        try:
+            import atexit
+            atexit._run_exitfuncs()
+        except Exception as e:
+            print(f"Error running exit functions: {e}")
         os._exit(1)  # Exit immediately without cleanup
 
 def signal_handler(sig, frame):
