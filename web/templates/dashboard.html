@@ -725,6 +725,129 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        /* Lot Protection Modal Styles */
+        .lot-protection-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .lot-protection-content {
+            background-color: #2d2d2d;
+            margin: 5% auto;
+            padding: 30px;
+            border: 2px solid #ff3b30;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(255, 59, 48, 0.5);
+            text-align: center;
+            position: relative;
+        }
+        
+        .lot-protection-close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .lot-protection-close:hover {
+            color: #fff;
+        }
+        
+        .lot-protection-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lot-protection-warning {
+            color: #ff3b30;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .lot-protection-message {
+            color: #e0e0e0;
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .lot-protection-input {
+            width: 80%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .lot-protection-input:focus {
+            outline: none;
+            border-color: #ff9500;
+        }
+        
+        .lot-protection-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .lot-protection-cancel {
+            padding: 12px 30px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .lot-protection-cancel:hover {
+            background-color: #666;
+        }
+        
+        .lot-protection-confirm {
+            padding: 12px 30px;
+            background-color: #ff3b30;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .lot-protection-confirm:hover {
+            background-color: #ff5040;
+        }
+        
+        .lot-protection-confirm:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -862,6 +985,31 @@
             <div class="trade-controls-row" style="margin-top: 10px;">
                 <button id="breakevenBtn" class="breakeven-button" style="flex:1;padding:12px 8px;background:#6c5ce7;color:#fff;border:none;border-radius:4px;font-weight:bold;">Breakeven</button>
                 <button id="reverseBtn" class="reverse-button" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse Position</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lot Protection Modal -->
+    <div id="lotProtectionModal" class="lot-protection-modal">
+        <div class="lot-protection-content">
+            <span class="lot-protection-close">&times;</span>
+            <h2 class="lot-protection-warning">⚠️ HIGH RISK TRADE ALERT ⚠️</h2>
+            <img src="{{ url_for('static', filename='images/protection-reminder.jpeg') }}" 
+                 alt="Protection Reminder" 
+                 class="lot-protection-image">
+            <p class="lot-protection-message">
+                You are about to place a trade with <span id="lotQtyDisplay"></span> contracts.<br>
+                This is a large position size that carries significant risk.<br><br>
+                To proceed, please type: <strong>"I understand the risks"</strong>
+            </p>
+            <input type="text" 
+                   id="lotProtectionConfirmInput" 
+                   class="lot-protection-input" 
+                   placeholder="Type confirmation phrase here"
+                   autocomplete="off">
+            <div class="lot-protection-buttons">
+                <button class="lot-protection-cancel" id="lotProtectionCancelBtn">Cancel Trade</button>
+                <button class="lot-protection-confirm" id="lotProtectionConfirmBtn" disabled>Confirm Trade</button>
             </div>
         </div>
     </div>
@@ -1990,61 +2138,79 @@
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
             
-            // Check if TP/SL checkboxes are checked
-            const enableTP = document.getElementById('tpCheckbox').checked;
-            const enableSL = document.getElementById('slCheckbox').checked;
-            
-            // Get TP/SL values only if enabled
-            const tp = enableTP ? (parseInt(document.getElementById('tpInput').value) || 100) : null;
-            const sl = enableSL ? (parseInt(document.getElementById('slInput').value) || 40) : null;
-            
-            // Prepare the trade parameters
-            const tradeParams = {
-                symbol: symbol,
-                quantity: qty,
-                action: action,
-                tick_size: tickSize,
-                account: 'all', // Trade on all accounts
-                enable_tp: enableTP,
-                enable_sl: enableSL
+            // Function to actually execute the trade
+            const performTrade = () => {
+                // Check if TP/SL checkboxes are checked
+                const enableTP = document.getElementById('tpCheckbox').checked;
+                const enableSL = document.getElementById('slCheckbox').checked;
+                
+                // Get TP/SL values only if enabled
+                const tp = enableTP ? (parseInt(document.getElementById('tpInput').value) || 100) : null;
+                const sl = enableSL ? (parseInt(document.getElementById('slInput').value) || 40) : null;
+                
+                // Prepare the trade parameters
+                const tradeParams = {
+                    symbol: symbol,
+                    quantity: qty,
+                    action: action,
+                    tick_size: tickSize,
+                    account: 'all', // Trade on all accounts
+                    enable_tp: enableTP,
+                    enable_sl: enableSL
+                };
+                
+                // Only add TP/SL if they are enabled
+                if (enableTP) {
+                    tradeParams.tp_ticks = tp;
+                }
+                
+                if (enableSL) {
+                    tradeParams.sl_ticks = sl;
+                }
+                
+                // If entry price is specified, add it to the parameters
+                if (entryPrice) {
+                    tradeParams.entry_price = entryPrice;
+                }
+                
+                // Send API request to execute the trade
+                fetch('/api/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(tradeParams)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    // Show success message
+                    //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                    
+                    // Reset price inputs
+                    document.getElementById('entryPriceInput').value = '';
+                    document.getElementById('tpPriceInput').value = '';
+                    document.getElementById('slPriceInput').value = '';
+                })
+                .catch(error => {
+                    console.error('Error executing trade:', error);
+                    alert('Error placing order. See console for details.');
+                });
             };
             
-            // Only add TP/SL if they are enabled
-            if (enableTP) {
-                tradeParams.tp_ticks = tp;
+            // Check if quantity exceeds lot protection threshold
+            if (qty > 5) {
+                // Show lot protection modal
+                showLotProtectionModal(qty, action, (confirmed) => {
+                    if (confirmed) {
+                        performTrade();
+                    } else {
+                        console.log('Trade cancelled by lot protection');
+                    }
+                });
+            } else {
+                // Execute trade directly for smaller quantities
+                performTrade();
             }
-            
-            if (enableSL) {
-                tradeParams.sl_ticks = sl;
-            }
-            
-            // If entry price is specified, add it to the parameters
-            if (entryPrice) {
-                tradeParams.entry_price = entryPrice;
-            }
-            
-            // Send API request to execute the trade
-            fetch('/api/trade', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(tradeParams)
-            })
-            .then(response => response.json())
-            .then(result => {
-                // Show success message
-                //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
-                
-                // Reset price inputs
-                document.getElementById('entryPriceInput').value = '';
-                document.getElementById('tpPriceInput').value = '';
-                document.getElementById('slPriceInput').value = '';
-            })
-            .catch(error => {
-                console.error('Error executing trade:', error);
-                alert('Error placing order. See console for details.');
-            });
         }
         
         // Execute breakeven action
@@ -2072,6 +2238,76 @@
                 console.error('Error executing breakeven action:', error);
                 alert('Error moving stop losses to breakeven. See console for details.');
             });
+        }
+        
+        // Show lot protection modal for high quantity trades
+        function showLotProtectionModal(qty, action, callback) {
+            const modal = document.getElementById('lotProtectionModal');
+            const qtyDisplay = document.getElementById('lotQtyDisplay');
+            const confirmInput = document.getElementById('lotProtectionConfirmInput');
+            const confirmBtn = document.getElementById('lotProtectionConfirmBtn');
+            const cancelBtn = document.getElementById('lotProtectionCancelBtn');
+            const closeBtn = document.querySelector('.lot-protection-close');
+            
+            // Reset modal state
+            confirmInput.value = '';
+            confirmBtn.disabled = true;
+            
+            // Set the quantity display
+            qtyDisplay.textContent = qty;
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Focus the input
+            setTimeout(() => confirmInput.focus(), 100);
+            
+            // Enable confirm button when correct phrase is typed
+            confirmInput.addEventListener('input', function() {
+                const inputValue = this.value.trim().toLowerCase();
+                const expectedPhrase = "i understand the risks";
+                confirmBtn.disabled = inputValue !== expectedPhrase;
+            });
+            
+            // Handle confirm button click
+            const handleConfirm = () => {
+                modal.style.display = 'none';
+                callback(true); // Proceed with the trade
+            };
+            
+            // Handle cancel
+            const handleCancel = () => {
+                modal.style.display = 'none';
+                callback(false); // Cancel the trade
+            };
+            
+            // Add event listeners (remove old ones first to avoid duplicates)
+            confirmBtn.replaceWith(confirmBtn.cloneNode(true));
+            cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+            closeBtn.replaceWith(closeBtn.cloneNode(true));
+            
+            // Re-get elements after cloning
+            const newConfirmBtn = document.getElementById('lotProtectionConfirmBtn');
+            const newCancelBtn = document.getElementById('lotProtectionCancelBtn');
+            const newCloseBtn = document.querySelector('.lot-protection-close');
+            
+            newConfirmBtn.addEventListener('click', handleConfirm);
+            newCancelBtn.addEventListener('click', handleCancel);
+            newCloseBtn.addEventListener('click', handleCancel);
+            
+            // Handle Enter key in input
+            confirmInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !confirmBtn.disabled) {
+                    handleConfirm();
+                }
+            });
+            
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    handleCancel();
+                }
+            };
         }
         
         // Execute cancel or close action
