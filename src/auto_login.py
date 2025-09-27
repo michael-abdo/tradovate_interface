@@ -217,7 +217,8 @@ class ChromeInstance:
                 const accessButtons = Array.from(document.querySelectorAll("button.tm"))
                     .filter(btn => 
                         btn.textContent.trim() === "Access Simulation" || 
-                        btn.textContent.trim() === "Launch"
+                        btn.textContent.trim() === "Launch" ||
+                        btn.textContent.trim() === "Start Simulated Trading"
                     );
                     
                 if (accessButtons.length > 0) {
@@ -251,7 +252,8 @@ class ChromeInstance:
                     const accessButtons = Array.from(document.querySelectorAll("button.tm"))
                         .filter(btn => 
                             btn.textContent.trim() === "Access Simulation" || 
-                            btn.textContent.trim() === "Launch"
+                            btn.textContent.trim() === "Launch" ||
+                            btn.textContent.trim() === "Start Simulated Trading"
                         );
                         
                     if (accessButtons.length > 0) {
@@ -556,7 +558,8 @@ def inject_login_script(tab, username, password):
             const accessButtons = Array.from(document.querySelectorAll("button.tm"))
                 .filter(btn => 
                     btn.textContent.trim() === "Access Simulation" || 
-                    btn.textContent.trim() === "Launch"
+                    btn.textContent.trim() === "Launch" ||
+                    btn.textContent.trim() === "Start Simulated Trading"
                 );
                 
             if (accessButtons.length > 0) {
