@@ -970,21 +970,24 @@ def main():
     chrome_instances = []
     cleanup_status_file_path = None
     
-    # Set up signal handlers for graceful shutdown
-    def signal_handler(signum, frame):
-        signal_names = {
-            signal.SIGINT: "SIGINT (Ctrl+C)",
-            signal.SIGTERM: "SIGTERM (termination request)"
-        }
-        signal_name = signal_names.get(signum, f"Signal {signum}")
-        logger.info(f"[SIGNAL] Received {signal_name}, initiating graceful shutdown...")
-        logger.info(f"[SIGNAL] Setting global shutdown event to stop all threads")
-        shutdown_event.set()
-        # Don't exit immediately - let the main loop handle cleanup
-    
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
-    logger.info("[SIGNAL] Signal handlers installed for SIGINT and SIGTERM")
+    # Set up signal handlers for graceful shutdown (only in main thread)
+    if threading.current_thread().name == 'MainThread':
+        def signal_handler(signum, frame):
+            signal_names = {
+                signal.SIGINT: "SIGINT (Ctrl+C)",
+                signal.SIGTERM: "SIGTERM (termination request)"
+            }
+            signal_name = signal_names.get(signum, f"Signal {signum}")
+            logger.info(f"[SIGNAL] Received {signal_name}, initiating graceful shutdown...")
+            logger.info(f"[SIGNAL] Setting global shutdown event to stop all threads")
+            shutdown_event.set()
+            # Don't exit immediately - let the main loop handle cleanup
+        
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
+        logger.info("[SIGNAL] Signal handlers installed for SIGINT and SIGTERM")
+    else:
+        logger.info(f"[SIGNAL] Running in thread '{threading.current_thread().name}' - signal handlers not installed (only work in main thread)")
     
     try:
         # Initialize cleanup coordination
