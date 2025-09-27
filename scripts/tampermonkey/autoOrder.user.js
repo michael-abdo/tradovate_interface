@@ -21,8 +21,8 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function createUI() {
-        console.log('Creating UI');
+    function createUI(visible = false) {
+        console.log(`Creating UI (visible=${visible})`);
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '53';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '15';
         const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
@@ -31,96 +31,136 @@
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);
 
         const container = document.createElement('div');
-        container.id = 'bracket-trade-box';
-        Object.assign(container.style, {
-            position: 'fixed',
-            background: '#1e1e1e',
-            border: '1px solid #444',
-            padding: '12px',
-            zIndex: '99999',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
-            borderRadius: '8px',
-            color: '#fff',
-            cursor: 'move',
-            fontFamily: 'sans-serif',
-            textAlign: 'center',
-            width: '200px'
-        });
-
-    // restore box position
-    const savedLeft = localStorage.getItem('bracketTradeBoxLeft');
-    const savedTop  = localStorage.getItem('bracketTradeBoxTop');
-    if (savedLeft && savedTop) { container.style.left = savedLeft; container.style.top = savedTop; }
-    else { container.style.top = '20px'; container.style.right = '20px'; }
-
-        container.innerHTML = `
-        <!-- Header with Symbol -->
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <span style="font-weight:bold;cursor:grab;">⠿ Bracket</span>
-            <input type="text" id="symbolInput" value="${storedSym}"
-                style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" 
-                placeholder="Symbol" />
-        </div>
+        container.id = visible ? 'bracket-trade-box' : 'invisible-trade-inputs';
         
-        <!-- Hidden Tick Size Input -->
-        <div id="tickContainer" style="display:none;margin-bottom:8px;">
-            <label style="display:block;margin-bottom:4px;font-size:11px;">Tick Size</label>
-            <input type="number" id="tickInput" step="0.01" value="${storedTick}"
-                style="width:100%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
-        </div>
+        if (visible) {
+            // Visible UI styling
+            Object.assign(container.style, {
+                position: 'fixed',
+                background: '#1e1e1e',
+                border: '1px solid #444',
+                padding: '12px',
+                zIndex: '99999',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                borderRadius: '8px',
+                color: '#fff',
+                cursor: 'move',
+                fontFamily: 'sans-serif',
+                textAlign: 'center',
+                width: '200px'
+            });
 
-        <!-- Main Controls -->
-        <div id="mainControls">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            // restore box position
+            const savedLeft = localStorage.getItem('bracketTradeBoxLeft');
+            const savedTop  = localStorage.getItem('bracketTradeBoxTop');
+            if (savedLeft && savedTop) { container.style.left = savedLeft; container.style.top = savedTop; }
+            else { container.style.top = '20px'; container.style.right = '20px'; }
+        } else {
+            // Invisible UI - off-screen
+            Object.assign(container.style, {
+                position: 'fixed',
+                top: '-9999px',
+                left: '-9999px',
+                visibility: 'hidden',
+                opacity: '0',
+                pointerEvents: 'none'
+            });
+        }
+
+        // Create different HTML based on visibility
+        if (visible) {
+            // Full visible UI with all controls
+            container.innerHTML = `
+            <!-- Header with Symbol -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span style="font-weight:bold;cursor:grab;">⠿ Bracket</span>
+                <input type="text" id="symbolInput" value="${storedSym}"
+                    style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" 
+                    placeholder="Symbol" />
+            </div>
+            
+            <!-- Hidden Tick Size Input -->
+            <div id="tickContainer" style="display:none;margin-bottom:8px;">
+                <label style="display:block;margin-bottom:4px;font-size:11px;">Tick Size</label>
+                <input type="number" id="tickInput" step="0.01" value="${storedTick}"
+                    style="width:100%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
+            </div>
+
+            <!-- Main Controls -->
+            <div id="mainControls">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <input type="checkbox" id="tpCheckbox" checked />
+                    <div style="display:flex;gap:4px;flex:1;">
+                        <input type="number" id="tpInput" value="${storedTP}"
+                            style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
+                            placeholder="TP Ticks" />
+                        <input type="number" id="tpPriceInput" step="0.01"
+                            style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
+                            placeholder="TP Price" />
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                    <input type="checkbox" id="slCheckbox" checked />
+                    <div style="display:flex;gap:4px;flex:1;">
+                        <input type="number" id="slInput" value="${storedSL}"
+                            style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
+                            placeholder="SL Ticks" />
+                        <input type="number" id="slPriceInput" step="0.01"
+                            style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" 
+                            placeholder="SL Price" />
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">
+                    <button id="buyBtn"  style="padding:6px 10px;background:#2ecc71;color:#fff;border:none;border-radius:4px;font-weight:bold;">Buy</button>
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <input type="number" id="entryPriceInput" placeholder="Entry" step="0.01"
+                            style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
+                        <input type="number" id="qtyInput" value="${storedQty}" min="1"
+                            style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
+                    </div>
+                    <button id="sellBtn" style="padding:6px 10px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Sell</button>
+                </div>
+                <div style="display:flex;gap:10px;margin-bottom:2px;">
+                    <button id="cancelAllBtn" style="flex:1;padding:12px 8px;background:#e6b800;color:#000;border:none;border-radius:4px;font-weight:bold;">Cancel</button>
+                    <button id="closeAllBtn" style="flex:3;padding:12px 8px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Close All</button>
+                </div>
+                <!-- NEW: Breakeven button above Reverse -->
+                <div style="display:flex;gap:10px;margin-top:6px;">
+                    <button id="breakevenBtn" style="flex:1;padding:12px 8px;background:#6c5ce7;color:#fff;border:none;border-radius:4px;font-weight:bold;">Breakeven</button>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:6px;">
+                    <button id="reverseBtn" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse</button>
+                </div>
+            </div>`;
+        } else {
+            // Invisible UI - only essential inputs
+            container.innerHTML = `
+                <input type="text" id="symbolInput" value="${storedSym}" />
+                <input type="number" id="tickInput" value="${storedTick}" />
+                <input type="number" id="tpInput" value="${storedTP}" />
+                <input type="number" id="slInput" value="${storedSL}" />
+                <input type="number" id="qtyInput" value="${storedQty}" />
+                <input type="number" id="entryPriceInput" />
+                <input type="number" id="tpPriceInput" />
+                <input type="number" id="slPriceInput" />
                 <input type="checkbox" id="tpCheckbox" checked />
-                <div style="display:flex;gap:4px;flex:1;">
-                    <input type="number" id="tpInput" value="${storedTP}"
-                        style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
-                        placeholder="TP Ticks" />
-                    <input type="number" id="tpPriceInput" step="0.01"
-                        style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
-                        placeholder="TP Price" />
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <input type="checkbox" id="slCheckbox" checked />
-                <div style="display:flex;gap:4px;flex:1;">
-                    <input type="number" id="slInput" value="${storedSL}"
-                        style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
-                        placeholder="SL Ticks" />
-                    <input type="number" id="slPriceInput" step="0.01"
-                        style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" 
-                        placeholder="SL Price" />
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">
-                <button id="buyBtn"  style="padding:6px 10px;background:#2ecc71;color:#fff;border:none;border-radius:4px;font-weight:bold;">Buy</button>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                    <input type="number" id="entryPriceInput" placeholder="Entry" step="0.01"
-                        style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
-                    <input type="number" id="qtyInput" value="${storedQty}" min="1"
-                        style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
-                </div>
-                <button id="sellBtn" style="padding:6px 10px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Sell</button>
-            </div>
-            <div style="display:flex;gap:10px;margin-bottom:2px;">
-                <button id="cancelAllBtn" style="flex:1;padding:12px 8px;background:#e6b800;color:#000;border:none;border-radius:4px;font-weight:bold;">Cancel</button>
-                <button id="closeAllBtn" style="flex:3;padding:12px 8px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Close All</button>
-            </div>
-            <!-- NEW: Breakeven button above Reverse -->
-            <div style="display:flex;gap:10px;margin-top:6px;">
-                <button id="breakevenBtn" style="flex:1;padding:12px 8px;background:#6c5ce7;color:#fff;border:none;border-radius:4px;font-weight:bold;">Breakeven</button>
-            </div>
-            <div style="display:flex;gap:10px;margin-top:6px;">
-                <button id="reverseBtn" style="flex:1;padding:12px 8px;background:#ff6600;color:#fff;border:none;border-radius:4px;font-weight:bold;">Reverse</button>
-            </div>
-        </div>`;
+            `;
+        }
 
+        // Don't create if it already exists
+        const existingId = visible ? 'bracket-trade-box' : 'invisible-trade-inputs';
+        if (document.getElementById(existingId)) {
+            console.log(`${existingId} already exists, skipping creation`);
+            return;
+        }
+        
         document.body.appendChild(container);
         console.log('UI container added to DOM');
 
-        // --- UI events ---
-        console.log('Setting up UI event handlers');
+        // --- UI events (only for visible UI) ---
+        if (visible) {
+            console.log('Setting up UI event handlers');
         const slInput  = document.getElementById('slInput');
         const tpInput  = document.getElementById('tpInput');
         const qtyInput = document.getElementById('qtyInput');
@@ -340,6 +380,20 @@
                 document.getElementById('slPriceInput').value = '';
                 console.log('Price inputs reset after SELL order');
             });
+        });
+        } // End of visible-only event handlers
+        
+        // Set up localStorage persistence for key inputs (both visible and invisible)
+        console.log('Setting up localStorage persistence');
+        ['symbolInput', 'tpInput', 'slInput', 'qtyInput', 'tickInput'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', (e) => {
+                    const storageKey = 'bracketTrade_' + id.replace('Input', '');
+                    localStorage.setItem(storageKey, e.target.value);
+                    console.log(`Saved ${storageKey} = ${e.target.value}`);
+                });
+            }
         });
     }
 
@@ -593,10 +647,10 @@
         return null;
     }
     
-    // Initialize the UI when the page loads - COMMENTED OUT to disable floating popup
-    // console.log('Creating UI...');
-    // createUI();
-    // console.log('UI creation complete');
+    // Initialize UI (defaults to invisible inputs only - no visible popup)
+    console.log('Creating UI for dashboard trading...');
+    createUI();
+    console.log('UI initialization complete');
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);
