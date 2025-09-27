@@ -316,6 +316,9 @@ class ChromeInstance:
                 
         except Exception as e:
             error_msg = str(e)
+            # Debug: Log the exact error message and type for troubleshooting
+            logger.info(f"DEBUG: Exception type: {type(e).__name__}, message: '{error_msg}', repr: {repr(error_msg)}")
+            
             # Check for WebSocket disconnection - this should terminate the monitor thread
             if ("Connection to remote host was lost" in error_msg or 
                 "WebSocketConnectionClosedException" in error_msg or
@@ -333,9 +336,13 @@ class ChromeInstance:
         
         while not self.stop_event.is_set() and not shutdown_event.is_set() and self.tab:
             try:
+                # Debug: Log loop state
+                logger.info(f"DEBUG: Monitor loop for {self.username} - stop_event: {self.stop_event.is_set()}, shutdown_event: {shutdown_event.is_set()}, tab: {self.tab is not None}")
+                
                 # Use wait with timeout instead of sleep for responsive shutdown
                 if self.stop_event.wait(timeout=self.login_check_interval):
                     # Event was set, exit loop
+                    logger.info(f"DEBUG: stop_event triggered for {self.username}, exiting loop")
                     break
                 
                 # Check global shutdown event
@@ -363,6 +370,7 @@ class ChromeInstance:
         
         # Set the stop event to signal the monitor thread to exit
         self.stop_event.set()
+        logger.info(f"DEBUG: stop_event set for {self.username}, is_set: {self.stop_event.is_set()}")
         
         # Stop Chrome logger if running
         if self.chrome_logger:
