@@ -207,6 +207,16 @@ def execute_trade():
         quantity = data.get('quantity', TRADING_DEFAULTS.get('quantity', 10))
         action = data.get('action', 'Buy')
         tick_size = data.get('tick_size', TRADING_DEFAULTS.get('tick_size', 0.25))
+        order_type = data.get('order_type', 'MARKET')  # Default to MARKET if not specified
+        
+        # Validate order type
+        valid_order_types = ['MARKET', 'LIMIT', 'STOP', 'STOP LIMIT', 'TRL STOP', 'TRL STP LMT']
+        if order_type not in valid_order_types:
+            return jsonify({
+                'status': 'error',
+                'message': f'Invalid order type: {order_type}. Valid types: {", ".join(valid_order_types)}'
+            }), 400
+        
         account_index = data.get('account', 'all')
         
         # Check TP/SL enable flags
@@ -221,7 +231,7 @@ def execute_trade():
         tp_ticks = int(tp_ticks) if tp_ticks else 0
         sl_ticks = int(sl_ticks) if sl_ticks else 0
         
-        print(f"Trade request: {symbol} {action} {quantity} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'}")
+        print(f"Trade request: {symbol} {action} {quantity} OrderType:{order_type} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'}")
         
         # Check if we should execute on all accounts or just one
         if account_index == 'all':
@@ -233,7 +243,8 @@ def execute_trade():
                 action, 
                 tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
                 sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
+                tick_size,
+                order_type  # Pass explicit order type
             )
             
             # Count successful trades
@@ -256,7 +267,8 @@ def execute_trade():
                 action, 
                 tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
                 sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
+                tick_size,
+                order_type  # Pass explicit order type
             )
             
             return jsonify({

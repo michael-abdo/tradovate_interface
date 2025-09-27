@@ -1,0 +1,971 @@
+[2025-09-27 07:24:56.979] LOG - 12:24:56.976Z Starting login process for: zenex3298@gmail.com
+[2025-09-27 07:24:56.980] LOG - 12:24:56.976Z Starting login process for: zenex3298@gmail.com
+[2025-09-27 07:24:56.980] LOG - 12:24:56.977Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-27 07:24:56.980] LOG - 12:24:56.977Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-27 07:24:56.981] LOG - 12:24:56.977Z Login form found, filling credentials...
+[2025-09-27 07:24:56.981] LOG - 12:24:56.977Z Login form found, filling credentials...
+[2025-09-27 07:24:57.105] LOG - 12:24:57.004Z Test element added to DOM
+[2025-09-27 07:24:57.106] LOG - 12:24:57.004Z Test element added to DOM
+[2025-09-27 07:24:57.109] LOG - 12:24:57.107Z All browser alerts and confirmations have been disabled
+[2025-09-27 07:24:57.109] LOG - 12:24:57.107Z All browser alerts and confirmations have been disabled
+[2025-09-27 07:24:57.493] LOG - 12:24:57.492Z Clicking login button...
+[2025-09-27 07:24:57.494] LOG - 12:24:57.492Z Clicking login button...
+[2025-09-27 07:24:57.504] LOG - 12:24:57.501Z authentication starting
+[2025-09-27 07:24:57.504] LOG - 12:24:57.501Z authentication starting
+[2025-09-27 07:24:57.858] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 07:24:57.861] LOG - 12:24:57.841Z Watching for account selection page...
+[2025-09-27 07:24:57.862] LOG - 12:24:57.841Z Watching for account selection page...
+[2025-09-27 07:24:58.066] LOG - 12:24:58.065Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:58 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:58.066] LOG - 12:24:58.065Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:58 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:58.360] INFO - 12:24:58.359Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.363] INFO - 12:24:58.359Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.364] INFO - 12:24:58.359Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.428] INFO - 12:24:58.427Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.428] INFO - 12:24:58.427Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:58.429] INFO - 12:24:58.427Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.429] INFO - 12:24:58.427Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:24:58.844] LOG - 12:24:58.843Z Account selection page detected, clicking button...
+[2025-09-27 07:24:58.844] LOG - 12:24:58.843Z Account selection page detected, clicking button...
+[2025-09-27 07:24:59.010] LOG - 12:24:58.984Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:58 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:59.010] LOG - 12:24:58.984Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:58 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:59.082] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=286655fc-f81c-49e9-898e-f3ee45245df2&bo=2&sid=3660cc809ad411f094ce7fdad7d91748&vid=9abf384092fe11f0b30e9fac449e4642&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-27 07:24:59.083] INFO - 12:24:59.081Z visibilitychange: hidden, gd: 1000
+[2025-09-27 07:24:59.084] INFO - 12:24:59.081Z visibilitychange: hidden, gd: 1000
+[2025-09-27 07:24:59.086] WARNING - 12:24:59.082Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 789 milliseconds.
+[2025-09-27 07:24:59.087] WARNING - 12:24:59.082Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 789 milliseconds.
+[2025-09-27 07:24:59.087] INFO - 12:24:59.082Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:59.087] INFO - 12:24:59.082Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:24:59.434] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.435] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.436] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.437] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.438] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.439] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.440] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.441] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.442] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.444] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.445] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.446] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.447] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.448] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.449] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.450] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.451] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.452] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.453] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.454] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.456] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.457] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.457] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.458] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.459] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.460] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.461] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.462] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.463] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.464] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 07:24:59.464] DEBUG - [bugsnag] Loaded!
+[2025-09-27 07:24:59.464] DEBUG - [bugsnag] Loaded!
+[2025-09-27 07:24:59.464] INFO - Version 3.250926.0 prod production 
+[2025-09-27 07:24:59.464] INFO - Version 3.250926.0 prod production 
+[2025-09-27 07:24:59.464] INFO - Time: Sat Sep 27 2025 07:24:59 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:59.464] INFO - Time:
+[2025-09-27 07:24:59.571] LOG - 12:24:59.569Z Try to restore session
+[2025-09-27 07:24:59.572] LOG - 12:24:59.569Z Try to restore session
+[2025-09-27 07:24:59.572] LOG - 12:24:59.570Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:59 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:59.572] LOG - 12:24:59.570Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 08:44:58 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 07:24:59 GMT-0500 (Central Daylight Time)
+[2025-09-27 07:24:59.577] WARNING - 12:24:59.576Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 07:24:59.578] WARNING - 12:24:59.576Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 07:24:59.584] INFO - 12:24:59.583Z chart cache state: islands=3, bars=2006
+[2025-09-27 07:24:59.585] INFO - 12:24:59.583Z chart cache state: islands=3, bars=2006
+[2025-09-27 07:24:59.585] INFO - 12:24:59.583Z Chart history database initialized
+[2025-09-27 07:24:59.585] INFO - 12:24:59.583Z Chart history database initialized
+[2025-09-27 07:24:59.591] INFO - 12:24:59.590Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 07:24:59.591] INFO - 12:24:59.590Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 07:24:59.592] INFO - 12:24:59.590Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 07:24:59.592] INFO - 12:24:59.590Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 07:25:00.006] INFO - 12:25:00.005Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:25:00.007] INFO - 12:25:00.005Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:25:00.007] INFO - 12:25:00.005Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-27 07:25:00.008] INFO - 12:25:00.005Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-27 07:25:00.071] INFO - 12:25:00.069Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:25:00.071] INFO - 12:25:00.069Z [LaunchDarkly] Closing stream connection
+[2025-09-27 07:25:00.071] INFO - 12:25:00.070Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:25:00.072] INFO - 12:25:00.070Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 07:25:00.122] LOG - 12:25:00.118Z opening https://demo.tradovateapi.com/
+[2025-09-27 07:25:00.123] LOG - 12:25:00.118Z opening https://demo.tradovateapi.com/
+[2025-09-27 07:25:00.126] LOG - 12:25:00.125Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 07:25:00.127] LOG - 12:25:00.125Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 07:25:00.328] LOG - 12:25:00.328Z websocket opened
+[2025-09-27 07:25:00.329] LOG - 12:25:00.328Z websocket opened
+[2025-09-27 07:25:00.516] LOG - 12:25:00.514Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 07:25:00.517] LOG - 12:25:00.514Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 07:25:00.517] LOG - 12:25:00.515Z Connection:  open
+[2025-09-27 07:25:00.517] LOG - 12:25:00.515Z Connection:  open
+[2025-09-27 07:25:01.494] LOG - 12:25:01.493Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 07:25:01.499] LOG - 12:25:01.493Z Canvas size: 853 899 dpp:  2
+[2025-09-27 07:25:01.502] LOG - 12:25:01.501Z Loading App-level Plugins
+[2025-09-27 07:25:01.503] LOG - 12:25:01.501Z Loading App-level Plugins
+[2025-09-27 07:25:01.522] LOG - 12:25:01.511Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 07:25:01.539] LOG - 12:25:01.511Z Canvas size: 853 899 dpp:  2
+[2025-09-27 07:25:01.601] LOG - 12:25:01.554Z websocket opened
+[2025-09-27 07:25:01.602] LOG - 12:25:01.554Z websocket opened
+[2025-09-27 07:25:01.783] LOG - 12:25:01.782Z loadAppLevelPlugins:  [object Object]
+[2025-09-27 07:25:01.783] LOG - 12:25:01.782Z loadAppLevelPlugins: 
+[2025-09-27 07:25:02.517] LOG - 12:25:02.515Z jailing is in progress
+[2025-09-27 07:25:02.518] LOG - 12:25:02.515Z jailing is in progress
+[2025-09-27 07:25:02.730] LOG - 12:25:02.729Z created chart 1
+[2025-09-27 07:25:02.881] LOG - 12:25:02.879Z pending jailing done. next starts
+[2025-09-27 07:25:02.881] LOG - 12:25:02.879Z pending jailing done. next starts
+[2025-09-27 07:25:03.017] LOG - 12:25:03.015Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":608}}
+[2025-09-27 07:25:03.017] LOG - 12:25:03.015Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":608}}
+[2025-09-27 07:25:03.018] LOG - 12:25:03.016Z mdMgApi open
+[2025-09-27 07:25:03.018] LOG - 12:25:03.016Z mdMgApi open
+[2025-09-27 07:25:03.961] LOG - 12:25:03.960Z updating the shared isolation
+[2025-09-27 07:25:03.962] LOG - 12:25:03.960Z updating the shared isolation
+[2025-09-27 07:25:04.096] DEBUG - 12:25:04.096Z Slow prev calc
+[2025-09-27 07:25:04.097] DEBUG - 12:25:04.096Z Slow prev calc
+[2025-09-27 07:25:08.318] LOG - 12:25:08.317Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 07:25:08.319] LOG - 12:25:08.317Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 07:25:08.320] LOG - 12:25:08.318Z Creating invisible inputs instead of full UI...
+[2025-09-27 07:25:08.321] LOG - 12:25:08.318Z Creating invisible inputs instead of full UI...
+[2025-09-27 07:25:08.321] LOG - 12:25:08.318Z Creating invisible input elements for autoTrade...
+[2025-09-27 07:25:08.322] LOG - 12:25:08.318Z Creating invisible input elements for autoTrade...
+[2025-09-27 07:25:08.323] LOG - 12:25:08.318Z Invisible input elements created successfully
+[2025-09-27 07:25:08.323] LOG - 12:25:08.318Z Invisible input elements created successfully
+[2025-09-27 07:25:08.324] LOG - 12:25:08.319Z Invisible input creation complete
+[2025-09-27 07:25:08.324] LOG - 12:25:08.319Z Invisible input creation complete
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z Creating example front-quarter symbol
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z Creating example front-quarter symbol
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z getQuarterlyCode called with date: 2025-09-27T12:25:08.319Z
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z getQuarterlyCode called with date: 2025-09-27T12:25:08.319Z
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z Current month index: 8
+[2025-09-27 07:25:08.325] LOG - 12:25:08.319Z Current month index: 8
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Starting calculation with year=2025, month=8
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Starting calculation with year=2025, month=8
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Example front-quarter symbol created: NQZ5
+[2025-09-27 07:25:08.326] LOG - 12:25:08.319Z Example front-quarter symbol created: NQZ5
+[2025-09-27 07:25:08.327] LOG - 12:25:08.326Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:25:08.327] LOG - 12:25:08.326Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:25:08.328] LOG - 12:25:08.327Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:08.328] LOG - 12:25:08.327Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:08.329] LOG - 12:25:08.327Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:08.330] LOG - 12:25:08.327Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:08.331] LOG - 12:25:08.327Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:08.331] LOG - 12:25:08.327Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:08.332] LOG - 12:25:08.327Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:25:08.333] LOG - 12:25:08.327Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:25:08.334] LOG - 12:25:08.327Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:25:08.335] LOG - 12:25:08.327Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:25:08.336] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 07:25:08.336] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 07:25:08.337] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:25:08.338] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:08.339] LOG - 12:25:08.328Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:08.340] LOG - 12:25:08.328Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:08.340] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:25:08.340] LOG - 12:25:08.328Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:25:08.340] ERROR - 12:25:08.328Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:25:08.340] ERROR - 12:25:08.328Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:25:08.351] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 07:25:08.351] LOG - 12:25:08.339Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:25:08.351] LOG - 12:25:08.339Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:25:09.344] LOG - 12:25:09.341Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:09.345] LOG - 12:25:09.341Z [analyzePhase] resetting phaseData
+[2025-09-27 07:25:09.346] LOG - 12:25:09.341Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:09.346] LOG - 12:25:09.341Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:25:09.346] LOG - 12:25:09.342Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:09.346] LOG - 12:25:09.342Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:25:09.347] WARNING - 12:25:09.342Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:4613725),    at https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:3547494
+[2025-09-27 07:25:09.347] WARNING - 12:25:09.342Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-27 07:25:09.357] LOG - 12:25:09.356Z Executing initial risk management assessment...
+[2025-09-27 07:25:09.359] LOG - 12:25:09.356Z Executing initial risk management assessment...
+[2025-09-27 07:25:09.361] ERROR - 12:25:09.356Z getTableData function not found
+[2025-09-27 07:25:09.362] ERROR - 12:25:09.356Z getTableData function not found
+[2025-09-27 07:25:09.362] ERROR - 12:25:09.357Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:25:09.363] ERROR - 12:25:09.357Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:25:09.364] ERROR - 12:25:09.357Z performAccountActions function not found
+[2025-09-27 07:25:09.364] ERROR - 12:25:09.357Z performAccountActions function not found
+[2025-09-27 07:25:09.365] LOG - 12:25:09.357Z Risk management assessment completed
+[2025-09-27 07:25:09.366] LOG - 12:25:09.357Z Risk management assessment completed
+[2025-09-27 07:25:15.502] LOG - 12:25:15.501Z autoTrade called with: symbol=NQ, qty=1, action=Sell, TP=100, SL=40, tickSize=0.25
+[2025-09-27 07:25:15.503] LOG - 12:25:15.501Z autoTrade called with: symbol=NQ, qty=1, action=Sell, TP=100, SL=40, tickSize=0.25
+[2025-09-27 07:25:15.504] LOG - 12:25:15.502Z Using symbol: NQ
+[2025-09-27 07:25:15.504] LOG - 12:25:15.502Z Using symbol: NQ
+[2025-09-27 07:25:15.505] LOG - 12:25:15.502Z Root symbol: NQ
+[2025-09-27 07:25:15.506] LOG - 12:25:15.502Z Root symbol: NQ
+[2025-09-27 07:25:15.506] LOG - 12:25:15.502Z Using tick size 0.25 (from dictionary)
+[2025-09-27 07:25:15.507] LOG - 12:25:15.502Z Using tick size 0.25 (from dictionary)
+[2025-09-27 07:25:15.508] LOG - 12:25:15.502Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-27 07:25:15.509] LOG - 12:25:15.502Z Using SL: 40 ticks, TP: 100 ticks
+[2025-09-27 07:25:15.509] LOG - 12:25:15.502Z Getting market data for NQ
+[2025-09-27 07:25:15.510] LOG - 12:25:15.502Z Getting market data for NQ
+[2025-09-27 07:25:15.511] LOG - 12:25:15.502Z getMarketData called for: "NQ"
+[2025-09-27 07:25:15.511] LOG - 12:25:15.502Z getMarketData called for: "NQ"
+[2025-09-27 07:25:15.512] LOG - 12:25:15.503Z getFrontQuarter called for root: "NQ"
+[2025-09-27 07:25:15.513] LOG - 12:25:15.503Z getFrontQuarter called for root: "NQ"
+[2025-09-27 07:25:15.514] LOG - 12:25:15.503Z getQuarterlyCode called with date: 2025-09-27T12:25:15.503Z
+[2025-09-27 07:25:15.514] LOG - 12:25:15.503Z getQuarterlyCode called with date: 2025-09-27T12:25:15.503Z
+[2025-09-27 07:25:15.515] LOG - 12:25:15.503Z Current month index: 8
+[2025-09-27 07:25:15.515] LOG - 12:25:15.503Z Current month index: 8
+[2025-09-27 07:25:15.516] LOG - 12:25:15.503Z Starting calculation with year=2025, month=8
+[2025-09-27 07:25:15.517] LOG - 12:25:15.503Z Starting calculation with year=2025, month=8
+[2025-09-27 07:25:15.518] LOG - 12:25:15.503Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:15.518] LOG - 12:25:15.503Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:15.519] LOG - 12:25:15.503Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:15.520] LOG - 12:25:15.503Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:25:15.521] LOG - 12:25:15.503Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 07:25:15.521] LOG - 12:25:15.503Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 07:25:15.521] LOG - 12:25:15.503Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Market data: [object Object]
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Market data:
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Market price: NaN (bid price)
+[2025-09-27 07:25:15.522] LOG - 12:25:15.503Z Market price: NaN (bid price)
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z No custom entry price provided, using market order at NaN
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z No custom entry price provided, using market order at NaN
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z Using price precision: 2 decimal places
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z Using price precision: 2 decimal places
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z Calculated SL price: NaN (entry + 40 ticks)
+[2025-09-27 07:25:15.523] LOG - 12:25:15.504Z Calculated SL price: NaN (entry + 40 ticks)
+[2025-09-27 07:25:15.524] LOG - 12:25:15.504Z Calculated TP price: NaN (entry - 100 ticks)
+[2025-09-27 07:25:15.524] LOG - 12:25:15.504Z Calculated TP price: NaN (entry - 100 ticks)
+[2025-09-27 07:25:15.525] LOG - 12:25:15.504Z Trade data prepared: [object Object]
+[2025-09-27 07:25:15.525] LOG - 12:25:15.504Z Trade data prepared:
+[2025-09-27 07:25:15.525] LOG - 12:25:15.504Z Submitting bracket orders
+[2025-09-27 07:25:15.526] LOG - 12:25:15.504Z Submitting bracket orders
+[2025-09-27 07:25:15.526] LOG - 12:25:15.504Z Creating bracket orders with data: [object Object]
+[2025-09-27 07:25:15.526] LOG - 12:25:15.504Z Creating bracket orders with data:
+[2025-09-27 07:25:15.526] LOG - 12:25:15.504Z TP enabled: true, SL enabled: true
+[2025-09-27 07:25:15.526] LOG - 12:25:15.504Z TP enabled: true, SL enabled: true
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Submitting initial MARKET order
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Submitting initial MARKET order
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Setting common order fields
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Setting common order fields
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Setting action to: Sell
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Setting action to: Sell
+[2025-09-27 07:25:15.527] LOG - 12:25:15.505Z Found 9 action labels
+[2025-09-27 07:25:15.528] LOG - 12:25:15.505Z Found 9 action labels
+[2025-09-27 07:25:15.528] LOG - 12:25:15.505Z Clicking Sell label
+[2025-09-27 07:25:15.528] LOG - 12:25:15.505Z Clicking Sell label
+[2025-09-27 07:25:15.528] LOG - 12:25:15.520Z Setting quantity to: 1
+[2025-09-27 07:25:15.528] LOG - 12:25:15.520Z Setting quantity to: 1
+[2025-09-27 07:25:15.528] LOG - 12:25:15.523Z Delaying for 150ms
+[2025-09-27 07:25:15.528] LOG - 12:25:15.523Z Delaying for 150ms
+[2025-09-27 07:25:15.684] LOG - 12:25:15.683Z Delaying for 150ms
+[2025-09-27 07:25:15.684] LOG - 12:25:15.683Z Delaying for 150ms
+[2025-09-27 07:25:15.837] LOG - 12:25:15.836Z Delaying for 250ms
+[2025-09-27 07:25:15.837] LOG - 12:25:15.836Z Delaying for 250ms
+[2025-09-27 07:25:16.103] LOG - 12:25:16.102Z Delaying for 200ms
+[2025-09-27 07:25:16.103] LOG - 12:25:16.102Z Delaying for 200ms
+[2025-09-27 07:25:16.306] LOG - 12:25:16.305Z 
+[2025-09-27 07:25:16.307] LOG - 12:25:16.305Z
+[2025-09-27 07:25:16.307] LOG - 12:25:16.305Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:16.307] LOG - 12:25:16.305Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:16.307] LOG - 12:25:16.305Z Delaying for 500ms
+[2025-09-27 07:25:16.307] LOG - 12:25:16.305Z Delaying for 500ms
+[2025-09-27 07:25:16.809] LOG - 12:25:16.806Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:16.811] LOG - 12:25:16.806Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:16.812] LOG - 12:25:16.806Z Delaying for 200ms
+[2025-09-27 07:25:16.812] LOG - 12:25:16.806Z Delaying for 200ms
+[2025-09-27 07:25:17.009] LOG - 12:25:17.007Z Flipping action to Buy for TP/SL orders
+[2025-09-27 07:25:17.010] LOG - 12:25:17.007Z Flipping action to Buy for TP/SL orders
+[2025-09-27 07:25:17.011] LOG - 12:25:17.008Z Creating take profit order at NaN
+[2025-09-27 07:25:17.013] LOG - 12:25:17.008Z Creating take profit order at NaN
+[2025-09-27 07:25:17.014] LOG - 12:25:17.008Z Setting common order fields
+[2025-09-27 07:25:17.015] LOG - 12:25:17.008Z Setting common order fields
+[2025-09-27 07:25:17.016] LOG - 12:25:17.008Z Setting action to: Buy
+[2025-09-27 07:25:17.017] LOG - 12:25:17.008Z Setting action to: Buy
+[2025-09-27 07:25:17.018] LOG - 12:25:17.008Z Found 9 action labels
+[2025-09-27 07:25:17.018] LOG - 12:25:17.008Z Found 9 action labels
+[2025-09-27 07:25:17.018] LOG - 12:25:17.008Z Clicking Buy label
+[2025-09-27 07:25:17.019] LOG - 12:25:17.008Z Clicking Buy label
+[2025-09-27 07:25:17.021] LOG - 12:25:17.021Z Setting quantity to: 1
+[2025-09-27 07:25:17.022] LOG - 12:25:17.021Z Setting quantity to: 1
+[2025-09-27 07:25:17.023] LOG - 12:25:17.022Z Delaying for 250ms
+[2025-09-27 07:25:17.023] LOG - 12:25:17.022Z Delaying for 250ms
+[2025-09-27 07:25:17.293] LOG - 12:25:17.292Z Delaying for 250ms
+[2025-09-27 07:25:17.293] LOG - 12:25:17.292Z Delaying for 250ms
+[2025-09-27 07:25:17.553] LOG - 12:25:17.552Z Delaying for 250ms
+[2025-09-27 07:25:17.553] LOG - 12:25:17.552Z Delaying for 250ms
+[2025-09-27 07:25:17.813] LOG - 12:25:17.812Z Delaying for 250ms
+[2025-09-27 07:25:17.813] LOG - 12:25:17.812Z Delaying for 250ms
+[2025-09-27 07:25:18.076] LOG - 12:25:18.075Z Delaying for 200ms
+[2025-09-27 07:25:18.078] LOG - 12:25:18.075Z Delaying for 200ms
+[2025-09-27 07:25:18.278] LOG - 12:25:18.275Z 
+[2025-09-27 07:25:18.278] LOG - 12:25:18.275Z
+[2025-09-27 07:25:18.279] LOG - 12:25:18.276Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:18.279] LOG - 12:25:18.276Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:18.279] LOG - 12:25:18.276Z Delaying for 500ms
+[2025-09-27 07:25:18.279] LOG - 12:25:18.276Z Delaying for 500ms
+[2025-09-27 07:25:18.778] LOG - 12:25:18.776Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:18.779] LOG - 12:25:18.776Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:18.779] LOG - 12:25:18.777Z Delaying for 200ms
+[2025-09-27 07:25:18.779] LOG - 12:25:18.777Z Delaying for 200ms
+[2025-09-27 07:25:18.979] LOG - 12:25:18.977Z Creating stop loss order at NaN
+[2025-09-27 07:25:18.980] LOG - 12:25:18.977Z Creating stop loss order at NaN
+[2025-09-27 07:25:18.981] LOG - 12:25:18.978Z Setting common order fields
+[2025-09-27 07:25:18.982] LOG - 12:25:18.978Z Setting common order fields
+[2025-09-27 07:25:18.982] LOG - 12:25:18.978Z Setting action to: Buy
+[2025-09-27 07:25:18.982] LOG - 12:25:18.978Z Setting action to: Buy
+[2025-09-27 07:25:18.982] LOG - 12:25:18.978Z Found 9 action labels
+[2025-09-27 07:25:18.983] LOG - 12:25:18.978Z Found 9 action labels
+[2025-09-27 07:25:18.983] LOG - 12:25:18.978Z Clicking Buy label
+[2025-09-27 07:25:18.983] LOG - 12:25:18.978Z Clicking Buy label
+[2025-09-27 07:25:18.983] LOG - 12:25:18.979Z Setting quantity to: 1
+[2025-09-27 07:25:18.983] LOG - 12:25:18.979Z Setting quantity to: 1
+[2025-09-27 07:25:18.983] LOG - 12:25:18.980Z Delaying for 250ms
+[2025-09-27 07:25:18.983] LOG - 12:25:18.980Z Delaying for 250ms
+[2025-09-27 07:25:19.255] LOG - 12:25:19.254Z Delaying for 250ms
+[2025-09-27 07:25:19.256] LOG - 12:25:19.254Z Delaying for 250ms
+[2025-09-27 07:25:19.515] LOG - 12:25:19.514Z Delaying for 250ms
+[2025-09-27 07:25:19.515] LOG - 12:25:19.514Z Delaying for 250ms
+[2025-09-27 07:25:19.775] LOG - 12:25:19.774Z Delaying for 250ms
+[2025-09-27 07:25:19.775] LOG - 12:25:19.774Z Delaying for 250ms
+[2025-09-27 07:25:20.040] LOG - 12:25:20.038Z Delaying for 200ms
+[2025-09-27 07:25:20.040] LOG - 12:25:20.038Z Delaying for 200ms
+[2025-09-27 07:25:20.242] LOG - 12:25:20.240Z 
+[2025-09-27 07:25:20.243] LOG - 12:25:20.240Z
+[2025-09-27 07:25:20.244] LOG - 12:25:20.241Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:20.244] LOG - 12:25:20.241Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:25:20.244] LOG - 12:25:20.241Z Delaying for 500ms
+[2025-09-27 07:25:20.244] LOG - 12:25:20.241Z Delaying for 500ms
+[2025-09-27 07:25:20.744] LOG - 12:25:20.742Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:20.745] LOG - 12:25:20.742Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:25:20.745] LOG - 12:25:20.743Z Delaying for 200ms
+[2025-09-27 07:25:20.745] LOG - 12:25:20.743Z Delaying for 200ms
+[2025-09-27 07:25:20.945] LOG - 12:25:20.943Z Bracket order creation complete
+[2025-09-27 07:25:20.945] LOG - 12:25:20.943Z Bracket order creation complete
+[2025-09-27 07:25:22.739] LOG - 12:25:22.738Z Trade control updates complete: [object Object]
+[2025-09-27 07:25:22.753] LOG - 12:25:22.738Z Trade control updates complete:
+[2025-09-27 07:25:22.841] LOG - 12:25:22.840Z Trade control updates complete: [object Object]
+[2025-09-27 07:25:22.842] LOG - 12:25:22.840Z Trade control updates complete:
+[2025-09-27 07:25:23.467] LOG - 12:25:23.466Z Trade control updates complete: [object Object]
+[2025-09-27 07:25:23.483] LOG - 12:25:23.466Z Trade control updates complete:
+[2025-09-27 07:25:59.607] INFO - 12:25:59.606Z time stats. avg diff: -53, min: -53, max: -53, roundtrip: 29 msec, #1
+[2025-09-27 07:25:59.608] INFO - 12:25:59.606Z time stats. avg diff: -53, min: -53, max: -53, roundtrip: 29 msec, #1
+[2025-09-27 07:27:01.525] LOG - 12:27:01.524Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:29:01.524] LOG - 12:29:01.521Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:30:04.462] LOG - 12:30:04.460Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:30:04.463] LOG - 12:30:04.460Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:30:04.464] LOG - 12:30:04.460Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:04.465] LOG - 12:30:04.460Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:04.466] LOG - 12:30:04.461Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:04.467] LOG - 12:30:04.461Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:04.468] LOG - 12:30:04.461Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:04.468] LOG - 12:30:04.461Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:04.469] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:30:04.470] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:30:04.470] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:30:04.470] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:30:04.470] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 07:30:04.471] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 07:30:04.471] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:30:04.471] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:30:04.471] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:30:04.471] LOG - 12:30:04.461Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:30:04.471] LOG - 12:30:04.462Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:04.471] LOG - 12:30:04.462Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:30:04.472] LOG - 12:30:04.462Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:30:04.472] ERROR - 12:30:04.462Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:30:04.472] ERROR - 12:30:04.462Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:30:04.476] LOG - 12:30:04.475Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:30:04.476] LOG - 12:30:04.475Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:30:05.477] LOG - 12:30:05.476Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:05.478] LOG - 12:30:05.476Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:05.479] LOG - 12:30:05.476Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:05.479] LOG - 12:30:05.476Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:05.479] LOG - 12:30:05.477Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:05.479] LOG - 12:30:05.477Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:05.482] LOG - 12:30:05.481Z Executing initial risk management assessment...
+[2025-09-27 07:30:05.483] LOG - 12:30:05.481Z Executing initial risk management assessment...
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.481Z getTableData function not found
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.481Z getTableData function not found
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.481Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.481Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.482Z performAccountActions function not found
+[2025-09-27 07:30:05.484] ERROR - 12:30:05.482Z performAccountActions function not found
+[2025-09-27 07:30:05.484] LOG - 12:30:05.482Z Risk management assessment completed
+[2025-09-27 07:30:05.484] LOG - 12:30:05.482Z Risk management assessment completed
+[2025-09-27 07:30:06.513] LOG - 12:30:06.512Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:30:06.515] LOG - 12:30:06.512Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:30:06.516] LOG - 12:30:06.513Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:06.517] LOG - 12:30:06.513Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:06.517] LOG - 12:30:06.513Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:06.519] LOG - 12:30:06.513Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:06.519] LOG - 12:30:06.513Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:06.521] LOG - 12:30:06.513Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:06.523] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:30:06.524] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:30:06.525] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:30:06.526] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:30:06.527] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 07:30:06.527] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 07:30:06.529] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:30:06.529] LOG - 12:30:06.513Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:30:06.529] LOG - 12:30:06.514Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:30:06.529] LOG - 12:30:06.514Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:30:06.529] LOG - 12:30:06.514Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:06.529] LOG - 12:30:06.514Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:06.530] LOG - 12:30:06.514Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:06.530] LOG - 12:30:06.514Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:06.530] LOG - 12:30:06.514Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:06.530] LOG - 12:30:06.514Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:06.538] LOG - 12:30:06.514Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:30:06.538] LOG - 12:30:06.514Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:30:06.538] ERROR - 12:30:06.514Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:30:06.538] ERROR - 12:30:06.514Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:30:06.538] LOG - 12:30:06.518Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:30:06.538] LOG - 12:30:06.518Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:30:07.523] LOG - 12:30:07.520Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:07.523] LOG - 12:30:07.520Z [analyzePhase] resetting phaseData
+[2025-09-27 07:30:07.523] LOG - 12:30:07.521Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:07.525] LOG - 12:30:07.521Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:30:07.526] LOG - 12:30:07.521Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:07.527] LOG - 12:30:07.521Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:30:07.527] LOG - 12:30:07.523Z Executing initial risk management assessment...
+[2025-09-27 07:30:07.528] LOG - 12:30:07.523Z Executing initial risk management assessment...
+[2025-09-27 07:30:07.528] ERROR - 12:30:07.523Z getTableData function not found
+[2025-09-27 07:30:07.528] ERROR - 12:30:07.523Z getTableData function not found
+[2025-09-27 07:30:07.528] ERROR - 12:30:07.524Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:30:07.528] ERROR - 12:30:07.524Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:30:07.528] ERROR - 12:30:07.524Z performAccountActions function not found
+[2025-09-27 07:30:07.529] ERROR - 12:30:07.524Z performAccountActions function not found
+[2025-09-27 07:30:07.529] LOG - 12:30:07.524Z Risk management assessment completed
+[2025-09-27 07:30:07.529] LOG - 12:30:07.524Z Risk management assessment completed
+[2025-09-27 07:31:01.521] LOG - 12:31:01.520Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:33:01.519] LOG - 12:33:01.518Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:35:01.517] LOG - 12:35:01.516Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:35:12.158] LOG - 12:35:12.157Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:35:12.159] LOG - 12:35:12.157Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:35:12.160] LOG - 12:35:12.157Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:12.161] LOG - 12:35:12.157Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:12.161] LOG - 12:35:12.157Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:12.162] LOG - 12:35:12.157Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:12.163] LOG - 12:35:12.157Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:12.163] LOG - 12:35:12.157Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:12.164] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:35:12.164] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:35:12.165] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:35:12.166] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:35:12.166] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 07:35:12.167] LOG - 12:35:12.157Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 07:35:12.167] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:35:12.167] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:35:12.167] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:35:12.167] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:12.168] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:35:12.169] LOG - 12:35:12.158Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:35:12.169] ERROR - 12:35:12.158Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:35:12.169] ERROR - 12:35:12.158Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:35:12.169] LOG - 12:35:12.162Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:35:12.169] LOG - 12:35:12.162Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:35:13.167] LOG - 12:35:13.164Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:13.167] LOG - 12:35:13.164Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:13.168] LOG - 12:35:13.165Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:13.169] LOG - 12:35:13.165Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:13.170] LOG - 12:35:13.165Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:13.170] LOG - 12:35:13.165Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:13.170] LOG - 12:35:13.167Z Executing initial risk management assessment...
+[2025-09-27 07:35:13.170] LOG - 12:35:13.167Z Executing initial risk management assessment...
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z getTableData function not found
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z getTableData function not found
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z performAccountActions function not found
+[2025-09-27 07:35:13.171] ERROR - 12:35:13.167Z performAccountActions function not found
+[2025-09-27 07:35:13.172] LOG - 12:35:13.167Z Risk management assessment completed
+[2025-09-27 07:35:13.172] LOG - 12:35:13.167Z Risk management assessment completed
+[2025-09-27 07:35:14.218] LOG - 12:35:14.217Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:35:14.219] LOG - 12:35:14.217Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 07:35:14.220] LOG - 12:35:14.218Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:14.220] LOG - 12:35:14.218Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:14.221] LOG - 12:35:14.218Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:14.222] LOG - 12:35:14.218Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:14.223] LOG - 12:35:14.218Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:14.224] LOG - 12:35:14.218Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:14.225] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:35:14.225] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 07:35:14.226] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:35:14.227] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 07:35:14.227] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 07:35:14.228] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 07:35:14.228] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:35:14.228] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 07:35:14.228] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:35:14.228] LOG - 12:35:14.218Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 07:35:14.229] LOG - 12:35:14.219Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:14.229] LOG - 12:35:14.219Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:14.229] LOG - 12:35:14.219Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:14.230] LOG - 12:35:14.219Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:14.230] LOG - 12:35:14.219Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:14.230] LOG - 12:35:14.219Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:14.230] LOG - 12:35:14.219Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:35:14.230] LOG - 12:35:14.219Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 07:35:14.230] ERROR - 12:35:14.219Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:35:14.231] ERROR - 12:35:14.219Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 07:35:14.231] LOG - 12:35:14.221Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:35:14.231] LOG - 12:35:14.221Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 07:35:15.225] LOG - 12:35:15.223Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:15.226] LOG - 12:35:15.223Z [analyzePhase] resetting phaseData
+[2025-09-27 07:35:15.227] LOG - 12:35:15.223Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:15.228] LOG - 12:35:15.223Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 07:35:15.230] LOG - 12:35:15.223Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:15.230] LOG - 12:35:15.223Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 07:35:15.230] LOG - 12:35:15.226Z Executing initial risk management assessment...
+[2025-09-27 07:35:15.231] LOG - 12:35:15.226Z Executing initial risk management assessment...
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z getTableData function not found
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z getTableData function not found
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z updateUserColumnPhaseStatus function not found
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z performAccountActions function not found
+[2025-09-27 07:35:15.231] ERROR - 12:35:15.226Z performAccountActions function not found
+[2025-09-27 07:35:15.232] LOG - 12:35:15.226Z Risk management assessment completed
+[2025-09-27 07:35:15.232] LOG - 12:35:15.226Z Risk management assessment completed
+[2025-09-27 07:35:17.519] LOG - 12:35:17.518Z Trade control updates complete: [object Object]
+[2025-09-27 07:35:17.520] LOG - 12:35:17.518Z Trade control updates complete:
+[2025-09-27 07:35:18.630] LOG - 12:35:18.629Z Trade control updates complete: [object Object]
+[2025-09-27 07:35:18.630] LOG - 12:35:18.629Z Trade control updates complete:
+[2025-09-27 07:35:19.880] LOG - 12:35:19.878Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 07:35:19.881] LOG - 12:35:19.878Z autoTrade called with: symbol=NQ, qty=1, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 07:35:19.882] LOG - 12:35:19.878Z Using symbol: NQ
+[2025-09-27 07:35:19.883] LOG - 12:35:19.878Z Using symbol: NQ
+[2025-09-27 07:35:19.884] LOG - 12:35:19.878Z Root symbol: NQ
+[2025-09-27 07:35:19.885] LOG - 12:35:19.878Z Root symbol: NQ
+[2025-09-27 07:35:19.886] LOG - 12:35:19.878Z Using tick size 0.25 (from dictionary)
+[2025-09-27 07:35:19.887] LOG - 12:35:19.878Z Using tick size 0.25 (from dictionary)
+[2025-09-27 07:35:19.888] LOG - 12:35:19.878Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 07:35:19.891] LOG - 12:35:19.878Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 07:35:19.891] LOG - 12:35:19.878Z Getting market data for NQ
+[2025-09-27 07:35:19.893] LOG - 12:35:19.878Z Getting market data for NQ
+[2025-09-27 07:35:19.893] LOG - 12:35:19.879Z getMarketData called for: "NQ"
+[2025-09-27 07:35:19.895] LOG - 12:35:19.879Z getMarketData called for: "NQ"
+[2025-09-27 07:35:19.896] LOG - 12:35:19.879Z getFrontQuarter called for root: "NQ"
+[2025-09-27 07:35:19.897] LOG - 12:35:19.879Z getFrontQuarter called for root: "NQ"
+[2025-09-27 07:35:19.898] LOG - 12:35:19.879Z getQuarterlyCode called with date: 2025-09-27T12:35:19.879Z
+[2025-09-27 07:35:19.899] LOG - 12:35:19.879Z getQuarterlyCode called with date: 2025-09-27T12:35:19.879Z
+[2025-09-27 07:35:19.900] LOG - 12:35:19.879Z Current month index: 8
+[2025-09-27 07:35:19.901] LOG - 12:35:19.879Z Current month index: 8
+[2025-09-27 07:35:19.902] LOG - 12:35:19.879Z Starting calculation with year=2025, month=8
+[2025-09-27 07:35:19.904] LOG - 12:35:19.879Z Starting calculation with year=2025, month=8
+[2025-09-27 07:35:19.905] LOG - 12:35:19.879Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:35:19.906] LOG - 12:35:19.879Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:35:19.907] LOG - 12:35:19.879Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:35:19.909] LOG - 12:35:19.879Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 07:35:19.910] LOG - 12:35:19.879Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 07:35:19.910] LOG - 12:35:19.879Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 07:35:19.911] LOG - 12:35:19.880Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 07:35:19.912] LOG - 12:35:19.880Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 07:35:19.912] LOG - 12:35:19.880Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 07:35:19.913] LOG - 12:35:19.880Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 07:35:19.913] LOG - 12:35:19.880Z Market data: [object Object]
+[2025-09-27 07:35:19.914] LOG - 12:35:19.880Z Market data:
+[2025-09-27 07:35:19.915] LOG - 12:35:19.880Z Market price: NaN (offer price)
+[2025-09-27 07:35:19.915] LOG - 12:35:19.880Z Market price: NaN (offer price)
+[2025-09-27 07:35:19.917] LOG - 12:35:19.880Z No custom entry price provided, using market order at NaN
+[2025-09-27 07:35:19.918] LOG - 12:35:19.880Z No custom entry price provided, using market order at NaN
+[2025-09-27 07:35:19.918] LOG - 12:35:19.880Z Using price precision: 2 decimal places
+[2025-09-27 07:35:19.919] LOG - 12:35:19.880Z Using price precision: 2 decimal places
+[2025-09-27 07:35:19.920] LOG - 12:35:19.880Z Calculated SL price: NaN (entry - 15 ticks)
+[2025-09-27 07:35:19.920] LOG - 12:35:19.880Z Calculated SL price: NaN (entry - 15 ticks)
+[2025-09-27 07:35:19.921] LOG - 12:35:19.880Z Calculated TP price: NaN (entry + 53 ticks)
+[2025-09-27 07:35:19.922] LOG - 12:35:19.880Z Calculated TP price: NaN (entry + 53 ticks)
+[2025-09-27 07:35:19.923] LOG - 12:35:19.880Z Trade data prepared: [object Object]
+[2025-09-27 07:35:19.923] LOG - 12:35:19.880Z Trade data prepared:
+[2025-09-27 07:35:19.923] LOG - 12:35:19.880Z Submitting bracket orders
+[2025-09-27 07:35:19.924] LOG - 12:35:19.880Z Submitting bracket orders
+[2025-09-27 07:35:19.924] LOG - 12:35:19.880Z Creating bracket orders with data: [object Object]
+[2025-09-27 07:35:19.924] LOG - 12:35:19.880Z Creating bracket orders with data:
+[2025-09-27 07:35:19.925] LOG - 12:35:19.881Z TP enabled: false, SL enabled: false
+[2025-09-27 07:35:19.925] LOG - 12:35:19.881Z TP enabled: false, SL enabled: false
+[2025-09-27 07:35:19.925] LOG - 12:35:19.881Z Submitting initial MARKET order
+[2025-09-27 07:35:19.925] LOG - 12:35:19.881Z Submitting initial MARKET order
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Setting common order fields
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Setting common order fields
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Setting action to: Buy
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Setting action to: Buy
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Found 9 action labels
+[2025-09-27 07:35:19.926] LOG - 12:35:19.881Z Found 9 action labels
+[2025-09-27 07:35:19.927] LOG - 12:35:19.881Z Clicking Buy label
+[2025-09-27 07:35:19.927] LOG - 12:35:19.881Z Clicking Buy label
+[2025-09-27 07:35:19.927] LOG - 12:35:19.883Z Setting quantity to: 1
+[2025-09-27 07:35:19.927] LOG - 12:35:19.883Z Setting quantity to: 1
+[2025-09-27 07:35:19.927] LOG - 12:35:19.887Z Delaying for 250ms
+[2025-09-27 07:35:19.927] LOG - 12:35:19.887Z Delaying for 250ms
+[2025-09-27 07:35:20.159] LOG - 12:35:20.158Z Delaying for 200ms
+[2025-09-27 07:35:20.159] LOG - 12:35:20.158Z Delaying for 200ms
+[2025-09-27 07:35:20.362] LOG - 12:35:20.359Z 
+[2025-09-27 07:35:20.362] LOG - 12:35:20.359Z
+[2025-09-27 07:35:20.363] LOG - 12:35:20.359Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:35:20.363] LOG - 12:35:20.359Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 07:35:20.363] LOG - 12:35:20.360Z Delaying for 500ms
+[2025-09-27 07:35:20.363] LOG - 12:35:20.360Z Delaying for 500ms
+[2025-09-27 07:35:20.864] LOG - 12:35:20.861Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:35:20.865] LOG - 12:35:20.861Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 07:35:20.865] LOG - 12:35:20.862Z Delaying for 200ms
+[2025-09-27 07:35:20.865] LOG - 12:35:20.862Z Delaying for 200ms
+[2025-09-27 07:35:21.066] LOG - 12:35:21.064Z Flipping action to Sell for TP/SL orders
+[2025-09-27 07:35:21.066] LOG - 12:35:21.064Z Flipping action to Sell for TP/SL orders
+[2025-09-27 07:35:21.067] LOG - 12:35:21.064Z Bracket order creation complete
+[2025-09-27 07:35:21.067] LOG - 12:35:21.064Z Bracket order creation complete
+[2025-09-27 07:35:59.601] INFO - 12:35:59.599Z time stats. avg diff: -56, min: -64, max: -40, roundtrip: 28 msec, #11
+[2025-09-27 07:35:59.601] INFO - 12:35:59.599Z time stats. avg diff: -56, min: -64, max: -40, roundtrip: 28 msec, #11
+[2025-09-27 07:37:01.518] LOG - 12:37:01.516Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:39:01.514] LOG - 12:39:01.513Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:41:01.514] LOG - 12:41:01.512Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:43:01.512] LOG - 12:43:01.510Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:45:01.529] LOG - 12:45:01.520Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:45:59.593] INFO - 12:45:59.592Z time stats. avg diff: -61, min: -73, max: -40, roundtrip: 27 msec, #21
+[2025-09-27 07:45:59.595] INFO - 12:45:59.592Z time stats. avg diff: -61, min: -73, max: -40, roundtrip: 27 msec, #21
+[2025-09-27 07:47:01.507] LOG - 12:47:01.506Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:49:01.506] LOG - 12:49:01.505Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:51:01.507] LOG - 12:51:01.504Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:53:01.504] LOG - 12:53:01.502Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:55:01.521] LOG - 12:55:01.520Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:55:59.600] INFO - 12:55:59.599Z time stats. avg diff: -64, min: -78, max: -40, roundtrip: 27 msec, #31
+[2025-09-27 07:55:59.601] INFO - 12:55:59.599Z time stats. avg diff: -64, min: -78, max: -40, roundtrip: 27 msec, #31
+[2025-09-27 07:57:01.520] LOG - 12:57:01.518Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 07:59:01.519] LOG - 12:59:01.518Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 08:01:01.517] LOG - 13:01:01.515Z WebGL:  {"geometries":69,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 08:01:32.653] LOG - 13:01:32.651Z Trade control updates complete: [object Object]
+[2025-09-27 08:01:32.653] LOG - 13:01:32.651Z Trade control updates complete:
+[2025-09-27 08:01:33.481] LOG - 13:01:33.480Z Trade control updates complete: [object Object]
+[2025-09-27 08:01:33.482] LOG - 13:01:33.480Z Trade control updates complete:
+[2025-09-27 08:01:34.022] LOG - 13:01:34.021Z autoTrade called with: symbol=NQ, qty=8, action=Buy, TP=53, SL=15, tickSize=0.25
+[2025-09-27 08:01:34.024] LOG - 13:01:34.021Z autoTrade called with: symbol=NQ, qty=8, action=Buy, TP=53, SL=15, tickSize=0.25
+[2025-09-27 08:01:34.025] LOG - 13:01:34.021Z Using symbol: NQ
+[2025-09-27 08:01:34.027] LOG - 13:01:34.021Z Using symbol: NQ
+[2025-09-27 08:01:34.028] LOG - 13:01:34.021Z Root symbol: NQ
+[2025-09-27 08:01:34.029] LOG - 13:01:34.021Z Root symbol: NQ
+[2025-09-27 08:01:34.029] LOG - 13:01:34.021Z Using tick size 0.25 (from dictionary)
+[2025-09-27 08:01:34.030] LOG - 13:01:34.021Z Using tick size 0.25 (from dictionary)
+[2025-09-27 08:01:34.031] LOG - 13:01:34.021Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 08:01:34.032] LOG - 13:01:34.021Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 08:01:34.033] LOG - 13:01:34.021Z Getting market data for NQ
+[2025-09-27 08:01:34.034] LOG - 13:01:34.021Z Getting market data for NQ
+[2025-09-27 08:01:34.036] LOG - 13:01:34.022Z getMarketData called for: "NQ"
+[2025-09-27 08:01:34.037] LOG - 13:01:34.022Z getMarketData called for: "NQ"
+[2025-09-27 08:01:34.038] LOG - 13:01:34.022Z getFrontQuarter called for root: "NQ"
+[2025-09-27 08:01:34.039] LOG - 13:01:34.022Z getFrontQuarter called for root: "NQ"
+[2025-09-27 08:01:34.040] LOG - 13:01:34.022Z getQuarterlyCode called with date: 2025-09-27T13:01:34.022Z
+[2025-09-27 08:01:34.041] LOG - 13:01:34.022Z getQuarterlyCode called with date: 2025-09-27T13:01:34.022Z
+[2025-09-27 08:01:34.041] LOG - 13:01:34.022Z Current month index: 8
+[2025-09-27 08:01:34.042] LOG - 13:01:34.022Z Current month index: 8
+[2025-09-27 08:01:34.043] LOG - 13:01:34.022Z Starting calculation with year=2025, month=8
+[2025-09-27 08:01:34.044] LOG - 13:01:34.022Z Starting calculation with year=2025, month=8
+[2025-09-27 08:01:34.045] LOG - 13:01:34.022Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 08:01:34.045] LOG - 13:01:34.022Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 08:01:34.046] LOG - 13:01:34.023Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 08:01:34.046] LOG - 13:01:34.023Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 08:01:34.047] LOG - 13:01:34.023Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 08:01:34.049] LOG - 13:01:34.023Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 08:01:34.050] LOG - 13:01:34.023Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 08:01:34.051] LOG - 13:01:34.023Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 08:01:34.052] LOG - 13:01:34.023Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 08:01:34.053] LOG - 13:01:34.023Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 08:01:34.054] LOG - 13:01:34.023Z Market data: [object Object]
+[2025-09-27 08:01:34.055] LOG - 13:01:34.023Z Market data:
+[2025-09-27 08:01:34.055] LOG - 13:01:34.023Z Market price: NaN (offer price)
+[2025-09-27 08:01:34.056] LOG - 13:01:34.023Z Market price: NaN (offer price)
+[2025-09-27 08:01:34.057] LOG - 13:01:34.023Z No custom entry price provided, using market order at NaN
+[2025-09-27 08:01:34.058] LOG - 13:01:34.023Z No custom entry price provided, using market order at NaN
+[2025-09-27 08:01:34.058] LOG - 13:01:34.023Z Using price precision: 2 decimal places
+[2025-09-27 08:01:34.059] LOG - 13:01:34.023Z Using price precision: 2 decimal places
+[2025-09-27 08:01:34.060] LOG - 13:01:34.023Z Calculated SL price: NaN (entry - 15 ticks)
+[2025-09-27 08:01:34.060] LOG - 13:01:34.023Z Calculated SL price: NaN (entry - 15 ticks)
+[2025-09-27 08:01:34.061] LOG - 13:01:34.023Z Calculated TP price: NaN (entry + 53 ticks)
+[2025-09-27 08:01:34.061] LOG - 13:01:34.023Z Calculated TP price: NaN (entry + 53 ticks)
+[2025-09-27 08:01:34.062] LOG - 13:01:34.023Z Trade data prepared: [object Object]
+[2025-09-27 08:01:34.063] LOG - 13:01:34.023Z Trade data prepared:
+[2025-09-27 08:01:34.063] LOG - 13:01:34.023Z Submitting bracket orders
+[2025-09-27 08:01:34.064] LOG - 13:01:34.023Z Submitting bracket orders
+[2025-09-27 08:01:34.064] LOG - 13:01:34.024Z Creating bracket orders with data: [object Object]
+[2025-09-27 08:01:34.065] LOG - 13:01:34.024Z Creating bracket orders with data:
+[2025-09-27 08:01:34.065] LOG - 13:01:34.024Z TP enabled: true, SL enabled: true
+[2025-09-27 08:01:34.065] LOG - 13:01:34.024Z TP enabled: true, SL enabled: true
+[2025-09-27 08:01:34.065] LOG - 13:01:34.024Z Submitting initial MARKET order
+[2025-09-27 08:01:34.065] LOG - 13:01:34.024Z Submitting initial MARKET order
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Setting common order fields
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Setting common order fields
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Setting action to: Buy
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Setting action to: Buy
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Found 9 action labels
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Found 9 action labels
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Clicking Buy label
+[2025-09-27 08:01:34.066] LOG - 13:01:34.024Z Clicking Buy label
+[2025-09-27 08:01:34.067] LOG - 13:01:34.029Z Setting quantity to: 8
+[2025-09-27 08:01:34.067] LOG - 13:01:34.029Z Setting quantity to: 8
+[2025-09-27 08:01:34.067] LOG - 13:01:34.047Z Delaying for 250ms
+[2025-09-27 08:01:34.067] LOG - 13:01:34.047Z Delaying for 250ms
+[2025-09-27 08:01:34.314] LOG - 13:01:34.313Z Delaying for 200ms
+[2025-09-27 08:01:34.315] LOG - 13:01:34.313Z Delaying for 200ms
+[2025-09-27 08:01:34.516] LOG - 13:01:34.514Z 
+[2025-09-27 08:01:34.516] LOG - 13:01:34.514Z
+[2025-09-27 08:01:34.517] LOG - 13:01:34.515Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:34.518] LOG - 13:01:34.515Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:34.518] LOG - 13:01:34.515Z Delaying for 500ms
+[2025-09-27 08:01:34.518] LOG - 13:01:34.515Z Delaying for 500ms
+[2025-09-27 08:01:35.017] LOG - 13:01:35.016Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:35.017] LOG - 13:01:35.016Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:35.018] LOG - 13:01:35.016Z Delaying for 200ms
+[2025-09-27 08:01:35.018] LOG - 13:01:35.016Z Delaying for 200ms
+[2025-09-27 08:01:35.220] LOG - 13:01:35.217Z Flipping action to Sell for TP/SL orders
+[2025-09-27 08:01:35.221] LOG - 13:01:35.217Z Flipping action to Sell for TP/SL orders
+[2025-09-27 08:01:35.221] LOG - 13:01:35.217Z Creating take profit order at NaN
+[2025-09-27 08:01:35.222] LOG - 13:01:35.217Z Creating take profit order at NaN
+[2025-09-27 08:01:35.222] LOG - 13:01:35.218Z Setting common order fields
+[2025-09-27 08:01:35.222] LOG - 13:01:35.218Z Setting common order fields
+[2025-09-27 08:01:35.223] LOG - 13:01:35.218Z Setting action to: Sell
+[2025-09-27 08:01:35.223] LOG - 13:01:35.218Z Setting action to: Sell
+[2025-09-27 08:01:35.223] LOG - 13:01:35.218Z Found 9 action labels
+[2025-09-27 08:01:35.223] LOG - 13:01:35.218Z Found 9 action labels
+[2025-09-27 08:01:35.223] LOG - 13:01:35.218Z Clicking Sell label
+[2025-09-27 08:01:35.224] LOG - 13:01:35.218Z Clicking Sell label
+[2025-09-27 08:01:35.229] LOG - 13:01:35.228Z Setting quantity to: 8
+[2025-09-27 08:01:35.229] LOG - 13:01:35.228Z Setting quantity to: 8
+[2025-09-27 08:01:35.231] LOG - 13:01:35.230Z Delaying for 250ms
+[2025-09-27 08:01:35.231] LOG - 13:01:35.230Z Delaying for 250ms
+[2025-09-27 08:01:35.514] LOG - 13:01:35.513Z Delaying for 250ms
+[2025-09-27 08:01:35.515] LOG - 13:01:35.513Z Delaying for 250ms
+[2025-09-27 08:01:35.775] LOG - 13:01:35.774Z Delaying for 250ms
+[2025-09-27 08:01:35.776] LOG - 13:01:35.774Z Delaying for 250ms
+[2025-09-27 08:01:36.035] LOG - 13:01:36.034Z Delaying for 250ms
+[2025-09-27 08:01:36.035] LOG - 13:01:36.034Z Delaying for 250ms
+[2025-09-27 08:01:36.297] LOG - 13:01:36.296Z Delaying for 200ms
+[2025-09-27 08:01:36.297] LOG - 13:01:36.296Z Delaying for 200ms
+[2025-09-27 08:01:36.499] LOG - 13:01:36.497Z 
+[2025-09-27 08:01:36.499] LOG - 13:01:36.497Z
+[2025-09-27 08:01:36.499] LOG - 13:01:36.497Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:36.499] LOG - 13:01:36.497Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:36.499] LOG - 13:01:36.498Z Delaying for 500ms
+[2025-09-27 08:01:36.500] LOG - 13:01:36.498Z Delaying for 500ms
+[2025-09-27 08:01:37.000] LOG - 13:01:36.999Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:37.000] LOG - 13:01:36.999Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:37.000] LOG - 13:01:36.999Z Delaying for 200ms
+[2025-09-27 08:01:37.001] LOG - 13:01:36.999Z Delaying for 200ms
+[2025-09-27 08:01:37.201] LOG - 13:01:37.200Z Creating stop loss order at NaN
+[2025-09-27 08:01:37.203] LOG - 13:01:37.200Z Creating stop loss order at NaN
+[2025-09-27 08:01:37.204] LOG - 13:01:37.200Z Setting common order fields
+[2025-09-27 08:01:37.205] LOG - 13:01:37.200Z Setting common order fields
+[2025-09-27 08:01:37.206] LOG - 13:01:37.200Z Setting action to: Sell
+[2025-09-27 08:01:37.206] LOG - 13:01:37.200Z Setting action to: Sell
+[2025-09-27 08:01:37.206] LOG - 13:01:37.201Z Found 9 action labels
+[2025-09-27 08:01:37.206] LOG - 13:01:37.201Z Found 9 action labels
+[2025-09-27 08:01:37.207] LOG - 13:01:37.201Z Clicking Sell label
+[2025-09-27 08:01:37.207] LOG - 13:01:37.201Z Clicking Sell label
+[2025-09-27 08:01:37.207] LOG - 13:01:37.202Z Setting quantity to: 8
+[2025-09-27 08:01:37.207] LOG - 13:01:37.202Z Setting quantity to: 8
+[2025-09-27 08:01:37.207] LOG - 13:01:37.204Z Delaying for 250ms
+[2025-09-27 08:01:37.207] LOG - 13:01:37.204Z Delaying for 250ms
+[2025-09-27 08:01:37.477] LOG - 13:01:37.475Z Delaying for 250ms
+[2025-09-27 08:01:37.477] LOG - 13:01:37.475Z Delaying for 250ms
+[2025-09-27 08:01:37.733] LOG - 13:01:37.732Z Delaying for 250ms
+[2025-09-27 08:01:37.733] LOG - 13:01:37.732Z Delaying for 250ms
+[2025-09-27 08:01:37.992] LOG - 13:01:37.991Z Delaying for 250ms
+[2025-09-27 08:01:37.992] LOG - 13:01:37.991Z Delaying for 250ms
+[2025-09-27 08:01:38.255] LOG - 13:01:38.254Z Delaying for 200ms
+[2025-09-27 08:01:38.255] LOG - 13:01:38.254Z Delaying for 200ms
+[2025-09-27 08:01:38.456] LOG - 13:01:38.454Z 
+[2025-09-27 08:01:38.456] LOG - 13:01:38.454Z
+[2025-09-27 08:01:38.457] LOG - 13:01:38.455Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:38.457] LOG - 13:01:38.455Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 08:01:38.457] LOG - 13:01:38.455Z Delaying for 500ms
+[2025-09-27 08:01:38.458] LOG - 13:01:38.455Z Delaying for 500ms
+[2025-09-27 08:01:38.958] LOG - 13:01:38.956Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:38.959] LOG - 13:01:38.956Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 08:01:38.959] LOG - 13:01:38.957Z Delaying for 200ms
+[2025-09-27 08:01:38.959] LOG - 13:01:38.957Z Delaying for 200ms
+[2025-09-27 08:01:39.160] LOG - 13:01:39.158Z Bracket order creation complete
+[2025-09-27 08:01:39.160] LOG - 13:01:39.158Z Bracket order creation complete
+[2025-09-27 08:01:41.575] INFO - 13:01:41.573Z visibilitychange: hidden, gd: 1000
+[2025-09-27 08:01:41.579] INFO - 13:01:41.573Z visibilitychange: hidden, gd: 1000

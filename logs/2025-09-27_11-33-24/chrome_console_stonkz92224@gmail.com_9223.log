@@ -1,0 +1,946 @@
+[2025-09-27 11:33:29.557] LOG - 16:33:29.556Z Starting login process for: stonkz92224@gmail.com
+[2025-09-27 11:33:29.558] LOG - 16:33:29.556Z Starting login process for: stonkz92224@gmail.com
+[2025-09-27 11:33:29.559] LOG - 16:33:29.557Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-27 11:33:29.560] LOG - 16:33:29.557Z Auto login function executing for: stonkz92224@gmail.com
+[2025-09-27 11:33:29.560] LOG - 16:33:29.557Z Login form found, filling credentials...
+[2025-09-27 11:33:29.560] LOG - 16:33:29.557Z Login form found, filling credentials...
+[2025-09-27 11:33:29.715] LOG - 16:33:29.591Z Test element added to DOM
+[2025-09-27 11:33:29.715] LOG - 16:33:29.591Z Test element added to DOM
+[2025-09-27 11:33:29.721] LOG - 16:33:29.720Z All browser alerts and confirmations have been disabled
+[2025-09-27 11:33:29.722] LOG - 16:33:29.720Z All browser alerts and confirmations have been disabled
+[2025-09-27 11:33:30.076] LOG - 16:33:30.075Z Clicking login button...
+[2025-09-27 11:33:30.077] LOG - 16:33:30.075Z Clicking login button...
+[2025-09-27 11:33:30.088] LOG - 16:33:30.085Z authentication starting
+[2025-09-27 11:33:30.088] LOG - 16:33:30.085Z authentication starting
+[2025-09-27 11:33:30.446] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 11:33:30.449] LOG - 16:33:30.427Z Watching for account selection page...
+[2025-09-27 11:33:30.452] LOG - 16:33:30.427Z Watching for account selection page...
+[2025-09-27 11:33:30.688] LOG - 16:33:30.687Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:30 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:30.688] LOG - 16:33:30.687Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:30 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:30.995] INFO - 16:33:30.993Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:30.998] INFO - 16:33:30.993Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:30.999] INFO - 16:33:30.993Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:30.999] INFO - 16:33:30.993Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:31.000] INFO - 16:33:30.993Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:31.001] INFO - 16:33:30.993Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:31.001] INFO - 16:33:30.993Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:31.001] INFO - 16:33:30.993Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:31.074] INFO - 16:33:31.072Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:31.075] INFO - 16:33:31.072Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:31.075] INFO - 16:33:31.072Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:31.075] INFO - 16:33:31.072Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:32.430] LOG - 16:33:32.428Z Account selection page detected, clicking button...
+[2025-09-27 11:33:32.430] LOG - 16:33:32.428Z Account selection page detected, clicking button...
+[2025-09-27 11:33:32.564] LOG - 16:33:32.540Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:32 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:32.565] LOG - 16:33:32.540Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:32 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:33.051] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=8601923e-7bbf-445c-a8c6-08729477f0c1&bo=2&sid=a82ace0097af11f0b51d4179c6f235dd&vid=99c3288092fe11f0bc7275adc39e6add&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-27 11:33:33.053] INFO - 16:33:33.049Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:33:33.054] INFO - 16:33:33.049Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:33:33.054] WARNING - 16:33:33.050Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 536 milliseconds.
+[2025-09-27 11:33:33.054] WARNING - 16:33:33.050Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 536 milliseconds.
+[2025-09-27 11:33:33.055] INFO - 16:33:33.050Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:33.055] INFO - 16:33:33.050Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:33.381] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.383] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.384] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.385] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.386] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.387] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.388] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.389] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.390] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.392] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.393] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.394] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.395] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.396] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.397] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.398] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.399] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.401] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.402] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.403] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.404] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.405] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.409] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.409] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.409] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.409] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.409] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.410] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.411] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.412] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.413] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.414] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.414] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.414] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.414] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.414] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.415] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.415] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:33:33.415] DEBUG - [bugsnag] Loaded!
+[2025-09-27 11:33:33.415] DEBUG - [bugsnag] Loaded!
+[2025-09-27 11:33:33.415] INFO - Version 3.250926.0 prod production 
+[2025-09-27 11:33:33.415] INFO - Version 3.250926.0 prod production 
+[2025-09-27 11:33:33.415] INFO - Time: Sat Sep 27 2025 11:33:33 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:33.415] INFO - Time:
+[2025-09-27 11:33:33.525] LOG - 16:33:33.522Z Try to restore session
+[2025-09-27 11:33:33.525] LOG - 16:33:33.522Z Try to restore session
+[2025-09-27 11:33:33.525] LOG - 16:33:33.524Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:33 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:33.526] LOG - 16:33:33.524Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:53:30 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:33:33 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:33:33.531] WARNING - 16:33:33.529Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 11:33:33.532] WARNING - 16:33:33.529Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 11:33:33.538] INFO - 16:33:33.537Z chart cache state: islands=5, bars=1196
+[2025-09-27 11:33:33.539] INFO - 16:33:33.537Z chart cache state: islands=5, bars=1196
+[2025-09-27 11:33:33.539] INFO - 16:33:33.538Z Chart history database initialized
+[2025-09-27 11:33:33.539] INFO - 16:33:33.538Z Chart history database initialized
+[2025-09-27 11:33:33.545] INFO - 16:33:33.544Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 11:33:33.546] INFO - 16:33:33.544Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 11:33:33.546] INFO - 16:33:33.544Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 11:33:33.547] INFO - 16:33:33.544Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 11:33:34.216] INFO - 16:33:34.215Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:34.216] INFO - 16:33:34.215Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:34.217] INFO - 16:33:34.215Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlN0b25rejkyMjI0IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:33:34.217] INFO - 16:33:34.215Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlN0b25rejkyMjI0IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:33:34.230] INFO - 16:33:34.229Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:34.231] INFO - 16:33:34.229Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:33:34.231] INFO - 16:33:34.229Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:34.231] INFO - 16:33:34.229Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjM2NTUwNTkiLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjozNjU1MDU5LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiU3Rvbmt6OTIyMjQiLCJsYW5kaW5nUGFyYW1zIjoiIn0
+[2025-09-27 11:33:34.927] LOG - 16:33:34.923Z opening https://demo.tradovateapi.com/
+[2025-09-27 11:33:34.927] LOG - 16:33:34.923Z opening https://demo.tradovateapi.com/
+[2025-09-27 11:33:34.931] LOG - 16:33:34.930Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 11:33:34.931] LOG - 16:33:34.930Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 11:33:35.007] LOG - 16:33:35.006Z websocket opened
+[2025-09-27 11:33:35.007] LOG - 16:33:35.006Z websocket opened
+[2025-09-27 11:33:35.096] LOG - 16:33:35.094Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 11:33:35.097] LOG - 16:33:35.094Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 11:33:35.097] LOG - 16:33:35.095Z Connection:  open
+[2025-09-27 11:33:35.097] LOG - 16:33:35.095Z Connection:  open
+[2025-09-27 11:33:35.149] LOG - 16:33:35.146Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 11:33:35.152] LOG - 16:33:35.147Z Canvas size: 1119 991 dpp:  2
+[2025-09-27 11:33:35.166] LOG - 16:33:35.160Z Loading App-level Plugins
+[2025-09-27 11:33:35.167] LOG - 16:33:35.160Z Loading App-level Plugins
+[2025-09-27 11:33:35.176] LOG - 16:33:35.169Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 11:33:35.180] LOG - 16:33:35.169Z Canvas size: 1119 991 dpp:  2
+[2025-09-27 11:33:35.241] LOG - 16:33:35.229Z websocket opened
+[2025-09-27 11:33:35.242] LOG - 16:33:35.229Z websocket opened
+[2025-09-27 11:33:35.301] LOG - 16:33:35.300Z loadAppLevelPlugins:  [object Object]
+[2025-09-27 11:33:35.303] LOG - 16:33:35.300Z loadAppLevelPlugins: 
+[2025-09-27 11:33:35.303] LOG - 16:33:35.301Z sync to remote defaultModules
+[2025-09-27 11:33:35.304] LOG - 16:33:35.301Z sync to remote defaultModules
+[2025-09-27 11:33:35.508] LOG - 16:33:35.507Z sync to remote workspaces
+[2025-09-27 11:33:35.508] LOG - 16:33:35.507Z sync to remote workspaces
+[2025-09-27 11:33:36.291] LOG - 16:33:36.269Z jailing is in progress
+[2025-09-27 11:33:36.291] LOG - 16:33:36.269Z jailing is in progress
+[2025-09-27 11:33:36.340] LOG - 16:33:36.339Z created chart 1
+[2025-09-27 11:33:36.641] LOG - 16:33:36.640Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-27 11:33:36.643] LOG - 16:33:36.640Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-27 11:33:36.643] LOG - 16:33:36.640Z mdMgApi open
+[2025-09-27 11:33:36.643] LOG - 16:33:36.640Z mdMgApi open
+[2025-09-27 11:33:36.774] LOG - 16:33:36.773Z pending jailing done. next starts
+[2025-09-27 11:33:36.774] LOG - 16:33:36.773Z pending jailing done. next starts
+[2025-09-27 11:33:37.579] LOG - 16:33:37.560Z created chart 12
+[2025-09-27 11:33:37.612] LOG - 16:33:37.611Z requestChart: {"symbol":"4086418","chartDescription":{"underlyingType":"MinuteBar","elementSize":15,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-27 11:33:37.613] LOG - 16:33:37.611Z requestChart: {"symbol":"4086418","chartDescription":{"underlyingType":"MinuteBar","elementSize":15,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":300}}
+[2025-09-27 11:33:37.613] LOG - 16:33:37.611Z mdMgApi open
+[2025-09-27 11:33:37.613] LOG - 16:33:37.611Z mdMgApi open
+[2025-09-27 11:33:37.866] LOG - 16:33:37.865Z updating the shared isolation
+[2025-09-27 11:33:37.866] LOG - 16:33:37.865Z updating the shared isolation
+[2025-09-27 11:33:38.280] LOG - 16:33:38.278Z updating the shared isolation
+[2025-09-27 11:33:38.280] LOG - 16:33:38.278Z updating the shared isolation
+[2025-09-27 11:33:40.165] LOG - 16:33:40.163Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 11:33:40.166] LOG - 16:33:40.163Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 11:33:40.167] LOG - 16:33:40.164Z Creating UI for dashboard trading...
+[2025-09-27 11:33:40.167] LOG - 16:33:40.164Z Creating UI for dashboard trading...
+[2025-09-27 11:33:40.168] LOG - 16:33:40.164Z Creating UI (visible=false)
+[2025-09-27 11:33:40.168] LOG - 16:33:40.164Z Creating UI (visible=false)
+[2025-09-27 11:33:40.169] LOG - 16:33:40.165Z Stored values: TP=53, SL=15, Qty=4, Tick=0.25, Symbol=NQ
+[2025-09-27 11:33:40.169] LOG - 16:33:40.165Z Stored values: TP=53, SL=15, Qty=4, Tick=0.25, Symbol=NQ
+[2025-09-27 11:33:40.170] LOG - 16:33:40.165Z UI container added to DOM
+[2025-09-27 11:33:40.170] LOG - 16:33:40.165Z UI container added to DOM
+[2025-09-27 11:33:40.170] LOG - 16:33:40.165Z Setting up localStorage persistence
+[2025-09-27 11:33:40.170] LOG - 16:33:40.165Z Setting up localStorage persistence
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z UI initialization complete
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z UI initialization complete
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z Creating example front-quarter symbol
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z Creating example front-quarter symbol
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z getQuarterlyCode called with date: 2025-09-27T16:33:40.165Z
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z getQuarterlyCode called with date: 2025-09-27T16:33:40.165Z
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z Current month index: 8
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z Current month index: 8
+[2025-09-27 11:33:40.171] LOG - 16:33:40.165Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:40.172] LOG - 16:33:40.165Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:40.172] LOG - 16:33:40.166Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:40.172] LOG - 16:33:40.166Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:40.172] LOG - 16:33:40.166Z Example front-quarter symbol created: NQZ5
+[2025-09-27 11:33:40.172] LOG - 16:33:40.166Z Example front-quarter symbol created: NQZ5
+[2025-09-27 11:33:40.173] LOG - 16:33:40.172Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 11:33:40.174] LOG - 16:33:40.172Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 11:33:40.175] LOG - 16:33:40.173Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:40.175] LOG - 16:33:40.173Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:40.175] LOG - 16:33:40.173Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:40.177] LOG - 16:33:40.173Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:40.177] LOG - 16:33:40.173Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:40.178] LOG - 16:33:40.173Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:40.178] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 11:33:40.179] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 11:33:40.180] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-27 11:33:40.181] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Found 4 rows
+[2025-09-27 11:33:40.181] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:40.182] LOG - 16:33:40.174Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Table data: 3 rows
+[2025-09-27 11:33:40.183] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] First data row has 6 cells, we need index 2
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 1 (DEMO3655059) phase=1, active=true
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=1, active=false
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 2 (DEMO3655059-1) phase=1, active=false
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=true
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Setting row 3 (DEMO3655059-2) phase=2, active=true
+[2025-09-27 11:33:40.184] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Completed
+[2025-09-27 11:33:40.185] LOG - 16:33:40.175Z [updateUserColumnPhaseStatus] Completed
+[2025-09-27 11:33:40.195] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 11:33:40.195] LOG - 16:33:40.184Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 11:33:40.196] LOG - 16:33:40.184Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 11:33:41.201] LOG - 16:33:41.199Z Executing initial risk management assessment...
+[2025-09-27 11:33:41.201] LOG - 16:33:41.199Z Executing initial risk management assessment...
+[2025-09-27 11:33:41.202] ERROR - 16:33:41.200Z getTableData function not found
+[2025-09-27 11:33:41.202] ERROR - 16:33:41.200Z getTableData function not found
+[2025-09-27 11:33:41.203] ERROR - 16:33:41.202Z updateUserColumnPhaseStatus function not found
+[2025-09-27 11:33:41.203] ERROR - 16:33:41.202Z updateUserColumnPhaseStatus function not found
+[2025-09-27 11:33:41.204] ERROR - 16:33:41.202Z performAccountActions function not found
+[2025-09-27 11:33:41.204] ERROR - 16:33:41.202Z performAccountActions function not found
+[2025-09-27 11:33:41.204] LOG - 16:33:41.202Z Risk management assessment completed
+[2025-09-27 11:33:41.204] LOG - 16:33:41.202Z Risk management assessment completed
+[2025-09-27 11:33:41.226] LOG - 16:33:41.224Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.227] LOG - 16:33:41.224Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.228] LOG - 16:33:41.225Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.229] LOG - 16:33:41.225Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.230] LOG - 16:33:41.225Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:41.231] LOG - 16:33:41.225Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:41.730] LOG - 16:33:41.729Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.732] LOG - 16:33:41.729Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.733] LOG - 16:33:41.729Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.734] LOG - 16:33:41.729Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.735] LOG - 16:33:41.729Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:41.736] LOG - 16:33:41.729Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:41.736] LOG - 16:33:41.730Z Set DEMO3655059 qty to 20
+[2025-09-27 11:33:41.737] LOG - 16:33:41.730Z Set DEMO3655059-2 qty to 10
+[2025-09-27 11:33:41.738] LOG - 16:33:41.730Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.738] LOG - 16:33:41.730Z [analyzePhase] resetting phaseData
+[2025-09-27 11:33:41.738] LOG - 16:33:41.730Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.738] LOG - 16:33:41.730Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:33:41.739] LOG - 16:33:41.731Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:41.739] LOG - 16:33:41.731Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:33:43.267] LOG - 16:33:43.266Z Updated master quantity to 30
+[2025-09-27 11:33:43.270] LOG - 16:33:43.266Z Saved bracketTrade_qty = 30
+[2025-09-27 11:33:43.270] LOG - 16:33:43.266Z Saved bracketTrade_qty = 30
+[2025-09-27 11:33:43.270] LOG - 16:33:43.267Z Updated bracket trade quantity to 30
+[2025-09-27 11:33:48.864] LOG - 16:33:48.862Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:48.865] LOG - 16:33:48.862Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:48.867] LOG - 16:33:48.863Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:48.868] LOG - 16:33:48.863Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:48.869] LOG - 16:33:48.863Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:48.869] LOG - 16:33:48.863Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:48.870] LOG - 16:33:48.863Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:48.871] LOG - 16:33:48.863Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:48.871] LOG - 16:33:48.863Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:48.871] LOG - 16:33:48.863Z Trade control updates complete:
+[2025-09-27 11:33:49.937] LOG - 16:33:49.936Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:49.939] LOG - 16:33:49.936Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:49.940] LOG - 16:33:49.936Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:49.941] LOG - 16:33:49.936Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:49.942] LOG - 16:33:49.937Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:49.943] LOG - 16:33:49.937Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:49.944] LOG - 16:33:49.937Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:49.944] LOG - 16:33:49.937Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:49.945] LOG - 16:33:49.937Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:49.945] LOG - 16:33:49.937Z Trade control updates complete:
+[2025-09-27 11:33:53.391] LOG - 16:33:53.390Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.392] LOG - 16:33:53.390Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.393] LOG - 16:33:53.391Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.395] LOG - 16:33:53.391Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.396] LOG - 16:33:53.391Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.397] LOG - 16:33:53.391Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.397] LOG - 16:33:53.391Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.398] LOG - 16:33:53.391Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.404] LOG - 16:33:53.391Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:53.405] LOG - 16:33:53.391Z Trade control updates complete:
+[2025-09-27 11:33:53.727] LOG - 16:33:53.726Z Saved bracketTrade_symbol = N
+[2025-09-27 11:33:53.729] LOG - 16:33:53.726Z Saved bracketTrade_symbol = N
+[2025-09-27 11:33:53.730] LOG - 16:33:53.727Z Updated symbol to N in Tradovate UI
+[2025-09-27 11:33:53.731] LOG - 16:33:53.727Z Updated symbol to N in Tradovate UI
+[2025-09-27 11:33:53.732] LOG - 16:33:53.727Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.733] LOG - 16:33:53.727Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.733] LOG - 16:33:53.727Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.734] LOG - 16:33:53.727Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.735] LOG - 16:33:53.727Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.735] LOG - 16:33:53.727Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.736] LOG - 16:33:53.727Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.736] LOG - 16:33:53.727Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.737] LOG - 16:33:53.727Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:53.737] LOG - 16:33:53.727Z Trade control updates complete:
+[2025-09-27 11:33:53.878] LOG - 16:33:53.877Z Saved bracketTrade_symbol = NQ
+[2025-09-27 11:33:53.879] LOG - 16:33:53.877Z Saved bracketTrade_symbol = NQ
+[2025-09-27 11:33:53.881] LOG - 16:33:53.877Z Updated symbol to NQ in Tradovate UI
+[2025-09-27 11:33:53.882] LOG - 16:33:53.877Z Updated symbol to NQ in Tradovate UI
+[2025-09-27 11:33:53.883] LOG - 16:33:53.878Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.884] LOG - 16:33:53.878Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:53.885] LOG - 16:33:53.878Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.886] LOG - 16:33:53.878Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:53.886] LOG - 16:33:53.878Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.887] LOG - 16:33:53.878Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:53.887] LOG - 16:33:53.878Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.888] LOG - 16:33:53.878Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:53.889] LOG - 16:33:53.878Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:53.889] LOG - 16:33:53.878Z Trade control updates complete:
+[2025-09-27 11:33:53.994] LOG - 16:33:53.993Z normalizeSymbol called with: "NQ"
+[2025-09-27 11:33:53.995] LOG - 16:33:53.993Z normalizeSymbol called with: "NQ"
+[2025-09-27 11:33:53.996] LOG - 16:33:53.994Z Is root symbol: true
+[2025-09-27 11:33:53.997] LOG - 16:33:53.994Z Is root symbol: true
+[2025-09-27 11:33:53.998] LOG - 16:33:53.994Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:33:53.998] LOG - 16:33:53.994Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:33:53.999] LOG - 16:33:53.994Z getQuarterlyCode called with date: 2025-09-27T16:33:53.994Z
+[2025-09-27 11:33:54.000] LOG - 16:33:53.994Z getQuarterlyCode called with date: 2025-09-27T16:33:53.994Z
+[2025-09-27 11:33:54.001] LOG - 16:33:53.994Z Current month index: 8
+[2025-09-27 11:33:54.001] LOG - 16:33:53.994Z Current month index: 8
+[2025-09-27 11:33:54.003] LOG - 16:33:53.994Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:54.004] LOG - 16:33:53.994Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:54.005] LOG - 16:33:53.994Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:54.007] LOG - 16:33:53.994Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:54.007] LOG - 16:33:53.994Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:54.008] LOG - 16:33:53.994Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:54.009] LOG - 16:33:53.994Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:33:54.010] LOG - 16:33:53.994Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:33:54.011] LOG - 16:33:53.994Z Normalized symbol: "NQZ5"
+[2025-09-27 11:33:54.012] LOG - 16:33:53.994Z Normalized symbol: "NQZ5"
+[2025-09-27 11:33:54.013] LOG - 16:33:53.995Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-27 11:33:54.014] LOG - 16:33:53.995Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-27 11:33:54.015] LOG - 16:33:53.995Z Found 1 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-27 11:33:54.016] LOG - 16:33:53.995Z Found 1 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-27 11:33:54.018] LOG - 16:33:53.995Z Selected input: [object HTMLInputElement]
+[2025-09-27 11:33:54.019] LOG - 16:33:53.995Z Selected input:
+[2025-09-27 11:33:54.019] LOG - 16:33:53.995Z Input location: [object Object]
+[2025-09-27 11:33:54.020] LOG - 16:33:53.995Z Input location:
+[2025-09-27 11:33:54.021] LOG - 16:33:53.995Z Clearing input field
+[2025-09-27 11:33:54.022] LOG - 16:33:53.995Z Clearing input field
+[2025-09-27 11:33:54.022] LOG - 16:33:53.999Z Delaying for 400ms
+[2025-09-27 11:33:54.022] LOG - 16:33:53.999Z Delaying for 400ms
+[2025-09-27 11:33:54.097] LOG - 16:33:54.096Z Saved bracketTrade_symbol = NQ
+[2025-09-27 11:33:54.099] LOG - 16:33:54.096Z Saved bracketTrade_symbol = NQ
+[2025-09-27 11:33:54.100] LOG - 16:33:54.096Z Updated symbol to NQ in Tradovate UI
+[2025-09-27 11:33:54.101] LOG - 16:33:54.096Z Updated symbol to NQ in Tradovate UI
+[2025-09-27 11:33:54.102] LOG - 16:33:54.096Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:54.103] LOG - 16:33:54.096Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:54.104] LOG - 16:33:54.096Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:54.105] LOG - 16:33:54.096Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:54.106] LOG - 16:33:54.096Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:54.107] LOG - 16:33:54.096Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:54.107] LOG - 16:33:54.097Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:54.107] LOG - 16:33:54.097Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:54.108] LOG - 16:33:54.097Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:54.108] LOG - 16:33:54.097Z Trade control updates complete:
+[2025-09-27 11:33:54.401] LOG - 16:33:54.400Z Setting input value to: "NQZ5"
+[2025-09-27 11:33:54.402] LOG - 16:33:54.400Z Setting input value to: "NQZ5"
+[2025-09-27 11:33:54.403] LOG - 16:33:54.402Z Delaying for 900ms
+[2025-09-27 11:33:54.403] LOG - 16:33:54.402Z Delaying for 900ms
+[2025-09-27 11:33:55.305] LOG - 16:33:55.304Z Simulating Enter key press
+[2025-09-27 11:33:55.305] LOG - 16:33:55.304Z Simulating Enter key press
+[2025-09-27 11:33:55.323] LOG - 16:33:55.322Z Symbol update complete
+[2025-09-27 11:33:55.323] LOG - 16:33:55.322Z Symbol update complete
+[2025-09-27 11:33:56.176] LOG - 16:33:56.174Z Saved bracketTrade_symbol = M
+[2025-09-27 11:33:56.176] LOG - 16:33:56.174Z Saved bracketTrade_symbol = M
+[2025-09-27 11:33:56.177] LOG - 16:33:56.175Z Updated symbol to M in Tradovate UI
+[2025-09-27 11:33:56.178] LOG - 16:33:56.175Z Updated symbol to M in Tradovate UI
+[2025-09-27 11:33:56.178] LOG - 16:33:56.175Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.180] LOG - 16:33:56.175Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.181] LOG - 16:33:56.175Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.182] LOG - 16:33:56.175Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.183] LOG - 16:33:56.175Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.184] LOG - 16:33:56.175Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.184] LOG - 16:33:56.175Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.185] LOG - 16:33:56.175Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.186] LOG - 16:33:56.176Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:56.186] LOG - 16:33:56.176Z Trade control updates complete:
+[2025-09-27 11:33:56.452] LOG - 16:33:56.451Z Saved bracketTrade_symbol = MNQ
+[2025-09-27 11:33:56.453] LOG - 16:33:56.451Z Saved bracketTrade_symbol = MNQ
+[2025-09-27 11:33:56.455] LOG - 16:33:56.451Z Updated symbol to MNQ in Tradovate UI
+[2025-09-27 11:33:56.455] LOG - 16:33:56.451Z Updated symbol to MNQ in Tradovate UI
+[2025-09-27 11:33:56.457] LOG - 16:33:56.452Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.458] LOG - 16:33:56.452Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.459] LOG - 16:33:56.452Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.460] LOG - 16:33:56.452Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.461] LOG - 16:33:56.452Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.461] LOG - 16:33:56.452Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.462] LOG - 16:33:56.452Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.462] LOG - 16:33:56.452Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.463] LOG - 16:33:56.452Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:56.464] LOG - 16:33:56.452Z Trade control updates complete:
+[2025-09-27 11:33:56.512] LOG - 16:33:56.511Z normalizeSymbol called with: "MNQ"
+[2025-09-27 11:33:56.513] LOG - 16:33:56.511Z normalizeSymbol called with: "MNQ"
+[2025-09-27 11:33:56.514] LOG - 16:33:56.512Z Is root symbol: true
+[2025-09-27 11:33:56.515] LOG - 16:33:56.512Z Is root symbol: true
+[2025-09-27 11:33:56.516] LOG - 16:33:56.512Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:33:56.517] LOG - 16:33:56.512Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:33:56.518] LOG - 16:33:56.512Z getQuarterlyCode called with date: 2025-09-27T16:33:56.512Z
+[2025-09-27 11:33:56.519] LOG - 16:33:56.512Z getQuarterlyCode called with date: 2025-09-27T16:33:56.512Z
+[2025-09-27 11:33:56.520] LOG - 16:33:56.512Z Current month index: 8
+[2025-09-27 11:33:56.521] LOG - 16:33:56.512Z Current month index: 8
+[2025-09-27 11:33:56.522] LOG - 16:33:56.512Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:56.524] LOG - 16:33:56.512Z Starting calculation with year=2025, month=8
+[2025-09-27 11:33:56.526] LOG - 16:33:56.512Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:56.527] LOG - 16:33:56.512Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:56.528] LOG - 16:33:56.512Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:56.529] LOG - 16:33:56.512Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:33:56.530] LOG - 16:33:56.512Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:33:56.531] LOG - 16:33:56.512Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:33:56.531] LOG - 16:33:56.512Z Normalized symbol: "MNQZ5"
+[2025-09-27 11:33:56.532] LOG - 16:33:56.512Z Normalized symbol: "MNQZ5"
+[2025-09-27 11:33:56.532] LOG - 16:33:56.512Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-27 11:33:56.533] LOG - 16:33:56.512Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-27 11:33:56.534] LOG - 16:33:56.512Z Found 1 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-27 11:33:56.534] LOG - 16:33:56.512Z Found 1 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-27 11:33:56.535] LOG - 16:33:56.512Z Selected input: [object HTMLInputElement]
+[2025-09-27 11:33:56.536] LOG - 16:33:56.512Z Selected input:
+[2025-09-27 11:33:56.537] LOG - 16:33:56.513Z Input location: [object Object]
+[2025-09-27 11:33:56.537] LOG - 16:33:56.513Z Input location:
+[2025-09-27 11:33:56.538] LOG - 16:33:56.513Z Clearing input field
+[2025-09-27 11:33:56.538] LOG - 16:33:56.513Z Clearing input field
+[2025-09-27 11:33:56.539] LOG - 16:33:56.515Z Delaying for 400ms
+[2025-09-27 11:33:56.539] LOG - 16:33:56.515Z Delaying for 400ms
+[2025-09-27 11:33:56.615] LOG - 16:33:56.613Z Saved bracketTrade_symbol = MNQ
+[2025-09-27 11:33:56.617] LOG - 16:33:56.613Z Saved bracketTrade_symbol = MNQ
+[2025-09-27 11:33:56.617] LOG - 16:33:56.613Z Updated symbol to MNQ in Tradovate UI
+[2025-09-27 11:33:56.618] LOG - 16:33:56.613Z Updated symbol to MNQ in Tradovate UI
+[2025-09-27 11:33:56.619] LOG - 16:33:56.614Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.620] LOG - 16:33:56.614Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:56.621] LOG - 16:33:56.614Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.622] LOG - 16:33:56.614Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:56.623] LOG - 16:33:56.614Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.623] LOG - 16:33:56.614Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:56.624] LOG - 16:33:56.614Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.625] LOG - 16:33:56.614Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:56.625] LOG - 16:33:56.614Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:56.626] LOG - 16:33:56.614Z Trade control updates complete:
+[2025-09-27 11:33:56.918] LOG - 16:33:56.916Z Setting input value to: "MNQZ5"
+[2025-09-27 11:33:56.918] LOG - 16:33:56.916Z Setting input value to: "MNQZ5"
+[2025-09-27 11:33:56.919] LOG - 16:33:56.918Z Delaying for 900ms
+[2025-09-27 11:33:56.919] LOG - 16:33:56.918Z Delaying for 900ms
+[2025-09-27 11:33:57.820] LOG - 16:33:57.819Z Simulating Enter key press
+[2025-09-27 11:33:57.820] LOG - 16:33:57.819Z Simulating Enter key press
+[2025-09-27 11:33:57.835] LOG - 16:33:57.834Z Symbol update complete
+[2025-09-27 11:33:57.835] LOG - 16:33:57.834Z Symbol update complete
+[2025-09-27 11:33:59.954] LOG - 16:33:59.952Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:59.955] LOG - 16:33:59.952Z Saved bracketTrade_qty = 3
+[2025-09-27 11:33:59.956] LOG - 16:33:59.952Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:59.958] LOG - 16:33:59.952Z Saved bracketTrade_tp = 100
+[2025-09-27 11:33:59.958] LOG - 16:33:59.953Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:59.959] LOG - 16:33:59.953Z Saved bracketTrade_sl = 40
+[2025-09-27 11:33:59.960] LOG - 16:33:59.953Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:59.960] LOG - 16:33:59.953Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:33:59.961] LOG - 16:33:59.953Z Trade control updates complete: [object Object]
+[2025-09-27 11:33:59.961] LOG - 16:33:59.953Z Trade control updates complete:
+[2025-09-27 11:34:00.319] LOG - 16:34:00.318Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.320] LOG - 16:34:00.318Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.323] LOG - 16:34:00.318Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.327] LOG - 16:34:00.318Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.328] LOG - 16:34:00.318Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.329] LOG - 16:34:00.318Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.330] LOG - 16:34:00.319Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.332] LOG - 16:34:00.319Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.334] LOG - 16:34:00.319Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:00.339] LOG - 16:34:00.319Z Trade control updates complete:
+[2025-09-27 11:34:00.637] LOG - 16:34:00.636Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.638] LOG - 16:34:00.636Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.639] LOG - 16:34:00.636Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.640] LOG - 16:34:00.636Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.641] LOG - 16:34:00.636Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.642] LOG - 16:34:00.636Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.642] LOG - 16:34:00.637Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.643] LOG - 16:34:00.637Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.644] LOG - 16:34:00.637Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:00.645] LOG - 16:34:00.637Z Trade control updates complete:
+[2025-09-27 11:34:00.785] LOG - 16:34:00.783Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.785] LOG - 16:34:00.783Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.786] LOG - 16:34:00.784Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.787] LOG - 16:34:00.784Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.788] LOG - 16:34:00.784Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.789] LOG - 16:34:00.784Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.790] LOG - 16:34:00.784Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.791] LOG - 16:34:00.784Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.792] LOG - 16:34:00.785Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:00.793] LOG - 16:34:00.785Z Trade control updates complete:
+[2025-09-27 11:34:00.903] LOG - 16:34:00.902Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.906] LOG - 16:34:00.902Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:00.908] LOG - 16:34:00.902Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.909] LOG - 16:34:00.902Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:00.910] LOG - 16:34:00.902Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.911] LOG - 16:34:00.902Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:00.911] LOG - 16:34:00.903Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.912] LOG - 16:34:00.903Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:00.912] LOG - 16:34:00.903Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:00.912] LOG - 16:34:00.903Z Trade control updates complete:
+[2025-09-27 11:34:02.395] LOG - 16:34:02.393Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:02.396] LOG - 16:34:02.393Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:02.397] LOG - 16:34:02.393Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:02.398] LOG - 16:34:02.393Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:02.398] LOG - 16:34:02.393Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:02.399] LOG - 16:34:02.393Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:02.399] LOG - 16:34:02.393Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:02.400] LOG - 16:34:02.393Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:02.401] LOG - 16:34:02.394Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:02.401] LOG - 16:34:02.394Z Trade control updates complete:
+[2025-09-27 11:34:07.582] LOG - 16:34:07.581Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:07.583] LOG - 16:34:07.581Z Saved bracketTrade_qty = 3
+[2025-09-27 11:34:07.584] LOG - 16:34:07.581Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:07.585] LOG - 16:34:07.581Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:07.586] LOG - 16:34:07.581Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:07.587] LOG - 16:34:07.581Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:07.588] LOG - 16:34:07.582Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:07.589] LOG - 16:34:07.582Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:07.589] LOG - 16:34:07.582Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:07.590] LOG - 16:34:07.582Z Trade control updates complete:
+[2025-09-27 11:34:08.909] LOG - 16:34:08.908Z Saved bracketTrade_qty = 2
+[2025-09-27 11:34:08.909] LOG - 16:34:08.908Z Saved bracketTrade_qty = 2
+[2025-09-27 11:34:08.910] LOG - 16:34:08.908Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:08.910] LOG - 16:34:08.908Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:08.911] LOG - 16:34:08.908Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:08.912] LOG - 16:34:08.908Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:08.913] LOG - 16:34:08.908Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:08.914] LOG - 16:34:08.908Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:08.914] LOG - 16:34:08.908Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:08.915] LOG - 16:34:08.908Z Trade control updates complete:
+[2025-09-27 11:34:09.059] LOG - 16:34:09.058Z Saved bracketTrade_qty = 2
+[2025-09-27 11:34:09.060] LOG - 16:34:09.058Z Saved bracketTrade_qty = 2
+[2025-09-27 11:34:09.060] LOG - 16:34:09.059Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.061] LOG - 16:34:09.059Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.062] LOG - 16:34:09.059Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.063] LOG - 16:34:09.059Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.064] LOG - 16:34:09.059Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.064] LOG - 16:34:09.059Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.065] LOG - 16:34:09.059Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:09.065] LOG - 16:34:09.059Z Trade control updates complete:
+[2025-09-27 11:34:09.230] LOG - 16:34:09.229Z Saved bracketTrade_qty = 1
+[2025-09-27 11:34:09.232] LOG - 16:34:09.229Z Saved bracketTrade_qty = 1
+[2025-09-27 11:34:09.233] LOG - 16:34:09.229Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.233] LOG - 16:34:09.229Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.234] LOG - 16:34:09.230Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.235] LOG - 16:34:09.230Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.236] LOG - 16:34:09.230Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.236] LOG - 16:34:09.230Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.236] LOG - 16:34:09.230Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:09.236] LOG - 16:34:09.230Z Trade control updates complete:
+[2025-09-27 11:34:09.350] LOG - 16:34:09.349Z Saved bracketTrade_qty = 1
+[2025-09-27 11:34:09.351] LOG - 16:34:09.349Z Saved bracketTrade_qty = 1
+[2025-09-27 11:34:09.351] LOG - 16:34:09.349Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.352] LOG - 16:34:09.349Z Saved bracketTrade_tp = 100
+[2025-09-27 11:34:09.353] LOG - 16:34:09.349Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.354] LOG - 16:34:09.349Z Saved bracketTrade_sl = 40
+[2025-09-27 11:34:09.354] LOG - 16:34:09.349Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.355] LOG - 16:34:09.349Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:34:09.356] LOG - 16:34:09.349Z Trade control updates complete: [object Object]
+[2025-09-27 11:34:09.356] LOG - 16:34:09.349Z Trade control updates complete:
+[2025-09-27 11:34:10.332] LOG - 16:34:10.331Z autoTrade called with: symbol=MNQ, qty=1, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:34:10.333] LOG - 16:34:10.331Z autoTrade called with: symbol=MNQ, qty=1, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:34:10.334] LOG - 16:34:10.331Z Using symbol: MNQ
+[2025-09-27 11:34:10.335] LOG - 16:34:10.331Z Using symbol: MNQ
+[2025-09-27 11:34:10.336] LOG - 16:34:10.331Z Root symbol: MNQ
+[2025-09-27 11:34:10.336] LOG - 16:34:10.331Z Root symbol: MNQ
+[2025-09-27 11:34:10.337] LOG - 16:34:10.332Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:34:10.338] LOG - 16:34:10.332Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:34:10.339] LOG - 16:34:10.332Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:34:10.339] LOG - 16:34:10.332Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:34:10.340] LOG - 16:34:10.332Z Getting market data for MNQ
+[2025-09-27 11:34:10.341] LOG - 16:34:10.332Z Getting market data for MNQ
+[2025-09-27 11:34:10.341] LOG - 16:34:10.332Z getMarketData called for: "MNQ"
+[2025-09-27 11:34:10.342] LOG - 16:34:10.332Z getMarketData called for: "MNQ"
+[2025-09-27 11:34:10.343] LOG - 16:34:10.332Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:34:10.343] LOG - 16:34:10.332Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:34:10.344] LOG - 16:34:10.332Z getQuarterlyCode called with date: 2025-09-27T16:34:10.332Z
+[2025-09-27 11:34:10.344] LOG - 16:34:10.332Z getQuarterlyCode called with date: 2025-09-27T16:34:10.332Z
+[2025-09-27 11:34:10.345] LOG - 16:34:10.332Z Current month index: 8
+[2025-09-27 11:34:10.346] LOG - 16:34:10.332Z Current month index: 8
+[2025-09-27 11:34:10.347] LOG - 16:34:10.332Z Starting calculation with year=2025, month=8
+[2025-09-27 11:34:10.347] LOG - 16:34:10.332Z Starting calculation with year=2025, month=8
+[2025-09-27 11:34:10.348] LOG - 16:34:10.332Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:10.348] LOG - 16:34:10.332Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:10.349] LOG - 16:34:10.332Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:10.350] LOG - 16:34:10.332Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:10.351] LOG - 16:34:10.333Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:34:10.351] LOG - 16:34:10.333Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:34:10.351] LOG - 16:34:10.333Z Using symbol: "MNQZ5" for market data lookup
+[2025-09-27 11:34:10.351] LOG - 16:34:10.333Z Using symbol: "MNQZ5" for market data lookup
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Extracted prices for MNQZ5: bid=24724.00, offer=24738.50
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Extracted prices for MNQZ5: bid=24724.00, offer=24738.50
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Market data: [object Object]
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Market data:
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Market price: 24738.5 (offer price)
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Market price: 24738.5 (offer price)
+[2025-09-27 11:34:10.352] LOG - 16:34:10.333Z Custom entry price provided: 24700
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Custom entry price provided: 24700
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Order type determined to be: LIMIT
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Order type determined to be: LIMIT
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Using price precision: 2 decimal places
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Using price precision: 2 decimal places
+[2025-09-27 11:34:10.353] LOG - 16:34:10.333Z Calculated SL price: 24696.25 (entry - 15 ticks)
+[2025-09-27 11:34:10.354] LOG - 16:34:10.333Z Calculated SL price: 24696.25 (entry - 15 ticks)
+[2025-09-27 11:34:10.354] LOG - 16:34:10.333Z Calculated TP price: 24713.25 (entry + 53 ticks)
+[2025-09-27 11:34:10.354] LOG - 16:34:10.333Z Calculated TP price: 24713.25 (entry + 53 ticks)
+[2025-09-27 11:34:10.354] LOG - 16:34:10.333Z Trade data prepared: [object Object]
+[2025-09-27 11:34:10.354] LOG - 16:34:10.333Z Trade data prepared:
+[2025-09-27 11:34:10.355] LOG - 16:34:10.334Z Submitting bracket orders
+[2025-09-27 11:34:10.355] LOG - 16:34:10.334Z Submitting bracket orders
+[2025-09-27 11:34:10.355] LOG - 16:34:10.334Z Creating bracket orders with data: [object Object]
+[2025-09-27 11:34:10.356] LOG - 16:34:10.334Z Creating bracket orders with data:
+[2025-09-27 11:34:10.357] LOG - 16:34:10.334Z TP enabled: false, SL enabled: false
+[2025-09-27 11:34:10.357] LOG - 16:34:10.334Z TP enabled: false, SL enabled: false
+[2025-09-27 11:34:10.358] LOG - 16:34:10.334Z Submitting initial LIMIT order
+[2025-09-27 11:34:10.358] LOG - 16:34:10.334Z Submitting initial LIMIT order
+[2025-09-27 11:34:10.359] LOG - 16:34:10.334Z Setting common order fields
+[2025-09-27 11:34:10.359] LOG - 16:34:10.334Z Setting common order fields
+[2025-09-27 11:34:10.360] LOG - 16:34:10.335Z Setting action to: Buy
+[2025-09-27 11:34:10.361] LOG - 16:34:10.335Z Setting action to: Buy
+[2025-09-27 11:34:10.361] LOG - 16:34:10.335Z Found 11 action labels
+[2025-09-27 11:34:10.362] LOG - 16:34:10.335Z Found 11 action labels
+[2025-09-27 11:34:10.369] LOG - 16:34:10.335Z Clicking Buy label
+[2025-09-27 11:34:10.370] LOG - 16:34:10.335Z Clicking Buy label
+[2025-09-27 11:34:10.371] LOG - 16:34:10.351Z Setting quantity to: 1
+[2025-09-27 11:34:10.371] LOG - 16:34:10.351Z Setting quantity to: 1
+[2025-09-27 11:34:10.372] LOG - 16:34:10.353Z Delaying for 150ms
+[2025-09-27 11:34:10.373] LOG - 16:34:10.353Z Delaying for 150ms
+[2025-09-27 11:34:10.519] LOG - 16:34:10.518Z Delaying for 150ms
+[2025-09-27 11:34:10.519] LOG - 16:34:10.518Z Delaying for 150ms
+[2025-09-27 11:34:10.671] LOG - 16:34:10.670Z Delaying for 250ms
+[2025-09-27 11:34:10.672] LOG - 16:34:10.670Z Delaying for 250ms
+[2025-09-27 11:34:10.951] LOG - 16:34:10.950Z Delaying for 250ms
+[2025-09-27 11:34:10.951] LOG - 16:34:10.950Z Delaying for 250ms
+[2025-09-27 11:34:11.219] LOG - 16:34:11.217Z Delaying for 200ms
+[2025-09-27 11:34:11.220] LOG - 16:34:11.217Z Delaying for 200ms
+[2025-09-27 11:34:11.427] LOG - 16:34:11.425Z [object Object],[object Object],[object Object]
+[2025-09-27 11:34:11.428] LOG - 16:34:11.425Z
+[2025-09-27 11:34:11.428] LOG - 16:34:11.426Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:34:11.428] LOG - 16:34:11.426Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:34:11.428] LOG - 16:34:11.426Z Delaying for 500ms
+[2025-09-27 11:34:11.428] LOG - 16:34:11.426Z Delaying for 500ms
+[2025-09-27 11:34:11.928] LOG - 16:34:11.927Z ✅ Found order history div - capturing feedback...
+[2025-09-27 11:34:11.929] LOG - 16:34:11.927Z ✅ Found order history div - capturing feedback...
+[2025-09-27 11:34:11.930] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Symbol: MNQZ5
+[2025-09-27 11:34:11.931] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Symbol: MNQZ5
+[2025-09-27 11:34:11.931] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-27 11:34:11.932] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-27 11:34:11.933] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-27 11:34:11.934] LOG - 16:34:11.927Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-27 11:34:11.935] LOG - 16:34:11.927Z 📊 EVENT 1: [object Object]
+[2025-09-27 11:34:11.946] LOG - 16:34:11.927Z 📊 EVENT 1:
+[2025-09-27 11:34:11.948] LOG - 16:34:11.927Z 📊 EVENT 2: [object Object]
+[2025-09-27 11:34:11.948] LOG - 16:34:11.927Z 📊 EVENT 2:
+[2025-09-27 11:34:11.948] LOG - 16:34:11.928Z 📊 EVENT 3: [object Object]
+[2025-09-27 11:34:11.949] LOG - 16:34:11.928Z 📊 EVENT 3:
+[2025-09-27 11:34:11.949] LOG - 16:34:11.928Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-27 11:34:11.949] LOG - 16:34:11.928Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-27 11:34:11.949] LOG - 16:34:11.928Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">MNQZ5</div></div><div class=""><small class="text-muted">#282988398716 </small><span class="text-success">Buy</span> 1 MNQZ5 LMT at 24700.25  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 195px; width: 352px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 178px; width: 352px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 195px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 195px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 352px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.245Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398716" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398716</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Buy 1 LMT at 24700.25" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Buy 1 LMT at 24700.25</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.247Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398717" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398717</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.249Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398718" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398718</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 352px;"><div style="height: 15px; overflow: hidden; width: 352px; top: 178px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 352px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 140.388px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-27 11:34:11.951] LOG - 16:34:11.928Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">MNQZ5</div></div><div class=""><small class="text-muted">#282988398716 </small><span class="text-success">Buy</span> 1 MNQZ5 LMT at 24700.25  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 195px; width: 352px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 178px; width: 352px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 195px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 195px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 352px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.245Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398716" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398716</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Buy 1 LMT at 24700.25" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Buy 1 LMT at 24700.25</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.247Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398717" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398717</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:11.249Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:11 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398718" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398718</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 352px;"><div style="height: 15px; overflow: hidden; width: 352px; top: 178px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 352px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 140.388px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-27 11:34:11.954] LOG - 16:34:11.928Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-27 11:34:11.955] LOG - 16:34:11.935Z Delaying for 200ms
+[2025-09-27 11:34:11.955] LOG - 16:34:11.935Z Delaying for 200ms
+[2025-09-27 11:34:12.137] LOG - 16:34:12.136Z Flipping action to Sell for TP/SL orders
+[2025-09-27 11:34:12.138] LOG - 16:34:12.136Z Flipping action to Sell for TP/SL orders
+[2025-09-27 11:34:12.138] LOG - 16:34:12.136Z Bracket order creation complete
+[2025-09-27 11:34:12.138] LOG - 16:34:12.136Z Bracket order creation complete
+[2025-09-27 11:34:14.756] LOG - 16:34:14.755Z autoTrade called with: symbol=MNQ, qty=1, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:34:14.775] LOG - 16:34:14.755Z autoTrade called with: symbol=MNQ, qty=1, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:34:14.794] LOG - 16:34:14.755Z Using symbol: MNQ
+[2025-09-27 11:34:14.795] LOG - 16:34:14.755Z Using symbol: MNQ
+[2025-09-27 11:34:14.813] LOG - 16:34:14.755Z Root symbol: MNQ
+[2025-09-27 11:34:14.814] LOG - 16:34:14.755Z Root symbol: MNQ
+[2025-09-27 11:34:14.814] LOG - 16:34:14.755Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:34:14.814] LOG - 16:34:14.755Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:34:14.815] LOG - 16:34:14.755Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:34:14.815] LOG - 16:34:14.755Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:34:14.816] LOG - 16:34:14.756Z Getting market data for MNQ
+[2025-09-27 11:34:14.816] LOG - 16:34:14.756Z Getting market data for MNQ
+[2025-09-27 11:34:14.816] LOG - 16:34:14.756Z getMarketData called for: "MNQ"
+[2025-09-27 11:34:14.817] LOG - 16:34:14.756Z getMarketData called for: "MNQ"
+[2025-09-27 11:34:14.817] LOG - 16:34:14.756Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:34:14.817] LOG - 16:34:14.756Z getFrontQuarter called for root: "MNQ"
+[2025-09-27 11:34:14.818] LOG - 16:34:14.756Z getQuarterlyCode called with date: 2025-09-27T16:34:14.756Z
+[2025-09-27 11:34:14.818] LOG - 16:34:14.756Z getQuarterlyCode called with date: 2025-09-27T16:34:14.756Z
+[2025-09-27 11:34:14.819] LOG - 16:34:14.756Z Current month index: 8
+[2025-09-27 11:34:14.819] LOG - 16:34:14.756Z Current month index: 8
+[2025-09-27 11:34:14.819] LOG - 16:34:14.756Z Starting calculation with year=2025, month=8
+[2025-09-27 11:34:14.820] LOG - 16:34:14.756Z Starting calculation with year=2025, month=8
+[2025-09-27 11:34:14.821] LOG - 16:34:14.756Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:14.821] LOG - 16:34:14.756Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:14.822] LOG - 16:34:14.756Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:14.823] LOG - 16:34:14.756Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:34:14.823] LOG - 16:34:14.756Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:34:14.823] LOG - 16:34:14.756Z Returning front quarter symbol: "MNQZ5"
+[2025-09-27 11:34:14.824] LOG - 16:34:14.756Z Using symbol: "MNQZ5" for market data lookup
+[2025-09-27 11:34:14.824] LOG - 16:34:14.756Z Using symbol: "MNQZ5" for market data lookup
+[2025-09-27 11:34:14.825] LOG - 16:34:14.756Z Extracted prices for MNQZ5: bid=24724.00, offer=24738.50
+[2025-09-27 11:34:14.825] LOG - 16:34:14.756Z Extracted prices for MNQZ5: bid=24724.00, offer=24738.50
+[2025-09-27 11:34:14.825] LOG - 16:34:14.756Z Market data: [object Object]
+[2025-09-27 11:34:14.825] LOG - 16:34:14.756Z Market data:
+[2025-09-27 11:34:14.826] LOG - 16:34:14.757Z Market price: 24724 (bid price)
+[2025-09-27 11:34:14.826] LOG - 16:34:14.757Z Market price: 24724 (bid price)
+[2025-09-27 11:34:14.826] LOG - 16:34:14.757Z Custom entry price provided: 24700
+[2025-09-27 11:34:14.827] LOG - 16:34:14.757Z Custom entry price provided: 24700
+[2025-09-27 11:34:14.827] LOG - 16:34:14.757Z Order type determined to be: STOP
+[2025-09-27 11:34:14.827] LOG - 16:34:14.757Z Order type determined to be: STOP
+[2025-09-27 11:34:14.827] LOG - 16:34:14.757Z Using price precision: 2 decimal places
+[2025-09-27 11:34:14.828] LOG - 16:34:14.757Z Using price precision: 2 decimal places
+[2025-09-27 11:34:14.828] LOG - 16:34:14.757Z Calculated SL price: 24703.75 (entry + 15 ticks)
+[2025-09-27 11:34:14.828] LOG - 16:34:14.757Z Calculated SL price: 24703.75 (entry + 15 ticks)
+[2025-09-27 11:34:14.829] LOG - 16:34:14.757Z Calculated TP price: 24686.75 (entry - 53 ticks)
+[2025-09-27 11:34:14.829] LOG - 16:34:14.757Z Calculated TP price: 24686.75 (entry - 53 ticks)
+[2025-09-27 11:34:14.829] LOG - 16:34:14.757Z Trade data prepared: [object Object]
+[2025-09-27 11:34:14.830] LOG - 16:34:14.757Z Trade data prepared:
+[2025-09-27 11:34:14.830] LOG - 16:34:14.757Z Submitting bracket orders
+[2025-09-27 11:34:14.830] LOG - 16:34:14.757Z Submitting bracket orders
+[2025-09-27 11:34:14.830] LOG - 16:34:14.757Z Creating bracket orders with data: [object Object]
+[2025-09-27 11:34:14.831] LOG - 16:34:14.757Z Creating bracket orders with data:
+[2025-09-27 11:34:14.831] LOG - 16:34:14.757Z TP enabled: false, SL enabled: false
+[2025-09-27 11:34:14.831] LOG - 16:34:14.757Z TP enabled: false, SL enabled: false
+[2025-09-27 11:34:14.832] LOG - 16:34:14.757Z Submitting initial STOP order
+[2025-09-27 11:34:14.832] LOG - 16:34:14.757Z Submitting initial STOP order
+[2025-09-27 11:34:14.832] LOG - 16:34:14.757Z Setting common order fields
+[2025-09-27 11:34:14.833] LOG - 16:34:14.757Z Setting common order fields
+[2025-09-27 11:34:14.833] LOG - 16:34:14.757Z Setting action to: Sell
+[2025-09-27 11:34:14.833] LOG - 16:34:14.757Z Setting action to: Sell
+[2025-09-27 11:34:14.833] LOG - 16:34:14.758Z Found 11 action labels
+[2025-09-27 11:34:14.834] LOG - 16:34:14.758Z Found 11 action labels
+[2025-09-27 11:34:14.834] LOG - 16:34:14.758Z Clicking Sell label
+[2025-09-27 11:34:14.834] LOG - 16:34:14.758Z Clicking Sell label
+[2025-09-27 11:34:14.835] LOG - 16:34:14.769Z Setting quantity to: 1
+[2025-09-27 11:34:14.835] LOG - 16:34:14.769Z Setting quantity to: 1
+[2025-09-27 11:34:14.835] LOG - 16:34:14.771Z Delaying for 150ms
+[2025-09-27 11:34:14.835] LOG - 16:34:14.771Z Delaying for 150ms
+[2025-09-27 11:34:14.934] LOG - 16:34:14.933Z Delaying for 150ms
+[2025-09-27 11:34:14.934] LOG - 16:34:14.933Z Delaying for 150ms
+[2025-09-27 11:34:15.086] LOG - 16:34:15.085Z Delaying for 250ms
+[2025-09-27 11:34:15.086] LOG - 16:34:15.085Z Delaying for 250ms
+[2025-09-27 11:34:15.360] LOG - 16:34:15.359Z Delaying for 250ms
+[2025-09-27 11:34:15.361] LOG - 16:34:15.359Z Delaying for 250ms
+[2025-09-27 11:34:15.626] LOG - 16:34:15.625Z Delaying for 200ms
+[2025-09-27 11:34:15.627] LOG - 16:34:15.625Z Delaying for 200ms
+[2025-09-27 11:34:15.831] LOG - 16:34:15.830Z [object Object],[object Object],[object Object]
+[2025-09-27 11:34:15.833] LOG - 16:34:15.830Z
+[2025-09-27 11:34:15.833] LOG - 16:34:15.831Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:34:15.833] LOG - 16:34:15.831Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:34:15.834] LOG - 16:34:15.831Z Delaying for 500ms
+[2025-09-27 11:34:15.834] LOG - 16:34:15.831Z Delaying for 500ms
+[2025-09-27 11:34:16.332] LOG - 16:34:16.331Z ✅ Found order history div - capturing feedback...
+[2025-09-27 11:34:16.333] LOG - 16:34:16.331Z ✅ Found order history div - capturing feedback...
+[2025-09-27 11:34:16.333] LOG - 16:34:16.331Z 📊 ORDER FEEDBACK - Symbol: MNQZ5
+[2025-09-27 11:34:16.334] LOG - 16:34:16.331Z 📊 ORDER FEEDBACK - Symbol: MNQZ5
+[2025-09-27 11:34:16.335] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-27 11:34:16.335] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Summary: 
+[2025-09-27 11:34:16.336] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-27 11:34:16.336] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Events (3 found):
+[2025-09-27 11:34:16.344] LOG - 16:34:16.332Z 📊 EVENT 1: [object Object]
+[2025-09-27 11:34:16.345] LOG - 16:34:16.332Z 📊 EVENT 1:
+[2025-09-27 11:34:16.345] LOG - 16:34:16.332Z 📊 EVENT 2: [object Object]
+[2025-09-27 11:34:16.345] LOG - 16:34:16.332Z 📊 EVENT 2:
+[2025-09-27 11:34:16.346] LOG - 16:34:16.332Z 📊 EVENT 3: [object Object]
+[2025-09-27 11:34:16.346] LOG - 16:34:16.332Z 📊 EVENT 3:
+[2025-09-27 11:34:16.346] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-27 11:34:16.346] LOG - 16:34:16.332Z 📊 ORDER FEEDBACK - Full HTML Structure:
+[2025-09-27 11:34:16.346] LOG - 16:34:16.332Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">MNQZ5</div></div><div class=""><small class="text-muted">#282988398719 </small><span class="text-danger">Sell</span> 1 MNQZ5 STP at 24700.25  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 195px; width: 352px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 178px; width: 352px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 195px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 195px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 352px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.649Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398719" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398719</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 STP at 24700.25" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 STP at 24700.25</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.651Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398720" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398720</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.653Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398721" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398721</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 352px;"><div style="height: 15px; overflow: hidden; width: 352px; top: 178px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 352px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 140.388px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-27 11:34:16.349] LOG - 16:34:16.332Z <div class="order-history" style="height: 100%;"><div class="trading-ticket-header"><div style="display: flex;"><div class="btn-group"><div class="btn btn-icon  " style="opacity: 1; margin-right: 10px; margin-top: -3px; margin-left: 10px;"><div class="icon icon-back"></div></div></div><div style="font-size: 160%;">MNQZ5</div></div><div class=""><small class="text-muted">#282988398719 </small><span class="text-danger">Sell</span> 1 MNQZ5 STP at 24700.25  - Rejected - 0/1    </div></div><div class="order-history-content"><div><div style=""><div class="fixedDataTableLayout_main public_fixedDataTable_main" role="grid" aria-rowcount="4" style="height: 195px; width: 352px;"><div class="fixedDataTableLayout_rowsContainer" style="height: 178px; width: 352px;"><div class="fixedDataTableColumnResizerLineLayout_main fixedDataTableColumnResizerLineLayout_hiddenElem public_fixedDataTableColumnResizerLine_main" style="width: 0px; height: 195px; left: 0px;"><div class="fixedDataTableColumnResizerLineLayout_mouseArea" style="height: 195px;"></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 30px; z-index: 1; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main fixedDataTableLayout_header public_fixedDataTable_header" role="row" aria-rowindex="1" style="width: 352px; height: 30px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 100px; left: 0px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Timestamp</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 75px; left: 100px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">ID</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 160px; left: 175px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Event</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="columnheader" style="height: 30px; width: 500px; left: 335px;"><div class="fixedDataTableCellLayout_columnResizerContainer" style="height: 30px;"><div class="fixedDataTableCellLayout_columnResizerKnob public_fixedDataTableCell_columnResizerKnob" style="height: 30px;"></div></div><div class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 30px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Comment</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 30px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 30px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 30px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 30px;"></div></div></div><div style="transform: translate3d(0px, 30px, 0px);"><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow" role="row" aria-rowindex="2" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.649Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398719" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398719</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Sell 1 STP at 24700.25" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Sell 1 STP at 24700.25</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Stonkz92224 " class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Stonkz92224 </div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 36px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_highlighted public_fixedDataTableRow_odd public_fixedDataTable_bodyRow" role="row" aria-rowindex="3" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.651Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398720" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398720</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Risk Passed" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Risk Passed</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent"></div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div><div class="fixedDataTableRowLayout_rowWrapper" style="width: 352px; height: 36px; z-index: 0; visibility: visible; transform: translate3d(0px, 72px, 0px);"><div class="fixedDataTableRowLayout_main public_fixedDataTableRow_main public_fixedDataTableRow_even public_fixedDataTable_bodyRow fixedDataTableLayout_hasBottomBorder public_fixedDataTable_hasBottomBorder" role="row" aria-rowindex="4" style="width: 352px; height: 36px;"><div class="fixedDataTableRowLayout_body"><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 352px; left: 0px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 835px; z-index: 0; transform: translate3d(0px, 0px, 0px);"><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 100px; left: 0px;"><div value="2025-09-27T16:34:15.653Z" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 100px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">09/27/2025 11:34:15 AM</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 75px; left: 100px;"><div value="282988398721" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 75px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">282988398721</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 160px; left: 175px;"><div value="Execution Rejected" class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 160px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Execution Rejected</div></div></div></div></div><div class="fixedDataTableCellLayout_main public_fixedDataTableCell_main" role="gridcell" style="height: 36px; width: 500px; left: 335px;"><div value="Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours." class="fixedDataTableCellLayout_wrap1 public_fixedDataTableCell_wrap1" style="height: 36px; width: 500px;"><div class="fixedDataTableCellLayout_wrap2 public_fixedDataTableCell_wrap2"><div class="fixedDataTableCellLayout_wrap3 public_fixedDataTableCell_wrap3"><div class="public_fixedDataTableCell_cellContent">Cannot place order outside of market hours. Please check contract specifications or quote info to view market hours.</div></div></div></div></div></div></div><div class="" style="left: 0px; height: 36px;"></div><div class="fixedDataTableCellGroupLayout_cellGroupWrapper" style="height: 36px; width: 0px; left: 352px;"><div class="fixedDataTableCellGroupLayout_cellGroup" style="height: 36px; position: absolute; width: 0px; z-index: 2; transform: translate3d(0px, 0px, 0px);"></div></div></div><div class="fixedDataTableRowLayout_columnsShadow fixedDataTableRowLayout_columnsRightShadow public_fixedDataTableRow_columnsShadow public_fixedDataTableRow_columnsRightShadow" style="height: 36px;"></div></div></div></div></div><div class="public_fixedDataTable_horizontalScrollbar" style="height: 15px; width: 352px;"><div style="height: 15px; overflow: hidden; width: 352px; top: 178px;"><div class="ScrollbarLayout_main ScrollbarLayout_mainHorizontal public_Scrollbar_main public_Scrollbar_mainOpaque" style="width: 352px; touch-action: none; z-index: 99;"><div class="ScrollbarLayout_face ScrollbarLayout_faceHorizontal public_Scrollbar_face" style="width: 140.388px; top: 0px; bottom: 0px; left: 4px;"></div></div></div></div></div></div></div></div></div>
+[2025-09-27 11:34:16.351] LOG - 16:34:16.333Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-27 11:34:16.351] LOG - 16:34:16.333Z ❌ ORDER REJECTED - checking rejection reason...
+[2025-09-27 11:34:16.352] LOG - 16:34:16.333Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-27 11:34:16.352] LOG - 16:34:16.333Z ❌ REJECTION REASON: Order placed outside market hours
+[2025-09-27 11:34:16.352] LOG - 16:34:16.333Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-27 11:34:16.352] LOG - 16:34:16.333Z 🔄 ORDER FEEDBACK CAPTURE COMPLETE
+[2025-09-27 11:34:16.352] LOG - 16:34:16.337Z Delaying for 200ms
+[2025-09-27 11:34:16.353] LOG - 16:34:16.337Z Delaying for 200ms
+[2025-09-27 11:34:16.539] LOG - 16:34:16.538Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:34:16.540] LOG - 16:34:16.538Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:34:16.540] LOG - 16:34:16.538Z Bracket order creation complete
+[2025-09-27 11:34:16.540] LOG - 16:34:16.538Z Bracket order creation complete
+[2025-09-27 11:34:33.569] INFO - 16:34:33.558Z time stats. avg diff: 4, min: 4, max: 4, roundtrip: 28 msec, #1
+[2025-09-27 11:34:33.589] INFO - 16:34:33.558Z time stats. avg diff: 4, min: 4, max: 4, roundtrip: 28 msec, #1
+[2025-09-27 11:35:35.188] LOG - 16:35:35.187Z WebGL:  {"geometries":74,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:37:17.323] LOG - 16:37:17.319Z Canvas size: 1119 691 dpp:  2
+[2025-09-27 11:37:17.348] LOG - 16:37:17.347Z Canvas size: 1119 691 dpp:  2
+[2025-09-27 11:37:35.181] LOG - 16:37:35.180Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:39:35.168] LOG - 16:39:35.167Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:41:35.171] LOG - 16:41:35.167Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:43:35.171] LOG - 16:43:35.170Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:44:33.543] INFO - 16:44:33.541Z time stats. avg diff: -10, min: -21, max: 14, roundtrip: 55 msec, #11
+[2025-09-27 11:44:33.545] INFO - 16:44:33.541Z time stats. avg diff: -10, min: -21, max: 14, roundtrip: 55 msec, #11
+[2025-09-27 11:45:35.173] LOG - 16:45:35.171Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:47:35.176] LOG - 16:47:35.172Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:49:35.177] LOG - 16:49:35.175Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2

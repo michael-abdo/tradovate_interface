@@ -142,13 +142,13 @@ class TradovateConnection:
         except Exception as e:
             return {"error": str(e)}
             
-    def auto_trade(self, symbol, quantity=1, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
+    def auto_trade(self, symbol, quantity=1, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25, order_type='MARKET'):
         """Execute an auto trade using the Tampermonkey script"""
         if not self.tab:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
+            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size}, '{order_type}');"
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:

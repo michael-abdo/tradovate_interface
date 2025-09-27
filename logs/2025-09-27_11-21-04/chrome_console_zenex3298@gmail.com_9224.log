@@ -1,0 +1,767 @@
+[2025-09-27 11:21:10.095] LOG - 16:21:10.093Z Starting login process for: zenex3298@gmail.com
+[2025-09-27 11:21:10.096] LOG - 16:21:10.093Z Starting login process for: zenex3298@gmail.com
+[2025-09-27 11:21:10.098] LOG - 16:21:10.094Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-27 11:21:10.101] LOG - 16:21:10.094Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-27 11:21:10.101] LOG - 16:21:10.094Z Login form found, filling credentials...
+[2025-09-27 11:21:10.101] LOG - 16:21:10.094Z Login form found, filling credentials...
+[2025-09-27 11:21:10.263] LOG - 16:21:10.124Z Test element added to DOM
+[2025-09-27 11:21:10.266] LOG - 16:21:10.124Z Test element added to DOM
+[2025-09-27 11:21:10.269] LOG - 16:21:10.264Z All browser alerts and confirmations have been disabled
+[2025-09-27 11:21:10.272] LOG - 16:21:10.264Z All browser alerts and confirmations have been disabled
+[2025-09-27 11:21:10.610] LOG - 16:21:10.607Z Clicking login button...
+[2025-09-27 11:21:10.610] LOG - 16:21:10.607Z Clicking login button...
+[2025-09-27 11:21:10.621] LOG - 16:21:10.618Z authentication starting
+[2025-09-27 11:21:10.622] LOG - 16:21:10.618Z authentication starting
+[2025-09-27 11:21:11.061] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 11:21:11.095] LOG - 16:21:11.038Z Watching for account selection page...
+[2025-09-27 11:21:11.097] LOG - 16:21:11.038Z Watching for account selection page...
+[2025-09-27 11:21:11.252] LOG - 16:21:11.251Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:11 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:11.252] LOG - 16:21:11.251Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:11 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:11.610] INFO - 16:21:11.608Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.612] INFO - 16:21:11.608Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.614] INFO - 16:21:11.609Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:11.614] INFO - 16:21:11.609Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:11.614] INFO - 16:21:11.609Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.615] INFO - 16:21:11.609Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.615] INFO - 16:21:11.609Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:11.615] INFO - 16:21:11.609Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:11.686] INFO - 16:21:11.685Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.688] INFO - 16:21:11.685Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:11.688] INFO - 16:21:11.685Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:11.688] INFO - 16:21:11.685Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:12.041] LOG - 16:21:12.040Z Account selection page detected, clicking button...
+[2025-09-27 11:21:12.041] LOG - 16:21:12.040Z Account selection page detected, clicking button...
+[2025-09-27 11:21:12.199] LOG - 16:21:12.174Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:12 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:12.199] LOG - 16:21:12.174Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:12 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:12.263] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=c38e274b-b01c-481b-888e-6daaaf6844b3&bo=2&sid=3660cc809ad411f094ce7fdad7d91748&vid=9abf384092fe11f0b30e9fac449e4642&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-27 11:21:12.265] INFO - 16:21:12.260Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:21:12.266] INFO - 16:21:12.260Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:21:12.267] WARNING - 16:21:12.261Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 765 milliseconds.
+[2025-09-27 11:21:12.267] WARNING - 16:21:12.261Z [LaunchDarkly] Error on stream connection: {"isTrusted":true}, will continue retrying after 765 milliseconds.
+[2025-09-27 11:21:12.268] INFO - 16:21:12.261Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.268] INFO - 16:21:12.261Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.628] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.629] WARNING - Duplicate atom key "locale". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.631] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.631] WARNING - Duplicate atom key "muiTheme". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.632] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.633] WARNING - Duplicate atom key "appLinksFooter". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.634] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.635] WARNING - Duplicate atom key "currentUserId2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.636] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.637] WARNING - Duplicate atom key "onboardingInProgress". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.639] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.640] WARNING - Duplicate atom key "editing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.640] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.642] WARNING - Duplicate atom key "infoMessage". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.642] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.644] WARNING - Duplicate atom key "browserWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.644] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.645] WARNING - Duplicate atom key "clockWarning". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.646] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.647] WARNING - Duplicate atom key "breakpoint". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.648] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.649] WARNING - Duplicate atom key "inMobileRange". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.650] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.651] WARNING - Duplicate atom key "gridSpacing". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.652] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.653] WARNING - Duplicate atom key "login". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.654] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.654] WARNING - Duplicate atom key "error". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.654] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "contactInfos2". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "individualApplicantsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "customerApplication". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "individualApplicants". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.655] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "clearingHouses". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "clearXClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "applicationClearingHouse". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "userLocation". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.656] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "savedApplicationsTimestamp". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "savedApplications". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "step". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.657] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.663] WARNING - Duplicate atom key "checkStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "signStates". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "wizard". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "formBuilder". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.664] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] WARNING - Duplicate atom key "headerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] WARNING - Duplicate atom key "footerSlot". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] WARNING - Duplicate atom key "alloyJourneyToken". This is a FATAL ERROR in
+      production. But it is safe to ignore this warning if it occurred because of
+      hot module replacement.
+[2025-09-27 11:21:12.665] DEBUG - [bugsnag] Loaded!
+[2025-09-27 11:21:12.665] DEBUG - [bugsnag] Loaded!
+[2025-09-27 11:21:12.665] INFO - Version 3.250926.0 prod production 
+[2025-09-27 11:21:12.665] INFO - Version 3.250926.0 prod production 
+[2025-09-27 11:21:12.666] INFO - Time: Sat Sep 27 2025 11:21:12 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:12.666] INFO - Time:
+[2025-09-27 11:21:12.723] LOG - 16:21:12.720Z Try to restore session
+[2025-09-27 11:21:12.724] LOG - 16:21:12.720Z Try to restore session
+[2025-09-27 11:21:12.724] LOG - 16:21:12.722Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:12 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:12.724] LOG - 16:21:12.722Z Access token will be renewed in 75 minutes; expired: Sat Sep 27 2025 12:41:11 GMT-0500 (Central Daylight Time), now: Sat Sep 27 2025 11:21:12 GMT-0500 (Central Daylight Time)
+[2025-09-27 11:21:12.730] WARNING - 16:21:12.729Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 11:21:12.731] WARNING - 16:21:12.729Z [LaunchDarkly] The waitForInitialization function was called without a timeout specified. In a future version a default timeout will be applied.
+[2025-09-27 11:21:12.741] INFO - 16:21:12.738Z chart cache state: islands=3, bars=2006
+[2025-09-27 11:21:12.742] INFO - 16:21:12.738Z chart cache state: islands=3, bars=2006
+[2025-09-27 11:21:12.742] INFO - 16:21:12.740Z Chart history database initialized
+[2025-09-27 11:21:12.742] INFO - 16:21:12.740Z Chart history database initialized
+[2025-09-27 11:21:12.776] INFO - 16:21:12.774Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 11:21:12.777] INFO - 16:21:12.774Z [LaunchDarkly] LaunchDarkly client initialized
+[2025-09-27 11:21:12.777] INFO - 16:21:12.774Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 11:21:12.777] INFO - 16:21:12.774Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6InVua25vd24iLCJhbm9ueW1vdXMiOmZhbHNlfQ
+[2025-09-27 11:21:12.889] INFO - 16:21:12.887Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.890] INFO - 16:21:12.887Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.890] INFO - 16:21:12.887Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-27 11:21:12.890] INFO - 16:21:12.887Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiIiLCJvcmdOYW1lIjoiVERWIiwibmFtZSI6IlplbmV4MzI5OCIsImxhbmRpbmdQYXJhbXMiOiIifQ
+[2025-09-27 11:21:12.924] INFO - 16:21:12.922Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.925] INFO - 16:21:12.922Z [LaunchDarkly] Closing stream connection
+[2025-09-27 11:21:12.925] INFO - 16:21:12.923Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:12.925] INFO - 16:21:12.923Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-27 11:21:13.583] LOG - 16:21:13.579Z opening https://demo.tradovateapi.com/
+[2025-09-27 11:21:13.583] LOG - 16:21:13.579Z opening https://demo.tradovateapi.com/
+[2025-09-27 11:21:13.588] LOG - 16:21:13.587Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 11:21:13.588] LOG - 16:21:13.587Z Hotkeys initialized {"Shift+Digit1":["orders/selectColumns"],"Shift+Digit2":["orders/showFilters"],"Shift+Digit3":["orders/standardTableView"],"Shift+Digit4":["orders/linkedOrdersView"],"Command+Shift+Digit0":["dom-chart/exit-and-cancel"]}
+[2025-09-27 11:21:13.669] LOG - 16:21:13.668Z websocket opened
+[2025-09-27 11:21:13.671] LOG - 16:21:13.668Z websocket opened
+[2025-09-27 11:21:13.721] LOG - 16:21:13.720Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 11:21:13.722] LOG - 16:21:13.720Z opening https://md-demo.tradovateapi.com/
+[2025-09-27 11:21:13.722] LOG - 16:21:13.721Z Connection:  open
+[2025-09-27 11:21:13.723] LOG - 16:21:13.721Z Connection:  open
+[2025-09-27 11:21:14.702] LOG - 16:21:14.701Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 11:21:14.707] LOG - 16:21:14.701Z Canvas size: 853 899 dpp:  2
+[2025-09-27 11:21:14.711] LOG - 16:21:14.709Z Loading App-level Plugins
+[2025-09-27 11:21:14.711] LOG - 16:21:14.709Z Loading App-level Plugins
+[2025-09-27 11:21:14.725] LOG - 16:21:14.720Z WebGL:  {"isWebGL2":true,"precision":"highp","logarithmicDepthBuffer":false,"maxTextures":16,"maxVertexTextures":16,"maxTextureSize":16384,"maxCubemapSize":16384,"maxAttributes":16,"maxVertexUniforms":1024,"maxVaryings":30,"maxFragmentUniforms":1024,"vertexTextures":true,"floatFragmentTextures":true,"floatVertexTextures":true,"maxSamples":8} , devicePixelRatio:  2
+[2025-09-27 11:21:14.733] LOG - 16:21:14.720Z Canvas size: 853 899 dpp:  2
+[2025-09-27 11:21:14.824] LOG - 16:21:14.782Z websocket opened
+[2025-09-27 11:21:14.825] LOG - 16:21:14.782Z websocket opened
+[2025-09-27 11:21:15.027] LOG - 16:21:15.026Z loadAppLevelPlugins:  [object Object]
+[2025-09-27 11:21:15.028] LOG - 16:21:15.026Z loadAppLevelPlugins: 
+[2025-09-27 11:21:15.875] LOG - 16:21:15.862Z jailing is in progress
+[2025-09-27 11:21:15.876] LOG - 16:21:15.862Z jailing is in progress
+[2025-09-27 11:21:16.220] LOG - 16:21:16.219Z pending jailing done. next starts
+[2025-09-27 11:21:16.241] LOG - 16:21:16.219Z pending jailing done. next starts
+[2025-09-27 11:21:17.098] LOG - 16:21:17.096Z created chart 1
+[2025-09-27 11:21:17.352] LOG - 16:21:17.349Z updating the shared isolation
+[2025-09-27 11:21:17.352] LOG - 16:21:17.349Z updating the shared isolation
+[2025-09-27 11:21:17.379] LOG - 16:21:17.358Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":608}}
+[2025-09-27 11:21:17.379] LOG - 16:21:17.358Z requestChart: {"symbol":"3267312","chartDescription":{"underlyingType":"Tick","elementSize":5000,"elementSizeUnit":"UnderlyingUnits","withHistogram":false},"timeRange":{"asMuchAsElements":608}}
+[2025-09-27 11:21:17.380] LOG - 16:21:17.359Z mdMgApi open
+[2025-09-27 11:21:17.380] LOG - 16:21:17.359Z mdMgApi open
+[2025-09-27 11:21:21.847] LOG - 16:21:21.846Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 11:21:21.848] LOG - 16:21:21.846Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-27 11:21:21.848] LOG - 16:21:21.847Z Creating UI for dashboard trading...
+[2025-09-27 11:21:21.849] LOG - 16:21:21.847Z Creating UI for dashboard trading...
+[2025-09-27 11:21:21.850] LOG - 16:21:21.847Z Creating UI (visible=false)
+[2025-09-27 11:21:21.851] LOG - 16:21:21.847Z Creating UI (visible=false)
+[2025-09-27 11:21:21.851] LOG - 16:21:21.848Z Stored values: TP=53, SL=15, Qty=1, Tick=0.25, Symbol=NQ
+[2025-09-27 11:21:21.852] LOG - 16:21:21.848Z Stored values: TP=53, SL=15, Qty=1, Tick=0.25, Symbol=NQ
+[2025-09-27 11:21:21.853] LOG - 16:21:21.848Z UI container added to DOM
+[2025-09-27 11:21:21.853] LOG - 16:21:21.848Z UI container added to DOM
+[2025-09-27 11:21:21.854] LOG - 16:21:21.848Z Setting up localStorage persistence
+[2025-09-27 11:21:21.854] LOG - 16:21:21.848Z Setting up localStorage persistence
+[2025-09-27 11:21:21.855] LOG - 16:21:21.848Z UI initialization complete
+[2025-09-27 11:21:21.856] LOG - 16:21:21.848Z UI initialization complete
+[2025-09-27 11:21:21.857] LOG - 16:21:21.848Z Creating example front-quarter symbol
+[2025-09-27 11:21:21.858] LOG - 16:21:21.848Z Creating example front-quarter symbol
+[2025-09-27 11:21:21.859] LOG - 16:21:21.848Z getQuarterlyCode called with date: 2025-09-27T16:21:21.848Z
+[2025-09-27 11:21:21.861] LOG - 16:21:21.848Z getQuarterlyCode called with date: 2025-09-27T16:21:21.848Z
+[2025-09-27 11:21:21.861] LOG - 16:21:21.848Z Current month index: 8
+[2025-09-27 11:21:21.862] LOG - 16:21:21.848Z Current month index: 8
+[2025-09-27 11:21:21.863] LOG - 16:21:21.849Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:21.864] LOG - 16:21:21.849Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:21.864] LOG - 16:21:21.849Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:21.865] LOG - 16:21:21.849Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:21.865] LOG - 16:21:21.849Z Example front-quarter symbol created: NQZ5
+[2025-09-27 11:21:21.866] LOG - 16:21:21.849Z Example front-quarter symbol created: NQZ5
+[2025-09-27 11:21:21.867] LOG - 16:21:21.852Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 11:21:21.867] LOG - 16:21:21.852Z Auto Risk Management: Running initial risk assessment...
+[2025-09-27 11:21:21.867] LOG - 16:21:21.853Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:21.867] LOG - 16:21:21.853Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:21.868] LOG - 16:21:21.854Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:21.868] LOG - 16:21:21.854Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:21.868] LOG - 16:21:21.854Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:21.868] LOG - 16:21:21.854Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:21.868] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 11:21:21.869] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-27 11:21:21.869] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 11:21:21.869] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Found 1 rows
+[2025-09-27 11:21:21.869] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Header cells: Account ▲,Total Available Margin,User,Dist Drawdown Net Liq,Dollar Open P L,Dollar Total P L
+[2025-09-27 11:21:21.869] LOG - 16:21:21.854Z [updateUserColumnPhaseStatus] Header cells:
+[2025-09-27 11:21:21.869] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Found User column at index 2
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Getting table data...
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:21.870] LOG - 16:21:21.855Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:21.871] LOG - 16:21:21.855Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:21.871] LOG - 16:21:21.855Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:21.871] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 11:21:21.871] LOG - 16:21:21.855Z [updateUserColumnPhaseStatus] Table data: 0 rows
+[2025-09-27 11:21:21.871] ERROR - 16:21:21.855Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 11:21:21.871] ERROR - 16:21:21.855Z [updateUserColumnPhaseStatus] No data from getTableData()
+[2025-09-27 11:21:21.884] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-27 11:21:21.884] LOG - 16:21:21.871Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 11:21:21.885] LOG - 16:21:21.871Z Auto Risk Management: Initial risk assessment completed
+[2025-09-27 11:21:22.879] LOG - 16:21:22.876Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:22.880] LOG - 16:21:22.876Z [analyzePhase] resetting phaseData
+[2025-09-27 11:21:22.880] LOG - 16:21:22.876Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:22.880] LOG - 16:21:22.876Z [analyzePhase] set phase 1 maxActive to 1
+[2025-09-27 11:21:22.880] LOG - 16:21:22.876Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:22.880] LOG - 16:21:22.876Z [analyzePhase] increased phase 2 maxActive to 1
+[2025-09-27 11:21:22.880] WARNING - 16:21:22.876Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:4613725),    at https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:3547494
+[2025-09-27 11:21:22.881] WARNING - 16:21:22.876Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-27 11:21:22.889] LOG - 16:21:22.888Z Executing initial risk management assessment...
+[2025-09-27 11:21:22.890] LOG - 16:21:22.888Z Executing initial risk management assessment...
+[2025-09-27 11:21:22.891] ERROR - 16:21:22.888Z getTableData function not found
+[2025-09-27 11:21:22.891] ERROR - 16:21:22.888Z getTableData function not found
+[2025-09-27 11:21:22.892] ERROR - 16:21:22.889Z updateUserColumnPhaseStatus function not found
+[2025-09-27 11:21:22.892] ERROR - 16:21:22.889Z updateUserColumnPhaseStatus function not found
+[2025-09-27 11:21:22.892] ERROR - 16:21:22.889Z performAccountActions function not found
+[2025-09-27 11:21:22.892] ERROR - 16:21:22.889Z performAccountActions function not found
+[2025-09-27 11:21:22.892] LOG - 16:21:22.889Z Risk management assessment completed
+[2025-09-27 11:21:22.892] LOG - 16:21:22.889Z Risk management assessment completed
+[2025-09-27 11:21:32.438] LOG - 16:21:32.436Z Saved bracketTrade_qty = 6
+[2025-09-27 11:21:32.440] LOG - 16:21:32.436Z Saved bracketTrade_qty = 6
+[2025-09-27 11:21:32.440] LOG - 16:21:32.438Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:32.441] LOG - 16:21:32.438Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:32.442] LOG - 16:21:32.438Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:32.442] LOG - 16:21:32.438Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:32.443] LOG - 16:21:32.438Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:32.443] LOG - 16:21:32.438Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:32.444] LOG - 16:21:32.438Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:32.444] LOG - 16:21:32.438Z Trade control updates complete:
+[2025-09-27 11:21:33.343] LOG - 16:21:33.341Z Saved bracketTrade_qty = 6
+[2025-09-27 11:21:33.344] LOG - 16:21:33.341Z Saved bracketTrade_qty = 6
+[2025-09-27 11:21:33.345] LOG - 16:21:33.341Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:33.346] LOG - 16:21:33.341Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:33.347] LOG - 16:21:33.342Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:33.347] LOG - 16:21:33.342Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:33.348] LOG - 16:21:33.342Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:33.349] LOG - 16:21:33.342Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:33.349] LOG - 16:21:33.342Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:33.349] LOG - 16:21:33.342Z Trade control updates complete:
+[2025-09-27 11:21:38.737] LOG - 16:21:38.736Z Saved bracketTrade_qty = 5
+[2025-09-27 11:21:38.738] LOG - 16:21:38.736Z Saved bracketTrade_qty = 5
+[2025-09-27 11:21:38.739] LOG - 16:21:38.736Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:38.740] LOG - 16:21:38.736Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:38.740] LOG - 16:21:38.736Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:38.741] LOG - 16:21:38.736Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:38.741] LOG - 16:21:38.736Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:38.741] LOG - 16:21:38.736Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:38.741] LOG - 16:21:38.736Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:38.741] LOG - 16:21:38.736Z Trade control updates complete:
+[2025-09-27 11:21:38.862] LOG - 16:21:38.851Z Saved bracketTrade_qty = 5
+[2025-09-27 11:21:38.864] LOG - 16:21:38.851Z Saved bracketTrade_qty = 5
+[2025-09-27 11:21:38.864] LOG - 16:21:38.851Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:38.866] LOG - 16:21:38.851Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:38.866] LOG - 16:21:38.851Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:38.867] LOG - 16:21:38.851Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:38.868] LOG - 16:21:38.852Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:38.868] LOG - 16:21:38.852Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:38.869] LOG - 16:21:38.852Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:38.869] LOG - 16:21:38.852Z Trade control updates complete:
+[2025-09-27 11:21:39.338] LOG - 16:21:39.336Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:39.339] LOG - 16:21:39.336Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:39.340] LOG - 16:21:39.337Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:39.340] LOG - 16:21:39.337Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:39.341] LOG - 16:21:39.337Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:39.342] LOG - 16:21:39.337Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:39.342] LOG - 16:21:39.337Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:39.343] LOG - 16:21:39.337Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:39.343] LOG - 16:21:39.337Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:39.343] LOG - 16:21:39.337Z Trade control updates complete:
+[2025-09-27 11:21:40.172] LOG - 16:21:40.171Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:40.173] LOG - 16:21:40.171Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:40.175] LOG - 16:21:40.171Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:40.175] LOG - 16:21:40.171Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:40.176] LOG - 16:21:40.172Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:40.176] LOG - 16:21:40.172Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:40.177] LOG - 16:21:40.172Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:40.177] LOG - 16:21:40.172Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:40.178] LOG - 16:21:40.172Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:40.178] LOG - 16:21:40.172Z Trade control updates complete:
+[2025-09-27 11:21:40.789] LOG - 16:21:40.787Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:40.790] LOG - 16:21:40.787Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:40.791] LOG - 16:21:40.787Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:40.792] LOG - 16:21:40.787Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:40.792] LOG - 16:21:40.788Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:40.793] LOG - 16:21:40.788Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:40.793] LOG - 16:21:40.788Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:40.794] LOG - 16:21:40.788Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:40.794] LOG - 16:21:40.788Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:40.794] LOG - 16:21:40.788Z Trade control updates complete:
+[2025-09-27 11:21:41.769] LOG - 16:21:41.768Z autoTrade called with: symbol=NQ, qty=4, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:21:41.770] LOG - 16:21:41.768Z autoTrade called with: symbol=NQ, qty=4, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:21:41.771] LOG - 16:21:41.769Z Using symbol: NQ
+[2025-09-27 11:21:41.772] LOG - 16:21:41.769Z Using symbol: NQ
+[2025-09-27 11:21:41.772] LOG - 16:21:41.769Z Root symbol: NQ
+[2025-09-27 11:21:41.773] LOG - 16:21:41.769Z Root symbol: NQ
+[2025-09-27 11:21:41.775] LOG - 16:21:41.769Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:21:41.776] LOG - 16:21:41.769Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:21:41.777] LOG - 16:21:41.769Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:21:41.779] LOG - 16:21:41.769Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:21:41.780] LOG - 16:21:41.769Z Getting market data for NQ
+[2025-09-27 11:21:41.781] LOG - 16:21:41.769Z Getting market data for NQ
+[2025-09-27 11:21:41.782] LOG - 16:21:41.769Z getMarketData called for: "NQ"
+[2025-09-27 11:21:41.783] LOG - 16:21:41.769Z getMarketData called for: "NQ"
+[2025-09-27 11:21:41.784] LOG - 16:21:41.769Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:21:41.785] LOG - 16:21:41.769Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:21:41.786] LOG - 16:21:41.770Z getQuarterlyCode called with date: 2025-09-27T16:21:41.770Z
+[2025-09-27 11:21:41.787] LOG - 16:21:41.770Z getQuarterlyCode called with date: 2025-09-27T16:21:41.770Z
+[2025-09-27 11:21:41.788] LOG - 16:21:41.770Z Current month index: 8
+[2025-09-27 11:21:41.789] LOG - 16:21:41.770Z Current month index: 8
+[2025-09-27 11:21:41.789] LOG - 16:21:41.770Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:41.789] LOG - 16:21:41.770Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:41.790] LOG - 16:21:41.770Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:41.790] LOG - 16:21:41.770Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:41.790] LOG - 16:21:41.770Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:41.790] LOG - 16:21:41.770Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:21:41.791] LOG - 16:21:41.770Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:21:41.792] LOG - 16:21:41.770Z Market data: [object Object]
+[2025-09-27 11:21:41.792] LOG - 16:21:41.770Z Market data:
+[2025-09-27 11:21:41.792] LOG - 16:21:41.770Z Market price: NaN (bid price)
+[2025-09-27 11:21:41.793] LOG - 16:21:41.770Z Market price: NaN (bid price)
+[2025-09-27 11:21:41.793] LOG - 16:21:41.770Z No custom entry price provided, using market order at NaN
+[2025-09-27 11:21:41.793] LOG - 16:21:41.770Z No custom entry price provided, using market order at NaN
+[2025-09-27 11:21:41.794] LOG - 16:21:41.770Z Using price precision: 2 decimal places
+[2025-09-27 11:21:41.795] LOG - 16:21:41.770Z Using price precision: 2 decimal places
+[2025-09-27 11:21:41.795] LOG - 16:21:41.771Z Calculated SL price: NaN (entry + 15 ticks)
+[2025-09-27 11:21:41.795] LOG - 16:21:41.771Z Calculated SL price: NaN (entry + 15 ticks)
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Calculated TP price: NaN (entry - 53 ticks)
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Calculated TP price: NaN (entry - 53 ticks)
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Trade data prepared: [object Object]
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Trade data prepared:
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Submitting bracket orders
+[2025-09-27 11:21:41.796] LOG - 16:21:41.771Z Submitting bracket orders
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z Creating bracket orders with data: [object Object]
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z Creating bracket orders with data:
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z TP enabled: false, SL enabled: false
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z TP enabled: false, SL enabled: false
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z Submitting initial MARKET order
+[2025-09-27 11:21:41.797] LOG - 16:21:41.771Z Submitting initial MARKET order
+[2025-09-27 11:21:41.798] LOG - 16:21:41.771Z Setting common order fields
+[2025-09-27 11:21:41.798] LOG - 16:21:41.771Z Setting common order fields
+[2025-09-27 11:21:41.798] LOG - 16:21:41.772Z Setting action to: Sell
+[2025-09-27 11:21:41.798] LOG - 16:21:41.772Z Setting action to: Sell
+[2025-09-27 11:21:41.798] LOG - 16:21:41.772Z Found 9 action labels
+[2025-09-27 11:21:41.799] LOG - 16:21:41.772Z Found 9 action labels
+[2025-09-27 11:21:41.799] LOG - 16:21:41.772Z Clicking Sell label
+[2025-09-27 11:21:41.799] LOG - 16:21:41.772Z Clicking Sell label
+[2025-09-27 11:21:41.799] LOG - 16:21:41.793Z Setting quantity to: 4
+[2025-09-27 11:21:41.799] LOG - 16:21:41.793Z Setting quantity to: 4
+[2025-09-27 11:21:41.809] LOG - 16:21:41.808Z Delaying for 250ms
+[2025-09-27 11:21:41.809] LOG - 16:21:41.808Z Delaying for 250ms
+[2025-09-27 11:21:42.077] LOG - 16:21:42.076Z Delaying for 200ms
+[2025-09-27 11:21:42.077] LOG - 16:21:42.076Z Delaying for 200ms
+[2025-09-27 11:21:42.277] LOG - 16:21:42.276Z 
+[2025-09-27 11:21:42.278] LOG - 16:21:42.276Z
+[2025-09-27 11:21:42.279] LOG - 16:21:42.277Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:21:42.279] LOG - 16:21:42.277Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:21:42.279] LOG - 16:21:42.277Z Delaying for 500ms
+[2025-09-27 11:21:42.279] LOG - 16:21:42.277Z Delaying for 500ms
+[2025-09-27 11:21:42.779] LOG - 16:21:42.778Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:21:42.780] LOG - 16:21:42.778Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:21:42.780] LOG - 16:21:42.778Z Delaying for 200ms
+[2025-09-27 11:21:42.780] LOG - 16:21:42.778Z Delaying for 200ms
+[2025-09-27 11:21:42.981] LOG - 16:21:42.980Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:21:42.981] LOG - 16:21:42.980Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:21:42.981] LOG - 16:21:42.980Z Bracket order creation complete
+[2025-09-27 11:21:42.981] LOG - 16:21:42.980Z Bracket order creation complete
+[2025-09-27 11:21:53.839] LOG - 16:21:53.837Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:53.840] LOG - 16:21:53.837Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:53.841] LOG - 16:21:53.838Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:53.841] LOG - 16:21:53.838Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:53.842] LOG - 16:21:53.838Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:53.843] LOG - 16:21:53.838Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:53.843] LOG - 16:21:53.838Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:53.844] LOG - 16:21:53.838Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:53.844] LOG - 16:21:53.838Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:53.844] LOG - 16:21:53.838Z Trade control updates complete:
+[2025-09-27 11:21:54.586] LOG - 16:21:54.585Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:54.587] LOG - 16:21:54.585Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:54.588] LOG - 16:21:54.585Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:54.589] LOG - 16:21:54.585Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:54.590] LOG - 16:21:54.585Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:54.590] LOG - 16:21:54.585Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:54.591] LOG - 16:21:54.585Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:54.591] LOG - 16:21:54.585Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:54.591] LOG - 16:21:54.586Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:54.592] LOG - 16:21:54.586Z Trade control updates complete:
+[2025-09-27 11:21:54.735] LOG - 16:21:54.733Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:54.736] LOG - 16:21:54.733Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:54.737] LOG - 16:21:54.733Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:54.738] LOG - 16:21:54.733Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:54.739] LOG - 16:21:54.734Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:54.739] LOG - 16:21:54.734Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:54.740] LOG - 16:21:54.734Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:54.740] LOG - 16:21:54.734Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:54.740] LOG - 16:21:54.734Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:54.740] LOG - 16:21:54.734Z Trade control updates complete:
+[2025-09-27 11:21:56.082] LOG - 16:21:56.081Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:56.083] LOG - 16:21:56.081Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:56.084] LOG - 16:21:56.081Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:56.085] LOG - 16:21:56.081Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:56.086] LOG - 16:21:56.081Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:56.087] LOG - 16:21:56.081Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:56.087] LOG - 16:21:56.081Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:56.087] LOG - 16:21:56.081Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:56.088] LOG - 16:21:56.082Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:56.088] LOG - 16:21:56.082Z Trade control updates complete:
+[2025-09-27 11:21:57.040] LOG - 16:21:57.039Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:57.041] LOG - 16:21:57.039Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:57.042] LOG - 16:21:57.039Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:57.043] LOG - 16:21:57.039Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:57.044] LOG - 16:21:57.039Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:57.044] LOG - 16:21:57.039Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:57.045] LOG - 16:21:57.039Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:57.045] LOG - 16:21:57.039Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:57.045] LOG - 16:21:57.040Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:57.046] LOG - 16:21:57.040Z Trade control updates complete:
+[2025-09-27 11:21:58.259] LOG - 16:21:58.251Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:58.271] LOG - 16:21:58.251Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:58.284] LOG - 16:21:58.252Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:58.284] LOG - 16:21:58.252Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:58.286] LOG - 16:21:58.252Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:58.286] LOG - 16:21:58.252Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:58.292] LOG - 16:21:58.252Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:58.294] LOG - 16:21:58.252Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:58.295] LOG - 16:21:58.252Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:58.295] LOG - 16:21:58.252Z Trade control updates complete:
+[2025-09-27 11:21:59.461] LOG - 16:21:59.459Z autoTrade called with: symbol=NQ, qty=4, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:21:59.463] LOG - 16:21:59.459Z autoTrade called with: symbol=NQ, qty=4, action=Buy, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:21:59.464] LOG - 16:21:59.459Z Using symbol: NQ
+[2025-09-27 11:21:59.465] LOG - 16:21:59.459Z Using symbol: NQ
+[2025-09-27 11:21:59.466] LOG - 16:21:59.459Z Root symbol: NQ
+[2025-09-27 11:21:59.468] LOG - 16:21:59.459Z Root symbol: NQ
+[2025-09-27 11:21:59.468] LOG - 16:21:59.460Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:21:59.469] LOG - 16:21:59.460Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:21:59.469] LOG - 16:21:59.460Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:21:59.470] LOG - 16:21:59.460Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:21:59.471] LOG - 16:21:59.460Z Getting market data for NQ
+[2025-09-27 11:21:59.472] LOG - 16:21:59.460Z Getting market data for NQ
+[2025-09-27 11:21:59.474] LOG - 16:21:59.460Z getMarketData called for: "NQ"
+[2025-09-27 11:21:59.475] LOG - 16:21:59.460Z getMarketData called for: "NQ"
+[2025-09-27 11:21:59.477] LOG - 16:21:59.460Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:21:59.477] LOG - 16:21:59.460Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:21:59.479] LOG - 16:21:59.460Z getQuarterlyCode called with date: 2025-09-27T16:21:59.460Z
+[2025-09-27 11:21:59.480] LOG - 16:21:59.460Z getQuarterlyCode called with date: 2025-09-27T16:21:59.460Z
+[2025-09-27 11:21:59.482] LOG - 16:21:59.460Z Current month index: 8
+[2025-09-27 11:21:59.483] LOG - 16:21:59.460Z Current month index: 8
+[2025-09-27 11:21:59.484] LOG - 16:21:59.460Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:59.484] LOG - 16:21:59.460Z Starting calculation with year=2025, month=8
+[2025-09-27 11:21:59.486] LOG - 16:21:59.460Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:59.488] LOG - 16:21:59.460Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:59.489] LOG - 16:21:59.460Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:59.489] LOG - 16:21:59.460Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:21:59.489] LOG - 16:21:59.460Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:21:59.490] LOG - 16:21:59.460Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:21:59.492] LOG - 16:21:59.460Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:21:59.494] LOG - 16:21:59.460Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:21:59.495] LOG - 16:21:59.460Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:21:59.497] LOG - 16:21:59.460Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:21:59.498] LOG - 16:21:59.460Z Market data: [object Object]
+[2025-09-27 11:21:59.499] LOG - 16:21:59.460Z Market data:
+[2025-09-27 11:21:59.501] LOG - 16:21:59.460Z Market price: NaN (offer price)
+[2025-09-27 11:21:59.503] LOG - 16:21:59.460Z Market price: NaN (offer price)
+[2025-09-27 11:21:59.505] LOG - 16:21:59.461Z Custom entry price provided: 24700
+[2025-09-27 11:21:59.507] LOG - 16:21:59.461Z Custom entry price provided: 24700
+[2025-09-27 11:21:59.508] LOG - 16:21:59.461Z Order type determined to be: STOP
+[2025-09-27 11:21:59.509] LOG - 16:21:59.461Z Order type determined to be: STOP
+[2025-09-27 11:21:59.510] LOG - 16:21:59.461Z Using price precision: 2 decimal places
+[2025-09-27 11:21:59.510] LOG - 16:21:59.461Z Using price precision: 2 decimal places
+[2025-09-27 11:21:59.511] LOG - 16:21:59.461Z Calculated SL price: 24696.25 (entry - 15 ticks)
+[2025-09-27 11:21:59.513] LOG - 16:21:59.461Z Calculated SL price: 24696.25 (entry - 15 ticks)
+[2025-09-27 11:21:59.513] LOG - 16:21:59.461Z Calculated TP price: 24713.25 (entry + 53 ticks)
+[2025-09-27 11:21:59.514] LOG - 16:21:59.461Z Calculated TP price: 24713.25 (entry + 53 ticks)
+[2025-09-27 11:21:59.515] LOG - 16:21:59.461Z Trade data prepared: [object Object]
+[2025-09-27 11:21:59.516] LOG - 16:21:59.461Z Trade data prepared:
+[2025-09-27 11:21:59.516] LOG - 16:21:59.461Z Submitting bracket orders
+[2025-09-27 11:21:59.517] LOG - 16:21:59.461Z Submitting bracket orders
+[2025-09-27 11:21:59.518] LOG - 16:21:59.461Z Creating bracket orders with data: [object Object]
+[2025-09-27 11:21:59.519] LOG - 16:21:59.461Z Creating bracket orders with data:
+[2025-09-27 11:21:59.520] LOG - 16:21:59.461Z TP enabled: false, SL enabled: false
+[2025-09-27 11:21:59.521] LOG - 16:21:59.461Z TP enabled: false, SL enabled: false
+[2025-09-27 11:21:59.521] LOG - 16:21:59.461Z Submitting initial STOP order
+[2025-09-27 11:21:59.522] LOG - 16:21:59.461Z Submitting initial STOP order
+[2025-09-27 11:21:59.522] LOG - 16:21:59.461Z Setting common order fields
+[2025-09-27 11:21:59.523] LOG - 16:21:59.461Z Setting common order fields
+[2025-09-27 11:21:59.523] LOG - 16:21:59.461Z Setting action to: Buy
+[2025-09-27 11:21:59.523] LOG - 16:21:59.461Z Setting action to: Buy
+[2025-09-27 11:21:59.523] LOG - 16:21:59.461Z Found 9 action labels
+[2025-09-27 11:21:59.524] LOG - 16:21:59.461Z Found 9 action labels
+[2025-09-27 11:21:59.524] LOG - 16:21:59.461Z Clicking Buy label
+[2025-09-27 11:21:59.524] LOG - 16:21:59.461Z Clicking Buy label
+[2025-09-27 11:21:59.524] LOG - 16:21:59.471Z Setting quantity to: 4
+[2025-09-27 11:21:59.524] LOG - 16:21:59.471Z Setting quantity to: 4
+[2025-09-27 11:21:59.525] LOG - 16:21:59.473Z Delaying for 250ms
+[2025-09-27 11:21:59.525] LOG - 16:21:59.473Z Delaying for 250ms
+[2025-09-27 11:21:59.525] LOG - 16:21:59.473Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:59.525] LOG - 16:21:59.473Z Saved bracketTrade_qty = 4
+[2025-09-27 11:21:59.525] LOG - 16:21:59.474Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:59.525] LOG - 16:21:59.474Z Saved bracketTrade_tp = 53
+[2025-09-27 11:21:59.525] LOG - 16:21:59.474Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:59.525] LOG - 16:21:59.474Z Saved bracketTrade_sl = 15
+[2025-09-27 11:21:59.526] LOG - 16:21:59.474Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:59.526] LOG - 16:21:59.474Z Saved bracketTrade_tick = 0.25
+[2025-09-27 11:21:59.526] LOG - 16:21:59.474Z Trade control updates complete: [object Object]
+[2025-09-27 11:21:59.526] LOG - 16:21:59.474Z Trade control updates complete:
+[2025-09-27 11:21:59.745] LOG - 16:21:59.744Z Delaying for 250ms
+[2025-09-27 11:21:59.746] LOG - 16:21:59.744Z Delaying for 250ms
+[2025-09-27 11:22:00.008] LOG - 16:22:00.006Z Delaying for 200ms
+[2025-09-27 11:22:00.008] LOG - 16:22:00.006Z Delaying for 200ms
+[2025-09-27 11:22:00.209] LOG - 16:22:00.208Z 
+[2025-09-27 11:22:00.210] LOG - 16:22:00.208Z
+[2025-09-27 11:22:00.210] LOG - 16:22:00.208Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:22:00.211] LOG - 16:22:00.208Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:22:00.211] LOG - 16:22:00.208Z Delaying for 500ms
+[2025-09-27 11:22:00.211] LOG - 16:22:00.208Z Delaying for 500ms
+[2025-09-27 11:22:00.711] LOG - 16:22:00.709Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:22:00.711] LOG - 16:22:00.709Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:22:00.712] LOG - 16:22:00.710Z Delaying for 200ms
+[2025-09-27 11:22:00.712] LOG - 16:22:00.710Z Delaying for 200ms
+[2025-09-27 11:22:00.913] LOG - 16:22:00.911Z Flipping action to Sell for TP/SL orders
+[2025-09-27 11:22:00.914] LOG - 16:22:00.911Z Flipping action to Sell for TP/SL orders
+[2025-09-27 11:22:00.914] LOG - 16:22:00.912Z Bracket order creation complete
+[2025-09-27 11:22:00.914] LOG - 16:22:00.912Z Bracket order creation complete
+[2025-09-27 11:22:03.696] LOG - 16:22:03.692Z autoTrade called with: symbol=NQ, qty=4, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:22:03.697] LOG - 16:22:03.692Z autoTrade called with: symbol=NQ, qty=4, action=Sell, TP=0, SL=0, tickSize=0.25
+[2025-09-27 11:22:03.698] LOG - 16:22:03.692Z Using symbol: NQ
+[2025-09-27 11:22:03.699] LOG - 16:22:03.692Z Using symbol: NQ
+[2025-09-27 11:22:03.700] LOG - 16:22:03.692Z Root symbol: NQ
+[2025-09-27 11:22:03.700] LOG - 16:22:03.692Z Root symbol: NQ
+[2025-09-27 11:22:03.702] LOG - 16:22:03.692Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:22:03.702] LOG - 16:22:03.692Z Using tick size 0.25 (from dictionary)
+[2025-09-27 11:22:03.703] LOG - 16:22:03.692Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:22:03.704] LOG - 16:22:03.692Z Using SL: 15 ticks, TP: 53 ticks
+[2025-09-27 11:22:03.706] LOG - 16:22:03.692Z Getting market data for NQ
+[2025-09-27 11:22:03.706] LOG - 16:22:03.692Z Getting market data for NQ
+[2025-09-27 11:22:03.707] LOG - 16:22:03.692Z getMarketData called for: "NQ"
+[2025-09-27 11:22:03.708] LOG - 16:22:03.692Z getMarketData called for: "NQ"
+[2025-09-27 11:22:03.709] LOG - 16:22:03.692Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:22:03.710] LOG - 16:22:03.692Z getFrontQuarter called for root: "NQ"
+[2025-09-27 11:22:03.710] LOG - 16:22:03.692Z getQuarterlyCode called with date: 2025-09-27T16:22:03.692Z
+[2025-09-27 11:22:03.711] LOG - 16:22:03.692Z getQuarterlyCode called with date: 2025-09-27T16:22:03.692Z
+[2025-09-27 11:22:03.712] LOG - 16:22:03.693Z Current month index: 8
+[2025-09-27 11:22:03.713] LOG - 16:22:03.693Z Current month index: 8
+[2025-09-27 11:22:03.714] LOG - 16:22:03.693Z Starting calculation with year=2025, month=8
+[2025-09-27 11:22:03.715] LOG - 16:22:03.693Z Starting calculation with year=2025, month=8
+[2025-09-27 11:22:03.715] LOG - 16:22:03.693Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:22:03.716] LOG - 16:22:03.693Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:22:03.717] LOG - 16:22:03.693Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:22:03.718] LOG - 16:22:03.693Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-27 11:22:03.718] LOG - 16:22:03.693Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:22:03.719] LOG - 16:22:03.693Z Returning front quarter symbol: "NQZ5"
+[2025-09-27 11:22:03.720] LOG - 16:22:03.693Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:22:03.720] LOG - 16:22:03.693Z Using symbol: "NQZ5" for market data lookup
+[2025-09-27 11:22:03.720] LOG - 16:22:03.693Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:22:03.721] LOG - 16:22:03.693Z Extracted prices for NQZ5: bid=, offer=
+[2025-09-27 11:22:03.722] LOG - 16:22:03.693Z Market data: [object Object]
+[2025-09-27 11:22:03.723] LOG - 16:22:03.693Z Market data:
+[2025-09-27 11:22:03.725] LOG - 16:22:03.693Z Market price: NaN (bid price)
+[2025-09-27 11:22:03.727] LOG - 16:22:03.693Z Market price: NaN (bid price)
+[2025-09-27 11:22:03.729] LOG - 16:22:03.693Z Custom entry price provided: 24700
+[2025-09-27 11:22:03.730] LOG - 16:22:03.693Z Custom entry price provided: 24700
+[2025-09-27 11:22:03.730] LOG - 16:22:03.693Z Order type determined to be: STOP
+[2025-09-27 11:22:03.731] LOG - 16:22:03.693Z Order type determined to be: STOP
+[2025-09-27 11:22:03.732] LOG - 16:22:03.693Z Using price precision: 2 decimal places
+[2025-09-27 11:22:03.733] LOG - 16:22:03.693Z Using price precision: 2 decimal places
+[2025-09-27 11:22:03.734] LOG - 16:22:03.693Z Calculated SL price: 24703.75 (entry + 15 ticks)
+[2025-09-27 11:22:03.734] LOG - 16:22:03.693Z Calculated SL price: 24703.75 (entry + 15 ticks)
+[2025-09-27 11:22:03.735] LOG - 16:22:03.694Z Calculated TP price: 24686.75 (entry - 53 ticks)
+[2025-09-27 11:22:03.736] LOG - 16:22:03.694Z Calculated TP price: 24686.75 (entry - 53 ticks)
+[2025-09-27 11:22:03.737] LOG - 16:22:03.694Z Trade data prepared: [object Object]
+[2025-09-27 11:22:03.737] LOG - 16:22:03.694Z Trade data prepared:
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z Submitting bracket orders
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z Submitting bracket orders
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z Creating bracket orders with data: [object Object]
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z Creating bracket orders with data:
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z TP enabled: false, SL enabled: false
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z TP enabled: false, SL enabled: false
+[2025-09-27 11:22:03.738] LOG - 16:22:03.694Z Submitting initial STOP order
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Submitting initial STOP order
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Setting common order fields
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Setting common order fields
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Setting action to: Sell
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Setting action to: Sell
+[2025-09-27 11:22:03.739] LOG - 16:22:03.694Z Found 9 action labels
+[2025-09-27 11:22:03.740] LOG - 16:22:03.694Z Found 9 action labels
+[2025-09-27 11:22:03.740] LOG - 16:22:03.694Z Clicking Sell label
+[2025-09-27 11:22:03.740] LOG - 16:22:03.694Z Clicking Sell label
+[2025-09-27 11:22:03.740] LOG - 16:22:03.704Z Setting quantity to: 4
+[2025-09-27 11:22:03.740] LOG - 16:22:03.704Z Setting quantity to: 4
+[2025-09-27 11:22:03.740] LOG - 16:22:03.706Z Delaying for 250ms
+[2025-09-27 11:22:03.741] LOG - 16:22:03.706Z Delaying for 250ms
+[2025-09-27 11:22:03.970] LOG - 16:22:03.969Z Delaying for 250ms
+[2025-09-27 11:22:03.971] LOG - 16:22:03.969Z Delaying for 250ms
+[2025-09-27 11:22:04.234] LOG - 16:22:04.233Z Delaying for 200ms
+[2025-09-27 11:22:04.234] LOG - 16:22:04.233Z Delaying for 200ms
+[2025-09-27 11:22:04.437] LOG - 16:22:04.435Z 
+[2025-09-27 11:22:04.438] LOG - 16:22:04.435Z
+[2025-09-27 11:22:04.438] LOG - 16:22:04.435Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:22:04.438] LOG - 16:22:04.435Z 🔄 CAPTURING TRADOVATE ORDER FEEDBACK...
+[2025-09-27 11:22:04.438] LOG - 16:22:04.436Z Delaying for 500ms
+[2025-09-27 11:22:04.439] LOG - 16:22:04.436Z Delaying for 500ms
+[2025-09-27 11:22:04.938] LOG - 16:22:04.937Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:22:04.939] LOG - 16:22:04.937Z ❌ Order history div not found - no feedback to capture
+[2025-09-27 11:22:04.939] LOG - 16:22:04.937Z Delaying for 200ms
+[2025-09-27 11:22:04.939] LOG - 16:22:04.937Z Delaying for 200ms
+[2025-09-27 11:22:05.140] LOG - 16:22:05.139Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:22:05.140] LOG - 16:22:05.139Z Flipping action to Buy for TP/SL orders
+[2025-09-27 11:22:05.141] LOG - 16:22:05.139Z Bracket order creation complete
+[2025-09-27 11:22:05.141] LOG - 16:22:05.139Z Bracket order creation complete
+[2025-09-27 11:22:12.751] INFO - 16:22:12.750Z time stats. avg diff: -9, min: -9, max: -9, roundtrip: 21 msec, #1
+[2025-09-27 11:22:12.752] INFO - 16:22:12.750Z time stats. avg diff: -9, min: -9, max: -9, roundtrip: 21 msec, #1
+[2025-09-27 11:22:35.197] INFO - 16:22:35.196Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:22:35.198] INFO - 16:22:35.196Z visibilitychange: hidden, gd: 1000

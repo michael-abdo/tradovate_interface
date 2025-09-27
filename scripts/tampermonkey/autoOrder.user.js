@@ -1013,8 +1013,8 @@
       MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }   // Micro Gold
     };
 
-function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25) {
-        console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}`);
+function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null) {
+        console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}, orderType=${explicitOrderType}`);
 
         const symbolInput = document.getElementById('symbolInput').value || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
@@ -1076,7 +1076,28 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         let orderType = 'MARKET';
         let entryPrice = marketPrice;
         
-        if (customEntryPrice !== null) {
+        // Use explicit order type if provided, otherwise fall back to entry price logic
+        if (explicitOrderType) {
+            // Validate order type
+            const validOrderTypes = ['MARKET', 'LIMIT', 'STOP', 'STOP LIMIT', 'TRL STOP', 'TRL STP LMT'];
+            if (!validOrderTypes.includes(explicitOrderType)) {
+                console.error(`Invalid order type: ${explicitOrderType}. Valid types: ${validOrderTypes.join(', ')}`);
+                return;
+            }
+            
+            orderType = explicitOrderType;
+            console.log(`Using explicit order type: ${orderType}`);
+            
+            // For non-market orders, use custom entry price if available, otherwise use market price
+            if (orderType !== 'MARKET' && customEntryPrice !== null) {
+                entryPrice = customEntryPrice;
+                console.log(`Using custom entry price: ${entryPrice} for ${orderType} order`);
+            } else if (orderType !== 'MARKET') {
+                // For non-market orders without custom price, use market price
+                entryPrice = marketPrice;
+                console.log(`Using market price: ${entryPrice} for ${orderType} order`);
+            }
+        } else if (customEntryPrice !== null) {
             console.log(`Custom entry price provided: ${customEntryPrice}`);
             entryPrice = customEntryPrice;
             

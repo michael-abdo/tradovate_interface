@@ -1,0 +1,491 @@
+[2025-09-26 22:12:18.888] LOG - 03:12:18.886Z Starting login process for: zenex3298@gmail.com
+[2025-09-26 22:12:18.894] LOG - 03:12:18.886Z Starting login process for: zenex3298@gmail.com
+[2025-09-26 22:12:18.897] LOG - 03:12:18.886Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-26 22:12:18.897] LOG - 03:12:18.886Z Auto login function executing for: zenex3298@gmail.com
+[2025-09-26 22:12:18.898] LOG - 03:12:18.887Z Login form found, filling credentials...
+[2025-09-26 22:12:18.898] LOG - 03:12:18.887Z Login form found, filling credentials...
+[2025-09-26 22:12:18.908] LOG - 03:12:18.905Z Test element added to DOM
+[2025-09-26 22:12:18.908] LOG - 03:12:18.905Z Test element added to DOM
+[2025-09-26 22:12:18.993] LOG - 03:12:18.916Z All browser alerts and confirmations have been disabled
+[2025-09-26 22:12:18.993] LOG - 03:12:18.916Z All browser alerts and confirmations have been disabled
+[2025-09-26 22:12:19.405] LOG - 03:12:19.404Z Clicking login button...
+[2025-09-26 22:12:19.405] LOG - 03:12:19.404Z Clicking login button...
+[2025-09-26 22:12:19.414] LOG - 03:12:19.412Z authentication starting
+[2025-09-26 22:12:19.415] LOG - 03:12:19.412Z authentication starting
+[2025-09-26 22:12:19.815] warning - The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://developer.chrome.com/blog/autoplay/#web_audio
+[2025-09-26 22:12:19.818] LOG - 03:12:19.794Z Watching for account selection page...
+[2025-09-26 22:12:19.819] LOG - 03:12:19.794Z Watching for account selection page...
+[2025-09-26 22:12:20.008] LOG - 03:12:20.007Z Access token will be renewed in 75 minutes; expired: Fri Sep 26 2025 23:32:19 GMT-0500 (Central Daylight Time), now: Fri Sep 26 2025 22:12:20 GMT-0500 (Central Daylight Time)
+[2025-09-26 22:12:20.009] LOG - 03:12:20.007Z Access token will be renewed in 75 minutes; expired: Fri Sep 26 2025 23:32:19 GMT-0500 (Central Daylight Time), now: Fri Sep 26 2025 22:12:20 GMT-0500 (Central Daylight Time)
+[2025-09-26 22:12:20.300] INFO - 03:12:20.294Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.302] INFO - 03:12:20.294Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.302] INFO - 03:12:20.296Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:20.302] INFO - 03:12:20.296Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:20.396] INFO - 03:12:20.395Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.397] INFO - 03:12:20.395Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.398] INFO - 03:12:20.395Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:20.399] INFO - 03:12:20.395Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:20.432] INFO - 03:12:20.430Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.433] INFO - 03:12:20.430Z [LaunchDarkly] Closing stream connection
+[2025-09-26 22:12:20.433] INFO - 03:12:20.430Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:20.433] INFO - 03:12:20.430Z [LaunchDarkly] Opening stream connection to https://clientstream.launchdarkly.com/eval/66cdf5b9cf61891061b4e437/eyJraW5kIjoidXNlciIsImtleSI6IjQ2NTYwMjciLCJkZXZpY2UiOiJkZXNrdG9wIiwidXNlcklkIjo0NjU2MDI3LCJpcENvdW50cnkiOiJVUyIsIm9yZ05hbWUiOiJURFYiLCJuYW1lIjoiWmVuZXgzMjk4IiwibGFuZGluZ1BhcmFtcyI6IiJ9
+[2025-09-26 22:12:29.798] LOG - 03:12:29.796Z Account selection page not found after multiple attempts
+[2025-09-26 22:12:29.798] LOG - 03:12:29.796Z Account selection page not found after multiple attempts
+[2025-09-26 22:12:32.567] LOG - 03:12:32.566Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-26 22:12:32.569] LOG - 03:12:32.566Z Auto Order script initialized - AUTOMATIC HOT RELOAD SUCCESS!
+[2025-09-26 22:12:32.569] LOG - 03:12:32.566Z Creating UI...
+[2025-09-26 22:12:32.570] LOG - 03:12:32.566Z Creating UI...
+[2025-09-26 22:12:32.571] LOG - 03:12:32.567Z Creating UI
+[2025-09-26 22:12:32.571] LOG - 03:12:32.567Z Creating UI
+[2025-09-26 22:12:32.573] LOG - 03:12:32.567Z Stored values: TP=140, SL=40, Qty=10, Tick=0.25, Symbol=NQ
+[2025-09-26 22:12:32.573] LOG - 03:12:32.567Z Stored values: TP=140, SL=40, Qty=10, Tick=0.25, Symbol=NQ
+[2025-09-26 22:12:32.574] LOG - 03:12:32.569Z UI container added to DOM
+[2025-09-26 22:12:32.576] LOG - 03:12:32.569Z UI container added to DOM
+[2025-09-26 22:12:32.577] LOG - 03:12:32.570Z Setting up UI event handlers
+[2025-09-26 22:12:32.577] LOG - 03:12:32.570Z Setting up UI event handlers
+[2025-09-26 22:12:32.578] LOG - 03:12:32.570Z Setting up persistent settings
+[2025-09-26 22:12:32.579] LOG - 03:12:32.570Z Setting up persistent settings
+[2025-09-26 22:12:32.580] LOG - 03:12:32.570Z Setting up drag functionality
+[2025-09-26 22:12:32.581] LOG - 03:12:32.570Z Setting up drag functionality
+[2025-09-26 22:12:32.581] LOG - 03:12:32.570Z Setting up trade buttons
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z Setting up trade buttons
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z UI creation complete
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z UI creation complete
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z Creating example front-quarter symbol
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z Creating example front-quarter symbol
+[2025-09-26 22:12:32.582] LOG - 03:12:32.570Z getQuarterlyCode called with date: 2025-09-27T03:12:32.570Z
+[2025-09-26 22:12:32.583] LOG - 03:12:32.570Z getQuarterlyCode called with date: 2025-09-27T03:12:32.570Z
+[2025-09-26 22:12:32.583] LOG - 03:12:32.570Z Current month index: 8
+[2025-09-26 22:12:32.583] LOG - 03:12:32.570Z Current month index: 8
+[2025-09-26 22:12:32.583] LOG - 03:12:32.571Z Starting calculation with year=2025, month=8
+[2025-09-26 22:12:32.583] LOG - 03:12:32.571Z Starting calculation with year=2025, month=8
+[2025-09-26 22:12:32.583] LOG - 03:12:32.571Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:12:32.584] LOG - 03:12:32.571Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:12:32.584] LOG - 03:12:32.571Z Example front-quarter symbol created: NQZ5
+[2025-09-26 22:12:32.584] LOG - 03:12:32.571Z Example front-quarter symbol created: NQZ5
+[2025-09-26 22:12:32.637] LOG - 03:12:32.636Z Auto Risk Management: Running initial risk assessment...
+[2025-09-26 22:12:32.638] LOG - 03:12:32.636Z Auto Risk Management: Running initial risk assessment...
+[2025-09-26 22:12:32.638] LOG - 03:12:32.637Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-26 22:12:32.639] LOG - 03:12:32.637Z [updateUserColumnPhaseStatus] Starting...
+[2025-09-26 22:12:32.640] ERROR - 03:12:32.637Z [updateUserColumnPhaseStatus] No accountTable found
+[2025-09-26 22:12:32.640] ERROR - 03:12:32.637Z [updateUserColumnPhaseStatus] No accountTable found
+[2025-09-26 22:12:32.641] LOG - 03:12:32.639Z Auto Risk Management: Initial risk assessment completed
+[2025-09-26 22:12:32.641] LOG - 03:12:32.639Z Auto Risk Management: Initial risk assessment completed
+[2025-09-26 22:12:33.642] WARNING - 03:12:33.640Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e} TypeError: Cannot read properties of undefined (reading 'querySelector'),    at <anonymous>:377:98,    at i.__trace__ (https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:4613725),    at https://cdn.tradovate.com/tradovate/scripts/4418.49f1ab77.js:2:3547494
+[2025-09-26 22:12:33.642] WARNING - 03:12:33.640Z Error in deferred func: TypeError: Cannot read properties of undefined (reading 'querySelector'), function(){d(a),f(function(){d(null)},0);var e=i.apply(this,arguments);return d(null),e}
+[2025-09-26 22:12:33.646] LOG - 03:12:33.645Z Executing initial risk management assessment...
+[2025-09-26 22:12:33.648] LOG - 03:12:33.645Z Executing initial risk management assessment...
+[2025-09-26 22:12:33.649] ERROR - 03:12:33.645Z getTableData function not found
+[2025-09-26 22:12:33.650] ERROR - 03:12:33.645Z getTableData function not found
+[2025-09-26 22:12:33.651] ERROR - 03:12:33.646Z updateUserColumnPhaseStatus function not found
+[2025-09-26 22:12:33.652] ERROR - 03:12:33.646Z updateUserColumnPhaseStatus function not found
+[2025-09-26 22:12:33.653] ERROR - 03:12:33.646Z performAccountActions function not found
+[2025-09-26 22:12:33.654] ERROR - 03:12:33.646Z performAccountActions function not found
+[2025-09-26 22:12:33.654] LOG - 03:12:33.646Z Risk management assessment completed
+[2025-09-26 22:12:33.655] LOG - 03:12:33.646Z Risk management assessment completed
+[2025-09-26 22:15:37.901] LOG - 03:15:37.899Z Symbol input changed to: M
+[2025-09-26 22:15:37.902] LOG - 03:15:37.899Z Symbol input changed to: M
+[2025-09-26 22:15:37.905] LOG - 03:15:37.904Z normalizeSymbol called with: "M"
+[2025-09-26 22:15:37.907] LOG - 03:15:37.904Z normalizeSymbol called with: "M"
+[2025-09-26 22:15:37.908] LOG - 03:15:37.904Z Is root symbol: true
+[2025-09-26 22:15:37.909] LOG - 03:15:37.904Z Is root symbol: true
+[2025-09-26 22:15:37.910] LOG - 03:15:37.904Z getFrontQuarter called for root: "M"
+[2025-09-26 22:15:37.911] LOG - 03:15:37.904Z getFrontQuarter called for root: "M"
+[2025-09-26 22:15:37.912] LOG - 03:15:37.904Z getQuarterlyCode called with date: 2025-09-27T03:15:37.904Z
+[2025-09-26 22:15:37.913] LOG - 03:15:37.904Z getQuarterlyCode called with date: 2025-09-27T03:15:37.904Z
+[2025-09-26 22:15:37.915] LOG - 03:15:37.905Z Current month index: 8
+[2025-09-26 22:15:37.916] LOG - 03:15:37.905Z Current month index: 8
+[2025-09-26 22:15:37.918] LOG - 03:15:37.905Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:37.918] LOG - 03:15:37.905Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:37.919] LOG - 03:15:37.905Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:37.920] LOG - 03:15:37.905Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:37.920] LOG - 03:15:37.905Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:37.921] LOG - 03:15:37.905Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:37.923] LOG - 03:15:37.905Z Returning front quarter symbol: "MZ5"
+[2025-09-26 22:15:37.924] LOG - 03:15:37.905Z Returning front quarter symbol: "MZ5"
+[2025-09-26 22:15:37.926] LOG - 03:15:37.905Z Normalized symbol: "MZ5"
+[2025-09-26 22:15:37.927] LOG - 03:15:37.905Z Normalized symbol: "MZ5"
+[2025-09-26 22:15:37.928] LOG - 03:15:37.905Z Symbol changed to: M, normalized: MZ5
+[2025-09-26 22:15:37.929] LOG - 03:15:37.905Z Symbol changed to: M, normalized: MZ5
+[2025-09-26 22:15:37.931] LOG - 03:15:37.906Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MZ5"
+[2025-09-26 22:15:37.932] LOG - 03:15:37.906Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MZ5"
+[2025-09-26 22:15:37.932] LOG - 03:15:37.906Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:37.933] LOG - 03:15:37.906Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:37.934] ERROR - 03:15:37.906Z No matching input elements found with any selector!
+[2025-09-26 22:15:37.934] ERROR - 03:15:37.906Z No matching input elements found with any selector!
+[2025-09-26 22:15:37.934] ERROR - 03:15:37.907Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:37.935] ERROR - 03:15:37.907Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:37.935] LOG - 03:15:37.907Z Updated symbol to M in Tradovate UI
+[2025-09-26 22:15:37.935] LOG - 03:15:37.907Z Updated symbol to M in Tradovate UI
+[2025-09-26 22:15:37.936] LOG - 03:15:37.908Z Quantity input changed to: 10
+[2025-09-26 22:15:37.936] LOG - 03:15:37.908Z Quantity input changed to: 10
+[2025-09-26 22:15:37.936] LOG - 03:15:37.909Z TP input changed to: 100
+[2025-09-26 22:15:37.937] LOG - 03:15:37.909Z TP input changed to: 100
+[2025-09-26 22:15:37.937] LOG - 03:15:37.909Z SL input changed to: 40
+[2025-09-26 22:15:37.937] LOG - 03:15:37.909Z SL input changed to: 40
+[2025-09-26 22:15:37.937] LOG - 03:15:37.909Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:37.937] LOG - 03:15:37.909Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:37.937] LOG - 03:15:37.910Z Tick size input changed to: 0.25
+[2025-09-26 22:15:37.938] LOG - 03:15:37.910Z Tick size input changed to: 0.25
+[2025-09-26 22:15:37.938] LOG - 03:15:37.911Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:37.938] LOG - 03:15:37.911Z Trade control updates complete:
+[2025-09-26 22:15:38.088] LOG - 03:15:38.086Z Symbol input changed to: MN
+[2025-09-26 22:15:38.089] LOG - 03:15:38.086Z Symbol input changed to: MN
+[2025-09-26 22:15:38.091] LOG - 03:15:38.086Z normalizeSymbol called with: "MN"
+[2025-09-26 22:15:38.092] LOG - 03:15:38.086Z normalizeSymbol called with: "MN"
+[2025-09-26 22:15:38.094] LOG - 03:15:38.087Z Is root symbol: true
+[2025-09-26 22:15:38.096] LOG - 03:15:38.087Z Is root symbol: true
+[2025-09-26 22:15:38.097] LOG - 03:15:38.087Z getFrontQuarter called for root: "MN"
+[2025-09-26 22:15:38.098] LOG - 03:15:38.087Z getFrontQuarter called for root: "MN"
+[2025-09-26 22:15:38.099] LOG - 03:15:38.087Z getQuarterlyCode called with date: 2025-09-27T03:15:38.087Z
+[2025-09-26 22:15:38.100] LOG - 03:15:38.087Z getQuarterlyCode called with date: 2025-09-27T03:15:38.087Z
+[2025-09-26 22:15:38.101] LOG - 03:15:38.087Z Current month index: 8
+[2025-09-26 22:15:38.101] LOG - 03:15:38.087Z Current month index: 8
+[2025-09-26 22:15:38.103] LOG - 03:15:38.087Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.104] LOG - 03:15:38.087Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.104] LOG - 03:15:38.087Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.105] LOG - 03:15:38.087Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.106] LOG - 03:15:38.087Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.107] LOG - 03:15:38.087Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.108] LOG - 03:15:38.087Z Returning front quarter symbol: "MNZ5"
+[2025-09-26 22:15:38.109] LOG - 03:15:38.087Z Returning front quarter symbol: "MNZ5"
+[2025-09-26 22:15:38.110] LOG - 03:15:38.087Z Normalized symbol: "MNZ5"
+[2025-09-26 22:15:38.112] LOG - 03:15:38.087Z Normalized symbol: "MNZ5"
+[2025-09-26 22:15:38.113] LOG - 03:15:38.087Z Symbol changed to: MN, normalized: MNZ5
+[2025-09-26 22:15:38.114] LOG - 03:15:38.087Z Symbol changed to: MN, normalized: MNZ5
+[2025-09-26 22:15:38.115] LOG - 03:15:38.087Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNZ5"
+[2025-09-26 22:15:38.116] LOG - 03:15:38.087Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNZ5"
+[2025-09-26 22:15:38.117] LOG - 03:15:38.088Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.118] LOG - 03:15:38.088Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.118] ERROR - 03:15:38.088Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.119] ERROR - 03:15:38.088Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.119] ERROR - 03:15:38.088Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.120] ERROR - 03:15:38.088Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.120] LOG - 03:15:38.088Z Updated symbol to MN in Tradovate UI
+[2025-09-26 22:15:38.121] LOG - 03:15:38.088Z Updated symbol to MN in Tradovate UI
+[2025-09-26 22:15:38.121] LOG - 03:15:38.088Z Quantity input changed to: 10
+[2025-09-26 22:15:38.121] LOG - 03:15:38.088Z Quantity input changed to: 10
+[2025-09-26 22:15:38.122] LOG - 03:15:38.089Z TP input changed to: 100
+[2025-09-26 22:15:38.122] LOG - 03:15:38.089Z TP input changed to: 100
+[2025-09-26 22:15:38.122] LOG - 03:15:38.089Z SL input changed to: 40
+[2025-09-26 22:15:38.122] LOG - 03:15:38.089Z SL input changed to: 40
+[2025-09-26 22:15:38.123] LOG - 03:15:38.089Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.123] LOG - 03:15:38.089Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.123] LOG - 03:15:38.090Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.123] LOG - 03:15:38.090Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.123] LOG - 03:15:38.090Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:38.124] LOG - 03:15:38.090Z Trade control updates complete:
+[2025-09-26 22:15:38.239] LOG - 03:15:38.237Z Symbol input changed to: MNQ
+[2025-09-26 22:15:38.240] LOG - 03:15:38.237Z Symbol input changed to: MNQ
+[2025-09-26 22:15:38.241] LOG - 03:15:38.238Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.242] LOG - 03:15:38.238Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.243] LOG - 03:15:38.238Z Is root symbol: true
+[2025-09-26 22:15:38.244] LOG - 03:15:38.238Z Is root symbol: true
+[2025-09-26 22:15:38.246] LOG - 03:15:38.238Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.248] LOG - 03:15:38.238Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.249] LOG - 03:15:38.238Z getQuarterlyCode called with date: 2025-09-27T03:15:38.238Z
+[2025-09-26 22:15:38.250] LOG - 03:15:38.238Z getQuarterlyCode called with date: 2025-09-27T03:15:38.238Z
+[2025-09-26 22:15:38.251] LOG - 03:15:38.238Z Current month index: 8
+[2025-09-26 22:15:38.252] LOG - 03:15:38.238Z Current month index: 8
+[2025-09-26 22:15:38.253] LOG - 03:15:38.238Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.254] LOG - 03:15:38.238Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.255] LOG - 03:15:38.238Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.255] LOG - 03:15:38.238Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.256] LOG - 03:15:38.238Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.257] LOG - 03:15:38.238Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.257] LOG - 03:15:38.238Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.258] LOG - 03:15:38.238Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.259] LOG - 03:15:38.238Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.260] LOG - 03:15:38.238Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.261] LOG - 03:15:38.238Z Symbol changed to: MNQ, normalized: MNQZ5
+[2025-09-26 22:15:38.261] LOG - 03:15:38.238Z Symbol changed to: MNQ, normalized: MNQZ5
+[2025-09-26 22:15:38.262] LOG - 03:15:38.239Z Found default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.263] LOG - 03:15:38.239Z Found default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.264] LOG - 03:15:38.239Z Updated tick size to 0.25 for MNQ
+[2025-09-26 22:15:38.265] LOG - 03:15:38.239Z Updated tick size to 0.25 for MNQ
+[2025-09-26 22:15:38.266] LOG - 03:15:38.239Z Updated SL/TP to default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.267] LOG - 03:15:38.239Z Updated SL/TP to default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.268] LOG - 03:15:38.239Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.268] LOG - 03:15:38.239Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.269] LOG - 03:15:38.239Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.270] LOG - 03:15:38.239Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.271] ERROR - 03:15:38.239Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.271] ERROR - 03:15:38.239Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.271] ERROR - 03:15:38.239Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.272] ERROR - 03:15:38.239Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.272] LOG - 03:15:38.239Z Updated symbol to MNQ in Tradovate UI
+[2025-09-26 22:15:38.272] LOG - 03:15:38.239Z Updated symbol to MNQ in Tradovate UI
+[2025-09-26 22:15:38.272] LOG - 03:15:38.240Z Quantity input changed to: 10
+[2025-09-26 22:15:38.272] LOG - 03:15:38.240Z Quantity input changed to: 10
+[2025-09-26 22:15:38.273] LOG - 03:15:38.240Z TP input changed to: 100
+[2025-09-26 22:15:38.273] LOG - 03:15:38.240Z TP input changed to: 100
+[2025-09-26 22:15:38.273] LOG - 03:15:38.240Z SL input changed to: 40
+[2025-09-26 22:15:38.273] LOG - 03:15:38.240Z SL input changed to: 40
+[2025-09-26 22:15:38.274] LOG - 03:15:38.240Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.274] LOG - 03:15:38.240Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.274] LOG - 03:15:38.240Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.275] LOG - 03:15:38.240Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.275] LOG - 03:15:38.241Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:38.275] LOG - 03:15:38.241Z Trade control updates complete:
+[2025-09-26 22:15:38.796] LOG - 03:15:38.794Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.797] LOG - 03:15:38.794Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.798] LOG - 03:15:38.795Z Is root symbol: true
+[2025-09-26 22:15:38.799] LOG - 03:15:38.795Z Is root symbol: true
+[2025-09-26 22:15:38.800] LOG - 03:15:38.795Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.801] LOG - 03:15:38.795Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.802] LOG - 03:15:38.795Z getQuarterlyCode called with date: 2025-09-27T03:15:38.795Z
+[2025-09-26 22:15:38.803] LOG - 03:15:38.795Z getQuarterlyCode called with date: 2025-09-27T03:15:38.795Z
+[2025-09-26 22:15:38.804] LOG - 03:15:38.795Z Current month index: 8
+[2025-09-26 22:15:38.805] LOG - 03:15:38.795Z Current month index: 8
+[2025-09-26 22:15:38.805] LOG - 03:15:38.795Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.807] LOG - 03:15:38.795Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.808] LOG - 03:15:38.795Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.809] LOG - 03:15:38.795Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.810] LOG - 03:15:38.795Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.811] LOG - 03:15:38.795Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.811] LOG - 03:15:38.795Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.812] LOG - 03:15:38.795Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.813] LOG - 03:15:38.795Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.813] LOG - 03:15:38.795Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.813] LOG - 03:15:38.795Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.813] LOG - 03:15:38.795Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.813] LOG - 03:15:38.796Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.814] LOG - 03:15:38.796Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.814] ERROR - 03:15:38.796Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.814] ERROR - 03:15:38.796Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.814] ERROR - 03:15:38.796Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.814] ERROR - 03:15:38.796Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.897] LOG - 03:15:38.896Z Symbol input changed to: MNQ
+[2025-09-26 22:15:38.899] LOG - 03:15:38.896Z Symbol input changed to: MNQ
+[2025-09-26 22:15:38.900] LOG - 03:15:38.897Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.901] LOG - 03:15:38.897Z normalizeSymbol called with: "MNQ"
+[2025-09-26 22:15:38.902] LOG - 03:15:38.897Z Is root symbol: true
+[2025-09-26 22:15:38.903] LOG - 03:15:38.897Z Is root symbol: true
+[2025-09-26 22:15:38.904] LOG - 03:15:38.897Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.905] LOG - 03:15:38.897Z getFrontQuarter called for root: "MNQ"
+[2025-09-26 22:15:38.906] LOG - 03:15:38.897Z getQuarterlyCode called with date: 2025-09-27T03:15:38.897Z
+[2025-09-26 22:15:38.907] LOG - 03:15:38.897Z getQuarterlyCode called with date: 2025-09-27T03:15:38.897Z
+[2025-09-26 22:15:38.908] LOG - 03:15:38.897Z Current month index: 8
+[2025-09-26 22:15:38.909] LOG - 03:15:38.897Z Current month index: 8
+[2025-09-26 22:15:38.910] LOG - 03:15:38.897Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.910] LOG - 03:15:38.897Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:38.911] LOG - 03:15:38.897Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.912] LOG - 03:15:38.897Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.913] LOG - 03:15:38.897Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.914] LOG - 03:15:38.897Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:38.915] LOG - 03:15:38.897Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.916] LOG - 03:15:38.897Z Returning front quarter symbol: "MNQZ5"
+[2025-09-26 22:15:38.917] LOG - 03:15:38.897Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.918] LOG - 03:15:38.897Z Normalized symbol: "MNQZ5"
+[2025-09-26 22:15:38.919] LOG - 03:15:38.897Z Symbol changed to: MNQ, normalized: MNQZ5
+[2025-09-26 22:15:38.920] LOG - 03:15:38.897Z Symbol changed to: MNQ, normalized: MNQZ5
+[2025-09-26 22:15:38.921] LOG - 03:15:38.898Z Found default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.921] LOG - 03:15:38.898Z Found default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.922] LOG - 03:15:38.898Z Updated tick size to 0.25 for MNQ
+[2025-09-26 22:15:38.924] LOG - 03:15:38.898Z Updated tick size to 0.25 for MNQ
+[2025-09-26 22:15:38.925] LOG - 03:15:38.898Z Updated SL/TP to default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.925] LOG - 03:15:38.898Z Updated SL/TP to default values for MNQ: SL=15, TP=53
+[2025-09-26 22:15:38.926] LOG - 03:15:38.898Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.927] LOG - 03:15:38.898Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "MNQZ5"
+[2025-09-26 22:15:38.928] LOG - 03:15:38.898Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.928] LOG - 03:15:38.898Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:38.929] ERROR - 03:15:38.898Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.929] ERROR - 03:15:38.898Z No matching input elements found with any selector!
+[2025-09-26 22:15:38.930] ERROR - 03:15:38.898Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.930] ERROR - 03:15:38.898Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:38.931] LOG - 03:15:38.898Z Updated symbol to MNQ in Tradovate UI
+[2025-09-26 22:15:38.931] LOG - 03:15:38.898Z Updated symbol to MNQ in Tradovate UI
+[2025-09-26 22:15:38.932] LOG - 03:15:38.898Z Quantity input changed to: 10
+[2025-09-26 22:15:38.932] LOG - 03:15:38.898Z Quantity input changed to: 10
+[2025-09-26 22:15:38.932] LOG - 03:15:38.899Z TP input changed to: 100
+[2025-09-26 22:15:38.932] LOG - 03:15:38.899Z TP input changed to: 100
+[2025-09-26 22:15:38.932] LOG - 03:15:38.899Z SL input changed to: 40
+[2025-09-26 22:15:38.933] LOG - 03:15:38.899Z SL input changed to: 40
+[2025-09-26 22:15:38.933] LOG - 03:15:38.899Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.933] LOG - 03:15:38.899Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:38.933] LOG - 03:15:38.899Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.934] LOG - 03:15:38.899Z Tick size input changed to: 0.25
+[2025-09-26 22:15:38.934] LOG - 03:15:38.900Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:38.934] LOG - 03:15:38.900Z Trade control updates complete:
+[2025-09-26 22:15:44.215] LOG - 03:15:44.212Z Symbol input changed to: N
+[2025-09-26 22:15:44.216] LOG - 03:15:44.212Z Symbol input changed to: N
+[2025-09-26 22:15:44.218] LOG - 03:15:44.213Z normalizeSymbol called with: "N"
+[2025-09-26 22:15:44.220] LOG - 03:15:44.213Z normalizeSymbol called with: "N"
+[2025-09-26 22:15:44.222] LOG - 03:15:44.213Z Is root symbol: true
+[2025-09-26 22:15:44.223] LOG - 03:15:44.213Z Is root symbol: true
+[2025-09-26 22:15:44.225] LOG - 03:15:44.213Z getFrontQuarter called for root: "N"
+[2025-09-26 22:15:44.226] LOG - 03:15:44.213Z getFrontQuarter called for root: "N"
+[2025-09-26 22:15:44.228] LOG - 03:15:44.213Z getQuarterlyCode called with date: 2025-09-27T03:15:44.213Z
+[2025-09-26 22:15:44.229] LOG - 03:15:44.213Z getQuarterlyCode called with date: 2025-09-27T03:15:44.213Z
+[2025-09-26 22:15:44.230] LOG - 03:15:44.214Z Current month index: 8
+[2025-09-26 22:15:44.230] LOG - 03:15:44.214Z Current month index: 8
+[2025-09-26 22:15:44.232] LOG - 03:15:44.214Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.233] LOG - 03:15:44.214Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.233] LOG - 03:15:44.214Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.234] LOG - 03:15:44.214Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.236] LOG - 03:15:44.214Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.236] LOG - 03:15:44.214Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.237] LOG - 03:15:44.214Z Returning front quarter symbol: "NZ5"
+[2025-09-26 22:15:44.238] LOG - 03:15:44.214Z Returning front quarter symbol: "NZ5"
+[2025-09-26 22:15:44.241] LOG - 03:15:44.214Z Normalized symbol: "NZ5"
+[2025-09-26 22:15:44.241] LOG - 03:15:44.214Z Normalized symbol: "NZ5"
+[2025-09-26 22:15:44.242] LOG - 03:15:44.214Z Symbol changed to: N, normalized: NZ5
+[2025-09-26 22:15:44.242] LOG - 03:15:44.214Z Symbol changed to: N, normalized: NZ5
+[2025-09-26 22:15:44.243] LOG - 03:15:44.214Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NZ5"
+[2025-09-26 22:15:44.244] LOG - 03:15:44.214Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NZ5"
+[2025-09-26 22:15:44.245] LOG - 03:15:44.214Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.245] LOG - 03:15:44.214Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.258] ERROR - 03:15:44.214Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.259] ERROR - 03:15:44.214Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.259] ERROR - 03:15:44.215Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.259] ERROR - 03:15:44.215Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.260] LOG - 03:15:44.215Z Updated symbol to N in Tradovate UI
+[2025-09-26 22:15:44.260] LOG - 03:15:44.215Z Updated symbol to N in Tradovate UI
+[2025-09-26 22:15:44.261] LOG - 03:15:44.215Z Quantity input changed to: 10
+[2025-09-26 22:15:44.261] LOG - 03:15:44.215Z Quantity input changed to: 10
+[2025-09-26 22:15:44.263] LOG - 03:15:44.216Z TP input changed to: 100
+[2025-09-26 22:15:44.263] LOG - 03:15:44.216Z TP input changed to: 100
+[2025-09-26 22:15:44.263] LOG - 03:15:44.216Z SL input changed to: 40
+[2025-09-26 22:15:44.264] LOG - 03:15:44.216Z SL input changed to: 40
+[2025-09-26 22:15:44.264] LOG - 03:15:44.216Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.264] LOG - 03:15:44.216Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.264] LOG - 03:15:44.217Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.264] LOG - 03:15:44.217Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.264] LOG - 03:15:44.219Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:44.265] LOG - 03:15:44.219Z Trade control updates complete:
+[2025-09-26 22:15:44.427] LOG - 03:15:44.426Z Symbol input changed to: NQ
+[2025-09-26 22:15:44.429] LOG - 03:15:44.426Z Symbol input changed to: NQ
+[2025-09-26 22:15:44.430] LOG - 03:15:44.426Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.431] LOG - 03:15:44.426Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.433] LOG - 03:15:44.426Z Is root symbol: true
+[2025-09-26 22:15:44.436] LOG - 03:15:44.426Z Is root symbol: true
+[2025-09-26 22:15:44.437] LOG - 03:15:44.427Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.438] LOG - 03:15:44.427Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.440] LOG - 03:15:44.427Z getQuarterlyCode called with date: 2025-09-27T03:15:44.427Z
+[2025-09-26 22:15:44.441] LOG - 03:15:44.427Z getQuarterlyCode called with date: 2025-09-27T03:15:44.427Z
+[2025-09-26 22:15:44.442] LOG - 03:15:44.427Z Current month index: 8
+[2025-09-26 22:15:44.443] LOG - 03:15:44.427Z Current month index: 8
+[2025-09-26 22:15:44.445] LOG - 03:15:44.427Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.445] LOG - 03:15:44.427Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.447] LOG - 03:15:44.427Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.449] LOG - 03:15:44.427Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.449] LOG - 03:15:44.427Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.451] LOG - 03:15:44.427Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.452] LOG - 03:15:44.427Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.453] LOG - 03:15:44.427Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.454] LOG - 03:15:44.427Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.455] LOG - 03:15:44.427Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.457] LOG - 03:15:44.427Z Symbol changed to: NQ, normalized: NQZ5
+[2025-09-26 22:15:44.458] LOG - 03:15:44.427Z Symbol changed to: NQ, normalized: NQZ5
+[2025-09-26 22:15:44.459] LOG - 03:15:44.427Z Found default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.460] LOG - 03:15:44.427Z Found default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.461] LOG - 03:15:44.427Z Updated tick size to 0.25 for NQ
+[2025-09-26 22:15:44.462] LOG - 03:15:44.427Z Updated tick size to 0.25 for NQ
+[2025-09-26 22:15:44.463] LOG - 03:15:44.427Z Updated SL/TP to default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.464] LOG - 03:15:44.427Z Updated SL/TP to default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.464] LOG - 03:15:44.427Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.465] LOG - 03:15:44.427Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.466] LOG - 03:15:44.428Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.466] LOG - 03:15:44.428Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.467] ERROR - 03:15:44.428Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.467] ERROR - 03:15:44.428Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.468] ERROR - 03:15:44.428Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.468] ERROR - 03:15:44.428Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.468] LOG - 03:15:44.429Z Updated symbol to NQ in Tradovate UI
+[2025-09-26 22:15:44.468] LOG - 03:15:44.429Z Updated symbol to NQ in Tradovate UI
+[2025-09-26 22:15:44.469] LOG - 03:15:44.429Z Quantity input changed to: 10
+[2025-09-26 22:15:44.469] LOG - 03:15:44.429Z Quantity input changed to: 10
+[2025-09-26 22:15:44.469] LOG - 03:15:44.429Z TP input changed to: 100
+[2025-09-26 22:15:44.469] LOG - 03:15:44.429Z TP input changed to: 100
+[2025-09-26 22:15:44.470] LOG - 03:15:44.429Z SL input changed to: 40
+[2025-09-26 22:15:44.470] LOG - 03:15:44.429Z SL input changed to: 40
+[2025-09-26 22:15:44.470] LOG - 03:15:44.430Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.470] LOG - 03:15:44.430Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.471] LOG - 03:15:44.430Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.471] LOG - 03:15:44.430Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.471] LOG - 03:15:44.431Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:44.471] LOG - 03:15:44.431Z Trade control updates complete:
+[2025-09-26 22:15:44.684] LOG - 03:15:44.683Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.686] LOG - 03:15:44.683Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.688] LOG - 03:15:44.683Z Is root symbol: true
+[2025-09-26 22:15:44.690] LOG - 03:15:44.683Z Is root symbol: true
+[2025-09-26 22:15:44.691] LOG - 03:15:44.683Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.692] LOG - 03:15:44.683Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.693] LOG - 03:15:44.683Z getQuarterlyCode called with date: 2025-09-27T03:15:44.683Z
+[2025-09-26 22:15:44.694] LOG - 03:15:44.683Z getQuarterlyCode called with date: 2025-09-27T03:15:44.683Z
+[2025-09-26 22:15:44.695] LOG - 03:15:44.683Z Current month index: 8
+[2025-09-26 22:15:44.696] LOG - 03:15:44.683Z Current month index: 8
+[2025-09-26 22:15:44.697] LOG - 03:15:44.683Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.697] LOG - 03:15:44.683Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.698] LOG - 03:15:44.683Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.699] LOG - 03:15:44.683Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.700] LOG - 03:15:44.683Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.701] LOG - 03:15:44.683Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.702] LOG - 03:15:44.684Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.702] LOG - 03:15:44.684Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.703] LOG - 03:15:44.684Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.704] LOG - 03:15:44.684Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.704] LOG - 03:15:44.684Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.704] LOG - 03:15:44.684Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.704] LOG - 03:15:44.684Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.706] LOG - 03:15:44.684Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.706] ERROR - 03:15:44.684Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.706] ERROR - 03:15:44.684Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.706] ERROR - 03:15:44.685Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.706] ERROR - 03:15:44.685Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.787] LOG - 03:15:44.786Z Symbol input changed to: NQ
+[2025-09-26 22:15:44.789] LOG - 03:15:44.786Z Symbol input changed to: NQ
+[2025-09-26 22:15:44.789] LOG - 03:15:44.786Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.791] LOG - 03:15:44.786Z normalizeSymbol called with: "NQ"
+[2025-09-26 22:15:44.792] LOG - 03:15:44.787Z Is root symbol: true
+[2025-09-26 22:15:44.794] LOG - 03:15:44.787Z Is root symbol: true
+[2025-09-26 22:15:44.796] LOG - 03:15:44.787Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.797] LOG - 03:15:44.787Z getFrontQuarter called for root: "NQ"
+[2025-09-26 22:15:44.799] LOG - 03:15:44.787Z getQuarterlyCode called with date: 2025-09-27T03:15:44.787Z
+[2025-09-26 22:15:44.799] LOG - 03:15:44.787Z getQuarterlyCode called with date: 2025-09-27T03:15:44.787Z
+[2025-09-26 22:15:44.801] LOG - 03:15:44.787Z Current month index: 8
+[2025-09-26 22:15:44.802] LOG - 03:15:44.787Z Current month index: 8
+[2025-09-26 22:15:44.803] LOG - 03:15:44.787Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.804] LOG - 03:15:44.787Z Starting calculation with year=2025, month=8
+[2025-09-26 22:15:44.805] LOG - 03:15:44.787Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.806] LOG - 03:15:44.787Z Calculated quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.808] LOG - 03:15:44.787Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.809] LOG - 03:15:44.787Z Got quarterly code: letter=Z, yearDigit=5
+[2025-09-26 22:15:44.809] LOG - 03:15:44.787Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.810] LOG - 03:15:44.787Z Returning front quarter symbol: "NQZ5"
+[2025-09-26 22:15:44.811] LOG - 03:15:44.787Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.812] LOG - 03:15:44.787Z Normalized symbol: "NQZ5"
+[2025-09-26 22:15:44.813] LOG - 03:15:44.787Z Symbol changed to: NQ, normalized: NQZ5
+[2025-09-26 22:15:44.813] LOG - 03:15:44.787Z Symbol changed to: NQ, normalized: NQZ5
+[2025-09-26 22:15:44.815] LOG - 03:15:44.787Z Found default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.816] LOG - 03:15:44.787Z Found default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.819] LOG - 03:15:44.788Z Updated tick size to 0.25 for NQ
+[2025-09-26 22:15:44.820] LOG - 03:15:44.788Z Updated tick size to 0.25 for NQ
+[2025-09-26 22:15:44.821] LOG - 03:15:44.788Z Updated SL/TP to default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.822] LOG - 03:15:44.788Z Updated SL/TP to default values for NQ: SL=15, TP=53
+[2025-09-26 22:15:44.823] LOG - 03:15:44.788Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.824] LOG - 03:15:44.788Z updateSymbol called with selector: ".trading-ticket .search-box--input", value: "NQZ5"
+[2025-09-26 22:15:44.824] LOG - 03:15:44.788Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.825] LOG - 03:15:44.788Z Found 0 matching inputs with selector: .trading-ticket .search-box--input
+[2025-09-26 22:15:44.826] ERROR - 03:15:44.789Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.827] ERROR - 03:15:44.789Z No matching input elements found with any selector!
+[2025-09-26 22:15:44.828] ERROR - 03:15:44.790Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.828] ERROR - 03:15:44.790Z Tried selectors: .trading-ticket .search-box--input and fallbacks
+[2025-09-26 22:15:44.828] LOG - 03:15:44.790Z Updated symbol to NQ in Tradovate UI
+[2025-09-26 22:15:44.828] LOG - 03:15:44.790Z Updated symbol to NQ in Tradovate UI
+[2025-09-26 22:15:44.829] LOG - 03:15:44.790Z Quantity input changed to: 10
+[2025-09-26 22:15:44.829] LOG - 03:15:44.790Z Quantity input changed to: 10
+[2025-09-26 22:15:44.829] LOG - 03:15:44.790Z TP input changed to: 100
+[2025-09-26 22:15:44.830] LOG - 03:15:44.790Z TP input changed to: 100
+[2025-09-26 22:15:44.830] LOG - 03:15:44.791Z SL input changed to: 40
+[2025-09-26 22:15:44.830] LOG - 03:15:44.791Z SL input changed to: 40
+[2025-09-26 22:15:44.830] LOG - 03:15:44.791Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.831] LOG - 03:15:44.791Z Calculated TP: 140 (SL × 3.5)
+[2025-09-26 22:15:44.831] LOG - 03:15:44.791Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.831] LOG - 03:15:44.791Z Tick size input changed to: 0.25
+[2025-09-26 22:15:44.832] LOG - 03:15:44.791Z Trade control updates complete: [object Object]
+[2025-09-26 22:15:44.832] LOG - 03:15:44.791Z Trade control updates complete:
+[2025-09-26 22:23:57.374] error - Refused to connect to 'https://bat.bing.com/actionp/0?ti=26330043&Ver=2&mid=5310049a-d672-4bf6-b103-c3c3fccbaa9f&bo=2&sid=3660cc809ad411f094ce7fdad7d91748&vid=9abf384092fe11f0b30e9fac449e4642&vids=0&msclkid=N&evt=pageHide' because it violates the following Content Security Policy directive: "connect-src wss://*.tradovate.com https://*.tradovate.com https://*.ntinnolab.com https://*.devel.ninjatrader.dev https://*.staging.ninjatrader.dev https://*.uat.ninjatrader.dev wss://*.ntinnolab.com wss://*.devel.ninjatrader.dev wss://*.staging.ninjatrader.dev wss://*.uat.ninjatrader.dev wss://*.tradovateapi.com https://*.tradovateapi.com https://*.ninjatrader.com https://cdn.walkme.com https://ec.walkme.com https://sessions.bugsnag.com https://notify.bugsnag.com https://*.plaid.com https://*.yodlee.com https://tradovate.zendesk.com https://rollout.ada.support https://static.ada.support https://ninjatrader.ada.support https://tradovate.ada.support https://ninjatrader-eap.ada.support/ https://demo-ninjatrader-gr.ada.support/ https://tradovate-gen.ada.support/ https://api.stripe.com https://apiproxy.ninjatrader.com https://apiproxy-d.ninjatrader.com https://us-autocomplete-pro.api.smartystreets.com https://international-autocomplete.api.smarty.com https://maps.googleapis.com https://accounts.google.com/ https://www.google.com https://www.googletagmanager.com/ https://*.browser-intake-datadoghq.com https://scripts.neuro-id.com https://receiver.neuroid.cloud https://logs.neuro-id.com https://firebaseinstallations.googleapis.com/ https://firebaseremoteconfig.googleapis.com/ https://logx.optimizely.com https://*.optimizely.com wss://mpsnare.iesnare.com wss://ci-mpsnare.iovation.com https://*.iovation.com/ https://*.reddit.com  https://www.redditstatic.com https://*.taboola.com https://*.launchdarkly.com https://*.alloy.co https://*.maze.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com/ https://api.hubapi.com https://forms.hubspot.com https://stats.g.doubleclick.net https://alb.reddit.com https://analytics.twitter.com https://heapanalytics.com https://*.auryc.com https://*.contentsquare.net https://siteintercept.qualtrics.com https://api.userway.org/".
+
+[2025-09-26 22:23:57.429] INFO - 03:23:57.396Z visibilitychange: hidden, gd: 1000
+[2025-09-26 22:23:57.429] INFO - 03:23:57.396Z visibilitychange: hidden, gd: 1000

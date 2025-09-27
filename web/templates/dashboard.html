@@ -2222,7 +2222,8 @@
                     tick_size: tickSize,
                     account: 'all', // Trade on all accounts
                     enable_tp: enableTP,
-                    enable_sl: enableSL
+                    enable_sl: enableSL,
+                    order_type: orderType.toUpperCase() // Convert 'market'/'limit' to 'MARKET'/'LIMIT'
                 };
                 
                 // Only add TP/SL if they are enabled
