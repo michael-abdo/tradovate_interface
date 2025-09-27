@@ -172,7 +172,7 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"updateSymbol('.search-box--input', normalizeSymbol('{symbol}'));"
+            js_code = f"updateSymbol('.trading-ticket .search-box--input', normalizeSymbol('{symbol}'));"
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:
