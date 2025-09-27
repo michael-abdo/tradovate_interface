@@ -315,8 +315,17 @@ class ChromeInstance:
                 return False
                 
         except Exception as e:
-            logger.error(f"Error checking login status: {e}")
-            return False
+            error_msg = str(e)
+            # Check for WebSocket disconnection - this should terminate the monitor thread
+            if ("Connection to remote host was lost" in error_msg or 
+                "WebSocketConnectionClosedException" in error_msg or
+                "Tab has been stopped" in error_msg):
+                logger.info(f"WebSocket connection lost for {self.username}, terminating monitor thread")
+                self.stop_event.set()  # Signal thread to exit gracefully
+                return None  # Special return value to indicate terminal condition
+            else:
+                logger.error(f"Error checking login status: {e}")
+                return False
     
     def monitor_login_status(self):
         """Monitor login status and automatically log in again if logged out"""
@@ -334,7 +343,11 @@ class ChromeInstance:
                     break
                     
                 # Check and log in if needed
-                self.check_and_login_if_needed()
+                result = self.check_and_login_if_needed()
+                # If None is returned, WebSocket connection was lost - exit gracefully
+                if result is None:
+                    logger.info(f"WebSocket disconnection detected for {self.username}, exiting monitor loop")
+                    break
                 
             except Exception as e:
                 logger.error(f"Error in login monitor for {self.username}: {e}")

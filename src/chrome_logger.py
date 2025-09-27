@@ -59,11 +59,28 @@ class ChromeLogger:
             return False
     
     def stop(self):
-        """Stop the logger"""
+        """Stop the logger and clean up WebSocket connections"""
         self.is_running = False
+        
+        # Disable CDP domains to stop WebSocket events and avoid blocking
+        try:
+            if self.tab:
+                self.tab.Log.disable()
+                self.tab.Runtime.disable()
+                self.tab.Console.disable()
+                self.tab.DOM.disable()
+                self.tab.Page.disable()
+        except Exception as e:
+            # Ignore WebSocket errors during cleanup - tab may already be closed
+            pass
+        
+        # Wait for background thread with shorter timeout to avoid blocking
         if self.log_thread:
-            self.log_thread.join(timeout=1.0)
+            self.log_thread.join(timeout=0.5)
+            if self.log_thread.is_alive():
+                print(f"Warning: ChromeLogger thread did not stop cleanly within timeout")
             self.log_thread = None
+        
         print("Chrome logger stopped")
     
     def add_callback(self, callback):
