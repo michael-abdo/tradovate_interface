@@ -526,43 +526,59 @@ def force_shutdown():
     print("\n!!! FORCE SHUTDOWN INITIATED !!!")
     print("Graceful shutdown timeout exceeded, force killing all processes...")
     
-    # Kill auto_login process immediately
-    if auto_login_process and auto_login_process.poll() is None:
-        try:
-            print("Force killing auto_login process...")
-            auto_login_process.kill()
-            auto_login_process.wait()
-        except Exception as e:
-            print(f"Error force killing auto_login: {e}")
-    
-    # Kill Flask process immediately
-    if flask_process and flask_process.poll() is None:
-        try:
-            print("Force killing Flask process...")
-            flask_process.kill()
-            flask_process.wait()
-        except Exception as e:
-            print(f"Error force killing Flask: {e}")
-    
-    # Kill dashboard Chrome immediately
-    if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
-        try:
-            print("Force killing dashboard Chrome...")
-            dashboard_chrome_process.kill()
-            dashboard_chrome_process.wait()
-        except Exception as e:
-            print(f"Error force killing dashboard Chrome: {e}")
-    
-    # Force kill all tracked Chrome processes
-    for pid in chrome_processes:
-        try:
-            print(f"Force killing Chrome PID: {pid}")
-            os.kill(pid, signal.SIGKILL)
-        except Exception as e:
-            print(f"Error force killing Chrome PID {pid}: {e}")
-    
-    print("Force shutdown completed")
-    os._exit(1)  # Exit immediately without cleanup
+    try:
+        # Kill auto_login process immediately
+        if auto_login_process and auto_login_process.poll() is None:
+            try:
+                print(f"Force killing auto_login process (PID: {auto_login_process.pid})...")
+                auto_login_process.kill()
+                auto_login_process.wait(timeout=1)
+                print("Auto_login process killed")
+            except Exception as e:
+                print(f"Error force killing auto_login: {e}")
+        
+        # Kill Flask process immediately
+        if flask_process and flask_process.poll() is None:
+            try:
+                print(f"Force killing Flask process (PID: {flask_process.pid})...")
+                flask_process.kill()
+                flask_process.wait(timeout=1)
+                print("Flask process killed")
+            except Exception as e:
+                print(f"Error force killing Flask: {e}")
+        
+        # Kill dashboard Chrome immediately
+        if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
+            try:
+                print(f"Force killing dashboard Chrome (PID: {dashboard_chrome_process.pid})...")
+                dashboard_chrome_process.kill()
+                dashboard_chrome_process.wait(timeout=1)
+                print("Dashboard Chrome killed")
+            except Exception as e:
+                print(f"Error force killing dashboard Chrome: {e}")
+        
+        # Force kill all tracked Chrome processes
+        killed_count = 0
+        for pid in chrome_processes:
+            try:
+                print(f"Force killing Chrome PID: {pid}")
+                os.kill(pid, signal.SIGKILL)
+                killed_count += 1
+            except ProcessLookupError:
+                print(f"Chrome PID {pid} already gone")
+            except Exception as e:
+                print(f"Error force killing Chrome PID {pid}: {e}")
+        
+        print(f"Force shutdown completed - killed {killed_count} Chrome processes")
+        
+        # Give a moment for processes to die, then exit
+        time.sleep(0.5)
+        
+    except Exception as e:
+        print(f"Error in force shutdown: {e}")
+    finally:
+        print("Force shutdown exiting...")
+        os._exit(1)  # Exit immediately without cleanup
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
