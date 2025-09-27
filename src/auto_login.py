@@ -10,6 +10,8 @@ import random
 import threading
 import logging
 from . import chrome_logger
+import tempfile
+from pathlib import Path
 
 # Set up logger for this module
 logger = logging.getLogger(__name__)
@@ -29,6 +31,18 @@ log_directory = None
 terminal_callback = None
 register_chrome_logger = None
 
+# Global variables for robust cleanup coordination
+shutdown_event = threading.Event()
+cleanup_status = {
+    'instances_total': 0,
+    'instances_stopped': 0,
+    'threads_total': 0,
+    'threads_stopped': 0,
+    'cleanup_complete': False
+}
+cleanup_lock = threading.Lock()
+cleanup_status_file = None
+
 def set_log_directory(directory):
     """Set the log directory for Chrome console logging"""
     global log_directory
@@ -46,6 +60,32 @@ def set_register_chrome_logger(register_func):
     global register_chrome_logger
     register_chrome_logger = register_func
     print("ChromeLogger registration function set")
+
+def update_cleanup_status(key, value):
+    """Thread-safe update of cleanup status"""
+    global cleanup_status
+    with cleanup_lock:
+        cleanup_status[key] = value
+        write_cleanup_status()
+
+def write_cleanup_status():
+    """Write cleanup status to file for parent process monitoring"""
+    if cleanup_status_file:
+        try:
+            with open(cleanup_status_file, 'w') as f:
+                json.dump(cleanup_status, f)
+        except Exception as e:
+            logger.error(f"Error writing cleanup status: {e}")
+
+def init_cleanup_coordination():
+    """Initialize cleanup coordination with parent process"""
+    global cleanup_status_file
+    # Create a temporary file for cleanup status
+    temp_dir = tempfile.gettempdir()
+    cleanup_status_file = os.path.join(temp_dir, f"tradovate_cleanup_{os.getpid()}.json")
+    logger.info(f"Cleanup status file: {cleanup_status_file}")
+    write_cleanup_status()
+    return cleanup_status_file
 
 def create_log_file_path(username, port):
     """Create a unique log file path for a Chrome instance"""
@@ -150,7 +190,7 @@ class ChromeInstance:
         self.tab = None
         self.login_check_interval = 30  # Check login status every 30 seconds
         self.login_monitor_thread = None
-        self.is_running = False
+        self.stop_event = threading.Event()  # Instance-specific stop event
         self.chrome_logger = None
         self.log_file_path = None
     
@@ -185,10 +225,9 @@ class ChromeInstance:
                 disable_alerts(self.tab)
                 
                 # Start a thread to monitor login status
-                self.is_running = True
                 self.login_monitor_thread = threading.Thread(
                     target=self.monitor_login_status,
-                    daemon=True
+                    daemon=False  # Not daemon so we can track it properly
                 )
                 self.login_monitor_thread.start()
                 
@@ -283,12 +322,15 @@ class ChromeInstance:
         """Monitor login status and automatically log in again if logged out"""
         logger.info(f"Starting login monitor for {self.username} on port {self.port}")
         
-        while self.is_running and self.tab:
+        while not self.stop_event.is_set() and not shutdown_event.is_set() and self.tab:
             try:
-                # Sleep first to allow initial login to complete
-                time.sleep(self.login_check_interval)
+                # Use wait with timeout instead of sleep for responsive shutdown
+                if self.stop_event.wait(timeout=self.login_check_interval):
+                    # Event was set, exit loop
+                    break
                 
-                if not self.is_running:
+                # Check global shutdown event
+                if shutdown_event.is_set():
                     break
                     
                 # Check and log in if needed
@@ -296,13 +338,18 @@ class ChromeInstance:
                 
             except Exception as e:
                 logger.error(f"Error in login monitor for {self.username}: {e}")
-                time.sleep(5)  # Shorter sleep after error
+                # Use shorter wait on error
+                if self.stop_event.wait(timeout=5):
+                    break
         
         logger.info(f"Login monitor stopped for {self.username}")
         
     def stop(self):
-        """Stop this Chrome instance"""
-        self.is_running = False
+        """Stop this Chrome instance using event signaling"""
+        logger.info(f"Initiating stop for {self.username}")
+        
+        # Set the stop event to signal the monitor thread to exit
+        self.stop_event.set()
         
         # Stop Chrome logger if running
         if self.chrome_logger:
@@ -316,13 +363,23 @@ class ChromeInstance:
         
         # Stop the login monitor thread
         if self.login_monitor_thread and self.login_monitor_thread.is_alive():
-            logger.info(f"Stopping login monitor for {self.username}")
-            self.login_monitor_thread.join(timeout=2)
+            logger.info(f"Waiting for login monitor thread to stop for {self.username}")
+            self.login_monitor_thread.join(timeout=5)
+            if self.login_monitor_thread.is_alive():
+                logger.warning(f"Login monitor thread for {self.username} did not stop within timeout")
+            else:
+                logger.info(f"Login monitor thread for {self.username} stopped successfully")
             
         if self.process:
             try:
                 self.process.terminate()
                 logger.info(f"Chrome on port {self.port} terminated")
+                # Give Chrome a moment to clean up
+                try:
+                    self.process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    logger.warning(f"Chrome process on port {self.port} did not terminate gracefully, killing...")
+                    self.process.kill()
             except Exception as e:
                 logger.error(f"Error terminating Chrome: {e}")
 
@@ -831,15 +888,108 @@ def open_dashboard_window():
         return None
 
 def handle_exit(chrome_instances):
-    """Clean up before exiting"""
-    logger.info("Cleaning up and exiting...")
+    """Clean up before exiting with proper tracking and detailed logging"""
+    logger.info("==========================================================")
+    logger.info("[CLEANUP] Starting graceful shutdown of all Chrome instances...")
+    logger.info(f"[CLEANUP] Total instances to stop: {len(chrome_instances)}")
+    logger.info("==========================================================")
+    
+    # Set the global shutdown event
+    shutdown_event.set()
+    logger.info("[CLEANUP] Global shutdown event set")
+    
+    # Update total counts
+    update_cleanup_status('instances_total', len(chrome_instances))
+    update_cleanup_status('threads_total', len(chrome_instances))  # Each instance has 1 monitor thread
+    
+    # Track cleanup progress
+    stopped_count = 0
+    failed_stops = []
+    
+    # Stop all instances
+    logger.info("[CLEANUP] Phase 1: Stopping Chrome instances...")
+    for idx, instance in enumerate(chrome_instances):
+        logger.info(f"[CLEANUP]   [{idx+1}/{len(chrome_instances)}] Stopping {instance.username} on port {instance.port}")
+        try:
+            instance.stop()
+            stopped_count += 1
+            update_cleanup_status('instances_stopped', stopped_count)
+            logger.info(f"[CLEANUP]   ✓ {instance.username} stopped successfully")
+        except Exception as e:
+            logger.error(f"[CLEANUP]   ✗ Error stopping {instance.username}: {e}")
+            failed_stops.append(instance.username)
+    
+    logger.info(f"[CLEANUP] Phase 1 complete: {stopped_count}/{len(chrome_instances)} instances stopped")
+    if failed_stops:
+        logger.warning(f"[CLEANUP] Failed to stop: {', '.join(failed_stops)}")
+    
+    # Wait for all monitor threads to complete
+    logger.info("[CLEANUP] Phase 2: Waiting for monitor threads to finish...")
+    threads_stopped = 0
+    threads_failed = []
+    timeout = 10  # Total timeout for all threads
+    start_time = time.time()
+    
     for instance in chrome_instances:
-        instance.stop()
+        if instance.login_monitor_thread and instance.login_monitor_thread.is_alive():
+            elapsed = time.time() - start_time
+            remaining_time = timeout - elapsed
+            if remaining_time > 0:
+                logger.info(f"[CLEANUP]   Waiting for {instance.username} monitor thread (timeout: {remaining_time:.1f}s)...")
+                instance.login_monitor_thread.join(timeout=remaining_time)
+                if not instance.login_monitor_thread.is_alive():
+                    threads_stopped += 1
+                    update_cleanup_status('threads_stopped', threads_stopped)
+                    logger.info(f"[CLEANUP]   ✓ {instance.username} monitor thread stopped")
+                else:
+                    logger.warning(f"[CLEANUP]   ⚠ {instance.username} monitor thread did not stop in time")
+                    threads_failed.append(instance.username)
+            else:
+                logger.warning(f"[CLEANUP]   ⚠ Timeout reached, skipping {instance.username} monitor thread")
+                threads_failed.append(instance.username)
+        else:
+            threads_stopped += 1
+            update_cleanup_status('threads_stopped', threads_stopped)
+    
+    logger.info(f"[CLEANUP] Phase 2 complete: {threads_stopped}/{len(chrome_instances)} threads stopped")
+    if threads_failed:
+        logger.warning(f"[CLEANUP] Threads still running: {', '.join(threads_failed)}")
+    
+    # Mark cleanup as complete
+    update_cleanup_status('cleanup_complete', True)
+    
+    # Final summary
+    logger.info("==========================================================")
+    logger.info("[CLEANUP] Cleanup Summary:")
+    logger.info(f"[CLEANUP]   Chrome instances stopped: {stopped_count}/{len(chrome_instances)}")
+    logger.info(f"[CLEANUP]   Monitor threads stopped: {threads_stopped}/{len(chrome_instances)}")
+    logger.info(f"[CLEANUP]   Cleanup status: {'COMPLETE' if stopped_count == len(chrome_instances) and threads_stopped == len(chrome_instances) else 'PARTIAL'}")
+    logger.info("==========================================================")
 
 def main():
     chrome_instances = []
+    cleanup_status_file_path = None
+    
+    # Set up signal handlers for graceful shutdown
+    def signal_handler(signum, frame):
+        signal_names = {
+            signal.SIGINT: "SIGINT (Ctrl+C)",
+            signal.SIGTERM: "SIGTERM (termination request)"
+        }
+        signal_name = signal_names.get(signum, f"Signal {signum}")
+        logger.info(f"[SIGNAL] Received {signal_name}, initiating graceful shutdown...")
+        logger.info(f"[SIGNAL] Setting global shutdown event to stop all threads")
+        shutdown_event.set()
+        # Don't exit immediately - let the main loop handle cleanup
+    
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    logger.info("[SIGNAL] Signal handlers installed for SIGINT and SIGTERM")
     
     try:
+        # Initialize cleanup coordination
+        cleanup_status_file_path = init_cleanup_coordination()
+        
         # Load credential pairs
         credentials = load_credentials()
         if not credentials:
@@ -905,9 +1055,13 @@ def main():
         for idx, instance in enumerate(chrome_instances):
             logger.info(f"  {idx+1}: {instance.username} - Port: {instance.port}")
         
+        # Print cleanup status file path for parent process
+        print(f"CLEANUP_STATUS_FILE:{cleanup_status_file_path}")
+        
         logger.info("Press Ctrl+C to exit and close all Chrome instances")
-        while True:
-            time.sleep(1)
+        # Monitor for shutdown event instead of sleeping indefinitely
+        while not shutdown_event.is_set():
+            shutdown_event.wait(timeout=1)
     
     except KeyboardInterrupt:
         logger.info("Exiting due to user interrupt...")

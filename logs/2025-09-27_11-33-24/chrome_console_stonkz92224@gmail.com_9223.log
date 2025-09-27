@@ -944,3 +944,6 @@
 [2025-09-27 11:45:35.173] LOG - 16:45:35.171Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
 [2025-09-27 11:47:35.176] LOG - 16:47:35.172Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
 [2025-09-27 11:49:35.177] LOG - 16:49:35.175Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:51:35.178] LOG - 16:51:35.175Z WebGL:  {"geometries":71,"textures":1} 6 , devicePixelRatio:  2
+[2025-09-27 11:52:12.265] INFO - 16:52:12.256Z visibilitychange: hidden, gd: 1000
+[2025-09-27 11:52:12.268] INFO - 16:52:12.256Z visibilitychange: hidden, gd: 1000

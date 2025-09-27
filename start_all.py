@@ -17,6 +17,8 @@ import signal
 import atexit
 import platform
 from datetime import datetime
+import json
+import tempfile
 
 # Add the project root to the path so we can import from src
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -30,6 +32,7 @@ chrome_processes = []
 chrome_termination_lock = threading.Lock()
 log_directory = None
 chrome_loggers = []  # Track ChromeLogger instances for cleanup
+cleanup_status_file = None  # Path to cleanup status file from auto_login.py
 
 def create_log_directory():
     """Create timestamped log directory for this session"""
@@ -143,6 +146,74 @@ def cleanup_chrome_loggers():
                 print(f"Error stopping ChromeLogger: {e}")
         chrome_loggers.clear()
         print("All ChromeLoggers cleaned up")
+
+def read_cleanup_status():
+    """Read the cleanup status from auto_login.py's status file"""
+    if not cleanup_status_file or not os.path.exists(cleanup_status_file):
+        return None
+    
+    try:
+        with open(cleanup_status_file, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error reading cleanup status: {e}")
+        return None
+
+def wait_for_subprocess_cleanup(timeout=30):
+    """Poll cleanup status file to monitor subprocess cleanup progress"""
+    start_time = time.time()
+    last_status = {}
+    
+    print(f"[CLEANUP] Starting cleanup monitor (timeout: {timeout}s)")
+    
+    while time.time() - start_time < timeout:
+        elapsed = time.time() - start_time
+        status = read_cleanup_status()
+        
+        if status:
+            # Log progress if changed
+            if status != last_status:
+                instances_stopped = status.get('instances_stopped', 0)
+                instances_total = status.get('instances_total', 0)
+                threads_stopped = status.get('threads_stopped', 0)
+                threads_total = status.get('threads_total', 0)
+                
+                print(f"[CLEANUP] Progress at {elapsed:.1f}s: "
+                      f"{instances_stopped}/{instances_total} instances stopped, "
+                      f"{threads_stopped}/{threads_total} threads stopped")
+                last_status = status
+            
+            # Check if cleanup is complete
+            if status.get('cleanup_complete', False):
+                print(f"[CLEANUP] ✓ Subprocess cleanup completed successfully at {elapsed:.1f}s")
+                
+                # Clean up the temporary status file
+                if cleanup_status_file and os.path.exists(cleanup_status_file):
+                    try:
+                        os.remove(cleanup_status_file)
+                        print(f"[CLEANUP] ✓ Removed temporary status file: {cleanup_status_file}")
+                    except Exception as e:
+                        print(f"[CLEANUP] Warning: Could not remove status file: {e}")
+                
+                return True
+        else:
+            # No status file yet, log only occasionally
+            if int(elapsed) % 5 == 0 and elapsed - int(elapsed) < 0.5:
+                print(f"[CLEANUP] Waiting for cleanup status file at {elapsed:.0f}s...")
+        
+        time.sleep(0.5)  # Poll every 500ms
+    
+    print(f"[CLEANUP] ✗ Timeout waiting for subprocess cleanup after {timeout}s")
+    
+    # Try to clean up status file even on timeout
+    if cleanup_status_file and os.path.exists(cleanup_status_file):
+        try:
+            os.remove(cleanup_status_file)
+            print(f"[CLEANUP] Removed temporary status file after timeout")
+        except Exception as e:
+            print(f"[CLEANUP] Warning: Could not remove status file: {e}")
+    
+    return False
 
 def run_auto_login():
     """Run the auto_login process to start Chrome and log in"""
@@ -342,7 +413,7 @@ def cleanup_chrome_instances():
                 print(f"Error terminating dashboard Chrome window: {e}")
         
         # Check if we've already cleaned up
-        if not chrome_processes:
+        if not chrome_processes and not auto_login_process:
             return
             
         print("\nShutting down Chrome instances (ports 9223+ only)...")
@@ -351,45 +422,98 @@ def cleanup_chrome_instances():
         # First try graceful termination through auto_login process if available
         if auto_login_process and auto_login_process.poll() is None:
             try:
-                print("Sending termination signal to auto_login process...")
+                print("Sending SIGINT to auto_login process for graceful shutdown...")
                 if platform.system() == "Windows":
                     auto_login_process.terminate()
                 else:
                     auto_login_process.send_signal(signal.SIGINT)
-                # Give it a moment to clean up
-                auto_login_process.wait(timeout=5)
+                
+                # Use polling to wait for graceful cleanup
+                if cleanup_status_file:
+                    print(f"[CLEANUP] Monitoring cleanup status file: {cleanup_status_file}")
+                    if wait_for_subprocess_cleanup(timeout=20):
+                        print("[CLEANUP] ✓ Auto_login subprocess cleaned up gracefully")
+                        # Wait for process to exit
+                        try:
+                            auto_login_process.wait(timeout=5)
+                            print("[CLEANUP] ✓ Auto_login process exited cleanly")
+                        except subprocess.TimeoutExpired:
+                            print("[CLEANUP] Process still running after graceful cleanup")
+                    else:
+                        # Fallback: escalate to SIGTERM, then SIGKILL
+                        print("[CLEANUP] ⚠ Graceful cleanup timed out, escalating to SIGTERM...")
+                        auto_login_process.terminate()
+                        try:
+                            auto_login_process.wait(timeout=5)
+                            print("[CLEANUP] ✓ Auto_login process terminated with SIGTERM")
+                        except subprocess.TimeoutExpired:
+                            print("[CLEANUP] ⚠ SIGTERM failed, force killing with SIGKILL...")
+                            auto_login_process.kill()
+                            auto_login_process.wait()
+                            print("[CLEANUP] ✓ Auto_login process killed with SIGKILL")
+                else:
+                    print("[CLEANUP] No cleanup status file detected, using standard termination")
+                    # Fallback: escalate to SIGTERM, then SIGKILL
+                    print("[CLEANUP] Sending SIGTERM...")
+                    auto_login_process.terminate()
+                    try:
+                        auto_login_process.wait(timeout=5)
+                        print("[CLEANUP] ✓ Auto_login process terminated with SIGTERM")
+                    except subprocess.TimeoutExpired:
+                        print("[CLEANUP] ⚠ SIGTERM failed, force killing with SIGKILL...")
+                        auto_login_process.kill()
+                        auto_login_process.wait()
+                        print("[CLEANUP] ✓ Auto_login process killed with SIGKILL")
             except Exception as e:
                 print(f"Error stopping auto_login process: {e}")
         
         # Terminate only the Chrome processes we've explicitly tracked (ports 9223+)
+        print(f"[CLEANUP] Terminating {len(chrome_processes)} Chrome processes...")
+        terminated_count = 0
         for pid in chrome_processes:
             try:
-                print(f"Terminating Chrome process with PID: {pid}")
+                print(f"[CLEANUP] Sending SIGTERM to Chrome process PID: {pid}")
                 if platform.system() == "Windows":
                     subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True)
                 else:
                     os.kill(pid, signal.SIGTERM)
+                terminated_count += 1
+            except ProcessLookupError:
+                print(f"[CLEANUP] Process {pid} already gone")
             except Exception as e:
-                print(f"Error terminating Chrome process {pid}: {e}")
+                print(f"[CLEANUP] ✗ Error terminating Chrome process {pid}: {e}")
         
         # Wait a bit for graceful termination
         time.sleep(1)
         
         # Force kill any that are still running
+        force_killed = 0
+        still_alive = 0
         for pid in chrome_processes[:]:  # Copy list to avoid modification during iteration
             try:
                 # Check if process still exists
                 os.kill(pid, 0)  # This will raise an exception if process doesn't exist
-                print(f"Force killing Chrome process {pid}")
+                print(f"[CLEANUP] ⚠ Force killing Chrome process {pid}")
                 os.kill(pid, signal.SIGKILL)
+                force_killed += 1
             except ProcessLookupError:
                 pass  # Process already terminated
             except Exception as e:
-                print(f"Error force killing Chrome process {pid}: {e}")
+                print(f"[CLEANUP] ✗ Error force killing Chrome process {pid}: {e}")
+                still_alive += 1
             
         # Clear the list after termination
         chrome_processes.clear()
-        print("Chrome instances terminated (ports 9223+ only)")
+        
+        # Summary
+        print("[CLEANUP] ========================================")
+        print(f"[CLEANUP] Cleanup Summary:")
+        print(f"[CLEANUP]   Chrome processes terminated: {terminated_count}")
+        print(f"[CLEANUP]   Chrome processes force killed: {force_killed}")
+        if still_alive > 0:
+            print(f"[CLEANUP]   ⚠ Chrome processes still alive: {still_alive}")
+        print(f"[CLEANUP]   Protected port 9222: Not affected")
+        print("[CLEANUP] =======================================")
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
@@ -461,7 +585,19 @@ def main():
             stderr=subprocess.STDOUT,
             text=True
         )
-        print(f"Auto-login started (PID: {auto_login_process.pid})")
+        print(f"Auto-login started (PID: {auto_login_process.pid}")
+        
+        # Monitor auto_login output for cleanup status file path
+        def monitor_auto_login_output():
+            global cleanup_status_file
+            for line in auto_login_process.stdout:
+                print(f"[auto_login] {line.rstrip()}")
+                if line.startswith("CLEANUP_STATUS_FILE:"):
+                    cleanup_status_file = line.split(":", 1)[1].strip()
+                    print(f"Detected cleanup status file: {cleanup_status_file}")
+        
+        output_monitor = threading.Thread(target=monitor_auto_login_output, daemon=True)
+        output_monitor.start()
         
         # Wait for Chrome instances to start and log in
         print(f"Waiting {args.wait} seconds for login to complete...")
