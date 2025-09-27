@@ -308,6 +308,8 @@ class ChromeInstance:
                 
             elif page_status == "logged_in":
                 logger.info(f"Already logged in for {self.username}")
+                # Inject autorisk management script if not already loaded
+                self.inject_autorisk_script()
                 return False
                 
             else:
@@ -357,6 +359,59 @@ class ChromeInstance:
                     break
         
         logger.info(f"Login monitor stopped for {self.username}")
+    
+    def inject_autorisk_script(self):
+        """Inject autorisk management script into logged-in Tradovate interface"""
+        if not self.tab:
+            return False
+            
+        try:
+            # Check if script is already loaded
+            check_script_js = """
+            (function() {
+                return typeof getTableData === 'function' && 
+                       typeof updateUserColumnPhaseStatus === 'function' && 
+                       typeof performAccountActions === 'function';
+            })();
+            """
+            
+            result = self.tab.Runtime.evaluate(expression=check_script_js)
+            script_loaded = result.get("result", {}).get("value", False)
+            
+            if script_loaded:
+                logger.info(f"Autorisk script already loaded for {self.username}")
+                return True
+            
+            logger.info(f"Injecting autorisk management script for {self.username}")
+            
+            # Read the autorisk script from file
+            autorisk_script_path = os.path.join(project_root, 'scripts/tampermonkey/autoriskManagement.js')
+            with open(autorisk_script_path, 'r') as f:
+                script_content = f.read()
+            
+            # Extract just the JavaScript content (skip the tampermonkey header)
+            script_lines = script_content.split('\n')
+            start_idx = None
+            for i, line in enumerate(script_lines):
+                if line.strip() == '(function() {':
+                    start_idx = i
+                    break
+            
+            if start_idx is None:
+                logger.error(f"Could not find script start in autorisk file")
+                return False
+                
+            # Get the JavaScript content
+            js_content = '\n'.join(script_lines[start_idx:])
+            
+            # Execute the script
+            self.tab.Runtime.evaluate(expression=js_content)
+            logger.info(f"Autorisk script injected successfully for {self.username}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error injecting autorisk script for {self.username}: {e}")
+            return False
         
     def stop(self):
         """Stop this Chrome instance using event signaling"""
