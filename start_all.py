@@ -521,6 +521,49 @@ def cleanup_chrome_instances():
         print(f"[CLEANUP]   Protected port 9222: Not affected")
         print("[CLEANUP] =======================================")
 
+def force_shutdown():
+    """Force shutdown by killing all processes immediately"""
+    print("\n!!! FORCE SHUTDOWN INITIATED !!!")
+    print("Graceful shutdown timeout exceeded, force killing all processes...")
+    
+    # Kill auto_login process immediately
+    if auto_login_process and auto_login_process.poll() is None:
+        try:
+            print("Force killing auto_login process...")
+            auto_login_process.kill()
+            auto_login_process.wait()
+        except Exception as e:
+            print(f"Error force killing auto_login: {e}")
+    
+    # Kill Flask process immediately
+    if flask_process and flask_process.poll() is None:
+        try:
+            print("Force killing Flask process...")
+            flask_process.kill()
+            flask_process.wait()
+        except Exception as e:
+            print(f"Error force killing Flask: {e}")
+    
+    # Kill dashboard Chrome immediately
+    if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
+        try:
+            print("Force killing dashboard Chrome...")
+            dashboard_chrome_process.kill()
+            dashboard_chrome_process.wait()
+        except Exception as e:
+            print(f"Error force killing dashboard Chrome: {e}")
+    
+    # Force kill all tracked Chrome processes
+    for pid in chrome_processes:
+        try:
+            print(f"Force killing Chrome PID: {pid}")
+            os.kill(pid, signal.SIGKILL)
+        except Exception as e:
+            print(f"Error force killing Chrome PID {pid}: {e}")
+    
+    print("Force shutdown completed")
+    os._exit(1)  # Exit immediately without cleanup
+
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
     global cleanup_in_progress
@@ -533,8 +576,23 @@ def signal_handler(sig, frame):
         return
     
     cleanup_in_progress = True
-    cleanup_chrome_instances()
-    sys.exit(0)
+    
+    # Start 15-second timer for force shutdown
+    print("Starting 15-second graceful shutdown timer...")
+    force_timer = threading.Timer(15.0, force_shutdown)
+    force_timer.daemon = True
+    force_timer.start()
+    
+    try:
+        cleanup_chrome_instances()
+        # If we get here, graceful shutdown succeeded
+        force_timer.cancel()
+        print("Graceful shutdown completed successfully")
+        sys.exit(0)
+    except Exception as e:
+        print(f"Error during graceful shutdown: {e}")
+        # Timer will handle force shutdown if we don't cancel it
+        raise
 
 def main():
     global auto_login_process
