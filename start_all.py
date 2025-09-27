@@ -33,6 +33,7 @@ chrome_termination_lock = threading.Lock()
 log_directory = None
 chrome_loggers = []  # Track ChromeLogger instances for cleanup
 cleanup_status_file = None  # Path to cleanup status file from auto_login.py
+cleanup_in_progress = False  # Flag to prevent signal handler reentrancy
 
 def create_log_directory():
     """Create timestamped log directory for this session"""
@@ -273,6 +274,11 @@ def run_dashboard():
         print(f"Chrome path exists: {os.path.exists(chrome_path)}")
         print(f"Dashboard URL: {dashboard_url}")
         print(f"Profile dir: {profile_dir}")
+        
+        # Kill any existing Chrome instance on the dashboard port to prevent merging
+        print(f"Cleaning up any existing Chrome instances on port {dashboard_port}...")
+        subprocess.run(["pkill", "-f", f"remote-debugging-port={dashboard_port}"], capture_output=True)
+        time.sleep(1)  # Give it a moment to fully terminate
         
         os.makedirs(profile_dir, exist_ok=True)
         
@@ -517,7 +523,16 @@ def cleanup_chrome_instances():
 
 def signal_handler(sig, frame):
     """Handle termination signals by cleaning up and exiting"""
+    global cleanup_in_progress
+    
     print(f"\nReceived signal {sig}, initiating graceful shutdown...")
+    
+    # Prevent signal handler reentrancy
+    if cleanup_in_progress:
+        print("Cleanup already in progress, ignoring repeated signal")
+        return
+    
+    cleanup_in_progress = True
     cleanup_chrome_instances()
     sys.exit(0)
 
