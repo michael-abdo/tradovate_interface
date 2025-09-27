@@ -1000,7 +1000,9 @@
             <p class="lot-protection-message">
                 You are about to place a trade with <span id="lotQtyDisplay"></span> contracts.<br>
                 This is a large position size that carries significant risk.<br><br>
-                To proceed, please type: <strong>"I understand the risks"</strong>
+                To allow <strong>one trade</strong> over 5 contracts, please type:<br>
+                <strong>"Yes, I am 100% confident this will help me take care of him sooner"</strong><br><br>
+                After confirming, click the Buy or Sell button to execute your trade.
             </p>
             <input type="text" 
                    id="lotProtectionConfirmInput" 
@@ -1017,6 +1019,9 @@
     <script>
         // Store the last fetched data
         let accountData = [];
+        
+        // Lot protection bypass state
+        let lotProtectionBypassed = false;
         
         // Default column order (first column is always Account)
         let defaultColumnOrder = ['Account', 'Platform', 'Phase', 'Status', 'Strategy', 'Open P&L', 'Total P&L', 'Available Margin', 'Net Liquidation'];
@@ -2198,18 +2203,21 @@
             };
             
             // Check if quantity exceeds lot protection threshold
-            if (qty > 5) {
+            if (qty > 5 && !lotProtectionBypassed) {
                 // Show lot protection modal
-                showLotProtectionModal(qty, action, (confirmed) => {
-                    if (confirmed) {
-                        performTrade();
-                    } else {
-                        console.log('Trade cancelled by lot protection');
-                    }
-                });
+                showLotProtectionModal(qty, action);
             } else {
-                // Execute trade directly for smaller quantities
+                // Execute trade directly for smaller quantities or if bypassed
                 performTrade();
+                
+                // Reset bypass and button colors after use
+                if (lotProtectionBypassed) {
+                    lotProtectionBypassed = false;
+                    // Restore original button colors
+                    document.getElementById('buyBtn').style.backgroundColor = '';
+                    document.getElementById('sellBtn').style.backgroundColor = '';
+                    console.log('Lot protection bypass used and reset');
+                }
             }
         }
         
@@ -2241,7 +2249,7 @@
         }
         
         // Show lot protection modal for high quantity trades
-        function showLotProtectionModal(qty, action, callback) {
+        function showLotProtectionModal(qty, action) {
             const modal = document.getElementById('lotProtectionModal');
             const qtyDisplay = document.getElementById('lotQtyDisplay');
             const confirmInput = document.getElementById('lotProtectionConfirmInput');
@@ -2265,20 +2273,24 @@
             // Enable confirm button when correct phrase is typed
             confirmInput.addEventListener('input', function() {
                 const inputValue = this.value.trim().toLowerCase();
-                const expectedPhrase = "i understand the risks";
+                const expectedPhrase = "yes, i am 100% confident this will help me take care of him sooner";
                 confirmBtn.disabled = inputValue !== expectedPhrase;
             });
             
             // Handle confirm button click
             const handleConfirm = () => {
                 modal.style.display = 'none';
-                callback(true); // Proceed with the trade
+                lotProtectionBypassed = true;
+                console.log('Lot protection bypassed for one trade');
+                // Change button colors to indicate bypass is active
+                document.getElementById('buyBtn').style.backgroundColor = '#4cd964';
+                document.getElementById('sellBtn').style.backgroundColor = '#ff3b30';
             };
             
             // Handle cancel
             const handleCancel = () => {
                 modal.style.display = 'none';
-                callback(false); // Cancel the trade
+                // No callback needed anymore
             };
             
             // Add event listeners (remove old ones first to avoid duplicates)
