@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import time
 import datetime
-import os
 import json
 import pychrome
 from threading import Thread
+from pathlib import Path
+from src.utils.core import get_project_root, setup_logging
 
 class ChromeLogger:
     def __init__(self, tab, log_file=None):
@@ -25,7 +26,13 @@ class ChromeLogger:
         
         # Create log file directory if needed
         if log_file:
-            os.makedirs(os.path.dirname(os.path.abspath(log_file)), exist_ok=True)
+            log_path = Path(log_file)
+            if not log_path.is_absolute():
+                log_path = get_project_root() / log_path
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+            self.log_file = str(log_path)
+        else:
+            self.log_file = None
     
     def start(self):
         """Start capturing logs from the browser"""
@@ -116,16 +123,17 @@ class ChromeLogger:
             return False
             
         # Validate file exists
-        if not os.path.exists(script_file_path):
+        script_path = Path(script_file_path)
+        if not script_path.exists():
             print(f"🔴 LAYER 3: ERROR - Script file not found: {script_file_path}")
             return False
             
-        if not os.path.isfile(script_file_path):
+        if not script_path.is_file():
             print(f"🔴 LAYER 3: ERROR - Path is not a file: {script_file_path}")
             return False
             
         # Extract filename for logging
-        filename = os.path.basename(script_file_path)
+        filename = script_path.name
         print(f"🔥 LAYER 3: Processing script: {filename}")
         
         # Special logging for critical autoOrder.user.js
@@ -317,11 +325,18 @@ class ChromeLogger:
         """
         if not output_file:
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            log_dir = os.path.dirname(self.log_file) if self.log_file else 'logs'
-            output_file = os.path.join(log_dir, f'claude_debug_data_{timestamp}.json')
+            if self.log_file:
+                log_dir = Path(self.log_file).parent
+            else:
+                log_dir = get_project_root() / 'logs'
+            output_file = log_dir / f'claude_debug_data_{timestamp}.json'
+        else:
+            output_file = Path(output_file)
             
         # Ensure directory exists
-        os.makedirs(os.path.dirname(os.path.abspath(output_file)), exist_ok=True)
+        if not output_file.is_absolute():
+            output_file = get_project_root() / output_file
+        output_file.parent.mkdir(parents=True, exist_ok=True)
         
         debug_data = self.get_combined_debug_data(include_snapshots=True)
         
@@ -335,7 +350,7 @@ class ChromeLogger:
             if debug_data.get('entries_with_dom_snapshots', 0) > 0:
                 print(f"🔍 Includes {debug_data['entries_with_dom_snapshots']} DOM snapshots")
                 
-            return output_file
+            return str(output_file)
             
         except Exception as e:
             print(f"🔴 ERROR: Failed to save debug data: {e}")
@@ -533,8 +548,8 @@ def main():
     
     if success:
         print("Connected to Chrome, setting up logger...")
-        log_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs', 'chrome.log')
-        logger = create_logger(tab, log_file, print_log)
+        log_file = get_project_root() / 'logs' / 'chrome.log'
+        logger = create_logger(tab, str(log_file), print_log)
         
         if logger:
             print(f"Logger started, writing to {log_file}")

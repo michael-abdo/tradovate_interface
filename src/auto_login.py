@@ -12,19 +12,17 @@ import logging
 from . import chrome_logger
 import tempfile
 from pathlib import Path
+from .utils.core import (
+    get_project_root,
+    find_chrome_executable,
+    load_json_config,
+    setup_logging
+)
 
-# Set up logger for this module
-logger = logging.getLogger(__name__)
-if not logger.handlers:
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+# Set up logger for this module using centralized logging setup
+logger = setup_logging(level="INFO")
 
 # Configuration
-# Try to detect Chrome path based on OS
-import platform
 
 # Global variables for logging (set by start_all.py)
 log_directory = None
@@ -93,60 +91,7 @@ def create_log_file_path(username, port):
         return None
     return os.path.join(log_directory, f"chrome_console_{username}_{port}.log")
 
-def find_chrome_path():
-    """Find the Chrome executable path based on the operating system"""
-    if platform.system() == "Darwin":  # macOS
-        # Try multiple possible paths
-        paths = [
-            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            "/Applications/Google Chrome Beta.app/Contents/MacOS/Google Chrome Beta",
-            "/Applications/Chromium.app/Contents/MacOS/Chromium",
-            # Add any other possible macOS Chrome paths here
-        ]
-    elif platform.system() == "Windows":
-        # Try multiple possible paths
-        paths = [
-            r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-            r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-            r"C:\Users\%USERNAME%\AppData\Local\Google\Chrome\Application\chrome.exe",
-            # Add any other possible Windows Chrome paths here
-        ]
-    else:  # Linux and others
-        # Try multiple possible paths
-        paths = [
-            "/usr/bin/google-chrome",
-            "/usr/bin/chromium-browser",
-            "/usr/bin/chromium",
-            # Add any other possible Linux Chrome paths here
-        ]
-    
-    # Try each path
-    for path in paths:
-        if os.path.exists(path):
-            logger.info(f"Found Chrome at: {path}")
-            return path
-    
-    # If Chrome is not found in the common paths, try to find it in PATH
-    try:
-        import subprocess
-        if platform.system() == "Windows":
-            result = subprocess.run(["where", "chrome"], capture_output=True, text=True)
-        else:
-            result = subprocess.run(["which", "google-chrome"], capture_output=True, text=True)
-        
-        if result.returncode == 0 and result.stdout.strip():
-            path = result.stdout.strip()
-            logger.info(f"Found Chrome in PATH: {path}")
-            return path
-    except Exception as e:
-        logger.warning(f"Error finding Chrome in PATH: {e}")
-    
-    # Default path as fallback
-    default_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    logger.warning(f"Chrome not found, will try with default path: {default_path}")
-    return default_path
-
-CHROME_PATH = find_chrome_path()
+CHROME_PATH = find_chrome_executable()
 BASE_DEBUGGING_PORT = 9223  # Changed from 9222 to protect that port
 TRADOVATE_URL = "https://trader.tradovate.com"
 WAIT_TIME = 5  # Seconds to wait for Chrome to start
@@ -179,6 +124,145 @@ def create_log_file_path(username, port):
     if not log_directory:
         return None
     return os.path.join(log_directory, f"chrome_console_{username}_{port}.log")
+
+
+class ChromeProcessManager:
+    """Manages Chrome process lifecycle with consistent launch and cleanup."""
+    
+    def __init__(self, chrome_path: str = None):
+        """Initialize ChromeProcessManager.
+        
+        Args:
+            chrome_path: Path to Chrome executable. If None, will auto-detect.
+        """
+        self.chrome_path = chrome_path or find_chrome_executable()
+        self.processes = {}  # port -> subprocess.Popen
+        self.lock = threading.Lock()
+    
+    def launch_chrome(self, port: int, user_data_dir: str = None) -> subprocess.Popen:
+        """Launch Chrome with remote debugging enabled.
+        
+        Args:
+            port: Remote debugging port number
+            user_data_dir: Optional Chrome user data directory
+            
+        Returns:
+            subprocess.Popen: The Chrome process
+            
+        Raises:
+            RuntimeError: If Chrome fails to start
+        """
+        with self.lock:
+            # Check if already running on this port
+            if port in self.processes and self.processes[port].poll() is None:
+                logger.warning(f"Chrome already running on port {port}")
+                return self.processes[port]
+            
+            # Build Chrome command
+            chrome_cmd = [
+                self.chrome_path,
+                f'--remote-debugging-port={port}',
+                '--no-first-run',
+                '--no-default-browser-check',
+                '--disable-popup-blocking',
+                '--disable-blink-features=AutomationControlled',
+                '--disable-dev-shm-usage',
+                '--no-sandbox'
+            ]
+            
+            # Add user data directory if specified
+            if user_data_dir:
+                chrome_cmd.append(f'--user-data-dir={user_data_dir}')
+            else:
+                # Use a temporary directory for this instance
+                temp_dir = tempfile.mkdtemp(prefix=f'chrome_{port}_')
+                chrome_cmd.append(f'--user-data-dir={temp_dir}')
+            
+            # Launch Chrome
+            try:
+                logger.info(f"Launching Chrome on port {port}")
+                process = subprocess.Popen(
+                    chrome_cmd,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                
+                # Store process reference
+                self.processes[port] = process
+                
+                # Give Chrome time to start
+                time.sleep(2)
+                
+                # Verify process is still running
+                if process.poll() is not None:
+                    raise RuntimeError(f"Chrome exited immediately with code {process.poll()}")
+                
+                return process
+                
+            except Exception as e:
+                logger.error(f"Failed to launch Chrome on port {port}: {e}")
+                raise RuntimeError(f"Chrome launch failed: {e}")
+    
+    def stop_chrome(self, port: int, timeout: int = 5) -> bool:
+        """Stop Chrome process on specified port.
+        
+        Args:
+            port: Remote debugging port number
+            timeout: Seconds to wait for graceful shutdown
+            
+        Returns:
+            bool: True if successfully stopped
+        """
+        with self.lock:
+            if port not in self.processes:
+                return True
+            
+            process = self.processes[port]
+            if process.poll() is not None:
+                # Already stopped
+                del self.processes[port]
+                return True
+            
+            try:
+                # Try graceful termination first
+                logger.info(f"Stopping Chrome on port {port}")
+                process.terminate()
+                
+                # Wait for graceful shutdown
+                try:
+                    process.wait(timeout=timeout)
+                except subprocess.TimeoutExpired:
+                    # Force kill if needed
+                    logger.warning(f"Chrome on port {port} didn't stop gracefully, forcing")
+                    process.kill()
+                    process.wait()
+                
+                del self.processes[port]
+                return True
+                
+            except Exception as e:
+                logger.error(f"Error stopping Chrome on port {port}: {e}")
+                return False
+    
+    def stop_all(self, timeout: int = 5) -> None:
+        """Stop all managed Chrome processes.
+        
+        Args:
+            timeout: Seconds to wait for each process to stop
+        """
+        ports = list(self.processes.keys())
+        for port in ports:
+            self.stop_chrome(port, timeout)
+    
+    def cleanup(self) -> None:
+        """Clean up all Chrome processes and resources."""
+        self.stop_all()
+        self.processes.clear()
+
+
+# Global ChromeProcessManager instance
+chrome_manager = ChromeProcessManager()
+
 
 class ChromeInstance:
     def __init__(self, port, username, password):
@@ -808,41 +892,17 @@ def disable_alerts(tab):
 def load_credentials():
     """Load all credentials from JSON file, allowing duplicates"""
     try:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        credentials_path = os.path.join(project_root, 'config/credentials.json')
-        logger.info(f"Loading credentials from {credentials_path}")
-        
-        with open(credentials_path, 'r') as file:
-            file_content = file.read()
-            # Use json.loads instead of json.load to handle potential duplicate keys
-            # When there are duplicate keys, the last occurrence will be used
-            try:
-                credentials = json.loads(file_content)
-            except json.JSONDecodeError:
-                logger.warning("Error parsing JSON, attempting custom parsing for duplicate keys")
-                # Custom parsing for duplicate keys
-                # This creates a list of all key-value pairs in the order they appear
-                import re
-                # Extract all key-value pairs including duplicates
-                pairs = re.findall(r'"([^"]+)"\s*:\s*"([^"]+)"', file_content)
-                credentials = dict()
-                for username, password in pairs:
-                    credentials[username] = password
+        credentials = load_json_config('config/credentials.json')
+        logger.info("Loaded credentials successfully")
         
         # Parse credentials into list of username/password pairs
-        # For duplicate usernames, we'll include multiple instances
         cred_pairs = []
         
         if isinstance(credentials, dict):
             # Handle flat dictionary with username as keys
-            # For duplicate usernames in the original JSON, we have lost them by now
-            # since dictionaries can't have duplicate keys
             for username, password in credentials.items():
                 if username and password:
-                    # Count occurrences in the original file to handle duplicates
-                    occurrences = file_content.count(f'"{username}"')
-                    for _ in range(max(1, occurrences)):
-                        cred_pairs.append((username, password))
+                    cred_pairs.append((username, password))
                         
         elif isinstance(credentials, dict) and 'users' in credentials:
             # If it has a 'users' array
@@ -859,7 +919,7 @@ def load_credentials():
             if username and password:
                 cred_pairs.append((username, password))
         
-        logger.info(f"Loaded {len(cred_pairs)} credential pairs (including duplicates)")
+        logger.info(f"Loaded {len(cred_pairs)} credential pairs")
         return cred_pairs
     except Exception as e:
         logger.error(f"Error loading credentials from file: {e}")
@@ -873,12 +933,7 @@ def load_credentials():
 def load_dashboard_config():
     """Load saved dashboard window configuration"""
     try:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        config_path = os.path.join(project_root, 'config/dashboard_window.json')
-        
-        if os.path.exists(config_path):
-            with open(config_path, 'r') as f:
-                return json.load(f)
+        return load_json_config('config/dashboard_window.json')
     except Exception as e:
         logger.warning(f"Could not load dashboard config: {e}")
     
@@ -893,11 +948,10 @@ def load_dashboard_config():
 def save_dashboard_config(config):
     """Save dashboard window configuration"""
     try:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        config_dir = os.path.join(project_root, 'config')
-        os.makedirs(config_dir, exist_ok=True)
+        config_dir = get_project_root() / 'config'
+        config_dir.mkdir(parents=True, exist_ok=True)
         
-        config_path = os.path.join(config_dir, 'dashboard_window.json')
+        config_path = config_dir / 'dashboard_window.json'
         with open(config_path, 'w') as f:
             json.dump(config, f, indent=2)
     except Exception as e:

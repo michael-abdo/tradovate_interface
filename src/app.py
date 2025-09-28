@@ -5,10 +5,16 @@ import json
 import argparse
 import threading
 import time
+from .utils.core import (
+    get_project_root,
+    find_chrome_executable,
+    load_json_config,
+    setup_logging
+)
 
 # Load the Tampermonkey script
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-tampermonkey_path = os.path.join(project_root, 'scripts/tampermonkey/autoOrder.user.js')
+project_root = get_project_root()
+tampermonkey_path = project_root / 'scripts' / 'tampermonkey' / 'autoOrder.user.js'
 with open(tampermonkey_path, 'r') as file:
     tampermonkey_code = file.read()
     
@@ -76,7 +82,7 @@ class TradovateConnection:
             self.tab.Runtime.evaluate(expression=tampermonkey_functions)
             
             # Also inject the getAllAccountTableData function
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            project_root = get_project_root()
             account_data_path = os.path.join(project_root, 
                                          'scripts/tampermonkey/getAllAccountTableData.user.js')
             if os.path.exists(account_data_path):
@@ -198,7 +204,7 @@ class TradovateConnection:
             # If any function is missing, try to re-inject the script
             if not all(check_data.values()):
                 print(f"Re-injecting auto risk management script because some functions are missing: {check_data}")
-                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                project_root = get_project_root()
                 risk_management_path = os.path.join(project_root, 
                                             'scripts/tampermonkey/autoriskManagement.js')
                 if os.path.exists(risk_management_path):
@@ -410,7 +416,7 @@ def main():
         # Ensure all connections have the account data function
         for conn in controller.connections:
             if conn.tab:
-                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                project_root = get_project_root()
                 account_data_path = os.path.join(project_root, 
                                           'scripts/tampermonkey/getAllAccountTableData.user.js')
                 if os.path.exists(account_data_path):

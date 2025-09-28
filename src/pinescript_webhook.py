@@ -14,27 +14,34 @@ from flask import Flask, request, jsonify, Response
 import requests
 from werkzeug.serving import is_running_from_reloader
 import atexit
+from pathlib import Path
 
-# Set up logging
-log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
-os.makedirs(log_dir, exist_ok=True)
-log_file = os.path.join(log_dir, f'webhook_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
+# Import utility functions from utils.core
+# Since this file is in src/, we need to import from src.utils.core
+try:
+    from src.utils.core import get_project_root, find_chrome_executable, load_json_config, setup_logging
+except ImportError:
+    # If that doesn't work, try direct import
+    from utils.core import get_project_root, find_chrome_executable, load_json_config, setup_logging
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(log_file),
-        logging.StreamHandler()
-    ]
+# Set up logging using utils.core
+project_root = get_project_root()
+log_dir = project_root / 'logs'
+log_dir.mkdir(exist_ok=True)
+log_file = log_dir / f'webhook_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.log'
+
+# Configure logging using setup_logging from utils.core
+logger = setup_logging(
+    level='INFO',
+    log_file=str(log_file),
+    console_output=True
 )
-logger = logging.getLogger('webhook_server')
+logger.name = 'webhook_server'
 
 # Import the TradovateController from app.py
 # Handle case where __file__ might not be defined
 try:
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(str(Path(__file__).parent))
 except NameError:
     sys.path.append(os.getcwd())
 from src.app import TradovateController
@@ -240,20 +247,15 @@ def watchdog_routine():
 def get_target_accounts_for_strategy(strategy_name):
     """Get account indices and account names mapped to a specific strategy"""
     try:
-        # Use the current working directory if __file__ is not defined
-        try:
-            base_dir = os.path.dirname(os.path.abspath(__file__))
-        except NameError:
-            base_dir = os.getcwd()
-            
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
-        if not os.path.exists(strategy_file):
+        # Use get_project_root from utils.core
+        project_root = get_project_root()
+        strategy_file = project_root / 'config' / 'strategy_mappings.json'
+        if not strategy_file.exists():
             logger.warning(f"Strategy mappings file not found. Using all accounts.")
             return list(range(len(controller.connections))), []
             
-        with open(strategy_file, 'r') as f:
-            mappings = json.load(f)
+        # Use load_json_config from utils.core
+        mappings = load_json_config(str(strategy_file))
             
         # Get the exact account names from strategy_mappings.json
         strategy_accounts = mappings.get("strategy_mappings", {}).get(strategy_name, [])
@@ -371,18 +373,22 @@ def process_trading_signal(data):
     # Inject the changeAccount.user.js script into each matching browser tab
     # to enable account switching functionality
     logger.info("Injecting account switching functionality...")
-    # Use the current working directory if __file__ is not defined
-    try:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-    except NameError:
-        base_dir = os.getcwd()
+    # Use get_project_root from utils.core
+    project_root = get_project_root()
     
-    account_switcher_path = os.path.join(base_dir, 'tampermonkey/changeAccount.user.js')
-    # Try the new path if the file doesn't exist
-    if not os.path.exists(account_switcher_path):
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        account_switcher_path = os.path.join(project_root, 'scripts/tampermonkey/changeAccount.user.js')
-    if os.path.exists(account_switcher_path):
+    # Try multiple possible locations for the account switcher script
+    possible_paths = [
+        project_root / 'src' / 'tampermonkey' / 'changeAccount.user.js',
+        project_root / 'scripts' / 'tampermonkey' / 'changeAccount.user.js'
+    ]
+    
+    account_switcher_path = None
+    for path in possible_paths:
+        if path.exists():
+            account_switcher_path = path
+            break
+    
+    if account_switcher_path:
         with open(account_switcher_path, 'r') as file:
             account_switcher_js = file.read()
             for i in target_account_indices:
@@ -851,6 +857,7 @@ def webhook():
                         if json_pattern:
                             extracted_json = json_pattern.group(1)
                             logger.info(f"Extracted potential JSON: {extracted_json}")
+                            # Parse JSON using standard json.loads since this is dynamic data
                             data = json.loads(extracted_json)
                             logger.info("Successfully parsed JSON from text content")
                         else:

@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 import pychrome
 import time
-import json
-import os
 import sys
+from pathlib import Path
 from src.auto_login import inject_login_script, disable_alerts
+from src.utils.core import get_project_root, load_json_config, setup_logging
+
+# Setup logging
+logger = setup_logging(level="INFO")
 
 def login_to_existing_chrome(port=9223, username=None, password=None, tradovate_url="https://trader.tradovate.com"):
     """
@@ -22,28 +25,26 @@ def login_to_existing_chrome(port=9223, username=None, password=None, tradovate_
     # If credentials not provided, try to load from file
     if not (username and password):
         try:
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            credentials_path = os.path.join(project_root, 'config/credentials.json')
-            print(f"Loading credentials from {credentials_path}")
+            # Use load_json_config with relative path
+            credentials = load_json_config('config/credentials.json')
+            logger.info(f"Loading credentials from config/credentials.json")
             
-            with open(credentials_path, 'r') as file:
-                credentials = json.load(file)
-                if isinstance(credentials, dict):
-                    # Get first credential from the dictionary
-                    username = list(credentials.keys())[0]
-                    password = credentials[username]
-                    print(f"Using credentials for user: {username}")
+            if isinstance(credentials, dict):
+                # Get first credential from the dictionary
+                username = list(credentials.keys())[0]
+                password = credentials[username]
+                logger.info(f"Using credentials for user: {username}")
         except Exception as e:
-            print(f"Error loading credentials: {e}")
+            logger.error(f"Error loading credentials: {e}")
             return False, None, None
     
     # Connect to Chrome
     try:
-        print(f"Connecting to Chrome on port {port}...")
+        logger.info(f"Connecting to Chrome on port {port}...")
         browser = pychrome.Browser(url=f"http://localhost:{port}")
         tabs = browser.list_tab()
         
-        print(f"Found {len(tabs)} tabs")
+        logger.info(f"Found {len(tabs)} tabs")
         
         # Find or create Tradovate tab
         target_tab = None
@@ -53,33 +54,33 @@ def login_to_existing_chrome(port=9223, username=None, password=None, tradovate_
                 tab.Page.enable()
                 result = tab.Runtime.evaluate(expression="document.location.href")
                 url = result.get("result", {}).get("value", "")
-                print(f"Tab URL: {url}")
+                logger.debug(f"Tab URL: {url}")
                 
                 if "tradovate" in url.lower():
                     target_tab = tab
-                    print("Found Tradovate tab")
+                    logger.info("Found Tradovate tab")
                     break
                 else:
                     tab.stop()
             except Exception as e:
-                print(f"Error checking tab: {e}")
+                logger.error(f"Error checking tab: {e}")
                 tab.stop()
         
         if not target_tab:
-            print("No Tradovate tab found. Creating a new tab...")
+            logger.info("No Tradovate tab found. Creating a new tab...")
             try:
                 target_tab = browser.new_tab(url=tradovate_url)
                 target_tab.start()
                 target_tab.Page.enable()
-                print("New tab created and navigated to Tradovate")
+                logger.info("New tab created and navigated to Tradovate")
                 # Wait for page to load
                 time.sleep(3)
             except Exception as e:
-                print(f"Error creating new tab: {e}")
+                logger.error(f"Error creating new tab: {e}")
                 return False, None, None
         
         # Inject login script and disable alerts
-        print(f"Injecting login script for {username}...")
+        logger.info(f"Injecting login script for {username}...")
         inject_login_script(target_tab, username, password)
         disable_alerts(target_tab)
         
@@ -103,11 +104,11 @@ def login_to_existing_chrome(port=9223, username=None, password=None, tradovate_
         """
         target_tab.Runtime.evaluate(expression=visual_indicator)
         
-        print("Login script injected successfully")
+        logger.info("Login script injected successfully")
         return True, target_tab, browser
     
     except Exception as e:
-        print(f"Error connecting to Chrome or logging in: {e}")
+        logger.error(f"Error connecting to Chrome or logging in: {e}")
         return False, None, None
 
 def wait_for_element(tab, selector, timeout=10, visible=True):
@@ -123,7 +124,7 @@ def wait_for_element(tab, selector, timeout=10, visible=True):
     Returns:
         bool: True if element was found (and visible if required), False otherwise
     """
-    print(f"Waiting for element: {selector}")
+    logger.debug(f"Waiting for element: {selector}")
     check_script = f"""
     function checkElement() {{
         const element = document.querySelector('{selector}');
@@ -148,14 +149,14 @@ def wait_for_element(tab, selector, timeout=10, visible=True):
         try:
             result = tab.Runtime.evaluate(expression=check_script)
             if result.get("result", {}).get("value", False):
-                print(f"Element found: {selector}")
+                logger.debug(f"Element found: {selector}")
                 return True
         except Exception as e:
-            print(f"Error checking for element: {e}")
+            logger.error(f"Error checking for element: {e}")
         
         time.sleep(0.5)
     
-    print(f"Timed out waiting for element: {selector}")
+    logger.warning(f"Timed out waiting for element: {selector}")
     return False
 
 def execute_js(tab, script):
@@ -164,7 +165,7 @@ def execute_js(tab, script):
         result = tab.Runtime.evaluate(expression=script)
         return result.get("result", {})
     except Exception as e:
-        print(f"Error executing script: {e}")
+        logger.error(f"Error executing script: {e}")
         return None
 
 def main():
@@ -184,21 +185,21 @@ def main():
     )
     
     if success:
-        print("Successfully logged in")
+        logger.info("Successfully logged in")
         
         # Wait for either the login button or dashboard to appear
         if wait_for_element(tab, ".desktop-dashboard", timeout=15) or wait_for_element(tab, ".login-button", timeout=5):
-            print("Login page or dashboard loaded successfully")
+            logger.info("Login page or dashboard loaded successfully")
         
         # Keep browser open
-        print("Press Ctrl+C to exit")
+        logger.info("Press Ctrl+C to exit")
         try:
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Exiting...")
+            logger.info("Exiting...")
     else:
-        print("Login failed")
+        logger.error("Login failed")
         return 1
     
     return 0

@@ -9,44 +9,23 @@ import json
 # Import from app.py
 from src.app import TradovateController
 from flask import request
+from .utils.core import (
+    get_project_root,
+    find_chrome_executable,
+    load_json_config,
+    setup_logging
+)
 
 # Create Flask app
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+project_root = get_project_root()
 
 # Load trading defaults from config
-trading_defaults_path = os.path.join(project_root, 'config/trading_defaults.json')
 try:
-    with open(trading_defaults_path, 'r') as f:
-        trading_config = json.load(f)
-        TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
-        SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
-except FileNotFoundError:
-    print(f"Warning: Trading defaults config not found at {trading_defaults_path}")
-    # Fallback defaults
-    TRADING_DEFAULTS = {
-        "symbol": "NQ",
-        "quantity": 10,
-        "stop_loss_ticks": 15,
-        "take_profit_ticks": 53,
-        "tick_size": 0.25,
-        "risk_reward_ratio": 3.5
-    }
-    SYMBOL_DEFAULTS = {}
-except json.JSONDecodeError as e:
-    print(f"Error: Trading defaults config is malformed: {e}")
-    print("Using fallback defaults")
-    # Fallback defaults
-    TRADING_DEFAULTS = {
-        "symbol": "NQ",
-        "quantity": 10,
-        "stop_loss_ticks": 15,
-        "take_profit_ticks": 53,
-        "tick_size": 0.25,
-        "risk_reward_ratio": 3.5
-    }
-    SYMBOL_DEFAULTS = {}
-except Exception as e:
-    print(f"Error loading trading defaults: {e}")
+    trading_config = load_json_config('config/trading_defaults.json')
+    TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
+    SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
+    print(f"Warning: Could not load trading defaults config: {e}")
     print("Using fallback defaults")
     # Fallback defaults
     TRADING_DEFAULTS = {
@@ -71,7 +50,7 @@ def inject_account_data_function():
         if conn.tab:
             try:
                 # Read the function from the file
-                project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                project_root = get_project_root()
                 account_data_path = os.path.join(project_root, 
                                        'scripts/tampermonkey/getAllAccountTableData.user.js')
                 with open(account_data_path, 'r') as file:
@@ -100,7 +79,7 @@ def get_accounts():
                 # First make sure the getAllAccountTableData function is available
                 try:
                     # Re-inject the function to ensure it's available
-                    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    project_root = get_project_root()
                     account_data_path = os.path.join(project_root, 
                                            'scripts/tampermonkey/getAllAccountTableData.user.js')
                     with open(account_data_path, 'r') as file:
@@ -630,7 +609,7 @@ def reload_trading_defaults():
 @app.route('/api/strategies', methods=['GET'])
 def get_strategies():
     try:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        project_root = get_project_root()
         strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         if not os.path.exists(strategy_file):
             # Create default file if it doesn't exist
@@ -654,7 +633,7 @@ def get_strategies():
 def update_strategies():
     try:
         data = request.json
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        project_root = get_project_root()
         strategy_file = os.path.join(project_root, 'config/strategy_mappings.json')
         
         with open(strategy_file, 'w') as f:
