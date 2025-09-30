@@ -417,8 +417,13 @@ class ChromeInstance:
         """Monitor login status and automatically log in again if logged out"""
         logger.info(f"Starting login monitor for {self.username} on port {self.port}")
         
-        while not self.stop_event.is_set() and not shutdown_event.is_set() and self.tab:
+        while not self.stop_event.is_set() and not shutdown_event.is_set():
             try:
+                # Check if tab still exists before using it
+                if not self.tab:
+                    logger.info(f"Tab no longer exists for {self.username}, exiting monitor")
+                    break
+                
                 # Use wait with timeout instead of sleep for responsive shutdown
                 if self.stop_event.wait(timeout=self.login_check_interval):
                     # Event was set, exit loop
@@ -436,11 +441,24 @@ class ChromeInstance:
                     logger.info(f"WebSocket disconnection detected for {self.username}, exiting monitor loop")
                     break
                 
+            except pychrome.exceptions.TabNotFoundError:
+                logger.info(f"Tab not found for {self.username}, likely during shutdown")
+                break
             except Exception as e:
-                logger.error(f"Error in login monitor for {self.username}: {e}")
-                # Use shorter wait on error
-                if self.stop_event.wait(timeout=5):
+                # Check for WebSocket exceptions that indicate shutdown
+                error_msg = str(e)
+                if any(x in error_msg for x in [
+                    "Connection to remote host was lost",
+                    "WebSocketConnectionClosedException", 
+                    "Tab has been stopped"
+                ]):
+                    logger.info(f"WebSocket closed for {self.username}, exiting monitor gracefully")
                     break
+                else:
+                    logger.error(f"Error in login monitor for {self.username}: {e}")
+                    # Use shorter wait on error
+                    if self.stop_event.wait(timeout=5):
+                        break
         
         logger.info(f"Login monitor stopped for {self.username}")
     
@@ -503,6 +521,17 @@ class ChromeInstance:
         
         # Set the stop event to signal the monitor thread to exit
         self.stop_event.set()
+        
+        # Close WebSocket connection cleanly if tab exists
+        if self.tab:
+            try:
+                logger.info(f"Closing WebSocket connection for {self.username}")
+                self.tab.stop()
+                self.tab = None
+            except Exception as e:
+                logger.debug(f"Error closing WebSocket for {self.username}: {e}")
+                # This is expected during shutdown
+        
         # Stop Chrome logger if running
         if self.chrome_logger:
             try:
@@ -529,9 +558,13 @@ class ChromeInstance:
                 # Give Chrome a moment to clean up
                 try:
                     self.process.wait(timeout=2)
+                    logger.info(f"Chrome process on port {self.port} exited with code: {self.process.returncode}")
                 except subprocess.TimeoutExpired:
                     logger.warning(f"Chrome process on port {self.port} did not terminate gracefully, killing...")
                     self.process.kill()
+                    # Always wait after kill to prevent zombie
+                    self.process.wait()
+                    logger.info(f"Chrome process on port {self.port} force killed")
             except Exception as e:
                 logger.error(f"Error terminating Chrome: {e}")
 

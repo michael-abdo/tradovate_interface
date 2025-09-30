@@ -255,7 +255,9 @@ def run_dashboard():
          "from src.dashboard import run_flask_dashboard; run_flask_dashboard()"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        text=True
+        text=True,
+        # Create new process group on Unix systems for proper signal handling
+        preexec_fn=os.setsid if platform.system() != "Windows" else None
     )
     print(f"Dashboard server started (PID: {flask_process.pid})")
     
@@ -383,7 +385,23 @@ def cleanup_chrome_instances():
     global chrome_processes, chrome_termination_lock, flask_process, dashboard_chrome_process
     
     with chrome_termination_lock:
-        # First clean up Flask dashboard process
+        # FIRST: Signal auto_login to start graceful shutdown BEFORE killing anything else
+        # This allows WebSocket connections to close cleanly
+        if auto_login_process and auto_login_process.poll() is None:
+            print("\nInitiating graceful shutdown of auto_login process...")
+            try:
+                if platform.system() == "Windows":
+                    auto_login_process.terminate()
+                else:
+                    auto_login_process.send_signal(signal.SIGINT)
+                
+                # Give auto_login time to close WebSocket connections gracefully
+                print("Waiting for auto_login to close connections...")
+                time.sleep(2)
+            except Exception as e:
+                print(f"Error signaling auto_login: {e}")
+        
+        # SECOND: Clean up Flask dashboard process
         if flask_process and flask_process.poll() is None:
             try:
                 print("Stopping Flask dashboard server...")
@@ -399,10 +417,10 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error stopping Flask dashboard: {e}")
         
-        # Then clean up ChromeLoggers before terminating Chrome
+        # THIRD: Clean up ChromeLoggers before terminating Chrome
         cleanup_chrome_loggers()
         
-        # Also try to gracefully terminate dashboard Chrome window if it exists
+        # FOURTH: Terminate dashboard Chrome window
         if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
             try:
                 print("Terminating dashboard Chrome window...")
@@ -425,19 +443,13 @@ def cleanup_chrome_instances():
         print("\nShutting down Chrome instances (ports 9223+ only)...")
         print("Port 9222 is protected and will not be affected.")
         
-        # First try graceful termination through auto_login process if available
+        # FIFTH: Complete auto_login termination if still running
         if auto_login_process and auto_login_process.poll() is None:
             try:
-                print("Sending SIGINT to auto_login process for graceful shutdown...")
-                if platform.system() == "Windows":
-                    auto_login_process.terminate()
-                else:
-                    auto_login_process.send_signal(signal.SIGINT)
-                
                 # Use polling to wait for graceful cleanup
                 if cleanup_status_file:
                     print(f"[CLEANUP] Monitoring cleanup status file: {cleanup_status_file}")
-                    if wait_for_subprocess_cleanup(timeout=20):
+                    if wait_for_subprocess_cleanup(timeout=15):
                         print("[CLEANUP] ✓ Auto_login subprocess cleaned up gracefully")
                         # Wait for process to exit
                         try:
@@ -448,28 +460,62 @@ def cleanup_chrome_instances():
                     else:
                         # Fallback: escalate to SIGTERM, then SIGKILL
                         print("[CLEANUP] ⚠ Graceful cleanup timed out, escalating to SIGTERM...")
-                        auto_login_process.terminate()
+                        # Kill process group if on Unix
+                        if platform.system() != "Windows":
+                            try:
+                                os.killpg(os.getpgid(auto_login_process.pid), signal.SIGTERM)
+                                print("[CLEANUP] Sent SIGTERM to process group")
+                            except ProcessLookupError:
+                                pass
+                        else:
+                            auto_login_process.terminate()
+                        
                         try:
                             auto_login_process.wait(timeout=5)
                             print("[CLEANUP] ✓ Auto_login process terminated with SIGTERM")
                         except subprocess.TimeoutExpired:
                             print("[CLEANUP] ⚠ SIGTERM failed, force killing with SIGKILL...")
-                            auto_login_process.kill()
+                            if platform.system() != "Windows":
+                                try:
+                                    os.killpg(os.getpgid(auto_login_process.pid), signal.SIGKILL)
+                                    print("[CLEANUP] Sent SIGKILL to process group")
+                                except ProcessLookupError:
+                                    pass
+                            else:
+                                auto_login_process.kill()
                             auto_login_process.wait()
                             print("[CLEANUP] ✓ Auto_login process killed with SIGKILL")
                 else:
-                    print("[CLEANUP] No cleanup status file detected, using standard termination")
-                    # Fallback: escalate to SIGTERM, then SIGKILL
-                    print("[CLEANUP] Sending SIGTERM...")
-                    auto_login_process.terminate()
+                    print("[CLEANUP] Waiting for auto_login to complete shutdown...")
                     try:
-                        auto_login_process.wait(timeout=5)
-                        print("[CLEANUP] ✓ Auto_login process terminated with SIGTERM")
+                        auto_login_process.wait(timeout=10)
+                        print("[CLEANUP] ✓ Auto_login process exited")
                     except subprocess.TimeoutExpired:
-                        print("[CLEANUP] ⚠ SIGTERM failed, force killing with SIGKILL...")
-                        auto_login_process.kill()
-                        auto_login_process.wait()
-                        print("[CLEANUP] ✓ Auto_login process killed with SIGKILL")
+                        print("[CLEANUP] Sending SIGTERM...")
+                        if platform.system() != "Windows":
+                            try:
+                                os.killpg(os.getpgid(auto_login_process.pid), signal.SIGTERM)
+                                print("[CLEANUP] Sent SIGTERM to process group")
+                            except ProcessLookupError:
+                                pass
+                        else:
+                            auto_login_process.terminate()
+                        
+                        try:
+                            auto_login_process.wait(timeout=5)
+                            print("[CLEANUP] ✓ Auto_login process terminated with SIGTERM")
+                        except subprocess.TimeoutExpired:
+                            print("[CLEANUP] ⚠ SIGTERM failed, force killing with SIGKILL...")
+                            if platform.system() != "Windows":
+                                try:
+                                    os.killpg(os.getpgid(auto_login_process.pid), signal.SIGKILL)
+                                    print("[CLEANUP] Sent SIGKILL to process group")
+                                except ProcessLookupError:
+                                    pass
+                            else:
+                                auto_login_process.kill()
+                            auto_login_process.wait()
+                            print("[CLEANUP] ✓ Auto_login process killed with SIGKILL")
             except Exception as e:
                 print(f"Error stopping auto_login process: {e}")
         
@@ -593,9 +639,9 @@ def signal_handler(sig, frame):
     
     cleanup_in_progress = True
     
-    # Start 15-second timer for force shutdown
-    print("Starting 15-second graceful shutdown timer...")
-    force_timer = threading.Timer(15.0, force_shutdown)
+    # Start 25-second timer for force shutdown (increased from 15 to allow proper sequencing)
+    print("Starting 25-second graceful shutdown timer...")
+    force_timer = threading.Timer(25.0, force_shutdown)
     force_timer.daemon = True
     force_timer.start()
     
@@ -666,13 +712,16 @@ def main():
         else:
             print("Warning: No log directory available for Chrome console logging")
         
-        # Start auto-login in the background
+        # Start auto-login in the background with process group
         print("Starting auto-login process in the background...")
+        # Create process in new session for better signal handling
         auto_login_process = subprocess.Popen(
             [sys.executable, "-m", "src.auto_login"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            text=True
+            text=True,
+            # Create new process group on Unix systems
+            preexec_fn=os.setsid if platform.system() != "Windows" else None
         )
         print(f"Auto-login started (PID: {auto_login_process.pid})")
         
