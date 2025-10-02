@@ -186,15 +186,7 @@ def execute_trade():
         quantity = data.get('quantity', TRADING_DEFAULTS.get('quantity', 10))
         action = data.get('action', 'Buy')
         tick_size = data.get('tick_size', TRADING_DEFAULTS.get('tick_size', 0.25))
-        order_type = data.get('order_type', 'MARKET')  # Default to MARKET if not specified
-        
-        # Validate order type
-        valid_order_types = ['MARKET', 'LIMIT', 'STOP', 'STOP LIMIT', 'TRL STOP', 'TRL STP LMT']
-        if order_type not in valid_order_types:
-            return jsonify({
-                'status': 'error',
-                'message': f'Invalid order type: {order_type}. Valid types: {", ".join(valid_order_types)}'
-            }), 400
+        entry_price = data.get('entry_price')  # Optional entry price
         
         account_index = data.get('account', 'all')
         
@@ -210,7 +202,45 @@ def execute_trade():
         tp_ticks = int(tp_ticks) if tp_ticks else 0
         sl_ticks = int(sl_ticks) if sl_ticks else 0
         
-        print(f"Trade request: {symbol} {action} {quantity} OrderType:{order_type} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'}")
+        print(f"Trade request: {symbol} {action} {quantity} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'} Entry:{entry_price if entry_price else 'market'}")
+        
+        # If entry price is provided, we need to set it in the Tampermonkey UI before executing the trade
+        if entry_price is not None:
+            # JavaScript to set the entry price in Tampermonkey UI
+            set_entry_js = f"""
+            (function() {{
+                try {{
+                    const entryPriceInput = document.getElementById('entryPriceInput');
+                    if (entryPriceInput) {{
+                        entryPriceInput.value = {entry_price};
+                        entryPriceInput.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                        entryPriceInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        return {{ success: true, message: 'Entry price set to {entry_price}' }};
+                    }} else {{
+                        return {{ success: false, error: 'Entry price input not found' }};
+                    }}
+                }} catch (err) {{
+                    return {{ success: false, error: err.toString() }};
+                }}
+            }})();
+            """
+            
+            # Set entry price on all relevant accounts
+            if account_index == 'all':
+                for conn in controller.connections:
+                    if conn.tab:
+                        try:
+                            conn.tab.Runtime.evaluate(expression=set_entry_js)
+                        except Exception as e:
+                            print(f"Warning: Failed to set entry price on account: {e}")
+            else:
+                # Set entry price on specific account
+                account_index_int = int(account_index)
+                if account_index_int < len(controller.connections) and controller.connections[account_index_int].tab:
+                    try:
+                        controller.connections[account_index_int].tab.Runtime.evaluate(expression=set_entry_js)
+                    except Exception as e:
+                        print(f"Warning: Failed to set entry price on account {account_index}: {e}")
         
         # Check if we should execute on all accounts or just one
         if account_index == 'all':
@@ -222,8 +252,7 @@ def execute_trade():
                 action, 
                 tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
                 sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size,
-                order_type  # Pass explicit order type
+                tick_size
             )
             
             # Count successful trades
@@ -246,8 +275,7 @@ def execute_trade():
                 action, 
                 tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
                 sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size,
-                order_type  # Pass explicit order type
+                tick_size
             )
             
             return jsonify({

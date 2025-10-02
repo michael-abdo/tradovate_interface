@@ -447,30 +447,6 @@
             box-shadow: 0 0 0 2px rgba(90, 200, 250, 0.3);
         }
         
-        .order-type-selector {
-            display: flex;
-            gap: 15px;
-            padding: 8px 0;
-        }
-        
-        .order-type-option {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            color: #e0e0e0;
-            font-size: 14px;
-        }
-        
-        .order-type-option input[type="radio"] {
-            margin: 0;
-            accent-color: #5ac8fa;
-        }
-        
-        .order-type-option:hover {
-            color: #ffffff;
-        }
-        
         .checkbox-label {
             display: flex;
             align-items: center;
@@ -993,20 +969,7 @@
             
             <div class="trade-controls-row">
                 <div class="input-group">
-                    <label>Order Type</label>
-                    <div class="order-type-selector">
-                        <label class="order-type-option">
-                            <input type="radio" name="orderType" value="market" checked>
-                            <span>Market</span>
-                        </label>
-                        <label class="order-type-option">
-                            <input type="radio" name="orderType" value="limit">
-                            <span>Limit</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="input-group" id="entryPriceGroup" style="display: none;">
-                    <label for="entryPriceInput">Entry Price</label>
+                    <label for="entryPriceInput">Entry Price (optional)</label>
                     <input type="number" id="entryPriceInput" step="0.01" class="trade-input" placeholder="Entry Price">
                 </div>
                 <div class="trade-buttons">
@@ -2178,31 +2141,35 @@
             document.getElementById('breakevenBtn').addEventListener('click', () => {
                 executeBreakevenAction();
             });
-            
-            // Order type change handlers
-            document.querySelectorAll('input[name="orderType"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const entryPriceGroup = document.getElementById('entryPriceGroup');
-                    const entryPriceInput = document.getElementById('entryPriceInput');
-                    
-                    if (this.value === 'limit') {
-                        entryPriceGroup.style.display = 'flex';
-                        entryPriceInput.focus();
-                    } else {
-                        entryPriceGroup.style.display = 'none';
-                        entryPriceInput.value = ''; // Clear price when switching to market
-                    }
-                });
-            });
         }
         
+        // Get current market prices for a symbol from the accounts table
+        function getMarketPrices(symbol) {
+            const accountRows = document.querySelectorAll('#accountsTable tbody tr');
+            
+            for (const row of accountRows) {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 7) {
+                    const rowSymbol = cells[1].textContent.trim();
+                    // Match exact symbol or root symbol (e.g., NQ matches NQZ5)
+                    if (rowSymbol === symbol || rowSymbol.startsWith(symbol)) {
+                        const bid = parseFloat(cells[5].textContent.replace(/[^0-9.-]/g, ''));
+                        const ask = parseFloat(cells[6].textContent.replace(/[^0-9.-]/g, ''));
+                        return { bid, ask };
+                    }
+                }
+            }
+            
+            console.warn(`Market prices not found for symbol: ${symbol}`);
+            return null;
+        }
+
         // Execute a trade action (Buy or Sell)
         function executeTradeAction(action) {
             const symbol = document.getElementById('symbolInput').value || 'NQ';
             const qty = parseInt(document.getElementById('qtyInput').value) || 1;
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
-            const orderType = document.querySelector('input[name="orderType"]:checked').value;
             
             // Function to actually execute the trade
             const performTrade = () => {
@@ -2222,8 +2189,7 @@
                     tick_size: tickSize,
                     account: 'all', // Trade on all accounts
                     enable_tp: enableTP,
-                    enable_sl: enableSL,
-                    order_type: orderType.toUpperCase() // Convert 'market'/'limit' to 'MARKET'/'LIMIT'
+                    enable_sl: enableSL
                 };
                 
                 // Only add TP/SL if they are enabled
@@ -2235,8 +2201,8 @@
                     tradeParams.sl_ticks = sl;
                 }
                 
-                // Only add entry price for limit orders
-                if (orderType === 'limit' && entryPrice) {
+                // If entry price is specified, add it to the parameters
+                if (entryPrice) {
                     tradeParams.entry_price = entryPrice;
                 }
                 
@@ -2265,7 +2231,7 @@
             };
             
             // Check if quantity exceeds lot protection threshold
-            if (qty > 5 && !lotProtectionBypassed) {
+            if (qty > 10 && !lotProtectionBypassed) {
                 // Show lot protection modal
                 showLotProtectionModal(qty, action);
             } else {
