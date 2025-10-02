@@ -204,7 +204,7 @@ def execute_trade():
         
         print(f"Trade request: {symbol} {action} {quantity} TP:{tp_ticks if enable_tp else 'disabled'} SL:{sl_ticks if enable_sl else 'disabled'} Entry:{entry_price if entry_price else 'market'}")
         
-        # If entry price is provided, we need to set it in the Tampermonkey UI before executing the trade
+        # Always update the Tampermonkey entry price field - either set it or clear it
         if entry_price is not None:
             # JavaScript to set the entry price in Tampermonkey UI
             set_entry_js = f"""
@@ -241,6 +241,42 @@ def execute_trade():
                         controller.connections[account_index_int].tab.Runtime.evaluate(expression=set_entry_js)
                     except Exception as e:
                         print(f"Warning: Failed to set entry price on account {account_index}: {e}")
+        else:
+            # Entry price is None - need to clear the Tampermonkey entry price field
+            clear_entry_js = """
+            (function() {
+                try {
+                    const entryPriceInput = document.getElementById('entryPriceInput');
+                    if (entryPriceInput) {
+                        entryPriceInput.value = '';
+                        entryPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        entryPriceInput.dispatchEvent(new Event('change', { bubbles: true }));
+                        return { success: true, message: 'Entry price cleared' };
+                    } else {
+                        return { success: false, error: 'Entry price input not found' };
+                    }
+                } catch (err) {
+                    return { success: false, error: err.toString() };
+                }
+            })();
+            """
+            
+            # Clear entry price on all relevant accounts
+            if account_index == 'all':
+                for conn in controller.connections:
+                    if conn.tab:
+                        try:
+                            conn.tab.Runtime.evaluate(expression=clear_entry_js)
+                        except Exception as e:
+                            print(f"Warning: Failed to clear entry price on account: {e}")
+            else:
+                # Clear entry price on specific account
+                account_index_int = int(account_index)
+                if account_index_int < len(controller.connections) and controller.connections[account_index_int].tab:
+                    try:
+                        controller.connections[account_index_int].tab.Runtime.evaluate(expression=clear_entry_js)
+                    except Exception as e:
+                        print(f"Warning: Failed to clear entry price on account {account_index}: {e}")
         
         # Check if we should execute on all accounts or just one
         if account_index == 'all':
