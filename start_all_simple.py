@@ -8,6 +8,8 @@ import os
 import time
 import subprocess
 import argparse
+import re
+from datetime import datetime
 
 # Add project root to path
 project_root = os.path.dirname(os.path.abspath(__file__))
@@ -15,11 +17,55 @@ sys.path.insert(0, project_root)
 
 from src import pid_tracker
 
+# Constants
+NGROK_DOMAIN = "mike-development.ngrok-free.app"
+
+
+def start_ngrok(port):
+    """Start ngrok tunnel and return the public URL"""
+    try:
+        print(f"Starting ngrok tunnel to {NGROK_DOMAIN}...")
+        ngrok_process = subprocess.Popen(
+            ["ngrok", "http", "--domain", NGROK_DOMAIN, str(port), "--log", "stdout"],
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+        )
+        
+        # Track the ngrok process
+        pid_tracker.add_pid(ngrok_process.pid, "ngrok")
+        
+        # Parse output to find the URL
+        url_pattern = re.compile(r"url=(https?://[^\s]+)")
+        for _ in range(60):  # Wait up to 6 seconds
+            if ngrok_process.poll() is not None:
+                print("Error: ngrok process terminated unexpectedly")
+                return None
+            
+            line = ngrok_process.stdout.readline()
+            match = url_pattern.search(line)
+            if match and NGROK_DOMAIN in match.group(1):
+                url = match.group(1)
+                print(f"✓ Ngrok tunnel established: {url}")
+                return url
+            
+            time.sleep(0.1)
+        
+        print("Error: Timeout waiting for ngrok to start")
+        return None
+        
+    except FileNotFoundError:
+        print("Error: ngrok not found. Please install ngrok: https://ngrok.com/download")
+        return None
+    except Exception as e:
+        print(f"Error starting ngrok: {e}")
+        return None
+
 
 def main():
     parser = argparse.ArgumentParser(description="Start Tradovate Interface")
     parser.add_argument("--wait", type=int, default=15, 
                         help="Seconds to wait between auto-login and dashboard (default: 15)")
+    parser.add_argument("--ngrok", action="store_true",
+                        help="Enable ngrok tunnel to mike-development.ngrok-free.app")
     args = parser.parse_args()
     
     # Setup signal handler for Ctrl+C
@@ -31,10 +77,40 @@ def main():
     print("\n=== Starting Tradovate Interface ===")
     print("Press Ctrl+C to stop all processes\n")
     
-    # Start auto-login process
-    print("Starting auto-login...")
+    # Start auto-login process with console logging
+    print("Starting auto-login with console logging...")
+    
+    # Create a Python command that sets up logging and runs auto_login
+    auto_login_cmd = """
+import sys
+from datetime import datetime
+from src.auto_login import main as auto_login_main, set_terminal_callback
+
+# Simple terminal callback for console logs
+def terminal_callback(entry):
+    colors = {
+        'ERROR': '\\033[31m',    # Red
+        'WARNING': '\\033[33m',  # Yellow
+        'INFO': '\\033[32m',     # Green
+        'LOG': '\\033[0m'        # Default
+    }
+    reset = '\\033[0m'
+    
+    level = entry.get('level', 'LOG')
+    text = entry.get('text', '')
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    
+    color = colors.get(level, '\\033[0m')
+    print(f"[{timestamp}] {color}[{level}]{reset} {text}")
+
+# Set the callback and run
+set_terminal_callback(terminal_callback)
+print("Console logging enabled")
+sys.exit(auto_login_main())
+"""
+    
     auto_login = subprocess.Popen(
-        [sys.executable, "-m", "src.auto_login"],
+        [sys.executable, "-c", auto_login_cmd],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -100,6 +176,17 @@ def main():
     pid_tracker.add_pid(dashboard_chrome.pid, "dashboard_chrome")
     
     print(f"\nDashboard opened at {dashboard_url}")
+    
+    # Start ngrok tunnel if requested
+    if args.ngrok:
+        ngrok_url = start_ngrok(6001)
+        if ngrok_url:
+            print(f"\n🌐 Dashboard also accessible at: {ngrok_url}")
+            print("   Share this URL for remote access")
+        else:
+            print("\n⚠️  Warning: Failed to start ngrok tunnel")
+            print("   Dashboard is still accessible locally")
+    
     print("\nSystem is running. Press Ctrl+C to stop.")
     
     # Keep running until interrupted
