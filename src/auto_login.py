@@ -201,7 +201,6 @@ class ChromeProcessManager:
                     '--disable-dev-shm-usage',
                     '--no-sandbox'
                 ])
-            ]
             
             # Add user data directory if specified
             if user_data_dir:

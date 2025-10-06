@@ -73,7 +73,7 @@ def start_chrome(port, username):
     return process
 
 
-def connect_to_chrome(port, retries=20):
+def connect_to_chrome(port, username=None, retries=20):
     """Connect to Chrome DevTools"""
     for i in range(retries):
         try:
@@ -82,6 +82,63 @@ def connect_to_chrome(port, retries=20):
             if tabs:
                 tab = tabs[0]
                 tab.start()
+                
+                # Enable console capture for minimal logging
+                try:
+                    tab.Runtime.enable()
+                    tab.Console.enable()
+                    
+                    # Simple console message handler
+                    def console_handler(**kwargs):
+                        msg = kwargs.get('message', {})
+                        level = msg.get('level', 'LOG').upper()
+                        text = msg.get('text', '')
+                        source = msg.get('source', 'console')
+                        
+                        # Color coding for different levels
+                        colors = {
+                            'ERROR': '\033[31m',    # Red
+                            'WARNING': '\033[33m',  # Yellow
+                            'INFO': '\033[32m',     # Green
+                            'LOG': '\033[0m'        # Default
+                        }
+                        color = colors.get(level, '\033[0m')
+                        reset = '\033[0m'
+                        
+                        if username:
+                            print(f"{color}[{username}:{port}] [{level}]{reset} {text}")
+                        else:
+                            print(f"{color}[Port {port}] [{level}]{reset} {text}")
+                    
+                    # Simple console API handler (for console.log, etc)
+                    def console_api_handler(**kwargs):
+                        msg_type = kwargs.get('type', 'log').upper()
+                        args = kwargs.get('args', [])
+                        # Join all arguments into a single message
+                        message = ' '.join(str(arg.get('value', '')) for arg in args)
+                        
+                        colors = {
+                            'ERROR': '\033[31m',
+                            'WARN': '\033[33m',
+                            'INFO': '\033[32m',
+                            'LOG': '\033[0m'
+                        }
+                        color = colors.get(msg_type, '\033[0m')
+                        reset = '\033[0m'
+                        
+                        if message:  # Only print if there's actual content
+                            if username:
+                                print(f"{color}[{username}:{port}] [{msg_type}]{reset} {message}")
+                            else:
+                                print(f"{color}[Port {port}] [{msg_type}]{reset} {message}")
+                    
+                    # Attach handlers
+                    tab.Console.messageAdded = console_handler
+                    tab.Runtime.consoleAPICalled = console_api_handler
+                    
+                except Exception as e:
+                    print(f"Warning: Could not enable console logging: {e}")
+                
                 return browser, tab
         except Exception:
             if i < retries - 1:
@@ -238,7 +295,7 @@ def main():
         time.sleep(2)  # Give Chrome time to start
         
         # Connect to Chrome
-        browser, tab = connect_to_chrome(port)
+        browser, tab = connect_to_chrome(port, username)
         if not tab:
             print(f"Failed to connect to Chrome for {username}")
             continue

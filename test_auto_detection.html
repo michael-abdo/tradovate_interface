@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto-Detection Logic Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .test-case {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .pass { background-color: #d4edda; }
+        .fail { background-color: #f8d7da; }
+        .result {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auto-Detection Logic Test</h1>
+    <p>Testing the order type auto-detection logic (same as Tampermonkey script)</p>
+
+    <h2>Test Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        // The exact auto-detection logic
+        function autoDetectOrderType(action, entryPrice, marketPrice) {
+            if (!entryPrice) return 'MARKET';
+            
+            const customEntryPrice = parseFloat(entryPrice);
+            
+            if (action === 'Buy') {
+                // For Buy: LIMIT if entry below market, STOP if entry above market
+                return customEntryPrice < marketPrice ? 'LIMIT' : 'STOP';
+            } else {
+                // For Sell: LIMIT if entry above market, STOP if entry below market
+                return customEntryPrice > marketPrice ? 'LIMIT' : 'STOP';
+            }
+        }
+
+        // Test cases
+        const testCases = [
+            {
+                name: 'Buy with price below market',
+                action: 'Buy',
+                entryPrice: 95,
+                marketPrice: 100,
+                expected: 'LIMIT',
+                explanation: 'Buy cheaper than market = LIMIT order'
+            },
+            {
+                name: 'Buy with price above market',
+                action: 'Buy',
+                entryPrice: 105,
+                marketPrice: 100,
+                expected: 'STOP',
+                explanation: 'Buy on breakout above market = STOP order'
+            },
+            {
+                name: 'Sell with price above market',
+                action: 'Sell',
+                entryPrice: 105,
+                marketPrice: 100,
+                expected: 'LIMIT',
+                explanation: 'Sell higher than market = LIMIT order'
+            },
+            {
+                name: 'Sell with price below market',
+                action: 'Sell',
+                entryPrice: 95,
+                marketPrice: 100,
+                expected: 'STOP',
+                explanation: 'Sell on breakdown below market = STOP order'
+            },
+            {
+                name: 'Buy with no entry price',
+                action: 'Buy',
+                entryPrice: null,
+                marketPrice: 100,
+                expected: 'MARKET',
+                explanation: 'No entry price = MARKET order'
+            },
+            {
+                name: 'Sell with no entry price',
+                action: 'Sell',
+                entryPrice: null,
+                marketPrice: 100,
+                expected: 'MARKET',
+                explanation: 'No entry price = MARKET order'
+            },
+            // Edge cases
+            {
+                name: 'Buy with price equal to market',
+                action: 'Buy',
+                entryPrice: 100,
+                marketPrice: 100,
+                expected: 'STOP',
+                explanation: 'Equal price for Buy = STOP order (>= logic)'
+            },
+            {
+                name: 'Sell with price equal to market',
+                action: 'Sell',
+                entryPrice: 100,
+                marketPrice: 100,
+                expected: 'STOP',
+                explanation: 'Equal price for Sell = STOP order (<= logic)'
+            }
+        ];
+
+        // Run tests
+        const resultsDiv = document.getElementById('results');
+        let allPassed = true;
+
+        testCases.forEach(test => {
+            const result = autoDetectOrderType(test.action, test.entryPrice, test.marketPrice);
+            const passed = result === test.expected;
+            if (!passed) allPassed = false;
+
+            const div = document.createElement('div');
+            div.className = `test-case ${passed ? 'pass' : 'fail'}`;
+            div.innerHTML = `
+                <h3>${test.name}</h3>
+                <p>${test.explanation}</p>
+                <pre>Action: ${test.action}
+Entry Price: ${test.entryPrice}
+Market Price: ${test.marketPrice}
+Expected: ${test.expected}
+Got: ${result}</pre>
+                <div class="result">${passed ? '✅ PASS' : '❌ FAIL'}</div>
+            `;
+            resultsDiv.appendChild(div);
+        });
+
+        // Summary
+        const summary = document.createElement('div');
+        summary.style.marginTop = '20px';
+        summary.innerHTML = `<h2>Summary: ${allPassed ? '✅ All tests passed!' : '❌ Some tests failed!'}</h2>`;
+        resultsDiv.appendChild(summary);
+
+        // Add visual representation
+        const visual = document.createElement('div');
+        visual.style.marginTop = '30px';
+        visual.innerHTML = `
+            <h2>Logic Summary:</h2>
+            <table border="1" cellpadding="10" style="border-collapse: collapse;">
+                <tr>
+                    <th>Action</th>
+                    <th>Entry vs Market</th>
+                    <th>Order Type</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>Buy</td>
+                    <td>Entry &lt; Market</td>
+                    <td>LIMIT</td>
+                    <td>Buy at better price</td>
+                </tr>
+                <tr>
+                    <td>Buy</td>
+                    <td>Entry &ge; Market</td>
+                    <td>STOP</td>
+                    <td>Buy on breakout</td>
+                </tr>
+                <tr>
+                    <td>Sell</td>
+                    <td>Entry &gt; Market</td>
+                    <td>LIMIT</td>
+                    <td>Sell at better price</td>
+                </tr>
+                <tr>
+                    <td>Sell</td>
+                    <td>Entry &le; Market</td>
+                    <td>STOP</td>
+                    <td>Sell on breakdown</td>
+                </tr>
+                <tr>
+                    <td>Any</td>
+                    <td>No entry price</td>
+                    <td>MARKET</td>
+                    <td>Immediate execution</td>
+                </tr>
+            </table>
+        `;
+        resultsDiv.appendChild(visual);
+    </script>
+</body>
+</html>

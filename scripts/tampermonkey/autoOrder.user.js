@@ -444,7 +444,20 @@
         const span = [...document.querySelectorAll('.header .contract-symbol span')]
         .find(s => {
             const got = normalize(s.textContent);
-            return got === wantSym || (isRoot && got.startsWith(wantSym));
+            // Exact match always wins
+            if (got === wantSym) return true;
+            
+            // For root symbols (e.g., "NQ"), match futures contracts properly
+            if (isRoot && got.startsWith(wantSym)) {
+                // Check if this is a valid futures symbol (root + month/year code)
+                // and not a different product (like MNQ which ends with NQ)
+                const afterRoot = got.substring(wantSym.length);
+                // Futures symbols have month (letter) and year (number) after root
+                // e.g., NQZ5, ESH6, etc.
+                const isFuturesFormat = /^[FGHJKMNQUVXZ]\d+$/.test(afterRoot);
+                return isFuturesFormat;
+            }
+            return false;
         });
         if (!span) { console.error('clickExitForSymbol: contract header not found'); return false; }
         const header  = span.closest('.header');
@@ -554,7 +567,13 @@
         
         for (const module of modules) {
             const symEl = module.querySelector('.contract-symbol span');
-            if (symEl && symEl.textContent.trim() === symbol) {
+            const symText = symEl ? symEl.textContent.trim().toUpperCase() : '';
+            const symbolUpper = symbol.toUpperCase();
+            const isRootSymbol = /^[A-Z]{1,3}$/.test(symbolUpper);
+            
+            if (symText === symbolUpper || 
+                (isRootSymbol && symText.startsWith(symbolUpper) && 
+                 /^[FGHJKMNQUVXZ]\d+$/.test(symText.substring(symbolUpper.length)))) {
                 // Check if this is a stop order
                 const orderTypeEl = module.querySelector('.order-type');
                 if (orderTypeEl && orderTypeEl.textContent.includes('STOP')) {
@@ -601,7 +620,13 @@
         
         for (const module of positionModules) {
             const symEl = module.querySelector('.contract-symbol span');
-            if (symEl && symEl.textContent.trim() === symbol) {
+            const symText = symEl ? symEl.textContent.trim().toUpperCase() : '';
+            const symbolUpper = symbol.toUpperCase();
+            const isRootSymbol = /^[A-Z]{1,3}$/.test(symbolUpper);
+            
+            if (symText === symbolUpper || 
+                (isRootSymbol && symText.startsWith(symbolUpper) && 
+                 /^[FGHJKMNQUVXZ]\d+$/.test(symText.substring(symbolUpper.length)))) {
                 // Check if this shows position info (not just orders)
                 const qtyEl = module.querySelector('.position-quantity, .quantity');
                 const priceEl = module.querySelector('.avg-price, .entry-price, .price');
@@ -622,7 +647,13 @@
         const portfolioRows = document.querySelectorAll('.portfolio-row, .position-row');
         for (const row of portfolioRows) {
             const symbolCell = row.querySelector('.symbol, .contract-symbol');
-            if (symbolCell && symbolCell.textContent.includes(symbol)) {
+            const cellText = symbolCell ? symbolCell.textContent.trim().toUpperCase() : '';
+            const symbolUpper = symbol.toUpperCase();
+            const isRootSymbol = /^[A-Z]{1,3}$/.test(symbolUpper);
+            
+            if (cellText === symbolUpper || 
+                (isRootSymbol && cellText.startsWith(symbolUpper) && 
+                 /^[FGHJKMNQUVXZ]\d+$/.test(cellText.substring(symbolUpper.length)))) {
                 const cells = row.querySelectorAll('td, .cell');
                 // Try to extract quantity and price from table cells
                 for (let i = 0; i < cells.length; i++) {
