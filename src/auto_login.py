@@ -165,9 +165,42 @@ class ChromeProcessManager:
                 '--no-first-run',
                 '--no-default-browser-check',
                 '--disable-popup-blocking',
-                '--disable-blink-features=AutomationControlled',
-                '--disable-dev-shm-usage',
-                '--no-sandbox'
+                '--disable-blink-features=AutomationControlled'
+            ]
+            
+            # Check if optimization mode is enabled
+            if os.environ.get('OPTIMIZE_MODE') == 'True':
+                # Add CPU optimization flags
+                chrome_cmd.extend([
+                    # Enable GPU acceleration
+                    '--enable-gpu-rasterization',
+                    '--enable-zero-copy',
+                    '--enable-accelerated-video-decode',
+                    '--ignore-gpu-blocklist',
+                    
+                    # Enable power saving
+                    '--enable-features=HighEfficiencyModeAvailable,BatterySaverModeAvailable',
+                    '--force-fieldtrials=HighEfficiencyModeAvailable/Enabled',
+                    
+                    # Enable background throttling
+                    '--enable-background-timer-throttling',
+                    '--enable-backgrounding-occluded-windows',
+                    
+                    # Reduce memory
+                    '--max-old-space-size=512',
+                    '--memory-pressure-off',
+                    
+                    # Disable unnecessary features
+                    '--disable-background-networking',
+                    '--disable-component-update',
+                    '--disable-domain-reliability'
+                ])
+            else:
+                # Use original performance flags
+                chrome_cmd.extend([
+                    '--disable-dev-shm-usage',
+                    '--no-sandbox'
+                ])
             ]
             
             # Add user data directory if specified
@@ -509,6 +542,19 @@ class ChromeInstance:
             # Execute the script
             self.tab.Runtime.evaluate(expression=js_content)
             logger.info(f"Autorisk script injected successfully for {self.username}")
+            
+            # Inject FPS throttling script if in optimization mode
+            if os.environ.get('OPTIMIZE_MODE') == 'True':
+                try:
+                    fps_throttle_path = os.path.join(project_root, 'scripts/fps_throttle.js')
+                    with open(fps_throttle_path, 'r') as f:
+                        fps_throttle_script = f.read()
+                    
+                    self.tab.Runtime.evaluate(expression=fps_throttle_script)
+                    logger.info(f"FPS throttling script injected for {self.username} - CPU optimization active")
+                except Exception as e:
+                    logger.warning(f"Failed to inject FPS throttle script: {e}")
+            
             return True
             
         except Exception as e:

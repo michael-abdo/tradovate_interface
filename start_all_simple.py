@@ -66,6 +66,8 @@ def main():
                         help="Seconds to wait between auto-login and dashboard (default: 15)")
     parser.add_argument("--ngrok", action="store_true",
                         help="Enable ngrok tunnel to mike-development.ngrok-free.app")
+    parser.add_argument("--optimize", action="store_true",
+                        help="Enable CPU optimization mode (GPU acceleration, power saving)")
     args = parser.parse_args()
     
     # Setup signal handler for Ctrl+C
@@ -81,19 +83,24 @@ def main():
     print("Starting auto-login with console logging...")
     
     # Create a Python command that sets up logging and runs auto_login
-    auto_login_cmd = """
+    optimize_mode = "True" if args.optimize else "False"
+    auto_login_cmd = f"""
 import sys
+import os
 from datetime import datetime
 from src.auto_login import main as auto_login_main, set_terminal_callback
 
+# Set optimization mode
+os.environ['OPTIMIZE_MODE'] = '{optimize_mode}'
+
 # Simple terminal callback for console logs
 def terminal_callback(entry):
-    colors = {
+    colors = {{
         'ERROR': '\\033[31m',    # Red
         'WARNING': '\\033[33m',  # Yellow
         'INFO': '\\033[32m',     # Green
         'LOG': '\\033[0m'        # Default
-    }
+    }}
     reset = '\\033[0m'
     
     level = entry.get('level', 'LOG')
@@ -101,11 +108,13 @@ def terminal_callback(entry):
     timestamp = datetime.now().strftime('%H:%M:%S')
     
     color = colors.get(level, '\\033[0m')
-    print(f"[{timestamp}] {color}[{level}]{reset} {text}")
+    print(f"[{{timestamp}}] {{color}}[{{level}}]{{reset}} {{text}}")
 
 # Set the callback and run
 set_terminal_callback(terminal_callback)
 print("Console logging enabled")
+if '{optimize_mode}' == 'True':
+    print("🚀 CPU Optimization mode enabled for auto-login Chrome instances")
 sys.exit(auto_login_main())
 """
     
@@ -149,6 +158,7 @@ sys.exit(auto_login_main())
     dashboard_url = "http://localhost:6001"
     dashboard_port = 9321
     
+    # Build Chrome command with optimization flags if requested
     chrome_cmd = [
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
         f"--remote-debugging-port={dashboard_port}",
@@ -163,12 +173,47 @@ sys.exit(auto_login_main())
         "--disable-save-password-bubble",
         "--disable-features=InfiniteSessionRestore",
         "--hide-crash-restore-bubble",
-        "--no-crash-upload",
-        "--disable-backgrounding-occluded-windows",
-        "--disable-dev-shm-usage",
-        "--no-sandbox",
-        dashboard_url
+        "--no-crash-upload"
     ]
+    
+    if args.optimize:
+        # Add CPU optimization flags
+        chrome_cmd.extend([
+            # Enable GPU acceleration
+            "--enable-gpu-rasterization",
+            "--enable-zero-copy",
+            "--enable-accelerated-video-decode",
+            "--ignore-gpu-blocklist",
+            
+            # Enable power saving features
+            "--enable-features=HighEfficiencyModeAvailable,BatterySaverModeAvailable",
+            "--force-fieldtrials=HighEfficiencyModeAvailable/Enabled",
+            
+            # Enable background throttling
+            "--enable-background-timer-throttling",
+            "--enable-backgrounding-occluded-windows",
+            
+            # Reduce memory usage
+            "--max-old-space-size=512",
+            "--memory-pressure-off",
+            
+            # Disable unnecessary features
+            "--disable-background-networking",
+            "--disable-component-update",
+            "--disable-domain-reliability",
+            "--disable-features=TranslateUI",
+            "--disable-sync"
+        ])
+        print("🚀 CPU Optimization mode enabled - GPU acceleration and power saving active")
+    else:
+        # Use original performance-oriented flags
+        chrome_cmd.extend([
+            "--disable-backgrounding-occluded-windows",
+            "--disable-dev-shm-usage",
+            "--no-sandbox"
+        ])
+    
+    chrome_cmd.append(dashboard_url)
     
     dashboard_chrome = subprocess.Popen(chrome_cmd, 
                                         stdout=subprocess.DEVNULL,
