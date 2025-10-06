@@ -300,6 +300,30 @@ To use this feature:
 3. Configure the alert message to include the JSON payload shown above
 4. Set the alert to trigger based on your trading strategy conditions
 
+## Technical Details
+
+### Chrome Flags and Performance Considerations
+
+The application uses specific Chrome flags that can impact performance:
+
+- **`--disable-backgrounding-occluded-windows`** - Keeps rendering even when hidden
+  - Ensures Chrome continues to process when the window is minimized or behind other windows
+  - Can increase CPU/memory usage as Chrome doesn't pause hidden tabs
+  
+- **`--no-sandbox`** - Disables Chrome's sandbox security model
+  - Required for some automation scenarios but reduces security
+  - Also disables GPU acceleration, which may impact rendering performance
+  
+- **`--disable-dev-shm-usage`** - Forces disk-based shared memory
+  - Prevents crashes in memory-constrained environments
+  - Can increase disk I/O and slow down operations that rely on shared memory
+  
+- **`--subproc-heap-profiling`** - Adds profiling overhead
+  - Enables detailed memory profiling for debugging
+  - Increases memory usage and can impact performance
+
+These flags prioritize reliability and automation compatibility over raw performance. If you experience performance issues, consider running fewer Chrome instances simultaneously or on a machine with more resources.
+
 ## Notes
 
 - Requires Chrome to be installed
