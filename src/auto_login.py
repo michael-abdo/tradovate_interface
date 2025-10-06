@@ -518,8 +518,11 @@ class ChromeInstance:
             
             logger.info(f"Injecting autorisk management script for {self.username}")
             
+            # Get project root
+            project_root = get_project_root()
+            
             # Read the autorisk script from file
-            autorisk_script_path = os.path.join(project_root, 'scripts/tampermonkey/autoriskManagement.js')
+            autorisk_script_path = project_root / 'scripts/tampermonkey/autoriskManagement.js'
             with open(autorisk_script_path, 'r') as f:
                 script_content = f.read()
             
@@ -545,7 +548,7 @@ class ChromeInstance:
             # Inject FPS throttling script if in optimization mode
             if os.environ.get('OPTIMIZE_MODE') == 'True':
                 try:
-                    fps_throttle_path = os.path.join(project_root, 'scripts/fps_throttle.js')
+                    fps_throttle_path = project_root / 'scripts/fps_throttle.js'
                     with open(fps_throttle_path, 'r') as f:
                         fps_throttle_script = f.read()
                     
