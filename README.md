@@ -20,7 +20,9 @@ The system now supports configurable trading defaults via `config/trading_defaul
     "stop_loss_ticks": 15,   // Default stop loss in ticks
     "take_profit_ticks": 53, // Default take profit in ticks
     "tick_size": 0.25,       // Default tick size
-    "risk_reward_ratio": 3.5 // Risk/reward ratio for auto-calculation
+    "risk_reward_ratio": 3.5,// Risk/reward ratio for auto-calculation
+    "scale_in_enabled": false,  // Enable scale in/out by default
+    "scale_in_levels": 4     // Number of scale levels
   },
   "symbol_defaults": {
     // Per-symbol default settings
@@ -29,7 +31,8 @@ The system now supports configurable trading defaults via `config/trading_defaul
       "tick_value": 5.0,
       "default_sl": 15,
       "default_tp": 53,
-      "precision": 2
+      "precision": 2,
+      "scale_in_ticks": 20   // Ticks between scale levels
     }
     // ... other symbols
   }
@@ -307,6 +310,45 @@ The web dashboard provides a comprehensive interface for monitoring and controll
 - Buy/Sell buttons for instant execution
 - Cancel All and Close All options for risk management
 - Automatic symbol and quantity synchronization across all accounts
+- Scale In/Out feature for distributing orders across multiple price levels
+
+### Scale In/Out Feature
+
+The Scale In/Out feature allows you to distribute your total order quantity across multiple price levels, reducing market impact and potentially achieving better average entry prices.
+
+#### How it Works
+- Enable the "Scale In/Out" checkbox in the trading interface
+- Specify the number of levels (e.g., 4 levels for splitting into quarters)
+- Set the tick spacing between levels (e.g., 20 ticks for NQ)
+- Orders are placed sequentially with a 500ms delay between each level
+- Each level maintains its own TP/SL bracket order
+
+#### Configuration
+Scale settings can be configured in `config/trading_defaults.json`:
+```json
+{
+  "trading_defaults": {
+    "scale_in_enabled": false,  // Default state
+    "scale_in_levels": 4        // Default number of levels
+  },
+  "symbol_defaults": {
+    "NQ": {
+      "scale_in_ticks": 20      // Symbol-specific tick spacing
+    }
+  }
+}
+```
+
+#### Example
+- Trading 10 NQ contracts with 4 scale levels, 20 ticks apart
+- Buy orders will be placed at: Entry, Entry-5, Entry-10, Entry-15
+- Distribution: 3, 3, 2, 2 contracts (remainder distributed to first levels)
+- Sell orders scale up: Entry, Entry+5, Entry+10, Entry+15
+
+#### Validation
+- Scale levels cannot exceed total quantity
+- Each level must have at least 1 contract
+- Invalid configurations are blocked with clear error messages
 
 ## PineScript Webhook Integration
 

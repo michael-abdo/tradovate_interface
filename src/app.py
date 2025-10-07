@@ -159,6 +159,21 @@ class TradovateConnection:
             return result
         except Exception as e:
             return {"error": str(e)}
+    
+    def auto_trade_scale(self, symbol, scale_orders, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
+        """Execute scale in/out orders using the Tampermonkey script"""
+        if not self.tab:
+            return {"error": "No tab available"}
+            
+        try:
+            # Convert scale_orders list to JavaScript array string
+            import json
+            orders_json = json.dumps(scale_orders)
+            js_code = f"auto_trade_scale('{symbol}', {orders_json}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
+            result = self.tab.Runtime.evaluate(expression=js_code)
+            return result
+        except Exception as e:
+            return {"error": str(e)}
             
     def exit_positions(self, symbol, option='cancel-option-Exit-at-Mkt-Cxl'):
         """Close all positions for the given symbol"""

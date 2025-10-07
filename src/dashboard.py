@@ -175,6 +175,63 @@ def get_summary():
         'account_count': len(accounts_data)
     })
 
+# Helper function to calculate scale in/out orders
+def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, scale_ticks, tick_size):
+    """
+    Calculate individual orders for scale in/out positions.
+    
+    Args:
+        symbol: Trading symbol
+        quantity: Total quantity to trade
+        action: 'Buy' or 'Sell'
+        entry_price: Base entry price (if None, uses market orders)
+        scale_levels: Number of scale levels
+        scale_ticks: Ticks between each level
+        tick_size: Symbol tick size
+        
+    Returns:
+        List of order dictionaries with quantity and entry_price for each level
+    """
+    orders = []
+    
+    # Calculate quantity per level (rounded down)
+    qty_per_level = quantity // scale_levels
+    remaining_qty = quantity % scale_levels
+    
+    # If quantity is too small to split, return single order
+    if qty_per_level == 0:
+        return [{
+            'quantity': quantity,
+            'entry_price': entry_price
+        }]
+    
+    # Calculate prices for each level
+    for i in range(scale_levels):
+        # Add extra quantity to first levels if there's a remainder
+        level_qty = qty_per_level + (1 if i < remaining_qty else 0)
+        
+        # Calculate entry price for this level
+        if entry_price is not None:
+            # For limit/stop orders, calculate scaled entry prices
+            price_offset = i * scale_ticks * tick_size
+            
+            if action == 'Buy':
+                # For Buy: scale down from entry price (better fills)
+                level_price = entry_price - price_offset
+            else:
+                # For Sell: scale up from entry price (better fills)
+                level_price = entry_price + price_offset
+        else:
+            # For market orders, all levels use None (market)
+            level_price = None
+        
+        orders.append({
+            'quantity': level_qty,
+            'entry_price': level_price
+        })
+    
+    return orders
+
 # API endpoint to execute trades
 @app.route('/api/trade', methods=['POST'])
 def execute_trade():
@@ -193,6 +250,13 @@ def execute_trade():
         # Check TP/SL enable flags
         enable_tp = data.get('enable_tp', True)
         enable_sl = data.get('enable_sl', True)
+        
+        # Extract scale in/out parameters
+        scale_in_enabled = data.get('scale_in_enabled', TRADING_DEFAULTS.get('scale_in_enabled', False))
+        scale_in_levels = data.get('scale_in_levels', TRADING_DEFAULTS.get('scale_in_levels', 4))
+        # Get symbol-specific scale ticks if available
+        symbol_config = symbol_defaults.get(symbol, {})
+        scale_in_ticks = data.get('scale_in_ticks', symbol_config.get('scale_in_ticks', 20))
         
         # Only get TP/SL values if they are enabled with config defaults
         tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
@@ -278,48 +342,120 @@ def execute_trade():
                     except Exception as e:
                         print(f"Warning: Failed to clear entry price on account {account_index}: {e}")
         
-        # Check if we should execute on all accounts or just one
-        if account_index == 'all':
-            # We need to update auto_trade.js to respect tp_ticks=0 and sl_ticks=0 as disabled
-            result = controller.execute_on_all(
-                'auto_trade', 
-                symbol, 
-                quantity, 
-                action, 
-                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
-                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
-            )
+        # Check if we should use scale in/out
+        if scale_in_enabled and scale_in_levels > 1:
+            # Validate scale levels don't exceed quantity
+            if scale_in_levels > quantity:
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Scale levels ({scale_in_levels}) cannot exceed quantity ({quantity})'
+                }), 400
             
+            try:
+                # Calculate scale orders
+                scale_orders = calculate_scale_orders(
+                    symbol, quantity, action, entry_price,
+                    scale_in_levels, scale_in_ticks, tick_size
+                )
+                
+                # Validate scale orders were calculated successfully
+                if not scale_orders or len(scale_orders) == 0:
+                    return jsonify({
+                        'status': 'error',
+                        'message': 'Failed to calculate scale orders'
+                    }), 500
+                
+                print(f"Scale in enabled: {len(scale_orders)} orders calculated")
+                
+                # For scale orders, we need to execute multiple trades
+                # Pass the scale orders as a special parameter
+                if account_index == 'all':
+                    result = controller.execute_on_all(
+                        'auto_trade_scale',  # New method for scale orders
+                        symbol, 
+                        scale_orders,  # Pass array of orders instead of single quantity
+                        action, 
+                        tp_ticks if enable_tp else 0,
+                        sl_ticks if enable_sl else 0,
+                        tick_size
+                    )
+                    # Check if any scale orders failed
+                    failed_accounts = [r for r in result if 'error' in r.get('result', {})]
+                    if failed_accounts:
+                        print(f"Warning: Scale orders failed on {len(failed_accounts)} accounts")
+                else:
+                    # Execute on specific account
+                    account_index = int(account_index)
+                    result = controller.execute_on_one(
+                        account_index,
+                        'auto_trade_scale',  # New method for scale orders
+                        symbol, 
+                        scale_orders,  # Pass array of orders instead of single quantity
+                        action, 
+                        tp_ticks if enable_tp else 0,
+                        sl_ticks if enable_sl else 0,
+                        tick_size
+                    )
+                    # Check if scale order failed
+                    if 'error' in result.get('result', {}):
+                        return jsonify({
+                            'status': 'error',
+                            'message': f"Scale order failed: {result['result'].get('error', 'Unknown error')}"
+                        }), 500
+            except Exception as e:
+                print(f"Error calculating/executing scale orders: {str(e)}")
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Failed to execute scale orders: {str(e)}'
+                }), 500
+        else:
+            # Regular single order execution
+            if account_index == 'all':
+                # We need to update auto_trade.js to respect tp_ticks=0 and sl_ticks=0 as disabled
+                result = controller.execute_on_all(
+                    'auto_trade', 
+                    symbol, 
+                    quantity, 
+                    action, 
+                    tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                    sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
+                    tick_size
+                )
+            
+            else:
+                # Execute on specific account
+                account_index = int(account_index)
+                result = controller.execute_on_one(
+                    account_index,
+                    'auto_trade', 
+                    symbol, 
+                    quantity, 
+                    action, 
+                    tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                    sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
+                    tick_size
+                )
+        
+        # Process results and return response
+        if account_index == 'all':
             # Count successful trades
             accounts_affected = sum(1 for r in result if 'error' not in r['result'])
-            
-            return jsonify({
-                'status': 'success',
-                'message': f'{action} trade executed on {accounts_affected} accounts',
-                'accounts_affected': accounts_affected,
-                'details': result
-            })
+            message = f'{action} trade executed on {accounts_affected} accounts'
+            if scale_in_enabled:
+                message += f' with {scale_in_levels} scale levels'
         else:
-            # Execute on specific account
-            account_index = int(account_index)
-            result = controller.execute_on_one(
-                account_index,
-                'auto_trade', 
-                symbol, 
-                quantity, 
-                action, 
-                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
-                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
-            )
-            
-            return jsonify({
-                'status': 'success',
-                'message': f'{action} trade executed on account {account_index}',
-                'accounts_affected': 1,
-                'details': result
-            })
+            accounts_affected = 1
+            message = f'{action} trade executed on account {account_index}'
+            if scale_in_enabled:
+                message += f' with {scale_in_levels} scale levels'
+        
+        return jsonify({
+            'status': 'success',
+            'message': message,
+            'accounts_affected': accounts_affected,
+            'scale_orders': scale_in_enabled,
+            'details': result
+        })
     except Exception as e:
         return jsonify({
             'status': 'error',
