@@ -2263,8 +2263,15 @@
                 const scaleLevels = parseInt(document.getElementById('scaleLevelsInput').value) || 4;
                 const scaleTicks = parseInt(document.getElementById('scaleTicksInput').value) || 20;
                 
+                console.log('\n=== FRONTEND SCALE DEBUG ===');
+                console.log('Scale checkbox checked:', scaleInEnabled);
+                console.log('Scale levels:', scaleLevels);
+                console.log('Scale ticks:', scaleTicks);
+                console.log('Quantity:', qty);
+                
                 // Validate scale levels
                 if (scaleInEnabled && scaleLevels > qty) {
+                    console.log('ERROR: Scale levels exceed quantity');
                     alert(`Scale levels (${scaleLevels}) cannot exceed quantity (${qty}). Please reduce the number of scale levels.`);
                     return;
                 }
@@ -2282,6 +2289,8 @@
                     scale_in_levels: scaleLevels,
                     scale_in_ticks: scaleTicks
                 };
+                
+                console.log('Trade parameters prepared:', tradeParams);
                 
                 // Only add TP/SL if they are enabled
                 if (enableTP) {

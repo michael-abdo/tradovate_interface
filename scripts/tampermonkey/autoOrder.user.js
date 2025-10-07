@@ -1211,24 +1211,42 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
     // Scale order function to handle multiple entry levels
     function auto_trade_scale(symbol, scaleOrders, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, tickSize = 0.25) {
-        console.log(`auto_trade_scale called with symbol=${symbol}, ${scaleOrders.length} orders, action=${action}`);
+        console.log(`\n=== AUTO_TRADE_SCALE DEBUG ===`);
+        console.log(`Called with parameters:`);
+        console.log(`  symbol: ${symbol}`);
+        console.log(`  scaleOrders:`, scaleOrders);
+        console.log(`  action: ${action}`);
+        console.log(`  takeProfitTicks: ${takeProfitTicks}`);
+        console.log(`  stopLossTicks: ${stopLossTicks}`);
+        console.log(`  tickSize: ${tickSize}`);
         
         // Validate inputs
         if (!scaleOrders || !Array.isArray(scaleOrders) || scaleOrders.length === 0) {
-            console.error('Invalid scale orders: empty or not an array');
+            console.error('ERROR: Invalid scale orders - empty or not an array');
+            console.error('scaleOrders value:', scaleOrders);
             alert('Error: Invalid scale orders configuration');
             return;
         }
         
+        console.log(`Scale orders array length: ${scaleOrders.length}`);
+        
         // Validate each order
+        console.log(`Validating ${scaleOrders.length} scale orders:`);
         for (let i = 0; i < scaleOrders.length; i++) {
             const order = scaleOrders[i];
+            console.log(`  Order ${i+1}:`, order);
+            
             if (!order || typeof order.quantity !== 'number' || order.quantity <= 0) {
-                console.error(`Invalid scale order at index ${i}: invalid quantity`);
+                console.error(`ERROR: Invalid scale order at index ${i}: invalid quantity`);
+                console.error(`Order details:`, order);
                 alert(`Error: Invalid quantity in scale order ${i + 1}`);
                 return;
             }
+            
+            console.log(`    ✓ Valid: ${order.quantity} contracts @ ${order.entry_price || 'Market'}`);
         }
+        
+        console.log(`All orders validated successfully`);
         
         // Execute each scale order with a delay between them
         const delayBetweenOrders = 500; // 500ms between orders
@@ -1237,8 +1255,14 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         let failedOrders = 0;
         
         function placeNextOrder() {
+            console.log(`\n--- placeNextOrder() called ---`);
+            console.log(`Current orderIndex: ${orderIndex}, Total orders: ${scaleOrders.length}`);
+            
             if (orderIndex >= scaleOrders.length) {
-                console.log(`Scale order execution completed. Successful: ${successfulOrders}, Failed: ${failedOrders}`);
+                console.log(`=== SCALE ORDER EXECUTION COMPLETED ===`);
+                console.log(`Successful: ${successfulOrders}, Failed: ${failedOrders}`);
+                console.log(`=== END AUTO_TRADE_SCALE DEBUG ===`);
+                
                 if (failedOrders > 0) {
                     alert(`Scale orders completed with ${failedOrders} failures. Check console for details.`);
                 }
@@ -1246,27 +1270,43 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             }
             
             const order = scaleOrders[orderIndex];
-            console.log(`Placing scale order ${orderIndex + 1}/${scaleOrders.length}: qty=${order.quantity}, entry=${order.entry_price}`);
+            console.log(`Placing scale order ${orderIndex + 1}/${scaleOrders.length}:`);
+            console.log(`  Order details:`, order);
+            console.log(`  Quantity: ${order.quantity}`);
+            console.log(`  Entry Price: ${order.entry_price}`);
             
             try {
                 // If entry_price is provided, set it in the UI first
                 const entryPriceInput = document.getElementById('entryPriceInput');
+                console.log(`Entry price input element found: ${!!entryPriceInput}`);
+                
                 if (entryPriceInput && order.entry_price !== null && order.entry_price !== undefined) {
+                    console.log(`Setting entry price to: ${order.entry_price}`);
                     entryPriceInput.value = order.entry_price;
                     entryPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
                     entryPriceInput.dispatchEvent(new Event('change', { bubbles: true }));
                 } else if (entryPriceInput && order.entry_price === null) {
+                    console.log(`Clearing entry price for market order`);
                     // Clear entry price for market orders
                     entryPriceInput.value = '';
                     entryPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
                     entryPriceInput.dispatchEvent(new Event('change', { bubbles: true }));
                 }
                 
+                console.log(`Calling autoTrade with:`);
+                console.log(`  symbol: ${symbol}`);
+                console.log(`  quantity: ${order.quantity}`);
+                console.log(`  action: ${action}`);
+                console.log(`  takeProfitTicks: ${takeProfitTicks}`);
+                console.log(`  stopLossTicks: ${stopLossTicks}`);
+                console.log(`  tickSize: ${tickSize}`);
+                
                 // Call autoTrade for this scale level
                 autoTrade(symbol, order.quantity, action, takeProfitTicks, stopLossTicks, tickSize);
                 successfulOrders++;
+                console.log(`✓ Order ${orderIndex + 1} submitted successfully`);
             } catch (error) {
-                console.error(`Error placing scale order ${orderIndex + 1}:`, error);
+                console.error(`ERROR placing scale order ${orderIndex + 1}:`, error);
                 failedOrders++;
             }
             

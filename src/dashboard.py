@@ -192,20 +192,36 @@ def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, 
     Returns:
         List of order dictionaries with quantity and entry_price for each level
     """
+    print(f"\n=== CALCULATE SCALE ORDERS DEBUG ===")
+    print(f"Input Parameters:")
+    print(f"  Symbol: {symbol}")
+    print(f"  Quantity: {quantity}")
+    print(f"  Action: {action}")
+    print(f"  Entry Price: {entry_price}")
+    print(f"  Scale Levels: {scale_levels}")
+    print(f"  Scale Ticks: {scale_ticks}")
+    print(f"  Tick Size: {tick_size}")
+    
     orders = []
     
     # Calculate quantity per level (rounded down)
     qty_per_level = quantity // scale_levels
     remaining_qty = quantity % scale_levels
     
+    print(f"Quantity Distribution:")
+    print(f"  Qty per level: {qty_per_level}")
+    print(f"  Remaining qty: {remaining_qty}")
+    
     # If quantity is too small to split, return single order
     if qty_per_level == 0:
+        print(f"  WARNING: Quantity too small to split, returning single order")
         return [{
             'quantity': quantity,
             'entry_price': entry_price
         }]
     
     # Calculate prices for each level
+    print(f"Calculating {scale_levels} scale levels:")
     for i in range(scale_levels):
         # Add extra quantity to first levels if there's a remainder
         level_qty = qty_per_level + (1 if i < remaining_qty else 0)
@@ -221,14 +237,20 @@ def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, 
             else:
                 # For Sell: scale up from entry price (better fills)
                 level_price = entry_price + price_offset
+                
+            print(f"  Level {i+1}: {level_qty} contracts @ ${level_price:.2f} (offset: {price_offset})")
         else:
             # For market orders, all levels use None (market)
             level_price = None
+            print(f"  Level {i+1}: {level_qty} contracts @ Market")
         
         orders.append({
             'quantity': level_qty,
             'entry_price': level_price
         })
+    
+    print(f"Total orders created: {len(orders)}")
+    print(f"=== END CALCULATE SCALE ORDERS DEBUG ===\n")
     
     return orders
 
@@ -343,23 +365,39 @@ def execute_trade():
                         print(f"Warning: Failed to clear entry price on account {account_index}: {e}")
         
         # Check if we should use scale in/out
+        print(f"\n=== SCALE IN/OUT CHECK ===")
+        print(f"Scale enabled: {scale_in_enabled}")
+        print(f"Scale levels: {scale_in_levels}")
+        print(f"Condition met: {scale_in_enabled and scale_in_levels > 1}")
+        
         if scale_in_enabled and scale_in_levels > 1:
+            print(f"=== EXECUTING SCALE IN/OUT ===")
+            
             # Validate scale levels don't exceed quantity
             if scale_in_levels > quantity:
+                print(f"ERROR: Scale levels ({scale_in_levels}) exceed quantity ({quantity})")
                 return jsonify({
                     'status': 'error',
                     'message': f'Scale levels ({scale_in_levels}) cannot exceed quantity ({quantity})'
                 }), 400
             
             try:
+                print(f"Calling calculate_scale_orders with:")
+                print(f"  symbol={symbol}, quantity={quantity}, action={action}")
+                print(f"  entry_price={entry_price}, scale_levels={scale_in_levels}")
+                print(f"  scale_ticks={scale_in_ticks}, tick_size={tick_size}")
+                
                 # Calculate scale orders
                 scale_orders = calculate_scale_orders(
                     symbol, quantity, action, entry_price,
                     scale_in_levels, scale_in_ticks, tick_size
                 )
                 
+                print(f"Scale orders calculated: {scale_orders}")
+                
                 # Validate scale orders were calculated successfully
                 if not scale_orders or len(scale_orders) == 0:
+                    print(f"ERROR: No scale orders returned from calculate_scale_orders")
                     return jsonify({
                         'status': 'error',
                         'message': 'Failed to calculate scale orders'
@@ -369,7 +407,10 @@ def execute_trade():
                 
                 # For scale orders, we need to execute multiple trades
                 # Pass the scale orders as a special parameter
+                print(f"Executing scale orders on accounts...")
+                
                 if account_index == 'all':
+                    print(f"Executing on ALL accounts ({len(controller.connections)} connections)")
                     result = controller.execute_on_all(
                         'auto_trade_scale',  # New method for scale orders
                         symbol, 
@@ -379,13 +420,16 @@ def execute_trade():
                         sl_ticks if enable_sl else 0,
                         tick_size
                     )
+                    print(f"Scale order execution result: {result}")
+                    
                     # Check if any scale orders failed
                     failed_accounts = [r for r in result if 'error' in r.get('result', {})]
                     if failed_accounts:
-                        print(f"Warning: Scale orders failed on {len(failed_accounts)} accounts")
+                        print(f"Warning: Scale orders failed on {len(failed_accounts)} accounts: {failed_accounts}")
                 else:
                     # Execute on specific account
                     account_index = int(account_index)
+                    print(f"Executing on account {account_index}")
                     result = controller.execute_on_one(
                         account_index,
                         'auto_trade_scale',  # New method for scale orders
@@ -396,8 +440,11 @@ def execute_trade():
                         sl_ticks if enable_sl else 0,
                         tick_size
                     )
+                    print(f"Scale order execution result: {result}")
+                    
                     # Check if scale order failed
                     if 'error' in result.get('result', {}):
+                        print(f"ERROR: Scale order failed: {result['result'].get('error', 'Unknown error')}")
                         return jsonify({
                             'status': 'error',
                             'message': f"Scale order failed: {result['result'].get('error', 'Unknown error')}"
