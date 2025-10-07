@@ -7,6 +7,7 @@ configuration loading, and logging setup.
 """
 
 import json
+import yaml
 import logging
 import os
 import platform
@@ -120,18 +121,22 @@ def find_chrome_executable() -> str:
     )
 
 
-def load_json_config(config_path: str) -> Dict[str, Any]:
-    """Load JSON configuration file with error handling.
+def load_config(config_path: str) -> Dict[str, Any]:
+    """Load configuration file with support for both JSON and YAML formats.
+    
+    Automatically detects the file format based on extension and uses the
+    appropriate parser. Supports .json, .yaml, and .yml extensions.
     
     Args:
-        config_path: Path to the JSON configuration file (relative or absolute)
+        config_path: Path to the configuration file (relative or absolute)
         
     Returns:
-        Dict[str, Any]: Parsed JSON configuration data
+        Dict[str, Any]: Parsed configuration data
         
     Raises:
         FileNotFoundError: If configuration file doesn't exist
         json.JSONDecodeError: If file contains invalid JSON
+        yaml.YAMLError: If file contains invalid YAML
         PermissionError: If file cannot be read due to permissions
     """
     # Convert to Path object for consistent handling
@@ -142,18 +147,50 @@ def load_json_config(config_path: str) -> Dict[str, Any]:
         project_root = get_project_root()
         config_file = project_root / config_file
     
+    # Try alternate formats if base file doesn't exist
+    original_file = config_file
+    possible_files = []
+    
+    # If file has no extension or doesn't exist, try common extensions
+    if not config_file.exists():
+        base_path = config_file.with_suffix('')
+        for ext in ['.yaml', '.yml', '.json']:
+            candidate = base_path.with_suffix(ext)
+            possible_files.append(candidate)
+            if candidate.exists():
+                config_file = candidate
+                break
+    else:
+        possible_files = [config_file]
+    
     # Check if file exists
     if not config_file.exists():
-        raise FileNotFoundError(f"Configuration file not found: {config_file}")
+        raise FileNotFoundError(
+            f"Configuration file not found: {original_file}\n"
+            f"Searched locations: {', '.join(str(f) for f in possible_files)}"
+        )
     
     # Check if file is readable
     if not config_file.is_file():
         raise ValueError(f"Path is not a file: {config_file}")
     
+    # Determine file format based on extension
+    file_ext = config_file.suffix.lower()
+    
     try:
-        # Read and parse JSON file
         with open(config_file, 'r', encoding='utf-8') as f:
-            config_data = json.load(f)
+            if file_ext in ['.yaml', '.yml']:
+                # Use safe_load to prevent arbitrary code execution
+                config_data = yaml.safe_load(f)
+            elif file_ext == '.json':
+                config_data = json.load(f)
+            else:
+                # Try JSON first, then YAML
+                content = f.read()
+                try:
+                    config_data = json.loads(content)
+                except json.JSONDecodeError:
+                    config_data = yaml.safe_load(content)
         
         return config_data
         
@@ -162,10 +199,34 @@ def load_json_config(config_path: str) -> Dict[str, Any]:
             f"Invalid JSON in configuration file {config_file}: {e.msg}",
             e.doc, e.pos
         )
+    except yaml.YAMLError as e:
+        raise yaml.YAMLError(f"Invalid YAML in configuration file {config_file}: {e}")
     except PermissionError as e:
         raise PermissionError(f"Cannot read configuration file {config_file}: {e}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error loading configuration {config_file}: {e}")
+
+
+def load_json_config(config_path: str) -> Dict[str, Any]:
+    """Load JSON configuration file with error handling.
+    
+    This function now supports both JSON and YAML formats by delegating
+    to load_config(). It maintains backward compatibility while adding
+    YAML support.
+    
+    Args:
+        config_path: Path to the configuration file (relative or absolute)
+        
+    Returns:
+        Dict[str, Any]: Parsed configuration data
+        
+    Raises:
+        FileNotFoundError: If configuration file doesn't exist
+        json.JSONDecodeError: If file contains invalid JSON
+        yaml.YAMLError: If file contains invalid YAML
+        PermissionError: If file cannot be read due to permissions
+    """
+    return load_config(config_path)
 
 
 def get_script_path(script_name: str) -> Path:

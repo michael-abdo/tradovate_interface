@@ -107,13 +107,23 @@ The project is organized into the following directories:
    pip install pychrome flask
    ```
 
-2. Configure your credentials in `config/credentials.json`:
+2. Configure your credentials in `config/credentials.yaml` (or `config/credentials.json`):
+   
+   **YAML format (recommended):**
+   ```yaml
+   username1@example.com: password1
+   username2@example.com: password2
+   ```
+   
+   **JSON format (also supported):**
    ```json
    {
      "username1@example.com": "password1",
      "username2@example.com": "password2"
    }
    ```
+   
+   **Note:** The system automatically detects the format. YAML files are checked first for better readability.
 
 ## Usage
 
@@ -128,7 +138,7 @@ python main.py login
 ```
 
 This will:
-- Start a new Chrome instance for each credential pair in `config/credentials.json`
+- Start a new Chrome instance for each credential pair in your config file
 - Each instance will run on a different debugging port (starting at 9223, port 9222 is protected)
 - Automatically log in to Tradovate
 - Keep running until you press Ctrl+C
@@ -232,14 +242,36 @@ python main.py login-helper --port 9223
 
 ## Credential Management
 
-Credentials are stored in a simple JSON file in the config directory:
+Credentials can be stored in either YAML or JSON format in the config directory:
 
+**YAML format (recommended for readability):**
+```yaml
+your_email1@example.com: your_password1
+your_email2@example.com: your_password2
+```
+
+**JSON format:**
 ```json
 {
   "your_email1@example.com": "your_password1",
   "your_email2@example.com": "your_password2"
 }
 ```
+
+### Migrating from JSON to YAML
+
+If you have existing JSON configuration files, you can easily convert them to YAML:
+
+```bash
+python scripts/migrate_to_yaml.py config/credentials.json
+```
+
+This will:
+- Create `config/credentials.yaml` with your credentials
+- Backup the original file to `config/credentials.json.bak`
+- The system will automatically use the YAML file going forward
+
+### Using Environment Variables
 
 You can also use environment variables if preferred:
 
@@ -248,7 +280,7 @@ export TRADOVATE_USERNAME="your_username"
 export TRADOVATE_PASSWORD="your_password"
 ```
 
-The script will first try to use credentials from the JSON file, then fall back to environment variables if needed.
+The script will first try to use credentials from the config file (YAML or JSON), then fall back to environment variables if needed.
 
 ## Dashboard Features
 
