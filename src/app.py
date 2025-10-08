@@ -100,6 +100,17 @@ class TradovateConnection:
                 # First evaluate the script to define the functions
                 self.tab.Runtime.evaluate(expression=risk_management_js)
                 print(f"Auto risk management script injected for {self.account_name}")
+            
+            # Inject the tradovate scraper script
+            scraper_path = os.path.join(project_root, 
+                                         'scripts/tampermonkey/tradovateScraper.user.js')
+            if os.path.exists(scraper_path):
+                with open(scraper_path, 'r') as file:
+                    scraper_js = file.read()
+                # Extract core functions (remove UserScript header and IIFE)
+                scraper_functions = extract_core_functions(scraper_js)
+                self.tab.Runtime.evaluate(expression=scraper_functions)
+                print(f"Tradovate scraper injected for {self.account_name}")
                 
                 # Wait a moment for the script to fully initialize
                 time.sleep(1)

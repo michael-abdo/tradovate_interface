@@ -76,5 +76,15 @@
       "precision": 1,
       "scale_in_ticks": 10
     }
+  },
+  "scraper_config": {
+    "enabled": false,
+    "interval": 1000,
+    "volume_filter": 0,
+    "debug": false,
+    "persist_interval": 60,
+    "buffer_size": 1000,
+    "days_to_keep": 7,
+    "auto_start": false
   }
 }

@@ -6,18 +6,21 @@ import pychrome
 from threading import Thread
 from pathlib import Path
 from src.utils.core import get_project_root, setup_logging
+from src.services.scraper_service import get_scraper_service
 
 class ChromeLogger:
-    def __init__(self, tab, log_file=None):
+    def __init__(self, tab, log_file=None, account_name=None):
         """
         Initialize a logger for Chrome DevTools Protocol
         
         Args:
             tab: The Chrome tab to log from (pychrome tab object)
             log_file: Path to log file (if None, will only use callbacks)
+            account_name: Name of the account associated with this tab
         """
         self.tab = tab
         self.log_file = log_file
+        self.account_name = account_name or 'Unknown'
         self.callbacks = []
         self.is_running = False
         self.log_thread = None
@@ -412,6 +415,25 @@ class ChromeLogger:
         message = ' '.join(message_parts)
         console_type = kwargs.get('type', 'log').upper()
         
+        # Check if this is scraper data
+        if message.startswith('[SCRAPER_DATA] '):
+            try:
+                # Extract JSON data after the marker
+                json_str = message[15:]  # Remove '[SCRAPER_DATA] ' prefix
+                scraper_data = json.loads(json_str)
+                
+                # Use the account name from logger instance
+                account = self.account_name
+                
+                # Send to scraper service
+                scraper_service = get_scraper_service()
+                scraper_service.add_scraped_data(account, scraper_data)
+                
+                # Log successful capture
+                print(f"[Chrome Logger] Captured scraper data from {account}: {len(scraper_data.get('trades', []))} trades")
+            except Exception as e:
+                print(f"[Chrome Logger] Error parsing scraper data: {e}")
+        
         log_entry = {
             'source': 'console',
             'level': console_type,
@@ -501,7 +523,7 @@ class ChromeLogger:
                 break
 
 
-def create_logger(tab, log_file=None, callback=None):
+def create_logger(tab, log_file=None, callback=None, account_name=None):
     """
     Create and start a Chrome logger for the given tab
     
@@ -509,11 +531,12 @@ def create_logger(tab, log_file=None, callback=None):
         tab: Chrome tab object from pychrome
         log_file: Optional file to write logs to
         callback: Optional callback function for log entries
+        account_name: Name of the account associated with this tab
         
     Returns:
         ChromeLogger instance if successful, None otherwise
     """
-    logger = ChromeLogger(tab, log_file)
+    logger = ChromeLogger(tab, log_file, account_name)
     if callback:
         logger.add_callback(callback)
         

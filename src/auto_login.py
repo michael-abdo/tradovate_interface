@@ -324,7 +324,7 @@ class ChromeInstance:
                 if self.log_file_path:
                     try:
                         logger.info(f"Initializing Chrome logger for {self.username}...")
-                        self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback)
+                        self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback, self.username)
                         if self.chrome_logger:
                             logger.info(f"Chrome logger started for {self.username} -> {self.log_file_path}")
                             # Register with start_all.py for centralized cleanup

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradovate Scraper Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .status {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .status.success {
+            background-color: #4CAF50;
+        }
+        .status.error {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tradovate Scraper Test Page</h1>
+        
+        <div class="section">
+            <h2>Instructions</h2>
+            <ol>
+                <li>Open this page and the actual Tradovate page in separate tabs</li>
+                <li>Copy the DOM snippet from Tradovate using browser DevTools</li>
+                <li>Paste it into the page where indicated</li>
+                <li>Click "Load Scraper" to initialize</li>
+                <li>Use the test buttons to verify functionality</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>Controls</h2>
+            <button onclick="loadScraper()">Load Scraper</button>
+            <button onclick="testScraping()" disabled id="scrapeBtn">Test Scraping</button>
+            <button onclick="testRealTime()" disabled id="realtimeBtn">Test Real-time</button>
+            <button onclick="testExport()" disabled id="exportBtn">Test Export</button>
+            <button onclick="clearOutput()">Clear Output</button>
+        </div>
+
+        <div class="section">
+            <h2>Status</h2>
+            <div id="status"></div>
+        </div>
+
+        <div class="section">
+            <h2>Output</h2>
+            <div id="output"></div>
+        </div>
+
+        <div class="section">
+            <h2>DOM Target Area</h2>
+            <p>The Tradovate DOM will be injected here for testing:</p>
+            <div id="domTarget" style="background-color: #1a1a1a; padding: 10px; border: 1px solid #444;">
+                <!-- Paste Tradovate DOM here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the scraper -->
+    <script src="tradovate_scraper.js"></script>
+    
+    <script>
+        let scraper = null;
+        let observer = null;
+
+        function updateStatus(message, isError = false) {
+            const statusDiv = document.getElementById('status');
+            const statusMsg = document.createElement('div');
+            statusMsg.className = `status ${isError ? 'error' : 'success'}`;
+            statusMsg.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            statusDiv.appendChild(statusMsg);
+            
+            // Keep only last 5 status messages
+            while (statusDiv.children.length > 5) {
+                statusDiv.removeChild(statusDiv.firstChild);
+            }
+        }
+
+        function appendOutput(content) {
+            const output = document.getElementById('output');
+            output.textContent += content + '\\n\\n';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').textContent = '';
+        }
+
+        function loadScraper() {
+            try {
+                scraper = new TradovateScraper();
+                updateStatus('Scraper loaded successfully!');
+                
+                // Enable test buttons
+                document.getElementById('scrapeBtn').disabled = false;
+                document.getElementById('realtimeBtn').disabled = false;
+                document.getElementById('exportBtn').disabled = false;
+            } catch (error) {
+                updateStatus(`Error loading scraper: ${error.message}`, true);
+            }
+        }
+
+        function testScraping() {
+            if (!scraper) {
+                updateStatus('Scraper not loaded!', true);
+                return;
+            }
+
+            try {
+                const data = scraper.scrapeData();
+                updateStatus('Scraping completed successfully!');
+                
+                appendOutput('=== SCRAPED DATA ===');
+                appendOutput(`Tabs found: ${data.tabs.length}`);
+                data.tabs.forEach(tab => {
+                    appendOutput(`  - ${tab.symbol} ${tab.isActive ? '(active)' : ''}`);
+                });
+                
+                appendOutput(`\\nContract Info:`);
+                appendOutput(JSON.stringify(data.contractInfo, null, 2));
+                
+                appendOutput(`\\nTrades found: ${data.trades.length}`);
+                if (data.trades.length > 0) {
+                    appendOutput('First 3 trades:');
+                    data.trades.slice(0, 3).forEach(trade => {
+                        appendOutput(JSON.stringify(trade, null, 2));
+                    });
+                }
+            } catch (error) {
+                updateStatus(`Scraping error: ${error.message}`, true);
+                appendOutput(`ERROR: ${error.stack}`);
+            }
+        }
+
+        function testRealTime() {
+            if (!scraper) {
+                updateStatus('Scraper not loaded!', true);
+                return;
+            }
+
+            try {
+                if (observer) {
+                    observer.disconnect();
+                    observer = null;
+                    updateStatus('Real-time monitoring stopped');
+                    document.getElementById('realtimeBtn').textContent = 'Test Real-time';
+                    return;
+                }
+
+                observer = scraper.startRealTimeUpdates((newData) => {
+                    updateStatus('Data update detected!');
+                    appendOutput(`[UPDATE] Trades: ${newData.trades.length}, Last Price: ${newData.contractInfo.lastPrice}`);
+                });
+                
+                updateStatus('Real-time monitoring started');
+                document.getElementById('realtimeBtn').textContent = 'Stop Real-time';
+            } catch (error) {
+                updateStatus(`Real-time error: ${error.message}`, true);
+            }
+        }
+
+        function testExport() {
+            if (!scraper) {
+                updateStatus('Scraper not loaded!', true);
+                return;
+            }
+
+            try {
+                const data = scraper.scrapeData();
+                
+                appendOutput('=== JSON EXPORT ===');
+                appendOutput(scraper.exportAsJSON());
+                
+                appendOutput('\\n=== CSV EXPORT ===');
+                appendOutput(scraper.exportAsCSV());
+                
+                updateStatus('Export completed successfully!');
+            } catch (error) {
+                updateStatus(`Export error: ${error.message}`, true);
+            }
+        }
+
+        // Auto-load scraper if TradovateScraper is available
+        window.addEventListener('load', () => {
+            if (typeof TradovateScraper !== 'undefined') {
+                loadScraper();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import threading
 import time
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_file
 import sys
 import os
 import json
+from io import BytesIO
 
 # Import from app.py
 from src.app import TradovateController
@@ -15,6 +16,7 @@ from .utils.core import (
     load_json_config,
     setup_logging
 )
+from .services.scraper_service import get_scraper_service
 
 # Create Flask app
 project_root = get_project_root()
@@ -24,6 +26,7 @@ try:
     trading_config = load_json_config('config/trading_defaults.json')
     TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
     SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+    SCRAPER_CONFIG = trading_config.get('scraper_config', {})
 except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
     print(f"Warning: Could not load trading defaults config: {e}")
     print("Using fallback defaults")
@@ -37,6 +40,12 @@ except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
         "risk_reward_ratio": 3.5
     }
     SYMBOL_DEFAULTS = {}
+    SCRAPER_CONFIG = {
+        "enabled": False,
+        "interval": 1000,
+        "volume_filter": 0,
+        "debug": False
+    }
 app = Flask(__name__, 
             static_folder=os.path.join(project_root, 'web/static'),
             template_folder=os.path.join(project_root, 'web/templates'))
@@ -846,7 +855,8 @@ def get_trading_defaults():
     try:
         return jsonify({
             'trading_defaults': TRADING_DEFAULTS,
-            'symbol_defaults': SYMBOL_DEFAULTS
+            'symbol_defaults': SYMBOL_DEFAULTS,
+            'scraper_config': SCRAPER_CONFIG
         }), 200
     except Exception as e:
         print(f"Error getting trading defaults: {e}")
@@ -856,7 +866,8 @@ def get_trading_defaults():
 @app.route('/api/trading-defaults/reload', methods=['POST'])
 def reload_trading_defaults():
     try:
-        global TRADING_DEFAULTS, SYMBOL_DEFAULTS
+        global TRADING_DEFAULTS, SYMBOL_DEFAULTS, SCRAPER_CONFIG
+        trading_defaults_path = os.path.join(project_root, 'config', 'trading_defaults.json')
         with open(trading_defaults_path, 'r') as f:
             trading_config = json.load(f)
             # Clear and update dictionaries in place to maintain references
@@ -864,6 +875,8 @@ def reload_trading_defaults():
             TRADING_DEFAULTS.update(trading_config.get('trading_defaults', {}))
             SYMBOL_DEFAULTS.clear()
             SYMBOL_DEFAULTS.update(trading_config.get('symbol_defaults', {}))
+            SCRAPER_CONFIG.clear()
+            SCRAPER_CONFIG.update(trading_config.get('scraper_config', {}))
         return jsonify({"status": "success", "message": "Trading defaults reloaded"}), 200
     except Exception as e:
         print(f"Error reloading trading defaults: {e}")
@@ -1170,6 +1183,152 @@ def update_trade_controls():
                     'status': 'error',
                     'message': f'Account {account_index} not found or not available'
                 }), 404
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+# Scraper API endpoints
+@app.route('/api/scraper/status', methods=['GET'])
+def get_scraper_status():
+    """Get the current status of the scraper service"""
+    try:
+        scraper = get_scraper_service()
+        status = scraper.get_status()
+        return jsonify({
+            'status': 'success',
+            'data': status
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/data', methods=['GET'])
+def get_scraper_data():
+    """Get recent trade data from the scraper"""
+    try:
+        scraper = get_scraper_service()
+        account = request.args.get('account', None)
+        limit = int(request.args.get('limit', 100))
+        
+        trades = scraper.get_recent_trades(limit=limit, account=account)
+        latest_data = scraper.get_latest_data(account=account)
+        
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'trades': trades,
+                'latest': latest_data,
+                'count': len(trades)
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/export', methods=['GET'])
+def export_scraper_data():
+    """Export scraped data as JSON or CSV"""
+    try:
+        scraper = get_scraper_service()
+        format = request.args.get('format', 'json')
+        start_date = request.args.get('start_date', None)
+        end_date = request.args.get('end_date', None)
+        
+        data, filename = scraper.export_data(format=format, start_date=start_date, end_date=end_date)
+        
+        # Create BytesIO object
+        file_obj = BytesIO(data)
+        file_obj.seek(0)
+        
+        # Determine MIME type
+        mimetype = 'application/json' if format == 'json' else 'text/csv'
+        
+        return send_file(
+            file_obj,
+            mimetype=mimetype,
+            as_attachment=True,
+            download_name=filename
+        )
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/config', methods=['POST'])
+def update_scraper_config():
+    """Update scraper configuration"""
+    try:
+        data = request.json
+        
+        # Update configuration for all connected accounts
+        results = []
+        for i, conn in enumerate(controller.connections):
+            try:
+                # Build JavaScript to update scraper config
+                js_code = f"""
+                if (window.TradovateScraperControl) {{
+                    window.TradovateScraperControl.setConfig('enabled', {str(data.get('enabled', False)).lower()});
+                    window.TradovateScraperControl.setConfig('interval', {data.get('interval', 1000)});
+                    window.TradovateScraperControl.setConfig('volumeFilter', {data.get('volumeFilter', 0)});
+                    window.TradovateScraperControl.setConfig('debug', {str(data.get('debug', False)).lower()});
+                    
+                    // Start or stop based on enabled state
+                    if ({str(data.get('enabled', False)).lower()}) {{
+                        window.TradovateScraperControl.start();
+                    }} else {{
+                        window.TradovateScraperControl.stop();
+                    }}
+                    
+                    window.TradovateScraperControl.getConfig();
+                }} else {{
+                    throw new Error('Scraper not loaded');
+                }}
+                """
+                
+                result = conn.tab.Runtime.evaluate(expression=js_code)
+                config = result.get('result', {}).get('value', {})
+                
+                results.append({
+                    'account': conn.account_name,
+                    'status': 'success',
+                    'config': config
+                })
+            except Exception as e:
+                results.append({
+                    'account': conn.account_name,
+                    'status': 'error',
+                    'message': str(e)
+                })
+        
+        return jsonify({
+            'status': 'success',
+            'message': f'Scraper config updated on {len(results)} accounts',
+            'results': results
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/persist', methods=['POST'])
+def persist_scraper_data():
+    """Force persistence of current scraper buffer"""
+    try:
+        scraper = get_scraper_service()
+        scraper.persist_data()
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'Scraper data persisted successfully'
+        })
     except Exception as e:
         return jsonify({
             'status': 'error',
