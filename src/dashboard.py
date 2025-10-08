@@ -468,6 +468,16 @@ def execute_trade():
                     sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
                     tick_size
                 )
+                
+                # Count successful trades
+                accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+                
+                return jsonify({
+                    'status': 'success',
+                    'message': f'{action} trade executed on {accounts_affected} accounts',
+                    'accounts_affected': accounts_affected,
+                    'details': result
+                })
             
             else:
                 # Execute on specific account
@@ -482,8 +492,15 @@ def execute_trade():
                     sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
                     tick_size
                 )
+                
+                return jsonify({
+                    'status': 'success',
+                    'message': f'{action} trade executed on account {account_index}',
+                    'accounts_affected': 1,
+                    'details': result
+                })
         
-        # Process results and return response
+        # Process results and return response for scale orders only
         if account_index == 'all':
             # Count successful trades
             accounts_affected = sum(1 for r in result if 'error' not in r['result'])
