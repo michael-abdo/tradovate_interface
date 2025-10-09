@@ -29,11 +29,11 @@ def run_test(test_name, test_func):
 
 def test_graceful_shutdown():
     """Test graceful shutdown with SIGINT (Ctrl+C)"""
-    print("Starting start_all.py in background mode...")
+    print("Starting start_all.py...")
     
     # Start the process
     proc = subprocess.Popen(
-        [sys.executable, "start_all.py", "--background", "--wait", "5"],
+        [sys.executable, "start_all.py"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -102,11 +102,11 @@ def test_graceful_shutdown():
 
 def test_sigterm_shutdown():
     """Test shutdown with SIGTERM"""
-    print("Starting start_all.py in background mode...")
+    print("Starting start_all.py...")
     
     # Start the process
     proc = subprocess.Popen(
-        [sys.executable, "start_all.py", "--background", "--wait", "5"],
+        [sys.executable, "start_all.py"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -156,7 +156,7 @@ def test_quick_shutdown():
     
     # Start the process
     proc = subprocess.Popen(
-        [sys.executable, "start_all.py", "--background", "--wait", "5"],
+        [sys.executable, "start_all.py"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True

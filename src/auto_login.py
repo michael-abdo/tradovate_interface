@@ -320,13 +320,17 @@ class ChromeInstance:
         if self.process:
             self.browser, self.tab = connect_to_chrome(self.port)
             if self.tab:
-                # Initialize Chrome logger if log file path is set
-                if self.log_file_path:
+                # Initialize Chrome logger for terminal output (file logging is optional)
+                if terminal_callback:
                     try:
                         logger.info(f"Initializing Chrome logger for {self.username}...")
+                        # Pass None for log file to only use terminal callback
                         self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback)
                         if self.chrome_logger:
-                            logger.info(f"Chrome logger started for {self.username} -> {self.log_file_path}")
+                            if self.log_file_path:
+                                logger.info(f"Chrome logger started for {self.username} -> {self.log_file_path}")
+                            else:
+                                logger.info(f"Chrome logger started for {self.username} (terminal output only)")
                             # Register with start_all.py for centralized cleanup
                             if register_chrome_logger:
                                 register_chrome_logger(self.chrome_logger)

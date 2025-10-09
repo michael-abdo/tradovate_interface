@@ -108,10 +108,10 @@ def main():
         "start-all",
         help="Launch the complete stack: Chrome, auto-login, and dashboard"
     )
-    start_all_parser.add_argument("--wait", type=int, default=15, 
-                        help="Seconds to wait between auto-login and dashboard start (default: 15)")
-    start_all_parser.add_argument("--background", action="store_true", 
-                        help="Run auto-login in the background")
+    start_all_parser.add_argument("--ngrok", action="store_true",
+                        help="Enable ngrok tunnel for remote access")
+    start_all_parser.add_argument("--optimize", action="store_true",
+                        help="Enable CPU optimization mode (GPU acceleration, power saving)")
     
     args = parser.parse_args()
     
@@ -144,38 +144,16 @@ def main():
         return chrome_logger_main()
     
     elif args.command == "start-all":
-        # Handle the complete stack: auto-login + dashboard
-        if args.background:
-            # Start auto-login in the background
-            print("Starting auto-login process in the background...")
-            auto_login_process = subprocess.Popen(
-                [sys.executable, f"{project_root}/main.py", "login"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True
-            )
-            print(f"Auto-login started (PID: {auto_login_process.pid})")
-            
-            # Wait for Chrome instances to start and log in
-            print(f"Waiting {args.wait} seconds for login to complete...")
-            time.sleep(args.wait)
-            
-            # Start the dashboard in the foreground
-            run_flask_dashboard()
-            return 0
-        else:
-            # Start auto-login in a separate thread
-            auto_login_thread = threading.Thread(target=auto_login_main)
-            auto_login_thread.daemon = True
-            auto_login_thread.start()
-            
-            # Wait for Chrome instances to start and log in
-            print(f"Waiting {args.wait} seconds for login to complete...")
-            time.sleep(args.wait)
-            
-            # Start dashboard in the main thread
-            run_flask_dashboard()
-            return 0
+        # Launch the unified start_all.py script with appropriate flags
+        cmd = [sys.executable, f"{project_root}/start_all.py"]
+        
+        if args.ngrok:
+            cmd.append("--ngrok")
+        if args.optimize:
+            cmd.append("--optimize")
+        
+        # Execute the start_all.py script directly
+        return subprocess.call(cmd)
     
     else:
         parser.print_help()
