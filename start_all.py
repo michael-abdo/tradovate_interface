@@ -401,7 +401,11 @@ def cleanup_chrome_instances():
             except Exception as e:
                 print(f"Error signaling auto_login: {e}")
         
-        # SECOND: Clean up Flask dashboard process
+        # SECOND: Clean up ChromeLoggers BEFORE stopping Flask or Chrome
+        # This prevents WebSocket exceptions when connections are closed
+        cleanup_chrome_loggers()
+        
+        # THIRD: Clean up Flask dashboard process
         if flask_process and flask_process.poll() is None:
             try:
                 print("Stopping Flask dashboard server...")
@@ -416,9 +420,6 @@ def cleanup_chrome_instances():
                     flask_process.wait()
             except Exception as e:
                 print(f"Error stopping Flask dashboard: {e}")
-        
-        # THIRD: Clean up ChromeLoggers before terminating Chrome
-        cleanup_chrome_loggers()
         
         # FOURTH: Terminate dashboard Chrome window
         if dashboard_chrome_process and dashboard_chrome_process.poll() is None:
@@ -591,9 +592,23 @@ def force_shutdown():
                         print(f"{name} process terminated gracefully")
                     except subprocess.TimeoutExpired:
                         print(f"{name} process didn't respond to SIGTERM, using SIGKILL...")
+                        
+                        # For Flask, also try to kill the process group
+                        if name == "Flask" and platform.system() != "Windows":
+                            try:
+                                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                                print(f"Sent SIGKILL to {name} process group")
+                            except ProcessLookupError:
+                                pass
+                            except Exception as e:
+                                print(f"Error killing {name} process group: {e}")
+                        
                         process.kill()
-                        process.wait(timeout=1)
-                        print(f"{name} process killed")
+                        try:
+                            process.wait(timeout=1)
+                            print(f"{name} process killed with SIGKILL")
+                        except subprocess.TimeoutExpired:
+                            print(f"Error: {name} process still not dead after SIGKILL")
                 except Exception as e:
                     print(f"Error force killing {name}: {e}")
         
@@ -618,12 +633,8 @@ def force_shutdown():
         print(f"Error in force shutdown: {e}")
     finally:
         print("Force shutdown exiting...")
-        # Call registered exit functions before immediate exit (best practice)
-        try:
-            import atexit
-            atexit._run_exitfuncs()
-        except Exception as e:
-            print(f"Error running exit functions: {e}")
+        # Don't run atexit functions - they might hang
+        # Just exit immediately
         os._exit(1)  # Exit immediately without cleanup
 
 def signal_handler(sig, frame):
@@ -714,12 +725,50 @@ def main():
         
         # Start auto-login in the background with process group
         print("Starting auto-login process in the background...")
+        
+        # Create the auto_login command with terminal logging setup
+        auto_login_cmd = f"""
+import sys
+import os
+from datetime import datetime
+from src.auto_login import main as auto_login_main, set_terminal_callback{', set_log_directory' if log_directory else ''}
+
+# Set optimization mode
+os.environ['OPTIMIZE_MODE'] = '{optimize_mode}'
+
+# Simple terminal callback for console logs
+def terminal_callback(entry):
+    colors = {{
+        'ERROR': '\\033[31m',    # Red
+        'WARNING': '\\033[33m',  # Yellow
+        'INFO': '\\033[32m',     # Green
+        'LOG': '\\033[0m'        # Default
+    }}
+    reset = '\\033[0m'
+    
+    level = entry.get('level', 'LOG')
+    text = entry.get('text', '')
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    
+    color = colors.get(level, '\\033[0m')
+    print(f"[{{timestamp}}] {{color}}[{{level}}]{{reset}} {{text}}")
+
+# Set the callback and run
+set_terminal_callback(terminal_callback)
+print("Console logging enabled")
+{"set_log_directory('" + log_directory + "')" if log_directory else ""}
+if '{optimize_mode}' == 'True':
+    print("🚀 CPU Optimization mode enabled for auto-login Chrome instances")
+sys.exit(auto_login_main())
+"""
+        
         # Create process in new session for better signal handling
         auto_login_process = subprocess.Popen(
-            [sys.executable, "-m", "src.auto_login"],
+            [sys.executable, "-u", "-c", auto_login_cmd],  # -u flag for unbuffered output
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
+            bufsize=1,  # Line buffered
             # Create new process group on Unix systems
             preexec_fn=os.setsid if platform.system() != "Windows" else None
         )
@@ -795,6 +844,8 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+        # If we get here, the program should exit cleanly
+        sys.exit(0)
     except KeyboardInterrupt:
         # The signal_handler will handle this
         pass

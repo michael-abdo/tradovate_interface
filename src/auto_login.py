@@ -570,17 +570,8 @@ class ChromeInstance:
         # Set the stop event to signal the monitor thread to exit
         self.stop_event.set()
         
-        # Close WebSocket connection cleanly if tab exists
-        if self.tab:
-            try:
-                logger.info(f"Closing WebSocket connection for {self.username}")
-                self.tab.stop()
-                self.tab = None
-            except Exception as e:
-                logger.debug(f"Error closing WebSocket for {self.username}: {e}")
-                # This is expected during shutdown
-        
-        # Stop Chrome logger if running
+        # IMPORTANT: Stop Chrome logger FIRST before closing the tab
+        # This prevents WebSocket exceptions in the logger's recv loop
         if self.chrome_logger:
             try:
                 logger.info(f"Stopping Chrome logger for {self.username}")
@@ -589,6 +580,16 @@ class ChromeInstance:
                 logger.error(f"Error stopping Chrome logger for {self.username}: {e}")
             finally:
                 self.chrome_logger = None
+        
+        # Now close WebSocket connection cleanly if tab exists
+        if self.tab:
+            try:
+                logger.info(f"Closing WebSocket connection for {self.username}")
+                self.tab.stop()
+                self.tab = None
+            except Exception as e:
+                logger.debug(f"Error closing WebSocket for {self.username}: {e}")
+                # This is expected during shutdown
         
         # Stop the login monitor thread
         if self.login_monitor_thread and self.login_monitor_thread.is_alive():

@@ -77,9 +77,20 @@ class ChromeLogger:
                 self.tab.Console.disable()
                 self.tab.DOM.disable()
                 self.tab.Page.disable()
+                
+                # IMPORTANT: Stop the tab to close WebSocket connection
+                # This prevents the _recv_loop thread from hanging
+                try:
+                    self.tab.stop()
+                except Exception:
+                    pass  # Ignore errors if already stopped
+                    
         except Exception as e:
             # Ignore WebSocket errors during cleanup - tab may already be closed
             pass
+        
+        # Clear the tab reference to prevent further operations
+        self.tab = None
         
         # Wait for background thread with shorter timeout to avoid blocking
         if self.log_thread:
@@ -375,6 +386,8 @@ class ChromeLogger:
                 callback(entry)
             except Exception as e:
                 print(f"Error in callback: {e}")
+                import traceback
+                traceback.print_exc()
     
     def _on_log_entry(self, **kwargs):
         """Handle Log.entryAdded event"""
@@ -411,6 +424,7 @@ class ChromeLogger:
                 message_parts.append(str(value))
         message = ' '.join(message_parts)
         console_type = kwargs.get('type', 'log').upper()
+        
         
         log_entry = {
             'source': 'console',
