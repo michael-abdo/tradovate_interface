@@ -309,6 +309,7 @@ class ChromeInstance:
         self.stop_event = threading.Event()  # Instance-specific stop event
         self.chrome_logger = None
         self.log_file_path = None
+        self.autorisk_injected = False  # Track if autorisk script has been injected
     
     def set_log_file_path(self, log_file_path):
         """Set the log file path for Chrome console logging"""
@@ -401,6 +402,8 @@ class ChromeInstance:
             
             if page_status == "login_page":
                 logger.info(f"Found login page for {self.username}, injecting login script")
+                # Reset autorisk flag when on login page
+                self.autorisk_injected = False
                 inject_login_script(self.tab, self.username, self.password)
                 return True
                 
@@ -502,6 +505,10 @@ class ChromeInstance:
         """Inject autorisk management script into logged-in Tradovate interface"""
         if not self.tab:
             return False
+        
+        # Check if already injected
+        if self.autorisk_injected:
+            return True
             
         try:
             # Check if script is already loaded
@@ -574,6 +581,10 @@ class ChromeInstance:
                         logger.info(f"FPS throttling script injected for {self.username} - CPU optimization active")
                 except Exception as e:
                     logger.warning(f"Failed to inject FPS throttle script: {e}")
+            
+            # Mark as injected to avoid repeated injections
+            self.autorisk_injected = True
+            logger.info(f"Autorisk script marked as injected for {self.username}")
             
             return True
             
