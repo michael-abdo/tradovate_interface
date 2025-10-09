@@ -423,8 +423,8 @@ class ChromeInstance:
                 return True
                 
             elif page_status == "logged_in":
-                logger.info(f"Already logged in for {self.username}")
-                # Inject autorisk management script if not already loaded
+                # Already logged in - inject scripts if not already loaded
+                # Don't log this every time to reduce noise
                 self.inject_autorisk_script()
                 return False
                 
@@ -513,7 +513,7 @@ class ChromeInstance:
             script_loaded = result.get("result", {}).get("value", False)
             
             if script_loaded:
-                logger.info(f"Autorisk script already loaded for {self.username}")
+                # Script already loaded, no need to inject again
                 return True
             
             logger.info(f"Injecting autorisk management script for {self.username}")
@@ -548,12 +548,26 @@ class ChromeInstance:
             # Inject FPS throttling script if in optimization mode
             if os.environ.get('OPTIMIZE_MODE') == 'True':
                 try:
-                    fps_throttle_path = project_root / 'scripts/fps_throttle.js'
-                    with open(fps_throttle_path, 'r') as f:
-                        fps_throttle_script = f.read()
+                    # Check if FPS throttling is already active
+                    check_fps_js = """
+                    (function() {
+                        return window.__fpsThrottleActive === true;
+                    })();
+                    """
                     
-                    self.tab.Runtime.evaluate(expression=fps_throttle_script)
-                    logger.info(f"FPS throttling script injected for {self.username} - CPU optimization active")
+                    fps_result = self.tab.Runtime.evaluate(expression=check_fps_js)
+                    fps_active = fps_result.get("result", {}).get("value", False)
+                    
+                    if not fps_active:
+                        fps_throttle_path = project_root / 'scripts/fps_throttle.js'
+                        with open(fps_throttle_path, 'r') as f:
+                            fps_throttle_script = f.read()
+                        
+                        # Add a flag to mark FPS throttling as active
+                        fps_throttle_script = fps_throttle_script + "\nwindow.__fpsThrottleActive = true;"
+                        
+                        self.tab.Runtime.evaluate(expression=fps_throttle_script)
+                        logger.info(f"FPS throttling script injected for {self.username} - CPU optimization active")
                 except Exception as e:
                     logger.warning(f"Failed to inject FPS throttle script: {e}")
             
