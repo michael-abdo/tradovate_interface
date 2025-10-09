@@ -245,12 +245,9 @@ def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, 
             # For limit/stop orders, calculate scaled entry prices
             price_offset = i * scale_ticks * tick_size
             
-            if action == 'Buy':
-                # For Buy: scale down from entry price (better fills)
-                level_price = entry_price - price_offset
-            else:
-                # For Sell: scale up from entry price (better fills)
-                level_price = entry_price + price_offset
+            # For both Buy and Sell: scale down from entry price
+            # This creates orders at: entry, entry-20, entry-40, entry-60, etc.
+            level_price = entry_price - price_offset
                 
             print(f"  Level {i+1}: {level_qty} contracts @ ${level_price:.2f} (offset: {price_offset})")
         else:

@@ -1416,11 +1416,9 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 if (customEntryPrice !== null) {
                     // For limit/stop orders, calculate scaled entry prices
                     const priceOffset = i * scaleSpacing * tickSize;
-                    if (action === 'Buy') {
-                        levelPrice = entryPrice - priceOffset; // Scale down for better fills
-                    } else {
-                        levelPrice = entryPrice + priceOffset; // Scale up for better fills  
-                    }
+                    // For both Buy and Sell: scale down from entry price
+                    // This creates orders at: entry, entry-20, entry-40, entry-60, etc.
+                    levelPrice = entryPrice - priceOffset;
                 }
                 
                 scaleOrders.push({
@@ -1602,8 +1600,8 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         let successfulOrders = 0;
         let failedOrders = 0;
         
-        // Show initial progress message
-        alert(`Placing ${scaleOrders.length} scaled orders...`);
+        // Show initial progress message in console instead of popup
+        console.log(`[SCALE] 📊 Placing ${scaleOrders.length} scaled orders...`);
         
         function placeNextOrder() {
             console.log(`\n--- placeNextOrder() called ---`);
@@ -1614,13 +1612,13 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 console.log(`Successful: ${successfulOrders}, Failed: ${failedOrders}`);
                 console.log(`=== END AUTO_TRADE_SCALE DEBUG ===`);
                 
-                // Show completion message based on results
+                // Show completion message in console instead of popup
                 if (failedOrders === 0) {
-                    alert(`✓ ${successfulOrders} scale orders placed successfully`);
+                    console.log(`[SCALE] ✅ ${successfulOrders} scale orders placed successfully`);
                 } else if (successfulOrders > 0) {
-                    alert(`Scale orders completed: ${successfulOrders} successful, ${failedOrders} failed. Check console for details.`);
+                    console.log(`[SCALE] ⚠️ Scale orders completed: ${successfulOrders} successful, ${failedOrders} failed.`);
                 } else {
-                    alert(`❌ All ${failedOrders} scale orders failed. Check console for details.`);
+                    console.log(`[SCALE] ❌ All ${failedOrders} scale orders failed.`);
                 }
                 return;
             }
@@ -1678,7 +1676,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 setTimeout(() => {
                     console.log(`Scale order execution completed. Successful: ${successfulOrders}, Failed: ${failedOrders}`);
                     if (failedOrders > 0) {
-                        alert(`Scale orders completed with ${failedOrders} failures. Check console for details.`);
+                        console.log(`[SCALE] ⚠️ Scale orders completed with ${failedOrders} failures.`);
                     }
                 }, delayBetweenOrders);
             }
