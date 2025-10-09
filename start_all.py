@@ -23,6 +23,7 @@ project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
 
 from src import pid_tracker
+from src.chrome_logger import ChromeLogger
 
 # Constants
 NGROK_DOMAIN = "mike-development.ngrok-free.app"
@@ -127,7 +128,7 @@ def terminal_callback(entry):
         'ERROR': '\\033[31m',    # Red
         'WARNING': '\\033[33m',  # Yellow
         'INFO': '\\033[32m',     # Green
-        'LOG': '\\033[0m'        # Default
+        'LOG': '\\033[96m'       # Bright Cyan - highly visible for detailed logs
     }}
     reset = '\\033[0m'
     
@@ -190,7 +191,7 @@ def run_dashboard():
 
 
 def open_dashboard_window(optimize_mode):
-    """Open dashboard in Chrome with optional optimization"""
+    """Open dashboard in Chrome with optional optimization and Chrome logging"""
     dashboard_url = "http://localhost:6001"
     dashboard_port = 9321
     
@@ -262,6 +263,51 @@ def open_dashboard_window(optimize_mode):
     pid_tracker.add_pid(dashboard_chrome.pid, "dashboard_chrome")
     
     print(f"Dashboard opened at {dashboard_url}")
+    
+    # Wait a moment for Chrome to start up
+    time.sleep(3)
+    
+    # Set up Chrome logging for the dashboard
+    print("Setting up Chrome logging for dashboard...")
+    terminal_callback = create_terminal_callback()
+    
+    try:
+        import pychrome
+        
+        # Connect to Chrome DevTools
+        browser = pychrome.Browser(url=f"http://127.0.0.1:{dashboard_port}")
+        tabs = browser.list_tab()
+        
+        if tabs:
+            # Since Chrome on port 9321 should only have the dashboard tab, use the first one
+            dashboard_tab = tabs[0]
+            
+            if dashboard_tab:
+                # Start the tab first
+                dashboard_tab.start()
+                
+                from src.chrome_logger import create_logger
+                dashboard_logger = create_logger(
+                    tab=dashboard_tab,
+                    callback=terminal_callback,
+                    account_name="dashboard"
+                )
+                
+                if dashboard_logger:
+                    # Register for cleanup
+                    register_chrome_logger(dashboard_logger)
+                    print("✓ Chrome logging connected to dashboard")
+                else:
+                    print("⚠️  Warning: Failed to start Chrome logger for dashboard")
+            else:
+                print("⚠️  Warning: Could not find dashboard tab for logging")
+        else:
+            print("⚠️  Warning: No Chrome tabs found for dashboard logging")
+        
+    except Exception as e:
+        print(f"⚠️  Warning: Failed to set up Chrome logging for dashboard: {e}")
+        print("   Dashboard will still work, but console logs won't appear in terminal")
+    
     return dashboard_chrome
 
 
@@ -312,7 +358,15 @@ def main():
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        # PID tracker signal handler will handle cleanup
+        # Clean up Chrome loggers
+        print("\nCleaning up Chrome loggers...")
+        for logger in chrome_loggers:
+            try:
+                logger.stop()
+            except Exception as e:
+                print(f"Error stopping Chrome logger: {e}")
+        
+        # PID tracker signal handler will handle process cleanup
         pass
 
 

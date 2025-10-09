@@ -21,6 +21,53 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    // Scale-in utility functions
+    function updateQuantitySplit() {
+        const quantitySplitDiv = document.getElementById('quantitySplit');
+        if (!quantitySplitDiv) return;
+        
+        const scaleEnabled = document.getElementById('scaleInCheckbox')?.checked;
+        if (!scaleEnabled) {
+            quantitySplitDiv.textContent = '';
+            return;
+        }
+        
+        const quantity = parseInt(document.getElementById('qtyInput')?.value || '0');
+        const levels = parseInt(document.getElementById('scaleLevelsInput')?.value || '4');
+        
+        if (quantity > 0 && levels > 0) {
+            const qtyPerLevel = quantity / levels;
+            quantitySplitDiv.textContent = `${quantity} ÷ ${levels} = ${qtyPerLevel.toFixed(1)} per level`;
+        } else {
+            quantitySplitDiv.textContent = '';
+        }
+    }
+    
+    function updateTickValue() {
+        const tickValueDiv = document.getElementById('tickValue');
+        if (!tickValueDiv) return;
+        
+        const scaleEnabled = document.getElementById('scaleInCheckbox')?.checked;
+        if (!scaleEnabled) {
+            tickValueDiv.textContent = '';
+            return;
+        }
+        
+        const spacing = parseInt(document.getElementById('scaleSpacingInput')?.value || '0');
+        const symbol = document.getElementById('symbolInput')?.value || 'NQ';
+        
+        // Get tick value from futuresTickData or default values
+        const tickData = futuresTickData[symbol] || { tickValue: 5.0 };
+        const tickValue = tickData.tickValue || 5.0;
+        const dollarValue = spacing * tickValue;
+        
+        if (spacing > 0) {
+            tickValueDiv.textContent = `${spacing} ticks = $${dollarValue.toFixed(2)} for ${symbol}`;
+        } else {
+            tickValueDiv.textContent = '';
+        }
+    }
+
     function createUI(visible = false) {
         console.log(`Creating UI (visible=${visible})`);
         const storedTP   = localStorage.getItem('bracketTrade_tp')  || '53';
@@ -28,6 +75,9 @@
         const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
         const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
         const storedSym  = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+        const storedScaleEnabled = localStorage.getItem('bracketTrade_scaleEnabled') === 'true';
+        const storedScaleLevels = localStorage.getItem('bracketTrade_scaleLevels') || '4';
+        const storedScaleSpacing = localStorage.getItem('bracketTrade_scaleSpacing') || '20';
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);
 
         const container = document.createElement('div');
@@ -120,6 +170,31 @@
                     </div>
                     <button id="sellBtn" style="padding:6px 10px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Sell</button>
                 </div>
+                
+                <!-- Scale In Controls -->
+                <div style="margin-bottom:12px;border-top:1px solid #444;padding-top:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                        <input type="checkbox" id="scaleInCheckbox" ${storedScaleEnabled ? 'checked' : ''}
+                            style="cursor:pointer;" />
+                        <label for="scaleInCheckbox" style="font-size:12px;cursor:pointer;">Scale In</label>
+                        <div id="quantitySplit" style="font-size:10px;color:#999;margin-left:auto;"></div>
+                    </div>
+                    <div id="scaleControls" style="display:${storedScaleEnabled ? 'block' : 'none'};">
+                        <div style="display:flex;gap:4px;margin-bottom:4px;">
+                            <div style="flex:1;">
+                                <label style="display:block;font-size:10px;color:#999;margin-bottom:2px;">Levels</label>
+                                <input type="number" id="scaleLevelsInput" value="${storedScaleLevels}" min="1" max="8"
+                                    style="width:100%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;font-size:12px;" />
+                            </div>
+                            <div style="flex:1;">
+                                <label style="display:block;font-size:10px;color:#999;margin-bottom:2px;">Spacing</label>
+                                <input type="number" id="scaleSpacingInput" value="${storedScaleSpacing}" min="1"
+                                    style="width:100%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;font-size:12px;" />
+                            </div>
+                        </div>
+                        <div id="tickValue" style="font-size:10px;color:#999;text-align:center;"></div>
+                    </div>
+                </div>
                 <div style="display:flex;gap:10px;margin-bottom:2px;">
                     <button id="cancelAllBtn" style="flex:1;padding:12px 8px;background:#e6b800;color:#000;border:none;border-radius:4px;font-weight:bold;">Cancel</button>
                     <button id="closeAllBtn" style="flex:3;padding:12px 8px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Close All</button>
@@ -145,6 +220,12 @@
                 <input type="number" id="slPriceInput" />
                 <input type="checkbox" id="tpCheckbox" checked />
                 <input type="checkbox" id="slCheckbox" checked />
+                <input type="checkbox" id="scaleInCheckbox" ${storedScaleEnabled ? 'checked' : ''} />
+                <input type="number" id="scaleLevelsInput" value="${storedScaleLevels}" />
+                <input type="number" id="scaleSpacingInput" value="${storedScaleSpacing}" />
+                <div id="scaleControls"></div>
+                <div id="quantitySplit"></div>
+                <div id="tickValue"></div>
             `;
         }
 
@@ -181,6 +262,31 @@
         document.getElementById('qtyInput').addEventListener('input', e => {
             console.log(`Quantity input changed to: ${e.target.value}`);
             localStorage.setItem('bracketTrade_qty', e.target.value);
+            updateQuantitySplit(); // Update scale quantity display
+        });
+        
+        // Scale In Controls Event Handlers
+        document.getElementById('scaleInCheckbox').addEventListener('change', e => {
+            console.log(`Scale In checkbox changed to: ${e.target.checked}`);
+            localStorage.setItem('bracketTrade_scaleEnabled', e.target.checked);
+            
+            const scaleControls = document.getElementById('scaleControls');
+            if (scaleControls) {
+                scaleControls.style.display = e.target.checked ? 'block' : 'none';
+            }
+            updateQuantitySplit();
+        });
+        
+        document.getElementById('scaleLevelsInput').addEventListener('input', e => {
+            console.log(`Scale levels input changed to: ${e.target.value}`);
+            localStorage.setItem('bracketTrade_scaleLevels', e.target.value);
+            updateQuantitySplit();
+        });
+        
+        document.getElementById('scaleSpacingInput').addEventListener('input', e => {
+            console.log(`Scale spacing input changed to: ${e.target.value}`);
+            localStorage.setItem('bracketTrade_scaleSpacing', e.target.value);
+            updateTickValue();
         });
         document.getElementById('closeAllBtn').addEventListener('click', () => {
             console.log('Close All button clicked');
@@ -299,6 +405,30 @@
                 localStorage.setItem('bracketTrade_tp', symbolDefaults.defaultTP);
 
                 console.log(`Updated SL/TP to default values for ${rootSymbol}: SL=${slInput.value}, TP=${tpInput.value}`);
+                
+                // Update scale-in defaults for the selected symbol
+                const scaleLevelsInput = document.getElementById('scaleLevelsInput');
+                const scaleSpacingInput = document.getElementById('scaleSpacingInput');
+                
+                if (scaleLevelsInput && scaleSpacingInput) {
+                    // Get scale defaults from symbol configuration
+                    const scaleInLevels = symbolDefaults.scale_in_levels || 4;
+                    const scaleInTicks = symbolDefaults.scale_in_ticks || 20;
+                    
+                    // Update the input fields
+                    scaleLevelsInput.value = scaleInLevels;
+                    scaleSpacingInput.value = scaleInTicks;
+                    
+                    // Save to localStorage
+                    localStorage.setItem('bracketTrade_scaleLevels', scaleInLevels);
+                    localStorage.setItem('bracketTrade_scaleSpacing', scaleInTicks);
+                    
+                    console.log(`Updated scale defaults for ${rootSymbol}: Levels=${scaleInLevels}, Spacing=${scaleInTicks}`);
+                    
+                    // Update displays
+                    updateQuantitySplit();
+                    updateTickValue();
+                }
             }
 
             // Update the symbol in Tradovate's interface
@@ -347,39 +477,150 @@
             container.style.cursor = 'grab';
         });
 
+        // Initialize scale displays on UI creation
+        console.log('Initializing scale displays');
+        updateQuantitySplit();
+        updateTickValue();
+
         // Trade buttons
         console.log('Setting up trade buttons');
         document.getElementById('buyBtn').addEventListener('click', () => {
-            console.log('BUY button clicked');
+            console.log('[BUTTON] 🟢 ========== BUY BUTTON CLICKED ==========');
+            console.log('[BUTTON] 📍 STEP 1: Button click event triggered');
+            
+            // Gather all input values with detailed logging
             const symbol = document.getElementById('symbolInput').value || 'NQ';
             const qty = +qtyInput.value;
             const tp = +tpInput.value;
             const sl = +slInput.value;
             const tickSize = +document.getElementById('tickInput').value;
-            console.log(`Initiating BUY order: Symbol=${symbol}, Qty=${qty}, TP=${tp}, SL=${sl}, TickSize=${tickSize}`);
-            autoTrade(symbol, qty, 'Buy', tp, sl, tickSize).finally(() => {
-                // Reset price inputs after order is placed
-                document.getElementById('entryPriceInput').value = '';
-                document.getElementById('tpPriceInput').value = '';
-                document.getElementById('slPriceInput').value = '';
-                console.log('Price inputs reset after BUY order');
-            });
+            const entryPrice = document.getElementById('entryPriceInput').value;
+            const scaleEnabled = document.getElementById('scaleInCheckbox')?.checked;
+            
+            console.log('[BUTTON] 📍 STEP 2: Input values gathered:');
+            console.log(`[BUTTON]   Symbol: "${symbol}"`);
+            console.log(`[BUTTON]   Quantity: ${qty} (type: ${typeof qty})`);
+            console.log(`[BUTTON]   Take Profit: ${tp} ticks (type: ${typeof tp})`);
+            console.log(`[BUTTON]   Stop Loss: ${sl} ticks (type: ${typeof sl})`);
+            console.log(`[BUTTON]   Tick Size: ${tickSize} (type: ${typeof tickSize})`);
+            console.log(`[BUTTON]   Entry Price: "${entryPrice}" (${entryPrice ? 'LIMIT/STOP ORDER' : 'MARKET ORDER'})`);
+            console.log(`[BUTTON]   Scale-In Enabled: ${scaleEnabled}`);
+            
+            // Validate inputs before proceeding
+            console.log('[BUTTON] 📍 STEP 3: Validating inputs...');
+            if (!symbol || symbol.trim() === '') {
+                console.error('[BUTTON] ❌ VALIDATION FAILED: Symbol is empty');
+                alert('Error: Symbol cannot be empty');
+                return;
+            }
+            if (!qty || qty <= 0 || isNaN(qty)) {
+                console.error('[BUTTON] ❌ VALIDATION FAILED: Invalid quantity');
+                alert('Error: Quantity must be a positive number');
+                return;
+            }
+            if (!tickSize || tickSize <= 0 || isNaN(tickSize)) {
+                console.error('[BUTTON] ❌ VALIDATION FAILED: Invalid tick size');
+                alert('Error: Tick size must be a positive number');
+                return;
+            }
+            console.log('[BUTTON] ✅ VALIDATION PASSED: All inputs are valid');
+            
+            console.log('[BUTTON] 📍 STEP 4: Calling autoTrade function...');
+            console.log(`[BUTTON]   Parameters: autoTrade("${symbol}", ${qty}, "Buy", ${tp}, ${sl}, ${tickSize})`);
+            
+            // Call autoTrade and handle the result
+            try {
+                const result = autoTrade(symbol, qty, 'Buy', tp, sl, tickSize);
+                if (result && typeof result.finally === 'function') {
+                    result.finally(() => {
+                        // Reset price inputs after order is placed
+                        document.getElementById('entryPriceInput').value = '';
+                        document.getElementById('tpPriceInput').value = '';
+                        document.getElementById('slPriceInput').value = '';
+                        console.log('[BUTTON] 📍 STEP 5: Price inputs reset after BUY order');
+                        console.log('[BUTTON] 🟢 ========== BUY PIPELINE COMPLETE ==========');
+                    });
+                } else {
+                    // Reset inputs immediately if no promise returned
+                    document.getElementById('entryPriceInput').value = '';
+                    document.getElementById('tpPriceInput').value = '';
+                    document.getElementById('slPriceInput').value = '';
+                    console.log('[BUTTON] 📍 STEP 5: Price inputs reset after BUY order (synchronous)');
+                    console.log('[BUTTON] 🟢 ========== BUY PIPELINE COMPLETE ==========');
+                }
+            } catch (err) {
+                console.error('[BUTTON] ❌ BUY autoTrade threw exception:', err);
+                console.log('[BUTTON] 🔴 ========== BUY PIPELINE FAILED ==========');
+            }
         });
         document.getElementById('sellBtn').addEventListener('click', () => {
-            console.log('SELL button clicked');
+            console.log('[BUTTON] 🔴 ========== SELL BUTTON CLICKED ==========');
+            console.log('[BUTTON] 📍 STEP 1: Button click event triggered');
+            
+            // Gather all input values with detailed logging
             const symbol = document.getElementById('symbolInput').value || 'NQ';
             const qty = +qtyInput.value;
             const tp = +tpInput.value;
             const sl = +slInput.value;
             const tickSize = +document.getElementById('tickInput').value;
-            console.log(`Initiating SELL order: Symbol=${symbol}, Qty=${qty}, TP=${tp}, SL=${sl}, TickSize=${tickSize}`);
-            autoTrade(symbol, qty, 'Sell', tp, sl, tickSize).finally(() => {
-                // Reset price inputs after order is placed
-                document.getElementById('entryPriceInput').value = '';
-                document.getElementById('tpPriceInput').value = '';
-                document.getElementById('slPriceInput').value = '';
-                console.log('Price inputs reset after SELL order');
-            });
+            const entryPrice = document.getElementById('entryPriceInput').value;
+            const scaleEnabled = document.getElementById('scaleInCheckbox')?.checked;
+            
+            console.log('[BUTTON] 📍 STEP 2: Input values gathered:');
+            console.log(`[BUTTON]   Symbol: "${symbol}"`);
+            console.log(`[BUTTON]   Quantity: ${qty} (type: ${typeof qty})`);
+            console.log(`[BUTTON]   Take Profit: ${tp} ticks (type: ${typeof tp})`);
+            console.log(`[BUTTON]   Stop Loss: ${sl} ticks (type: ${typeof sl})`);
+            console.log(`[BUTTON]   Tick Size: ${tickSize} (type: ${typeof tickSize})`);
+            console.log(`[BUTTON]   Entry Price: "${entryPrice}" (${entryPrice ? 'LIMIT/STOP ORDER' : 'MARKET ORDER'})`);
+            console.log(`[BUTTON]   Scale-In Enabled: ${scaleEnabled}`);
+            
+            // Validate inputs before proceeding
+            console.log('📍 STEP 3: Validating inputs...');
+            if (!symbol || symbol.trim() === '') {
+                console.error('❌ VALIDATION FAILED: Symbol is empty');
+                alert('Error: Symbol cannot be empty');
+                return;
+            }
+            if (!qty || qty <= 0 || isNaN(qty)) {
+                console.error('❌ VALIDATION FAILED: Invalid quantity');
+                alert('Error: Quantity must be a positive number');
+                return;
+            }
+            if (!tickSize || tickSize <= 0 || isNaN(tickSize)) {
+                console.error('❌ VALIDATION FAILED: Invalid tick size');
+                alert('Error: Tick size must be a positive number');
+                return;
+            }
+            console.log('✅ VALIDATION PASSED: All inputs are valid');
+            
+            console.log('📍 STEP 4: Calling autoTrade function...');
+            console.log(`  Parameters: autoTrade("${symbol}", ${qty}, "Sell", ${tp}, ${sl}, ${tickSize})`);
+            
+            // Call autoTrade and handle the result
+            try {
+                const result = autoTrade(symbol, qty, 'Sell', tp, sl, tickSize);
+                if (result && typeof result.finally === 'function') {
+                    result.finally(() => {
+                        // Reset price inputs after order is placed
+                        document.getElementById('entryPriceInput').value = '';
+                        document.getElementById('tpPriceInput').value = '';
+                        document.getElementById('slPriceInput').value = '';
+                        console.log('📍 STEP 5: Price inputs reset after SELL order');
+                        console.log('🔴 ========== SELL PIPELINE COMPLETE ==========');
+                    });
+                } else {
+                    // Reset inputs immediately if no promise returned
+                    document.getElementById('entryPriceInput').value = '';
+                    document.getElementById('tpPriceInput').value = '';
+                    document.getElementById('slPriceInput').value = '';
+                    console.log('📍 STEP 5: Price inputs reset after SELL order (synchronous)');
+                    console.log('🔴 ========== SELL PIPELINE COMPLETE ==========');
+                }
+            } catch (err) {
+                console.error('❌ SELL autoTrade threw exception:', err);
+                console.log('🔴 ========== SELL PIPELINE FAILED ==========');
+            }
         });
         } // End of visible-only event handlers
         
@@ -781,10 +1022,14 @@
 
 
     async function createBracketOrdersManual(tradeData) {
-        console.log('Creating bracket orders with data:', tradeData);
+        console.log(`\n📋 ========== CREATE BRACKET ORDERS MANUAL ==========`);
+        console.log(`📍 BRACKET STEP 1: Function called with trade data:`, tradeData);
+        
         const enableTP = document.getElementById('tpCheckbox').checked;
         const enableSL = document.getElementById('slCheckbox').checked;
-        console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
+        console.log(`📍 BRACKET STEP 2: Bracket settings:`);
+        console.log(`  Take Profit enabled: ${enableTP}`);
+        console.log(`  Stop Loss enabled: ${enableSL}`);
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
         async function updateInputValue(selector, value) {
@@ -911,8 +1156,13 @@
             await delay(200);
         }
 
-        console.log(`Submitting initial ${tradeData.orderType || 'MARKET'} order`);
+        console.log(`📍 BRACKET STEP 3: Submitting initial ${tradeData.orderType || 'MARKET'} order...`);
+        console.log(`  Order type: ${tradeData.orderType || 'MARKET'}`);
+        console.log(`  Entry price: ${tradeData.entryPrice || 'Market price'}`);
+        console.log(`  Action: ${tradeData.action}`);
+        console.log(`  Quantity: ${tradeData.qty}`);
         await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
+        console.log(`✅ Initial order submitted successfully`);
 
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
@@ -1045,17 +1295,35 @@
     };
 
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null) {
-        console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}, orderType=${explicitOrderType}`);
+        console.log(`\n[TRADE] 🚀 ========== AUTOTRADE FUNCTION ENTRY ==========`);
+        console.log(`[TRADE] 📍 AUTOTRADE STEP 1: Function called with parameters:`);
+        console.log(`  inputSymbol: "${inputSymbol}"`);
+        console.log(`  quantity: ${quantity} (type: ${typeof quantity})`);
+        console.log(`  action: "${action}"`);
+        console.log(`  takeProfitTicks: ${takeProfitTicks}`);
+        console.log(`  stopLossTicks: ${stopLossTicks}`);
+        console.log(`  _tickSize: ${_tickSize}`);
+        console.log(`  explicitOrderType: ${explicitOrderType}`);
 
+        console.log(`📍 AUTOTRADE STEP 2: Getting symbol from UI...`);
         const symbolInput = document.getElementById('symbolInput').value || 'NQ';
-        console.log(`Using symbol: ${symbolInput}`);
+        console.log(`  UI Symbol Input: "${symbolInput}"`);
+        console.log(`  Final symbol to use: "${symbolInput}" (from UI input field)`);
 
+        console.log(`📍 AUTOTRADE STEP 3: Processing symbol data...`);
         // Get root symbol (e.g., 'NQH5' -> 'NQ')
         const rootSymbol = symbolInput.replace(/[A-Z]\d+$/, '');
-        console.log(`Root symbol: ${rootSymbol}`);
+        console.log(`  Input symbol: "${symbolInput}"`);
+        console.log(`  Root symbol extracted: "${rootSymbol}"`);
 
         // Get tick size and default values from dictionary or fallback
+        console.log(`📍 AUTOTRADE STEP 4: Looking up symbol configuration...`);
         const symbolData = futuresTickData[rootSymbol];
+        if (symbolData) {
+            console.log(`  ✅ Found symbol data for ${rootSymbol}:`, symbolData);
+        } else {
+            console.log(`  ⚠️ No symbol data found for ${rootSymbol}, will use fallbacks`);
+        }
 
         // Keep track of the last symbol to handle symbol changes
         if (rootSymbol !== autoTrade.lastRootSymbol) {
@@ -1085,15 +1353,94 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
           : document.getElementById('tickInput').value ? 'input field'
           : 'default parameter';
         console.log(`Using tick size ${tickSize} (from ${from})`);
-        console.log(`Using SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
+        console.log(`  Final TP/SL values: SL=${actualStopLossTicks} ticks, TP=${actualTakeProfitTicks} ticks`);
 
-        console.log(`Getting market data for ${symbolInput}`);
+        console.log(`📍 AUTOTRADE STEP 6: Getting market data...`);
+        console.log(`  Calling getMarketData("${symbolInput}")`);
         const marketData = getMarketData(symbolInput);
         if (!marketData) {
-            console.error(`No market data for ${symbolInput}`);
+            console.error(`❌ AUTOTRADE FAILED: No market data available for ${symbolInput}`);
+            console.error(`  This usually means the symbol is not found in the trading interface`);
+            console.error(`  Check that the symbol exists in the quoteboard/market data table`);
             return;
         }
-        console.log('Market data:', marketData);
+        console.log(`  ✅ Market data retrieved successfully:`, marketData);
+        console.log(`    Symbol: ${marketData.symbol}`);
+        console.log(`    Bid: ${marketData.bidPrice}`);
+        console.log(`    Offer: ${marketData.offerPrice}`);
+
+        console.log(`📍 AUTOTRADE STEP 7: Checking scale-in mode...`);
+        // Check if scale-in is enabled
+        const scaleInEnabled = document.getElementById('scaleInCheckbox')?.checked;
+        console.log(`  Scale-in checkbox checked: ${scaleInEnabled}`);
+        
+        if (scaleInEnabled) {
+            console.log(`🔀 SCALE-IN MODE DETECTED - Delegating to auto_trade_scale function`);
+            
+            // Get scale parameters
+            console.log(`📍 SCALE-IN STEP 1: Getting scale parameters...`);
+            const scaleLevels = parseInt(document.getElementById('scaleLevelsInput')?.value || '4');
+            const scaleSpacing = parseInt(document.getElementById('scaleSpacingInput')?.value || '20');
+            
+            console.log(`  Scale levels: ${scaleLevels}`);
+            console.log(`  Scale spacing: ${scaleSpacing} ticks`);
+            console.log(`  Total quantity to split: ${quantity} contracts`);
+            
+            // Get entry price for scale calculation
+            const entryPriceInput = document.getElementById('entryPriceInput');
+            const customEntryPrice = entryPriceInput && entryPriceInput.value ? parseFloat(entryPriceInput.value) : null;
+            const entryPrice = customEntryPrice || parseFloat(action === 'Buy' ? marketData.offerPrice : marketData.bidPrice);
+            
+            // Calculate scale orders using backend logic
+            const scaleOrdersData = {
+                symbol: inputSymbol,
+                quantity: quantity,
+                action: action,
+                entry_price: customEntryPrice, // null for market orders
+                scale_levels: scaleLevels,
+                scale_ticks: scaleSpacing,
+                tick_size: tickSize
+            };
+            
+            console.log('Calculating scale orders with data:', scaleOrdersData);
+            
+            // Calculate scale orders (mimic backend calculation)
+            const scaleOrders = [];
+            const qtyPerLevel = Math.floor(quantity / scaleLevels);
+            const remainingQty = quantity % scaleLevels;
+            
+            for (let i = 0; i < scaleLevels; i++) {
+                const levelQty = qtyPerLevel + (i < remainingQty ? 1 : 0);
+                let levelPrice = null;
+                
+                if (customEntryPrice !== null) {
+                    // For limit/stop orders, calculate scaled entry prices
+                    const priceOffset = i * scaleSpacing * tickSize;
+                    if (action === 'Buy') {
+                        levelPrice = entryPrice - priceOffset; // Scale down for better fills
+                    } else {
+                        levelPrice = entryPrice + priceOffset; // Scale up for better fills  
+                    }
+                }
+                
+                scaleOrders.push({
+                    quantity: levelQty,
+                    entry_price: levelPrice
+                });
+            }
+            
+            console.log(`📍 SCALE-IN STEP 3: Generated ${scaleOrders.length} scale orders:`, scaleOrders);
+            
+            // Call auto_trade_scale with calculated orders
+            console.log(`📍 SCALE-IN STEP 4: Calling auto_trade_scale function...`);
+            console.log(`  Parameters: auto_trade_scale("${inputSymbol}", scaleOrders, "${action}", ${actualTakeProfitTicks}, ${actualStopLossTicks}, ${tickSize})`);
+            auto_trade_scale(inputSymbol, scaleOrders, action, actualTakeProfitTicks, actualStopLossTicks, tickSize);
+            console.log(`🔀 AUTOTRADE DELEGATED TO SCALE-IN - Exiting autoTrade function`);
+            return; // Exit early, scale handling is complete
+        }
+
+        // Continue with single order logic if scale-in is disabled
+        console.log(`📍 AUTOTRADE STEP 8: Scale-in disabled, proceeding with single order logic...`);
 
         // Check if an entry price was provided
         const entryPriceInput = document.getElementById('entryPriceInput');
@@ -1190,9 +1537,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             orderType: orderType,
             entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
         };
-        console.log('Trade data prepared:', tradeData);
+        console.log(`📍 AUTOTRADE STEP 9: Trade data prepared for submission:`, tradeData);
 
-        console.log('Submitting bracket orders');
+        console.log(`📍 AUTOTRADE STEP 10: Calling createBracketOrdersManual...`);
+        console.log(`  This will handle the actual DOM manipulation and order submission`);
         return createBracketOrdersManual(tradeData).finally(() => {
             const d = futuresTickData[rootSymbol];      // or rootSymbol
             const slInput = document.getElementById('slInput');
@@ -1254,6 +1602,9 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         let successfulOrders = 0;
         let failedOrders = 0;
         
+        // Show initial progress message
+        alert(`Placing ${scaleOrders.length} scaled orders...`);
+        
         function placeNextOrder() {
             console.log(`\n--- placeNextOrder() called ---`);
             console.log(`Current orderIndex: ${orderIndex}, Total orders: ${scaleOrders.length}`);
@@ -1263,14 +1614,21 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 console.log(`Successful: ${successfulOrders}, Failed: ${failedOrders}`);
                 console.log(`=== END AUTO_TRADE_SCALE DEBUG ===`);
                 
-                if (failedOrders > 0) {
-                    alert(`Scale orders completed with ${failedOrders} failures. Check console for details.`);
+                // Show completion message based on results
+                if (failedOrders === 0) {
+                    alert(`✓ ${successfulOrders} scale orders placed successfully`);
+                } else if (successfulOrders > 0) {
+                    alert(`Scale orders completed: ${successfulOrders} successful, ${failedOrders} failed. Check console for details.`);
+                } else {
+                    alert(`❌ All ${failedOrders} scale orders failed. Check console for details.`);
                 }
                 return;
             }
             
             const order = scaleOrders[orderIndex];
-            console.log(`Placing scale order ${orderIndex + 1}/${scaleOrders.length}:`);
+            
+            // Show progress indicator 
+            console.log(`\n🔄 Placing order ${orderIndex + 1} of ${scaleOrders.length}...`);
             console.log(`  Order details:`, order);
             console.log(`  Quantity: ${order.quantity}`);
             console.log(`  Entry Price: ${order.entry_price}`);
@@ -1304,9 +1662,9 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 // Call autoTrade for this scale level
                 autoTrade(symbol, order.quantity, action, takeProfitTicks, stopLossTicks, tickSize);
                 successfulOrders++;
-                console.log(`✓ Order ${orderIndex + 1} submitted successfully`);
+                console.log(`✅ Order ${orderIndex + 1}/${scaleOrders.length} submitted successfully (${order.quantity} contracts @ ${order.entry_price || 'Market'})`);
             } catch (error) {
-                console.error(`ERROR placing scale order ${orderIndex + 1}:`, error);
+                console.error(`❌ ERROR placing scale order ${orderIndex + 1}/${scaleOrders.length}:`, error);
                 failedOrders++;
             }
             

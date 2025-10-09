@@ -99,7 +99,7 @@ def terminal_callback(entry):
         'ERROR': '\\033[31m',    # Red
         'WARNING': '\\033[33m',  # Yellow
         'INFO': '\\033[32m',     # Green
-        'LOG': '\\033[0m'        # Default
+        'LOG': '\\033[96m'       # Bright Cyan - highly visible for detailed logs
     }}
     reset = '\\033[0m'
     

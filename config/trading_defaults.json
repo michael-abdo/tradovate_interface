@@ -18,7 +18,8 @@
       "default_sl": 15,
       "default_tp": 53,
       "precision": 2,
-      "scale_in_ticks": 20
+      "scale_in_ticks": 20,
+      "scale_in_levels": 4
     },
     "MNQ": {
       "tick_size": 0.25,
@@ -26,7 +27,8 @@
       "default_sl": 15,
       "default_tp": 53,
       "precision": 2,
-      "scale_in_ticks": 20
+      "scale_in_ticks": 20,
+      "scale_in_levels": 4
     },
     "ES": {
       "tick_size": 0.25,
@@ -34,7 +36,8 @@
       "default_sl": 40,
       "default_tp": 100,
       "precision": 2,
-      "scale_in_ticks": 10
+      "scale_in_ticks": 10,
+      "scale_in_levels": 4
     },
     "RTY": {
       "tick_size": 0.1,
@@ -42,7 +45,8 @@
       "default_sl": 90,
       "default_tp": 225,
       "precision": 1,
-      "scale_in_ticks": 50
+      "scale_in_ticks": 50,
+      "scale_in_levels": 4
     },
     "YM": {
       "tick_size": 1.0,
@@ -50,7 +54,8 @@
       "default_sl": 10,
       "default_tp": 25,
       "precision": 0,
-      "scale_in_ticks": 10
+      "scale_in_ticks": 10,
+      "scale_in_levels": 4
     },
     "CL": {
       "tick_size": 0.01,
@@ -58,7 +63,8 @@
       "default_sl": 50,
       "default_tp": 100,
       "precision": 2,
-      "scale_in_ticks": 30
+      "scale_in_ticks": 30,
+      "scale_in_levels": 4
     },
     "GC": {
       "tick_size": 0.1,
@@ -66,7 +72,8 @@
       "default_sl": 15,
       "default_tp": 30,
       "precision": 1,
-      "scale_in_ticks": 10
+      "scale_in_ticks": 10,
+      "scale_in_levels": 4
     },
     "MGC": {
       "tick_size": 0.1,
@@ -74,7 +81,8 @@
       "default_sl": 15,
       "default_tp": 30,
       "precision": 1,
-      "scale_in_ticks": 10
+      "scale_in_ticks": 10,
+      "scale_in_levels": 4
     }
   },
   "scraper_config": {

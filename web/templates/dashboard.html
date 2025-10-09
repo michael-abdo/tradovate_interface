@@ -2166,11 +2166,15 @@
             
             // Buy button handler
             document.getElementById('buyBtn').addEventListener('click', () => {
+                console.log('[DASHBOARD] 🟢 ========== BUY BUTTON CLICKED ==========');
+                console.log('[DASHBOARD] 📍 STEP 1: Buy button click event triggered');
                 executeTradeAction('Buy');
             });
             
             // Sell button handler
             document.getElementById('sellBtn').addEventListener('click', () => {
+                console.log('[DASHBOARD] 🔴 ========== SELL BUTTON CLICKED ==========');
+                console.log('[DASHBOARD] 📍 STEP 1: Sell button click event triggered');
                 executeTradeAction('Sell');
             });
             
@@ -2243,40 +2247,61 @@
 
         // Execute a trade action (Buy or Sell)
         function executeTradeAction(action) {
+            console.log(`[DASHBOARD] 📍 STEP 2: executeTradeAction('${action}') function called`);
+            
             const symbol = document.getElementById('symbolInput').value || 'NQ';
             const qty = parseInt(document.getElementById('qtyInput').value) || 1;
             const tickSize = parseFloat(document.getElementById('tickInput').value) || 0.25;
             const entryPrice = document.getElementById('entryPriceInput').value || null;
             
+            console.log('[DASHBOARD] 📊 STEP 3: Form values extracted');
+            console.log('[DASHBOARD] 📊 Symbol:', symbol);
+            console.log('[DASHBOARD] 📊 Quantity:', qty);
+            console.log('[DASHBOARD] 📊 Tick Size:', tickSize);
+            console.log('[DASHBOARD] 📊 Entry Price:', entryPrice || 'Market Order');
+            
             // Function to actually execute the trade
             const performTrade = () => {
+                console.log('[DASHBOARD] 🚀 STEP 4: performTrade() function called');
+                
                 // Check if TP/SL checkboxes are checked
                 const enableTP = document.getElementById('tpCheckbox').checked;
                 const enableSL = document.getElementById('slCheckbox').checked;
                 
+                console.log('[DASHBOARD] 🎯 STEP 5: TP/SL settings extracted');
+                console.log('[DASHBOARD] 🎯 Take Profit enabled:', enableTP);
+                console.log('[DASHBOARD] 🎯 Stop Loss enabled:', enableSL);
+                
                 // Get TP/SL values only if enabled
                 const tp = enableTP ? (parseInt(document.getElementById('tpInput').value) || 100) : null;
                 const sl = enableSL ? (parseInt(document.getElementById('slInput').value) || 40) : null;
+                
+                if (enableTP) console.log('[DASHBOARD] 🎯 Take Profit ticks:', tp);
+                if (enableSL) console.log('[DASHBOARD] 🎯 Stop Loss ticks:', sl);
                 
                 // Check if scale in is enabled
                 const scaleInEnabled = document.getElementById('scaleInCheckbox').checked;
                 const scaleLevels = parseInt(document.getElementById('scaleLevelsInput').value) || 4;
                 const scaleTicks = parseInt(document.getElementById('scaleTicksInput').value) || 20;
                 
-                console.log('\n=== FRONTEND SCALE DEBUG ===');
-                console.log('Scale checkbox checked:', scaleInEnabled);
-                console.log('Scale levels:', scaleLevels);
-                console.log('Scale ticks:', scaleTicks);
-                console.log('Quantity:', qty);
+                console.log('[DASHBOARD] 📈 STEP 6: Scale-in settings extracted');
+                console.log('[DASHBOARD] 📈 Scale-in enabled:', scaleInEnabled);
+                console.log('[DASHBOARD] 📈 Scale levels:', scaleLevels);
+                console.log('[DASHBOARD] 📈 Scale ticks:', scaleTicks);
+                console.log('[DASHBOARD] 📈 Base quantity:', qty);
                 
                 // Validate scale levels
+                console.log('[DASHBOARD] ✅ STEP 7: Validating scale-in configuration');
                 if (scaleInEnabled && scaleLevels > qty) {
-                    console.log('ERROR: Scale levels exceed quantity');
+                    console.log('[DASHBOARD] ❌ ERROR: Scale levels exceed quantity');
+                    console.log('[DASHBOARD] ❌ Scale levels:', scaleLevels, 'Quantity:', qty);
                     alert(`Scale levels (${scaleLevels}) cannot exceed quantity (${qty}). Please reduce the number of scale levels.`);
                     return;
                 }
+                console.log('[DASHBOARD] ✅ Scale-in configuration is valid');
                 
                 // Prepare the trade parameters
+                console.log('[DASHBOARD] 📦 STEP 8: Preparing trade parameters');
                 const tradeParams = {
                     symbol: symbol,
                     quantity: qty,
@@ -2290,23 +2315,35 @@
                     scale_in_ticks: scaleTicks
                 };
                 
-                console.log('Trade parameters prepared:', tradeParams);
+                console.log('[DASHBOARD] 📦 Base trade parameters prepared:', tradeParams);
                 
                 // Only add TP/SL if they are enabled
+                console.log('[DASHBOARD] 🎯 STEP 9: Adding optional parameters');
                 if (enableTP) {
                     tradeParams.tp_ticks = tp;
+                    console.log('[DASHBOARD] 🎯 Added Take Profit:', tp, 'ticks');
                 }
                 
                 if (enableSL) {
                     tradeParams.sl_ticks = sl;
+                    console.log('[DASHBOARD] 🎯 Added Stop Loss:', sl, 'ticks');
                 }
                 
                 // If entry price is specified, add it to the parameters
                 if (entryPrice) {
                     tradeParams.entry_price = entryPrice;
+                    console.log('[DASHBOARD] 💰 Added Entry Price:', entryPrice);
                 }
                 
+                console.log('[DASHBOARD] 📦 Final trade parameters:', JSON.stringify(tradeParams, null, 2));
+                
                 // Send API request to execute the trade
+                console.log('[DASHBOARD] 🌐 STEP 10: Sending API request to /api/trade');
+                console.log('[DASHBOARD] 🌐 Request method: POST');
+                console.log('[DASHBOARD] 🌐 Request headers: Content-Type: application/json');
+                console.log('[DASHBOARD] 🌐 Request body:', JSON.stringify(tradeParams));
+                
+                const startTime = performance.now();
                 fetch('/api/trade', {
                     method: 'POST',
                     headers: {
@@ -2314,27 +2351,60 @@
                     },
                     body: JSON.stringify(tradeParams)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    const responseTime = performance.now() - startTime;
+                    console.log(`[DASHBOARD] 📨 STEP 11: Received API response (${responseTime.toFixed(2)}ms)`);
+                    console.log('[DASHBOARD] 📨 Response status:', response.status);
+                    console.log('[DASHBOARD] 📨 Response status text:', response.statusText);
+                    console.log('[DASHBOARD] 📨 Response headers:', Object.fromEntries(response.headers.entries()));
+                    
+                    if (!response.ok) {
+                        console.log('[DASHBOARD] ❌ API response not OK, status:', response.status);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    return response.json();
+                })
                 .then(result => {
+                    console.log('[DASHBOARD] ✅ STEP 12: Successfully parsed JSON response');
+                    console.log('[DASHBOARD] ✅ API result:', JSON.stringify(result, null, 2));
+                    
                     // Show success message
-                    //alert(`${action} order placed successfully on ${result.accounts_affected} accounts.`);
+                    console.log('[DASHBOARD] 🎉 Trade execution completed successfully');
+                    if (result.accounts_affected) {
+                        console.log('[DASHBOARD] 🎉 Accounts affected:', result.accounts_affected);
+                    }
                     
                     // Reset price inputs
+                    console.log('[DASHBOARD] 🧹 STEP 13: Cleaning up form inputs');
                     document.getElementById('entryPriceInput').value = '';
                     document.getElementById('tpPriceInput').value = '';
                     document.getElementById('slPriceInput').value = '';
+                    console.log('[DASHBOARD] 🧹 Form inputs reset');
+                    
+                    console.log('[DASHBOARD] ✅ ========== TRADE EXECUTION COMPLETE ==========');
                 })
                 .catch(error => {
-                    console.error('Error executing trade:', error);
+                    const responseTime = performance.now() - startTime;
+                    console.log(`[DASHBOARD] ❌ STEP 11: API request failed (${responseTime.toFixed(2)}ms)`);
+                    console.error('[DASHBOARD] ❌ Error executing trade:', error);
+                    console.error('[DASHBOARD] ❌ Error details:', error.message);
+                    console.error('[DASHBOARD] ❌ Error stack:', error.stack);
                     alert('Error placing order. See console for details.');
+                    console.log('[DASHBOARD] ❌ ========== TRADE EXECUTION FAILED ==========');
                 });
             };
             
             // Check if quantity exceeds lot protection threshold
+            console.log('[DASHBOARD] 🛡️ STEP 14: Checking lot protection');
+            console.log('[DASHBOARD] 🛡️ Quantity:', qty, 'Lot protection bypassed:', lotProtectionBypassed);
+            
             if (qty > 10 && !lotProtectionBypassed) {
+                console.log('[DASHBOARD] 🛡️ Lot protection triggered - showing confirmation modal');
                 // Show lot protection modal
                 showLotProtectionModal(qty, action);
             } else {
+                console.log('[DASHBOARD] 🛡️ Lot protection passed - executing trade directly');
                 // Execute trade directly for smaller quantities or if bypassed
                 performTrade();
                 

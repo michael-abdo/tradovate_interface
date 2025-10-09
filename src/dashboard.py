@@ -213,6 +213,11 @@ def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, 
     
     orders = []
     
+    # Convert entry_price to float if it's a string
+    if entry_price is not None:
+        entry_price = float(entry_price)
+        print(f"  Converted entry_price to float: {entry_price}")
+    
     # Calculate quantity per level (rounded down)
     qty_per_level = quantity // scale_levels
     remaining_qty = quantity % scale_levels
@@ -286,7 +291,7 @@ def execute_trade():
         scale_in_enabled = data.get('scale_in_enabled', TRADING_DEFAULTS.get('scale_in_enabled', False))
         scale_in_levels = data.get('scale_in_levels', TRADING_DEFAULTS.get('scale_in_levels', 4))
         # Get symbol-specific scale ticks if available
-        symbol_config = symbol_defaults.get(symbol, {})
+        symbol_config = SYMBOL_DEFAULTS.get(symbol, {})
         scale_in_ticks = data.get('scale_in_ticks', symbol_config.get('scale_in_ticks', 20))
         
         # Only get TP/SL values if they are enabled with config defaults
