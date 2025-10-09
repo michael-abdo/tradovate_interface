@@ -324,8 +324,8 @@ class ChromeInstance:
                 if terminal_callback:
                     try:
                         logger.info(f"Initializing Chrome logger for {self.username}...")
-                        # Pass None for log file to only use terminal callback
-                        self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback)
+                        # Include username for scraper integration
+                        self.chrome_logger = chrome_logger.create_logger(self.tab, self.log_file_path, terminal_callback, self.username)
                         if self.chrome_logger:
                             if self.log_file_path:
                                 logger.info(f"Chrome logger started for {self.username} -> {self.log_file_path}")

@@ -972,7 +972,20 @@
                     <label for="entryPriceInput">Entry Price (optional)</label>
                     <input type="number" id="entryPriceInput" step="0.01" class="trade-input" placeholder="Entry Price">
                 </div>
-                <div class="trade-buttons">
+                <div class="input-group" style="min-width: 200px;">
+                    <div class="checkbox-label">
+                        <input type="checkbox" id="scaleInCheckbox">
+                        <label for="scaleInCheckbox">Scale In/Out</label>
+                    </div>
+                    <div class="scale-inputs" id="scaleInputs" style="display: none; gap: 10px; margin-top: 5px;">
+                        <input type="number" id="scaleLevelsInput" value="4" min="2" max="10" class="trade-input" placeholder="Levels" style="width: 60px;">
+                        <input type="number" id="scaleTicksInput" value="20" min="1" class="trade-input" placeholder="Ticks" style="width: 80px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trade-controls-row">
+                <div class="trade-buttons" style="flex: 1; justify-content: center;">
                     <button id="buyBtn" class="buy-button">Buy</button>
                     <button id="sellBtn" class="sell-button">Sell</button>
                 </div>
@@ -2112,6 +2125,45 @@
                 });
             });
             
+            // Scale checkbox handler
+            const scaleCheckbox = document.getElementById('scaleInCheckbox');
+            const scaleInputsDiv = document.getElementById('scaleInputs');
+            const scaleLevelsInput = document.getElementById('scaleLevelsInput');
+            const scaleTicksInput = document.getElementById('scaleTicksInput');
+            
+            scaleCheckbox.addEventListener('change', function() {
+                scaleInputsDiv.style.display = this.checked ? 'flex' : 'none';
+                
+                // Update scale ticks based on symbol when checkbox is checked
+                if (this.checked && symbolInput.value) {
+                    updateScaleDefaults(symbolInput.value);
+                }
+            });
+            
+            // Update scale defaults when symbol changes
+            symbolInput.addEventListener('change', function() {
+                if (scaleCheckbox.checked) {
+                    updateScaleDefaults(this.value);
+                }
+            });
+            
+            // Validate scale levels when quantity or scale levels change
+            const validateScaleLevels = () => {
+                const qty = parseInt(qtyInput.value) || 1;
+                const scaleLevels = parseInt(scaleLevelsInput.value) || 4;
+                
+                if (scaleLevels > qty) {
+                    scaleLevelsInput.setCustomValidity(`Scale levels cannot exceed quantity (${qty})`);
+                    scaleLevelsInput.style.borderColor = '#ff3b30';
+                } else {
+                    scaleLevelsInput.setCustomValidity('');
+                    scaleLevelsInput.style.borderColor = '';
+                }
+            };
+            
+            scaleLevelsInput.addEventListener('input', validateScaleLevels);
+            qtyInput.addEventListener('input', validateScaleLevels);
+            
             // Buy button handler
             document.getElementById('buyBtn').addEventListener('click', () => {
                 executeTradeAction('Buy');
@@ -2164,6 +2216,31 @@
             return null;
         }
 
+        // Update scale defaults based on selected symbol
+        function updateScaleDefaults(symbol) {
+            // Symbol defaults with scale_in_ticks
+            const symbolDefaults = {
+                'NQ': { scale_in_ticks: 20 },
+                'MNQ': { scale_in_ticks: 20 },
+                'ES': { scale_in_ticks: 10 },
+                'RTY': { scale_in_ticks: 50 },
+                'YM': { scale_in_ticks: 10 },
+                'CL': { scale_in_ticks: 30 },
+                'GC': { scale_in_ticks: 10 },
+                'MGC': { scale_in_ticks: 10 }
+            };
+            
+            const scaleTicksInput = document.getElementById('scaleTicksInput');
+            const defaults = symbolDefaults[symbol];
+            
+            if (defaults && defaults.scale_in_ticks) {
+                scaleTicksInput.value = defaults.scale_in_ticks;
+            } else {
+                // Default to 20 ticks if symbol not found
+                scaleTicksInput.value = 20;
+            }
+        }
+
         // Execute a trade action (Buy or Sell)
         function executeTradeAction(action) {
             const symbol = document.getElementById('symbolInput').value || 'NQ';
@@ -2181,6 +2258,24 @@
                 const tp = enableTP ? (parseInt(document.getElementById('tpInput').value) || 100) : null;
                 const sl = enableSL ? (parseInt(document.getElementById('slInput').value) || 40) : null;
                 
+                // Check if scale in is enabled
+                const scaleInEnabled = document.getElementById('scaleInCheckbox').checked;
+                const scaleLevels = parseInt(document.getElementById('scaleLevelsInput').value) || 4;
+                const scaleTicks = parseInt(document.getElementById('scaleTicksInput').value) || 20;
+                
+                console.log('\n=== FRONTEND SCALE DEBUG ===');
+                console.log('Scale checkbox checked:', scaleInEnabled);
+                console.log('Scale levels:', scaleLevels);
+                console.log('Scale ticks:', scaleTicks);
+                console.log('Quantity:', qty);
+                
+                // Validate scale levels
+                if (scaleInEnabled && scaleLevels > qty) {
+                    console.log('ERROR: Scale levels exceed quantity');
+                    alert(`Scale levels (${scaleLevels}) cannot exceed quantity (${qty}). Please reduce the number of scale levels.`);
+                    return;
+                }
+                
                 // Prepare the trade parameters
                 const tradeParams = {
                     symbol: symbol,
@@ -2189,8 +2284,13 @@
                     tick_size: tickSize,
                     account: 'all', // Trade on all accounts
                     enable_tp: enableTP,
-                    enable_sl: enableSL
+                    enable_sl: enableSL,
+                    scale_in_enabled: scaleInEnabled,
+                    scale_in_levels: scaleLevels,
+                    scale_in_ticks: scaleTicks
                 };
+                
+                console.log('Trade parameters prepared:', tradeParams);
                 
                 // Only add TP/SL if they are enabled
                 if (enableTP) {

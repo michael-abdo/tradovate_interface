@@ -100,6 +100,17 @@ class TradovateConnection:
                 # First evaluate the script to define the functions
                 self.tab.Runtime.evaluate(expression=risk_management_js)
                 print(f"Auto risk management script injected for {self.account_name}")
+            
+            # Inject the tradovate scraper script
+            scraper_path = os.path.join(project_root, 
+                                         'scripts/tampermonkey/tradovateScraper.user.js')
+            if os.path.exists(scraper_path):
+                with open(scraper_path, 'r') as file:
+                    scraper_js = file.read()
+                # Extract core functions (remove UserScript header and IIFE)
+                scraper_functions = extract_core_functions(scraper_js)
+                self.tab.Runtime.evaluate(expression=scraper_functions)
+                print(f"Tradovate scraper injected for {self.account_name}")
                 
                 # Wait a moment for the script to fully initialize
                 time.sleep(1)
@@ -155,6 +166,21 @@ class TradovateConnection:
             
         try:
             js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
+            result = self.tab.Runtime.evaluate(expression=js_code)
+            return result
+        except Exception as e:
+            return {"error": str(e)}
+    
+    def auto_trade_scale(self, symbol, scale_orders, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
+        """Execute scale in/out orders using the Tampermonkey script"""
+        if not self.tab:
+            return {"error": "No tab available"}
+            
+        try:
+            # Convert scale_orders list to JavaScript array string
+            import json
+            orders_json = json.dumps(scale_orders)
+            js_code = f"auto_trade_scale('{symbol}', {orders_json}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:

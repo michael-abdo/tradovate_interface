@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import threading
 import time
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_file
 import sys
 import os
 import json
+from io import BytesIO
 
 # Import from app.py
 from src.app import TradovateController
@@ -15,6 +16,7 @@ from .utils.core import (
     load_json_config,
     setup_logging
 )
+from .services.scraper_service import get_scraper_service
 
 # Create Flask app
 project_root = get_project_root()
@@ -24,6 +26,7 @@ try:
     trading_config = load_json_config('config/trading_defaults.json')
     TRADING_DEFAULTS = trading_config.get('trading_defaults', {})
     SYMBOL_DEFAULTS = trading_config.get('symbol_defaults', {})
+    SCRAPER_CONFIG = trading_config.get('scraper_config', {})
 except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
     print(f"Warning: Could not load trading defaults config: {e}")
     print("Using fallback defaults")
@@ -37,6 +40,12 @@ except (FileNotFoundError, json.JSONDecodeError, Exception) as e:
         "risk_reward_ratio": 3.5
     }
     SYMBOL_DEFAULTS = {}
+    SCRAPER_CONFIG = {
+        "enabled": False,
+        "interval": 1000,
+        "volume_filter": 0,
+        "debug": False
+    }
 app = Flask(__name__, 
             static_folder=os.path.join(project_root, 'web/static'),
             template_folder=os.path.join(project_root, 'web/templates'))
@@ -175,6 +184,85 @@ def get_summary():
         'account_count': len(accounts_data)
     })
 
+# Helper function to calculate scale in/out orders
+def calculate_scale_orders(symbol, quantity, action, entry_price, scale_levels, scale_ticks, tick_size):
+    """
+    Calculate individual orders for scale in/out positions.
+    
+    Args:
+        symbol: Trading symbol
+        quantity: Total quantity to trade
+        action: 'Buy' or 'Sell'
+        entry_price: Base entry price (if None, uses market orders)
+        scale_levels: Number of scale levels
+        scale_ticks: Ticks between each level
+        tick_size: Symbol tick size
+        
+    Returns:
+        List of order dictionaries with quantity and entry_price for each level
+    """
+    print(f"\n=== CALCULATE SCALE ORDERS DEBUG ===")
+    print(f"Input Parameters:")
+    print(f"  Symbol: {symbol}")
+    print(f"  Quantity: {quantity}")
+    print(f"  Action: {action}")
+    print(f"  Entry Price: {entry_price}")
+    print(f"  Scale Levels: {scale_levels}")
+    print(f"  Scale Ticks: {scale_ticks}")
+    print(f"  Tick Size: {tick_size}")
+    
+    orders = []
+    
+    # Calculate quantity per level (rounded down)
+    qty_per_level = quantity // scale_levels
+    remaining_qty = quantity % scale_levels
+    
+    print(f"Quantity Distribution:")
+    print(f"  Qty per level: {qty_per_level}")
+    print(f"  Remaining qty: {remaining_qty}")
+    
+    # If quantity is too small to split, return single order
+    if qty_per_level == 0:
+        print(f"  WARNING: Quantity too small to split, returning single order")
+        return [{
+            'quantity': quantity,
+            'entry_price': entry_price
+        }]
+    
+    # Calculate prices for each level
+    print(f"Calculating {scale_levels} scale levels:")
+    for i in range(scale_levels):
+        # Add extra quantity to first levels if there's a remainder
+        level_qty = qty_per_level + (1 if i < remaining_qty else 0)
+        
+        # Calculate entry price for this level
+        if entry_price is not None:
+            # For limit/stop orders, calculate scaled entry prices
+            price_offset = i * scale_ticks * tick_size
+            
+            if action == 'Buy':
+                # For Buy: scale down from entry price (better fills)
+                level_price = entry_price - price_offset
+            else:
+                # For Sell: scale up from entry price (better fills)
+                level_price = entry_price + price_offset
+                
+            print(f"  Level {i+1}: {level_qty} contracts @ ${level_price:.2f} (offset: {price_offset})")
+        else:
+            # For market orders, all levels use None (market)
+            level_price = None
+            print(f"  Level {i+1}: {level_qty} contracts @ Market")
+        
+        orders.append({
+            'quantity': level_qty,
+            'entry_price': level_price
+        })
+    
+    print(f"Total orders created: {len(orders)}")
+    print(f"=== END CALCULATE SCALE ORDERS DEBUG ===\n")
+    
+    return orders
+
 # API endpoint to execute trades
 @app.route('/api/trade', methods=['POST'])
 def execute_trade():
@@ -193,6 +281,13 @@ def execute_trade():
         # Check TP/SL enable flags
         enable_tp = data.get('enable_tp', True)
         enable_sl = data.get('enable_sl', True)
+        
+        # Extract scale in/out parameters
+        scale_in_enabled = data.get('scale_in_enabled', TRADING_DEFAULTS.get('scale_in_enabled', False))
+        scale_in_levels = data.get('scale_in_levels', TRADING_DEFAULTS.get('scale_in_levels', 4))
+        # Get symbol-specific scale ticks if available
+        symbol_config = symbol_defaults.get(symbol, {})
+        scale_in_ticks = data.get('scale_in_ticks', symbol_config.get('scale_in_ticks', 20))
         
         # Only get TP/SL values if they are enabled with config defaults
         tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
@@ -278,48 +373,162 @@ def execute_trade():
                     except Exception as e:
                         print(f"Warning: Failed to clear entry price on account {account_index}: {e}")
         
-        # Check if we should execute on all accounts or just one
-        if account_index == 'all':
-            # We need to update auto_trade.js to respect tp_ticks=0 and sl_ticks=0 as disabled
-            result = controller.execute_on_all(
-                'auto_trade', 
-                symbol, 
-                quantity, 
-                action, 
-                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
-                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
-            )
+        # Check if we should use scale in/out
+        print(f"\n=== SCALE IN/OUT CHECK ===")
+        print(f"Scale enabled: {scale_in_enabled}")
+        print(f"Scale levels: {scale_in_levels}")
+        print(f"Condition met: {scale_in_enabled and scale_in_levels > 1}")
+        
+        if scale_in_enabled and scale_in_levels > 1:
+            print(f"=== EXECUTING SCALE IN/OUT ===")
             
+            # Validate scale levels don't exceed quantity
+            if scale_in_levels > quantity:
+                print(f"ERROR: Scale levels ({scale_in_levels}) exceed quantity ({quantity})")
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Scale levels ({scale_in_levels}) cannot exceed quantity ({quantity})'
+                }), 400
+            
+            try:
+                print(f"Calling calculate_scale_orders with:")
+                print(f"  symbol={symbol}, quantity={quantity}, action={action}")
+                print(f"  entry_price={entry_price}, scale_levels={scale_in_levels}")
+                print(f"  scale_ticks={scale_in_ticks}, tick_size={tick_size}")
+                
+                # Calculate scale orders
+                scale_orders = calculate_scale_orders(
+                    symbol, quantity, action, entry_price,
+                    scale_in_levels, scale_in_ticks, tick_size
+                )
+                
+                print(f"Scale orders calculated: {scale_orders}")
+                
+                # Validate scale orders were calculated successfully
+                if not scale_orders or len(scale_orders) == 0:
+                    print(f"ERROR: No scale orders returned from calculate_scale_orders")
+                    return jsonify({
+                        'status': 'error',
+                        'message': 'Failed to calculate scale orders'
+                    }), 500
+                
+                print(f"Scale in enabled: {len(scale_orders)} orders calculated")
+                
+                # For scale orders, we need to execute multiple trades
+                # Pass the scale orders as a special parameter
+                print(f"Executing scale orders on accounts...")
+                
+                if account_index == 'all':
+                    print(f"Executing on ALL accounts ({len(controller.connections)} connections)")
+                    result = controller.execute_on_all(
+                        'auto_trade_scale',  # New method for scale orders
+                        symbol, 
+                        scale_orders,  # Pass array of orders instead of single quantity
+                        action, 
+                        tp_ticks if enable_tp else 0,
+                        sl_ticks if enable_sl else 0,
+                        tick_size
+                    )
+                    print(f"Scale order execution result: {result}")
+                    
+                    # Check if any scale orders failed
+                    failed_accounts = [r for r in result if 'error' in r.get('result', {})]
+                    if failed_accounts:
+                        print(f"Warning: Scale orders failed on {len(failed_accounts)} accounts: {failed_accounts}")
+                else:
+                    # Execute on specific account
+                    account_index = int(account_index)
+                    print(f"Executing on account {account_index}")
+                    result = controller.execute_on_one(
+                        account_index,
+                        'auto_trade_scale',  # New method for scale orders
+                        symbol, 
+                        scale_orders,  # Pass array of orders instead of single quantity
+                        action, 
+                        tp_ticks if enable_tp else 0,
+                        sl_ticks if enable_sl else 0,
+                        tick_size
+                    )
+                    print(f"Scale order execution result: {result}")
+                    
+                    # Check if scale order failed
+                    if 'error' in result.get('result', {}):
+                        print(f"ERROR: Scale order failed: {result['result'].get('error', 'Unknown error')}")
+                        return jsonify({
+                            'status': 'error',
+                            'message': f"Scale order failed: {result['result'].get('error', 'Unknown error')}"
+                        }), 500
+            except Exception as e:
+                print(f"Error calculating/executing scale orders: {str(e)}")
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Failed to execute scale orders: {str(e)}'
+                }), 500
+        else:
+            # Regular single order execution
+            if account_index == 'all':
+                # We need to update auto_trade.js to respect tp_ticks=0 and sl_ticks=0 as disabled
+                result = controller.execute_on_all(
+                    'auto_trade', 
+                    symbol, 
+                    quantity, 
+                    action, 
+                    tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                    sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
+                    tick_size
+                )
+                
+                # Count successful trades
+                accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+                
+                return jsonify({
+                    'status': 'success',
+                    'message': f'{action} trade executed on {accounts_affected} accounts',
+                    'accounts_affected': accounts_affected,
+                    'details': result
+                })
+            
+            else:
+                # Execute on specific account
+                account_index = int(account_index)
+                result = controller.execute_on_one(
+                    account_index,
+                    'auto_trade', 
+                    symbol, 
+                    quantity, 
+                    action, 
+                    tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
+                    sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
+                    tick_size
+                )
+                
+                return jsonify({
+                    'status': 'success',
+                    'message': f'{action} trade executed on account {account_index}',
+                    'accounts_affected': 1,
+                    'details': result
+                })
+        
+        # Process results and return response for scale orders only
+        if account_index == 'all':
             # Count successful trades
             accounts_affected = sum(1 for r in result if 'error' not in r['result'])
-            
-            return jsonify({
-                'status': 'success',
-                'message': f'{action} trade executed on {accounts_affected} accounts',
-                'accounts_affected': accounts_affected,
-                'details': result
-            })
+            message = f'{action} trade executed on {accounts_affected} accounts'
+            if scale_in_enabled:
+                message += f' with {scale_in_levels} scale levels'
         else:
-            # Execute on specific account
-            account_index = int(account_index)
-            result = controller.execute_on_one(
-                account_index,
-                'auto_trade', 
-                symbol, 
-                quantity, 
-                action, 
-                tp_ticks if enable_tp else 0,  # Pass 0 to disable TP
-                sl_ticks if enable_sl else 0,  # Pass 0 to disable SL
-                tick_size
-            )
-            
-            return jsonify({
-                'status': 'success',
-                'message': f'{action} trade executed on account {account_index}',
-                'accounts_affected': 1,
-                'details': result
-            })
+            accounts_affected = 1
+            message = f'{action} trade executed on account {account_index}'
+            if scale_in_enabled:
+                message += f' with {scale_in_levels} scale levels'
+        
+        return jsonify({
+            'status': 'success',
+            'message': message,
+            'accounts_affected': accounts_affected,
+            'scale_orders': scale_in_enabled,
+            'details': result
+        })
     except Exception as e:
         return jsonify({
             'status': 'error',
@@ -646,7 +855,8 @@ def get_trading_defaults():
     try:
         return jsonify({
             'trading_defaults': TRADING_DEFAULTS,
-            'symbol_defaults': SYMBOL_DEFAULTS
+            'symbol_defaults': SYMBOL_DEFAULTS,
+            'scraper_config': SCRAPER_CONFIG
         }), 200
     except Exception as e:
         print(f"Error getting trading defaults: {e}")
@@ -656,7 +866,8 @@ def get_trading_defaults():
 @app.route('/api/trading-defaults/reload', methods=['POST'])
 def reload_trading_defaults():
     try:
-        global TRADING_DEFAULTS, SYMBOL_DEFAULTS
+        global TRADING_DEFAULTS, SYMBOL_DEFAULTS, SCRAPER_CONFIG
+        trading_defaults_path = os.path.join(project_root, 'config', 'trading_defaults.json')
         with open(trading_defaults_path, 'r') as f:
             trading_config = json.load(f)
             # Clear and update dictionaries in place to maintain references
@@ -664,6 +875,8 @@ def reload_trading_defaults():
             TRADING_DEFAULTS.update(trading_config.get('trading_defaults', {}))
             SYMBOL_DEFAULTS.clear()
             SYMBOL_DEFAULTS.update(trading_config.get('symbol_defaults', {}))
+            SCRAPER_CONFIG.clear()
+            SCRAPER_CONFIG.update(trading_config.get('scraper_config', {}))
         return jsonify({"status": "success", "message": "Trading defaults reloaded"}), 200
     except Exception as e:
         print(f"Error reloading trading defaults: {e}")
@@ -970,6 +1183,152 @@ def update_trade_controls():
                     'status': 'error',
                     'message': f'Account {account_index} not found or not available'
                 }), 404
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+# Scraper API endpoints
+@app.route('/api/scraper/status', methods=['GET'])
+def get_scraper_status():
+    """Get the current status of the scraper service"""
+    try:
+        scraper = get_scraper_service()
+        status = scraper.get_status()
+        return jsonify({
+            'status': 'success',
+            'data': status
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/data', methods=['GET'])
+def get_scraper_data():
+    """Get recent trade data from the scraper"""
+    try:
+        scraper = get_scraper_service()
+        account = request.args.get('account', None)
+        limit = int(request.args.get('limit', 100))
+        
+        trades = scraper.get_recent_trades(limit=limit, account=account)
+        latest_data = scraper.get_latest_data(account=account)
+        
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'trades': trades,
+                'latest': latest_data,
+                'count': len(trades)
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/export', methods=['GET'])
+def export_scraper_data():
+    """Export scraped data as JSON or CSV"""
+    try:
+        scraper = get_scraper_service()
+        format = request.args.get('format', 'json')
+        start_date = request.args.get('start_date', None)
+        end_date = request.args.get('end_date', None)
+        
+        data, filename = scraper.export_data(format=format, start_date=start_date, end_date=end_date)
+        
+        # Create BytesIO object
+        file_obj = BytesIO(data)
+        file_obj.seek(0)
+        
+        # Determine MIME type
+        mimetype = 'application/json' if format == 'json' else 'text/csv'
+        
+        return send_file(
+            file_obj,
+            mimetype=mimetype,
+            as_attachment=True,
+            download_name=filename
+        )
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/config', methods=['POST'])
+def update_scraper_config():
+    """Update scraper configuration"""
+    try:
+        data = request.json
+        
+        # Update configuration for all connected accounts
+        results = []
+        for i, conn in enumerate(controller.connections):
+            try:
+                # Build JavaScript to update scraper config
+                js_code = f"""
+                if (window.TradovateScraperControl) {{
+                    window.TradovateScraperControl.setConfig('enabled', {str(data.get('enabled', False)).lower()});
+                    window.TradovateScraperControl.setConfig('interval', {data.get('interval', 1000)});
+                    window.TradovateScraperControl.setConfig('volumeFilter', {data.get('volumeFilter', 0)});
+                    window.TradovateScraperControl.setConfig('debug', {str(data.get('debug', False)).lower()});
+                    
+                    // Start or stop based on enabled state
+                    if ({str(data.get('enabled', False)).lower()}) {{
+                        window.TradovateScraperControl.start();
+                    }} else {{
+                        window.TradovateScraperControl.stop();
+                    }}
+                    
+                    window.TradovateScraperControl.getConfig();
+                }} else {{
+                    throw new Error('Scraper not loaded');
+                }}
+                """
+                
+                result = conn.tab.Runtime.evaluate(expression=js_code)
+                config = result.get('result', {}).get('value', {})
+                
+                results.append({
+                    'account': conn.account_name,
+                    'status': 'success',
+                    'config': config
+                })
+            except Exception as e:
+                results.append({
+                    'account': conn.account_name,
+                    'status': 'error',
+                    'message': str(e)
+                })
+        
+        return jsonify({
+            'status': 'success',
+            'message': f'Scraper config updated on {len(results)} accounts',
+            'results': results
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/api/scraper/persist', methods=['POST'])
+def persist_scraper_data():
+    """Force persistence of current scraper buffer"""
+    try:
+        scraper = get_scraper_service()
+        scraper.persist_data()
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'Scraper data persisted successfully'
+        })
     except Exception as e:
         return jsonify({
             'status': 'error',

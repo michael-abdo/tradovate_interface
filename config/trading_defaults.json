@@ -7,7 +7,9 @@
     "tick_size": 0.25,
     "risk_reward_ratio": 3.5,
     "enable_take_profit": true,
-    "enable_stop_loss": true
+    "enable_stop_loss": true,
+    "scale_in_enabled": false,
+    "scale_in_levels": 4
   },
   "symbol_defaults": {
     "NQ": {
@@ -15,56 +17,74 @@
       "tick_value": 5.0,
       "default_sl": 15,
       "default_tp": 53,
-      "precision": 2
+      "precision": 2,
+      "scale_in_ticks": 20
     },
     "MNQ": {
       "tick_size": 0.25,
       "tick_value": 0.5,
       "default_sl": 15,
       "default_tp": 53,
-      "precision": 2
+      "precision": 2,
+      "scale_in_ticks": 20
     },
     "ES": {
       "tick_size": 0.25,
       "tick_value": 12.5,
       "default_sl": 40,
       "default_tp": 100,
-      "precision": 2
+      "precision": 2,
+      "scale_in_ticks": 10
     },
     "RTY": {
       "tick_size": 0.1,
       "tick_value": 5.0,
       "default_sl": 90,
       "default_tp": 225,
-      "precision": 1
+      "precision": 1,
+      "scale_in_ticks": 50
     },
     "YM": {
       "tick_size": 1.0,
       "tick_value": 5.0,
       "default_sl": 10,
       "default_tp": 25,
-      "precision": 0
+      "precision": 0,
+      "scale_in_ticks": 10
     },
     "CL": {
       "tick_size": 0.01,
       "tick_value": 10.0,
       "default_sl": 50,
       "default_tp": 100,
-      "precision": 2
+      "precision": 2,
+      "scale_in_ticks": 30
     },
     "GC": {
       "tick_size": 0.1,
       "tick_value": 10.0,
       "default_sl": 15,
       "default_tp": 30,
-      "precision": 1
+      "precision": 1,
+      "scale_in_ticks": 10
     },
     "MGC": {
       "tick_size": 0.1,
       "tick_value": 1.0,
       "default_sl": 15,
       "default_tp": 30,
-      "precision": 1
+      "precision": 1,
+      "scale_in_ticks": 10
     }
+  },
+  "scraper_config": {
+    "enabled": false,
+    "interval": 1000,
+    "volume_filter": 0,
+    "debug": false,
+    "persist_interval": 60,
+    "buffer_size": 1000,
+    "days_to_keep": 7,
+    "auto_start": false
   }
 }
