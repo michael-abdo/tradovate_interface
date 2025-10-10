@@ -1294,7 +1294,7 @@
       MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }   // Micro Gold
     };
 
-function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null) {
+function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null, isScaleOrder = false) {
         console.log(`\n[TRADE] 🚀 ========== AUTOTRADE FUNCTION ENTRY ==========`);
         console.log(`[TRADE] 📍 AUTOTRADE STEP 1: Function called with parameters:`);
         console.log(`  inputSymbol: "${inputSymbol}"`);
@@ -1370,9 +1370,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         console.log(`    Offer: ${marketData.offerPrice}`);
 
         console.log(`📍 AUTOTRADE STEP 7: Checking scale-in mode...`);
-        // Check if scale-in is enabled
-        const scaleInEnabled = document.getElementById('scaleInCheckbox')?.checked;
+        // Check if scale-in is enabled (skip this check if we're already processing a scale order)
+        const scaleInEnabled = !isScaleOrder && document.getElementById('scaleInCheckbox')?.checked;
         console.log(`  Scale-in checkbox checked: ${scaleInEnabled}`);
+        console.log(`  Is scale order: ${isScaleOrder}`);
         
         if (scaleInEnabled) {
             console.log(`🔀 SCALE-IN MODE DETECTED - Delegating to auto_trade_scale function`);
@@ -1658,7 +1659,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 console.log(`  tickSize: ${tickSize}`);
                 
                 // Call autoTrade for this scale level
-                autoTrade(symbol, order.quantity, action, takeProfitTicks, stopLossTicks, tickSize);
+                // IMPORTANT: Pass 0 for TP/SL to prevent bracket orders that interfere with scale levels
+                // We'll add TP/SL only to the final consolidated position if needed
+                // Pass isScaleOrder=true to prevent recursive scale-in checks
+                autoTrade(symbol, order.quantity, action, 0, 0, tickSize, null, true);
                 successfulOrders++;
                 console.log(`✅ Order ${orderIndex + 1}/${scaleOrders.length} submitted successfully (${order.quantity} contracts @ ${order.entry_price || 'Market'})`);
             } catch (error) {
