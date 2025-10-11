@@ -57,7 +57,7 @@
         const symbol = document.getElementById('symbolInput')?.value || 'NQ';
         
         // Get tick value from futuresTickData or default values
-        const tickData = futuresTickData[symbol] || { tickValue: 5.0 };
+        const tickData = window.futuresTickData[symbol] || { tickValue: 5.0 };
         const tickValue = tickData.tickValue || 5.0;
         const dollarValue = spacing * tickValue;
         
@@ -380,7 +380,7 @@
 
             // Update TP and SL based on the symbol's default values
             const rootSymbol = symbolValue.replace(/[A-Z]\d+$/, '');
-            const symbolDefaults = futuresTickData[rootSymbol];
+            const symbolDefaults = window.futuresTickData[rootSymbol];
 
             if (symbolDefaults) {
                 console.log(`Found default values for ${rootSymbol}: SL=${symbolDefaults.defaultSL}, TP=${symbolDefaults.defaultTP}`);
@@ -434,7 +434,7 @@
             // Update the symbol in Tradovate's interface
             // FIXED: Use more specific selector for order ticket instead of market analyzer
             // Old selector '.search-box--input' was too generic and hit market analyzer first
-            updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
+            updateSymbol('.trading-ticket.module-placement.width-1-3 .search-box--input', normalizedSymbol);
         });
 
         document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
@@ -525,7 +525,13 @@
             }
             console.log('[BUTTON] ✅ VALIDATION PASSED: All inputs are valid');
             
-            console.log('[BUTTON] 📍 STEP 4: Calling autoTrade function...');
+            console.log('[BUTTON] 📍 STEP 4: Checking scale-in before calling autoTrade...');
+            console.log(`[BUTTON]   Scale-In Enabled: ${scaleEnabled}`);
+            if (scaleEnabled) {
+                const scaleLevels = document.getElementById('scaleLevelsInput')?.value || '4';
+                const scaleSpacing = document.getElementById('scaleSpacingInput')?.value || '20';
+                console.log(`[BUTTON]   Scale Levels: ${scaleLevels}, Scale Spacing: ${scaleSpacing}`);
+            }
             console.log(`[BUTTON]   Parameters: autoTrade("${symbol}", ${qty}, "Buy", ${tp}, ${sl}, ${tickSize})`);
             
             // Call autoTrade and handle the result
@@ -594,8 +600,14 @@
             }
             console.log('✅ VALIDATION PASSED: All inputs are valid');
             
-            console.log('📍 STEP 4: Calling autoTrade function...');
-            console.log(`  Parameters: autoTrade("${symbol}", ${qty}, "Sell", ${tp}, ${sl}, ${tickSize})`);
+            console.log('[BUTTON] 📍 STEP 4: Checking scale-in before calling autoTrade...');
+            console.log(`[BUTTON]   Scale-In Enabled: ${scaleEnabled}`);
+            if (scaleEnabled) {
+                const scaleLevels = document.getElementById('scaleLevelsInput')?.value || '4';
+                const scaleSpacing = document.getElementById('scaleSpacingInput')?.value || '20';
+                console.log(`[BUTTON]   Scale Levels: ${scaleLevels}, Scale Spacing: ${scaleSpacing}`);
+            }
+            console.log(`[BUTTON]   Parameters: autoTrade("${symbol}", ${qty}, "Sell", ${tp}, ${sl}, ${tickSize})`);
             
             // Call autoTrade and handle the result
             try {
@@ -791,7 +803,7 @@
         
         // Get tick size for the symbol
         const rootSymbol = symbol.replace(/[A-Z]\d+$/, '');
-        const symbolData = futuresTickData[rootSymbol];
+        const symbolData = window.futuresTickData[rootSymbol];
         const tickSize = symbolData?.tickSize || 0.25;
         
         // Add small buffer (1-2 ticks) to account for commissions
@@ -920,9 +932,18 @@
     }
     
     // Initialize UI (defaults to invisible inputs only - no visible popup)
-    console.log('Creating UI for dashboard trading...');
-    createUI();
-    console.log('UI initialization complete');
+    // Create invisible UI elements for backend functionality
+    console.log('🔧 Creating invisible UI elements for backend functionality...');
+    createUI(false); // false = invisible mode
+    console.log('🔧 Invisible UI initialization complete');
+    
+    // Verify UI elements were created
+    console.log('🔧 Verifying UI elements exist:');
+    console.log(`  symbolInput: ${document.getElementById('symbolInput') ? 'EXISTS' : 'MISSING'}`);
+    console.log(`  qtyInput: ${document.getElementById('qtyInput') ? 'EXISTS' : 'MISSING'}`);
+    console.log(`  tickInput: ${document.getElementById('tickInput') ? 'EXISTS' : 'MISSING'}`);
+    console.log(`  tpInput: ${document.getElementById('tpInput') ? 'EXISTS' : 'MISSING'}`);
+    console.log(`  slInput: ${document.getElementById('slInput') ? 'EXISTS' : 'MISSING'}`);
 
     async function updateSymbol(selector, value) {
             console.log(`updateSymbol called with selector: "${selector}", value: "${value}"`);
@@ -932,6 +953,7 @@
             // If no inputs found with primary selector, try fallback selectors
             if (inputs.length === 0) {
                 const fallbackSelectors = [
+                    '.trading-ticket.module-placement.width-1-3 .search-box--input',  // Specific trading ticket module
                     '.trading-ticket input[type="text"]',  // First text input in trading ticket
                     '.order-entry .search-box--input',      // Order entry search box
                     '.order-ticket .search-box--input',     // Order ticket search box  
@@ -959,6 +981,7 @@
             console.log('Selected input:', input);
             console.log('Input location:', {
                 inTradingTicket: !!input.closest('.trading-ticket'),
+                inSpecificTicketModule: !!input.closest('.trading-ticket.module-placement.width-1-3'),
                 inMarketAnalyzer: !!input.closest('.market-analyzer, .market-watchlist'),
                 parentClasses: input.parentElement?.className,
                 placeholder: input.placeholder
@@ -1025,8 +1048,11 @@
         console.log(`\n📋 ========== CREATE BRACKET ORDERS MANUAL ==========`);
         console.log(`📍 BRACKET STEP 1: Function called with trade data:`, tradeData);
         
-        const enableTP = document.getElementById('tpCheckbox').checked;
-        const enableSL = document.getElementById('slCheckbox').checked;
+        // CRITICAL FIX: Add null checks for TP/SL checkboxes (may not exist)
+        const tpCheckbox = document.getElementById('tpCheckbox');
+        const slCheckbox = document.getElementById('slCheckbox');
+        const enableTP = tpCheckbox?.checked ?? false; // Default to false if checkbox doesn't exist
+        const enableSL = slCheckbox?.checked ?? false; // Default to false if checkbox doesn't exist
         console.log(`📍 BRACKET STEP 2: Bracket settings:`);
         console.log(`  Take Profit enabled: ${enableTP}`);
         console.log(`  Stop Loss enabled: ${enableSL}`);
@@ -1080,7 +1106,12 @@
 
         async function setCommonFields() {
             console.log('Setting common order fields');
-            //if (tradeData.symbol) await updateSymbol('.search-box--input', normalizeSymbol(tradeData.symbol));
+            // CRITICAL FIX: Enable symbol update
+            if (tradeData.symbol) {
+                console.log(`🎯 Setting symbol to: ${tradeData.symbol}`);
+                await updateSymbol('.trading-ticket.module-placement.width-1-3 .search-box--input', normalizeSymbol(tradeData.symbol));
+                await delay(500); // Allow symbol to load and stabilize
+            }
             if (tradeData.action) {
                 console.log(`Setting action to: ${tradeData.action}`);
                 const actionLabels = document.querySelectorAll('.radio-group.btn-group label');
@@ -1131,29 +1162,101 @@
         }
 
         async function submitOrder(orderType, priceValue) {
+            console.log(`🔧 Starting submitOrder for ${orderType} order`);
+            
             await setCommonFields();
 
+            // CRITICAL FIX: Add validation before DOM interactions
             const typeSel = document.querySelector('.group.order-type .select-input div[tabindex]');
-            typeSel?.click();
-            [...document.querySelectorAll('ul.dropdown-menu li')]
-                .find(li => li.textContent.trim() === orderType)
-                ?.click();
+            if (!typeSel) {
+                console.error('❌ Order type dropdown not found!');
+                return {
+                    success: false,
+                    error: 'Order type dropdown not found',
+                    orders: [],
+                    symbol: null,
+                    summary: null,
+                    rejectionReason: 'UI validation error',
+                    filledCount: 0,
+                    rejectedCount: 1
+                };
+            }
+            
+            console.log(`📋 Setting order type to: ${orderType}`);
+            typeSel.click();
+            await delay(200); // Allow dropdown to open
+            
+            const orderTypeOption = [...document.querySelectorAll('ul.dropdown-menu li')]
+                .find(li => li.textContent.trim() === orderType);
+            if (!orderTypeOption) {
+                console.error(`❌ Order type option '${orderType}' not found!`);
+                return {
+                    success: false,
+                    error: `Order type option '${orderType}' not found`,
+                    orders: [],
+                    symbol: null,
+                    summary: null,
+                    rejectionReason: 'UI validation error',
+                    filledCount: 0,
+                    rejectedCount: 1
+                };
+            }
+            orderTypeOption.click();
 
-            //await delay(400);               // NEW - let Tradovate draw the price box
+            // CRITICAL FIX: Restore delay to let Tradovate draw the price box
+            await delay(500);               // Increased delay for UI stability
 
-            if (priceValue)
+            if (priceValue) {
+                console.log(`💰 Setting price to: ${priceValue}`);
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
+            }
             clickPriceArrow();
 
-            document.querySelector('.btn-group .btn-primary')?.click();
-            await delay(200);
+            // CRITICAL FIX: Validate submit button exists before clicking
+            const submitButton = document.querySelector('.btn-group .btn-primary');
+            if (!submitButton) {
+                console.error('❌ Submit button not found!');
+                return {
+                    success: false,
+                    error: 'Submit button not found',
+                    orders: [],
+                    symbol: null,
+                    summary: null,
+                    rejectionReason: 'UI validation error',
+                    filledCount: 0,
+                    rejectedCount: 1
+                };
+            }
+            
+            console.log('🚀 Clicking submit button...');
+            submitButton.click();
+            await delay(500); // Increased delay after order submission
             console.log(getOrderEvents());
             
+            // CRITICAL FIX: Wait longer for order to appear in history
+            console.log('⏳ Waiting for order to appear in history...');
+            await delay(1000); // Additional delay for order processing
+            
             // 🔄 CAPTURE ORDER FEEDBACK BEFORE CLICKING BACK BUTTON
-            await captureOrderFeedback();
+            console.log('📊 Capturing order feedback from submitOrder...');
+            const feedbackResult = await captureOrderFeedback();
+            
+            // Log the feedback capture result
+            if (feedbackResult?.rejectionReason) {
+                console.log(`✅ submitOrder captured REJECTION: ${feedbackResult.rejectionReason}`);
+            } else if (feedbackResult?.success && feedbackResult?.orders?.length > 0) {
+                console.log(`✅ submitOrder captured SUCCESS: ${feedbackResult.orders.length} orders`);
+            } else if (feedbackResult?.error) {
+                console.log(`⚠️ submitOrder captured ERROR: ${feedbackResult.error}`);
+            } else {
+                console.log('⚠️ submitOrder captured UNKNOWN result:', feedbackResult);
+            }
             
             document.querySelector('.icon.icon-back')?.click();
             await delay(200);
+            
+            // Return the captured feedback result
+            return feedbackResult;
         }
 
         console.log(`📍 BRACKET STEP 3: Submitting initial ${tradeData.orderType || 'MARKET'} order...`);
@@ -1161,34 +1264,106 @@
         console.log(`  Entry price: ${tradeData.entryPrice || 'Market price'}`);
         console.log(`  Action: ${tradeData.action}`);
         console.log(`  Quantity: ${tradeData.qty}`);
-        await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
-        console.log(`✅ Initial order submitted successfully`);
+        
+        // Capture feedback from the main entry order
+        const mainOrderResult = await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
+        console.log(`📊 Main order result:`, mainOrderResult);
+        
+        // Initialize bracket feedback aggregation
+        const bracketFeedback = {
+            success: mainOrderResult?.success || false,
+            orders: mainOrderResult?.orders || [],
+            symbol: mainOrderResult?.symbol || null,
+            summary: mainOrderResult?.summary || null,
+            rejectionReason: mainOrderResult?.rejectionReason || null,
+            filledCount: mainOrderResult?.filledCount || 0,
+            rejectedCount: mainOrderResult?.rejectedCount || 0,
+            error: mainOrderResult?.error || null,
+            mainOrder: mainOrderResult,
+            tpOrder: null,
+            slOrder: null
+        };
+
+        // Check if main order was rejected - if so, don't place TP/SL orders
+        if (mainOrderResult?.rejectionReason || mainOrderResult?.error || !mainOrderResult?.success) {
+            console.log(`❌ Main order rejected/failed - skipping TP/SL orders`);
+            console.log(`   Rejection reason: ${mainOrderResult?.rejectionReason || mainOrderResult?.error || 'Unknown'}`);
+            
+            // Return immediately with main order feedback
+            console.log('Bracket order creation complete (main order rejected)');
+            return bracketFeedback;
+        }
+        
+        console.log(`✅ Main order successful - proceeding with TP/SL orders`);
 
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
             tradeData.action = 'Sell';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                await submitOrder('LIMIT', tradeData.takeProfit);
+                const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
+                bracketFeedback.tpOrder = tpResult;
+                
+                // Aggregate TP results
+                if (tpResult?.orders?.length) {
+                    bracketFeedback.orders = [...bracketFeedback.orders, ...tpResult.orders];
+                }
+                if (tpResult?.filledCount) bracketFeedback.filledCount += tpResult.filledCount;
+                if (tpResult?.rejectedCount) bracketFeedback.rejectedCount += tpResult.rejectedCount;
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                await submitOrder('STOP', tradeData.stopLoss);
+                const slResult = await submitOrder('STOP', tradeData.stopLoss);
+                bracketFeedback.slOrder = slResult;
+                
+                // Aggregate SL results  
+                if (slResult?.orders?.length) {
+                    bracketFeedback.orders = [...bracketFeedback.orders, ...slResult.orders];
+                }
+                if (slResult?.filledCount) bracketFeedback.filledCount += slResult.filledCount;
+                if (slResult?.rejectedCount) bracketFeedback.rejectedCount += slResult.rejectedCount;
             }
         } else {
             console.log('Flipping action to Buy for TP/SL orders');
             tradeData.action = 'Buy';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                await submitOrder('LIMIT', tradeData.takeProfit);
+                const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
+                bracketFeedback.tpOrder = tpResult;
+                
+                // Aggregate TP results
+                if (tpResult?.orders?.length) {
+                    bracketFeedback.orders = [...bracketFeedback.orders, ...tpResult.orders];
+                }
+                if (tpResult?.filledCount) bracketFeedback.filledCount += tpResult.filledCount;
+                if (tpResult?.rejectedCount) bracketFeedback.rejectedCount += tpResult.rejectedCount;
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                await submitOrder('STOP', tradeData.stopLoss);
+                const slResult = await submitOrder('STOP', tradeData.stopLoss);
+                bracketFeedback.slOrder = slResult;
+                
+                // Aggregate SL results  
+                if (slResult?.orders?.length) {
+                    bracketFeedback.orders = [...bracketFeedback.orders, ...slResult.orders];
+                }
+                if (slResult?.filledCount) bracketFeedback.filledCount += slResult.filledCount;
+                if (slResult?.rejectedCount) bracketFeedback.rejectedCount += slResult.rejectedCount;
             }
         }
+        
+        // Final aggregated feedback logging
+        console.log('📊 Final bracket feedback aggregation:');
+        console.log(`   Overall success: ${bracketFeedback.success}`);
+        console.log(`   Total orders: ${bracketFeedback.orders.length}`);
+        console.log(`   Filled count: ${bracketFeedback.filledCount}`);
+        console.log(`   Rejected count: ${bracketFeedback.rejectedCount}`);
+        if (bracketFeedback.rejectionReason) {
+            console.log(`   Rejection reason: ${bracketFeedback.rejectionReason}`);
+        }
+        
         console.log('Bracket order creation complete');
-        return Promise.resolve();
+        return bracketFeedback;
     }
 
     // returns an array like [{timestamp,id,event,comment,fillPrice}, …]
@@ -1213,8 +1388,53 @@
       });
     }
 
+    // 🔄 WAIT FOR ORDER FEEDBACK WITH RETRY LOGIC
+    window.waitForOrderFeedback = async function(maxWaitTime = 10000, checkInterval = 500) {
+        console.log(`⏳ Waiting for order feedback (max ${maxWaitTime/1000}s)...`);
+        
+        const startTime = Date.now();
+        let lastResult = null;
+        let attempts = 0;
+        
+        while (Date.now() - startTime < maxWaitTime) {
+            attempts++;
+            console.log(`⏳ Attempt ${attempts}: Checking for order feedback...`);
+            
+            // Try to capture order feedback
+            const result = await captureOrderFeedback();
+            
+            // If we found order history with events, return it
+            if (result.success && result.orders.length > 0) {
+                console.log(`✅ Order feedback found after ${attempts} attempts`);
+                return result;
+            }
+            
+            // If we found a rejection, return immediately
+            if (result.rejectionReason) {
+                console.log(`❌ Order rejected after ${attempts} attempts`);
+                return result;
+            }
+            
+            // Store last result for timeout return
+            lastResult = result;
+            
+            // Wait before next check
+            await delay(checkInterval);
+        }
+        
+        // Timeout reached
+        console.log(`⏱️ Timeout reached after ${attempts} attempts (${maxWaitTime/1000}s)`);
+        return lastResult || {
+            success: false,
+            error: 'Timeout waiting for order feedback',
+            orders: [],
+            symbol: null,
+            summary: null
+        };
+    };
+
     // 🔄 CAPTURE TRADOVATE ORDER FEEDBACK SYSTEM
-    async function captureOrderFeedback() {
+    window.captureOrderFeedback = async function() {
         console.log('🔄 CAPTURING TRADOVATE ORDER FEEDBACK...');
         
         // Wait a moment for order feedback to load
@@ -1224,65 +1444,86 @@
         const orderHistoryDiv = document.querySelector('.order-history');
         if (!orderHistoryDiv) {
             console.log('❌ Order history div not found - no feedback to capture');
-            return;
+            return {
+                success: false,
+                error: 'Order history not found',
+                orders: [],
+                symbol: null,
+                summary: null
+            };
         }
         
         console.log('✅ Found order history div - capturing feedback...');
+        
+        // Initialize result object
+        const result = {
+            success: true,
+            orders: [],
+            symbol: null,
+            summary: null,
+            rejectionReason: null,
+            filledCount: 0,
+            rejectedCount: 0
+        };
         
         // Extract the trading ticket header information
         const ticketHeader = orderHistoryDiv.querySelector('.trading-ticket-header');
         if (ticketHeader) {
             // Extract symbol info
             const symbolDiv = ticketHeader.querySelector('div[style*="font-size: 160%"]');
-            const symbol = symbolDiv ? symbolDiv.textContent.trim() : 'UNKNOWN';
+            result.symbol = symbolDiv ? symbolDiv.textContent.trim() : 'UNKNOWN';
             
             // Extract order summary
             const orderSummaryDiv = ticketHeader.querySelector('div:last-child');
-            const orderSummary = orderSummaryDiv ? orderSummaryDiv.textContent.trim() : 'No summary';
+            result.summary = orderSummaryDiv ? orderSummaryDiv.textContent.trim() : 'No summary';
             
-            console.log(`📊 ORDER FEEDBACK - Symbol: ${symbol}`);
-            console.log(`📊 ORDER FEEDBACK - Summary: ${orderSummary}`);
+            console.log(`📊 ORDER FEEDBACK - Symbol: ${result.symbol}`);
+            console.log(`📊 ORDER FEEDBACK - Summary: ${result.summary}`);
         }
         
         // Extract detailed order events from the data table
         const orderEvents = getOrderEvents(orderHistoryDiv);
-        console.log(`📊 ORDER FEEDBACK - Events (${orderEvents.length} found):`);
-        
-        orderEvents.forEach((event, index) => {
-            console.log(`📊 EVENT ${index + 1}:`, {
-                timestamp: event.timestamp,
-                id: event.id,
-                event: event.event,
-                comment: event.comment,
-                fillPrice: event.fillPrice
-            });
-        });
-        
-        // Extract the entire order history HTML for complete analysis
-        console.log('📊 ORDER FEEDBACK - Full HTML Structure:');
-        console.log(orderHistoryDiv.outerHTML);
+        result.orders = orderEvents;
+        console.log(`📊 ORDER FEEDBACK - Events (${orderEvents.length} found)`);
         
         // Check for specific rejection reasons or success indicators
         const rejectionText = orderHistoryDiv.textContent;
         if (rejectionText.includes('Rejected')) {
+            result.success = false;
+            result.rejectedCount++;
             console.log('❌ ORDER REJECTED - checking rejection reason...');
             if (rejectionText.includes('outside of market hours')) {
+                result.rejectionReason = 'Outside market hours';
                 console.log('❌ REJECTION REASON: Order placed outside market hours');
             } else if (rejectionText.includes('Risk')) {
+                result.rejectionReason = 'Risk management violation';
                 console.log('❌ REJECTION REASON: Risk management violation');
             } else {
+                result.rejectionReason = 'Unknown rejection';
                 console.log('❌ REJECTION REASON: Other - check full feedback above');
             }
         } else if (rejectionText.includes('Risk Passed')) {
             console.log('✅ RISK MANAGEMENT: Order passed risk checks');
         }
         
+        // Count filled orders
+        const filledOrders = orderEvents.filter(event => 
+            event.event.includes('Fill') || event.event.includes('@')
+        );
+        result.filledCount = filledOrders.length;
+        if (result.filledCount > 0) {
+            console.log(`✅ Found ${result.filledCount} filled orders`);
+        }
+        
         console.log('🔄 ORDER FEEDBACK CAPTURE COMPLETE');
-    }
+        return result;
+    };
 
 
     // Futures tick data dictionary with default SL/TP settings for each instrument
-    const futuresTickData = {
+    // Use window property to avoid redeclaration errors on script reinjection
+    if (!window.futuresTickData) {
+        window.futuresTickData = {
       // Symbol: { tickSize, tickValue, defaultSL (ticks), defaultTP (ticks), precision (decimal places) }
       MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // Micro E-mini Nasdaq-100
       NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // E-mini Nasdaq-100
@@ -1292,9 +1533,12 @@
       CL:  { tickSize: 0.01, tickValue: 10.0, defaultSL: 50,  defaultTP: 100, precision: 2 },  // Crude Oil
       GC:  { tickSize: 0.1,  tickValue: 10.0, defaultSL: 15,  defaultTP: 30,  precision: 1 },  // Gold (15 ticks = $150 risk)
       MGC: { tickSize: 0.1,  tickValue: 1.0,  defaultSL: 15,  defaultTP: 30,  precision: 1 }   // Micro Gold
-    };
+        };
+    }
 
-function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null, isScaleOrder = false) {
+// Make function declaration safe for reinjection
+window.autoTrade = async function(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null, isScaleOrder = false, explicitEntryPrice = null) {
+        console.log(`\n[TRADE] 🔵🔵🔵 AUTOTRADE FUNCTION (NOT SCALE) 🔵🔵🔵`);
         console.log(`\n[TRADE] 🚀 ========== AUTOTRADE FUNCTION ENTRY ==========`);
         console.log(`[TRADE] 📍 AUTOTRADE STEP 1: Function called with parameters:`);
         console.log(`  inputSymbol: "${inputSymbol}"`);
@@ -1304,11 +1548,39 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         console.log(`  stopLossTicks: ${stopLossTicks}`);
         console.log(`  _tickSize: ${_tickSize}`);
         console.log(`  explicitOrderType: ${explicitOrderType}`);
+        console.log(`  explicitEntryPrice: ${explicitEntryPrice}`);
 
         console.log(`📍 AUTOTRADE STEP 2: Getting symbol from UI...`);
-        const symbolInput = document.getElementById('symbolInput').value || 'NQ';
-        console.log(`  UI Symbol Input: "${symbolInput}"`);
-        console.log(`  Final symbol to use: "${symbolInput}" (from UI input field)`);
+        
+        // Declare symbolInput outside the try-catch block
+        let symbolInput = inputSymbol || 'NQ'; // Default fallback
+        
+        try {
+            console.log(`🔴🔴🔴 IMMEDIATE DEBUG: Reached line after STEP 2 🔴🔴🔴`);
+            
+            console.log(`🔍 DEBUG: Checking if symbolInput element exists...`);
+            const symbolInputElement = document.getElementById('symbolInput');
+            console.log(`🔍 DEBUG: symbolInputElement = ${symbolInputElement}`);
+            
+            if (symbolInputElement && symbolInputElement.value) {
+                symbolInput = symbolInputElement.value;
+                console.log(`  ✅ UI Symbol Input element: FOUND`);
+                console.log(`  UI Symbol value: "${symbolInputElement.value}"`);
+                console.log(`  Final symbol to use: "${symbolInput}" (from UI input field)`);
+            } else {
+                console.log(`  ❌ UI Symbol Input element: NOT FOUND or empty`);
+                console.log(`  Final symbol to use: "${symbolInput}" (from function parameter)`);
+            }
+        } catch (error) {
+            console.error(`🚨 ERROR in STEP 2: ${error.message}`);
+            console.error(`🚨 ERROR stack: ${error.stack}`);
+            // symbolInput already has fallback value
+            console.log(`🚨 Using fallback symbol: "${symbolInput}"`);
+        }
+
+        console.log(`🔥🔥🔥 CRITICAL DEBUG: Reached end of STEP 2 try-catch block`);
+        console.log(`🔥🔥🔥 symbolInput = "${symbolInput}"`);
+        console.log(`🔥🔥🔥 About to proceed to STEP 3...`);
 
         console.log(`📍 AUTOTRADE STEP 3: Processing symbol data...`);
         // Get root symbol (e.g., 'NQH5' -> 'NQ')
@@ -1318,7 +1590,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         // Get tick size and default values from dictionary or fallback
         console.log(`📍 AUTOTRADE STEP 4: Looking up symbol configuration...`);
-        const symbolData = futuresTickData[rootSymbol];
+        const symbolData = window.futuresTickData[rootSymbol];
         if (symbolData) {
             console.log(`  ✅ Found symbol data for ${rootSymbol}:`, symbolData);
         } else {
@@ -1326,31 +1598,36 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         }
 
         // Keep track of the last symbol to handle symbol changes
-        if (rootSymbol !== autoTrade.lastRootSymbol) {
-           document.getElementById('tickInput').value = symbolData?.tickSize ?? '';
+        const tickInputElement = document.getElementById('tickInput');
+        if (rootSymbol !== autoTrade.lastRootSymbol && tickInputElement) {
+           tickInputElement.value = symbolData?.tickSize ?? '';
         }
         autoTrade.lastRootSymbol = rootSymbol;
         const tickSize = (symbolData && typeof symbolData.tickSize === 'number')
                ? symbolData.tickSize
-               : parseFloat(document.getElementById('tickInput').value) || _tickSize;
+               : parseFloat(tickInputElement?.value) || _tickSize;
 
-        // right after tickSize is determined
-        tickInput.value = tickSize;           // shows the real value
-        localStorage.setItem('bracketTrade_tick', tickSize);
+        // right after tickSize is determined - only if UI element exists
+        if (tickInputElement) {
+            tickInputElement.value = tickSize;           // shows the real value
+            localStorage.setItem('bracketTrade_tick', tickSize);
+        }
 
         // Use provided values or defaults from dictionary or UI
+        const slInputElement = document.getElementById('slInput');
         const actualStopLossTicks = stopLossTicks ||
                                    symbolData?.defaultSL ||
-                                   parseInt(document.getElementById('slInput').value) ||
+                                   parseInt(slInputElement?.value) ||
                                    40;
 
+        const tpInputElement = document.getElementById('tpInput');
         const actualTakeProfitTicks = takeProfitTicks ||
                                      symbolData?.defaultTP ||
-                                     parseInt(document.getElementById('tpInput').value) ||
+                                     parseInt(tpInputElement?.value) ||
                                      100;
 
         const from = symbolData?.tickSize ? 'dictionary'
-          : document.getElementById('tickInput').value ? 'input field'
+          : tickInputElement?.value ? 'input field'
           : 'default parameter';
         console.log(`Using tick size ${tickSize} (from ${from})`);
         console.log(`  Final TP/SL values: SL=${actualStopLossTicks} ticks, TP=${actualTakeProfitTicks} ticks`);
@@ -1371,9 +1648,12 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         console.log(`📍 AUTOTRADE STEP 7: Checking scale-in mode...`);
         // Check if scale-in is enabled (skip this check if we're already processing a scale order)
-        const scaleInEnabled = !isScaleOrder && document.getElementById('scaleInCheckbox')?.checked;
-        console.log(`  Scale-in checkbox checked: ${scaleInEnabled}`);
+        const scaleCheckbox = document.getElementById('scaleInCheckbox');
+        const scaleInEnabled = !isScaleOrder && scaleCheckbox?.checked;
+        console.log(`  Scale-in checkbox element: ${scaleCheckbox ? 'FOUND' : 'NOT FOUND'}`);
+        console.log(`  Scale-in checkbox checked: ${scaleCheckbox?.checked}`);
         console.log(`  Is scale order: ${isScaleOrder}`);
+        console.log(`  Final scale-in enabled: ${scaleInEnabled}`);
         
         if (scaleInEnabled) {
             console.log(`🔀 SCALE-IN MODE DETECTED - Delegating to auto_trade_scale function`);
@@ -1441,20 +1721,32 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         // Continue with single order logic if scale-in is disabled
         console.log(`📍 AUTOTRADE STEP 8: Scale-in disabled, proceeding with single order logic...`);
 
-        // Check if an entry price was provided
-        const entryPriceInput = document.getElementById('entryPriceInput');
-        const customEntryPrice = entryPriceInput && entryPriceInput.value ? parseFloat(entryPriceInput.value) : null;
+        // Check if an entry price was provided - prioritize explicit parameter over UI field
+        let customEntryPrice = null;
+        if (explicitEntryPrice !== null) {
+            console.log(`🔥 USING EXPLICIT ENTRY PRICE: ${explicitEntryPrice}`);
+            customEntryPrice = parseFloat(explicitEntryPrice);
+        } else {
+            const entryPriceInput = document.getElementById('entryPriceInput');
+            customEntryPrice = entryPriceInput && entryPriceInput.value ? parseFloat(entryPriceInput.value) : null;
+            console.log(`🔥 USING UI ENTRY PRICE: ${customEntryPrice}`);
+        }
         
         // Determine market price (used when no entry price is specified or for SL/TP calculations)
         const marketPrice = parseFloat(action === 'Buy' ? marketData.offerPrice : marketData.bidPrice);
         console.log(`Market price: ${marketPrice} (${action === 'Buy' ? 'offer' : 'bid'} price)`);
         
         // Determine entry order type and price
+        console.log(`🔥 REACHED ORDER TYPE DETERMINATION SECTION`);
+        console.log(`🔥 Initial values: customEntryPrice=${customEntryPrice}, marketPrice=${marketPrice}, explicitOrderType=${explicitOrderType}`);
         let orderType = 'MARKET';
         let entryPrice = marketPrice;
         
         // Use explicit order type if provided, otherwise fall back to entry price logic
+        console.log(`🔥 Checking explicitOrderType: ${explicitOrderType}`);
         if (explicitOrderType) {
+            console.log(`🔥 EXPLICIT ORDER TYPE BRANCH`);
+        
             // Validate order type
             const validOrderTypes = ['MARKET', 'LIMIT', 'STOP', 'STOP LIMIT', 'TRL STOP', 'TRL STP LMT'];
             if (!validOrderTypes.includes(explicitOrderType)) {
@@ -1475,19 +1767,29 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 console.log(`Using market price: ${entryPrice} for ${orderType} order`);
             }
         } else if (customEntryPrice !== null) {
+            console.log(`🔥 AUTO-DETECTION BRANCH REACHED!`);
             console.log(`Custom entry price provided: ${customEntryPrice}`);
+            console.log(`Market price: ${marketPrice}`);
+            console.log(`Action: ${action}`);
             entryPrice = customEntryPrice;
             
             // Determine if this should be a LIMIT or STOP order based on price comparison
+            console.log(`🔥 STARTING AUTO-DETECTION LOGIC...`);
             if (action === 'Buy') {
                 // For Buy: LIMIT if entry below market, STOP if entry above market
+                console.log(`🔥 Buy order: comparing ${customEntryPrice} < ${marketPrice}`);
                 orderType = customEntryPrice < marketPrice ? 'LIMIT' : 'STOP';
+                console.log(`🔥 Buy result: ${customEntryPrice < marketPrice ? 'BELOW market → LIMIT' : 'ABOVE market → STOP'}`);
             } else {
                 // For Sell: LIMIT if entry above market, STOP if entry below market
+                console.log(`🔥 Sell order: comparing ${customEntryPrice} > ${marketPrice}`);
                 orderType = customEntryPrice > marketPrice ? 'LIMIT' : 'STOP';
+                console.log(`🔥 Sell result: ${customEntryPrice > marketPrice ? 'ABOVE market → LIMIT' : 'BELOW market → STOP'}`);
             }
-            console.log(`Order type determined to be: ${orderType}`);
+            console.log(`🔥 Order type determined to be: ${orderType}`);
+            console.log(`🔥 AUTO-DETECTION LOGIC COMPLETED!`);
         } else {
+            console.log(`🔥 NO CUSTOM ENTRY PRICE - Market order branch`);
             console.log(`No custom entry price provided, using market order at ${marketPrice}`);
         }
 
@@ -1540,8 +1842,48 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         console.log(`📍 AUTOTRADE STEP 10: Calling createBracketOrdersManual...`);
         console.log(`  This will handle the actual DOM manipulation and order submission`);
-        return createBracketOrdersManual(tradeData).finally(() => {
-            const d = futuresTickData[rootSymbol];      // or rootSymbol
+        
+        try {
+            // Execute the trade and capture feedback
+            console.log(`📍 AUTOTRADE STEP 10: Executing bracket orders...`);
+            const bracketResult = await createBracketOrdersManual(tradeData);
+            console.log(`📊 Bracket execution result:`, bracketResult);
+            
+            // Check if we already have valid feedback from bracket execution
+            const hasFeedback = bracketResult && (
+                bracketResult.rejectionReason || 
+                (bracketResult.success && bracketResult.orders?.length > 0) ||
+                bracketResult.error
+            );
+            
+            let orderResult;
+            if (hasFeedback) {
+                console.log(`📍 AUTOTRADE STEP 11: Using feedback from bracket execution (no waitForOrderFeedback needed)`);
+                orderResult = bracketResult;
+            } else {
+                console.log(`📍 AUTOTRADE STEP 11: No feedback from bracket execution - falling back to waitForOrderFeedback...`);
+                orderResult = await waitForOrderFeedback();
+            }
+            
+            // Log the result
+            console.log(`📍 AUTOTRADE STEP 12: Order verification complete`);
+            console.log(`  Success: ${orderResult.success}`);
+            console.log(`  Orders placed: ${orderResult.orders.length}`);
+            if (orderResult.error) {
+                console.log(`  Error: ${orderResult.error}`);
+            }
+            
+            return orderResult;
+            
+        } catch (error) {
+            console.error(`❌ AUTOTRADE ERROR: ${error.message}`);
+            return {
+                success: false,
+                error: error.message,
+                orders: []
+            };
+        } finally {
+            const d = window.futuresTickData[rootSymbol];      // or rootSymbol
             const slInput = document.getElementById('slInput');
             const tpInput = document.getElementById('tpInput');
             /*
@@ -1553,11 +1895,14 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 localStorage.setItem('bracketTrade_sl', d.defaultSL);
                 localStorage.setItem('bracketTrade_tp', d.defaultTP);
             }*/
-        });
-    }
+        }
+    }; // End of window.autoTrade function
 
     // Scale order function to handle multiple entry levels
-    function auto_trade_scale(symbol, scaleOrders, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, tickSize = 0.25) {
+    // Make function declaration safe for reinjection
+    window.auto_trade_scale = async function(symbol, scaleOrders, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, tickSize = 0.25) {
+        console.log(`\n🚨🚨🚨🚨🚨🚨🚨 AUTO_TRADE_SCALE FUNCTION CALLED! 🚨🚨🚨🚨🚨🚨🚨`);
+        console.log(`🚨🚨🚨 THIS IS THE SCALE FUNCTION - NOT autoTrade 🚨🚨🚨`);
         console.log(`\n=== AUTO_TRADE_SCALE DEBUG ===`);
         console.log(`Called with parameters:`);
         console.log(`  symbol: ${symbol}`);
@@ -1571,8 +1916,11 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         if (!scaleOrders || !Array.isArray(scaleOrders) || scaleOrders.length === 0) {
             console.error('ERROR: Invalid scale orders - empty or not an array');
             console.error('scaleOrders value:', scaleOrders);
-            alert('Error: Invalid scale orders configuration');
-            return;
+            return {
+                success: false,
+                error: 'Invalid scale orders configuration',
+                orders: []
+            };
         }
         
         console.log(`Scale orders array length: ${scaleOrders.length}`);
@@ -1586,8 +1934,11 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             if (!order || typeof order.quantity !== 'number' || order.quantity <= 0) {
                 console.error(`ERROR: Invalid scale order at index ${i}: invalid quantity`);
                 console.error(`Order details:`, order);
-                alert(`Error: Invalid quantity in scale order ${i + 1}`);
-                return;
+                return {
+                    success: false,
+                    error: `Invalid quantity in scale order ${i + 1}`,
+                    orders: []
+                };
             }
             
             console.log(`    ✓ Valid: ${order.quantity} contracts @ ${order.entry_price || 'Market'}`);
@@ -1597,18 +1948,19 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         
         // Execute each scale order with a delay between them
         const delayBetweenOrders = 500; // 500ms between orders
-        let orderIndex = 0;
-        let successfulOrders = 0;
-        let failedOrders = 0;
+        const orderResults = [];
         
         // Show initial progress message in console instead of popup
         console.log(`[SCALE] 📊 Placing ${scaleOrders.length} scaled orders...`);
         
-        function placeNextOrder() {
+        async function placeNextOrder(orderIndex) {
             console.log(`\n--- placeNextOrder() called ---`);
             console.log(`Current orderIndex: ${orderIndex}, Total orders: ${scaleOrders.length}`);
             
             if (orderIndex >= scaleOrders.length) {
+                const successfulOrders = orderResults.filter(r => r.success).length;
+                const failedOrders = orderResults.filter(r => !r.success).length;
+                
                 console.log(`=== SCALE ORDER EXECUTION COMPLETED ===`);
                 console.log(`Successful: ${successfulOrders}, Failed: ${failedOrders}`);
                 console.log(`=== END AUTO_TRADE_SCALE DEBUG ===`);
@@ -1621,7 +1973,16 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 } else {
                     console.log(`[SCALE] ❌ All ${failedOrders} scale orders failed.`);
                 }
-                return;
+                
+                return {
+                    success: failedOrders === 0,
+                    orders: orderResults,
+                    summary: {
+                        total: scaleOrders.length,
+                        successful: successfulOrders,
+                        failed: failedOrders
+                    }
+                };
             }
             
             const order = scaleOrders[orderIndex];
@@ -1633,23 +1994,6 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             console.log(`  Entry Price: ${order.entry_price}`);
             
             try {
-                // If entry_price is provided, set it in the UI first
-                const entryPriceInput = document.getElementById('entryPriceInput');
-                console.log(`Entry price input element found: ${!!entryPriceInput}`);
-                
-                if (entryPriceInput && order.entry_price !== null && order.entry_price !== undefined) {
-                    console.log(`Setting entry price to: ${order.entry_price}`);
-                    entryPriceInput.value = order.entry_price;
-                    entryPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    entryPriceInput.dispatchEvent(new Event('change', { bubbles: true }));
-                } else if (entryPriceInput && order.entry_price === null) {
-                    console.log(`Clearing entry price for market order`);
-                    // Clear entry price for market orders
-                    entryPriceInput.value = '';
-                    entryPriceInput.dispatchEvent(new Event('input', { bubbles: true }));
-                    entryPriceInput.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-                
                 console.log(`Calling autoTrade with:`);
                 console.log(`  symbol: ${symbol}`);
                 console.log(`  quantity: ${order.quantity}`);
@@ -1657,38 +2001,64 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 console.log(`  takeProfitTicks: ${takeProfitTicks}`);
                 console.log(`  stopLossTicks: ${stopLossTicks}`);
                 console.log(`  tickSize: ${tickSize}`);
+                console.log(`  explicitEntryPrice: ${order.entry_price} (passed directly)`);
                 
                 // Call autoTrade for this scale level
                 // IMPORTANT: Pass 0 for TP/SL to prevent bracket orders that interfere with scale levels
                 // We'll add TP/SL only to the final consolidated position if needed
                 // Pass isScaleOrder=true to prevent recursive scale-in checks
-                autoTrade(symbol, order.quantity, action, 0, 0, tickSize, null, true);
-                successfulOrders++;
-                console.log(`✅ Order ${orderIndex + 1}/${scaleOrders.length} submitted successfully (${order.quantity} contracts @ ${order.entry_price || 'Market'})`);
+                // Pass order.entry_price directly as explicitEntryPrice to bypass UI timing issues
+                const orderResult = await autoTrade(symbol, order.quantity, action, 0, 0, tickSize, null, true, order.entry_price);
+                
+                // Add scale order metadata to result
+                orderResult.scaleLevel = orderIndex + 1;
+                orderResult.requestedPrice = order.entry_price;
+                orderResult.requestedQuantity = order.quantity;
+                
+                orderResults.push(orderResult);
+                
+                if (orderResult.success) {
+                    console.log(`✅ Order ${orderIndex + 1}/${scaleOrders.length} verified successfully (${order.quantity} contracts @ ${order.entry_price || 'Market'})`);
+                } else {
+                    console.log(`❌ Order ${orderIndex + 1}/${scaleOrders.length} failed: ${orderResult.error}`);
+                }
+                
             } catch (error) {
                 console.error(`❌ ERROR placing scale order ${orderIndex + 1}/${scaleOrders.length}:`, error);
-                failedOrders++;
+                orderResults.push({
+                    success: false,
+                    error: error.message,
+                    scaleLevel: orderIndex + 1,
+                    requestedPrice: order.entry_price,
+                    requestedQuantity: order.quantity,
+                    orders: []
+                });
             }
             
-            orderIndex++;
-            
-            // Schedule next order even if this one failed
-            if (orderIndex < scaleOrders.length) {
-                setTimeout(placeNextOrder, delayBetweenOrders);
+            // Wait before placing next order
+            if (orderIndex + 1 < scaleOrders.length) {
+                await new Promise(resolve => setTimeout(resolve, delayBetweenOrders));
+                return placeNextOrder(orderIndex + 1);
             } else {
-                // Final order completed, show summary
-                setTimeout(() => {
-                    console.log(`Scale order execution completed. Successful: ${successfulOrders}, Failed: ${failedOrders}`);
-                    if (failedOrders > 0) {
-                        console.log(`[SCALE] ⚠️ Scale orders completed with ${failedOrders} failures.`);
+                // This was the last order, return the results
+                const successfulOrders = orderResults.filter(r => r.success).length;
+                const failedOrders = orderResults.filter(r => !r.success).length;
+                
+                return {
+                    success: failedOrders === 0,
+                    orders: orderResults,
+                    summary: {
+                        total: scaleOrders.length,
+                        successful: successfulOrders,
+                        failed: failedOrders
                     }
-                }, delayBetweenOrders);
+                };
             }
         }
         
-        // Start placing orders
-        placeNextOrder();
-    }
+        // Start placing orders and return the promise
+        return placeNextOrder(0);
+    }; // End of window.auto_trade_scale function
 
     // helper – builds the front-quarter code for any root (e.g. 'NQ' → 'NQU5' or 'NQZ5' post-roll)
     function getFrontQuarter(root) {
@@ -1740,7 +2110,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         return { symbol, bidPrice, offerPrice };
     }
     // --- FUTURES MONTH LETTERS (Jan-Dec) ---
-    const MONTH_CODES = ['F','G','H','J','K','M','N','Q','U','V','X','Z'];
+    // Use var to allow redeclaration on script reinjection
+    if (!window.MONTH_CODES) {
+        window.MONTH_CODES = ['F','G','H','J','K','M','N','Q','U','V','X','Z'];
+    }
 
     /**
  * Returns { letter, yearDigit } for the given date.
@@ -1748,7 +2121,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
  */
     function getMonthlyCode(date = new Date()) {
         console.log(`getMonthlyCode called with date: ${date.toISOString()}`);
-        const letter = MONTH_CODES[date.getUTCMonth()];      // 0-11 → F … Z
+        const letter = window.MONTH_CODES[date.getUTCMonth()];      // 0-11 → F … Z
         const yearDigit = (date.getUTCFullYear() % 10) + ''; // 2025 → "5"
         console.log(`Calculated monthly code: letter=${letter}, yearDigit=${yearDigit}`);
         return { letter, yearDigit };

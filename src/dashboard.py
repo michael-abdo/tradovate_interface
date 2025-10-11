@@ -285,11 +285,18 @@ def execute_trade():
         enable_sl = data.get('enable_sl', True)
         
         # Extract scale in/out parameters
+        print(f"\n=== SCALE PARAMETER EXTRACTION ===")
+        print(f"Raw request data: {data}")
         scale_in_enabled = data.get('scale_in_enabled', TRADING_DEFAULTS.get('scale_in_enabled', False))
         scale_in_levels = data.get('scale_in_levels', TRADING_DEFAULTS.get('scale_in_levels', 4))
         # Get symbol-specific scale ticks if available
         symbol_config = SYMBOL_DEFAULTS.get(symbol, {})
         scale_in_ticks = data.get('scale_in_ticks', symbol_config.get('scale_in_ticks', 20))
+        
+        print(f"Extracted scale_in_enabled: {scale_in_enabled} (type: {type(scale_in_enabled)})")
+        print(f"Extracted scale_in_levels: {scale_in_levels}")
+        print(f"Extracted scale_in_ticks: {scale_in_ticks}")
+        print(f"=== END SCALE PARAMETER EXTRACTION ===\n")
         
         # Only get TP/SL values if they are enabled with config defaults
         tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
@@ -433,10 +440,57 @@ def execute_trade():
                     )
                     print(f"Scale order execution result: {result}")
                     
-                    # Check if any scale orders failed
-                    failed_accounts = [r for r in result if 'error' in r.get('result', {})]
-                    if failed_accounts:
-                        print(f"Warning: Scale orders failed on {len(failed_accounts)} accounts: {failed_accounts}")
+                    # Check scale order verification results
+                    verified_accounts = []
+                    failed_accounts = []
+                    
+                    for r in result:
+                        scale_result = r.get('result', {})
+                        if 'error' in scale_result:
+                            failed_accounts.append({
+                                'account': r.get('account', 'Unknown'),
+                                'error': scale_result.get('error')
+                            })
+                        elif scale_result.get('success') is not False:
+                            # For scale orders, check the summary
+                            summary = scale_result.get('summary', {})
+                            verified_accounts.append({
+                                'account': r.get('account', 'Unknown'),
+                                'total_orders': summary.get('total', 0),
+                                'successful_orders': summary.get('successful', 0),
+                                'failed_orders': summary.get('failed', 0),
+                                'orders': scale_result.get('orders', [])
+                            })
+                        else:
+                            failed_accounts.append({
+                                'account': r.get('account', 'Unknown'),
+                                'error': 'Scale orders not verified'
+                            })
+                    
+                    # Return appropriate response based on verification results
+                    if len(verified_accounts) == 0:
+                        return jsonify({
+                            'status': 'error',
+                            'message': 'All scale orders failed',
+                            'failed_accounts': failed_accounts
+                        }), 400
+                    elif len(failed_accounts) > 0:
+                        return jsonify({
+                            'status': 'partial_success',
+                            'message': f'Scale orders verified on {len(verified_accounts)} accounts, failed on {len(failed_accounts)}',
+                            'verified_accounts': verified_accounts,
+                            'failed_accounts': failed_accounts,
+                            'scale_levels': scale_in_levels
+                        })
+                    else:
+                        # Calculate total orders placed across all accounts
+                        total_orders = sum(acc['successful_orders'] for acc in verified_accounts)
+                        return jsonify({
+                            'status': 'success',
+                            'message': f'{total_orders} scale orders verified across {len(verified_accounts)} accounts',
+                            'verified_accounts': verified_accounts,
+                            'scale_levels': scale_in_levels
+                        })
                 else:
                     # Execute on specific account
                     account_index = int(account_index)
@@ -453,13 +507,46 @@ def execute_trade():
                     )
                     print(f"Scale order execution result: {result}")
                     
-                    # Check if scale order failed
-                    if 'error' in result.get('result', {}):
-                        print(f"ERROR: Scale order failed: {result['result'].get('error', 'Unknown error')}")
+                    # Check scale order verification
+                    scale_result = result.get('result', {})
+                    if 'error' in scale_result:
+                        print(f"ERROR: Scale order failed: {scale_result.get('error', 'Unknown error')}")
                         return jsonify({
                             'status': 'error',
-                            'message': f"Scale order failed: {result['result'].get('error', 'Unknown error')}"
-                        }), 500
+                            'message': f"Scale order failed: {scale_result.get('error', 'Unknown error')}",
+                            'account': result.get('account', 'Unknown')
+                        }), 400
+                    elif scale_result.get('success') is not False:
+                        # For scale orders, check the summary
+                        summary = scale_result.get('summary', {})
+                        total_orders = summary.get('successful', 0)
+                        failed_orders = summary.get('failed', 0)
+                        
+                        if failed_orders > 0:
+                            return jsonify({
+                                'status': 'partial_success',
+                                'message': f'{total_orders} scale orders verified, {failed_orders} failed on account {account_index}',
+                                'account': result.get('account', 'Unknown'),
+                                'total_orders': summary.get('total', 0),
+                                'successful_orders': total_orders,
+                                'failed_orders': failed_orders,
+                                'orders': scale_result.get('orders', [])
+                            })
+                        else:
+                            return jsonify({
+                                'status': 'success',
+                                'message': f'{total_orders} scale orders verified on account {account_index}',
+                                'account': result.get('account', 'Unknown'),
+                                'total_orders': summary.get('total', 0),
+                                'successful_orders': total_orders,
+                                'orders': scale_result.get('orders', [])
+                            })
+                    else:
+                        return jsonify({
+                            'status': 'error',
+                            'message': 'Scale orders not verified',
+                            'account': result.get('account', 'Unknown')
+                        }), 400
             except Exception as e:
                 print(f"Error calculating/executing scale orders: {str(e)}")
                 return jsonify({
@@ -480,15 +567,48 @@ def execute_trade():
                     tick_size
                 )
                 
-                # Count successful trades
-                accounts_affected = sum(1 for r in result if 'error' not in r['result'])
+                # Check order verification results
+                verified_trades = []
+                failed_trades = []
                 
-                return jsonify({
-                    'status': 'success',
-                    'message': f'{action} trade executed on {accounts_affected} accounts',
-                    'accounts_affected': accounts_affected,
-                    'details': result
-                })
+                for r in result:
+                    order_result = r.get('result', {})
+                    if 'error' in order_result:
+                        failed_trades.append({
+                            'account': r.get('account', 'Unknown'),
+                            'error': order_result.get('error')
+                        })
+                    elif order_result.get('success') is True:
+                        verified_trades.append({
+                            'account': r.get('account', 'Unknown'),
+                            'orders': order_result.get('orders', [])
+                        })
+                    else:
+                        failed_trades.append({
+                            'account': r.get('account', 'Unknown'),
+                            'error': 'Order not verified'
+                        })
+                
+                # Determine overall status
+                if len(verified_trades) == 0:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'All {action} orders failed',
+                        'failed_accounts': failed_trades
+                    }), 400
+                elif len(failed_trades) > 0:
+                    return jsonify({
+                        'status': 'partial_success',
+                        'message': f'{action} orders verified on {len(verified_trades)} accounts, failed on {len(failed_trades)}',
+                        'verified_accounts': verified_trades,
+                        'failed_accounts': failed_trades
+                    })
+                else:
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'{action} orders verified on {len(verified_trades)} accounts',
+                        'verified_accounts': verified_trades
+                    })
             
             else:
                 # Execute on specific account
@@ -504,33 +624,28 @@ def execute_trade():
                     tick_size
                 )
                 
-                return jsonify({
-                    'status': 'success',
-                    'message': f'{action} trade executed on account {account_index}',
-                    'accounts_affected': 1,
-                    'details': result
-                })
+                # Check order verification
+                order_result = result.get('result', {})
+                if 'error' in order_result:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'{action} order failed: {order_result.get("error")}',
+                        'account': result.get('account', 'Unknown')
+                    }), 400
+                elif order_result.get('success') is True:
+                    return jsonify({
+                        'status': 'success',
+                        'message': f'{action} order verified on account {account_index}',
+                        'account': result.get('account', 'Unknown'),
+                        'orders': order_result.get('orders', [])
+                    })
+                else:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'{action} order not verified',
+                        'account': result.get('account', 'Unknown')
+                    }), 400
         
-        # Process results and return response for scale orders only
-        if account_index == 'all':
-            # Count successful trades
-            accounts_affected = sum(1 for r in result if 'error' not in r['result'])
-            message = f'{action} trade executed on {accounts_affected} accounts'
-            if scale_in_enabled:
-                message += f' with {scale_in_levels} scale levels'
-        else:
-            accounts_affected = 1
-            message = f'{action} trade executed on account {account_index}'
-            if scale_in_enabled:
-                message += f' with {scale_in_levels} scale levels'
-        
-        return jsonify({
-            'status': 'success',
-            'message': message,
-            'accounts_affected': accounts_affected,
-            'scale_orders': scale_in_enabled,
-            'details': result
-        })
     except Exception as e:
         return jsonify({
             'status': 'error',

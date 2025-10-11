@@ -20,7 +20,7 @@ with open(tampermonkey_path, 'r') as file:
     
 # Extract the core functions from Tampermonkey script
 def extract_core_functions(code):
-    # This is a simple extraction that removes the IIFE wrapper
+    # Simple extraction that removes the IIFE wrapper
     lines = code.split('\n')
     core_lines = []
     
@@ -79,7 +79,45 @@ class TradovateConnection:
             
         try:
             print(f"Injecting Tampermonkey functions for {self.account_name}...")
-            self.tab.Runtime.evaluate(expression=tampermonkey_functions)
+            
+            # Test if JavaScript execution works at all
+            test_result = self.tab.Runtime.evaluate(expression="console.log('🟢 PYTHON SCRIPT INJECTION TEST'); 'injection_test_success';")
+            print(f"JavaScript injection test result: {test_result}")
+            
+            # Wrap script to handle redeclaration issues gracefully
+            wrapped_script = f"""
+            try {{
+                // Try to load the script, catching redeclaration errors
+                console.log('🔄 Loading Tampermonkey functions...');
+                {tampermonkey_functions}
+                console.log('✅ Tampermonkey functions loaded successfully');
+            }} catch (error) {{
+                // Check if it's just a redeclaration error and functions exist
+                if (error.toString().includes('already been declared') || 
+                    error.toString().includes('Identifier') ||
+                    error.toString().includes('redeclaration')) {{
+                    console.log('🟠 Redeclaration error caught, checking if functions exist...');
+                    if (typeof window.autoTrade === 'function' && typeof window.auto_trade_scale === 'function') {{
+                        console.log('✅ Functions already exist and are working');
+                    }} else {{
+                        console.error('❌ Functions missing despite redeclaration error:', error);
+                    }}
+                }} else {{
+                    console.error('❌ Error loading Tampermonkey functions:', error);
+                }}
+            }}
+            
+            // Verify functions are available
+            if (typeof window.autoTrade === 'function' && typeof window.auto_trade_scale === 'function') {{
+                console.log('🎯 Both autoTrade and auto_trade_scale functions confirmed available');
+            }} else {{
+                console.error('❌ Missing functions - autoTrade:', typeof window.autoTrade, 'auto_trade_scale:', typeof window.auto_trade_scale);
+            }}
+            """
+            
+            # Inject the wrapped script
+            result = self.tab.Runtime.evaluate(expression=wrapped_script)
+            print(f"Tampermonkey injection result: {result}")
             
             # Also inject the getAllAccountTableData function
             project_root = get_project_root()
@@ -165,25 +203,57 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
-            result = self.tab.Runtime.evaluate(expression=js_code)
-            return result
+            # autoTrade now returns a promise, so we need to await it
+            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size})"
+            result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True, timeout=15000)  # 15 second timeout
+            
+            # Extract the actual result value
+            if 'result' in result and 'value' in result['result']:
+                order_result = result['result']['value']
+                print(f"Order verification result: {order_result}")
+                return order_result
+            else:
+                return {"error": "No result returned from autoTrade", "raw_result": result}
+                
         except Exception as e:
+            print(f"Error in auto_trade: {str(e)}")
             return {"error": str(e)}
     
     def auto_trade_scale(self, symbol, scale_orders, action='Buy', tp_ticks=100, sl_ticks=40, tick_size=0.25):
         """Execute scale in/out orders using the Tampermonkey script"""
+        print(f"\n🔍 AUTO_TRADE_SCALE PYTHON METHOD CALLED")
+        print(f"  symbol: {symbol}")
+        print(f"  scale_orders: {scale_orders}")
+        print(f"  action: {action}")
+        print(f"  tp_ticks: {tp_ticks}, sl_ticks: {sl_ticks}, tick_size: {tick_size}")
+        
         if not self.tab:
+            print(f"❌ No tab available for auto_trade_scale")
             return {"error": "No tab available"}
             
         try:
             # Convert scale_orders list to JavaScript array string
             import json
             orders_json = json.dumps(scale_orders)
-            js_code = f"auto_trade_scale('{symbol}', {orders_json}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
-            result = self.tab.Runtime.evaluate(expression=js_code)
-            return result
+            # auto_trade_scale now returns a promise, so we need to await it
+            js_code = f"auto_trade_scale('{symbol}', {orders_json}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size})"
+            print(f"🔍 Executing JavaScript: {js_code}")
+            
+            # Longer timeout for scale orders since they take time between orders
+            timeout_ms = 15000 + (len(scale_orders) * 1000)  # Base 15s + 1s per order
+            result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True, timeout=timeout_ms)
+            
+            # Extract the actual result value
+            if 'result' in result and 'value' in result['result']:
+                scale_result = result['result']['value']
+                print(f"🔍 Scale order verification result: {scale_result}")
+                return scale_result
+            else:
+                print(f"❌ No result returned from auto_trade_scale")
+                return {"error": "No result returned from auto_trade_scale", "raw_result": result}
+                
         except Exception as e:
+            print(f"❌ Exception in auto_trade_scale: {str(e)}")
             return {"error": str(e)}
             
     def exit_positions(self, symbol, option='cancel-option-Exit-at-Mkt-Cxl'):

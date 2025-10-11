@@ -2293,10 +2293,16 @@
                 // Validate scale levels
                 console.log('[DASHBOARD] ✅ STEP 7: Validating scale-in configuration');
                 if (scaleInEnabled && scaleLevels > qty) {
-                    console.log('[DASHBOARD] ❌ ERROR: Scale levels exceed quantity');
-                    console.log('[DASHBOARD] ❌ Scale levels:', scaleLevels, 'Quantity:', qty);
-                    alert(`Scale levels (${scaleLevels}) cannot exceed quantity (${qty}). Please reduce the number of scale levels.`);
-                    return;
+                    console.log('[DASHBOARD] ⚠️ WARNING: Scale levels exceed quantity');
+                    console.log('[DASHBOARD] ⚠️ Scale levels:', scaleLevels, 'Quantity:', qty);
+                    console.log('[DASHBOARD] 🔧 Auto-disabling scale-in for this trade');
+                    
+                    // Auto-disable scale-in instead of blocking the trade
+                    scaleInEnabled = false;
+                    document.getElementById('scaleInCheckbox').checked = false;
+                    
+                    // Notify user
+                    alert(`Scale-in disabled: Cannot split ${qty} contract(s) into ${scaleLevels} levels. Minimum 1 contract per level required.`);
                 }
                 console.log('[DASHBOARD] ✅ Scale-in configuration is valid');
                 
