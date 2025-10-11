@@ -1506,13 +1506,63 @@
             console.log('✅ RISK MANAGEMENT: Order passed risk checks');
         }
         
-        // Count filled orders
+        // Count filled orders and detect partial fills
         const filledOrders = orderEvents.filter(event => 
             event.event.includes('Fill') || event.event.includes('@')
         );
         result.filledCount = filledOrders.length;
+        
+        // Enhanced partial fill detection
+        result.partialFills = [];
+        result.totalFillQuantity = 0;
+        result.isPartiallyFilled = false;
+        
+        for (const order of orderEvents) {
+            // Check for partial fill indicators
+            if (order.event.includes('Fill') || order.event.includes('@')) {
+                const fillInfo = {
+                    event: order.event,
+                    quantity: order.quantity,
+                    price: order.price,
+                    timestamp: order.timestamp,
+                    isPartial: false
+                };
+                
+                // Extract quantity from fill event
+                const quantityMatch = order.quantity.match(/(\d+)/);
+                if (quantityMatch) {
+                    fillInfo.filledQuantity = parseInt(quantityMatch[1]);
+                    result.totalFillQuantity += fillInfo.filledQuantity;
+                }
+                
+                // Check if this is explicitly marked as partial
+                if (order.event.toLowerCase().includes('partial') || 
+                    order.event.toLowerCase().includes('part') ||
+                    order.quantity.toLowerCase().includes('partial')) {
+                    fillInfo.isPartial = true;
+                    result.isPartiallyFilled = true;
+                    console.log(`⚠️ PARTIAL FILL DETECTED: ${order.event} - Qty: ${order.quantity}`);
+                }
+                
+                result.partialFills.push(fillInfo);
+            }
+            
+            // Check for remaining quantity indicators
+            if (order.event.toLowerCase().includes('remaining') ||
+                order.event.toLowerCase().includes('unfilled') ||
+                order.event.toLowerCase().includes('pending')) {
+                result.isPartiallyFilled = true;
+                console.log(`⚠️ PARTIAL FILL INDICATOR: ${order.event}`);
+            }
+        }
+        
+        // Log fill summary
         if (result.filledCount > 0) {
-            console.log(`✅ Found ${result.filledCount} filled orders`);
+            console.log(`✅ Found ${result.filledCount} filled orders (Total qty: ${result.totalFillQuantity})`);
+            if (result.isPartiallyFilled) {
+                console.log(`⚠️ PARTIAL FILLS DETECTED - Some orders may not be completely filled`);
+                result.success = 'partial'; // Change success status for partial fills
+            }
         }
         
         console.log('🔄 ORDER FEEDBACK CAPTURE COMPLETE');
@@ -1853,6 +1903,7 @@ window.autoTrade = async function(inputSymbol, quantity = 1, action = 'Buy', tak
             const hasFeedback = bracketResult && (
                 bracketResult.rejectionReason || 
                 (bracketResult.success && bracketResult.orders?.length > 0) ||
+                (bracketResult.success === 'partial' && bracketResult.partialFills?.length > 0) ||
                 bracketResult.error
             );
             
@@ -1865,12 +1916,31 @@ window.autoTrade = async function(inputSymbol, quantity = 1, action = 'Buy', tak
                 orderResult = await waitForOrderFeedback();
             }
             
-            // Log the result
+            // Log the result with enhanced partial fill reporting
             console.log(`📍 AUTOTRADE STEP 12: Order verification complete`);
             console.log(`  Success: ${orderResult.success}`);
             console.log(`  Orders placed: ${orderResult.orders.length}`);
+            
+            // Enhanced partial fill reporting
+            if (orderResult.success === 'partial') {
+                console.log(`⚠️ PARTIAL FILLS DETECTED:`);
+                console.log(`  Total filled quantity: ${orderResult.totalFillQuantity || 0}`);
+                console.log(`  Number of partial fills: ${orderResult.partialFills?.length || 0}`);
+                if (orderResult.partialFills && orderResult.partialFills.length > 0) {
+                    orderResult.partialFills.forEach((fill, index) => {
+                        console.log(`    Fill ${index + 1}: ${fill.event} - Qty: ${fill.quantity} - Partial: ${fill.isPartial}`);
+                    });
+                }
+                console.log(`⚠️ NOTE: Some orders may require manual completion or cancellation`);
+            } else if (orderResult.isPartiallyFilled) {
+                console.log(`⚠️ Partial fill indicators found - check order status`);
+            }
+            
             if (orderResult.error) {
                 console.log(`  Error: ${orderResult.error}`);
+            }
+            if (orderResult.rejectionReason) {
+                console.log(`  Rejection: ${orderResult.rejectionReason}`);
             }
             
             return orderResult;
