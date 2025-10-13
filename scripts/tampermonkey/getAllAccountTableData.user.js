@@ -2,6 +2,7 @@
 function getAllAccountTableData() {
   // The accounts data is in the third .publicDataTable_main element
   const tables = document.querySelectorAll('.public_fixedDataTable_main');
+  console.log(`Found ${tables.length} tables with class .public_fixedDataTable_main`);
   
   // Look for the table with account headers
   let accountTable = null;
@@ -10,15 +11,18 @@ function getAllAccountTableData() {
     const headers = [...table.querySelectorAll('[role="columnheader"]')].map(h => 
       h.textContent.trim()
     );
+    console.log(`Table ${i} headers:`, headers.slice(0, 5).join(', ') + '...');
     
     // Check if this table has account-related headers
     if (headers.includes('Account ▲') || headers.includes('Total Available Margin')) {
       accountTable = table;
+      console.log(`Found account table at index ${i}`);
       break;
     }
   }
   
   if (!accountTable) {
+    console.log('No account table found');
     return JSON.stringify([]);
   }
   
@@ -47,6 +51,7 @@ function getAllAccountTableData() {
   
   // Extract rows
   const rows = [...accountTable.querySelectorAll('.public_fixedDataTable_bodyRow')];
+  console.log(`Found ${rows.length} account rows`);
   
   const result = rows.map(r => {
     const cells = r.querySelectorAll('[role="gridcell"]');

@@ -79,12 +79,33 @@ def dashboard():
 # API endpoint to get all account data
 @app.route('/api/accounts', methods=['GET'])
 def get_accounts():
+    print("\n=== /api/accounts endpoint called ===", flush=True)
+    print(f"Controller has {len(controller.connections)} connections", flush=True)
     account_data = []
     
     # Fetch data from all tabs
     for i, conn in enumerate(controller.connections):
         if conn.tab:
             try:
+                # Enable Runtime domain for console logging
+                conn.tab.Runtime.enable()
+                
+                # Set up console handler to capture console.log output
+                def make_console_handler(account_name):
+                    def console_api_handler(**kwargs):
+                        args = kwargs.get('args', [])
+                        message_parts = []
+                        for arg in args:
+                            if 'value' in arg:
+                                message_parts.append(str(arg['value']))
+                        message = ' '.join(message_parts)
+                        console_type = kwargs.get('type', 'log')
+                        print(f"[{account_name}] [console.{console_type}] {message}")
+                    return console_api_handler
+                
+                # Set the console handler for this connection
+                conn.tab.Runtime.consoleAPICalled = make_console_handler(conn.account_name)
+                
                 # First make sure the getAllAccountTableData function is available
                 try:
                     # Re-inject the function to ensure it's available
@@ -97,6 +118,9 @@ def get_accounts():
                 except Exception as inject_err:
                     print(f"Error re-injecting function: {inject_err}")
                 
+                # Log that we're calling getAllAccountTableData
+                print(f"[{conn.account_name}] Calling getAllAccountTableData()...")
+                
                 # Execute the getAllAccountTableData() function in each tab
                 result = conn.tab.Runtime.evaluate(
                     expression="getAllAccountTableData()")
@@ -106,7 +130,17 @@ def get_accounts():
                         # Parse the JSON result
                         tab_data = json.loads(result['result']['value'])
                         
+                        # Log the result data
+                        print(f"[{conn.account_name}] Result: {len(tab_data)} accounts found")
+                        if tab_data:
+                            # Show first account as sample
+                            sample = tab_data[0] if tab_data else {}
+                            print(f"[{conn.account_name}] Sample account: {sample.get('Account', 'Unknown')} - "
+                                  f"Platform: {sample.get('Platform', 'Unknown')}, "
+                                  f"Status: {sample.get('Status', 'Unknown')}")
+                        
                         if not tab_data:
+                            print(f"[{conn.account_name}] No account data returned (empty array)")
                             continue
                             
                         # Add account identifier to each item
@@ -1454,8 +1488,16 @@ def persist_scraper_data():
 
 # Run the app
 def run_flask_dashboard():
+    import sys
+    sys.stdout = sys.__stdout__  # Ensure stdout is not redirected
+    sys.stderr = sys.__stderr__  # Ensure stderr is not redirected
+    print("Starting Flask dashboard on port 6001...", flush=True)
     inject_account_data_function()
-    app.run(host='0.0.0.0', port=6001)
+    # Enable Flask logging
+    import logging
+    logging.basicConfig(level=logging.INFO)
+    app.logger.setLevel(logging.INFO)
+    app.run(host='0.0.0.0', port=6001, debug=True, use_reloader=False)
 
 if __name__ == '__main__':
     # Start the Flask server

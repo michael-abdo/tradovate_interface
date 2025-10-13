@@ -27,7 +27,7 @@ from src.chrome_logger import ChromeLogger
 
 # Constants
 NGROK_DOMAIN = "mike-development.ngrok-free.app"
-WAIT_TIME = 15  # Hardcoded wait time (was --wait flag)
+WAIT_TIME = 30  # Increased from 15 to allow all accounts to load properly
 
 # Global list to track ChromeLogger instances for cleanup
 chrome_loggers = []
@@ -178,12 +178,23 @@ def run_dashboard():
     """Run the dashboard process"""
     print("Starting dashboard server...")
     flask_process = subprocess.Popen(
-        [sys.executable, "-c", 
+        [sys.executable, "-u", "-c",  # -u for unbuffered output
          "from src.dashboard import run_flask_dashboard; run_flask_dashboard()"],
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.STDOUT,  # Combine stderr with stdout
+        text=True
     )
     pid_tracker.add_pid(flask_process.pid, "flask_dashboard")
+    
+    # Start a thread to print Flask output
+    def print_flask_output(proc):
+        for line in iter(proc.stdout.readline, ''):
+            if line:
+                print(f"[flask_dashboard] {line.rstrip()}")
+    
+    flask_thread = threading.Thread(target=print_flask_output, args=(flask_process,))
+    flask_thread.daemon = True
+    flask_thread.start()
     
     # Wait a moment for Flask to start
     time.sleep(2)
