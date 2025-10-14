@@ -1135,6 +1135,13 @@
         
         // Extract the trading ticket header information
         const ticketHeader = orderHistoryDiv.querySelector('.trading-ticket-header');
+        let orderType = 'UNKNOWN';
+        let requestedPrice = null;
+        let orderQuantity = null;
+        let orderAction = null;
+        let orderId = null;
+        let fillRatio = null;
+        
         if (ticketHeader) {
             // Extract symbol info
             const symbolDiv = ticketHeader.querySelector('div[style*="font-size: 160%"]');
@@ -1144,8 +1151,49 @@
             const orderSummaryDiv = ticketHeader.querySelector('div:last-child');
             const orderSummary = orderSummaryDiv ? orderSummaryDiv.textContent.trim() : 'No summary';
             
+            // Parse order type from summary
+            if (orderSummary.includes(' MKT ')) orderType = 'MARKET';
+            else if (orderSummary.includes(' LMT ')) orderType = 'LIMIT';
+            else if (orderSummary.includes(' STP LMT ')) orderType = 'STOP_LIMIT';
+            else if (orderSummary.includes(' STP ')) orderType = 'STOP';
+            
+            // Extract order ID
+            const orderIdMatch = orderSummary.match(/#(\d+)/);
+            orderId = orderIdMatch ? orderIdMatch[1] : null;
+            
+            // Extract action (Buy/Sell)
+            orderAction = orderSummary.includes('Buy') ? 'Buy' : 
+                         orderSummary.includes('Sell') ? 'Sell' : null;
+            
+            // Extract quantity
+            const quantityMatch = orderSummary.match(/(\d+)\s+[A-Z]+\d*\s+(?:MKT|LMT|STP)/);
+            orderQuantity = quantityMatch ? parseInt(quantityMatch[1]) : null;
+            
+            // Extract limit price if present
+            const limitPriceMatch = orderSummary.match(/LMT at ([\d.]+)/);
+            requestedPrice = limitPriceMatch ? parseFloat(limitPriceMatch[1]) : null;
+            
+            // Extract fill ratio (e.g., "6/6" or "3/5")
+            const fillRatioMatch = orderSummary.match(/(\d+)\/(\d+)/);
+            fillRatio = fillRatioMatch ? {
+                filled: parseInt(fillRatioMatch[1]),
+                total: parseInt(fillRatioMatch[2]),
+                isPartial: parseInt(fillRatioMatch[1]) < parseInt(fillRatioMatch[2]),
+                percentFilled: (parseInt(fillRatioMatch[1]) / parseInt(fillRatioMatch[2]) * 100).toFixed(2)
+            } : null;
+            
             console.log(`📊 ORDER FEEDBACK - Symbol: ${symbol}`);
             console.log(`📊 ORDER FEEDBACK - Summary: ${orderSummary}`);
+            console.log(`📊 ORDER FEEDBACK - Order Type: ${orderType}`);
+            console.log(`📊 ORDER FEEDBACK - Order ID: ${orderId}`);
+            console.log(`📊 ORDER FEEDBACK - Action: ${orderAction}`);
+            console.log(`📊 ORDER FEEDBACK - Quantity: ${orderQuantity}`);
+            if (requestedPrice) {
+                console.log(`📊 ORDER FEEDBACK - Requested Price: ${requestedPrice}`);
+            }
+            if (fillRatio) {
+                console.log(`📊 ORDER FEEDBACK - Fill Status: ${fillRatio.filled}/${fillRatio.total} (${fillRatio.percentFilled}%${fillRatio.isPartial ? ' - PARTIAL FILL' : ' - COMPLETE'})`);
+            }
         }
         
         // Extract detailed order events from the data table
@@ -1166,14 +1214,272 @@
         console.log('📊 ORDER FEEDBACK - Full HTML Structure:');
         console.log(orderHistoryDiv.outerHTML);
         
+        // Extract individual fill events with quantities
+        const fillEvents = orderEvents
+            .filter(event => event.fillPrice !== null)
+            .map(event => {
+                // Parse quantity from event text (e.g., "6@24824.00 NQZ5")
+                const fillMatch = event.event.match(/(\d+)@([\d.]+)/);
+                return {
+                    timestamp: event.timestamp,
+                    id: event.id,
+                    price: event.fillPrice,
+                    quantity: fillMatch ? parseInt(fillMatch[1]) : null,
+                    eventText: event.event
+                };
+            });
+        
+        // Parse stop loss and take profit order IDs
+        let stopLossOrderId = null;
+        let takeProfitOrderId = null;
+        let bracketOrders = [];
+        
+        // Look for bracket order creation events
+        orderEvents.forEach(event => {
+            // Check for stop loss order creation
+            if (event.event.includes('STP') || event.comment.includes('Stop')) {
+                const stopIdMatch = event.event.match(/#?(\d+)/);
+                if (stopIdMatch) {
+                    stopLossOrderId = stopIdMatch[1];
+                    bracketOrders.push({
+                        type: 'STOP_LOSS',
+                        orderId: stopLossOrderId,
+                        event: event
+                    });
+                }
+            }
+            
+            // Check for take profit order creation
+            if (event.event.includes('LMT') && (event.comment.includes('Profit') || event.comment.includes('Target'))) {
+                const tpIdMatch = event.event.match(/#?(\d+)/);
+                if (tpIdMatch && tpIdMatch[1] !== orderId) { // Make sure it's not the main order
+                    takeProfitOrderId = tpIdMatch[1];
+                    bracketOrders.push({
+                        type: 'TAKE_PROFIT',
+                        orderId: takeProfitOrderId,
+                        event: event
+                    });
+                }
+            }
+            
+            // Also check for bracket order indicators in comments
+            if (event.comment.includes('bracket') || event.comment.includes('OCO')) {
+                console.log(`📊 BRACKET ORDER DETECTED - Event: ${event.event}, Comment: ${event.comment}`);
+            }
+        });
+        
+        if (bracketOrders.length > 0) {
+            console.log(`📊 BRACKET ORDERS FOUND: ${bracketOrders.length} orders`);
+            bracketOrders.forEach(bo => {
+                console.log(`📊 ${bo.type} Order ID: ${bo.orderId}`);
+            });
+        }
+        
+        // Extract commission and fees information
+        let commission = null;
+        let fees = [];
+        let totalCost = 0;
+        
+        orderEvents.forEach(event => {
+            // Look for commission in comments or event text
+            const commissionMatch = event.comment.match(/commission[:\s]+\$?([\d.]+)/i) || 
+                                   event.event.match(/commission[:\s]+\$?([\d.]+)/i);
+            if (commissionMatch) {
+                commission = parseFloat(commissionMatch[1]);
+                totalCost += commission;
+                console.log(`📊 COMMISSION FOUND: $${commission}`);
+            }
+            
+            // Look for fees
+            const feeMatch = event.comment.match(/fee[:\s]+\$?([\d.]+)/i) || 
+                            event.event.match(/fee[:\s]+\$?([\d.]+)/i);
+            if (feeMatch) {
+                const fee = parseFloat(feeMatch[1]);
+                fees.push({
+                    amount: fee,
+                    description: event.comment || event.event,
+                    timestamp: event.timestamp
+                });
+                totalCost += fee;
+                console.log(`📊 FEE FOUND: $${fee}`);
+            }
+            
+            // Look for exchange fees specifically
+            if (event.comment.includes('Exchange') || event.event.includes('Exchange')) {
+                const exchangeFeeMatch = event.comment.match(/\$?([\d.]+)/) || 
+                                        event.event.match(/\$?([\d.]+)/);
+                if (exchangeFeeMatch) {
+                    const exchangeFee = parseFloat(exchangeFeeMatch[1]);
+                    fees.push({
+                        amount: exchangeFee,
+                        description: 'Exchange Fee',
+                        timestamp: event.timestamp
+                    });
+                }
+            }
+        });
+        
+        // Extract order timing metrics
+        let timingMetrics = {
+            submittedAt: null,
+            firstFillAt: null,
+            completedAt: null,
+            timeToFill: null,
+            riskCheckTime: null
+        };
+        
+        if (orderEvents.length > 0) {
+            // First event is typically order submission
+            timingMetrics.submittedAt = orderEvents[0].timestamp;
+            
+            // Find risk check event
+            const riskCheckEvent = orderEvents.find(e => e.event.includes('Risk Passed'));
+            if (riskCheckEvent) {
+                const submittedTime = new Date(timingMetrics.submittedAt);
+                const riskTime = new Date(riskCheckEvent.timestamp);
+                timingMetrics.riskCheckTime = riskTime - submittedTime; // milliseconds
+                console.log(`📊 TIMING - Risk check completed in ${timingMetrics.riskCheckTime}ms`);
+            }
+            
+            // Find first fill
+            const firstFill = fillEvents[0];
+            if (firstFill) {
+                timingMetrics.firstFillAt = firstFill.timestamp;
+                const submittedTime = new Date(timingMetrics.submittedAt);
+                const fillTime = new Date(timingMetrics.firstFillAt);
+                timingMetrics.timeToFill = fillTime - submittedTime; // milliseconds
+                console.log(`📊 TIMING - First fill in ${timingMetrics.timeToFill}ms`);
+            }
+            
+            // Last event timestamp is completion
+            timingMetrics.completedAt = orderEvents[orderEvents.length - 1].timestamp;
+            
+            // Calculate total order duration
+            const submittedTime = new Date(timingMetrics.submittedAt);
+            const completedTime = new Date(timingMetrics.completedAt);
+            const totalDuration = completedTime - submittedTime;
+            timingMetrics.totalDuration = totalDuration;
+            
+            console.log(`📊 TIMING - Order completed in ${totalDuration}ms total`);
+            console.log(`📊 TIMING - Submitted: ${timingMetrics.submittedAt}`);
+            console.log(`📊 TIMING - Completed: ${timingMetrics.completedAt}`);
+        }
+        
+        // Extract fill prices from order events
+        const fillPrices = orderEvents
+            .filter(event => event.fillPrice !== null)
+            .map(event => event.fillPrice);
+        
+        // Calculate average fill price if we have fills
+        const averageFillPrice = fillPrices.length > 0 
+            ? fillPrices.reduce((sum, price) => sum + price, 0) / fillPrices.length
+            : null;
+        
+        // Calculate price improvement for limit orders
+        let priceImprovement = null;
+        if (orderType === 'LIMIT' && requestedPrice && averageFillPrice) {
+            // For buy orders: negative improvement means filled at better (lower) price
+            // For sell orders: positive improvement means filled at better (higher) price
+            if (orderAction === 'Buy') {
+                priceImprovement = requestedPrice - averageFillPrice;
+            } else if (orderAction === 'Sell') {
+                priceImprovement = averageFillPrice - requestedPrice;
+            }
+        }
+        
+        // Calculate slippage for market orders
+        let slippage = null;
+        let slippageTicks = null;
+        if (orderType === 'MARKET' && averageFillPrice) {
+            // Get the symbol to determine tick size
+            const symbolDiv = ticketHeader?.querySelector('div[style*="font-size: 160%"]');
+            const symbol = symbolDiv ? symbolDiv.textContent.trim() : '';
+            const rootSymbol = symbol.replace(/[A-Z]\d+$/, '');
+            const symbolData = futuresTickData[rootSymbol];
+            const tickSize = symbolData?.tickSize || 0.25;
+            
+            // For market orders, we need the expected price at submission
+            // Since we don't have that, we'll calculate slippage indicators
+            if (fillPrices.length > 1) {
+                // Calculate price range for multiple fills (indicates slippage)
+                const minFill = Math.min(...fillPrices);
+                const maxFill = Math.max(...fillPrices);
+                const priceRange = maxFill - minFill;
+                const priceRangeTicks = Math.round(priceRange / tickSize);
+                
+                slippage = {
+                    priceRange: priceRange,
+                    priceRangeTicks: priceRangeTicks,
+                    minFillPrice: minFill,
+                    maxFillPrice: maxFill,
+                    fillCount: fillPrices.length,
+                    tickSize: tickSize,
+                    note: 'Slippage calculated from fill price range. Mid-price at submission not available.'
+                };
+                
+                console.log(`📊 MARKET ORDER SLIPPAGE - Price range: ${priceRange} (${priceRangeTicks} ticks)`);
+                console.log(`📊 MARKET ORDER SLIPPAGE - Fills ranged from ${minFill} to ${maxFill}`);
+            } else if (fillPrices.length === 1) {
+                // Single fill - can't calculate slippage without submission price
+                slippage = {
+                    fillPrice: fillPrices[0],
+                    tickSize: tickSize,
+                    note: 'Single fill. Slippage cannot be calculated without mid-price at submission.'
+                };
+                console.log(`📊 MARKET ORDER - Single fill at ${fillPrices[0]}`);
+            }
+        }
+        
         // Check for specific rejection reasons or success indicators
         const rejectionText = orderHistoryDiv.textContent;
         let feedbackResult = {
             success: false,
             orders: orderEvents || [],
             rejectionReason: null,
-            error: null
+            error: null,
+            // Enhanced order details
+            orderId: orderId,
+            orderType: orderType,
+            orderAction: orderAction,
+            orderQuantity: orderQuantity,
+            requestedPrice: requestedPrice,
+            averageFillPrice: averageFillPrice,
+            priceImprovement: priceImprovement,
+            fillPrices: fillPrices,
+            fillRatio: fillRatio,
+            fillEvents: fillEvents,
+            slippage: slippage,
+            // Bracket order information
+            stopLossOrderId: stopLossOrderId,
+            takeProfitOrderId: takeProfitOrderId,
+            bracketOrders: bracketOrders,
+            // Commission and fees
+            commission: commission,
+            fees: fees,
+            totalCost: totalCost > 0 ? totalCost : null,
+            // Timing metrics
+            timingMetrics: timingMetrics,
+            // Price comparison analysis
+            priceComparison: null
         };
+        
+        // Add price comparison analysis
+        if (requestedPrice && averageFillPrice) {
+            feedbackResult.priceComparison = {
+                requested: requestedPrice,
+                filled: averageFillPrice,
+                difference: averageFillPrice - requestedPrice,
+                percentDifference: ((averageFillPrice - requestedPrice) / requestedPrice * 100).toFixed(3),
+                improvement: priceImprovement,
+                analysis: priceImprovement > 0 ? 'BETTER_THAN_REQUESTED' : 
+                         priceImprovement < 0 ? 'WORSE_THAN_REQUESTED' : 
+                         'FILLED_AT_REQUESTED'
+            };
+            
+            console.log(`📊 PRICE COMPARISON - Requested: ${requestedPrice}, Filled: ${averageFillPrice}`);
+            console.log(`📊 PRICE COMPARISON - Difference: ${feedbackResult.priceComparison.difference} (${feedbackResult.priceComparison.percentDifference}%)`);
+            console.log(`📊 PRICE COMPARISON - Analysis: ${feedbackResult.priceComparison.analysis}`);
+        }
         
         if (rejectionText.includes('Rejected')) {
             console.log('❌ ORDER REJECTED - checking rejection reason...');
@@ -1195,7 +1501,107 @@
             feedbackResult.success = true;
         }
         
+        // Generate comprehensive order verification report
+        const generateOrderReport = () => {
+            let report = '\n📊 ════════════════ ORDER VERIFICATION REPORT ════════════════\n';
+            
+            // Order Header
+            report += `\n🔸 ORDER DETAILS:\n`;
+            report += `   Order ID: ${feedbackResult.orderId || 'N/A'}\n`;
+            report += `   Type: ${feedbackResult.orderType}\n`;
+            report += `   Action: ${feedbackResult.orderAction} ${feedbackResult.orderQuantity || 'N/A'} units\n`;
+            report += `   Status: ${feedbackResult.success ? '✅ SUCCESS' : '❌ FAILED'}\n`;
+            
+            // Price Analysis
+            if (feedbackResult.orderType === 'LIMIT' && feedbackResult.priceComparison) {
+                report += `\n🔸 PRICE VERIFICATION:\n`;
+                report += `   Requested: ${feedbackResult.requestedPrice}\n`;
+                report += `   Filled: ${feedbackResult.averageFillPrice}\n`;
+                report += `   Difference: ${feedbackResult.priceComparison.difference} (${feedbackResult.priceComparison.percentDifference}%)\n`;
+                report += `   Result: ${feedbackResult.priceComparison.analysis}\n`;
+            }
+            
+            // Market Order Slippage
+            if (feedbackResult.orderType === 'MARKET' && feedbackResult.slippage) {
+                report += `\n🔸 MARKET ORDER SLIPPAGE:\n`;
+                if (feedbackResult.slippage.priceRange !== undefined) {
+                    report += `   Fill Range: ${feedbackResult.slippage.priceRange} (${feedbackResult.slippage.priceRangeTicks} ticks)\n`;
+                    report += `   Min Fill: ${feedbackResult.slippage.minFillPrice}\n`;
+                    report += `   Max Fill: ${feedbackResult.slippage.maxFillPrice}\n`;
+                }
+            }
+            
+            // Fill Information
+            if (feedbackResult.fillRatio) {
+                report += `\n🔸 FILL INFORMATION:\n`;
+                report += `   Fill Ratio: ${feedbackResult.fillRatio.filled}/${feedbackResult.fillRatio.total} (${feedbackResult.fillRatio.percentFilled}%)\n`;
+                report += `   Status: ${feedbackResult.fillRatio.isPartial ? '⚠️ PARTIAL FILL' : '✅ COMPLETE FILL'}\n`;
+                if (feedbackResult.fillEvents.length > 0) {
+                    report += `   Individual Fills:\n`;
+                    feedbackResult.fillEvents.forEach((fill, idx) => {
+                        report += `     ${idx + 1}. ${fill.quantity || 'N/A'} @ ${fill.price} (${fill.timestamp})\n`;
+                    });
+                }
+            }
+            
+            // Bracket Orders
+            if (feedbackResult.bracketOrders.length > 0) {
+                report += `\n🔸 BRACKET ORDERS:\n`;
+                if (feedbackResult.stopLossOrderId) {
+                    report += `   Stop Loss: #${feedbackResult.stopLossOrderId}\n`;
+                }
+                if (feedbackResult.takeProfitOrderId) {
+                    report += `   Take Profit: #${feedbackResult.takeProfitOrderId}\n`;
+                }
+            }
+            
+            // Timing Analysis
+            if (feedbackResult.timingMetrics.timeToFill) {
+                report += `\n🔸 EXECUTION TIMING:\n`;
+                report += `   Time to Fill: ${feedbackResult.timingMetrics.timeToFill}ms\n`;
+                if (feedbackResult.timingMetrics.riskCheckTime) {
+                    report += `   Risk Check: ${feedbackResult.timingMetrics.riskCheckTime}ms\n`;
+                }
+                report += `   Total Duration: ${feedbackResult.timingMetrics.totalDuration || 'N/A'}ms\n`;
+            }
+            
+            // Costs
+            if (feedbackResult.commission || feedbackResult.totalCost) {
+                report += `\n🔸 COSTS:\n`;
+                if (feedbackResult.commission) {
+                    report += `   Commission: $${feedbackResult.commission}\n`;
+                }
+                if (feedbackResult.fees.length > 0) {
+                    report += `   Fees: ${feedbackResult.fees.length} fee(s) totaling $${feedbackResult.fees.reduce((sum, f) => sum + f.amount, 0)}\n`;
+                }
+                if (feedbackResult.totalCost) {
+                    report += `   Total Cost: $${feedbackResult.totalCost}\n`;
+                }
+            }
+            
+            // Rejection Reason
+            if (feedbackResult.rejectionReason) {
+                report += `\n🔸 REJECTION DETAILS:\n`;
+                report += `   Reason: ${feedbackResult.rejectionReason}\n`;
+            }
+            
+            report += '\n══════════════════════════════════════════════════════════\n';
+            return report;
+        };
+        
+        // Generate and log the comprehensive report
+        const orderReport = generateOrderReport();
+        console.log(orderReport);
+        
+        // Add the report to the feedback result
+        feedbackResult.verificationReport = orderReport;
+        
+        // Store last result for testing/debugging
+        captureOrderFeedback.lastResult = feedbackResult;
+        window.lastOrderFeedback = feedbackResult; // Also make available globally
+        
         console.log('🔄 ORDER FEEDBACK CAPTURE COMPLETE');
+        console.log('💡 TIP: Access last feedback with: window.lastOrderFeedback');
         return feedbackResult;
     }
 
