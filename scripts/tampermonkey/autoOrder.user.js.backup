@@ -886,208 +886,59 @@
         }
 
         async function submitOrder(orderType, priceValue) {
-            console.log(`🔧 Starting submitOrder for ${orderType} order`);
-            
             await setCommonFields();
 
-            // CRITICAL FIX: Add validation before DOM interactions
             const typeSel = document.querySelector('.group.order-type .select-input div[tabindex]');
-            if (!typeSel) {
-                console.error('❌ Order type dropdown not found!');
-                return {
-                    success: false,
-                    error: 'Order type dropdown not found',
-                    orders: [],
-                    symbol: null,
-                    summary: null,
-                    rejectionReason: 'UI validation error',
-                    filledCount: 0,
-                    rejectedCount: 1
-                };
-            }
-            
-            console.log(`📋 Setting order type to: ${orderType}`);
-            typeSel.click();
-            await delay(200); // Allow dropdown to open
-            
-            const orderTypeOption = [...document.querySelectorAll('ul.dropdown-menu li')]
-                .find(li => li.textContent.trim() === orderType);
-            if (!orderTypeOption) {
-                console.error(`❌ Order type option '${orderType}' not found!`);
-                return {
-                    success: false,
-                    error: `Order type option '${orderType}' not found`,
-                    orders: [],
-                    symbol: null,
-                    summary: null,
-                    rejectionReason: 'UI validation error',
-                    filledCount: 0,
-                    rejectedCount: 1
-                };
-            }
-            orderTypeOption.click();
+            typeSel?.click();
+            [...document.querySelectorAll('ul.dropdown-menu li')]
+                .find(li => li.textContent.trim() === orderType)
+                ?.click();
 
-            // CRITICAL FIX: Restore delay to let Tradovate draw the price box
-            await delay(500);               // Increased delay for UI stability
+            //await delay(400);               // NEW - let Tradovate draw the price box
 
-            if (priceValue) {
-                console.log(`💰 Setting price to: ${priceValue}`);
+            if (priceValue)
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
-            }
             clickPriceArrow();
 
-            // CRITICAL FIX: Validate submit button exists before clicking
-            const submitButton = document.querySelector('.btn-group .btn-primary');
-            if (!submitButton) {
-                console.error('❌ Submit button not found!');
-                return {
-                    success: false,
-                    error: 'Submit button not found',
-                    orders: [],
-                    symbol: null,
-                    summary: null,
-                    rejectionReason: 'UI validation error',
-                    filledCount: 0,
-                    rejectedCount: 1
-                };
-            }
-            
-            console.log('🚀 Clicking submit button...');
-            submitButton.click();
-            await delay(500); // Increased delay after order submission
+            document.querySelector('.btn-group .btn-primary')?.click();
+            await delay(200);
             console.log(getOrderEvents());
             
-            // CRITICAL FIX: Wait longer for order to appear in history
-            console.log('⏳ Waiting for order to appear in history...');
-            await delay(1000); // Additional delay for order processing
-            
             // 🔄 CAPTURE ORDER FEEDBACK BEFORE CLICKING BACK BUTTON
-            console.log('📊 Capturing order feedback from submitOrder...');
-            const feedbackResult = await captureOrderFeedback();
-            
-            // Log the feedback capture result
-            if (feedbackResult?.rejectionReason) {
-                console.log(`✅ submitOrder captured REJECTION: ${feedbackResult.rejectionReason}`);
-            } else if (feedbackResult?.success && feedbackResult?.orders?.length > 0) {
-                console.log(`✅ submitOrder captured SUCCESS: ${feedbackResult.orders.length} orders`);
-            } else if (feedbackResult?.error) {
-                console.log(`⚠️ submitOrder captured ERROR: ${feedbackResult.error}`);
-            } else {
-                console.log('⚠️ submitOrder captured UNKNOWN result:', feedbackResult);
-            }
+            await captureOrderFeedback();
             
             document.querySelector('.icon.icon-back')?.click();
             await delay(200);
-            
-            // Return the captured feedback result
-            return feedbackResult;
         }
 
-        console.log(`📍 BRACKET STEP 3: Submitting initial ${tradeData.orderType || 'MARKET'} order...`);
-        console.log(`  Order type: ${tradeData.orderType || 'MARKET'}`);
-        console.log(`  Entry price: ${tradeData.entryPrice || 'Market price'}`);
-        console.log(`  Action: ${tradeData.action}`);
-        console.log(`  Quantity: ${tradeData.qty}`);
-        
-        // Capture feedback from the main entry order
-        const mainOrderResult = await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
-        console.log(`📊 Main order result:`, mainOrderResult);
-        
-        // Initialize bracket feedback aggregation
-        const bracketFeedback = {
-            success: mainOrderResult?.success || false,
-            orders: mainOrderResult?.orders || [],
-            symbol: mainOrderResult?.symbol || null,
-            summary: mainOrderResult?.summary || null,
-            rejectionReason: mainOrderResult?.rejectionReason || null,
-            filledCount: mainOrderResult?.filledCount || 0,
-            rejectedCount: mainOrderResult?.rejectedCount || 0,
-            error: mainOrderResult?.error || null,
-            mainOrder: mainOrderResult,
-            tpOrder: null,
-            slOrder: null
-        };
-
-        // Check if main order was rejected - if so, don't place TP/SL orders
-        if (mainOrderResult?.rejectionReason || mainOrderResult?.error || !mainOrderResult?.success) {
-            console.log(`❌ Main order rejected/failed - skipping TP/SL orders`);
-            console.log(`   Rejection reason: ${mainOrderResult?.rejectionReason || mainOrderResult?.error || 'Unknown'}`);
-            
-            // Return immediately with main order feedback
-            console.log('Bracket order creation complete (main order rejected)');
-            return bracketFeedback;
-        }
-        
-        console.log(`✅ Main order successful - proceeding with TP/SL orders`);
+        console.log(`Submitting initial ${tradeData.orderType || 'MARKET'} order`);
+        await submitOrder(tradeData.orderType || 'MARKET', tradeData.entryPrice);
 
         if (tradeData.action === 'Buy') {
             console.log('Flipping action to Sell for TP/SL orders');
             tradeData.action = 'Sell';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
-                bracketFeedback.tpOrder = tpResult;
-                
-                // Aggregate TP results
-                if (tpResult?.orders?.length) {
-                    bracketFeedback.orders = [...bracketFeedback.orders, ...tpResult.orders];
-                }
-                if (tpResult?.filledCount) bracketFeedback.filledCount += tpResult.filledCount;
-                if (tpResult?.rejectedCount) bracketFeedback.rejectedCount += tpResult.rejectedCount;
+                await submitOrder('LIMIT', tradeData.takeProfit);
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                const slResult = await submitOrder('STOP', tradeData.stopLoss);
-                bracketFeedback.slOrder = slResult;
-                
-                // Aggregate SL results  
-                if (slResult?.orders?.length) {
-                    bracketFeedback.orders = [...bracketFeedback.orders, ...slResult.orders];
-                }
-                if (slResult?.filledCount) bracketFeedback.filledCount += slResult.filledCount;
-                if (slResult?.rejectedCount) bracketFeedback.rejectedCount += slResult.rejectedCount;
+                await submitOrder('STOP', tradeData.stopLoss);
             }
         } else {
             console.log('Flipping action to Buy for TP/SL orders');
             tradeData.action = 'Buy';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
-                const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
-                bracketFeedback.tpOrder = tpResult;
-                
-                // Aggregate TP results
-                if (tpResult?.orders?.length) {
-                    bracketFeedback.orders = [...bracketFeedback.orders, ...tpResult.orders];
-                }
-                if (tpResult?.filledCount) bracketFeedback.filledCount += tpResult.filledCount;
-                if (tpResult?.rejectedCount) bracketFeedback.rejectedCount += tpResult.rejectedCount;
+                await submitOrder('LIMIT', tradeData.takeProfit);
             }
             if (enableSL) {
                 console.log(`Creating stop loss order at ${tradeData.stopLoss}`);
-                const slResult = await submitOrder('STOP', tradeData.stopLoss);
-                bracketFeedback.slOrder = slResult;
-                
-                // Aggregate SL results  
-                if (slResult?.orders?.length) {
-                    bracketFeedback.orders = [...bracketFeedback.orders, ...slResult.orders];
-                }
-                if (slResult?.filledCount) bracketFeedback.filledCount += slResult.filledCount;
-                if (slResult?.rejectedCount) bracketFeedback.rejectedCount += slResult.rejectedCount;
+                await submitOrder('STOP', tradeData.stopLoss);
             }
         }
-        
-        // Final aggregated feedback logging
-        console.log('📊 Final bracket feedback aggregation:');
-        console.log(`   Overall success: ${bracketFeedback.success}`);
-        console.log(`   Total orders: ${bracketFeedback.orders.length}`);
-        console.log(`   Filled count: ${bracketFeedback.filledCount}`);
-        console.log(`   Rejected count: ${bracketFeedback.rejectedCount}`);
-        console.log(`   Main order: ${bracketFeedback.mainOrder?.success ? 'Success' : 'Failed'}`);
-        console.log(`   TP order: ${bracketFeedback.tpOrder?.success ? 'Success' : bracketFeedback.tpOrder ? 'Failed' : 'N/A'}`);
-        console.log(`   SL order: ${bracketFeedback.slOrder?.success ? 'Success' : bracketFeedback.slOrder ? 'Failed' : 'N/A'}`);
-        
         console.log('Bracket order creation complete');
-        return bracketFeedback;
+        return Promise.resolve();
     }
 
     // returns an array like [{timestamp,id,event,comment,fillPrice}, …]
