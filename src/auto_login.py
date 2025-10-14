@@ -424,12 +424,16 @@ class ChromeInstance:
                 })();
                 """
                 self.tab.Runtime.evaluate(expression=access_js)
+                # Inject autorisk script after successful account access
+                time.sleep(2)  # Wait for page to load
+                self.inject_autorisk_script()
                 return True
                 
             elif page_status == "logged_in":
                 # Already logged in - inject scripts if not already loaded
                 # Don't log this every time to reduce noise
-                self.inject_autorisk_script()
+                # DISABLED: Don't repeatedly inject script - only inject once on login
+                # self.inject_autorisk_script()
                 return False
                 
             else:
