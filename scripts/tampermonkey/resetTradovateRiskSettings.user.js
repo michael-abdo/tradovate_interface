@@ -158,11 +158,11 @@ let ACCOUNT_ID = null;
             .then(() => {
             const closeBtn = document.querySelector('button[aria-label="close"]');
             if (closeBtn) closeBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-            loopId = setTimeout(start, 3000); // remember id
+            // loopId = setTimeout(start, 3000); // remember id - DISABLED to prevent automatic loop
         })
             .catch(err => {
             console.error(err);
-            loopId = setTimeout(start, 3000); // remember id
+            // loopId = setTimeout(start, 3000); // remember id - DISABLED to prevent automatic loop
         });
     };
 
@@ -209,7 +209,7 @@ let ACCOUNT_ID = null;
         if (!gear) return console.error('RiskStarter: settings icon not found');
         gear.click();
         btn.disabled = true;
-        setTimeout(start, 10000);
+        // setTimeout(start, 10000); // DISABLED to prevent automatic loop
     });
 
     dropdown.addEventListener('change', () => {
