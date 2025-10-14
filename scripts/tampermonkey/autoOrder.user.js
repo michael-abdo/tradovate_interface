@@ -23,7 +23,7 @@
 
     function createUI(visible = false) {
         console.log(`Creating UI (visible=${visible})`);
-        const storedTP   = localStorage.getItem('bracketTrade_tp')  || '53';
+        const storedTP   = localStorage.getItem('bracketTrade_tp')  || '200';
         const storedSL   = localStorage.getItem('bracketTrade_sl')  || '15';
         const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
         const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
@@ -1123,7 +1123,12 @@
         const orderHistoryDiv = document.querySelector('.order-history');
         if (!orderHistoryDiv) {
             console.log('❌ Order history div not found - no feedback to capture');
-            return;
+            return {
+                success: false,
+                orders: [],
+                rejectionReason: null,
+                error: 'Order history not found'
+            };
         }
         
         console.log('✅ Found order history div - capturing feedback...');
@@ -1163,28 +1168,43 @@
         
         // Check for specific rejection reasons or success indicators
         const rejectionText = orderHistoryDiv.textContent;
+        let feedbackResult = {
+            success: false,
+            orders: orderEvents || [],
+            rejectionReason: null,
+            error: null
+        };
+        
         if (rejectionText.includes('Rejected')) {
             console.log('❌ ORDER REJECTED - checking rejection reason...');
             if (rejectionText.includes('outside of market hours')) {
                 console.log('❌ REJECTION REASON: Order placed outside market hours');
+                feedbackResult.rejectionReason = 'Order placed outside market hours';
             } else if (rejectionText.includes('Risk')) {
                 console.log('❌ REJECTION REASON: Risk management violation');
+                feedbackResult.rejectionReason = 'Risk management violation';
             } else {
                 console.log('❌ REJECTION REASON: Other - check full feedback above');
+                feedbackResult.rejectionReason = 'Order rejected';
             }
         } else if (rejectionText.includes('Risk Passed')) {
             console.log('✅ RISK MANAGEMENT: Order passed risk checks');
+            feedbackResult.success = true;
+        } else if (orderEvents.length > 0) {
+            // If we have order events and no rejection, consider it successful
+            feedbackResult.success = true;
         }
         
         console.log('🔄 ORDER FEEDBACK CAPTURE COMPLETE');
+        return feedbackResult;
     }
 
 
     // Futures tick data dictionary with default SL/TP settings for each instrument
     const futuresTickData = {
       // Symbol: { tickSize, tickValue, defaultSL (ticks), defaultTP (ticks), precision (decimal places) }
-      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // Micro E-mini Nasdaq-100
-      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 15,  defaultTP: 53, precision: 2 },  // E-mini Nasdaq-100
+      MNQ: { tickSize: 0.25, tickValue: 0.5,  defaultSL: 15,  defaultTP: 200, precision: 2 },  // Micro E-mini Nasdaq-100
+      NQ:  { tickSize: 0.25, tickValue: 5.0,  defaultSL: 15,  defaultTP: 200, precision: 2 },  // E-mini Nasdaq-100
       ES:  { tickSize: 0.25, tickValue: 12.5, defaultSL: 40,  defaultTP: 100, precision: 2 },  // E-mini S&P 500
       RTY: { tickSize: 0.1,  tickValue: 5.0,  defaultSL: 90,  defaultTP: 225, precision: 1 },  // E-mini Russell 2000
       YM:  { tickSize: 1.0,  tickValue: 5.0,  defaultSL: 10,  defaultTP: 25,  precision: 0 },  // E-mini Dow Jones

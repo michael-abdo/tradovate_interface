@@ -1871,16 +1871,16 @@
             applyFilters();
         });
         
-        // Set up periodic refresh (every 5 seconds)
-        setInterval(() => {
-            // Only auto-refresh if page is visible to avoid unnecessary requests
-            if (!document.hidden) {
-                fetchAccountData().then(() => {
-                    populateFilterOptions();
-                    applyFilters();
-                });
-            }
-        }, 5000);
+        // Disabled automatic refresh - only refresh when button is clicked
+        // setInterval(() => {
+        //     // Only auto-refresh if page is visible to avoid unnecessary requests
+        //     if (!document.hidden) {
+        //         fetchAccountData().then(() => {
+        //             populateFilterOptions();
+        //             applyFilters();
+        //         });
+        //     }
+        // }, 5000);
         
         // ---- Trade Controls Functionality ----
         

@@ -671,13 +671,21 @@ function addActionButton() {
 }
 
 
+    // Create global function that can be called from dashboard
+    window.runAutoRiskAssessment = function() {
+        console.log("Auto Risk Management: Running risk assessment...");
+        getTableData();
+        updateUserColumnPhaseStatus();
+        performAccountActions();
+        console.log("Auto Risk Management: Risk assessment completed");
+    };
+    
+    // Only add the action button, don't run automatically
     addActionButton();
     
-    // Run auto risk management immediately when the script loads
-    console.log("Auto Risk Management: Running initial risk assessment...");
-    getTableData();
-    updateUserColumnPhaseStatus();
-    performAccountActions();
-    console.log("Auto Risk Management: Initial risk assessment completed");
+    // Run once on page load
+    console.log("Auto Risk Management: Running initial risk assessment on page load...");
+    window.runAutoRiskAssessment();
+    console.log("Auto Risk Management: Script initialized");
 
 })();

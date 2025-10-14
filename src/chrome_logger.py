@@ -51,7 +51,8 @@ class ChromeLogger:
             self.tab.Log.entryAdded = self._on_log_entry
             self.tab.Runtime.consoleAPICalled = self._on_console_api
             self.tab.Runtime.exceptionThrown = self._on_exception
-            self.tab.Console.messageAdded = self._on_console_message
+            # Disabled to prevent duplicate logging - Runtime.consoleAPICalled handles console messages
+            # self.tab.Console.messageAdded = self._on_console_message
             
             # Start background thread for processing logs
             self.is_running = True

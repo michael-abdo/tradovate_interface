@@ -85,6 +85,14 @@ def get_accounts():
                     with open(account_data_path, 'r') as file:
                         get_account_data_js = file.read()
                     conn.tab.Runtime.evaluate(expression=get_account_data_js)
+                    
+                    # Also run the auto risk assessment when refreshing data
+                    try:
+                        conn.tab.Runtime.evaluate(expression="if (window.runAutoRiskAssessment) { window.runAutoRiskAssessment(); }")
+                        print(f"Triggered auto risk assessment for {conn.account_name}")
+                    except Exception as risk_err:
+                        print(f"Error running auto risk assessment: {risk_err}")
+                        
                 except Exception as inject_err:
                     print(f"Error re-injecting function: {inject_err}")
                 
