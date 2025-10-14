@@ -1702,6 +1702,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 // For non-market orders without custom price, use market price
                 entryPrice = marketPrice;
                 console.log(`Using market price: ${entryPrice} for ${orderType} order`);
+            } else if (orderType === 'MARKET') {
+                // For MARKET orders, always use the current market price
+                entryPrice = marketPrice;
+                console.log(`Using market price: ${entryPrice} for MARKET order`);
             }
         } else if (customEntryPrice !== null) {
             console.log(`Custom entry price provided: ${customEntryPrice}`);
