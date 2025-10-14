@@ -31,11 +31,38 @@ WAIT_TIME = 15  # Hardcoded wait time (was --wait flag)
 # Global list to track ChromeLogger instances for cleanup
 chrome_loggers = []
 
+# Global variables for logging
+log_directory = None
+terminal_callback = None
+
 def register_chrome_logger(chrome_logger):
     """Register a ChromeLogger instance for cleanup"""
     if chrome_logger and chrome_logger not in chrome_loggers:
         chrome_loggers.append(chrome_logger)
         print(f"[ChromeLogger] Registered for cleanup (total: {len(chrome_loggers)})")
+
+def create_terminal_callback():
+    """Create a callback function to display Chrome console logs in terminal"""
+    def terminal_log_callback(entry):
+        """Display console log entry in terminal with color coding"""
+        level_colors = {
+            'DEBUG': '\033[36m',      # Cyan
+            'INFO': '\033[32m',       # Green  
+            'WARNING': '\033[33m',    # Yellow
+            'ERROR': '\033[31m',      # Red
+            'LOG': '\033[0m'          # Default
+        }
+        reset_color = '\033[0m'
+        
+        level = entry.get('level', 'LOG')
+        text = entry.get('text', '')
+        source = entry.get('source', 'unknown')
+        timestamp = datetime.now().strftime('%H:%M:%S')
+        
+        color = level_colors.get(level, '\033[0m')
+        print(f"[{timestamp}] {color}[{source}:{level}]{reset_color} {text}")
+    
+    return terminal_log_callback
 
 
 def start_ngrok(port):
@@ -262,10 +289,65 @@ def open_dashboard_window(optimize_mode):
     pid_tracker.add_pid(dashboard_chrome.pid, "dashboard_chrome")
     
     print(f"Dashboard opened at {dashboard_url}")
+    
+    # Wait for Chrome to start and then create a logger for the dashboard
+    time.sleep(3)
+    try:
+        import pychrome
+        from src.chrome_logger import ChromeLogger
+        
+        # Connect to the dashboard Chrome instance
+        browser = pychrome.Browser(url=f"http://127.0.0.1:{dashboard_port}")
+        tabs = browser.list_tab()
+        
+        # Find the dashboard tab
+        dashboard_tab = None
+        for tab in tabs:
+            try:
+                tab.start()
+                tab.Page.enable()
+                result = tab.Runtime.evaluate(expression="document.location.href")
+                url = result.get("result", {}).get("value", "")
+                
+                if "localhost:6001" in url:
+                    dashboard_tab = tab
+                    print(f"Found dashboard tab for Chrome logger: {url}")
+                    break
+                else:
+                    tab.stop()
+            except Exception as e:
+                try:
+                    tab.stop()
+                except:
+                    pass
+        
+        if dashboard_tab:
+            # Create Chrome logger for dashboard
+            log_file = f"{log_directory}/chrome_console_dashboard_9321.log" if log_directory else None
+            dashboard_logger = ChromeLogger(dashboard_tab, log_file)
+            
+            # Add terminal callback for real-time output
+            if terminal_callback:
+                dashboard_logger.add_callback(terminal_callback)
+            
+            # Start the logger
+            if dashboard_logger.start():
+                register_chrome_logger(dashboard_logger)
+                print("✅ Dashboard Chrome logger started - console messages will appear in terminal")
+            else:
+                print("❌ Failed to start dashboard Chrome logger")
+        else:
+            print("❌ Dashboard tab not found for Chrome logger")
+            
+    except Exception as e:
+        print(f"❌ Error setting up dashboard Chrome logger: {e}")
+    
     return dashboard_chrome
 
 
 def main():
+    global log_directory, terminal_callback
+    
     parser = argparse.ArgumentParser(description="Start the complete Tradovate Interface stack")
     parser.add_argument("--ngrok", action="store_true",
                         help="Enable ngrok tunnel for remote access")
@@ -278,6 +360,12 @@ def main():
     
     # Track this main process
     pid_tracker.add_pid(os.getpid(), "start_all")
+    
+    # Setup Chrome console logging
+    log_directory = f"logs/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+    os.makedirs(log_directory, exist_ok=True)
+    terminal_callback = create_terminal_callback()
+    print(f"Chrome console logging enabled - logs saved to: {log_directory}")
     
     print("\n=== Starting Tradovate Interface ===")
     print("Press Ctrl+C to stop all processes\n")
