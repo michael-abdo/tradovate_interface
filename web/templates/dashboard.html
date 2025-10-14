@@ -911,6 +911,7 @@
         
         <div style="text-align: center; margin-top: 10px;">
             <button class="refresh-button" onclick="fetchAccountData()">Refresh Data</button>
+            <button class="refresh-button" onclick="runPhases()">Run Phases</button>
         </div>
         
         <div class="strategy-controls">
@@ -1658,6 +1659,57 @@
                     
                 // Clear existing data to avoid showing stale data
                 return [];
+            }
+        }
+        
+        // Function to run phase analysis
+        async function runPhases() {
+            try {
+                const response = await fetch('/api/risk-management', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ account: 'all' })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Show success message briefly
+                const successMsg = document.createElement('div');
+                successMsg.textContent = `Phase analysis completed on ${result.accounts_affected} accounts`;
+                successMsg.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background-color: #4cd964;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    z-index: 9999;
+                    font-size: 14px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                `;
+                document.body.appendChild(successMsg);
+                
+                // Remove message after 3 seconds
+                setTimeout(() => {
+                    successMsg.style.opacity = '0';
+                    successMsg.style.transition = 'opacity 0.3s';
+                    setTimeout(() => document.body.removeChild(successMsg), 300);
+                }, 3000);
+                
+                // Optionally refresh the data to show updated phases
+                // await fetchAccountData();
+                
+                console.log('Phase analysis result:', result);
+            } catch (error) {
+                console.error('Error running phase analysis:', error);
+                alert(`Error running phase analysis: ${error.message}`);
             }
         }
         

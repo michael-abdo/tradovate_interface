@@ -86,12 +86,8 @@ def get_accounts():
                         get_account_data_js = file.read()
                     conn.tab.Runtime.evaluate(expression=get_account_data_js)
                     
-                    # Also run the auto risk assessment when refreshing data
-                    try:
-                        conn.tab.Runtime.evaluate(expression="if (window.runAutoRiskAssessment) { window.runAutoRiskAssessment(); }")
-                        print(f"Triggered auto risk assessment for {conn.account_name}")
-                    except Exception as risk_err:
-                        print(f"Error running auto risk assessment: {risk_err}")
+                    # Risk assessment is now triggered manually via the "Run Phases" button
+                    # Removed automatic execution to give users control over when phase analysis runs
                         
                 except Exception as inject_err:
                     print(f"Error re-injecting function: {inject_err}")
@@ -202,9 +198,42 @@ def execute_trade():
         enable_tp = data.get('enable_tp', True)
         enable_sl = data.get('enable_sl', True)
         
-        # Only get TP/SL values if they are enabled with config defaults
-        tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
-        sl_ticks = data.get('sl_ticks', TRADING_DEFAULTS.get('stop_loss_ticks', 15)) if enable_sl else 0
+        # JavaScript to read current Tampermonkey UI values
+        read_ui_values_js = """
+        (function() {
+            try {
+                const tpInput = document.getElementById('tpInput');
+                const slInput = document.getElementById('slInput');
+                return {
+                    tp_value: tpInput ? parseInt(tpInput.value) || 0 : 0,
+                    sl_value: slInput ? parseInt(slInput.value) || 0 : 0
+                };
+            } catch (err) {
+                return { tp_value: 0, sl_value: 0 };
+            }
+        })();
+        """
+        
+        # Try to read values from Tampermonkey UI first
+        ui_values = None
+        if account_index != 'all' and int(account_index) < len(controller.connections):
+            try:
+                result = controller.connections[int(account_index)].tab.Runtime.evaluate(expression=read_ui_values_js)
+                if result and 'result' in result and 'value' in result['result']:
+                    ui_values = result['result']['value']
+            except:
+                pass
+        
+        # Use UI values if available, otherwise fall back to request/defaults
+        if ui_values and enable_tp and ui_values.get('tp_value', 0) > 0:
+            tp_ticks = ui_values['tp_value']
+        else:
+            tp_ticks = data.get('tp_ticks', TRADING_DEFAULTS.get('take_profit_ticks', 53)) if enable_tp else 0
+            
+        if ui_values and enable_sl and ui_values.get('sl_value', 0) > 0:
+            sl_ticks = ui_values['sl_value']
+        else:
+            sl_ticks = data.get('sl_ticks', TRADING_DEFAULTS.get('stop_loss_ticks', 15)) if enable_sl else 0
         
         # Ensure tp_ticks and sl_ticks are integers
         tp_ticks = int(tp_ticks) if tp_ticks else 0
