@@ -703,9 +703,9 @@
         return null;
     }
     
-    // Initialize UI (defaults to invisible inputs only - no visible popup)
-    console.log('Creating UI for dashboard trading...');
-    createUI();
+    // Initialize UI with visible popup for full TP/SL functionality
+    console.log('Creating UI for direct trading...');
+    createUI(true);
     console.log('UI initialization complete');
 
     async function updateSymbol(selector, value) {
