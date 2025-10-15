@@ -184,9 +184,8 @@ class ChromeLogger:
                     oldUI.remove();
                     console.log('🔥 HOT RELOAD: Old UI removed');
                 }
-                // Clear localStorage quantity to force new defaults
-                localStorage.removeItem('bracketTrade_qty');
-                console.log('🔥 HOT RELOAD: localStorage cleared for fresh defaults');
+                // No localStorage cleanup needed - using in-memory state only
+                console.log('🔥 HOT RELOAD: Ready for fresh UI with default values');
                 """
                 cleanup_result = self.tab.Runtime.evaluate(expression=cleanup_script)
                 print(f"🔥 LAYER 3: HOT-RELOAD cleanup completed")

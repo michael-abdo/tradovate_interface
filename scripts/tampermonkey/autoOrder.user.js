@@ -21,40 +21,44 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    // Simple in-memory state to track current UI values
+    const currentState = {
+        symbol: 'NQ',
+        tickSize: 0.25,
+        tp: null,     // Will be set from futuresTickData defaults
+        sl: null,     // Will be set from futuresTickData defaults
+        qty: 10,
+        entryPrice: null,
+        tpPrice: null,
+        slPrice: null,
+        tpEnabled: true,
+        slEnabled: true
+    };
+
     function createUI(visible = false) {
         console.log(`Creating UI (visible=${visible})`);
         
-        // Get stored symbol first to determine defaults
-        const storedSym = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+        // Default symbol (no localStorage)
+        const defaultSymbol = 'NQ';
         
         // Extract root symbol (remove expiry) for futuresTickData lookup
-        const rootSymbol = storedSym.replace(/[A-Z]\d+$/, '');
+        const rootSymbol = defaultSymbol.replace(/[A-Z]\d+$/, '');
         const symbolData = futuresTickData[rootSymbol] || futuresTickData['NQ'];
         
-        // Use symbol defaults instead of hardcoded fallbacks - this fixes the 140 vs 200 tick issue
-        const storedTP   = localStorage.getItem('bracketTrade_tp')  || symbolData.defaultTP.toString();
-        const storedSL   = localStorage.getItem('bracketTrade_sl')  || symbolData.defaultSL.toString();
-        const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
-        const storedTick = localStorage.getItem('bracketTrade_tick')|| symbolData.tickSize.toString();
+        // Initialize state with symbol defaults
+        currentState.symbol = defaultSymbol;
+        currentState.tp = symbolData.defaultTP;
+        currentState.sl = symbolData.defaultSL;
+        currentState.tickSize = symbolData.tickSize;
         
-        // Validate localStorage values against symbol defaults and log conflicts
-        const storedTPValue = localStorage.getItem('bracketTrade_tp');
-        const storedSLValue = localStorage.getItem('bracketTrade_sl');
+        // Always use symbol defaults - no localStorage persistence
+        const defaultTP   = symbolData.defaultTP.toString();
+        const defaultSL   = symbolData.defaultSL.toString();
+        const defaultQty  = '10';
+        const defaultTick = symbolData.tickSize.toString();
         
-        if (storedTPValue && parseInt(storedTPValue) !== symbolData.defaultTP) {
-            console.warn(`🚨 TP CONFLICT: localStorage has ${storedTPValue} ticks, but ${rootSymbol} default is ${symbolData.defaultTP} ticks`);
-            console.warn(`🔧 USING: ${storedTPValue} (localStorage override)`);
-            console.warn(`💡 TIP: Change symbol and change back to refresh defaults, or clear browser data`);
-        }
-        
-        if (storedSLValue && parseInt(storedSLValue) !== symbolData.defaultSL) {
-            console.warn(`🚨 SL CONFLICT: localStorage has ${storedSLValue} ticks, but ${rootSymbol} default is ${symbolData.defaultSL} ticks`);
-            console.warn(`🔧 USING: ${storedSLValue} (localStorage override)`);
-            console.warn(`💡 TIP: Change symbol and change back to refresh defaults, or clear browser data`);
-        }
-        
-        console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);
-        console.log(`Using symbol defaults for ${rootSymbol}: defaultTP=${symbolData.defaultTP}, defaultSL=${symbolData.defaultSL}`);
+        console.log(`Using defaults: TP=${defaultTP}, SL=${defaultSL}, Qty=${defaultQty}, Tick=${defaultTick}, Symbol=${defaultSymbol}`);
+        console.log(`Symbol data for ${rootSymbol}: defaultTP=${symbolData.defaultTP}, defaultSL=${symbolData.defaultSL}`);
 
         const container = document.createElement('div');
         container.id = visible ? 'bracket-trade-box' : 'invisible-trade-inputs';
@@ -76,11 +80,9 @@
                 width: '200px'
             });
 
-            // restore box position
-            const savedLeft = localStorage.getItem('bracketTradeBoxLeft');
-            const savedTop  = localStorage.getItem('bracketTradeBoxTop');
-            if (savedLeft && savedTop) { container.style.left = savedLeft; container.style.top = savedTop; }
-            else { container.style.top = '20px'; container.style.right = '20px'; }
+            // Default box position (no localStorage)
+            container.style.top = '20px';
+            container.style.right = '20px';
         } else {
             // Invisible UI - off-screen
             Object.assign(container.style, {
@@ -100,7 +102,7 @@
             <!-- Header with Symbol -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                 <span style="font-weight:bold;cursor:grab;">⠿ Bracket</span>
-                <input type="text" id="symbolInput" value="${storedSym}"
+                <input type="text" id="symbolInput" value="${defaultSymbol}"
                     style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" 
                     placeholder="Symbol" />
             </div>
@@ -108,7 +110,7 @@
             <!-- Hidden Tick Size Input -->
             <div id="tickContainer" style="display:none;margin-bottom:8px;">
                 <label style="display:block;margin-bottom:4px;font-size:11px;">Tick Size</label>
-                <input type="number" id="tickInput" step="0.01" value="${storedTick}"
+                <input type="number" id="tickInput" step="0.01" value="${defaultTick}"
                     style="width:100%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
             </div>
 
@@ -117,7 +119,7 @@
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                     <input type="checkbox" id="tpCheckbox" checked />
                     <div style="display:flex;gap:4px;flex:1;">
-                        <input type="number" id="tpInput" value="${storedTP}"
+                        <input type="number" id="tpInput" value="${defaultTP}"
                             style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
                             placeholder="TP Ticks" />
                         <input type="number" id="tpPriceInput" step="0.01"
@@ -128,7 +130,7 @@
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                     <input type="checkbox" id="slCheckbox" checked />
                     <div style="display:flex;gap:4px;flex:1;">
-                        <input type="number" id="slInput" value="${storedSL}"
+                        <input type="number" id="slInput" value="${defaultSL}"
                             style="width:50%;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;"
                             placeholder="SL Ticks" />
                         <input type="number" id="slPriceInput" step="0.01"
@@ -141,7 +143,7 @@
                     <div style="display:flex;flex-direction:column;gap:4px;">
                         <input type="number" id="entryPriceInput" placeholder="Entry" step="0.01"
                             style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
-                        <input type="number" id="qtyInput" value="${storedQty}" min="1"
+                        <input type="number" id="qtyInput" value="${defaultQty}" min="1"
                             style="width:80px;text-align:center;border-radius:4px;border:1px solid #666;background:#2a2a2a;color:#fff;" />
                     </div>
                     <button id="sellBtn" style="padding:6px 10px;background:#e74c3c;color:#fff;border:none;border-radius:4px;font-weight:bold;">Sell</button>
@@ -161,11 +163,11 @@
         } else {
             // Invisible UI - only essential inputs
             container.innerHTML = `
-                <input type="text" id="symbolInput" value="${storedSym}" />
-                <input type="number" id="tickInput" value="${storedTick}" />
-                <input type="number" id="tpInput" value="${storedTP}" />
-                <input type="number" id="slInput" value="${storedSL}" />
-                <input type="number" id="qtyInput" value="${storedQty}" />
+                <input type="text" id="symbolInput" value="${defaultSymbol}" />
+                <input type="number" id="tickInput" value="${defaultTick}" />
+                <input type="number" id="tpInput" value="${defaultTP}" />
+                <input type="number" id="slInput" value="${defaultSL}" />
+                <input type="number" id="qtyInput" value="${defaultQty}" />
                 <input type="number" id="entryPriceInput" />
                 <input type="number" id="tpPriceInput" />
                 <input type="number" id="slPriceInput" />
@@ -194,19 +196,25 @@
             console.log(`SL input changed to: ${slInput.value}`);
             const slVal = parseFloat(slInput.value);
             if (!isNaN(slVal)) {
+                currentState.sl = slVal;
                 tpInput.value = Math.round(slVal * 3.5);
+                currentState.tp = Math.round(slVal * 3.5);
                 console.log(`Calculated TP: ${tpInput.value} (SL × 3.5)`);
             }
-            localStorage.setItem('bracketTrade_sl', slInput.value);
-            localStorage.setItem('bracketTrade_tp', tpInput.value);
         });
         tpInput.addEventListener('input', () => {
             console.log(`TP input changed to: ${tpInput.value}`);
-            localStorage.setItem('bracketTrade_tp', tpInput.value);
+            const tpVal = parseFloat(tpInput.value);
+            if (!isNaN(tpVal)) {
+                currentState.tp = tpVal;
+            }
         });
         document.getElementById('qtyInput').addEventListener('input', e => {
             console.log(`Quantity input changed to: ${e.target.value}`);
-            localStorage.setItem('bracketTrade_qty', e.target.value);
+            const qtyVal = parseInt(e.target.value);
+            if (!isNaN(qtyVal) && qtyVal > 0) {
+                currentState.qty = qtyVal;
+            }
         });
         document.getElementById('closeAllBtn').addEventListener('click', () => {
             console.log('Close All button clicked');
@@ -286,10 +294,10 @@
 
         // Persist settings inputs
         console.log('Setting up persistent settings');
-        document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+        document.getElementById('symbolInput').value = 'NQ'; // Default symbol
         document.getElementById('symbolInput').addEventListener('input', e => {
             console.log(`Symbol input changed to: ${e.target.value}`);
-            localStorage.setItem('bracketTrade_symbol', e.target.value);
+            currentState.symbol = e.target.value;
         });
 
         // 👉 automatically push change into Tradovate ticket
@@ -312,29 +320,17 @@
 
                 slInput.value = symbolDefaults.defaultSL;
                 tpInput.value = symbolDefaults.defaultTP;
+                
+                // Update state with new defaults
+                currentState.sl = symbolDefaults.defaultSL;
+                currentState.tp = symbolDefaults.defaultTP;
 
                 // Update tick size if available
                 if (typeof symbolDefaults.tickSize === 'number') {
                     tickInput.value = symbolDefaults.tickSize;
-                    localStorage.setItem('bracketTrade_tick', symbolDefaults.tickSize);
+                    currentState.tickSize = symbolDefaults.tickSize;
                     console.log(`Updated tick size to ${symbolDefaults.tickSize} for ${rootSymbol}`);
                 }
-
-                // Check for localStorage conflicts before saving
-                const oldTPValue = localStorage.getItem('bracketTrade_tp');
-                const oldSLValue = localStorage.getItem('bracketTrade_sl');
-                
-                if (oldTPValue && parseInt(oldTPValue) !== symbolDefaults.defaultTP) {
-                    console.warn(`🔄 SYMBOL CHANGE: Clearing conflicting TP localStorage (${oldTPValue} → ${symbolDefaults.defaultTP})`);
-                }
-                
-                if (oldSLValue && parseInt(oldSLValue) !== symbolDefaults.defaultSL) {
-                    console.warn(`🔄 SYMBOL CHANGE: Clearing conflicting SL localStorage (${oldSLValue} → ${symbolDefaults.defaultSL})`);
-                }
-                
-                // Save to localStorage - this will override any conflicting values
-                localStorage.setItem('bracketTrade_sl', symbolDefaults.defaultSL);
-                localStorage.setItem('bracketTrade_tp', symbolDefaults.defaultTP);
 
                 console.log(`✅ Updated SL/TP to default values for ${rootSymbol}: SL=${slInput.value}, TP=${tpInput.value}`);
             }
@@ -345,10 +341,13 @@
             updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
         });
 
-        document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
+        document.getElementById('tickInput').value = currentState.tickSize; // Use state tick size
         document.getElementById('tickInput').addEventListener('input', e => {
             console.log(`Tick size input changed to: ${e.target.value}`);
-            localStorage.setItem('bracketTrade_tick', e.target.value);
+            const tickVal = parseFloat(e.target.value);
+            if (!isNaN(tickVal) && tickVal > 0) {
+                currentState.tickSize = tickVal;
+            }
         });
 
         // --- Drag logic ---
@@ -378,8 +377,7 @@
         document.addEventListener('mouseup', () => {
             if (isDragging) {
                 console.log(`Container drop position: Left:${container.style.left}, Top:${container.style.top}`);
-                localStorage.setItem('bracketTradeBoxLeft', container.style.left);
-                localStorage.setItem('bracketTradeBoxTop', container.style.top);
+                // localStorage removed - box position not persisted
             }
             isDragging = false;
             container.style.cursor = 'grab';
@@ -421,18 +419,8 @@
         });
         } // End of visible-only event handlers
         
-        // Set up localStorage persistence for key inputs (both visible and invisible)
-        console.log('Setting up localStorage persistence');
-        ['symbolInput', 'tpInput', 'slInput', 'qtyInput', 'tickInput'].forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                element.addEventListener('input', (e) => {
-                    const storageKey = 'bracketTrade_' + id.replace('Input', '');
-                    localStorage.setItem(storageKey, e.target.value);
-                    console.log(`Saved ${storageKey} = ${e.target.value}`);
-                });
-            }
-        });
+        // No localStorage persistence - using in-memory state only
+        console.log('State management: Using in-memory state only, no persistence');
     }
 
 
@@ -1693,7 +1681,7 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
 
         // right after tickSize is determined
         tickInput.value = tickSize;           // shows the real value
-        localStorage.setItem('bracketTrade_tick', tickSize);
+        // localStorage removed - tick size is always determined from symbol data
 
         // Use provided values or defaults from dictionary or UI
         const actualStopLossTicks = stopLossTicks ||

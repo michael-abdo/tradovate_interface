@@ -310,8 +310,7 @@ def update_ui_symbol(account_index, symbol):
                 symbolInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
                 console.log("Updated UI symbol to {symbol}");
                 
-                // Also store in localStorage for persistence
-                localStorage.setItem('bracketTrade_symbol', "{symbol}");
+                // No localStorage persistence - using in-memory state only
                 return "Symbol updated in UI";
             }} else {{
                 return "symbolInput element not found";

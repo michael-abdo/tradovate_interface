@@ -1,0 +1,14 @@
+[2025-10-14 17:32:42.950] LOG - 🔄 [DEBUG] runPhases() function called - starting phase analysis
+[2025-10-14 17:32:42.951] LOG - 🔄 [DEBUG] Making POST request to /api/risk-management with data:
+[2025-10-14 17:32:42.972] LOG - 🔄 [DEBUG] Received response - status: 200 statusText: OK
+[2025-10-14 17:32:42.973] LOG - 🔄 [DEBUG] Successfully parsed response JSON:
+[2025-10-14 17:32:42.973] LOG - 🔄 [DEBUG] Phase analysis completed successfully, final result:
+[2025-10-14 17:32:48.268] LOG - Checkbox tpCheckbox clicked: false
+[2025-10-14 17:32:48.369] LOG - Executing synchronized update to Chrome windows from field: tpCheckbox
+[2025-10-14 17:32:48.374] LOG - Trade controls updated on connected accounts:
+[2025-10-14 17:32:49.100] LOG - Checkbox slCheckbox clicked: false
+[2025-10-14 17:32:49.202] LOG - Executing synchronized update to Chrome windows from field: slCheckbox
+[2025-10-14 17:32:49.206] LOG - Trade controls updated on connected accounts:
+[2025-10-14 17:33:57.039] LOG - Checkbox tpCheckbox clicked: true
+[2025-10-14 17:33:57.140] LOG - Executing synchronized update to Chrome windows from field: tpCheckbox
+[2025-10-14 17:33:57.146] LOG - Trade controls updated on connected accounts:

@@ -186,11 +186,15 @@ class TradovateConnection:
             
     def run_risk_management(self):
         """Run the auto risk management functions"""
+        print(f"🔄 [DEBUG] run_risk_management() called for account: {self.account_name}")
         if not self.tab:
+            print("❌ [DEBUG] No Chrome tab available")
             return {"error": "No tab available"}
             
+        print("🔄 [DEBUG] Chrome tab is available, proceeding with risk management")
         try:
             # First check if the required functions exist
+            print("🔄 [DEBUG] Checking if required JavaScript functions exist")
             check_code = """
             {
                 "getTableData": typeof getTableData === 'function',
@@ -200,6 +204,7 @@ class TradovateConnection:
             """
             check_result = self.tab.Runtime.evaluate(expression=check_code)
             check_data = json.loads(check_result.get('result', {}).get('value', '{}'))
+            print(f"🔄 [DEBUG] Function check results: {check_data}")
             
             # If any function is missing, try to re-inject the script
             if not all(check_data.values()):
@@ -215,37 +220,53 @@ class TradovateConnection:
                     time.sleep(0.5)
             
             # Run the main auto risk management sequence
+            print("🔄 [DEBUG] About to execute risk management JavaScript sequence")
             js_code = """
-            console.log("Running risk management sequence...");
+            console.log("[DEBUG] 🔄 Starting risk management sequence...");
             try {
                 if (typeof getTableData !== 'function') {
                     throw new Error("getTableData function not available");
                 }
+                console.log("[DEBUG] 🔄 Calling getTableData()");
                 getTableData();
+                console.log("[DEBUG] ✅ getTableData() completed");
                 
                 if (typeof updateUserColumnPhaseStatus !== 'function') {
                     throw new Error("updateUserColumnPhaseStatus function not available");
                 }
+                console.log("[DEBUG] 🔄 Calling updateUserColumnPhaseStatus()");
                 updateUserColumnPhaseStatus();
+                console.log("[DEBUG] ✅ updateUserColumnPhaseStatus() completed");
                 
                 if (typeof performAccountActions !== 'function') {
                     throw new Error("performAccountActions function not available");
                 }
+                console.log("[DEBUG] 🔄 Calling performAccountActions()");
                 performAccountActions();
+                console.log("[DEBUG] ✅ performAccountActions() completed");
                 
+                console.log("[DEBUG] ✅ Full risk management sequence completed successfully");
                 return {status: "success", message: "Risk management sequence completed"};
             } catch (err) {
+                console.error("[DEBUG] ❌ Error in risk management sequence:", err);
                 return {status: "error", message: err.toString()};
             }
             """
             result = self.tab.Runtime.evaluate(expression=js_code)
+            print(f"🔄 [DEBUG] JavaScript execution result: {result}")
             result_data = json.loads(result.get('result', {}).get('value', '{}'))
+            print(f"🔄 [DEBUG] Parsed result data: {result_data}")
             
             if result_data.get('status') == 'success':
+                print("✅ [DEBUG] Risk management completed successfully")
                 return {"status": "success", "message": "Auto risk management executed"}
             else:
+                print(f"❌ [DEBUG] Risk management failed: {result_data.get('message', 'Unknown error')}")
                 return {"status": "error", "message": result_data.get('message', 'Unknown error')}
         except Exception as e:
+            print(f"❌ [DEBUG] Exception in run_risk_management(): {e}")
+            import traceback
+            print(f"❌ [DEBUG] Full traceback: {traceback.format_exc()}")
             return {"error": str(e)}
             
     def get_account_data(self):

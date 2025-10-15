@@ -1,0 +1,20 @@
+[2025-10-14 16:59:06.237] LOG - 🔄 [DEBUG] runPhases() function called - starting phase analysis
+[2025-10-14 16:59:06.237] LOG - 🔄 [DEBUG] Making POST request to /api/risk-management with data:
+[2025-10-14 16:59:06.243] LOG - 🔄 [DEBUG] Received response - status: 200 statusText: OK
+[2025-10-14 16:59:06.245] LOG - 🔄 [DEBUG] Successfully parsed response JSON:
+[2025-10-14 16:59:06.246] LOG - 🔄 [DEBUG] Phase analysis completed successfully, final result:
+[2025-10-14 17:01:02.407] LOG - 🔄 [DEBUG] runPhases() function called - starting phase analysis
+[2025-10-14 17:01:02.408] LOG - 🔄 [DEBUG] Making POST request to /api/risk-management with data:
+[2025-10-14 17:01:02.416] LOG - 🔄 [DEBUG] Received response - status: 200 statusText: OK
+[2025-10-14 17:01:02.418] LOG - 🔄 [DEBUG] Successfully parsed response JSON:
+[2025-10-14 17:01:02.419] LOG - 🔄 [DEBUG] Phase analysis completed successfully, final result:
+[2025-10-14 17:01:15.425] LOG - 🔄 [DEBUG] runPhases() function called - starting phase analysis
+[2025-10-14 17:01:15.426] LOG - 🔄 [DEBUG] Making POST request to /api/risk-management with data:
+[2025-10-14 17:01:15.432] LOG - 🔄 [DEBUG] Received response - status: 200 statusText: OK
+[2025-10-14 17:01:15.434] LOG - 🔄 [DEBUG] Successfully parsed response JSON:
+[2025-10-14 17:01:15.435] LOG - 🔄 [DEBUG] Phase analysis completed successfully, final result:
+[2025-10-14 17:01:32.843] LOG - 🔄 [DEBUG] runPhases() function called - starting phase analysis
+[2025-10-14 17:01:32.844] LOG - 🔄 [DEBUG] Making POST request to /api/risk-management with data:
+[2025-10-14 17:01:32.858] LOG - 🔄 [DEBUG] Received response - status: 200 statusText: OK
+[2025-10-14 17:01:32.859] LOG - 🔄 [DEBUG] Successfully parsed response JSON:
+[2025-10-14 17:01:32.860] LOG - 🔄 [DEBUG] Phase analysis completed successfully, final result:

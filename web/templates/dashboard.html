@@ -1664,20 +1664,27 @@
         
         // Function to run phase analysis
         async function runPhases() {
+            console.log('🔄 [DEBUG] runPhases() function called - starting phase analysis');
             try {
+                const requestData = { account: 'all' };
+                console.log('🔄 [DEBUG] Making POST request to /api/risk-management with data:', requestData);
+                
                 const response = await fetch('/api/risk-management', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ account: 'all' })
+                    body: JSON.stringify(requestData)
                 });
+                
+                console.log('🔄 [DEBUG] Received response - status:', response.status, 'statusText:', response.statusText);
                 
                 if (!response.ok) {
                     throw new Error(`Server returned ${response.status}: ${response.statusText}`);
                 }
                 
                 const result = await response.json();
+                console.log('🔄 [DEBUG] Successfully parsed response JSON:', result);
                 
                 // Show success message briefly
                 const successMsg = document.createElement('div');
@@ -1706,9 +1713,11 @@
                 // Optionally refresh the data to show updated phases
                 // await fetchAccountData();
                 
-                console.log('Phase analysis result:', result);
+                console.log('🔄 [DEBUG] Phase analysis completed successfully, final result:', result);
             } catch (error) {
-                console.error('Error running phase analysis:', error);
+                console.error('❌ [DEBUG] Error in runPhases() function:', error);
+                console.error('❌ [DEBUG] Error message:', error.message);
+                console.error('❌ [DEBUG] Error stack:', error.stack);
                 alert(`Error running phase analysis: ${error.message}`);
             }
         }
