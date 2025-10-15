@@ -23,12 +23,38 @@
 
     function createUI(visible = false) {
         console.log(`Creating UI (visible=${visible})`);
-        const storedTP   = localStorage.getItem('bracketTrade_tp')  || '200';
-        const storedSL   = localStorage.getItem('bracketTrade_sl')  || '15';
+        
+        // Get stored symbol first to determine defaults
+        const storedSym = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+        
+        // Extract root symbol (remove expiry) for futuresTickData lookup
+        const rootSymbol = storedSym.replace(/[A-Z]\d+$/, '');
+        const symbolData = futuresTickData[rootSymbol] || futuresTickData['NQ'];
+        
+        // Use symbol defaults instead of hardcoded fallbacks - this fixes the 140 vs 200 tick issue
+        const storedTP   = localStorage.getItem('bracketTrade_tp')  || symbolData.defaultTP.toString();
+        const storedSL   = localStorage.getItem('bracketTrade_sl')  || symbolData.defaultSL.toString();
         const storedQty  = localStorage.getItem('bracketTrade_qty') || '10';
-        const storedTick = localStorage.getItem('bracketTrade_tick')|| '0.25';
-        const storedSym  = localStorage.getItem('bracketTrade_symbol') || 'NQ';
+        const storedTick = localStorage.getItem('bracketTrade_tick')|| symbolData.tickSize.toString();
+        
+        // Validate localStorage values against symbol defaults and log conflicts
+        const storedTPValue = localStorage.getItem('bracketTrade_tp');
+        const storedSLValue = localStorage.getItem('bracketTrade_sl');
+        
+        if (storedTPValue && parseInt(storedTPValue) !== symbolData.defaultTP) {
+            console.warn(`🚨 TP CONFLICT: localStorage has ${storedTPValue} ticks, but ${rootSymbol} default is ${symbolData.defaultTP} ticks`);
+            console.warn(`🔧 USING: ${storedTPValue} (localStorage override)`);
+            console.warn(`💡 TIP: Change symbol and change back to refresh defaults, or clear browser data`);
+        }
+        
+        if (storedSLValue && parseInt(storedSLValue) !== symbolData.defaultSL) {
+            console.warn(`🚨 SL CONFLICT: localStorage has ${storedSLValue} ticks, but ${rootSymbol} default is ${symbolData.defaultSL} ticks`);
+            console.warn(`🔧 USING: ${storedSLValue} (localStorage override)`);
+            console.warn(`💡 TIP: Change symbol and change back to refresh defaults, or clear browser data`);
+        }
+        
         console.log(`Stored values: TP=${storedTP}, SL=${storedSL}, Qty=${storedQty}, Tick=${storedTick}, Symbol=${storedSym}`);
+        console.log(`Using symbol defaults for ${rootSymbol}: defaultTP=${symbolData.defaultTP}, defaultSL=${symbolData.defaultSL}`);
 
         const container = document.createElement('div');
         container.id = visible ? 'bracket-trade-box' : 'invisible-trade-inputs';
@@ -294,11 +320,23 @@
                     console.log(`Updated tick size to ${symbolDefaults.tickSize} for ${rootSymbol}`);
                 }
 
-                // Save to localStorage
+                // Check for localStorage conflicts before saving
+                const oldTPValue = localStorage.getItem('bracketTrade_tp');
+                const oldSLValue = localStorage.getItem('bracketTrade_sl');
+                
+                if (oldTPValue && parseInt(oldTPValue) !== symbolDefaults.defaultTP) {
+                    console.warn(`🔄 SYMBOL CHANGE: Clearing conflicting TP localStorage (${oldTPValue} → ${symbolDefaults.defaultTP})`);
+                }
+                
+                if (oldSLValue && parseInt(oldSLValue) !== symbolDefaults.defaultSL) {
+                    console.warn(`🔄 SYMBOL CHANGE: Clearing conflicting SL localStorage (${oldSLValue} → ${symbolDefaults.defaultSL})`);
+                }
+                
+                // Save to localStorage - this will override any conflicting values
                 localStorage.setItem('bracketTrade_sl', symbolDefaults.defaultSL);
                 localStorage.setItem('bracketTrade_tp', symbolDefaults.defaultTP);
 
-                console.log(`Updated SL/TP to default values for ${rootSymbol}: SL=${slInput.value}, TP=${tpInput.value}`);
+                console.log(`✅ Updated SL/TP to default values for ${rootSymbol}: SL=${slInput.value}, TP=${tpInput.value}`);
             }
 
             // Update the symbol in Tradovate's interface
@@ -888,6 +926,9 @@
         async function submitOrder(orderType, priceValue) {
             console.log(`🔧 Starting submitOrder for ${orderType} order`);
             
+            // DEBUG: Verify price parameter received
+            console.log(`🔍 DEBUG: submitOrder called with orderType=${orderType}, priceValue=${priceValue}`);
+            
             await setCommonFields();
 
             // CRITICAL FIX: Add validation before DOM interactions
@@ -932,6 +973,8 @@
 
             if (priceValue) {
                 console.log(`💰 Setting price to: ${priceValue}`);
+                // DEBUG: Verify price value just before setting in input
+                console.log(`🔍 DEBUG: About to set price input to: ${priceValue} (type: ${typeof priceValue})`);
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
             }
             clickPriceArrow();
@@ -1025,6 +1068,8 @@
             tradeData.action = 'Sell';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
+                // DEBUG: Verify TP price just before submission
+                console.log(`🔍 DEBUG: About to submit TP LIMIT order at price: ${tradeData.takeProfit}`);
                 const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
                 bracketFeedback.tpOrder = tpResult;
                 
@@ -1052,6 +1097,8 @@
             tradeData.action = 'Buy';
             if (enableTP) {
                 console.log(`Creating take profit order at ${tradeData.takeProfit}`);
+                // DEBUG: Verify TP price just before submission
+                console.log(`🔍 DEBUG: About to submit TP LIMIT order at price: ${tradeData.takeProfit}`);
                 const tpResult = await submitOrder('LIMIT', tradeData.takeProfit);
                 bracketFeedback.tpOrder = tpResult;
                 
@@ -1621,6 +1668,9 @@
 
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25, explicitOrderType = null) {
         console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}, orderType=${explicitOrderType}`);
+        
+        // DEBUG: Verify TP ticks input
+        console.log(`🔍 DEBUG: TP ticks input parameter = ${takeProfitTicks} (type: ${typeof takeProfitTicks})`);
 
         const symbolInput = document.getElementById('symbolInput').value || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
@@ -1655,12 +1705,18 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                                      symbolData?.defaultTP ||
                                      parseInt(document.getElementById('tpInput').value) ||
                                      100;
+        
+        // DEBUG: Verify TP ticks after processing
+        console.log(`🔍 DEBUG: actualTakeProfitTicks = ${actualTakeProfitTicks} (from takeProfitTicks: ${takeProfitTicks}, defaultTP: ${symbolData?.defaultTP}, tpInput: ${document.getElementById('tpInput')?.value})`);
 
         const from = symbolData?.tickSize ? 'dictionary'
           : document.getElementById('tickInput').value ? 'input field'
           : 'default parameter';
         console.log(`Using tick size ${tickSize} (from ${from})`);
         console.log(`Using SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
+        
+        // DEBUG: Verify tick size values
+        console.log(`🔍 DEBUG: tickSize = ${tickSize} (symbolData.tickSize: ${symbolData?.tickSize}, tickInput: ${document.getElementById('tickInput')?.value}, _tickSize param: ${_tickSize})`);
 
         console.log(`Getting market data for ${symbolInput}`);
         const marketData = getMarketData(symbolInput);
@@ -1754,6 +1810,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
             console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
         } else {
+            // DEBUG: Show calculation components before computing
+            const tpOffset = actualTakeProfitTicks * tickSize;
+            console.log(`🔍 DEBUG: TP calculation - entryPrice: ${entryPrice}, actualTakeProfitTicks: ${actualTakeProfitTicks}, tickSize: ${tickSize}, offset: ${tpOffset}`);
+            
             takeProfitPrice = (action === 'Buy'
                 ? entryPrice + actualTakeProfitTicks * tickSize
                 : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
@@ -1770,6 +1830,18 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
         };
         console.log('Trade data prepared:', tradeData);
+        
+        // DEBUG: Verify TP in trade data object and validate against expected calculation
+        const expectedTPPrice = (action === 'Buy' 
+            ? entryPrice + actualTakeProfitTicks * tickSize 
+            : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
+        
+        console.log(`🔍 DEBUG: tradeData.takeProfit = ${tradeData.takeProfit} (should be TP price for ${actualTakeProfitTicks} ticks)`);
+        console.log(`✅ TP VALIDATION: Expected=${expectedTPPrice}, Actual=${tradeData.takeProfit}, Match=${expectedTPPrice === tradeData.takeProfit ? '✅' : '❌'}`);
+        
+        if (expectedTPPrice !== tradeData.takeProfit) {
+            console.error(`🚨 TP MISMATCH: Expected ${expectedTPPrice} but got ${tradeData.takeProfit} - this indicates a calculation error!`);
+        }
 
         console.log('Submitting bracket orders');
         return createBracketOrdersManual(tradeData).finally(() => {
