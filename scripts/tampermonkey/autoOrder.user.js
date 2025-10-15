@@ -7,8 +7,7 @@
 // @match        https://trader.tradovate.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tradovate.com
 // @grant        none
-// @updateURL    http://localhost:8080/AutoOrder.user.js
-// @downloadURL  http://localhost:8080/AutoOrder.user.js
+// Update URLs removed - use reload.py for local development
 // ==/UserScript==
 
 (function () {

@@ -1,0 +1,7 @@
+[2025-10-14 20:13:22.082] LOG - Checkbox slCheckbox clicked: false
+[2025-10-14 20:13:22.185] LOG - Executing synchronized update to Chrome windows from field: slCheckbox
+[2025-10-14 20:13:22.190] LOG - Trade controls updated on connected accounts:
+[2025-10-14 20:14:03.471] LOG - Loaded trading defaults from config:
+[2025-10-14 20:14:03.472] LOG - Loaded strategies:
+[2025-10-14 20:14:03.473] LOG - Strategy mappings:
+[2025-10-14 20:14:03.480] error - Failed to load resource: the server responded with a status of 404 (NOT FOUND)
