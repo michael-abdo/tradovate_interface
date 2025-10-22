@@ -161,6 +161,10 @@ class TradovateConnection:
             
         try:
             self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
+            tp_enabled_js = 'true' if tp_ticks and tp_ticks > 0 else 'false'
+            sl_enabled_js = 'true' if sl_ticks and sl_ticks > 0 else 'false'
+            tp_ticks_js = 'null' if tp_ticks is None else tp_ticks
+            sl_ticks_js = 'null' if sl_ticks is None else sl_ticks
             js_code = f"""
             (async () => {{
                 console.log('🔥 [DASHBOARD] About to call TradoAuto.autoTrade("{symbol}", {quantity}, "{action}", {tp_ticks}, {sl_ticks}, {tick_size})');
@@ -239,6 +243,20 @@ class TradovateConnection:
                     return {{ error: 'TradoAuto.autoTrade unavailable' }};
                 }}
                 snapshot('resolved');
+                const overrides = {{
+                    symbol: '{symbol}',
+                    quantity: {quantity},
+                    tpTicks: {tp_ticks_js},
+                    slTicks: {sl_ticks_js},
+                    tickSize: {tick_size},
+                    tpEnabled: {tp_enabled_js},
+                    slEnabled: {sl_enabled_js}
+                }};
+                if (typeof driver.applyConfig === 'function') {{
+                    driver.applyConfig(overrides, 'dashboard');
+                }} else if (driver.state) {{
+                    Object.assign(driver.state, overrides);
+                }}
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();
@@ -347,6 +365,11 @@ class TradovateConnection:
                     return {{ error: 'TradoAuto.clickExitForSymbol unavailable' }};
                 }}
                 snapshot('resolved');
+                if (typeof driver.applyConfig === 'function') {{
+                    driver.applyConfig({{ symbol: '{symbol}' }}, 'dashboard-exit');
+                }} else if (driver.state) {{
+                    driver.state.symbol = '{symbol}'.toUpperCase();
+                }}
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();
@@ -444,6 +467,11 @@ class TradovateConnection:
                     return {{ error: 'TradoAuto.updateSymbol unavailable' }};
                 }}
                 snapshot('resolved');
+                if (typeof driver.applyConfig === 'function') {{
+                    driver.applyConfig({{ symbol: '{symbol}' }}, 'dashboard-update-symbol');
+                }} else if (driver.state) {{
+                    driver.state.symbol = '{symbol}'.toUpperCase();
+                }}
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();

@@ -11,7 +11,119 @@
 // @downloadURL  http://localhost:8080/AutoOrder.user.js
 // ==/UserScript==
 
+import { createDriverStore } from './driverState.js';
+
 (function () {
+    const driverStore = window.TradoAutoState && typeof window.TradoAutoState.getState === 'function'
+        ? window.TradoAutoState
+        : createDriverStore();
+    window.TradoAutoState = driverStore;
+    const { getState: getDriverState, applyUpdate: updateDriverState, subscribe: subscribeDriverState } = driverStore;
+
+    function coerceNumber(value, fallback = null) {
+        const num = typeof value === 'string' ? parseFloat(value) : value;
+        return Number.isFinite(num) ? num : fallback;
+    }
+
+    function readLegacyUiConfig() {
+        const byId = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.value : undefined;
+        };
+        const checked = (id) => {
+            const el = document.getElementById(id);
+            return el ? !!el.checked : undefined;
+        };
+        return {
+            symbol: byId('symbolInput'),
+            quantity: coerceNumber(byId('qtyInput')),
+            tpTicks: coerceNumber(byId('tpInput')),
+            slTicks: coerceNumber(byId('slInput')),
+            tickSize: coerceNumber(byId('tickInput')),
+            entryPrice: coerceNumber(byId('entryPriceInput')),
+            tpPrice: coerceNumber(byId('tpPriceInput')),
+            slPrice: coerceNumber(byId('slPriceInput')),
+            tpEnabled: checked('tpCheckbox'),
+            slEnabled: checked('slCheckbox')
+        };
+    }
+
+    function resolveTradeConfig(overrides = {}, source = 'autoTrade-call') {
+        const state = typeof getDriverState === 'function' ? getDriverState() : {};
+        const legacy = readLegacyUiConfig();
+        const merged = {
+            ...legacy,
+            ...state
+        };
+
+        const normalized = { ...merged };
+
+        if (overrides.symbol) normalized.symbol = overrides.symbol;
+        if (typeof overrides.quantity === 'number') normalized.quantity = overrides.quantity;
+        if (typeof overrides.tpTicks === 'number') normalized.tpTicks = overrides.tpTicks;
+        if (typeof overrides.slTicks === 'number') normalized.slTicks = overrides.slTicks;
+        if (typeof overrides.tickSize === 'number') normalized.tickSize = overrides.tickSize;
+        if (overrides.entryPrice != null) normalized.entryPrice = overrides.entryPrice;
+        if (overrides.tpEnabled != null) normalized.tpEnabled = overrides.tpEnabled;
+        if (overrides.slEnabled != null) normalized.slEnabled = overrides.slEnabled;
+        if (overrides.tpPrice != null) normalized.tpPrice = overrides.tpPrice;
+        if (overrides.slPrice != null) normalized.slPrice = overrides.slPrice;
+
+        normalized.symbol = (normalized.symbol || 'NQ').toUpperCase();
+        normalized.quantity = coerceNumber(normalized.quantity, 1);
+        normalized.tpTicks = coerceNumber(normalized.tpTicks, 120);
+        normalized.slTicks = coerceNumber(normalized.slTicks, 40);
+        normalized.tickSize = coerceNumber(normalized.tickSize, 0.25);
+        normalized.entryPrice = normalized.entryPrice != null ? coerceNumber(normalized.entryPrice) : null;
+        normalized.tpPrice = normalized.tpPrice != null ? coerceNumber(normalized.tpPrice) : null;
+        normalized.slPrice = normalized.slPrice != null ? coerceNumber(normalized.slPrice) : null;
+        normalized.tpEnabled = typeof normalized.tpEnabled === 'boolean' ? normalized.tpEnabled : true;
+        normalized.slEnabled = typeof normalized.slEnabled === 'boolean' ? normalized.slEnabled : true;
+        normalized.lastSource = source;
+
+        if (typeof updateDriverState === 'function') {
+            updateDriverState(normalized, source);
+        }
+
+        return normalized;
+    }
+
+    function syncUiFromState(state) {
+        if (!state) return;
+        const assignValue = (id, value) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const next = value == null ? '' : value;
+            if (el.value !== String(next)) {
+                el.value = next;
+            }
+        };
+        const assignChecked = (id, checked) => {
+            const el = document.getElementById(id);
+            if (!el || typeof checked !== 'boolean') return;
+            if (el.checked !== checked) {
+                el.checked = checked;
+            }
+        };
+        assignValue('symbolInput', state.symbol);
+        assignValue('qtyInput', state.quantity);
+        assignValue('tpInput', state.tpTicks);
+        assignValue('slInput', state.slTicks);
+        assignValue('tickInput', state.tickSize);
+        assignValue('entryPriceInput', state.entryPrice);
+        assignValue('tpPriceInput', state.tpPrice);
+        assignValue('slPriceInput', state.slPrice);
+        assignChecked('tpCheckbox', state.tpEnabled);
+        assignChecked('slCheckbox', state.slEnabled);
+    }
+
+    if (typeof subscribeDriverState === 'function') {
+        subscribeDriverState(syncUiFromState);
+    }
+
+
+    const { createDriverStore } = window.TradoAutoState || {};
+
     'use strict';
     console.log('Auto Order script initialized');
     var debug = false;
@@ -287,14 +399,61 @@ function createUI() {
         }
         localStorage.setItem('bracketTrade_sl', slInput.value);
         localStorage.setItem('bracketTrade_tp', tpInput.value);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({
+                slTicks: coerceNumber(slInput.value),
+                tpTicks: coerceNumber(tpInput.value)
+            }, 'floating-ui');
+        }
     });
     tpInput.addEventListener('input', () => {
         console.log(`TP input changed to: ${tpInput.value}`);
         localStorage.setItem('bracketTrade_tp', tpInput.value);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ tpTicks: coerceNumber(tpInput.value) }, 'floating-ui');
+        }
     });
     document.getElementById('qtyInput').addEventListener('input', e => {
         console.log(`Quantity input changed to: ${e.target.value}`);
         localStorage.setItem('bracketTrade_qty', e.target.value);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ quantity: coerceNumber(e.target.value, 1) }, 'floating-ui');
+        }
+    });
+
+    const tpCheckbox = document.getElementById('tpCheckbox');
+    tpCheckbox?.addEventListener('change', e => {
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ tpEnabled: !!e.target.checked }, 'floating-ui');
+        }
+    });
+
+    const slCheckbox = document.getElementById('slCheckbox');
+    slCheckbox?.addEventListener('change', e => {
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ slEnabled: !!e.target.checked }, 'floating-ui');
+        }
+    });
+
+    const entryInput = document.getElementById('entryPriceInput');
+    entryInput?.addEventListener('input', e => {
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ entryPrice: coerceNumber(e.target.value) }, 'floating-ui');
+        }
+    });
+
+    const tpPriceInputEl = document.getElementById('tpPriceInput');
+    tpPriceInputEl?.addEventListener('input', e => {
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ tpPrice: coerceNumber(e.target.value) }, 'floating-ui');
+        }
+    });
+
+    const slPriceInputEl = document.getElementById('slPriceInput');
+    slPriceInputEl?.addEventListener('input', e => {
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ slPrice: coerceNumber(e.target.value) }, 'floating-ui');
+        }
     });
     document.getElementById('closeAllBtn').addEventListener('click', () => {
         console.log('Close All button clicked');
@@ -436,8 +595,12 @@ function createUI() {
     console.log('Setting up persistent settings');
     document.getElementById('symbolInput').value = localStorage.getItem('bracketTrade_symbol') || 'NQ';
     document.getElementById('symbolInput').addEventListener('input', e => {
-        console.log(`Symbol input changed to: ${e.target.value}`);
-        localStorage.setItem('bracketTrade_symbol', e.target.value);
+        const value = e.target.value;
+        console.log(`Symbol input changed to: ${value}`);
+        localStorage.setItem('bracketTrade_symbol', value);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ symbol: value }, 'floating-ui');
+        }
     });
 
     document.getElementById('symbolInput').addEventListener('change', e => {
@@ -465,12 +628,23 @@ function createUI() {
             console.log(`Updated SL/TP to default values for ${rootSymbol}: SL=${slInput.value}, TP=${tpInput.value}`);
         }
         updateSymbol('.search-box--input', normalizedSymbol);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({
+                symbol: normalizedSymbol,
+                slTicks: symbolDefaults?.defaultSL,
+                tpTicks: symbolDefaults?.defaultTP,
+                tickSize: symbolDefaults?.tickSize
+            }, 'floating-ui');
+        }
     });
 
     document.getElementById('tickInput').value = localStorage.getItem('bracketTrade_tick') || '0.25';
     document.getElementById('tickInput').addEventListener('input', e => {
         console.log(`Tick size input changed to: ${e.target.value}`);
         localStorage.setItem('bracketTrade_tick', e.target.value);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({ tickSize: coerceNumber(e.target.value, 0.25) }, 'floating-ui');
+        }
     });
 
     // --- Drag logic ---
@@ -805,8 +979,12 @@ async function updateSymbol(selector, value) {
 
     async function createBracketOrdersManual(tradeData) {
         console.log('Creating bracket orders with data:', tradeData);
-        const enableTP = document.getElementById('tpCheckbox').checked;
-        const enableSL = document.getElementById('slCheckbox').checked;
+        const enableTP = typeof tradeData.tpEnabled === 'boolean'
+            ? tradeData.tpEnabled
+            : (document.getElementById('tpCheckbox')?.checked ?? true);
+        const enableSL = typeof tradeData.slEnabled === 'boolean'
+            ? tradeData.slEnabled
+            : (document.getElementById('slCheckbox')?.checked ?? true);
         console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
 
         // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
@@ -1000,45 +1178,54 @@ async function updateSymbol(selector, value) {
 function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = null, stopLossTicks = null, _tickSize = 0.25) {
         console.log(`autoTrade called with: symbol=${inputSymbol}, qty=${quantity}, action=${action}, TP=${takeProfitTicks}, SL=${stopLossTicks}, tickSize=${_tickSize}`);
 
-        const symbolInput = document.getElementById('symbolInput').value || 'NQ';
+        const overrides = {};
+        if (inputSymbol) overrides.symbol = inputSymbol;
+        if (typeof quantity === 'number' && !Number.isNaN(quantity)) overrides.quantity = quantity;
+        if (takeProfitTicks !== null && takeProfitTicks !== undefined) overrides.tpTicks = takeProfitTicks;
+        if (stopLossTicks !== null && stopLossTicks !== undefined) overrides.slTicks = stopLossTicks;
+        if (_tickSize !== null && _tickSize !== undefined) overrides.tickSize = _tickSize;
+
+        const config = resolveTradeConfig(overrides, 'autoTrade');
+        const {
+            symbol,
+            quantity: qty,
+            tpTicks,
+            slTicks,
+            tickSize: configTickSize,
+            entryPrice: configuredEntryPrice,
+            tpPrice: configuredTpPrice,
+            slPrice: configuredSlPrice,
+            tpEnabled,
+            slEnabled
+        } = config;
+
+        const symbolInput = symbol || 'NQ';
         console.log(`Using symbol: ${symbolInput}`);
 
-        // Get root symbol (e.g., 'NQH5' -> 'NQ')
-        const rootSymbol = symbolInput.replace(/[A-Z]\d+$/, '');
+        const rootSymbol = symbolInput.replace(/[A-Z]\d+$/, '') || symbolInput;
         console.log(`Root symbol: ${rootSymbol}`);
 
-        // Get tick size and default values from dictionary or fallback
-        const symbolData = futuresTickData[rootSymbol];
+        const symbolData = futuresTickData[rootSymbol] || {};
 
-        // Keep track of the last symbol to handle symbol changes
-        if (rootSymbol !== autoTrade.lastRootSymbol) {
-           document.getElementById('tickInput').value = symbolData?.tickSize ?? '';
+        let tickSize = Number.isFinite(configTickSize)
+            ? configTickSize
+            : (typeof symbolData.tickSize === 'number' ? symbolData.tickSize : coerceNumber(_tickSize, 0.25));
+
+        if (!Number.isFinite(tickSize)) {
+            tickSize = 0.25;
         }
-        autoTrade.lastRootSymbol = rootSymbol;
-        const tickSize = (symbolData && typeof symbolData.tickSize === 'number')
-               ? symbolData.tickSize
-               : parseFloat(document.getElementById('tickInput').value) || _tickSize;
 
-        // right after tickSize is determined
-        tickInput.value = tickSize;           // shows the real value
-        localStorage.setItem('bracketTrade_tick', tickSize);
+        const actualStopLossTicks = slEnabled
+            ? coerceNumber(slTicks, symbolData.defaultSL ?? 40)
+            : 0;
+        const actualTakeProfitTicks = tpEnabled
+            ? coerceNumber(tpTicks, symbolData.defaultTP ?? 100)
+            : 0;
 
-        // Use provided values or defaults from dictionary or UI
-        const actualStopLossTicks = stopLossTicks ||
-                                   symbolData?.defaultSL ||
-                                   parseInt(document.getElementById('slInput').value) ||
-                                   40;
+        const resolvedQty = coerceNumber(qty, 1);
 
-        const actualTakeProfitTicks = takeProfitTicks ||
-                                     symbolData?.defaultTP ||
-                                     parseInt(document.getElementById('tpInput').value) ||
-                                     100;
-
-        const from = symbolData?.tickSize ? 'dictionary'
-          : document.getElementById('tickInput').value ? 'input field'
-          : 'default parameter';
-        console.log(`Using tick size ${tickSize} (from ${from})`);
-        console.log(`Using SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
+        console.log(`Using tick size ${tickSize}`);
+        console.log(`Effective SL: ${actualStopLossTicks} ticks, TP: ${actualTakeProfitTicks} ticks`);
 
         console.log(`Getting market data for ${symbolInput}`);
         const marketData = getMarketData(symbolInput);
@@ -1048,28 +1235,19 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         }
         console.log('Market data:', marketData);
 
-        // Check if an entry price was provided
-        const entryPriceInput = document.getElementById('entryPriceInput');
-        const customEntryPrice = entryPriceInput && entryPriceInput.value ? parseFloat(entryPriceInput.value) : null;
-
-        // Determine market price (used when no entry price is specified or for SL/TP calculations)
         const marketPrice = parseFloat(action === 'Buy' ? marketData.offerPrice : marketData.bidPrice);
         console.log(`Market price: ${marketPrice} (${action === 'Buy' ? 'offer' : 'bid'} price)`);
 
-        // Determine entry order type and price
-        let orderType = 'MARKET';
+        const customEntryPrice = Number.isFinite(configuredEntryPrice) ? configuredEntryPrice : null;
         let entryPrice = marketPrice;
+        let orderType = 'MARKET';
 
         if (customEntryPrice !== null) {
             console.log(`Custom entry price provided: ${customEntryPrice}`);
             entryPrice = customEntryPrice;
-
-            // Determine if this should be a LIMIT or STOP order based on price comparison
             if (action === 'Buy') {
-                // For Buy: LIMIT if entry below market, STOP if entry above market
                 orderType = customEntryPrice < marketPrice ? 'LIMIT' : 'STOP';
             } else {
-                // For Sell: LIMIT if entry above market, STOP if entry below market
                 orderType = customEntryPrice > marketPrice ? 'LIMIT' : 'STOP';
             }
             console.log(`Order type determined to be: ${orderType}`);
@@ -1077,68 +1255,58 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
             console.log(`No custom entry price provided, using market order at ${marketPrice}`);
         }
 
-        // Get the correct decimal precision for this instrument
-        const decimalPrecision = symbolData?.precision ?? 2; // Default to 2 if not specified
+        const decimalPrecision = Number.isFinite(symbolData.precision) ? symbolData.precision : 2;
         console.log(`Using price precision: ${decimalPrecision} decimal places`);
 
-        // Check if hardcoded SL/TP prices are provided
-        const slPriceInput = document.getElementById('slPriceInput');
-        const tpPriceInput = document.getElementById('tpPriceInput');
+        const slPriceValue = slEnabled
+            ? (Number.isFinite(configuredSlPrice)
+                ? configuredSlPrice
+                : (action === 'Buy'
+                    ? entryPrice - actualStopLossTicks * tickSize
+                    : entryPrice + actualStopLossTicks * tickSize))
+            : null;
 
-        // Get hardcoded prices if they exist
-        const hardcodedSLPrice = slPriceInput && slPriceInput.value ? parseFloat(slPriceInput.value) : null;
-        const hardcodedTPPrice = tpPriceInput && tpPriceInput.value ? parseFloat(tpPriceInput.value) : null;
+        const tpPriceValue = tpEnabled
+            ? (Number.isFinite(configuredTpPrice)
+                ? configuredTpPrice
+                : (action === 'Buy'
+                    ? entryPrice + actualTakeProfitTicks * tickSize
+                    : entryPrice - actualTakeProfitTicks * tickSize))
+            : null;
 
-        // Determine SL price - use hardcoded if available, otherwise calculate based on ticks
-        let stopLossPrice;
-        if (hardcodedSLPrice !== null) {
-            stopLossPrice = hardcodedSLPrice.toFixed(decimalPrecision);
-            console.log(`Using hardcoded SL price: ${stopLossPrice}`);
-        } else {
-            stopLossPrice = (action === 'Buy'
-                ? entryPrice - actualStopLossTicks * tickSize
-                : entryPrice + actualStopLossTicks * tickSize).toFixed(decimalPrecision);
-            console.log(`Calculated SL price: ${stopLossPrice} (${action === 'Buy' ? 'entry - ' : 'entry + '}${actualStopLossTicks} ticks)`);
-        }
+        const stopLossPrice = slPriceValue != null ? slPriceValue.toFixed(decimalPrecision) : null;
+        const takeProfitPrice = tpPriceValue != null ? tpPriceValue.toFixed(decimalPrecision) : null;
 
-        // Determine TP price - use hardcoded if available, otherwise calculate based on ticks
-        let takeProfitPrice;
-        if (hardcodedTPPrice !== null) {
-            takeProfitPrice = hardcodedTPPrice.toFixed(decimalPrecision);
-            console.log(`Using hardcoded TP price: ${takeProfitPrice}`);
-        } else {
-            takeProfitPrice = (action === 'Buy'
-                ? entryPrice + actualTakeProfitTicks * tickSize
-                : entryPrice - actualTakeProfitTicks * tickSize).toFixed(decimalPrecision);
-            console.log(`Calculated TP price: ${takeProfitPrice} (${action === 'Buy' ? 'entry + ' : 'entry - '}${actualTakeProfitTicks} ticks)`);
+        if (typeof updateDriverState === 'function') {
+            updateDriverState({
+                symbol: symbolInput,
+                quantity: resolvedQty,
+                tpTicks: actualTakeProfitTicks,
+                slTicks: actualStopLossTicks,
+                tickSize,
+                entryPrice: customEntryPrice,
+                tpPrice: tpPriceValue != null ? tpPriceValue : null,
+                slPrice: slPriceValue,
+                tpEnabled,
+                slEnabled
+            }, 'autoTrade-final');
         }
 
         const tradeData = {
             symbol: marketData.symbol,
             action,
-            qty: quantity.toString(),
+            qty: String(resolvedQty),
             takeProfit: takeProfitPrice,
             stopLoss: stopLossPrice,
-            orderType: orderType,
-            entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
+            orderType,
+            entryPrice: orderType !== 'MARKET' && entryPrice != null ? entryPrice.toFixed(decimalPrecision) : null,
+            tpEnabled,
+            slEnabled
         };
         console.log('Trade data prepared:', tradeData);
 
         console.log('Submitting bracket orders');
-        return createBracketOrdersManual(tradeData).finally(() => {
-            const d = futuresTickData[rootSymbol];      // or rootSymbol
-            const slInput = document.getElementById('slInput');
-            const tpInput = document.getElementById('tpInput');
-            /*
-            if (d && slInput && tpInput) {
-                console.log(`Resetting boxes to default values for ${rootSymbol}: SL=${d.defaultSL}, TP=${d.defaultTP}`);
-                slInput.value = d.defaultSL;          // 40 or 10
-                tpInput.value = d.defaultTP;          // 120 or 25
-                // Also update localStorage
-                localStorage.setItem('bracketTrade_sl', d.defaultSL);
-                localStorage.setItem('bracketTrade_tp', d.defaultTP);
-            }*/
-        });
+        return createBracketOrdersManual(tradeData).finally(() => {});
     }
 
 
@@ -1370,7 +1538,20 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         moveStopLossToBreakeven,
         createUI,
         getNQFrontMonth,
-        getThirdFriday
+        getThirdFriday,
+        getState: () => (typeof getDriverState === 'function' ? getDriverState() : {}),
+        applyConfig: (patch = {}, source = 'external') => {
+            if (typeof updateDriverState === 'function') {
+                return updateDriverState(patch, source);
+            }
+            return {};
+        },
+        subscribeState: (listener) => {
+            if (typeof subscribeDriverState === 'function') {
+                return subscribeDriverState(listener);
+            }
+            return () => {};
+        }
     };
 
     const targetWindow = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
