@@ -12,31 +12,30 @@ from .utils.core import (
     setup_logging
 )
 
-# Load the Tampermonkey script
 project_root = get_project_root()
-tampermonkey_path = project_root / 'scripts' / 'tampermonkey' / 'autoOrder.user.js'
-with open(tampermonkey_path, 'r') as file:
-    tampermonkey_code = file.read()
-    
-# Extract the core functions from Tampermonkey script
-def extract_core_functions(code):
-    # This is a simple extraction that removes the IIFE wrapper
-    lines = code.split('\n')
-    core_lines = []
-    
-    for line in lines:
-        # Skip the IIFE start and end
-        if '(function ()' in line or line.strip() == '})();':
-            continue
-        else:
-            # Remove any leading indentation that was inside the IIFE
-            if line.startswith('    '):
-                line = line[4:]
-            core_lines.append(line)
-    
-    return '\n'.join(core_lines)
+driver_bundle_path = project_root / 'scripts' / 'tampermonkey' / 'dist' / 'tradovate_auto_driver.js'
+ui_bundle_path = project_root / 'scripts' / 'tampermonkey' / 'dist' / 'tradovate_ui_panel.js'
 
-tampermonkey_functions = extract_core_functions(tampermonkey_code)
+with open(driver_bundle_path, 'r', encoding='utf-8') as file:
+    tradovate_auto_driver_bundle = file.read()
+
+with open(ui_bundle_path, 'r', encoding='utf-8') as file:
+    tradovate_ui_panel_bundle = file.read()
+
+bootstrap_snippet = """
+(function() {
+    try {
+        if (window.TradoAuto && typeof window.TradoAuto.init === 'function') {
+            window.TradoAuto.init({ source: 'python-controller' });
+        }
+        if (window.TradoUIPanel && typeof window.TradoUIPanel.createInvisibleUI === 'function') {
+            window.TradoUIPanel.createInvisibleUI();
+        }
+    } catch (err) {
+        console.error('[PythonController] Error during TradoAuto bootstrap', err);
+    }
+})();
+"""
 
 class TradovateConnection:
     def __init__(self, port, account_name=None):
@@ -78,8 +77,10 @@ class TradovateConnection:
             return False
             
         try:
-            print(f"Injecting Tampermonkey functions for {self.account_name}...")
-            self.tab.Runtime.evaluate(expression=tampermonkey_functions)
+            print(f"Injecting TradoAuto bundles for {self.account_name}...")
+            self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
+            self.tab.Runtime.evaluate(expression=tradovate_ui_panel_bundle)
+            self.tab.Runtime.evaluate(expression=bootstrap_snippet)
             
             # Also inject the getAllAccountTableData function
             project_root = get_project_root()
@@ -143,7 +144,9 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            result = self.tab.Runtime.evaluate(expression="createUI();")
+            result = self.tab.Runtime.evaluate(
+                expression="window.TradoUIPanel && window.TradoUIPanel.mount && window.TradoUIPanel.mount({ visible: true });"
+            )
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -154,7 +157,25 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"autoTrade('{symbol}', {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});"
+            # Fixed: Call autoTrade directly and let it handle the Promise
+            js_code = f"""
+            (function() {{
+                console.log('🔥 [DASHBOARD] About to call TradoAuto.autoTrade("{symbol}", {quantity}, "{action}", {tp_ticks}, {sl_ticks}, {tick_size})');
+                const driver = window.TradoAuto;
+                if (!driver || typeof driver.autoTrade !== 'function') {{
+                    console.error('TradoAuto.autoTrade not available');
+                    return {{ error: 'TradoAuto.autoTrade unavailable' }};
+                }}
+                const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
+                    ? driver.normalizeSymbol('{symbol}')
+                    : '{symbol}'.toUpperCase();
+                if (driver.state) {{
+                    driver.state.symbol = normalizedSymbol;
+                }}
+                driver.autoTrade(normalizedSymbol, {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});
+                return {{ status: 'invoked', symbol: normalizedSymbol }};
+            }})();
+            """
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:
@@ -166,7 +187,20 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"clickExitForSymbol(normalizeSymbol('{symbol}'), '{option}');"
+            js_code = f"""
+            (function() {{
+                const driver = window.TradoAuto;
+                if (!driver || typeof driver.clickExitForSymbol !== 'function') {{
+                    console.error('TradoAuto.clickExitForSymbol not available');
+                    return {{ error: 'TradoAuto.clickExitForSymbol unavailable' }};
+                }}
+                const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
+                    ? driver.normalizeSymbol('{symbol}')
+                    : '{symbol}'.toUpperCase();
+                driver.clickExitForSymbol(normalizedSymbol, '{option}');
+                return {{ status: 'invoked', symbol: normalizedSymbol }};
+            }})();
+            """
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:
@@ -178,7 +212,23 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            js_code = f"updateSymbol('.trading-ticket .search-box--input', normalizeSymbol('{symbol}'));"
+            js_code = f"""
+            (function() {{
+                const driver = window.TradoAuto;
+                if (!driver || typeof driver.updateSymbol !== 'function') {{
+                    console.error('TradoAuto.updateSymbol not available');
+                    return {{ error: 'TradoAuto.updateSymbol unavailable' }};
+                }}
+                const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
+                    ? driver.normalizeSymbol('{symbol}')
+                    : '{symbol}'.toUpperCase();
+                driver.updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
+                if (driver.state) {{
+                    driver.state.symbol = normalizedSymbol;
+                }}
+                return {{ status: 'invoked', symbol: normalizedSymbol }};
+            }})();
+            """
             result = self.tab.Runtime.evaluate(expression=js_code)
             return result
         except Exception as e:

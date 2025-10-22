@@ -409,8 +409,18 @@ function normalizeSymbol(s) {
 
 async function createBracketOrdersManual(tradeData) {
     console.log('Creating bracket orders with data:', tradeData);
-    const enableTP = document.getElementById('tpCheckbox').checked;
-    const enableSL = document.getElementById('slCheckbox').checked;
+    const tpCheckbox = document.getElementById('tpCheckbox');
+    const slCheckbox = document.getElementById('slCheckbox');
+
+    if (tpCheckbox && typeof tradeData.enableTP === 'boolean') {
+        tpCheckbox.checked = tradeData.enableTP;
+    }
+    if (slCheckbox && typeof tradeData.enableSL === 'boolean') {
+        slCheckbox.checked = tradeData.enableSL;
+    }
+
+    const enableTP = typeof tradeData.enableTP === 'boolean' ? tradeData.enableTP : (tpCheckbox ? tpCheckbox.checked : true);
+    const enableSL = typeof tradeData.enableSL === 'boolean' ? tradeData.enableSL : (slCheckbox ? slCheckbox.checked : true);
     console.log(`TP enabled: ${enableTP}, SL enabled: ${enableSL}`);
 
     // DO NOT UNDER ANY CIRCUMSTANCES UPDATE THIS FUNCTION
@@ -860,7 +870,28 @@ async function captureOrderFeedback() {
             fillPrice: event.fillPrice
         });
     });
-    
+
+    if (orderType === 'UNKNOWN' && orderEvents.length > 0) {
+        const eventTexts = orderEvents.map(e => e.event.toUpperCase());
+        if (eventTexts.some(e => e.includes(' STP LMT '))) orderType = 'STOP_LIMIT';
+        else if (eventTexts.some(e => e.includes(' STP '))) orderType = 'STOP';
+        else if (eventTexts.some(e => e.includes(' LMT '))) orderType = 'LIMIT';
+        else if (eventTexts.some(e => e.includes(' MKT '))) orderType = 'MARKET';
+    }
+
+    if (!orderAction && orderEvents.length > 0) {
+        const actionMatch = orderEvents[0].event.match(/^(BUY|SELL)/i);
+        if (actionMatch) {
+            const word = actionMatch[1].toLowerCase();
+            orderAction = word.charAt(0).toUpperCase() + word.slice(1);
+        }
+    }
+
+    if (!orderQuantity && orderEvents.length > 0) {
+        const qtyMatch = orderEvents[0].event.match(/^(?:BUY|SELL)\s+(\d+)/i);
+        if (qtyMatch) orderQuantity = parseInt(qtyMatch[1], 10);
+    }
+
     // Extract the entire order history HTML for complete analysis
     console.log('📊 ORDER FEEDBACK - Full HTML Structure:');
     console.log(orderHistoryDiv.outerHTML);
@@ -1318,6 +1349,9 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                                  symbolData?.defaultTP ||
                                  parseInt(currentState.tp) ||
                                  100;
+
+    const enableSL = actualStopLossTicks > 0;
+    const enableTP = actualTakeProfitTicks > 0;
     
     // DEBUG: Verify TP ticks after processing
     console.log(`🔍 DEBUG: actualTakeProfitTicks = ${actualTakeProfitTicks} (from takeProfitTicks: ${takeProfitTicks}, defaultTP: ${symbolData?.defaultTP}, tpInput: ${currentState.tp})`);
@@ -1447,7 +1481,9 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         takeProfit: takeProfitPrice,
         stopLoss: stopLossPrice,
         orderType: orderType,
-        entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null
+        entryPrice: orderType !== 'MARKET' ? entryPrice.toFixed(decimalPrecision) : null,
+        enableTP: enableTP,
+        enableSL: enableSL
     };
     console.log('Trade data prepared:', tradeData);
     

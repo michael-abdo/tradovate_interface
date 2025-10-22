@@ -167,12 +167,12 @@ def test_quantity_defaults():
     if localStorage_default:
         print(f"  ✅ Uses configDefaults.quantity for localStorage fallback")
     
-    # Test autoOrder.user.js
-    print("\nTest: autoOrder.user.js defaults")
-    with open("scripts/tampermonkey/autoOrder.user.js", 'r') as f:
+    # Test UI panel module defaults
+    print("\nTest: uiPanel module defaults")
+    with open("scripts/tampermonkey/modules/uiPanel.js", 'r') as f:
         content = f.read()
     
-    qty_default = re.search(r"localStorage\.getItem\('bracketTrade_qty'\)\s*\|\|\s*'(\d+)'", content)
+    qty_default = re.search(r"defaultQty\s*=\s*'(\d+)'", content)
     if qty_default:
         print(f"  JavaScript default: {qty_default.group(1)}")
 
@@ -192,9 +192,9 @@ def test_risk_reward_ratio():
         print(f"  Dashboard ratio: {ratio}")
         print(f"  ✅ PASS" if ratio == 3.5 else f"  ❌ FAIL: Expected 3.5")
     
-    # Test autoOrder.user.js
-    print("\nTest: autoOrder.user.js calculation")
-    with open("scripts/tampermonkey/autoOrder.user.js", 'r') as f:
+    # Test uiPanel module
+    print("\nTest: uiPanel module calculation")
+    with open("scripts/tampermonkey/modules/uiPanel.js", 'r') as f:
         content = f.read()
     
     calculation = re.search(r'tpInput\.value\s*=\s*Math\.round\(slVal\s*\*\s*([\d.]+)\)', content)

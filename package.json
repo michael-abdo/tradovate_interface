@@ -1,0 +1,21 @@
+{
+  "name": "enhanced_order_execution",
+  "version": "1.0.0",
+  "description": "A Python interface for automating trading operations with multiple Tradovate accounts simultaneously. Features a web dashboard for visual monitoring and control of all accounts.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "build:tampermonkey": "node scripts/tampermonkey/build.mjs",
+    "build:tampermonkey:watch": "node scripts/tampermonkey/build.mjs --watch",
+    "test": "pytest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.11"
+  }
+}

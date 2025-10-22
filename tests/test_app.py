@@ -89,7 +89,10 @@ class TestTradovateConnection:
         # Setup
         with patch("src.app.pychrome.Browser", return_value=mock_browser), \
              patch("os.path.exists", return_value=True), \
-             patch("builtins.open", mock_open(read_data="test script")):
+             patch("builtins.open", mock_open(read_data="test script")), \
+             patch("src.app.tradovate_auto_driver_bundle", "/* driver */"), \
+             patch("src.app.tradovate_ui_panel_bundle", "/* panel */"), \
+             patch("src.app.bootstrap_snippet", "/* bootstrap */"):
             
             with patch.object(app.TradovateConnection, "find_tradovate_tab"):
                 connection = app.TradovateConnection(9222, "Test Account")
@@ -100,14 +103,19 @@ class TestTradovateConnection:
                 
                 # Assert
                 assert result is True
-                # Should be called multiple times for different scripts
-                assert mock_tab.Runtime.evaluate.call_count >= 3
+                calls = mock_tab.Runtime.evaluate.call_args_list
+                assert calls[0][1]['expression'] == "/* driver */"
+                assert calls[1][1]['expression'] == "/* panel */"
+                assert calls[2][1]['expression'] == "/* bootstrap */"
     
     def test_inject_tampermonkey_exception(self, mock_browser, mock_tab):
         # Setup
         mock_tab.Runtime.evaluate.side_effect = Exception("Injection error")
         
-        with patch("src.app.pychrome.Browser", return_value=mock_browser):
+        with patch("src.app.pychrome.Browser", return_value=mock_browser), \
+             patch("src.app.tradovate_auto_driver_bundle", "/* driver */"), \
+             patch("src.app.tradovate_ui_panel_bundle", "/* panel */"), \
+             patch("src.app.bootstrap_snippet", "/* bootstrap */"):
             with patch.object(app.TradovateConnection, "find_tradovate_tab"):
                 connection = app.TradovateConnection(9222, "Test Account")
                 connection.tab = mock_tab
@@ -146,7 +154,9 @@ class TestTradovateConnection:
                 
                 # Assert
                 assert result == expected_result
-                mock_tab.Runtime.evaluate.assert_called_once_with(expression="createUI();")
+                mock_tab.Runtime.evaluate.assert_called_once_with(
+                    expression="window.TradoUIPanel && window.TradoUIPanel.mount && window.TradoUIPanel.mount({ visible: true });"
+                )
     
     def test_auto_trade(self, mock_browser, mock_tab):
         # Setup
@@ -166,6 +176,7 @@ class TestTradovateConnection:
                 mock_tab.Runtime.evaluate.assert_called_once()
                 # Check that the script contains the expected trade parameters
                 script = mock_tab.Runtime.evaluate.call_args[1]['expression']
+                assert "TradoAuto.autoTrade" in script
                 assert "ES" in script
                 assert "Buy" in script
                 assert "100" in script
@@ -190,6 +201,7 @@ class TestTradovateConnection:
                 mock_tab.Runtime.evaluate.assert_called_once()
                 # Check that the script contains the expected exit parameters
                 script = mock_tab.Runtime.evaluate.call_args[1]['expression']
+                assert "TradoAuto.clickExitForSymbol" in script
                 assert "ES" in script
                 assert "cancel-option-Exit-at-Mkt-Cxl" in script
 
@@ -211,6 +223,7 @@ class TestTradovateConnection:
                 mock_tab.Runtime.evaluate.assert_called_once()
                 # Check that the script contains the expected symbol
                 script = mock_tab.Runtime.evaluate.call_args[1]['expression']
+                assert "TradoAuto.updateSymbol" in script
                 assert "ES" in script
 
     def test_run_risk_management(self, mock_browser, mock_tab):

@@ -8,6 +8,20 @@ When making changes to Tampermonkey scripts (scripts/tampermonkey/*.user.js):
 
 This uses the existing Chrome DevTools Protocol infrastructure to directly inject scripts.
 
+## CRITICAL: Chrome Process Safety Rules
+**NEVER** kill Chrome processes or restart the trading system during testing or development:
+- **NEVER** use `pkill -f "Google Chrome.*remote-debugging-port"`
+- **NEVER** use `kill` commands on Chrome processes
+- **NEVER** restart `start_all.py` during active development
+- **ALWAYS** use `python3 reload.py` for script updates
+- **ALWAYS** respect the user's running Chrome instances and trading sessions
+
+Killing Chrome processes can:
+- Disrupt active trading positions
+- Break the user's workflow and open tabs
+- Cause data loss in unsaved work
+- Interrupt live trading sessions
+
 ## 1. Read the prompt
 
 * **Action:** Read all new user text, attachments, and prior-turn context.
