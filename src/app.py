@@ -23,13 +23,15 @@ with open(ui_bundle_path, 'r', encoding='utf-8') as file:
     tradovate_ui_panel_bundle = file.read()
 
 bootstrap_snippet = """
-(function() {
+(function ready(attempt = 0) {
     try {
         if (window.TradoAuto && typeof window.TradoAuto.init === 'function') {
             window.TradoAuto.init({ source: 'python-controller' });
-        }
-        if (window.TradoUIPanel && typeof window.TradoUIPanel.createInvisibleUI === 'function') {
-            window.TradoUIPanel.createInvisibleUI();
+            if (window.TradoUIPanel && typeof window.TradoUIPanel.createInvisibleUI === 'function') {
+                window.TradoUIPanel.createInvisibleUI();
+            }
+        } else if (attempt < 50) {
+            setTimeout(function() { ready(attempt + 1); }, 200);
         }
     } catch (err) {
         console.error('[PythonController] Error during TradoAuto bootstrap', err);
@@ -79,6 +81,7 @@ class TradovateConnection:
         try:
             print(f"Injecting TradoAuto bundles for {self.account_name}...")
             self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
+            self.tab.Runtime.evaluate(expression="(function(){\n  if (typeof window.TradoAuto === 'undefined' && typeof TradovateAutoDriverBundle !== 'undefined') {\n    var candidate = TradovateAutoDriverBundle.default || TradovateAutoDriverBundle;\n    if (candidate) {\n      window.TradoAuto = candidate;\n      if (typeof window.TradoAuto.init === 'function') {\n        window.TradoAuto.init({ source: 'python-controller' });\n      }\n    }\n  }\n})();")
             self.tab.Runtime.evaluate(expression=tradovate_ui_panel_bundle)
             self.tab.Runtime.evaluate(expression=bootstrap_snippet)
             
@@ -157,12 +160,37 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
-            # Fixed: Call autoTrade directly and let it handle the Promise
+            self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
             js_code = f"""
-            (function() {{
+            (async () => {{
                 console.log('🔥 [DASHBOARD] About to call TradoAuto.autoTrade("{symbol}", {quantity}, "{action}", {tp_ticks}, {sl_ticks}, {tick_size})');
-                const driver = window.TradoAuto;
-                if (!driver || typeof driver.autoTrade !== 'function') {{
+                const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const resolveDriver = () => {{
+                    if (window.TradoAuto && typeof window.TradoAuto.autoTrade === 'function') {{
+                        return window.TradoAuto;
+                    }}
+                    if (typeof window.TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = window.TradovateAutoDriverBundle.default || window.TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.autoTrade === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    if (typeof TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = TradovateAutoDriverBundle.default || TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.autoTrade === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    return null;
+                }};
+                let driver = resolveDriver();
+                for (let attempt = 0; !driver && attempt < 50; attempt++) {{
+                    await sleep(120);
+                    driver = resolveDriver();
+                }}
+                if (!driver) {{
                     console.error('TradoAuto.autoTrade not available');
                     return {{ error: 'TradoAuto.autoTrade unavailable' }};
                 }}
@@ -172,11 +200,19 @@ class TradovateConnection:
                 if (driver.state) {{
                     driver.state.symbol = normalizedSymbol;
                 }}
-                driver.autoTrade(normalizedSymbol, {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});
+                try {{
+                    const result = driver.autoTrade(normalizedSymbol, {quantity}, '{action}', {tp_ticks}, {sl_ticks}, {tick_size});
+                    if (result && typeof result.then === 'function') {{
+                        await result;
+                    }}
+                }} catch (err) {{
+                    console.error('TradoAuto.autoTrade threw', err);
+                    return {{ error: err && err.message ? err.message : String(err) }};
+                }}
                 return {{ status: 'invoked', symbol: normalizedSymbol }};
             }})();
             """
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -187,10 +223,36 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
+            self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
             js_code = f"""
-            (function() {{
-                const driver = window.TradoAuto;
-                if (!driver || typeof driver.clickExitForSymbol !== 'function') {{
+            (async () => {{
+                const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const resolveDriver = () => {{
+                    if (window.TradoAuto && typeof window.TradoAuto.clickExitForSymbol === 'function') {{
+                        return window.TradoAuto;
+                    }}
+                    if (typeof window.TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = window.TradovateAutoDriverBundle.default || window.TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.clickExitForSymbol === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    if (typeof TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = TradovateAutoDriverBundle.default || TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.clickExitForSymbol === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    return null;
+                }};
+                let driver = resolveDriver();
+                for (let attempt = 0; !driver && attempt < 50; attempt++) {{
+                    await sleep(120);
+                    driver = resolveDriver();
+                }}
+                if (!driver) {{
                     console.error('TradoAuto.clickExitForSymbol not available');
                     return {{ error: 'TradoAuto.clickExitForSymbol unavailable' }};
                 }}
@@ -201,7 +263,7 @@ class TradovateConnection:
                 return {{ status: 'invoked', symbol: normalizedSymbol }};
             }})();
             """
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -212,10 +274,36 @@ class TradovateConnection:
             return {"error": "No tab available"}
             
         try:
+            self.tab.Runtime.evaluate(expression=tradovate_auto_driver_bundle)
             js_code = f"""
-            (function() {{
-                const driver = window.TradoAuto;
-                if (!driver || typeof driver.updateSymbol !== 'function') {{
+            (async () => {{
+                const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const resolveDriver = () => {{
+                    if (window.TradoAuto && typeof window.TradoAuto.updateSymbol === 'function') {{
+                        return window.TradoAuto;
+                    }}
+                    if (typeof window.TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = window.TradovateAutoDriverBundle.default || window.TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.updateSymbol === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    if (typeof TradovateAutoDriverBundle !== 'undefined') {{
+                        const candidate = TradovateAutoDriverBundle.default || TradovateAutoDriverBundle;
+                        if (candidate && typeof candidate.updateSymbol === 'function') {{
+                            window.TradoAuto = candidate;
+                            return candidate;
+                        }}
+                    }}
+                    return null;
+                }};
+                let driver = resolveDriver();
+                for (let attempt = 0; !driver && attempt < 50; attempt++) {{
+                    await sleep(120);
+                    driver = resolveDriver();
+                }}
+                if (!driver) {{
                     console.error('TradoAuto.updateSymbol not available');
                     return {{ error: 'TradoAuto.updateSymbol unavailable' }};
                 }}
@@ -229,7 +317,7 @@ class TradovateConnection:
                 return {{ status: 'invoked', symbol: normalizedSymbol }};
             }})();
             """
-            result = self.tab.Runtime.evaluate(expression=js_code)
+            result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
             return result
         except Exception as e:
             return {"error": str(e)}

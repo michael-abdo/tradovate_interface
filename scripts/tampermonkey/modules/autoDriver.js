@@ -1369,7 +1369,24 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
         getThirdFriday
     };
 
+    const targetWindow = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    console.log('[TradoAuto] installing legacy driver onto window/unsafeWindow');
     window.TradoAuto = TradoAuto;
+    targetWindow.TradoAuto = TradoAuto;
+    targetWindow.TradovateAutoDriverBundle = { default: TradoAuto, autoTrade, clickExitForSymbol, moveStopLossToBreakeven, createUI, getNQFrontMonth, getThirdFriday };
+    if (!targetWindow.__tradoAutoInterval) {
+        targetWindow.__tradoAutoInterval = setInterval(() => {
+            if (!targetWindow.TradoAuto || typeof targetWindow.TradoAuto.autoTrade !== 'function') {
+                console.warn('[TradoAuto] Reasserting driver on targetWindow');
+                targetWindow.TradoAuto = TradoAuto;
+            }
+            if (!window.TradoAuto || typeof window.TradoAuto.autoTrade !== 'function') {
+                console.warn('[TradoAuto] Reasserting driver on window');
+                window.TradoAuto = TradoAuto;
+            }
+        }, 250);
+        console.log('[TradoAuto] watchdog interval started');
+    }
 
 })();
 
