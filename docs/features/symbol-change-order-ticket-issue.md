@@ -2,15 +2,15 @@
 
 ## Problem Description
 
-When changing symbols using the autoOrder.user.js tool, the symbol update is being applied to the Market Analyzer search box instead of the Order Ticket symbol input. This causes trades to be placed with the wrong symbol or the symbol change to not affect the actual order.
+When changing symbols using the modular Tampermonkey UI (`scripts/tampermonkey/modules/uiPanel.js`), the symbol update was being applied to the Market Analyzer search box instead of the Order Ticket symbol input. This caused trades to be placed with the wrong symbol or the symbol change to not affect the actual order.
 
-**Status: FIXED** - The issue has been resolved by using a more specific selector.
+**Status: FIXED** - The issue has been resolved in the split driver/UI architecture by using a more specific selector.
 
 ## Previous Behavior (INCORRECT)
 
-The previous code used this selector to update symbols:
+The previous UI code used this selector to update symbols:
 ```javascript
-updateSymbol('.search-box--input', normalizedSymbol);
+driver.updateSymbol('.search-box--input', normalizedSymbol);
 ```
 
 This selector `.search-box--input` was too generic and would target the market analyzer/watchlist search box instead of the order ticket.
@@ -19,7 +19,7 @@ This selector `.search-box--input` was too generic and would target the market a
 
 Changed the selector to be more specific:
 ```javascript
-updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
+driver.updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
 ```
 
 This ensures we only target the search input within the trading ticket area.
@@ -34,12 +34,12 @@ The `.search-box--input` selector is too generic and matches multiple elements o
 
 ### 2. Current Code Flow
 ```javascript
-// When user changes symbol in autoOrder UI
+// When user changes symbol in the UI panel
 document.getElementById('symbolInput').addEventListener('change', e => {
     const normalizedSymbol = normalizeSymbol(e.target.value);
     
     // This updates the WRONG element!
-    updateSymbol('.search-box--input', normalizedSymbol);
+    driver.updateSymbol('.search-box--input', normalizedSymbol);
 });
 ```
 
@@ -84,13 +84,13 @@ Update both the market analyzer AND the order ticket:
 ```javascript
 function updateAllSymbols(symbol) {
     // Update market analyzer
-    updateSymbol('.search-box--input', symbol);
+    driver.updateSymbol('.search-box--input', symbol);
     
     // Update order ticket
-    updateSymbol('.trading-ticket input[type="text"]', symbol);
+    driver.updateSymbol('.trading-ticket input[type="text"]', symbol);
     
     // Update any other relevant symbol inputs
-    updateSymbol('.order-ticket-symbol', symbol);
+    driver.updateSymbol('.order-ticket-symbol', symbol);
 }
 ```
 
@@ -113,7 +113,7 @@ Instead of generic `.search-box--input`, use more specific selectors:
 
 1. **Load the Updated Script**
    - Refresh Tradovate page
-   - Ensure autoOrder.user.js is loaded in Tampermonkey
+   - Ensure the updated modular Tampermonkey script is loaded
 
 2. **Run Diagnostic Script**
    ```javascript
@@ -192,9 +192,9 @@ alert(`Please manually update the order ticket symbol to: ${normalizedSymbol}`);
 
 ## Related Files
 
-- `/scripts/tampermonkey/autoOrder.user.js` - Main file needing update
-- Line 265 - The problematic updateSymbol call
-- Lines 598-636 - The updateSymbol function definition
+- `/scripts/tampermonkey/modules/uiPanel.js` - UI event wiring
+- `/scripts/tampermonkey/modules/autoDriver.js` - Automation driver with `updateSymbol`
+- Bundled outputs in `/scripts/tampermonkey/dist/`
 
 ## References
 

@@ -85,6 +85,10 @@ The project is organized into the following directories:
   - `static/`: Static assets (CSS, JS, images)
 - `scripts/`: Browser automation scripts
   - `tampermonkey/`: Tampermonkey scripts for browser automation
+    - `modules/`: Source modules (`autoDriver.js`, `uiPanel.js`) for the driver/UI split
+    - `dist/`: Bundled assets generated via esbuild (`tradovate_auto_driver.js`, `tradovate_ui_panel.js`)
+    - `autoOrder.template.user.js`: Template for the thin Tampermonkey wrapper
+    - `autoOrder.user.js`: Generated user script that injects the bundled driver/UI
 - `strategies/`: Trading strategy files
   - `pinescript/`: PineScript code for TradingView
 - `launchers/`: Entry point scripts for different components
@@ -124,6 +128,12 @@ The project is organized into the following directories:
    ```
    
    **Note:** The system automatically detects the format. YAML files are checked first for better readability.
+
+3. Install Node dependencies (for Tampermonkey bundle builds) and generate the driver/UI bundles:
+   ```bash
+   npm install
+   npm run build:tampermonkey
+   ```
 
 ## Usage
 

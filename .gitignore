@@ -11,6 +11,13 @@ venv/
 # OS specific files
 .DS_Store
 
+# Node and build artifacts
+node_modules/
+.pytest_cache/
+
 # Saved web pages (may contain third-party API keys)
 docs/Tradovate\ Page/
 docs/Tradovate Page/
+
+# Tampermonkey bundles
+scripts/tampermonkey/dist/

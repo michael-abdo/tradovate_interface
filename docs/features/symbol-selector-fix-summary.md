@@ -1,7 +1,7 @@
 # Symbol Selector Fix Summary
 
 ## Problem
-When changing symbols using the autoOrder.user.js tool, the tool was updating the Market Analyzer search box instead of the Order Ticket symbol input field. This meant trades would be placed with the wrong symbol.
+When changing symbols using the modular Tampermonkey UI (`scripts/tampermonkey/modules/uiPanel.js`), the tool was updating the Market Analyzer search box instead of the Order Ticket symbol input field. This meant trades would be placed with the wrong symbol.
 
 ## Root Cause
 The selector `.search-box--input` was too generic and matched multiple elements on the page:
@@ -13,13 +13,13 @@ The code was trying to be clever by selecting the second element (`inputs[1]`), 
 
 ## Fix Applied
 
-### 1. Updated Symbol Selector (Line 267)
+### 1. Updated Symbol Selector (UI Module)
 ```javascript
 // OLD: Generic selector that hit market analyzer
-updateSymbol('.search-box--input', normalizedSymbol);
+driver.updateSymbol('.search-box--input', normalizedSymbol);
 
 // NEW: Specific selector for trading ticket
-updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
+driver.updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
 ```
 
 ### 2. Enhanced updateSymbol Function
@@ -29,7 +29,8 @@ updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
 - Added location detection to verify correct element is being updated
 
 ### 3. Files Modified
-- `/scripts/tampermonkey/autoOrder.user.js` - Fixed selector and improved function
+- `/scripts/tampermonkey/modules/uiPanel.js` - Fixed selector and improved event handling
+- `/scripts/tampermonkey/modules/autoDriver.js` - Provides shared automation utilities
 - `/docs/features/symbol-change-order-ticket-issue.md` - Updated documentation
 
 ### 4. Test Scripts Created
@@ -61,6 +62,6 @@ updateSymbol('.trading-ticket .search-box--input', normalizedSymbol);
 ## Rollback Instructions
 If needed, revert to previous behavior:
 ```javascript
-// Change line 267 back to:
-updateSymbol('.search-box--input', normalizedSymbol);
+// Restore the generic selector in uiPanel.js if emergency rollback is required:
+driver.updateSymbol('.search-box--input', normalizedSymbol);
 ```
