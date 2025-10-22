@@ -165,6 +165,29 @@ class TradovateConnection:
             (async () => {{
                 console.log('🔥 [DASHBOARD] About to call TradoAuto.autoTrade("{symbol}", {quantity}, "{action}", {tp_ticks}, {sl_ticks}, {tick_size})');
                 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const requiredMethod = 'autoTrade';
+                const snapshot = (label) => {{
+                    try {{
+                        const details = {{
+                            label,
+                            hasTradoAuto: !!window.TradoAuto,
+                            methodType: window.TradoAuto ? typeof window.TradoAuto[requiredMethod] : 'n/a',
+                            hasWindowBundle: typeof window.TradovateAutoDriverBundle !== 'undefined',
+                            hasGlobalBundle: typeof TradovateAutoDriverBundle !== 'undefined'
+                        }};
+                        if (window.TradoAuto && (typeof window.TradoAuto === 'object' || typeof window.TradoAuto === 'function')) {{
+                            try {{
+                                details.keys = Object.keys(window.TradoAuto).slice(0, 20);
+                            }} catch (err) {{
+                                details.keysError = err && err.message ? err.message : String(err);
+                            }}
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                    }} catch (err) {{
+                        console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
+                    }}
+                }};
+                snapshot('initial');
                 const resolveDriver = () => {{
                     if (window.TradoAuto && typeof window.TradoAuto.autoTrade === 'function') {{
                         return window.TradoAuto;
@@ -186,14 +209,20 @@ class TradovateConnection:
                     return null;
                 }};
                 let driver = resolveDriver();
+                if (!driver) {{
+                    snapshot('post-resolve-0');
+                }}
                 for (let attempt = 0; !driver && attempt < 50; attempt++) {{
                     await sleep(120);
+                     snapshot(`retry-${{attempt + 1}}`);
                     driver = resolveDriver();
                 }}
                 if (!driver) {{
+                    snapshot('resolve-failed');
                     console.error('TradoAuto.autoTrade not available');
                     return {{ error: 'TradoAuto.autoTrade unavailable' }};
                 }}
+                snapshot('resolved');
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();
@@ -213,6 +242,7 @@ class TradovateConnection:
             }})();
             """
             result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
+            print(f"[auto_trade][{self.account_name}] result: {result}")
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -227,6 +257,29 @@ class TradovateConnection:
             js_code = f"""
             (async () => {{
                 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const requiredMethod = 'clickExitForSymbol';
+                const snapshot = (label) => {{
+                    try {{
+                        const details = {{
+                            label,
+                            hasTradoAuto: !!window.TradoAuto,
+                            methodType: window.TradoAuto ? typeof window.TradoAuto[requiredMethod] : 'n/a',
+                            hasWindowBundle: typeof window.TradovateAutoDriverBundle !== 'undefined',
+                            hasGlobalBundle: typeof TradovateAutoDriverBundle !== 'undefined'
+                        }};
+                        if (window.TradoAuto && (typeof window.TradoAuto === 'object' || typeof window.TradoAuto === 'function')) {{
+                            try {{
+                                details.keys = Object.keys(window.TradoAuto).slice(0, 20);
+                            }} catch (err) {{
+                                details.keysError = err && err.message ? err.message : String(err);
+                            }}
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                    }} catch (err) {{
+                        console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
+                    }}
+                }};
+                snapshot('initial');
                 const resolveDriver = () => {{
                     if (window.TradoAuto && typeof window.TradoAuto.clickExitForSymbol === 'function') {{
                         return window.TradoAuto;
@@ -248,14 +301,20 @@ class TradovateConnection:
                     return null;
                 }};
                 let driver = resolveDriver();
+                if (!driver) {{
+                    snapshot('post-resolve-0');
+                }}
                 for (let attempt = 0; !driver && attempt < 50; attempt++) {{
                     await sleep(120);
+                    snapshot(`retry-${{attempt + 1}}`);
                     driver = resolveDriver();
                 }}
                 if (!driver) {{
+                    snapshot('resolve-failed');
                     console.error('TradoAuto.clickExitForSymbol not available');
                     return {{ error: 'TradoAuto.clickExitForSymbol unavailable' }};
                 }}
+                snapshot('resolved');
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();
@@ -264,6 +323,7 @@ class TradovateConnection:
             }})();
             """
             result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
+            print(f"[exit_positions][{self.account_name}] result: {result}")
             return result
         except Exception as e:
             return {"error": str(e)}
@@ -278,6 +338,29 @@ class TradovateConnection:
             js_code = f"""
             (async () => {{
                 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+                const requiredMethod = 'updateSymbol';
+                const snapshot = (label) => {{
+                    try {{
+                        const details = {{
+                            label,
+                            hasTradoAuto: !!window.TradoAuto,
+                            methodType: window.TradoAuto ? typeof window.TradoAuto[requiredMethod] : 'n/a',
+                            hasWindowBundle: typeof window.TradovateAutoDriverBundle !== 'undefined',
+                            hasGlobalBundle: typeof TradovateAutoDriverBundle !== 'undefined'
+                        }};
+                        if (window.TradoAuto && (typeof window.TradoAuto === 'object' || typeof window.TradoAuto === 'function')) {{
+                            try {{
+                                details.keys = Object.keys(window.TradoAuto).slice(0, 20);
+                            }} catch (err) {{
+                                details.keysError = err && err.message ? err.message : String(err);
+                            }}
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                    }} catch (err) {{
+                        console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
+                    }}
+                }};
+                snapshot('initial');
                 const resolveDriver = () => {{
                     if (window.TradoAuto && typeof window.TradoAuto.updateSymbol === 'function') {{
                         return window.TradoAuto;
@@ -299,14 +382,20 @@ class TradovateConnection:
                     return null;
                 }};
                 let driver = resolveDriver();
+                if (!driver) {{
+                    snapshot('post-resolve-0');
+                }}
                 for (let attempt = 0; !driver && attempt < 50; attempt++) {{
                     await sleep(120);
+                    snapshot(`retry-${{attempt + 1}}`);
                     driver = resolveDriver();
                 }}
                 if (!driver) {{
+                    snapshot('resolve-failed');
                     console.error('TradoAuto.updateSymbol not available');
                     return {{ error: 'TradoAuto.updateSymbol unavailable' }};
                 }}
+                snapshot('resolved');
                 const normalizedSymbol = typeof driver.normalizeSymbol === 'function'
                     ? driver.normalizeSymbol('{symbol}')
                     : '{symbol}'.toUpperCase();
@@ -318,6 +407,7 @@ class TradovateConnection:
             }})();
             """
             result = self.tab.Runtime.evaluate(expression=js_code, awaitPromise=True)
+            print(f"[update_symbol][{self.account_name}] result: {result}")
             return result
         except Exception as e:
             return {"error": str(e)}

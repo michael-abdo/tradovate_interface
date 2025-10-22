@@ -105,9 +105,10 @@ class TestTradovateConnection:
                 assert result is True
                 calls = mock_tab.Runtime.evaluate.call_args_list
                 assert calls[0][1]['expression'] == "/* driver */"
-                assert calls[1][1]['expression'] == "/* panel */"
-                assert calls[2][1]['expression'] == "/* bootstrap */"
-    
+                assert "window.TradoAuto" in calls[1][1]['expression']
+                assert calls[2][1]['expression'] == "/* panel */"
+                assert calls[3][1]['expression'] == "/* bootstrap */"
+
     def test_inject_tampermonkey_exception(self, mock_browser, mock_tab):
         # Setup
         mock_tab.Runtime.evaluate.side_effect = Exception("Injection error")
@@ -161,9 +162,10 @@ class TestTradovateConnection:
     def test_auto_trade(self, mock_browser, mock_tab):
         # Setup
         expected_result = {"result": "Trade executed"}
-        mock_tab.Runtime.evaluate.return_value = expected_result
+        mock_tab.Runtime.evaluate.side_effect = [None, expected_result]
         
-        with patch("src.app.pychrome.Browser", return_value=mock_browser):
+        with patch("src.app.pychrome.Browser", return_value=mock_browser), \
+             patch("src.app.tradovate_auto_driver_bundle", "/* driver */"):
             with patch.object(app.TradovateConnection, "find_tradovate_tab"):
                 connection = app.TradovateConnection(9222, "Test Account")
                 connection.tab = mock_tab
@@ -173,22 +175,23 @@ class TestTradovateConnection:
                 
                 # Assert
                 assert result == expected_result
-                mock_tab.Runtime.evaluate.assert_called_once()
-                # Check that the script contains the expected trade parameters
-                script = mock_tab.Runtime.evaluate.call_args[1]['expression']
-                assert "TradoAuto.autoTrade" in script
-                assert "ES" in script
-                assert "Buy" in script
-                assert "100" in script
-                assert "40" in script
-                assert "0.25" in script
+                calls = mock_tab.Runtime.evaluate.call_args_list
+                assert calls[0][1]['expression'] == "/* driver */"
+                trade_script = calls[1][1]['expression']
+                assert "TradoAuto.autoTrade" in trade_script
+                assert "ES" in trade_script
+                assert "Buy" in trade_script
+                assert "100" in trade_script
+                assert "40" in trade_script
+                assert "0.25" in trade_script
 
     def test_exit_positions(self, mock_browser, mock_tab):
         # Setup
         expected_result = {"result": "Positions closed"}
-        mock_tab.Runtime.evaluate.return_value = expected_result
+        mock_tab.Runtime.evaluate.side_effect = [None, expected_result]
         
-        with patch("src.app.pychrome.Browser", return_value=mock_browser):
+        with patch("src.app.pychrome.Browser", return_value=mock_browser), \
+             patch("src.app.tradovate_auto_driver_bundle", "/* driver */"):
             with patch.object(app.TradovateConnection, "find_tradovate_tab"):
                 connection = app.TradovateConnection(9222, "Test Account")
                 connection.tab = mock_tab
@@ -198,19 +201,20 @@ class TestTradovateConnection:
                 
                 # Assert
                 assert result == expected_result
-                mock_tab.Runtime.evaluate.assert_called_once()
-                # Check that the script contains the expected exit parameters
-                script = mock_tab.Runtime.evaluate.call_args[1]['expression']
-                assert "TradoAuto.clickExitForSymbol" in script
-                assert "ES" in script
-                assert "cancel-option-Exit-at-Mkt-Cxl" in script
+                calls = mock_tab.Runtime.evaluate.call_args_list
+                assert calls[0][1]['expression'] == "/* driver */"
+                exit_script = calls[1][1]['expression']
+                assert "TradoAuto.clickExitForSymbol" in exit_script
+                assert "ES" in exit_script
+                assert "cancel-option-Exit-at-Mkt-Cxl" in exit_script
 
     def test_update_symbol(self, mock_browser, mock_tab):
         # Setup
         expected_result = {"result": "Symbol updated"}
-        mock_tab.Runtime.evaluate.return_value = expected_result
+        mock_tab.Runtime.evaluate.side_effect = [None, expected_result]
         
-        with patch("src.app.pychrome.Browser", return_value=mock_browser):
+        with patch("src.app.pychrome.Browser", return_value=mock_browser), \
+             patch("src.app.tradovate_auto_driver_bundle", "/* driver */"):
             with patch.object(app.TradovateConnection, "find_tradovate_tab"):
                 connection = app.TradovateConnection(9222, "Test Account")
                 connection.tab = mock_tab
@@ -220,11 +224,11 @@ class TestTradovateConnection:
                 
                 # Assert
                 assert result == expected_result
-                mock_tab.Runtime.evaluate.assert_called_once()
-                # Check that the script contains the expected symbol
-                script = mock_tab.Runtime.evaluate.call_args[1]['expression']
-                assert "TradoAuto.updateSymbol" in script
-                assert "ES" in script
+                calls = mock_tab.Runtime.evaluate.call_args_list
+                assert calls[0][1]['expression'] == "/* driver */"
+                symbol_script = calls[1][1]['expression']
+                assert "TradoAuto.updateSymbol" in symbol_script
+                assert "ES" in symbol_script
 
     def test_run_risk_management(self, mock_browser, mock_tab):
         # Setup
