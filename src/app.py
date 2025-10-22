@@ -182,7 +182,23 @@ class TradovateConnection:
                                 details.keysError = err && err.message ? err.message : String(err);
                             }}
                         }}
-                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                        let serialized = '';
+                        try {{
+                            serialized = JSON.stringify(details);
+                        }} catch (serr) {{
+                            serialized = JSON.stringify({{ ...details, stringifyError: serr && serr.message ? serr.message : String(serr) }});
+                        }}
+                        try {{
+                            window.__TradoAutoSnapshots = window.__TradoAutoSnapshots || {{}};
+                            window.__TradoAutoSnapshots[requiredMethod] = {{
+                                ...(window.__TradoAutoSnapshots[requiredMethod] || {{}}),
+                                [label]: details,
+                                lastUpdated: Date.now()
+                            }};
+                        }} catch (storeErr) {{
+                            console.warn('[DASHBOARD][DriverSnapshot] failed to store snapshot', storeErr);
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] ${{serialized}}`);
                     }} catch (err) {{
                         console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
                     }}
@@ -274,7 +290,23 @@ class TradovateConnection:
                                 details.keysError = err && err.message ? err.message : String(err);
                             }}
                         }}
-                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                        let serialized = '';
+                        try {{
+                            serialized = JSON.stringify(details);
+                        }} catch (serr) {{
+                            serialized = JSON.stringify({{ ...details, stringifyError: serr && serr.message ? serr.message : String(serr) }});
+                        }}
+                        try {{
+                            window.__TradoAutoSnapshots = window.__TradoAutoSnapshots || {{}};
+                            window.__TradoAutoSnapshots[requiredMethod] = {{
+                                ...(window.__TradoAutoSnapshots[requiredMethod] || {{}}),
+                                [label]: details,
+                                lastUpdated: Date.now()
+                            }};
+                        }} catch (storeErr) {{
+                            console.warn('[DASHBOARD][DriverSnapshot] failed to store snapshot', storeErr);
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] ${{serialized}}`);
                     }} catch (err) {{
                         console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
                     }}
@@ -355,7 +387,23 @@ class TradovateConnection:
                                 details.keysError = err && err.message ? err.message : String(err);
                             }}
                         }}
-                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}]`, details);
+                        let serialized = '';
+                        try {{
+                            serialized = JSON.stringify(details);
+                        }} catch (serr) {{
+                            serialized = JSON.stringify({{ ...details, stringifyError: serr && serr.message ? serr.message : String(serr) }});
+                        }}
+                        try {{
+                            window.__TradoAutoSnapshots = window.__TradoAutoSnapshots || {{}};
+                            window.__TradoAutoSnapshots[requiredMethod] = {{
+                                ...(window.__TradoAutoSnapshots[requiredMethod] || {{}}),
+                                [label]: details,
+                                lastUpdated: Date.now()
+                            }};
+                        }} catch (storeErr) {{
+                            console.warn('[DASHBOARD][DriverSnapshot] failed to store snapshot', storeErr);
+                        }}
+                        console.log(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] ${{serialized}}`);
                     }} catch (err) {{
                         console.warn(`[DASHBOARD][DriverSnapshot:${{requiredMethod}}] failed`, err);
                     }}

@@ -1357,6 +1357,10 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
     window.getNQFrontMonth = getNQFrontMonth;
     window.getThirdFriday = getThirdFriday;
 
+    function moveStopLossToBreakeven() {
+        console.warn('[TradoAuto] moveStopLossToBreakeven is not implemented in this build');
+    }
+
     const TradoAuto = {
         init: () => {
             console.log('[TradoAuto] legacy driver init');

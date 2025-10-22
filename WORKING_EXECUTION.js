@@ -924,7 +924,7 @@
 
             if (priceValue)
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
-            clickPriceArrow();
+            // clickPriceArrow();
 
             document.querySelector('.btn-group .btn-primary')?.click();
             await delay(200);
@@ -1071,6 +1071,51 @@
         });
     }
 
+    function attachDraggable(element, handle, storageKeyPrefix, onMove) {
+        if (!element) return;
+        const dragHandle = handle || element;
+        if (!dragHandle) return;
+
+        const state = { dragging: false, offsetX: 0, offsetY: 0 };
+
+        const onMouseDown = e => {
+            if (e.button !== 0) return;
+            state.dragging = true;
+            const rect = element.getBoundingClientRect();
+            state.offsetX = e.clientX - rect.left;
+            state.offsetY = e.clientY - rect.top;
+            element.style.cursor = 'grabbing';
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        };
+
+        const onMouseMove = e => {
+            if (!state.dragging) return;
+            const left = `${e.clientX - state.offsetX}px`;
+            const top = `${e.clientY - state.offsetY}px`;
+            element.style.left = left;
+            element.style.top = top;
+            element.style.right = 'unset';
+            if (typeof onMove === 'function') onMove(left, top);
+        };
+
+        const onMouseUp = () => {
+            if (!state.dragging) return;
+            state.dragging = false;
+            element.style.cursor = 'grab';
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            if (storageKeyPrefix) {
+                localStorage.setItem(`${storageKeyPrefix}Left`, element.style.left || '');
+                localStorage.setItem(`${storageKeyPrefix}Top`, element.style.top || '');
+            }
+        };
+
+        dragHandle.style.cursor = 'grab';
+        dragHandle.addEventListener('mousedown', onMouseDown);
+    }
+
+
     const orderAnalyticsState = {
         container: null,
         ratioEl: null,
@@ -1098,8 +1143,8 @@
         panel.id = 'order-analytics-panel';
         Object.assign(panel.style, {
             position: 'fixed',
-            top: '520px',
-            right: '520px',
+            top: '220px',
+            right: '20px',
             width: '280px',
             background: '#1a1d23',
             color: '#f1f1f1',
@@ -1145,10 +1190,20 @@
         panel.appendChild(canvas);
         document.body.appendChild(panel);
 
+        const savedLeft = localStorage.getItem('orderAnalyticsPanelLeft');
+        const savedTop = localStorage.getItem('orderAnalyticsPanelTop');
+        if (savedLeft && savedTop) {
+            panel.style.left = savedLeft;
+            panel.style.top = savedTop;
+            panel.style.right = 'unset';
+        }
+
         orderAnalyticsState.container = panel;
         orderAnalyticsState.ratioEl = ratioEl;
         orderAnalyticsState.canvas = canvas;
         orderAnalyticsState.ctx = canvas.getContext('2d');
+
+        attachDraggable(panel, title, 'orderAnalyticsPanel');
     }
 
     function mergeOrderAnalyticsHistory(rows) {
