@@ -1055,28 +1055,6 @@ async function updateSymbol(selector, value) {
             }
         }
 
-        // returns an array like [{timestamp,id,event,comment,fillPrice}, …]
-        function getOrderEvents(container = document) {
-            const rows = container.querySelectorAll(
-                '.order-history-content .public_fixedDataTable_bodyRow'
-            );
-
-            return Array.from(rows, row => {
-                const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
-                const timestamp = cells[0]?.textContent.trim() || '';
-                const id        = cells[1]?.textContent.trim() || '';
-                const eventTxt  = cells[2]?.textContent.trim() || '';
-                const comment   = cells[3]?.textContent.trim() || '';
-
-                // extract fill price patterns like “1@18747.25 NQM5”
-                let fillPrice = null;
-                const m = eventTxt.match(/@([\d.]+)/);
-                if (m) fillPrice = Number(m[1]);
-
-                return { timestamp, id, event: eventTxt, comment, fillPrice };
-            });
-        }
-
         function clickPriceArrow(direction = 'up') {
           const wrapper = document.querySelector('.numeric-input-value-controls');
           if (!wrapper) return;
@@ -1098,9 +1076,9 @@ async function updateSymbol(selector, value) {
 
             //await delay(400);               // NEW - let Tradovate draw the price box
 
-            if (priceValue)
+            if (priceValue) {
                 await updateInputValue('.numeric-input.feedback-wrapper input', priceValue);
-            clickPriceArrow();
+            }
 
             document.querySelector('.btn-group .btn-primary')?.click();
             await delay(200);
@@ -1141,24 +1119,29 @@ async function updateSymbol(selector, value) {
 
     // returns an array like [{timestamp,id,event,comment,fillPrice}, …]
     function getOrderEvents(container = document) {
-      const rows = container.querySelectorAll(
-        '.order-history-content .public_fixedDataTable_bodyRow'
-      );
+      const host =
+        container.querySelector('.order-history-content') ||
+        container.querySelector('.module.orders');
+
+      if (!host) {
+        return [];
+      }
+
+      const rows = host.querySelectorAll('.public_fixedDataTable_bodyRow');
 
       return Array.from(rows, row => {
         const cells = row.querySelectorAll('.public_fixedDataTableCell_cellContent');
+        if (!cells.length) return null;
         const timestamp = cells[0]?.textContent.trim() || '';
-        const id        = cells[1]?.textContent.trim() || '';
-        const eventTxt  = cells[2]?.textContent.trim() || '';
-        const comment   = cells[3]?.textContent.trim() || '';
-
-        // extract fill price patterns like “1@18747.25 NQM5”
+        const id = cells[1]?.textContent.trim() || '';
+        const eventTxt = cells[2]?.textContent.trim() || '';
+        const comment = cells[3]?.textContent.trim() || '';
         let fillPrice = null;
         const m = eventTxt.match(/@([\d.]+)/);
         if (m) fillPrice = Number(m[1]);
-
+        if (!eventTxt) return null;
         return { timestamp, id, event: eventTxt, comment, fillPrice };
-      });
+      }).filter(Boolean);
     }
 
 
@@ -1551,7 +1534,8 @@ function autoTrade(inputSymbol, quantity = 1, action = 'Buy', takeProfitTicks = 
                 return subscribeDriverState(listener);
             }
             return () => {};
-        }
+        },
+        getOrderEvents
     };
 
     const targetWindow = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
